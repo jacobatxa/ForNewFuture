@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34C759"/><stop offset="1" stop-color="#007AFF"/></linearGradient></defs>
+  <rect width="640" height="360" fill="url(#g)"/>
+  <text x="40" y="300" fill="#fff" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Khan World School</text>
+  <text x="40" y="330" fill="rgba(255,255,255,.85)" font-family="system-ui,sans-serif" font-size="18">ASU Prep · Mastery</text>
+</svg>

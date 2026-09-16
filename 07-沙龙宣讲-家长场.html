@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「机」遇未来 · AI 对教育变革的分析及选择</title>
+<style>
+  :root{
+    --bg:#f5f5f7;
+    --paper:#ffffff;
+    --ink:#1d1d1f;
+    --ink-2:#6e6e73;
+    --ink-3:#86868b;
+    --line:#d2d2d7;
+    --blue:#0071e3;
+    --fill:#f5f5f7;
+    --fill-2:#e8e8ed;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",sans-serif;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  #deck{height:100%;position:relative;background:var(--bg)}
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 8vw;
+    opacity:0;visibility:hidden;
+    transform:translateY(12px);
+    transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),visibility .55s;
+    z-index:2;background:var(--bg);
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .slide.paper{background:var(--paper)}
+  .slide.center{align-items:center;text-align:center}
+  .content{position:relative;z-index:3;width:100%;min-width:0}
+  h1,h2,.statement,.note,.quote-hero,.hero-num,.hero-sub,.hero-detail{overflow-wrap:break-word}
+
+  .em{color:var(--blue)}
+  .mark{
+    font-size:clamp(12px,.95vw,14px);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink);
+    font-weight:600;
+    margin-bottom:3.2vh;
+  }
+  .slide.cover{
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:0;
+    padding:0;
+    background:#fff;
+    overflow:visible;
+  }
+  .pane-bird{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 2.5vw 6vh 6vw;
+    min-width:0;
+    background:#fff;
+  }
+  .cover-bird{
+    display:block;
+    min-width:0;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:78vh;
+    object-fit:contain;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.06))
+      drop-shadow(0 18px 28px rgba(0,0,0,.10))
+      drop-shadow(0 42px 70px rgba(0,0,0,.12));
+  }
+  .slide.cover .pane-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7vh 7vw 7vh 4vw;
+    min-width:0;
+  }
+  .cover-agenda{
+    list-style:none;
+    margin-top:4vh;
+    max-width:28em;
+    display:flex;
+    flex-direction:column;
+    gap:1.6vh;
+  }
+  .cover-agenda li{
+    display:grid;
+    grid-template-columns:2.2em 1fr;
+    gap:10px;
+    align-items:start;
+  }
+  .cover-agenda .num{
+    font-size:clamp(13px,1.1vw,15px);
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:.02em;
+    padding-top:.15em;
+  }
+  .cover-agenda .txt{
+    font-size:clamp(15px,1.35vw,19px);
+    font-weight:500;
+    letter-spacing:-.02em;
+    line-height:1.35;
+    color:var(--ink);
+  }
+  .cover-agenda .desc{
+    display:block;
+    margin-top:.35em;
+    font-size:clamp(12px,1.05vw,14px);
+    font-weight:400;
+    color:var(--ink-2);
+    line-height:1.45;
+  }
+
+  .kicker{
+    font-size:clamp(12px,.95vw,14px);
+    color:var(--ink-2);
+    letter-spacing:.04em;
+    margin-bottom:2.2vh;
+    font-weight:600;
+  }
+  h1{
+    font-size:clamp(44px,6.4vw,92px);
+    line-height:1.05;
+    font-weight:600;
+    letter-spacing:-.035em;
+  }
+  .cover-title{
+    white-space:nowrap;
+    font-size:clamp(36px,4.8vw,72px);
+  }
+  .cover-sub{
+    font-size:clamp(16px,1.5vw,22px);
+    color:var(--ink-2);
+    margin-top:1.6vh;
+    font-weight:400;
+    letter-spacing:-.01em;
+  }
+  h2{
+    font-size:clamp(32px,4.1vw,58px);
+    line-height:1.12;
+    font-weight:600;
+    letter-spacing:-.03em;
+    margin-bottom:4vh;
+  }
+  .lede{
+    font-size:clamp(18px,1.7vw,24px);
+    line-height:1.45;
+    color:var(--ink-2);
+    font-weight:400;
+    max-width:22em;
+    margin-top:2.4vh;
+  }
+  .statement{
+    font-size:clamp(22px,2.5vw,36px);
+    line-height:1.4;
+    font-weight:500;
+    letter-spacing:-.02em;
+    max-width:28em;
+    color:var(--ink);
+  }
+  .note{
+    margin-top:4vh;
+    font-size:clamp(15px,1.25vw,18px);
+    color:var(--ink-2);
+    line-height:1.7;
+    max-width:46em;
+  }
+  .note strong{color:var(--ink);font-weight:600}
+
+  .hero-num{
+    font-size:clamp(64px,11vw,160px);
+    font-weight:600;
+    line-height:.95;
+    letter-spacing:-.05em;
+    color:var(--ink);
+  }
+  .hero-sub{
+    font-size:clamp(20px,2.05vw,28px);
+    margin-top:2.4vh;
+    font-weight:500;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    max-width:22em;
+    line-height:1.35;
+  }
+  .hero-detail{
+    margin-top:2.6vh;
+    font-size:clamp(15px,1.25vw,18px);
+    color:var(--ink-2);
+    line-height:1.7;
+    max-width:36em;
+  }
+  .hero-tag{
+    margin-top:3.4vh;
+    font-size:clamp(11px,.9vw,13px);
+    color:var(--ink-3);
+    letter-spacing:.02em;
+  }
+
+  /* Split: text + big photo */
+  .split{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:0;
+    padding:0;
+    align-items:stretch;
+  }
+  .split.reverse{grid-template-columns:.95fr 1.05fr}
+  .split .pane-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 6vw 8vh 8vw;
+    min-width:0;
+  }
+  .split.reverse .pane-text{padding:8vh 8vw 8vh 6vw}
+  .pane-photo{
+    background-size:cover;
+    background-position:center;
+    min-height:100%;
+  }
+
+  /* Inset photo under headline, Apple product-page style */
+  .photo-band{
+    width:100%;
+    height:42vh;
+    border-radius:28px;
+    background-size:cover;
+    background-position:center;
+    margin-top:3.2vh;
+  }
+
+  /* Schools overview — map + cards */
+  .slide.schools{
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    overflow:hidden;
+    padding:3.8vh 3.2vw 3vh;
+    background:
+      radial-gradient(ellipse 70% 45% at 0% 0%, rgba(255,59,48,.05), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(0,122,255,.05), transparent 50%),
+      var(--paper);
+  }
+  .schools-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:2vw;
+    margin-bottom:1.8vh;
+    flex-shrink:0;
+  }
+  .schools-head .kicker{margin-bottom:.45vh}
+  .schools-head h2{
+    font-size:clamp(20px,2.1vw,30px);
+    letter-spacing:-.03em;
+    line-height:1.15;
+    max-width:16em;
+  }
+  .schools-head .lede{
+    font-size:clamp(11px,.95vw,13.5px);
+    color:var(--ink-2);
+    line-height:1.45;
+    max-width:26em;
+    text-align:right;
+  }
+  .schools-main{
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+    gap:1.4vw;
+    align-items:stretch;
+  }
+  .schools-map-col{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .schools-map-stage{
+    position:relative;
+    width:100%;
+    aspect-ratio:1280 / 712;
+    border-radius:18px;
+    overflow:hidden;
+    background:#0e1116;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  }
+  .schools-map-stage > img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:fill;
+    opacity:.95;
+    filter:contrast(1.12) brightness(1.06);
+    pointer-events:none;
+    user-select:none;
+  }
+  .schools-map-stage .mpin{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    pointer-events:none;
+  }
+  .schools-map-stage .mpin .dot{
+    width:15px;height:15px;
+    border-radius:50%;
+    border:2.5px solid #fff;
+    box-shadow:0 0 0 5px color-mix(in srgb, var(--pin, #fff) 40%, transparent), 0 4px 14px rgba(0,0,0,.5);
+    display:block;
+  }
+  .schools-map-stage .mpin .label{display:none}
+  .map-legend{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:.4vh .7vw;
+    margin-top:1vh;
+  }
+  .map-legend .item{
+    display:flex;align-items:center;gap:8px;
+    font-size:11.5px;
+    color:var(--ink);
+    font-weight:500;
+    line-height:1.25;
+  }
+  .map-legend .swatch{
+    width:10px;height:10px;border-radius:50%;flex-shrink:0;
+    box-shadow:0 0 0 2px #fff, 0 1px 4px rgba(0,0,0,.15);
+  }
+  .map-legend .item span.meta{
+    color:var(--ink-3);font-weight:400;font-size:10.5px;
+  }
+  .map-caption{
+    margin-top:.9vh;
+    font-size:11px;
+    color:var(--ink-3);
+    line-height:1.4;
+  }
+  .schools-grid{
+    min-width:0;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(3,minmax(0,1fr));
+    gap:.65vh .7vw;
+  }
+  .scard{
+    --accent:#007AFF;
+    display:grid;
+    grid-template-rows:auto 1fr;
+    min-height:0;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    position:relative;
+  }
+  .scard::before{
+    content:'';
+    position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--accent);
+    z-index:2;
+  }
+  .scard.c-alpha{--accent:#FF3B30}
+  .scard.c-astra{--accent:#007AFF}
+  .scard.c-sabre{--accent:#AF52DE}
+  .scard.c-kami{--accent:#FF2D55}
+  .scard.c-founders{--accent:#FF9500}
+  .scard.c-forge{--accent:#34C759}
+  .scard-media{
+    position:relative;
+    height:3.8vh;
+    min-height:28px;
+    max-height:40px;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, #fff), #f0f0f5);
+  }
+  .scard-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .scard-media .fallback{
+    position:absolute;inset:0;
+    display:flex;align-items:flex-end;
+    padding:6px 10px;
+    font-size:9.5px;font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:color-mix(in srgb, var(--accent) 75%, #1d1d1f);
+  }
+  .scard-media .play{
+    position:absolute;right:8px;bottom:7px;
+    width:26px;height:26px;border-radius:50%;
+    background:rgba(0,0,0,.75);
+    color:#fff;
+    display:grid;place-items:center;
+    font-size:10px;
+    backdrop-filter:blur(6px);
+    z-index:1;
+    border:0;cursor:pointer;padding:0;font:inherit;
+  }
+  .scard-media .play:hover{background:var(--accent)}
+  .scard-body{
+    padding:.55vh .7vw .65vh .9vw;
+    display:flex;flex-direction:column;
+    min-height:0;
+    overflow:hidden;
+  }
+  .scard .where{
+    font-size:8.5px;
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:.03em;
+    margin-bottom:.1vh;
+  }
+  .scard h3{
+    font-size:clamp(11.5px,1.05vw,14.5px);
+    font-weight:650;
+    letter-spacing:-.025em;
+    margin-bottom:.3vh;
+  }
+  .scard ul{
+    list-style:none;
+    display:flex;flex-direction:column;gap:.15vh;
+    flex:1;min-height:0;overflow:hidden;
+  }
+  .scard li{
+    font-size:clamp(9.5px,.82vw,11px);
+    line-height:1.3;
+    color:var(--ink);
+    padding-left:.75em;
+    position:relative;
+  }
+  .scard li::before{
+    content:'';
+    position:absolute;left:0;top:.48em;
+    width:4px;height:4px;border-radius:50%;
+    background:var(--accent);
+  }
+  .scard li strong{font-weight:650}
+  .scard .media-link{
+    margin-top:.35vh;
+    font-size:9.5px;
+    font-weight:650;
+    color:var(--accent);
+    text-decoration:none;
+    display:inline-flex;align-items:center;gap:4px;
+    flex-shrink:0;
+    background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  }
+  .scard .media-link:hover{text-decoration:underline}
+  .scard .note{
+    margin-top:.15vh;
+    font-size:8.5px;
+    color:var(--ink-3);
+    line-height:1.25;
+    flex-shrink:0;
+  }
+
+  /* In-page school story lightbox */
+  #story-modal{
+    position:fixed;inset:0;z-index:80;
+    display:none;align-items:center;justify-content:center;
+    padding:3.5vh 3vw;
+  }
+  #story-modal.open{display:flex}
+  #story-modal .sm-backdrop{
+    position:absolute;inset:0;
+    background:rgba(18,18,22,.62);
+    backdrop-filter:blur(12px);
+  }
+  #story-modal .sm-panel{
+    position:relative;z-index:1;
+    width:min(760px,94vw);
+    max-height:min(88vh,920px);
+    display:flex;flex-direction:column;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 28px 90px rgba(0,0,0,.28);
+  }
+  #story-modal .sm-bar{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:14px 18px;
+    border-bottom:1px solid rgba(0,0,0,.06);
+    flex-shrink:0;
+    background:#fff;
+  }
+  #story-modal .sm-kicker{
+    font-size:11px;font-weight:700;letter-spacing:.04em;
+    color:var(--accent,#007AFF);
+  }
+  #story-modal .sm-close{
+    width:34px;height:34px;border-radius:50%;
+    border:0;background:rgba(0,0,0,.06);color:#1d1d1f;
+    cursor:pointer;font-size:20px;line-height:1;
+  }
+  #story-modal .sm-close:hover{background:rgba(0,0,0,.12)}
+  #story-modal .sm-body{
+    overflow:auto;-webkit-overflow-scrolling:touch;
+    padding:0 0 28px;
+  }
+  #story-modal .sm-hero{
+    position:relative;width:100%;aspect-ratio:16/9;
+    background:#e8e8ed;
+  }
+  #story-modal .sm-hero img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+  #story-modal .sm-hero video{
+    width:100%;height:100%;object-fit:cover;display:block;background:#000;
+  }
+  #story-modal .sm-content{padding:22px 26px 0}
+  #story-modal .sm-where{
+    font-size:12px;font-weight:700;color:var(--accent,#007AFF);
+    letter-spacing:.03em;margin-bottom:6px;
+  }
+  #story-modal .sm-title{
+    font-size:clamp(22px,2.2vw,30px);font-weight:650;
+    letter-spacing:-.03em;line-height:1.15;margin-bottom:10px;
+  }
+  #story-modal .sm-tagline{
+    font-size:15px;line-height:1.55;color:var(--ink-2);
+    margin-bottom:18px;
+  }
+  #story-modal .sm-facts{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:10px;margin-bottom:22px;
+  }
+  #story-modal .sm-fact{
+    background:var(--fill);border-radius:12px;padding:12px 14px;
+  }
+  #story-modal .sm-fact .k{
+    font-size:10.5px;font-weight:650;color:var(--ink-3);
+    letter-spacing:.04em;margin-bottom:4px;
+  }
+  #story-modal .sm-fact .v{
+    font-size:13.5px;font-weight:600;letter-spacing:-.02em;line-height:1.3;
+  }
+  #story-modal .sm-section{margin-bottom:18px}
+  #story-modal .sm-section h4{
+    font-size:14px;font-weight:650;letter-spacing:-.02em;margin-bottom:6px;
+  }
+  #story-modal .sm-section p,
+  #story-modal .sm-section li{
+    font-size:14px;line-height:1.6;color:var(--ink-2);
+  }
+  #story-modal .sm-section ul{
+    list-style:none;display:flex;flex-direction:column;gap:6px;
+  }
+  #story-modal .sm-section li{
+    padding-left:1em;position:relative;
+  }
+  #story-modal .sm-section li::before{
+    content:'';position:absolute;left:0;top:.55em;
+    width:5px;height:5px;border-radius:50%;background:var(--accent,#007AFF);
+  }
+  #story-modal .sm-gallery{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    margin:8px 0 20px;
+  }
+  #story-modal .sm-gallery img{
+    width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;
+    background:#eee;
+  }
+  #story-modal .sm-src{
+    font-size:12px;color:var(--ink-3);padding-top:4px;
+    border-top:1px solid rgba(0,0,0,.06);margin-top:8px;padding-top:14px;
+  }
+  #story-modal .sm-src a{color:var(--accent,#007AFF);font-weight:600;text-decoration:none}
+  #story-modal .sm-src a:hover{text-decoration:underline}
+  .scard-media .play{
+    font-size:11px;font-weight:700;letter-spacing:0;
+  }
+
+
+  /* Data charts P3/P4 */
+  .slide.data-slide{
+    padding:4.5vh 4.5vw 3.5vh;
+    justify-content:flex-start;
+  }
+  .data-head{margin-bottom:2.2vh;flex-shrink:0}
+  .data-head h2{font-size:clamp(22px,2.3vw,34px);letter-spacing:-.03em;line-height:1.15;max-width:18em}
+  .data-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1.15fr 1fr 0.95fr;
+    gap:1.2vw;
+    align-items:stretch;
+  }
+  .dcard{
+    background:#fff;
+    border-radius:18px;
+    padding:2vh 1.4vw 1.8vh;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;min-height:0;
+  }
+  .slide:not(.paper) .dcard{background:var(--paper)}
+  .dcard h3{font-size:clamp(13px,1.15vw,16px);font-weight:650;letter-spacing:-.02em;margin-bottom:1.2vh}
+  .dcard .chart{flex:1;min-height:0;display:flex;align-items:center}
+  .dcard .chart svg{width:100%;height:auto;max-height:28vh}
+  .dcard .src{margin-top:1.2vh;font-size:10.5px;color:var(--ink-3);line-height:1.35}
+  .bar-list{display:flex;flex-direction:column;gap:1.1vh;width:100%}
+  .bar-row{display:grid;grid-template-columns:5.5em 1fr 2.8em;gap:8px;align-items:center;font-size:12px}
+  .bar-row .lab{color:var(--ink-2);font-weight:500}
+  .bar-row .track{height:10px;background:var(--fill-2);border-radius:6px;overflow:hidden}
+  .bar-row .fill{height:100%;border-radius:6px;background:var(--blue)}
+  .bar-row .val{font-weight:650;text-align:right;font-variant-numeric:tabular-nums}
+  .kpi-stack{display:flex;flex-direction:column;gap:1.4vh}
+  .kpi{padding:1.2vh 0;border-bottom:1px solid var(--line)}
+  .kpi:last-child{border-bottom:0}
+  .kpi .n{font-size:clamp(22px,2.2vw,32px);font-weight:650;letter-spacing:-.03em;color:var(--blue)}
+  .kpi p{font-size:12.5px;color:var(--ink-2);line-height:1.45;margin-top:.35vh}
+
+  .slide.labor{
+    padding:4.5vh 4.5vw 3.5vh;
+    justify-content:flex-start;
+  }
+  .labor-main{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:1.6vw;
+  }
+  .labor-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:1vh 1vw;
+  }
+  .lstat{
+    background:#fff;border-radius:16px;padding:2vh 1.3vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .lstat .n{font-size:clamp(26px,2.6vw,40px);font-weight:650;letter-spacing:-.04em;color:var(--blue)}
+  .lstat p{font-size:13px;color:var(--ink-2);line-height:1.4;margin-top:.5vh}
+  .job-cols{display:grid;grid-template-columns:1fr 1fr;gap:1vw;margin-top:1.4vh}
+  .job-col{
+    background:#fff;border-radius:16px;padding:1.8vh 1.2vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .job-col h4{font-size:12px;font-weight:700;letter-spacing:.04em;margin-bottom:1vh}
+  .job-col.up h4{color:#34C759}
+  .job-col.down h4{color:#FF3B30}
+  .job-col ul{list-style:none;display:flex;flex-direction:column;gap:.55vh}
+  .job-col li{font-size:13.5px;font-weight:550;padding-left:.85em;position:relative}
+  .job-col li::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%}
+  .job-col.up li::before{background:#34C759}
+  .job-col.down li::before{background:#FF3B30}
+  .labor-side{
+    display:flex;flex-direction:column;gap:1.2vh;
+  }
+  .skill-pill{
+    flex:1;background:#fff;border-radius:16px;padding:2vh 1.4vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .skill-pill .tag{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.04em;margin-bottom:.5vh}
+  .skill-pill h3{font-size:clamp(16px,1.5vw,22px);font-weight:650;letter-spacing:-.02em}
+  .skill-pill p{font-size:13px;color:var(--ink-2);line-height:1.45;margin-top:.5vh}
+  .labor .src{margin-top:1.4vh;font-size:11px;color:var(--ink-3)}
+
+  /* Capability body P5 */
+  .slide.cap-slide{
+    padding:4vh 4vw 3vh;
+    justify-content:flex-start;
+  }
+  .cap-main{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:2vw;
+    align-items:center;
+  }
+  .cap-figure{
+    display:flex;align-items:center;justify-content:center;
+    min-height:0;
+  }
+  .cap-figure svg{width:min(100%,420px);height:auto;max-height:68vh}
+  .cap-legend{display:flex;flex-direction:column;gap:1.1vh}
+  .cap-item{
+    display:grid;grid-template-columns:14px 1fr;gap:12px;
+    align-items:start;
+    padding:1.2vh 1vw;
+    background:#fff;border-radius:14px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+  }
+  .cap-item i{
+    width:12px;height:12px;border-radius:3px;margin-top:4px;
+  }
+  .cap-item h4{font-size:14px;font-weight:650;letter-spacing:-.02em}
+  .cap-item p{font-size:12px;color:var(--ink-2);line-height:1.4;margin-top:.2vh}
+
+  /* Cases P6 */
+  .slide.cases-slide{
+    padding:3.5vh 3.5vw 3vh;
+    justify-content:flex-start;
+    overflow:hidden;
+  }
+  .cases-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:1.2vh 1.2vw;
+    position:relative;
+  }
+  .case-card{
+    position:relative;
+    border-radius:18px;overflow:hidden;
+    background:#111;
+    cursor:pointer;
+    transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .35s ease,box-shadow .35s;
+    transform-origin:center center;
+  }
+  .case-card img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;opacity:.72;
+    transition:opacity .35s,transform .5s;
+  }
+  .case-card .shade{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(0,0,0,.15) 20%,rgba(0,0,0,.78) 100%);
+  }
+  .case-card .body{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:2vh 1.4vw 1.8vh;
+    color:#fff;z-index:2;
+  }
+  .case-card .who{font-size:11px;font-weight:700;letter-spacing:.04em;opacity:.85;margin-bottom:.4vh}
+  .case-card h3{font-size:clamp(16px,1.5vw,22px);font-weight:650;letter-spacing:-.02em;margin-bottom:.5vh}
+  .case-card p{font-size:clamp(12px,1vw,14px);line-height:1.4;opacity:.9;max-width:36em}
+  .case-card .src{font-size:10.5px;opacity:.55;margin-top:.7vh}
+  .cases-grid.focus-on .case-card{opacity:.28;transform:scale(.94)}
+  .cases-grid.focus-on .case-card.is-focus{
+    opacity:1;transform:scale(1.06);
+    z-index:3;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+  }
+  .cases-grid.focus-on .case-card.is-focus img{opacity:.88;transform:scale(1.04)}
+  .cases-hint{font-size:11px;color:var(--ink-3);margin-top:1vh}
+
+  /* Framework P7 */
+  .slide.frame-slide{
+    padding:5vh 6vw 4vh;
+    justify-content:flex-start;
+  }
+  .frame-trio{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;
+    margin-top:3vh;
+  }
+  .frame-card{
+    background:var(--fill);border-radius:20px;padding:3vh 1.6vw;
+    min-height:28vh;
+  }
+  .slide:not(.paper) .frame-card{background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+  .frame-card .num{font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.08em;margin-bottom:1.4vh}
+  .frame-card h3{font-size:clamp(18px,1.7vw,24px);font-weight:650;letter-spacing:-.02em;margin-bottom:1vh}
+  .frame-card p{font-size:clamp(13px,1.15vw,15.5px);color:var(--ink-2);line-height:1.55}
+  .frame-bridge{
+    margin-top:3.2vh;font-size:clamp(15px,1.35vw,19px);
+    font-weight:550;letter-spacing:-.02em;color:var(--ink);
+  }
+
+  /* Course poster P8 */
+  .slide.course-poster{
+    padding:0;display:grid;
+    grid-template-columns:1.15fr .85fr;
+    overflow:hidden;
+  }
+  .cp-left{
+    position:relative;
+    padding:5vh 3.5vw 4vh 4.5vw;
+    display:flex;flex-direction:column;
+    background:#0c0c0e;
+    color:#f5f5f7;
+    overflow:hidden;
+  }
+  .cp-left .bg{
+    position:absolute;inset:0;
+    background-size:cover;background-position:center;
+    opacity:.28;filter:saturate(1.05);
+  }
+  .cp-left .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+  .cp-left .kicker{color:rgba(255,255,255,.55)}
+  .cp-left h2{font-size:clamp(26px,2.8vw,42px);letter-spacing:-.035em;line-height:1.12;margin:1vh 0 2.5vh}
+  .cp-path{display:flex;flex-direction:column;gap:0;flex:1}
+  .cp-step{
+    display:grid;grid-template-columns:48px 1fr;gap:14px;
+    padding:1.5vh 0;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .cp-step:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+  .cp-step .ix{
+    width:40px;height:40px;border-radius:12px;
+    display:grid;place-items:center;
+    font-size:14px;font-weight:700;
+    background:rgba(0,113,227,.9);color:#fff;
+  }
+  .cp-step h3{font-size:clamp(16px,1.5vw,21px);font-weight:650;letter-spacing:-.02em}
+  .cp-step p{font-size:13px;color:rgba(255,255,255,.7);line-height:1.45;margin-top:.35vh}
+  .cp-step .out{font-size:11.5px;color:#64b5ff;margin-top:.45vh;font-weight:600}
+  .cp-right{
+    padding:5vh 3.5vw 4vh;
+    display:flex;flex-direction:column;
+    background:#fff;
+    position:relative;
+  }
+  .cp-right .bg{
+    position:absolute;right:0;bottom:0;width:70%;height:55%;
+    background-size:cover;background-position:center;
+    opacity:.14;pointer-events:none;
+  }
+  .cp-right .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+  .cp-right h2{font-size:clamp(24px,2.4vw,36px);letter-spacing:-.03em;line-height:1.15;margin:1vh 0 2vh}
+  .cp-right .lede{font-size:15px;color:var(--ink-2);line-height:1.5;margin-bottom:2.5vh}
+  .cp-flow{display:flex;flex-direction:column;gap:1.2vh;flex:1}
+  .cp-flow .node{
+    padding:1.6vh 1.2vw;
+    border-radius:14px;
+    background:var(--fill);
+    border-left:4px solid var(--blue);
+  }
+  .cp-flow .node h3{font-size:15px;font-weight:650}
+  .cp-flow .node p{font-size:12.5px;color:var(--ink-2);margin-top:.3vh;line-height:1.4}
+  .cp-brand{
+    margin-top:auto;padding-top:2vh;
+    font-size:12px;font-weight:650;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-3);
+  }
+
+
+  .facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;margin-top:.5vh}
+  .fact{
+    background:var(--paper);
+    border-radius:22px;
+    padding:3.4vh 1.8vw;
+  }
+  .slide.paper .fact{background:var(--fill)}
+  .fact .n{font-size:clamp(22px,2.2vw,32px);font-weight:600;letter-spacing:-.03em;color:var(--blue)}
+  .fact h3{font-size:clamp(16px,1.45vw,20px);font-weight:600;margin-top:1.4vh;letter-spacing:-.02em}
+  .fact p{font-size:clamp(13px,1.1vw,15.5px);color:var(--ink-2);line-height:1.6;margin-top:.8vh}
+
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4vw;margin-top:.4vh}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:1.4vw;margin-top:.4vh}
+  .role{
+    background:var(--paper);
+    border-radius:22px;
+    padding:3.4vh 2vw;
+  }
+  .slide.paper .role{background:var(--fill)}
+  .role .idx{
+    font-size:clamp(12px,.95vw,13px);
+    color:var(--ink-3);
+    font-weight:600;
+    letter-spacing:.06em;
+    margin-bottom:1.2vh;
+  }
+  .role h3{font-size:clamp(18px,1.7vw,24px);font-weight:600;letter-spacing:-.025em}
+  .role p{font-size:clamp(13.5px,1.15vw,16px);color:var(--ink-2);line-height:1.65;margin-top:1.1vh}
+  .role .hrs{font-size:clamp(11px,.9vw,13px);color:var(--ink-3);margin-top:1.8vh}
+
+  .compare-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6vw;margin-top:.6vh}
+  .compare-col{
+    border-radius:22px;
+    padding:4vh 2.4vw;
+    background:var(--paper);
+  }
+  .slide.paper .compare-col{background:var(--fill)}
+  .compare-col.new{background:var(--ink);color:#f5f5f7}
+  .compare-col h3{font-size:clamp(20px,1.9vw,26px);font-weight:600;letter-spacing:-.025em}
+  .compare-col .sub{font-size:clamp(12px,1vw,14px);color:var(--ink-3);margin-top:.5vh;margin-bottom:2.2vh}
+  .compare-col.new .sub{color:rgba(255,255,255,.5)}
+  .compare-col.new h3{color:#fff}
+  .compare-col ul{list-style:none}
+  .compare-col li{
+    padding:1.35vh 0;
+    border-bottom:1px solid var(--line);
+    font-size:clamp(14.5px,1.3vw,18px);
+    display:flex;gap:12px;align-items:flex-start;
+    letter-spacing:-.01em;
+  }
+  .compare-col.new li{border-bottom-color:rgba(255,255,255,.12);color:#f5f5f7;font-weight:500}
+  .compare-col li:last-child{border-bottom:none}
+  .compare-col li svg{width:16px;height:16px;flex-shrink:0;margin-top:5px;stroke:var(--ink-3)}
+  .compare-col.new li svg{stroke:#fff}
+  .compare-col.old li{color:var(--ink-2)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:.7vw;margin-top:3.2vh}
+  .chip{
+    background:var(--paper);
+    border-radius:100px;
+    padding:1.15vh 1.5vw;
+    font-size:clamp(13px,1.1vw,16px);
+    color:var(--ink);
+    font-weight:500;
+  }
+  .slide.paper .chip{background:var(--fill)}
+
+  .duo-col{display:grid;grid-template-columns:1fr 1fr;gap:1.6vw;margin-top:.6vh}
+  .panel{
+    border-radius:22px;
+    padding:4vh 2.5vw;
+    background:var(--paper);
+  }
+  .slide.paper .panel{background:var(--fill)}
+  .panel h3{font-size:clamp(22px,2vw,28px);margin-bottom:2vh;font-weight:600;letter-spacing:-.025em}
+  .panel ul{list-style:none}
+  .panel li{
+    padding:1.05vh 0;
+    font-size:clamp(15px,1.3vw,18px);
+    color:var(--ink-2);
+    line-height:1.55;
+    padding-left:1.2em;
+    position:relative;
+  }
+  .panel li::before{content:'';position:absolute;left:0;top:.85em;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+
+  .quote-hero{
+    font-size:clamp(32px,4.4vw,64px);
+    line-height:1.22;
+    font-weight:600;
+    letter-spacing:-.035em;
+    max-width:16em;
+    color:var(--ink);
+  }
+  .quote-attr{
+    margin-top:3.6vh;
+    font-size:clamp(14px,1.2vw,17px);
+    color:var(--ink-3);
+  }
+  .src{
+    margin-top:7vh;
+    font-size:clamp(11px,.9vw,13px);
+    color:var(--ink-3);
+    line-height:1.6;
+    max-width:54em;
+  }
+
+  #progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;transition:width .4s;z-index:20;opacity:.35}
+  #pager{
+    position:fixed;bottom:3.2vh;right:3vw;z-index:20;
+    font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:14px;
+  }
+  #pager button{
+    background:var(--paper);border:1px solid var(--line);color:var(--ink);
+    width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;
+    transition:all .2s;font-family:inherit;
+  }
+  #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  #hint.hidden{opacity:0}
+
+  #editor-bar{
+    position:fixed;top:14px;right:14px;z-index:30;
+    display:flex;align-items:center;gap:8px;
+    font-size:12px;font-family:inherit;
+  }
+  #editor-bar button{
+    background:rgba(255,255,255,.92);
+    border:1px solid var(--line);
+    color:var(--ink);
+    padding:8px 12px;
+    border-radius:980px;
+    cursor:pointer;
+    font:inherit;
+    font-size:12px;
+    font-weight:600;
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+  }
+  #editor-bar button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  #editor-bar button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+  #editor-bar button.primary:hover{filter:brightness(.95)}
+  #editor-bar .status{color:var(--ink-3);padding:0 4px;max-width:12em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  body.editing #editor-bar button#btn-edit{background:var(--ink);color:#fff;border-color:var(--ink)}
+  body.editing .slide [data-edit]{
+    outline:1.5px dashed rgba(0,113,227,.35);
+    outline-offset:4px;
+    border-radius:4px;
+    cursor:text;
+  }
+  body.editing .slide [data-edit]:focus{
+    outline:2px solid var(--blue);
+    outline-offset:4px;
+    background:rgba(0,113,227,.04);
+  }
+  body.editing #deck{cursor:default}
+  body.editing #hint{display:none}
+  @media print{
+    #editor-bar{display:none!important}
+  }
+
+  @media (max-width:800px){
+    .slide{padding:7vh 7vw 12vh;overflow-y:auto;justify-content:flex-start}
+    .split,.split.reverse{grid-template-columns:1fr;padding:0}
+    .split .pane-text,.split.reverse .pane-text{padding:7vh 7vw 4vh}
+    .slide.schools{overflow-y:auto;justify-content:flex-start}
+    .schools-head{flex-direction:column;align-items:flex-start}
+    .schools-head .lede{text-align:left}
+    .schools-main{grid-template-columns:1fr;overflow:visible}
+    .schools-map-stage{max-height:32vh}
+    .schools-grid{
+      grid-template-columns:1fr;
+      grid-template-rows:auto;
+    }
+    .scard{min-height:auto}
+    .scard-media{height:12vh;max-height:100px}
+    .scard-body{overflow:visible}
+    .scard ul{overflow:visible}
+    .photo-band{height:26vh}
+    .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
+  }
+  @media print{
+    body{overflow:visible}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}
+    #pager,#hint,#progress,#editor-bar{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+<!-- P1 封面 -->
+<section class="slide cover paper">
+  <div class="pane-bird">
+    <img class="cover-bird" src="assets/cover-bird.png?v=7" alt="">
+  </div>
+  <div class="pane-text">
+    <div class="mark">Natural Computation</div>
+    <h1 class="cover-title">「<span class="em">机</span>」遇未来</h1>
+    <p class="cover-sub">AI 对教育变革的分析及选择</p>
+    <ol class="cover-agenda">
+      <li>
+        <span class="num">01</span>
+        <span class="txt">学校与选拔正在改写什么
+          <span class="desc">六所实验校、名校录取数据、招生办对 AI 文书的新规则。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span class="txt">用人市场与能力结构
+          <span class="desc">岗位净增与技能重塑；七校公开课程里反复出现的能力层。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span class="txt">案例、培养路径与课程
+          <span class="desc">青少年突破样本；接触会拒绝的世界；AI 通识与青年创始人社区。</span>
+        </span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- P2 创新学校 · 地图 + 七校 -->
+<section class="slide schools paper">
+  <div class="schools-head">
+    <div>
+      <div class="kicker" data-edit>01 · 国际教育如何向 AI 靠拢</div>
+      <h2 data-edit>六所学校，同一页看清各自在改什么</h2>
+    </div>
+    <p class="lede" data-edit>共同点：主课更短、项目更真、教练更近。以下为各校公开课程口径摘要。</p>
+  </div>
+
+  <div class="schools-main">
+    <aside class="schools-map-col">
+      <div class="schools-map-stage">
+        <img src="assets/world-map.png?v=3" alt="世界地图">
+        <!-- equirectangular: x=(lon+180)/360, y=(90-lat)/180；略向陆地微调 -->
+        <div class="mpin" style="left:22.50%;top:31.88%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
+        <div class="mpin" style="left:17.05%;top:31.05%;--pin:#007AFF" title="Ad Astra → Astra Nova"><span class="dot" style="background:#007AFF"></span></div>
+        <div class="mpin" style="left:49.95%;top:21.60%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
+        <div class="mpin" style="left:87.20%;top:31.20%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
+        <div class="mpin" style="left:29.35%;top:27.45%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
+        <div class="mpin" style="left:29.85%;top:28.05%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
+      </div>
+      <div class="map-legend">
+        <div class="item"><i class="swatch" style="background:#FF3B30"></i>Alpha <span class="meta">奥斯汀</span></div>
+        <div class="item"><i class="swatch" style="background:#007AFF"></i>Astra Nova <span class="meta">SpaceX 渊源</span></div>
+        <div class="item"><i class="swatch" style="background:#AF52DE"></i>Sabrewing <span class="meta">伦敦</span></div>
+        <div class="item"><i class="swatch" style="background:#FF2D55"></i>神山高专 <span class="meta">德岛</span></div>
+        <div class="item"><i class="swatch" style="background:#FF9500"></i>Founders <span class="meta">纽约</span></div>
+        <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
+      </div>
+      <p class="map-caption" data-edit>圆点按地理位置标注。线上学校标在创立渊源地。口径以校方公开信息为准。</p>
+    </aside>
+
+    <div class="schools-grid">
+      <article class="scard c-alpha">
+        <div class="scard-media">
+          <span class="fallback">Austin</span>
+          <img src="assets/schools/stories/alpha.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="alpha" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 奥斯汀等地 · 全日制</div>
+          <h3 data-edit>Alpha School</h3>
+          <ul data-edit>
+            <li><strong>2-Hour Learning</strong>：约 2 小时掌握制主课（校方称）。</li>
+            <li>下午：Guide 制生活技能、演讲、创业与项目。</li>
+            <li>校方称测评约 top 1–2%，学习速度约 2× 均速。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="alpha">图文介绍 →</button>
+          <div class="note">alpha.school</div>
+        </div>
+      </article>
+
+      <article class="scard c-astra">
+        <div class="scard-media">
+          <span class="fallback">SpaceX → Online</span>
+          <img src="assets/schools/stories/astra.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="astra" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>SpaceX 园区 Ad Astra → 全球线上</div>
+          <h3 data-edit>Astra Nova</h3>
+          <ul data-edit>
+            <li>前身 Ad Astra（2014–2020）在 SpaceX 园区；2020 转线上。</li>
+            <li>签名活动 <strong>Conundrums</strong>；课程含 AI、工程与人文。</li>
+            <li>11–18 岁；周约 4–16 课时；约 45 国（校方称）。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="astra">图文介绍 →</button>
+          <div class="note">astranova.org</div>
+        </div>
+      </article>
+
+      <article class="scard c-sabre">
+        <div class="scard-media">
+          <span class="fallback">London</span>
+          <img src="assets/schools/stories/london.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="sabre" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>英国 · 伦敦 · David Game College</div>
+          <h3 data-edit>Sabrewing 项目</h3>
+          <ul data-edit>
+            <li>到校约 9:10–16:30；上午 AI 自适应 GCSE / A Level。</li>
+            <li>教练 + AI 导师 Violet；下午 300+ 小时技能与项目（校方称）。</li>
+            <li>一年通常 5 门 GCSE 或 2–3 门 A Level（校方称）。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="sabre">图文介绍 →</button>
+          <div class="note">davidgamecollege.com</div>
+        </div>
+      </article>
+
+      <article class="scard c-kami">
+        <div class="scard-media">
+          <span class="fallback">Tokushima</span>
+          <img src="assets/schools/stories/kamiyama.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="kami" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>日本 · 德岛神山 · 五年制高等专门学校</div>
+          <h3 data-edit>神山まるごと高専</h3>
+          <ul data-edit>
+            <li>设计·工程学科，五年贯通；约 15 岁入学、全寮制。</li>
+            <li>支柱：科技 × 设计 × 企业家精神；含编程 / IoT / AI。</li>
+            <li>一学年约 40 人（校方称）。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="kami">图文介绍 →</button>
+          <div class="note">kamiyama.ac.jp</div>
+        </div>
+      </article>
+
+      <article class="scard c-founders">
+        <div class="scard-media">
+          <span class="fallback">NYC</span>
+          <img src="assets/schools/stories/nyc.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="founders" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 纽约 · 9–12 · 2026 首届</div>
+          <h3 data-edit>The Founders School</h3>
+          <ul data-edit>
+            <li>学术约 3 小时/日；一年五段 Sell→Scale（校方称）。</li>
+            <li>三柱：生活技能、创业、AI 协作构建。</li>
+            <li>2026 秋 NYC 首届约 20 人；founders.school。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="founders">图文介绍 →</button>
+          <div class="note">founders.school</div>
+        </div>
+      </article>
+
+      <article class="scard c-forge">
+        <div class="scard-media">
+          <span class="fallback">New Jersey</span>
+          <img src="assets/schools/stories/forge.jpg" alt="" onerror="this.style.display='none'">
+          <button type="button" class="play js-story" data-story="forge" aria-label="打开图文介绍">文</button>
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 新泽西 · 2026 新开</div>
+          <h3 data-edit>Forge Prep</h3>
+          <ul data-edit>
+            <li>上午深度专注，下午工作室动手创作。</li>
+            <li>1:1 Guide 多年跟进；真实业务与可用产品。</li>
+            <li>2026 秋新泽西首校；约 30 个 Founding Families（校方称）。</li>
+          </ul>
+          <button type="button" class="media-link js-story" data-story="forge">图文介绍 →</button>
+          <div class="note">forgeprep.com</div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- P3 名校选拔数据 -->
+<section class="slide data-slide paper">
+  <div class="data-head">
+    <div class="kicker">01 · 名校选拔</div>
+    <h2>顶尖校仍极窄。<br>中国相关路径更陡。<br>文书正在被核验。</h2>
+  </div>
+  <div class="data-grid">
+    <div class="dcard">
+      <h3>Harvard 录取率 · Class of 2024–2029</h3>
+      <div class="chart">
+        <svg viewBox="0 0 360 200" role="img" aria-label="Harvard admit rate chart">
+          <line x1="40" y1="20" x2="40" y2="160" stroke="#d2d2d7" stroke-width="1"/>
+          <line x1="40" y1="160" x2="340" y2="160" stroke="#d2d2d7" stroke-width="1"/>
+          <!-- 5% top -> y=20; 0% -> y=160; scale: 1%=28px -->
+          <polyline fill="none" stroke="#0071e3" stroke-width="3" stroke-linejoin="round"
+            points="60,20 110,48 160,70.4 210,62 260,59.2 310,42.4"/>
+          <g fill="#0071e3">
+            <circle cx="60" cy="20" r="4"/><circle cx="110" cy="48" r="4"/><circle cx="160" cy="70.4" r="4"/>
+            <circle cx="210" cy="62" r="4"/><circle cx="260" cy="59.2" r="4"/><circle cx="310" cy="42.4" r="4"/>
+          </g>
+          <g font-size="10" fill="#6e6e73" text-anchor="middle">
+            <text x="60" y="178">'24</text><text x="110" y="178">'25</text><text x="160" y="178">'26</text>
+            <text x="210" y="178">'27</text><text x="260" y="178">'28</text><text x="310" y="178">'29</text>
+          </g>
+          <g font-size="11" fill="#1d1d1f" font-weight="600" text-anchor="middle">
+            <text x="60" y="12">5.0%</text><text x="160" y="62">3.2%</text><text x="310" y="34">4.2%</text>
+          </g>
+          <text x="40" y="198" font-size="10" fill="#86868b">旁注：Stanford Class of 2028 录取率 3.6%（CDS 2024–25）</text>
+        </svg>
+      </div>
+      <div class="src">Harvard College Admissions Statistics · OIRA Fact Book</div>
+    </div>
+    <div class="dcard">
+      <h3>中国相关 · 成功率对比</h3>
+      <div class="chart">
+        <div class="bar-list">
+          <div class="bar-row"><span class="lab">剑桥整体</span><div class="track"><div class="fill" style="width:82%"></div></div><span class="val">~16%</span></div>
+          <div class="bar-row"><span class="lab">剑桥·中国</span><div class="track"><div class="fill" style="width:49%"></div></div><span class="val">9.8%</span></div>
+          <div class="bar-row"><span class="lab">牛津整体</span><div class="track"><div class="fill" style="width:70.5%"></div></div><span class="val">14.1%</span></div>
+          <div class="bar-row"><span class="lab">牛津·中国</span><div class="track"><div class="fill" style="width:44.5%"></div></div><span class="val">8.9%</span></div>
+          <div class="bar-row"><span class="lab">在美中国生</span><div class="track"><div class="fill" style="width:40%;background:#FF9500"></div></div><span class="val">−4.1%</span></div>
+        </div>
+      </div>
+      <div class="src">Cambridge UG cycle 2025 · Oxford Annual Admissions 2025 · IIE Open Doors 2024/25（中国生 265,919；本科 −10.2%）</div>
+    </div>
+    <div class="dcard">
+      <h3>招生办 × GenAI 文书</h3>
+      <div class="kpi-stack">
+        <div class="kpi"><div class="n">30%</div><p>明确禁止 AI 撰写文书（2024：25%）</p></div>
+        <div class="kpi"><div class="n">68%</div><p>仍无正式书面政策</p></div>
+        <div class="kpi"><div class="n">27%</div><p>允许用 AI 做头脑风暴</p></div>
+      </div>
+      <div class="src">Kaplan 2025，n=220 美国高校招生办 · Caltech：AI 视频问答核验研究申请真实性（AP）</div>
+    </div>
+  </div>
+</section>
+
+<!-- P4 行业用人 -->
+<section class="slide labor">
+  <div class="data-head">
+    <div class="kicker">02 · 行业用人</div>
+    <h2>岗位在净增。<br>技能在重塑。<br>入门白领承压最大。</h2>
+  </div>
+  <div class="labor-main">
+    <div>
+      <div class="labor-stats">
+        <div class="lstat"><div class="n">+7800万</div><p>WEF：2025–2030 全球净增就业（创造 1.7 亿 − 替代 9200 万）</p></div>
+        <div class="lstat"><div class="n">39%</div><p>WEF：到 2030 年，劳动者核心技能被重塑的比例</p></div>
+        <div class="lstat"><div class="n">~30%</div><p>McKinsey：到 2030 美国约三成工时可被自动化（含 genAI）</p></div>
+        <div class="lstat"><div class="n">~50%</div><p>Amodei 情景：1–5 年内入门白领岗位承压（CEO 观点，非同行评议）</p></div>
+      </div>
+      <div class="job-cols">
+        <div class="job-col up">
+          <h4>增长更快</h4>
+          <ul>
+            <li>大数据专家</li>
+            <li>金融科技工程</li>
+            <li>AI / 机器学习</li>
+            <li>软件与应用开发</li>
+          </ul>
+        </div>
+        <div class="job-col down">
+          <h4>承压更快</h4>
+          <ul>
+            <li>收银 / 票务</li>
+            <li>行政秘书</li>
+            <li>银行柜员</li>
+            <li>数据录入</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="labor-side">
+      <div class="skill-pill">
+        <div class="tag">能力 01</div>
+        <h3>技术素养</h3>
+        <p>AI、数据与网络安全被 WEF 列为增长最快技能簇；多数岗位要的是使用与判断，不是人人造模型。</p>
+      </div>
+      <div class="skill-pill">
+        <div class="tag">能力 02</div>
+        <h3>判断与核验</h3>
+        <p>流畅产出贬值。招生办禁写作用 AI、职场要管理与社会技能——共同点是：能证明这是你的理解。</p>
+      </div>
+      <div class="skill-pill">
+        <div class="tag">能力 03</div>
+        <h3>对人负责的交付</h3>
+        <p>真实客户、真实实验、真实协作。梯子最下面的模板化任务正在被抽掉。</p>
+      </div>
+    </div>
+  </div>
+  <p class="src">World Economic Forum, Future of Jobs 2025 · McKinsey GSI · Axios / Dario Amodei, Anthropic, 2025 · OECD AI skills 2024–25</p>
+</section>
+
+<!-- P5 能力人形 -->
+<section class="slide cap-slide paper">
+  <div class="data-head">
+    <div class="kicker">02 · 能力结构</div>
+    <h2>六所实验校公开课程里<br>反复出现的能力层</h2>
+  </div>
+  <div class="cap-main">
+    <div class="cap-figure">
+      <svg viewBox="0 0 280 420" xmlns="http://www.w3.org/2000/svg" aria-label="能力人形">
+        <defs>
+          <clipPath id="cell"><rect x="0" y="0" width="64" height="42" rx="7"/></clipPath>
+        </defs>
+        <!-- body outline -->
+        <ellipse cx="140" cy="52" rx="38" ry="42" fill="#fff" stroke="#1d1d1f" stroke-width="2.5"/>
+        <path d="M90 112 C90 96 112 90 140 90 C168 90 190 96 190 112 L198 208 C200 236 188 252 168 258 L168 388 C168 400 160 408 148 408 L132 408 C120 408 112 400 112 388 L112 258 C92 252 80 236 82 208 Z" fill="#fff" stroke="#1d1d1f" stroke-width="2.5"/>
+        <!-- HEAD battery AI 90% -->
+        <rect x="116" y="28" width="48" height="48" rx="10" fill="#e8e8ed" stroke="#1d1d1f" stroke-width="1.5"/>
+        <rect x="116" y="33" width="48" height="43" rx="0" fill="#007AFF"/>
+        <text x="140" y="58" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">AI 90%</text>
+        <!-- TORSO cells as batteries -->
+        <!-- mastery 85% -->
+        <rect x="108" y="114" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="108" y="120" width="64" height="34" fill="#FF3B30"/>
+        <text x="140" y="140" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">主课 85%</text>
+        <!-- judgment 70% -->
+        <rect x="108" y="160" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="108" y="172" width="64" height="28" fill="#5856D6"/>
+        <text x="140" y="190" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">判断 70%</text>
+        <!-- delivery 80% -->
+        <rect x="108" y="206" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="108" y="214" width="64" height="32" fill="#34C759"/>
+        <text x="140" y="236" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">交付 80%</text>
+        <!-- LEFT coach 75% -->
+        <rect x="70" y="122" width="30" height="78" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="70" y="141" width="30" height="59" fill="#AF52DE"/>
+        <text x="85" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" transform="rotate(-90 85 175)">教练 75%</text>
+        <!-- RIGHT venture 65% -->
+        <rect x="180" y="122" width="30" height="78" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="180" y="149" width="30" height="51" fill="#FF9500"/>
+        <text x="195" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" transform="rotate(90 195 175)">创业 65%</text>
+        <!-- LEGS community 60% -->
+        <rect x="116" y="278" width="22" height="108" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="116" y="321" width="22" height="65" fill="#FF2D55"/>
+        <rect x="142" y="278" width="22" height="108" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
+        <rect x="142" y="321" width="22" height="65" fill="#FF2D55" opacity="0.7"/>
+        <text x="140" y="355" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">社区 60%</text>
+      </svg>
+    </div>
+    <div class="cap-legend">
+      <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>掌握式主课效率</h4><p>Alpha · Sabrewing — 自适应系统压缩主课，腾出下午做难事。</p></div></div>
+      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>判断与两难</h4><p>Astra Nova（含 Ad Astra）— Conundrums：无标准答案的开放题与辩论。</p></div></div>
+      <div class="cap-item"><i style="background:#34C759"></i><div><h4>真实项目交付</h4><p>Forge Prep · 神山 — 可用产品、原创研究、地方课题。</p></div></div>
+      <div class="cap-item"><i style="background:#FF9500"></i><div><h4>创业与市场反馈</h4><p>Founders · 神山 — 销售—验证—增长闭环，客户会拒绝你。</p></div></div>
+      <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>教练式支持</h4><p>Forge · Sabrewing — 1:1 Guide / 学习教练，而非整日讲授。</p></div></div>
+      <div class="cap-item"><i style="background:#007AFF"></i><div><h4>AI 作为工具层</h4><p>贯穿七校 — AI 加速主课与构建；责任仍在人。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- P6 案例 -->
+<section class="slide cases-slide">
+  <div class="data-head">
+    <div class="kicker">03 · 突破样本</div>
+    <h2>四个青少年，四种路径</h2>
+  </div>
+  <div class="cases-grid" id="cases-grid">
+    <article class="case-card" data-case="0" tabindex="0">
+      <img src="assets/salon/cases/code.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">深圳 · 17 岁 · Moonshot 实习</div>
+        <h3>陈广宇 · Kimi K3 / AttnRes</h3>
+        <p>Attention Residuals 共一作（arXiv 2603.15031），架构思路进入 Kimi K3。</p>
+        <div class="src">经济参考报 · 21财经 · Moonshot / arXiv</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="1" tabindex="0">
+      <img src="assets/salon/cases/office-sv.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">硅谷 · 高中毕业即入职路径</div>
+        <h3>Palantir Meritocracy Fellowship</h3>
+        <p>面向未上大学的美国高中毕业生：带薪约 4 个月实习；SAT ≥1460 / ACT ≥33。</p>
+        <div class="src">Business Insider, 2025 · Palantir 项目公开条件</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="2" tabindex="0">
+      <img src="assets/salon/cases/startup.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">英国 · 16 岁 · Beem AI</div>
+        <h3>Toby Brown · $1M</h3>
+        <p>South Park Commons 领投约 100 万美元；推迟 GCSE，赴旧金山推进产品。</p>
+        <div class="src">BBC · Evening Standard · Business Insider</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="3" tabindex="0">
+      <img src="assets/salon/cases/teen-work.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">美国 · 17 岁 · Aviato</div>
+        <h3>Eric Zhu · $2.3M Seed</h3>
+        <p>高中阶段做出私募市场分析产品；8VC、Soma、SoftBank 等参与种子轮。</p>
+        <div class="src">TechCrunch, 22 Jul 2024</div>
+      </div>
+    </article>
+  </div>
+  <p class="cases-hint">点击任一案例放大聚焦 · 再点空白或按 Esc 复位</p>
+</section>
+
+<!-- P7 培养体系 -->
+<section class="slide frame-slide paper">
+  <div class="kicker">03 · 培养路径</div>
+  <h2>教育任务倒转了：<br>长期接触<span class="em">会拒绝他的世界</span>。</h2>
+  <p class="lede" style="margin-top:1.2vh;max-width:36em;color:var(--ink-2)">AI 把「看起来像知识」变成无限供给。分得清事实、机理与关系，靠的是外部阻力——实验会失败、证明会卡死、原文改不了、听众会摇头。</p>
+  <div class="frame-trio">
+    <div class="frame-card">
+      <div class="num">01</div>
+      <h3>先摸清边界</h3>
+      <p>亲手发现 AI 会一本正经说错。知道它能做什么、不能做什么，比学会某个产品更重要。</p>
+    </div>
+    <div class="frame-card">
+      <div class="num">02</div>
+      <h3>再碰到阻力</h3>
+      <p>问题、证据、判断必须经过真实之物：实验、证明、原文、真人。AI 可以当草稿，不能当世界。</p>
+    </div>
+    <div class="frame-card">
+      <div class="num">03</div>
+      <h3>做成一件事</h3>
+      <p>从身边的真问题出发，做成能给别人用的东西。人负责问题、证据、判断和责任。</p>
+    </div>
+  </div>
+  <p class="frame-bridge">下一页：把这条路径落成的两门课。</p>
+</section>
+
+<!-- P8 课程海报 -->
+<section class="slide course-poster">
+  <div class="cp-left">
+    <div class="bg" style="background-image:url('assets/salon/course/lab.jpg')"></div>
+    <div class="inner">
+      <div class="kicker">课程 A · AI 通识</div>
+      <h2>从自然智慧<br>走到可交付产品</h2>
+      <div class="cp-path">
+        <div class="cp-step">
+          <div class="ix">01</div>
+          <div>
+            <h3>自然智慧</h3>
+            <p>生物智能与机器智能的边界；大模型会流畅地猜，不等于懂。</p>
+            <div class="out">产出：查证三问 · 第一行 prompt</div>
+          </div>
+        </div>
+        <div class="cp-step">
+          <div class="ix">02</div>
+          <div>
+            <h3>产品设计</h3>
+            <p>真问题三筛：有人群、有频次、有痛感；逻辑闭环代替空想功能。</p>
+            <div class="out">产出：问题卡 · 解决闭环图</div>
+          </div>
+        </div>
+        <div class="cp-step">
+          <div class="ix">03</div>
+          <div>
+            <h3>商业思维</h3>
+            <p>谁付钱、为何留下、如何迭代；路演叙事：痛点 → 演示 → 证据。</p>
+            <div class="out">产出：3 分钟路演讲稿</div>
+          </div>
+        </div>
+        <div class="cp-step">
+          <div class="ix">04</div>
+          <div>
+            <h3>AI 技术高阶</h3>
+            <p>Agent、插件、多模态、数据与安全；在有限预算里做能力取舍。</p>
+            <div class="out">产出：可演示 MVP · 用户反馈报告</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cp-right">
+    <div class="bg" style="background-image:url('assets/salon/course/build.jpg')"></div>
+    <div class="inner">
+      <div class="kicker">课程 B · 青年创始人社区</div>
+      <h2>真实问题里的<br>同伴与责任</h2>
+      <p class="lede">不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。</p>
+      <div class="cp-flow">
+        <div class="node">
+          <h3>真问题</h3>
+          <p>从生活与社区里选可验证的麻烦，而不是选题作文。</p>
+        </div>
+        <div class="node">
+          <h3>同伴 / 导师</h3>
+          <p>跨年龄协作；成人角色是教练与提问者，不是代写。</p>
+        </div>
+        <div class="node">
+          <h3>路演与迭代</h3>
+          <p>向真人演示；收集拒绝与修改；责任留在人，不留给模型。</p>
+        </div>
+      </div>
+      <div class="cp-brand">Natural Computation</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div id="pager">
+  <button id="prev" aria-label="上一页">←</button>
+  <span id="page-num">1 / 12</span>
+  <button id="next" aria-label="下一页">→</button>
+</div>
+<div id="hint">← → 方向键 / 空格 / 点击翻页 · 右上角可编辑文字</div>
+
+<div id="editor-bar">
+  <span class="status" id="edit-status"></span>
+  <button type="button" id="btn-edit">编辑文字</button>
+  <button type="button" id="btn-save" class="primary" hidden>保存文件</button>
+  <button type="button" id="btn-clear" hidden>清除草稿</button>
+</div>
+
+
+<div id="story-modal" aria-hidden="true">
+  <div class="sm-backdrop" data-close="1"></div>
+  <div class="sm-panel" role="dialog" aria-modal="true" aria-labelledby="sm-title">
+    <div class="sm-bar">
+      <div class="sm-kicker" id="sm-kicker">学校介绍</div>
+      <button type="button" class="sm-close" data-close="1" aria-label="关闭">×</button>
+    </div>
+    <div class="sm-body" id="sm-body"></div>
+  </div>
+</div>
+
+<script>
+  const DRAFT_KEY='salon-ppt-draft-v15';
+  const slides=[...document.querySelectorAll('.slide')];
+  let cur=0;
+  let editing=false;
+  const progress=document.getElementById('progress');
+  const pageNum=document.getElementById('page-num');
+  const statusEl=document.getElementById('edit-status');
+  const btnEdit=document.getElementById('btn-edit');
+  const btnSave=document.getElementById('btn-save');
+  const btnClear=document.getElementById('btn-clear');
+
+  const EDIT_SEL=[
+    'h1','h2','h3','p','li',
+    '.mark','.kicker','.lede','.cover-sub','.cover-title',
+    '.statement','.note','.hero-num','.hero-sub','.hero-detail','.hero-tag',
+    '.quote-hero','.quote-attr','.src','.idx','.hrs',
+    '.role p','.role h3','.fact .n','.fact h3','.fact p',
+    '.compare-col h3','.compare-col .sub',
+    '.cover-agenda .txt','.cover-agenda .desc','.cover-agenda .num',
+    '.school-panel h2','.school-panel .where','.school-panel .lab',
+    '.school-panel p','.school-panel .school-src','.map-title','.map-hint'
+  ].join(',');
+
+  function go(n){
+    if(editing && document.activeElement?.closest?.('[data-edit]')) return;
+    if(typeof closeStory==='function') closeStory();
+    if(typeof clearCaseFocus==='function') clearCaseFocus();
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    pageNum.textContent=(cur+1)+' / '+slides.length;
+    history.replaceState(null,'','#'+(cur+1));
+    document.getElementById('hint').classList.toggle('hidden',cur>0 || editing);
+  }
+
+  function markEditable(){
+    document.querySelectorAll('#deck '+EDIT_SEL).forEach(el=>{
+      if(el.closest('svg') || el.tagName==='SVG' || el.querySelector('svg') && el.children.length===1 && el.querySelector('svg')) return;
+      // allow li that contain svg+text: still editable on the li
+      el.setAttribute('data-edit','1');
+    });
+  }
+
+  function setEditing(on){
+    editing=on;
+    document.body.classList.toggle('editing',on);
+    btnEdit.textContent=on?'完成编辑':'编辑文字';
+    btnSave.hidden=!on;
+    btnClear.hidden=!on;
+    document.querySelectorAll('[data-edit]').forEach(el=>{
+      el.contentEditable=on?'true':'false';
+      if(!on) el.blur();
+    });
+    document.getElementById('hint').classList.toggle('hidden',on || cur>0);
+    statusEl.textContent=on?'点击文字直接改':'';
+  }
+
+  function saveDraft(){
+    try{
+      localStorage.setItem(DRAFT_KEY, document.getElementById('deck').innerHTML);
+      const t=new Date();
+      statusEl.textContent='已暂存 '+t.toLocaleTimeString();
+    }catch(e){
+      statusEl.textContent='暂存失败';
+    }
+  }
+
+  function restoreDraft(){
+    const raw=localStorage.getItem(DRAFT_KEY);
+    if(!raw) return false;
+    // Ignore drafts that don't match current deck structure
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('js-story')){
+      localStorage.removeItem(DRAFT_KEY);
+      return false;
+    }
+    try{
+      const deck=document.getElementById('deck');
+      const backup=deck.innerHTML;
+      deck.innerHTML=raw;
+      const found=document.querySelectorAll('.slide');
+      if(!found.length){
+        deck.innerHTML=backup;
+        localStorage.removeItem(DRAFT_KEY);
+        statusEl.textContent='草稿无效，已回退';
+        return false;
+      }
+      slides.length=0;
+      slides.push(...found);
+      markEditable();
+      statusEl.textContent='已恢复草稿';
+      return true;
+    }catch(e){
+      localStorage.removeItem(DRAFT_KEY);
+      statusEl.textContent='草稿损坏，已清除';
+      return false;
+    }
+  }
+
+  function clearDraft(){
+    localStorage.removeItem(DRAFT_KEY);
+    statusEl.textContent='草稿已清除，请刷新页面';
+  }
+
+  function buildExportHtml(){
+    const clone=document.documentElement.cloneNode(true);
+    clone.querySelector('#editor-bar')?.remove();
+    clone.querySelectorAll('[data-edit]').forEach(el=>{
+      el.removeAttribute('contenteditable');
+      el.removeAttribute('data-edit');
+    });
+    clone.querySelector('body')?.classList.remove('editing');
+    // strip this editor script block's runtime state isn't needed; keep scripts
+    // remove draft-restore noise from hint
+    const hint=clone.querySelector('#hint');
+    if(hint) hint.textContent='← → 方向键 / 空格 / 点击翻页 · #页码可直达';
+    // remove editor CSS? keep it so they can edit again after re-open
+    return '<!DOCTYPE html>\n'+clone.outerHTML;
+  }
+
+  async function saveToFile(){
+    saveDraft();
+    const html=buildExportHtml();
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const name='07-沙龙宣讲-家长场.html';
+    try{
+      if(window.showSaveFilePicker){
+        const handle=await window.showSaveFilePicker({
+          suggestedName:name,
+          types:[{description:'HTML',accept:{'text/html':['.html']}}]
+        });
+        const writable=await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        statusEl.textContent='已保存到文件';
+        return;
+      }
+    }catch(e){
+      if(e?.name==='AbortError'){ statusEl.textContent='已取消'; return; }
+    }
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    statusEl.textContent='已下载，请覆盖原文件';
+  }
+
+  document.getElementById('next').onclick=e=>{e.stopPropagation();go(cur+1)};
+  document.getElementById('prev').onclick=e=>{e.stopPropagation();go(cur-1)};
+  document.addEventListener('keydown',e=>{
+    const inEdit=editing && (document.activeElement?.isContentEditable || document.activeElement?.closest?.('[data-edit]'));
+    if(inEdit){
+      // allow normal typing; Esc exits field / edit mode
+      if(e.key==='Escape'){ document.activeElement.blur(); return; }
+      return;
+    }
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='s'){
+      e.preventDefault();
+      if(editing) saveToFile();
+    }
+  });
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(editing) return;
+    if(document.getElementById('story-modal')?.classList.contains('open')) return;
+    if(e.target.closest('a,button,[data-edit],.scard-media,.media-link,.js-story,#story-modal,.case-card,.cases-grid')) return;
+    go(cur+1);
+  });
+
+
+  const storyModal=document.getElementById('story-modal');
+  const smBody=document.getElementById('sm-body');
+  const smKicker=document.getElementById('sm-kicker');
+
+  const SCHOOL_STORIES={
+    alpha:{
+      accent:'#FF3B30', kicker:'美国 · 奥斯汀',
+      where:'全日制 · 2-Hour Learning',
+      title:'Alpha School',
+      tagline:'约 2 小时掌握制主课（数学、读写、科学、历史等），下午由 Guide 带生活技能、演讲、创业与项目。成人角色偏动机与引导，非整日讲授。',
+      hero:'assets/schools/stories/alpha.jpg',
+      gallery:['assets/schools/stories/alpha.jpg','assets/schools/stories/alpha-2.jpg'],
+      facts:[
+        {k:'主课',v:'约 2 小时（校方称）'},
+        {k:'测评',v:'约 top 1–2%（校方称）'},
+        {k:'速度',v:'约 2× 均速（校方称）'}
+      ],
+      sections:[
+        {h:'日结构', items:[
+          '上午：自适应软件按掌握度推进核心学科，可跨年级。',
+          '下午：领导力、演讲、创业、协作、体能等工作坊。',
+          'Guide 负责动机、情绪与生活技能，而非传统整班讲授。'
+        ]},
+        {h:'公开指标', items:[
+          '校方称全国测评约 top 1–2%，学习速度约 2× 全国平均。',
+          '校区覆盖 PreK–8 / K–8，高中另有 Alpha High。'
+        ]}
+      ],
+      source:'alpha.school', sourceUrl:'https://alpha.school'
+    },
+    astra:{
+      accent:'#007AFF', kicker:'SpaceX 渊源 · 全球线上',
+      where:'Ad Astra（园区）→ Astra Nova（线上）',
+      title:'Astra Nova',
+      tagline:'前身 Ad Astra 在 SpaceX 园区运行约六年（2014–2020），强调第一性原理、好奇心与智识勇气；Conundrums 与 Synthesis 源于此校。2020 转型为全球线上校 Astra Nova。',
+      hero:'assets/schools/stories/astra.jpg',
+      video:'assets/schools/videos/astra-nasa.mp4',
+      gallery:['assets/schools/stories/astra.jpg','assets/schools/stories/astra-2.jpg','assets/schools/stories/adastra.jpg'],
+      facts:[
+        {k:'前身',v:'Ad Astra · SpaceX'},
+        {k:'现态',v:'线上 · 11–18 岁'},
+        {k:'班额',v:'约 6–16（校方称）'}
+      ],
+      sections:[
+        {h:'一条血统', items:[
+          'Ad Astra：园区内混龄实验；无现行独立官网。',
+          'Astra Nova：承接理念与教师网络，开放全球招生。',
+          '签名活动 Conundrums：开放题与建设性辩论。'
+        ]},
+        {h:'现行课程（校方公开）', items:[
+          '每周约 4–16 课时；技术向含生物科技、工程、AI；人文向含文学、哲学与心智模型。',
+          '学生约 45 国；2026 年起高中毕业轨道。'
+        ]}
+      ],
+      source:'astranova.org', sourceUrl:'https://astranova.org'
+    },
+    sabre:{
+      accent:'#AF52DE', kicker:'英国 · 伦敦',
+      where:'David Game College · Sabrewing',
+      title:'Sabrewing Programme',
+      tagline:'到校日约 9:10–16:30。上午 AI 自适应推进 GCSE / A Level，学习教练与 AI 导师 Violet 即时辅导；下午累计 300+ 小时韧性、辩论、领导力、创业与科技。',
+      hero:'assets/schools/stories/london.jpg',
+      gallery:['assets/schools/stories/london.jpg','assets/schools/stories/london-2.jpg'],
+      facts:[
+        {k:'开学',v:'2026-09'},
+        {k:'GCSE',v:'一年约 5 门（校方称）'},
+        {k:'A Level',v:'一年约 2–3 门（校方称）'}
+      ],
+      sections:[
+        {h:'科目', items:[
+          'GCSE：英、数、生、化、物、地理、计算机等。',
+          'A Level：数、生、化、物、心理、经济、计算机等。',
+          '学科老师负责实验、复习与模考反馈。'
+        ]}
+      ],
+      source:'davidgamecollege.com', sourceUrl:'https://www.davidgamecollege.com/gcse-and-a-level-ai-programme'
+    },
+    kami:{
+      accent:'#FF2D55', kicker:'日本 · 德岛神山',
+      where:'设计·工程学科 · 五年制高专',
+      title:'神山まるごと高専',
+      tagline:'约 15 岁入学、全寮制。支柱为科技 × 设计 × 企业家精神：编程、IoT、AI、数据，以及 UI·UX、3DCG 与地方课题。',
+      hero:'assets/schools/stories/kamiyama.jpg',
+      gallery:['assets/schools/stories/kamiyama.jpg','assets/schools/stories/kamiyama-2.jpg'],
+      facts:[
+        {k:'学制',v:'五年贯通'},
+        {k:'规模',v:'约 40 人/年（校方称）'},
+        {k:'住宿',v:'全寮制'}
+      ],
+      sections:[
+        {h:'课程支柱', items:[
+          '神山サークル：造物中心 + 语言/数学/设计/编程。',
+          '无传统部活，学生自办项目与地方协作。',
+          '一日示例：约 9:00 上课，1 限 90 分钟。'
+        ]}
+      ],
+      source:'kamiyama.ac.jp', sourceUrl:'https://www.kamiyama.ac.jp'
+    },
+    founders:{
+      accent:'#FF9500', kicker:'美国 · 纽约',
+      where:'创业高中 · Founders School',
+      title:'The Founders School',
+      tagline:'建立在加速学术上：学术约 3 小时/日。一年五段 Sell → Build → Validate → Grow → Scale。三柱技能：生活、创业、AI。',
+      hero:'assets/schools/stories/nyc.jpg',
+      gallery:['assets/schools/stories/nyc.jpg','assets/schools/stories/founders-2.jpg'],
+      facts:[
+        {k:'首届',v:'2026 秋 NYC · 约 20 人'},
+        {k:'年级',v:'9–12'},
+        {k:'官网',v:'founders.school'}
+      ],
+      sections:[
+        {h:'公开结构', items:[
+          '每周跑「专长–受众–产品」小循环；导师辅导。',
+          '校方宣传含学费与营收相关承诺，以合同条款为准。'
+        ]}
+      ],
+      source:'founders.school', sourceUrl:'https://founders.school'
+    },
+    forge:{
+      accent:'#34C759', kicker:'美国 · 新泽西',
+      where:'2026 新开 · Forge Prep',
+      title:'Forge Prep',
+      tagline:'上午深度专注，下午工作室动手。六类专业工作室；1:1 Guide 多年跟进学业与 power skills；强调真实业务与可用产品。',
+      hero:'assets/schools/stories/forge.jpg',
+      gallery:['assets/schools/stories/forge.jpg','assets/schools/stories/forge-2.jpg'],
+      facts:[
+        {k:'开课',v:'2026 秋 Livingston'},
+        {k:'年级',v:'先 5–8，计划至 12'},
+        {k:'首届',v:'约 30 Founding Families'}
+      ],
+      sections:[
+        {h:'结构', items:[
+          '较晚开学；全年历、短假期。',
+          '工作室含运动科学、生物科技、媒体、AI 等表述。'
+        ]}
+      ],
+      source:'forgeprep.com', sourceUrl:'https://forgeprep.com'
+    }
+  };
+
+  function closeStory(){
+    if(!storyModal) return;
+    storyModal.classList.remove('open');
+    storyModal.setAttribute('aria-hidden','true');
+    smBody.querySelectorAll('video').forEach(v=>{ try{v.pause()}catch(e){} });
+    smBody.innerHTML='';
+  }
+  function escapeHtml(s){
+    return String(s||'').replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+  function openStory(id){
+    const s=SCHOOL_STORIES[id];
+    if(!s) return;
+    storyModal.style.setProperty('--accent', s.accent||'#007AFF');
+    smKicker.textContent=s.kicker||'学校介绍';
+    const facts=(s.facts||[]).map(f=>`<div class="sm-fact"><div class="k">${escapeHtml(f.k)}</div><div class="v">${escapeHtml(f.v)}</div></div>`).join('');
+    const sections=(s.sections||[]).map(sec=>{
+      const items=(sec.items||[]).map(i=>`<li>${escapeHtml(i)}</li>`).join('');
+      return `<div class="sm-section"><h4>${escapeHtml(sec.h)}</h4><ul>${items}</ul></div>`;
+    }).join('');
+    const gallery=(s.gallery||[]).slice(0,2).map(src=>`<img src="${escapeHtml(src)}" alt="">`).join('');
+    const hero = `<div class="sm-hero"><img src="${escapeHtml(s.hero||'')}" alt=""></div>`;
+    const videoBlock = s.video
+      ? `<div class="sm-section"><h4>校园短片</h4><div class="sm-hero" style="aspect-ratio:16/9;border-radius:12px;overflow:hidden"><video controls playsinline preload="metadata" poster="${escapeHtml(s.hero||'')}" src="${escapeHtml(s.video)}"></video></div></div>`
+      : '';
+    const srcHtml = s.sourceUrl
+      ? `<a href="${escapeHtml(s.sourceUrl)}" target="_blank" rel="noopener">${escapeHtml(s.source||s.sourceUrl)}</a>`
+      : escapeHtml(s.source||'');
+    smBody.innerHTML = `
+      ${hero}
+      <div class="sm-content">
+        <div class="sm-where">${escapeHtml(s.where||'')}</div>
+        <h3 class="sm-title" id="sm-title">${escapeHtml(s.title||'')}</h3>
+        <p class="sm-tagline">${escapeHtml(s.tagline||'')}</p>
+        <div class="sm-facts">${facts}</div>
+        ${sections}
+        ${videoBlock}
+        <div class="sm-gallery">${gallery}</div>
+        <div class="sm-src">公开信息整理 · ${srcHtml}</div>
+      </div>`;
+    storyModal.classList.add('open');
+    storyModal.setAttribute('aria-hidden','false');
+    smBody.scrollTop=0;
+  }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.js-story');
+    if(btn){
+      e.preventDefault();
+      e.stopPropagation();
+      openStory(btn.dataset.story);
+      return;
+    }
+    if(e.target.closest('#story-modal [data-close]')) closeStory();
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ closeStory(); if(typeof clearCaseFocus==='function') clearCaseFocus(); }
+  });
+
+
+
+  // Case focus grid
+  const casesGrid=document.getElementById('cases-grid');
+  function clearCaseFocus(){
+    if(!casesGrid) return;
+    casesGrid.classList.remove('focus-on');
+    casesGrid.querySelectorAll('.case-card').forEach(c=>c.classList.remove('is-focus'));
+  }
+  if(casesGrid){
+    casesGrid.addEventListener('click',e=>{
+      const card=e.target.closest('.case-card');
+      if(!card) return;
+      e.stopPropagation();
+      const on=card.classList.contains('is-focus') && casesGrid.classList.contains('focus-on');
+      clearCaseFocus();
+      if(!on){
+        casesGrid.classList.add('focus-on');
+        card.classList.add('is-focus');
+      }
+    });
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') clearCaseFocus();
+  });
+  const _go=go;
+  // wrap go to clear focus - patch after go defined via monkey at end
+
+
+  btnEdit.onclick=()=>setEditing(!editing);
+  btnSave.onclick=()=>saveToFile();
+  btnClear.onclick=()=>{
+    if(confirm('清除本地草稿？刷新后会回到磁盘上的原文件内容。')) clearDraft();
+  };
+
+  let saveTimer=null;
+  document.getElementById('deck').addEventListener('input',e=>{
+    if(!e.target.closest('[data-edit]')) return;
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(saveDraft,400);
+  });
+
+  restoreDraft();
+  markEditable();
+  go((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>

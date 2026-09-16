@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
+<title>「机」遇未来 · 家长专场</title>
+<style>
+  :root{
+    --bg:#e8eef3;
+    --ink:#121820;
+    --ink-2:#3d4754;
+    --ink-3:#667484;
+    --line:#d3dbe4;
+    --blue:#2a6aa8;
+    --blue-soft:rgba(42,106,168,.11);
+    --amber:#b8922d;
+    --amber-soft:rgba(184,146,45,.12);
+    --fill:#e7eef5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.45;
+    min-height:100dvh;
+  }
+
+  .poster{
+    position:relative;
+    width:min(100%,420px);
+    margin:0 auto;
+    overflow:hidden;
+    background:#f3f7fa;
+    padding:26px 22px 36px;
+    padding-bottom:calc(36px + env(safe-area-inset-bottom));
+    isolation:isolate;
+  }
+
+  /* Full-bleed photo behind all copy (not a top decoration) */
+  .bg-bird{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:50% 35%;
+    opacity:1;
+    filter:saturate(.55) brightness(1.1) contrast(.88);
+    pointer-events:none;
+    z-index:0;
+    user-select:none;
+  }
+  /* Frosted veil ABOVE bird, BELOW type */
+  .poster::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      linear-gradient(180deg,
+        rgba(243,247,250,.82) 0%,
+        rgba(243,247,250,.86) 45%,
+        rgba(243,247,250,.90) 100%),
+      radial-gradient(70% 50% at 85% 20%, rgba(42,106,168,.05), transparent 55%);
+  }
+
+  .poster > *:not(.bg-bird){position:relative;z-index:2}
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:28px;
+  }
+  .logo{
+    height:28px;
+    width:auto;
+    display:block;
+  }
+  .badge{
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.12em;
+    color:var(--amber);
+    background:var(--amber-soft);
+    padding:7px 11px;
+    border-radius:999px;
+  }
+
+  .hero{
+    position:relative;
+    margin-bottom:26px;
+    padding-left:16px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.35em;
+    bottom:.35em;
+    width:3px;
+    border-radius:2px;
+    background:linear-gradient(180deg, var(--blue), var(--amber));
+  }
+  .hero-mark{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+    margin-bottom:14px;
+  }
+  .hero-mark::before{
+    content:"";
+    width:18px;
+    height:1.5px;
+    background:var(--amber);
+    flex-shrink:0;
+  }
+  .title{
+    font-size:clamp(44px,12vw,52px);
+    font-weight:600;
+    letter-spacing:-.045em;
+    line-height:1.08;
+    margin-bottom:14px;
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:0;
+  }
+  .title-bracket{
+    font-weight:300;
+    color:var(--ink-3);
+    letter-spacing:-.08em;
+  }
+  .em{
+    color:var(--blue);
+    position:relative;
+    display:inline-block;
+    padding:0 .02em;
+    z-index:0;
+  }
+  .em::after{
+    content:"";
+    position:absolute;
+    left:2%;
+    right:2%;
+    bottom:.06em;
+    height:.22em;
+    background:linear-gradient(90deg, rgba(42,106,168,.25), rgba(184,146,45,.2));
+    border-radius:2px;
+    z-index:-1;
+  }
+  .title-rest{
+    letter-spacing:-.04em;
+  }
+  .sub{
+    font-size:16.5px;
+    color:var(--ink-2);
+    font-weight:500;
+    letter-spacing:.01em;
+    line-height:1.5;
+    max-width:18em;
+    position:relative;
+    padding-top:12px;
+  }
+  .sub::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:36px;
+    height:2px;
+    background:linear-gradient(90deg, var(--blue), transparent);
+    border-radius:1px;
+  }
+
+  .meta{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin:0 0 26px;
+    padding:16px 0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .meta-row{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:12px;
+    align-items:start;
+  }
+  .ico{
+    width:28px;height:28px;
+    border-radius:8px;
+    background:var(--blue-soft);
+    display:grid;place-items:center;
+    flex-shrink:0;
+  }
+  .ico svg{
+    width:15px;height:15px;
+    stroke:var(--blue);
+    fill:none;
+    stroke-width:1.7;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .meta-text .label{
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink-3);
+    letter-spacing:.05em;
+    margin-bottom:3px;
+  }
+  .meta-text .value{
+    font-size:15.5px;
+    font-weight:500;
+    letter-spacing:-.015em;
+    color:var(--ink);
+  }
+
+  .section{margin-bottom:26px}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .section-title{
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .section-title::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 0 3px var(--blue-soft);
+    flex-shrink:0;
+  }
+  .section-rule{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, var(--line), transparent);
+    transform:translateY(-2px);
+  }
+
+  .topics{list-style:none}
+  .topics li{
+    display:grid;
+    grid-template-columns:48px 1fr;
+    gap:12px;
+    align-items:start;
+    padding:14px 0;
+    border-bottom:1px solid rgba(211,219,228,.7);
+  }
+  .topics li:last-child{border-bottom:0;padding-bottom:0}
+  .topics .num{
+    font-size:13px;
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:.04em;
+    line-height:1;
+    font-variant-numeric:tabular-nums;
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    border:1px solid rgba(42,106,168,.22);
+    background:rgba(255,255,255,.55);
+    display:grid;
+    place-items:center;
+  }
+  .topics .txt{
+    font-size:17px;
+    font-weight:500;
+    letter-spacing:-.015em;
+    line-height:1.5;
+    padding-top:8px;
+  }
+  .topics .txt em,
+  .topics .txt .hl{
+    font-style:normal;
+    color:var(--blue);
+    font-weight:600;
+  }
+
+  .speakers{display:flex;flex-direction:column;gap:16px}
+  .speaker{
+    display:grid;
+    grid-template-columns:3px 1fr;
+    gap:12px;
+  }
+  .speaker .bar{
+    background:linear-gradient(180deg, var(--blue), rgba(184,146,45,.55));
+    border-radius:2px;
+  }
+  .speaker .name{
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:-.025em;
+    margin-bottom:5px;
+    display:inline-flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .speaker .name::after{
+    content:"";
+    width:18px;
+    height:1.5px;
+    background:var(--amber);
+    transform:translateY(-.35em);
+  }
+  .speaker .role{
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:.06em;
+    margin-bottom:7px;
+    text-transform:uppercase;
+  }
+  .speaker .bio{
+    font-size:14px;
+    color:var(--ink-2);
+    line-height:1.7;
+    font-weight:400;
+  }
+
+  .signup{
+    margin:4px 0 8px;
+    padding:22px 16px 20px;
+    background:rgba(255,255,255,.86);
+    border:1px solid var(--line);
+    border-radius:18px;
+    text-align:center;
+  }
+  .signup .section-title{
+    justify-content:center;
+    margin-bottom:4px;
+    letter-spacing:.12em;
+  }
+  .signup .section-title::before{display:none}
+  .signup-lead{
+    font-size:13px;
+    color:var(--ink-3);
+    margin-bottom:14px;
+    letter-spacing:.04em;
+  }
+  .qr-frame{
+    width:152px;
+    height:152px;
+    margin:0 auto 12px;
+    padding:10px;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(26,35,48,.07);
+    display:grid;
+    place-items:center;
+  }
+  .qr{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+    border-radius:6px;
+  }
+  .signup-hint{
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.03em;
+  }
+
+  .footer{
+    margin-top:28px;
+    text-align:center;
+  }
+  .footer-quote{
+    font-size:17px;
+    font-weight:500;
+    letter-spacing:.01em;
+    color:var(--ink);
+    line-height:1.55;
+    max-width:14em;
+    margin:0 auto;
+  }
+  .footer-quote::before{
+    content:"“";
+    display:block;
+    font-size:36px;
+    line-height:1;
+    color:var(--blue);
+    opacity:.55;
+    font-family:Georgia,"Songti SC","SimSun",serif;
+    margin:0 auto 6px;
+    font-weight:400;
+  }
+  .footer .brand{
+    margin-top:12px;
+    font-size:10px;
+    color:var(--ink-3);
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+
+  @media (min-width:480px){
+    body{padding:28px 0 48px}
+    .poster{
+      border-radius:28px;
+      box-shadow:0 22px 60px rgba(26,35,48,.10);
+    }
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .poster{box-shadow:none;width:100%;max-width:none;border-radius:0}
+  }
+</style>
+</head>
+<body>
+  <article class="poster">
+    <img class="bg-bird" src="assets/cover-bird.jpg" alt="" aria-hidden="true">
+
+    <div class="topbar">
+      <img class="logo" src="assets/bilden-logo.png" alt="Bilden Edu">
+      <span class="badge">家长专场</span>
+    </div>
+
+    <header class="hero">
+      <p class="hero-mark">Natural Computation</p>
+      <h1 class="title">
+        <span class="title-bracket">「</span><span class="em">机</span><span class="title-bracket">」</span><span class="title-rest">遇未来</span>
+      </h1>
+      <p class="sub">AI 对教育变革分析及机遇</p>
+    </header>
+
+    <div class="meta">
+      <div class="meta-row">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/></svg>
+        </div>
+        <div class="meta-text">
+          <span class="label">时间</span>
+          <span class="value">2026.09.19 周六 13:00–15:00</span>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z"/><circle cx="12" cy="11" r="2.2"/></svg>
+        </div>
+        <div class="meta-text">
+          <span class="label">地点</span>
+          <span class="value">重庆 · 金弓两江会客厅</span>
+        </div>
+      </div>
+      <div class="meta-row">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h10M4 17h14"/></svg>
+        </div>
+        <div class="meta-text">
+          <span class="label">形式</span>
+          <span class="value">两小时 · 主讲分享 + 现场问答</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">分享要点</h2>
+        <div class="section-rule" aria-hidden="true"></div>
+      </div>
+      <ol class="topics">
+        <li>
+          <span class="num">01</span>
+          <span class="txt">硅谷的科技精英如何在 <span class="hl">AI</span> 时代培养自己的孩子</span>
+        </li>
+        <li>
+          <span class="num">02</span>
+          <span class="txt">未来职业路径的变革</span>
+        </li>
+        <li>
+          <span class="num">03</span>
+          <span class="txt">我们应该如何决策与选择</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2 class="section-title">主讲人</h2>
+        <div class="section-rule" aria-hidden="true"></div>
+      </div>
+      <div class="speakers">
+        <div class="speaker">
+          <div class="bar" aria-hidden="true"></div>
+          <div>
+            <div class="name">Jacob</div>
+            <div class="role">AI 产品与数字化转型</div>
+            <p class="bio">15 年 AI 与数字化转型经验 · 约克大学 AI 硕士 · 现任 AI 产品总监 · 曾任四大金融科技咨询总监</p>
+          </div>
+        </div>
+        <div class="speaker">
+          <div class="bar" aria-hidden="true"></div>
+          <div>
+            <div class="name">廖老师</div>
+            <div class="role">AI 教育与课程实践</div>
+            <p class="bio">重庆市科普研究会 AI 专委会秘书长 · 巴蜀中学高中部 AI 通识课程负责人 · 哥大、牛津 AI 教育论坛特邀嘉宾</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="signup">
+      <h2 class="section-title">扫码报名</h2>
+      <p class="signup-lead">家长专场 · 现场交流</p>
+      <div class="qr-frame">
+        <img class="qr" src="assets/poster-qr.jpg" alt="扫码报名二维码" width="132" height="132">
+      </div>
+      <p class="signup-hint">长按识别二维码</p>
+    </section>
+
+    <footer class="footer">
+      <p class="footer-quote">在 AI 时代，抓住教育的新机遇</p>
+      <div class="brand">Bilden Edu</div>
+    </footer>
+  </article>
+</body>
+</html>
