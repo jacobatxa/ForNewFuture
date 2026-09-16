@@ -836,6 +836,136 @@
   }
 
 
+
+  /* Capability redesign */
+  .cap-main{
+    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:2.4vw;
+  }
+  .cap-stage{
+    position:relative;
+    height:100%;
+    min-height:58vh;
+    display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 40%, rgba(0,113,227,.06), transparent 70%),
+      #fafafa;
+    border-radius:24px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+    overflow:hidden;
+  }
+  .cap-stage svg{width:min(92%,440px);height:auto;max-height:62vh}
+  .cap-legend{gap:.85vh}
+  .cap-item{
+    padding:1vh .95vw;
+    border-radius:12px;
+  }
+  .cap-item h4{font-size:13.5px}
+  .cap-item p{font-size:11.5px}
+
+  /* Course deep-dive */
+  .slide.course-deep{
+    padding:3.8vh 3.8vw 3vh;
+    justify-content:flex-start;
+  }
+  .cd-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:1.2vh 1.2vw;
+    margin-top:1.6vh;
+  }
+  .cd-card{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:grid;
+    grid-template-columns:42% 1fr;
+    min-height:0;
+  }
+  .cd-card .pic{
+    position:relative;min-height:0;
+    background:#111;
+  }
+  .cd-card .pic img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;
+  }
+  .cd-card .body{
+    padding:1.6vh 1.2vw;
+    display:flex;flex-direction:column;min-height:0;
+  }
+  .cd-card .mod{
+    font-size:10.5px;font-weight:700;letter-spacing:.06em;
+    color:var(--blue);margin-bottom:.35vh;
+  }
+  .cd-card h3{
+    font-size:clamp(15px,1.35vw,19px);font-weight:650;
+    letter-spacing:-.02em;margin-bottom:.45vh;
+  }
+  .cd-card p{
+    font-size:clamp(11.5px,.95vw,13px);color:var(--ink-2);
+    line-height:1.45;flex:1;
+  }
+  .cd-tools{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:1vh;
+  }
+  .cd-tools span{
+    font-size:10.5px;font-weight:650;
+    padding:4px 9px;border-radius:100px;
+    background:var(--fill);color:var(--ink);
+  }
+  .cd-out{
+    margin-top:.7vh;font-size:11px;font-weight:600;color:var(--blue);
+  }
+
+  .slide.founder-deep{
+    padding:3.8vh 3.8vw 3vh;
+    justify-content:flex-start;
+  }
+  .fd-rail{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1vw;
+    margin-top:1.8vh;
+  }
+  .fd-step{
+    border-radius:18px;overflow:hidden;
+    background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;
+    min-height:0;
+  }
+  .fd-step .pic{
+    position:relative;height:22vh;min-height:140px;background:#111;
+  }
+  .fd-step .pic img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .fd-step .pic .num{
+    position:absolute;left:12px;top:12px;
+    width:32px;height:32px;border-radius:10px;
+    background:rgba(0,113,227,.95);color:#fff;
+    display:grid;place-items:center;
+    font-size:13px;font-weight:700;z-index:1;
+  }
+  .fd-step .body{padding:1.5vh 1.1vw 1.6vh;flex:1;display:flex;flex-direction:column}
+  .fd-step h3{font-size:clamp(15px,1.35vw,18px);font-weight:650;margin-bottom:.4vh}
+  .fd-step p{font-size:12.5px;color:var(--ink-2);line-height:1.45;flex:1}
+  .fd-step .tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:1vh}
+  .fd-step .tools span{
+    font-size:10px;font-weight:650;padding:3px 8px;border-radius:100px;
+    background:var(--fill);
+  }
+  .fd-note{
+    margin-top:1.4vh;font-size:12.5px;color:var(--ink-2);line-height:1.45;
+  }
+
+
   .facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;margin-top:.5vh}
   .fact{
     background:var(--paper);
@@ -1052,8 +1182,8 @@
       </li>
       <li>
         <span class="num">03</span>
-        <span class="txt">案例、培养路径与课程
-          <span class="desc">青少年突破样本；接触会拒绝的世界；AI 通识与青年创始人社区。</span>
+        <span class="txt">案例、本源培养与课程
+          <span class="desc">突破样本；核验力与五门根基；AI 通识与创始人社区的可见产出。</span>
         </span>
       </li>
     </ol>
@@ -1325,61 +1455,82 @@
   <p class="src">World Economic Forum, Future of Jobs 2025 · McKinsey GSI · Axios / Dario Amodei, Anthropic, 2025 · OECD AI skills 2024–25</p>
 </section>
 
-<!-- P5 能力人形 -->
+<!-- P5 能力结构 -->
 <section class="slide cap-slide paper">
   <div class="data-head">
     <div class="kicker">02 · 能力结构</div>
     <h2>六所实验校公开课程里<br>反复出现的能力层</h2>
   </div>
   <div class="cap-main">
-    <div class="cap-figure">
-      <svg viewBox="0 0 280 420" xmlns="http://www.w3.org/2000/svg" aria-label="能力人形">
+    <div class="cap-stage">
+      <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" aria-label="能力结构">
         <defs>
-          <clipPath id="cell"><rect x="0" y="0" width="64" height="42" rx="7"/></clipPath>
+          <linearGradient id="figFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#f0f0f3"/>
+          </linearGradient>
+          <filter id="figShadow" x="-30%" y="-20%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.07"/>
+          </filter>
         </defs>
-        <!-- body outline -->
-        <ellipse cx="140" cy="52" rx="38" ry="42" fill="#fff" stroke="#1d1d1f" stroke-width="2.5"/>
-        <path d="M90 112 C90 96 112 90 140 90 C168 90 190 96 190 112 L198 208 C200 236 188 252 168 258 L168 388 C168 400 160 408 148 408 L132 408 C120 408 112 400 112 388 L112 258 C92 252 80 236 82 208 Z" fill="#fff" stroke="#1d1d1f" stroke-width="2.5"/>
-        <!-- HEAD battery AI 90% -->
-        <rect x="116" y="28" width="48" height="48" rx="10" fill="#e8e8ed" stroke="#1d1d1f" stroke-width="1.5"/>
-        <rect x="116" y="33" width="48" height="43" rx="0" fill="#007AFF"/>
-        <text x="140" y="58" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">AI 90%</text>
-        <!-- TORSO cells as batteries -->
-        <!-- mastery 85% -->
-        <rect x="108" y="114" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="108" y="120" width="64" height="34" fill="#FF3B30"/>
-        <text x="140" y="140" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">主课 85%</text>
-        <!-- judgment 70% -->
-        <rect x="108" y="160" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="108" y="172" width="64" height="28" fill="#5856D6"/>
-        <text x="140" y="190" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">判断 70%</text>
-        <!-- delivery 80% -->
-        <rect x="108" y="206" width="64" height="40" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="108" y="214" width="64" height="32" fill="#34C759"/>
-        <text x="140" y="236" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">交付 80%</text>
-        <!-- LEFT coach 75% -->
-        <rect x="70" y="122" width="30" height="78" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="70" y="141" width="30" height="59" fill="#AF52DE"/>
-        <text x="85" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" transform="rotate(-90 85 175)">教练 75%</text>
-        <!-- RIGHT venture 65% -->
-        <rect x="180" y="122" width="30" height="78" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="180" y="149" width="30" height="51" fill="#FF9500"/>
-        <text x="195" y="175" text-anchor="middle" fill="#fff" font-size="9" font-weight="700" transform="rotate(90 195 175)">创业 65%</text>
-        <!-- LEGS community 60% -->
-        <rect x="116" y="278" width="22" height="108" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="116" y="321" width="22" height="65" fill="#FF2D55"/>
-        <rect x="142" y="278" width="22" height="108" rx="8" fill="#eee" stroke="#1d1d1f" stroke-width="1.2"/>
-        <rect x="142" y="321" width="22" height="65" fill="#FF2D55" opacity="0.7"/>
-        <text x="140" y="355" text-anchor="middle" fill="#fff" font-size="9" font-weight="700">社区 60%</text>
+        <circle cx="150" cy="220" r="175" fill="none" stroke="rgba(0,113,227,.07)" stroke-width="1"/>
+        <circle cx="150" cy="220" r="132" fill="none" stroke="rgba(0,113,227,.09)" stroke-width="1"/>
+        <g filter="url(#figShadow)" fill="url(#figFill)" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round">
+          <ellipse cx="150" cy="72" rx="32" ry="36"/>
+          <path d="M104 118 C104 104 122 96 150 96 C178 96 196 104 196 118
+            L206 200 C210 232 194 250 172 256 L172 400 C172 414 162 424 148 424 L132 424
+            C118 424 108 414 108 400 L108 256 C86 250 70 232 74 200 Z"/>
+        </g>
+        <!-- zone markers -->
+        <g>
+          <circle cx="150" cy="72" r="5.5" fill="#007AFF"/>
+          <circle cx="150" cy="155" r="5.5" fill="#FF3B30"/>
+          <circle cx="150" cy="195" r="5.5" fill="#5856D6"/>
+          <circle cx="150" cy="232" r="5.5" fill="#34C759"/>
+          <circle cx="98" cy="178" r="5" fill="#AF52DE"/>
+          <circle cx="202" cy="178" r="5" fill="#FF9500"/>
+          <circle cx="150" cy="330" r="5.5" fill="#FF2D55"/>
+        </g>
+        <!-- clean meters -->
+        <g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif">
+          <g transform="translate(240,48)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">AI 工具层</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="126" height="9" rx="4.5" fill="#007AFF"/>
+          </g>
+          <g transform="translate(240,100)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">主课掌握</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="118" height="9" rx="4.5" fill="#FF3B30"/>
+          </g>
+          <g transform="translate(240,152)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">判断与两难</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="98" height="9" rx="4.5" fill="#5856D6"/>
+          </g>
+          <g transform="translate(240,204)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">项目交付</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="112" height="9" rx="4.5" fill="#34C759"/>
+          </g>
+          <g transform="translate(240,256)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">创业闭环</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="91" height="9" rx="4.5" fill="#FF9500"/>
+          </g>
+          <g transform="translate(240,308)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">教练制支持</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="105" height="9" rx="4.5" fill="#AF52DE"/>
+          </g>
+          <g transform="translate(240,360)">
+            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">社区实作</text>
+            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="84" height="9" rx="4.5" fill="#FF2D55"/>
+          </g>
+        </g>
       </svg>
     </div>
     <div class="cap-legend">
-      <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>掌握式主课效率</h4><p>Alpha · Sabrewing — 自适应系统压缩主课，腾出下午做难事。</p></div></div>
-      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>判断与两难</h4><p>Astra Nova（含 Ad Astra）— Conundrums：无标准答案的开放题与辩论。</p></div></div>
-      <div class="cap-item"><i style="background:#34C759"></i><div><h4>真实项目交付</h4><p>Forge Prep · 神山 — 可用产品、原创研究、地方课题。</p></div></div>
-      <div class="cap-item"><i style="background:#FF9500"></i><div><h4>创业与市场反馈</h4><p>Founders · 神山 — 销售—验证—增长闭环，客户会拒绝你。</p></div></div>
-      <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>教练式支持</h4><p>Forge · Sabrewing — 1:1 Guide / 学习教练，而非整日讲授。</p></div></div>
-      <div class="cap-item"><i style="background:#007AFF"></i><div><h4>AI 作为工具层</h4><p>贯穿七校 — AI 加速主课与构建；责任仍在人。</p></div></div>
+      <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>主课掌握</h4><p>Alpha · Sabrewing — 自适应压缩主课，下午留给难事。</p></div></div>
+      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>判断与两难</h4><p>Astra Nova — Conundrums：无标准答案的开放题与辩论。</p></div></div>
+      <div class="cap-item"><i style="background:#34C759"></i><div><h4>项目交付</h4><p>Forge · 神山 — 可用产品、原创研究、地方课题。</p></div></div>
+      <div class="cap-item"><i style="background:#FF9500"></i><div><h4>创业闭环</h4><p>Founders · 神山 — 销售—验证—增长，市场给反馈。</p></div></div>
+      <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>教练制支持</h4><p>Forge · Sabrewing — 1:1 Guide，非整日讲授。</p></div></div>
+      <div class="cap-item"><i style="background:#007AFF"></i><div><h4>AI 工具层</h4><p>贯穿六校 — 加速主课与构建；判断与责任仍在人。</p></div></div>
     </div>
   </div>
 </section>
@@ -1437,27 +1588,27 @@
 
 <!-- P7 培养体系 -->
 <section class="slide frame-slide paper">
-  <div class="kicker">03 · 培养路径</div>
-  <h2>教育任务倒转了：<br>长期接触<span class="em">会拒绝他的世界</span>。</h2>
-  <p class="lede" style="margin-top:1.2vh;max-width:36em;color:var(--ink-2)">AI 把「看起来像知识」变成无限供给。分得清事实、机理与关系，靠的是外部阻力——实验会失败、证明会卡死、原文改不了、听众会摇头。</p>
+  <div class="kicker">03 · 如何培养</div>
+  <h2>回到本源：<br>能被世界<span class="em">核验</span>的判断力。</h2>
+  <p class="lede" style="margin-top:1.2vh;max-width:40em;color:var(--ink-2)">前面那些样本里跑在前面的人，赢的不是「更会操作软件」。是提出真问题、用证据站住脚、并对结果负责。AI 让流畅的产出无限供给——教育要加重的，是那些改不了、骗不了、必须当面交代清楚的东西。</p>
   <div class="frame-trio">
     <div class="frame-card">
-      <div class="num">01</div>
-      <h3>先摸清边界</h3>
-      <p>亲手发现 AI 会一本正经说错。知道它能做什么、不能做什么，比学会某个产品更重要。</p>
+      <div class="num">本源 · 01</div>
+      <h3>五门根基仍是主渠道</h3>
+      <p>数理与自然、语言与古典、历史与人事、艺术、共同生活。不另起一套对抗课标的学科表；改的是重心——每门课经常碰到实验、原典、证明、史料与当众表达。</p>
     </div>
     <div class="frame-card">
-      <div class="num">02</div>
-      <h3>再碰到阻力</h3>
-      <p>问题、证据、判断必须经过真实之物：实验、证明、原文、真人。AI 可以当草稿，不能当世界。</p>
+      <div class="num">本源 · 02</div>
+      <h3>AI 只占三个职位</h3>
+      <p>一起学、自学、表达交流。人负责问题、证据、判断和责任；AI 负责草稿、对照和加速。职位可以随能力上移，责任不能上移给机器。</p>
     </div>
     <div class="frame-card">
-      <div class="num">03</div>
-      <h3>做成一件事</h3>
-      <p>从身边的真问题出发，做成能给别人用的东西。人负责问题、证据、判断和责任。</p>
+      <div class="num">本源 · 03</div>
+      <h3>按能力进阶，不按年龄锁死</h3>
+      <p>接触真实 → 追究机理 → 形成判断。升级看门槛任务：能核验、能答辩、能处理反对意见——不看生日，也不看刷了多少题。</p>
     </div>
   </div>
-  <p class="frame-bridge">下一页：把这条路径落成的两门课。</p>
+  <p class="frame-bridge">我们把这条路径落成两门课：AI 通识，与青年创始人社区。</p>
 </section>
 
 <!-- P8 课程海报 -->
@@ -1528,6 +1679,112 @@
   </div>
 </section>
 
+<!-- P9 AI通识展开 -->
+<section class="slide course-deep paper">
+  <div class="data-head">
+    <div class="kicker">03 · 课程 A 展开</div>
+    <h2>AI 通识：孩子手里会碰到什么</h2>
+  </div>
+  <div class="cd-grid">
+    <article class="cd-card">
+      <div class="pic"><img src="assets/salon/course/lab.jpg" alt=""></div>
+      <div class="body">
+        <div class="mod">模块 01 · 自然智慧</div>
+        <h3>分清「会说」和「真懂」</h3>
+        <p>自然智能 vs 人工智能；大模型在猜下一个顺口的词。亲手把模型问倒，建立查证习惯。</p>
+        <div class="cd-tools"><span>Kimi</span><span>Claude</span><span>ChatGPT</span><span>多模态 LVM</span></div>
+        <div class="cd-out">带走：查证三问卡 · 第一行 prompt</div>
+      </div>
+    </article>
+    <article class="cd-card">
+      <div class="pic"><img src="assets/salon/course/sketch.jpg" alt=""></div>
+      <div class="body">
+        <div class="mod">模块 02 · 产品设计</div>
+        <h3>从真问题到逻辑闭环</h3>
+        <p>有人群、有频次、有痛感。识别常见逻辑谬误；用「因为…所以…」把问题定义写死，再画解决闭环。</p>
+        <div class="cd-tools"><span>用户访谈</span><span>问题卡</span><span>闭环草图</span><span>Claude 找茬</span></div>
+        <div class="cd-out">带走：问题定义卡 · 解决闭环图</div>
+      </div>
+    </article>
+    <article class="cd-card">
+      <div class="pic"><img src="assets/salon/course/pitch.jpg" alt=""></div>
+      <div class="body">
+        <div class="mod">模块 03 · 商业思维</div>
+        <h3>谁付钱、为何留下、怎么讲清楚</h3>
+        <p>路演结构：痛点 → 演示 → 证据 → 愿景。AI 帮排练提问；真正的听众必须是人。</p>
+        <div class="cd-tools"><span>路演稿</span><span>GPT 模拟投资人</span><span>同伴互评</span></div>
+        <div class="cd-out">带走：3 分钟路演讲稿</div>
+      </div>
+    </article>
+    <article class="cd-card">
+      <div class="pic"><img src="assets/salon/course/laptop-code.jpg" alt=""></div>
+      <div class="body">
+        <div class="mod">模块 04 · AI 技术高阶</div>
+        <h3>Agent · 插件 · 多模态 · 安全</h3>
+        <p>搭私人助手、接工具与多模态、最小用户系统；在有限「能力预算」里取舍。数据与隐私清单进课堂。</p>
+        <div class="cd-tools"><span>Agent 搭建</span><span>Cursor</span><span>API / 插件</span><span>云端托管</span></div>
+        <div class="cd-out">带走：可演示 MVP · 用户反馈报告</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- P10 创始人社区展开 -->
+<section class="slide founder-deep">
+  <div class="data-head">
+    <div class="kicker">03 · 课程 B 展开</div>
+    <h2>青年创始人社区：一个项目怎么走完</h2>
+  </div>
+  <div class="fd-rail">
+    <article class="fd-step">
+      <div class="pic">
+        <span class="num">01</span>
+        <img src="assets/salon/course/whiteboard.jpg" alt="">
+      </div>
+      <div class="body">
+        <h3>选题</h3>
+        <p>从生活与社区里捞可验证的麻烦，不是作文题。导师追问：谁痛、多痛、你怎么知道。</p>
+        <div class="tools"><span>访谈</span><span>Kimi 调研</span><span>选题答辩</span></div>
+      </div>
+    </article>
+    <article class="fd-step">
+      <div class="pic">
+        <span class="num">02</span>
+        <img src="assets/salon/course/laptop-code.jpg" alt="">
+      </div>
+      <div class="body">
+        <h3>原型</h3>
+        <p>最小可点击版本。AI 加速草稿与代码；孩子必须能讲清：哪些判断是我的。</p>
+        <div class="tools"><span>Cursor</span><span>Agent</span><span>纸面原型</span></div>
+      </div>
+    </article>
+    <article class="fd-step">
+      <div class="pic">
+        <span class="num">03</span>
+        <img src="assets/salon/course/build.jpg" alt="">
+      </div>
+      <div class="body">
+        <h3>用户测试</h3>
+        <p>给真人用。收集拒绝与修改；反馈进下一版，不进「感觉良好」。</p>
+        <div class="tools"><span>可用性测试</span><span>反馈表</span><span>迭代日志</span></div>
+      </div>
+    </article>
+    <article class="fd-step">
+      <div class="pic">
+        <span class="num">04</span>
+        <img src="assets/salon/course/pitch.jpg" alt="">
+      </div>
+      <div class="body">
+        <h3>路演</h3>
+        <p>当众演示，回答反对意见。责任留在人——模型不替你答辩。</p>
+        <div class="tools"><span>路演</span><span>Q&A</span><span>版本归档</span></div>
+      </div>
+    </article>
+  </div>
+  <p class="fd-note">家长能看见的进度：选题卡 → 可点原型 → 真实用户反馈 → 路演录像。工具会换代；这条交付链不会。</p>
+</section>
+
+
 </div>
 
 <div id="pager">
@@ -1557,7 +1814,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v15';
+  const DRAFT_KEY='salon-ppt-draft-v16';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
