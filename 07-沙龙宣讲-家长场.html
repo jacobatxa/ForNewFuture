@@ -835,7 +835,61 @@
     text-transform:uppercase;color:var(--ink-3);
   }
 
-
+  /* AI tools pyramid */
+  .slide.pyramid-slide{
+    padding:3.4vh 4vw 2.6vh;
+    justify-content:flex-start;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,113,227,.06), transparent 55%),
+      var(--paper);
+  }
+  .pyramid-slide .data-head h2{max-width:18em}
+  .pyr{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:.7vh;
+    margin-top:.4vh;
+  }
+  .pyr-row{
+    display:flex;align-items:center;justify-content:center;
+    gap:8px;
+    position:relative;
+    width:100%;
+  }
+  .pyr-row .band{
+    position:absolute;
+    font-size:10.5px;font-weight:650;letter-spacing:.02em;
+    color:var(--ink-3);
+    background:var(--fill);
+    border-radius:100px;
+    padding:4px 10px;
+    white-space:nowrap;
+  }
+  .pyr-row .band.l{left:0}
+  .pyr-row .band.r{right:0}
+  .ptile{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    min-width:52px;
+  }
+  .ptile .ico{
+    width:36px;height:36px;border-radius:11px;
+    display:grid;place-items:center;
+    color:#fff;font-size:12px;font-weight:700;letter-spacing:-.03em;
+    margin:0;text-transform:none;
+  }
+  .ptile .n{
+    font-size:10px;font-weight:600;color:var(--ink);
+    letter-spacing:-.01em;text-align:center;line-height:1.2;
+  }
+  .pyr-base{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;
+    width:min(92%,1080px);
+    margin-top:.6vh;
+    padding-top:1.2vh;
+    border-top:1px solid var(--line);
+  }
+  .pyramid-slide .src{margin-top:1vh}
 
   /* Capability battery */
   .cap-main{
@@ -1454,6 +1508,65 @@
   <p class="src">World Economic Forum, Future of Jobs 2025 · McKinsey GSI · Axios / Dario Amodei, Anthropic, 2025 · OECD AI skills 2024–25</p>
 </section>
 
+<!-- P4b 2026 工具地图 -->
+<section class="slide pyramid-slide paper">
+  <div class="data-head">
+    <div class="kicker">02 · 工具会换代</div>
+    <h2>2026 还站得住的 AI 工具层</h2>
+  </div>
+  <div class="pyr">
+    <div class="pyr-row">
+      <span class="band r">通用助手</span>
+      <div class="ptile"><div class="ico" style="background:#d97757">Cl</div><div class="n">Claude</div></div>
+      <div class="ptile"><div class="ico" style="background:#10a37f">GPT</div><div class="n">ChatGPT</div></div>
+      <div class="ptile"><div class="ico" style="background:#4285f4">G</div><div class="n">Gemini</div></div>
+      <div class="ptile"><div class="ico" style="background:#1d1d1f">K</div><div class="n">Kimi</div></div>
+    </div>
+    <div class="pyr-row">
+      <span class="band l">构建 / 编程</span>
+      <div class="ptile"><div class="ico" style="background:#1d1d1f">Cu</div><div class="n">Cursor</div></div>
+      <div class="ptile"><div class="ico" style="background:#d97757">CC</div><div class="n">Claude Code</div></div>
+      <div class="ptile"><div class="ico" style="background:#f26207">Rp</div><div class="n">Replit</div></div>
+      <div class="ptile"><div class="ico" style="background:#ec4899">Lv</div><div class="n">Lovable</div></div>
+      <div class="ptile"><div class="ico" style="background:#24292f">Cp</div><div class="n">Copilot</div></div>
+    </div>
+    <div class="pyr-row">
+      <span class="band r">内容生产</span>
+      <div class="ptile"><div class="ico" style="background:#8b5cf6">Hg</div><div class="n">HeyGen</div></div>
+      <div class="ptile"><div class="ico" style="background:#6d28d9">Sy</div><div class="n">Synthesia</div></div>
+      <div class="ptile"><div class="ico" style="background:#2563eb">De</div><div class="n">Descript</div></div>
+      <div class="ptile"><div class="ico" style="background:#111827">Ga</div><div class="n">Gamma</div></div>
+      <div class="ptile"><div class="ico" style="background:#0ea5e9">可</div><div class="n">可灵 Kling</div></div>
+    </div>
+    <div class="pyr-row">
+      <span class="band l">效率办公</span>
+      <div class="ptile"><div class="ico" style="background:#15c39a">Nb</div><div class="n">NotebookLM</div></div>
+      <div class="ptile"><div class="ico" style="background:#000">No</div><div class="n">Notion</div></div>
+      <div class="ptile"><div class="ico" style="background:#15c39a">Gr</div><div class="n">Grammarly</div></div>
+      <div class="ptile"><div class="ico" style="background:#22c55e">Gn</div><div class="n">Granola</div></div>
+      <div class="ptile"><div class="ico" style="background:#6366f1">Px</div><div class="n">Perplexity</div></div>
+    </div>
+    <div class="pyr-row">
+      <span class="band r">创意生成</span>
+      <div class="ptile"><div class="ico" style="background:#111">11</div><div class="n">ElevenLabs</div></div>
+      <div class="ptile"><div class="ico" style="background:#f59e0b">Su</div><div class="n">Suno</div></div>
+      <div class="ptile"><div class="ico" style="background:#1d1d1f">Mj</div><div class="n">Midjourney</div></div>
+      <div class="ptile"><div class="ico" style="background:#6366f1">Rw</div><div class="n">Runway</div></div>
+      <div class="ptile"><div class="ico" style="background:#a259ff">Fi</div><div class="n">Figma</div></div>
+      <div class="ptile"><div class="ico" style="background:#00c4cc">Ca</div><div class="n">Canva</div></div>
+      <div class="ptile"><div class="ico" style="background:#4285f4">Ve</div><div class="n">Veo</div></div>
+    </div>
+    <div class="pyr-base">
+      <div class="ptile"><div class="ico" style="background:#ea4b71">n8</div><div class="n">n8n</div></div>
+      <div class="ptile"><div class="ico" style="background:#ff4a00">Za</div><div class="n">Zapier</div></div>
+      <div class="ptile"><div class="ico" style="background:#6d00cc">Mk</div><div class="n">Make</div></div>
+      <div class="ptile"><div class="ico" style="background:#4d6bfe">DS</div><div class="n">DeepSeek</div></div>
+      <div class="ptile"><div class="ico" style="background:#10a37f">Cx</div><div class="n">Codex</div></div>
+    </div>
+  </div>
+  <p class="src">截至 2026.9。已去掉 Manus（Meta 收购拆分、数据删除，不适合作为课堂工具）。课上会用到其中若干，不绑定单一产品。</p>
+</section>
+
 <!-- P5 能力结构 -->
 <section class="slide cap-slide paper">
   <div class="data-head">
@@ -1637,7 +1750,7 @@
         <div class="mod">模块 01 · 自然智慧</div>
         <h3>分清「会说」和「真懂」</h3>
         <p>自然智能 vs 人工智能；大模型在猜下一个顺口的词。亲手把模型问倒，建立查证习惯。</p>
-        <div class="cd-tools"><span>Kimi</span><span>Claude</span><span>ChatGPT</span><span>多模态 LVM</span></div>
+        <div class="cd-tools"><span>Kimi</span><span>Claude</span><span>ChatGPT</span><span>Gemini</span><span>DeepSeek</span></div>
         <div class="cd-out">带走：查证三问卡 · 第一行 prompt</div>
       </div>
     </article>
@@ -1667,7 +1780,7 @@
         <div class="mod">模块 04 · AI 技术高阶</div>
         <h3>Agent · 插件 · 多模态 · 安全</h3>
         <p>搭私人助手、接工具与多模态、最小用户系统；在有限「能力预算」里取舍。数据与隐私清单进课堂。</p>
-        <div class="cd-tools"><span>Agent 搭建</span><span>Cursor</span><span>API / 插件</span><span>云端托管</span></div>
+        <div class="cd-tools"><span>Cursor</span><span>Claude Code</span><span>Replit</span><span>Lovable</span></div>
         <div class="cd-out">带走：可演示 MVP · 用户反馈报告</div>
       </div>
     </article>
@@ -1759,7 +1872,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v17';
+  const DRAFT_KEY='salon-ppt-draft-v18';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
