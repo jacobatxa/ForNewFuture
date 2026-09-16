@@ -15,6 +15,12 @@
     --blue:#0071e3;
     --fill:#f5f5f7;
     --fill-2:#e8e8ed;
+    --gold:#c48a2a;
+    --coral:#e85d4c;
+    --teal:#1aa39a;
+    --violet:#6c5ce7;
+    --orange:#ff9500;
+    --green:#34c759;
     --fs-kicker: clamp(11px, 1.3vmin, 16px);
     --fs-h1: clamp(36px, 6vmin, 88px);
     --fs-cover: clamp(30px, 5vmin, 68px);
@@ -51,6 +57,27 @@
   }
   .slide.active{opacity:1;visibility:visible;transform:none}
   .slide.paper{background:var(--paper)}
+  .creature{
+    position:absolute;
+    pointer-events:none;
+    z-index:1;
+    user-select:none;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.06))
+      drop-shadow(0 18px 28px rgba(0,0,0,.10))
+      drop-shadow(0 36px 56px rgba(0,0,0,.08));
+  }
+  .slide > *:not(.creature){position:relative;z-index:2}
+  .creature.flock{right:-4vw;top:6vh;width:min(36vw,460px);opacity:.88}
+  .creature.lizard{right:1.2vw;bottom:9vh;width:min(26vw,320px);opacity:.94}
+  .creature.ants{right:-3vw;left:auto;top:6vh;bottom:auto;width:min(38vw,520px);transform:none;opacity:.9}
+  .slide.labor .creature.ants{top:5vh;right:-4vw;bottom:auto}
+  .neuron-side{
+    width:min(100%,280px);height:auto;max-height:62vh;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.05))
+      drop-shadow(0 16px 28px rgba(0,0,0,.10));
+  }
   .slide.center{align-items:center;text-align:center}
   .content{position:relative;z-index:3;width:100%;min-width:0}
   h1,h2,.statement,.note,.quote-hero,.hero-num,.hero-sub,.hero-detail{overflow-wrap:break-word}
@@ -606,6 +633,11 @@
   .slide.data-slide{
     padding:4.2vh 4.2vw 3vh;
     justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 55% 45% at 100% 0%, rgba(0,122,255,.09), transparent 55%),
+      radial-gradient(ellipse 40% 35% at 0% 100%, rgba(255,149,0,.07), transparent 50%),
+      var(--paper);
   }
   .data-head{margin-bottom:1.6vh;flex-shrink:0}
   .data-head h2{font-size:var(--fs-h2-data);letter-spacing:-.03em;line-height:1.15;max-width:22em;margin-bottom:0}
@@ -660,8 +692,9 @@
     flex-shrink:0;
     margin-top:1.3vh;
     padding:1.15vh 1.25vw;
-    background:var(--fill);
+    background:linear-gradient(90deg, rgba(0,113,227,.08), rgba(255,149,0,.10));
     border-radius:14px;
+    border-left:4px solid var(--blue);
     font-size:var(--fs-body);
     color:var(--ink);
     line-height:1.45;
@@ -675,14 +708,38 @@
     color:var(--blue);
     margin-right:.55em;
   }
-  .slide.labor .takeaway,
-  .slide.data-slide .takeaway,
-  .slide.cap-slide .takeaway{background:var(--fill)}
-  .slide:not(.paper) .takeaway{background:#fff}
+  .fact-strip{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:.8vw;margin-top:1.1vh;flex-shrink:0;
+  }
+  .fact-strip .f{
+    background:rgba(255,255,255,.88);
+    border-radius:12px;padding:1vh .9vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .fact-strip .n{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:var(--blue);line-height:1.1}
+  .fact-strip p{font-size:var(--fs-micro);color:var(--ink-2);margin-top:.2vh;line-height:1.3}
+  .io-row{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:.8vw;margin-top:1.1vh;
+  }
+  .io{
+    background:#fff;border-radius:14px;padding:1.2vh 1vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  .io b{display:block;font-size:var(--fs-h3);letter-spacing:-.03em;font-weight:650;line-height:1.1}
+  .io span{display:block;font-size:var(--fs-micro);color:var(--ink-2);margin-top:.25vh}
+  .io.up b{color:var(--green)}
+  .io.down b{color:var(--coral)}
+  .io.mid b{color:var(--gold)}
 
   .slide.labor{
     padding:4.2vh 4.2vw 3vh;
     justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 50% 40% at 0% 100%, rgba(196,138,42,.12), transparent 55%),
+      radial-gradient(ellipse 40% 30% at 100% 0%, rgba(232,93,76,.08), transparent 50%),
+      var(--bg);
   }
   .labor-main{
     flex:1;min-height:0;
@@ -731,12 +788,16 @@
   .slide.cap-slide{
     padding:4vh 4vw 3vh;
     justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 50% 50% at 8% 70%, rgba(108,92,231,.09), transparent 55%),
+      var(--paper);
   }
   .cap-main{
     flex:1;min-height:0;
     display:grid;
-    grid-template-columns:1.05fr 1fr;
-    gap:2vw;
+    grid-template-columns:minmax(0,.72fr) minmax(0,.78fr) minmax(0,1.15fr);
+    gap:1.6vw;
     align-items:center;
   }
   .cap-figure{
@@ -763,6 +824,9 @@
     padding:3.5vh 3.5vw 3vh;
     justify-content:flex-start;
     overflow:hidden;
+    background:
+      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0,122,255,.08), transparent 50%),
+      var(--bg);
   }
   .cases-grid{
     flex:1;min-height:0;
@@ -811,6 +875,10 @@
   .slide.frame-slide{
     padding:5vh 6vw 4vh;
     justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 45% 40% at 100% 100%, rgba(232,93,76,.08), transparent 50%),
+      var(--paper);
   }
   .frame-trio{
     display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;
@@ -900,8 +968,10 @@
   .slide.pyramid-slide{
     padding:3.4vh 4vw 2.6vh;
     justify-content:flex-start;
+    overflow:hidden;
     background:
-      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,113,227,.06), transparent 55%),
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,113,227,.08), transparent 55%),
+      radial-gradient(ellipse 40% 35% at 100% 100%, rgba(26,163,154,.10), transparent 50%),
       var(--paper);
   }
   .pyramid-slide .data-head h2{max-width:18em}
@@ -933,11 +1003,10 @@
     display:flex;flex-direction:column;align-items:center;gap:4px;
     min-width:52px;
   }
-  .ptile .ico{
-    width:clamp(34px, 3.5vmin, 52px);height:clamp(34px, 3.5vmin, 52px);border-radius:12px;
-    display:grid;place-items:center;
-    color:#fff;font-size:var(--fs-micro);font-weight:700;letter-spacing:-.03em;
-    margin:0;text-transform:none;
+  .ptile img.ico{
+    width:clamp(42px, 4.8vmin, 66px);height:clamp(42px, 4.8vmin, 66px);border-radius:15px;
+    display:block;object-fit:cover;background:#fff;
+    box-shadow:0 2px 8px rgba(0,0,0,.14), inset 0 0 0 1px rgba(0,0,0,.06);
   }
   .ptile .n{
     font-size:var(--fs-micro);font-weight:600;color:var(--ink);
@@ -951,14 +1020,20 @@
     border-top:1px solid var(--line);
   }
   .slide.cap-slide .src{margin-top:1vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.4}
-  .slide.cases-slide .takeaway{background:#fff}
+  .slide.cases-slide .takeaway{
+    background:linear-gradient(90deg, rgba(0,113,227,.10), rgba(255,149,0,.12));
+  }
   .slide.pyramid-slide .takeaway{margin-top:.8vh}
 
   /* Capability battery */
   .cap-main{
-    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-    gap:2.6vw;
+    grid-template-columns:minmax(0,.7fr) minmax(0,.75fr) minmax(0,1.15fr);
+    gap:1.8vw;
     align-items:center;
+  }
+  .cap-figure{
+    display:flex;align-items:center;justify-content:center;
+    min-height:0;
   }
   .cap-stage{
     position:relative;
@@ -1276,6 +1351,9 @@
     .scard ul{overflow:visible}
     .photo-band{height:26vh}
     .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
+    .creature,.neuron-side{display:none}
+    .fact-strip{grid-template-columns:1fr 1fr}
+    .io-row{grid-template-columns:1fr}
   }
   @media print{
     body{overflow:visible}
@@ -1301,19 +1379,19 @@
       <li>
         <span class="num">01</span>
         <span class="txt">学校、选拔、文书正在改什么
-          <span class="desc">六所实验校；赴美收窄、牛剑更陡；文书开始被核验。</span>
+          <span class="desc">六所实验校；美国更难进，英国申请在涨；作文开始被查。</span>
         </span>
       </li>
       <li>
         <span class="num">02</span>
         <span class="txt">用人市场与能力结构
-          <span class="desc">岗位净增与技能重塑；工具会换代；公开课里的能力层。</span>
+          <span class="desc">工作总数还在增；软件会换；学校真正在练的六件事。</span>
         </span>
       </li>
       <li>
         <span class="num">03</span>
         <span class="txt">案例、本源培养与课程
-          <span class="desc">极端样本不是配方；核验力与五门根基；两门课的可见产出。</span>
+          <span class="desc">四个少年不是模板；判断力怎么练；两门课能看见什么。</span>
         </span>
       </li>
     </ol>
@@ -1327,7 +1405,7 @@
       <div class="kicker" data-edit>01 · 国际教育如何向 AI 靠拢</div>
       <h2 data-edit>六所学校，同一页看清各自在改什么</h2>
     </div>
-      <p class="lede" data-edit>校方口径 ≠ 独立调查。先看结构。</p>
+      <p class="lede" data-edit>先看课怎么上，再看成绩广告。</p>
   </div>
 
   <div class="schools-main">
@@ -1350,7 +1428,7 @@
         <div class="item"><i class="swatch" style="background:#FF9500"></i>Founders <span class="meta">纽约</span></div>
         <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
       </div>
-      <p class="map-caption" data-edit>圆点按地理位置标注。线上学校标在创立渊源地。校方口径与独立报道分开写；长期结果证据仍薄。</p>
+      <p class="map-caption" data-edit>先看课怎么上。校方说的成绩，和独立调查经常对不上。</p>
     </aside>
 
     <div class="schools-grid">
@@ -1476,7 +1554,7 @@
 <section class="slide data-slide paper">
   <div class="data-head">
     <div class="kicker">01 · 名校选拔</div>
-    <h2>申请量不是机会。<br>对中国学生，路径在分化。</h2>
+    <h2>申请的人变多，<br>不等于更好考。</h2>
   </div>
   <div class="data-grid">
     <div class="dcard">
@@ -1517,7 +1595,7 @@
           <div class="bar-row"><span class="lab">牛津·生化</span><div class="track"><div class="fill" style="width:24.5%"></div></div><span class="val">4.9%</span></div>
         </div>
       </div>
-      <p class="bar-note">牛津 2025 cycle：全球申请 23,291 / offer 约 3,853。中国大陆申请约 2,111 / offer 218，为最大海外申请来源。工程 18.0%、物理 18.5%。三年合计（2023–2025）中国申请 6,025，录取 559。</p>
+      <p class="bar-note">牛津 2025：全球申请 23,291，offer 约 3,853。中国大陆 2,111 人申请、218 人拿到 offer，是最大海外申请来源。工程 18.0%，物理 18.5%——热门不等于更难，难的是数学和生化。</p>
       <div class="src">Oxford Undergraduate Admissions Statistical Report 2026 · 剑桥公开招生统计与媒体汇总的官方数据</div>
     </div>
     <div class="dcard">
@@ -1525,27 +1603,35 @@
       <div class="kpi-stack">
         <div class="kpi"><div class="n">30%</div><p>明确禁止 AI 撰写文书（2024 为 25%）</p></div>
         <div class="kpi"><div class="n">68%</div><p>仍无正式书面政策</p></div>
-        <div class="kpi"><div class="n">27%</div><p>允许用 AI 做头脑风暴</p></div>
+        <div class="kpi"><div class="n">27%</div><p>允许用 AI 帮忙想，不让 AI 代写</p></div>
+        <div class="kpi"><div class="n">方向</div><p>规定还乱，但趋势清楚：可以用来想，不能用来交差。</p></div>
       </div>
       <div class="src">Kaplan 2025 官方调查，n=220 美国高校招生办</div>
     </div>
   </div>
-  <p class="takeaway"><span class="lbl">给家长</span>赴美本科路径在收窄；英本申请仍增，但签证与牛剑对中国更陡。流畅文书正在贬值——招生办要核验的，是这是不是孩子自己的理解。</p>
+  <div class="fact-strip">
+    <div class="f"><div class="n">6,025</div><p>牛津三年中国申请（2023–2025）</p></div>
+    <div class="f"><div class="n">559</div><p>三年录取人数</p></div>
+    <div class="f"><div class="n">9.3%</div><p>三年成功率（559 / 6,025）</p></div>
+    <div class="f"><div class="n">20.6%</div><p>英国国际生里中国学生占比</p></div>
+  </div>
+  <p class="takeaway"><span class="lbl">一句话</span>美国本科更难进了；英国申请还在涨，但签证和牛剑更严。作文写得顺不够，得能讲清楚是自己想的。</p>
+  <img class="creature flock" src="assets/salon/creatures/flock.png" alt="">
 </section>
 
 <!-- P4 行业用人 -->
 <section class="slide labor">
   <div class="data-head">
     <div class="kicker">02 · 行业用人</div>
-    <h2>岗位总量还在增。<br>被抽掉的是入门台阶。</h2>
+    <h2>工作总数还在增加。<br>先被拿走的是入门岗。</h2>
   </div>
   <div class="labor-main">
     <div>
       <div class="labor-stats">
-        <div class="lstat"><div class="n">+7800万</div><p>WEF：2025–2030 全球净增就业（创造约 1.7 亿 − 替代约 9200 万）；结构性变革影响约 22% 现有正式工作。</p></div>
-        <div class="lstat"><div class="n">39–40%</div><p>WEF：到 2030 年，劳动者核心技能被重塑的比例。技术（数字接入与 AI）是最大双向驱动。</p></div>
-        <div class="lstat"><div class="n">59 / 100</div><p>若全球劳动力为 100 人：59 人需再培训；其中约 11 人可能得不到（对应超 1.2 亿人中期冗余风险）。</p></div>
-        <div class="lstat"><div class="n">~30%</div><p>McKinsey：到 2030 美国约三成工时可被自动化（含 genAI）。这是任务层潜力，不是岗位直接消失。</p></div>
+        <div class="lstat"><div class="n">+7800万</div><p>2025–2030 全球就业净增（雇主预期）。创造约 1.7 亿，替代约 9200 万。</p></div>
+        <div class="lstat"><div class="n">39–40%</div><p>到 2030 年，干活要用的核心技能会换掉将近四成。最大推手是数字和 AI。</p></div>
+        <div class="lstat"><div class="n">59 / 100</div><p>每 100 个劳动力，59 人需要再培训；大约 11 人可能培训不到（对应超 1.2 亿人）。</p></div>
+        <div class="lstat"><div class="n">~30%</div><p>到 2030 年，美国约三成工时理论上能被自动化。说的是任务，不是岗位立刻消失。</p></div>
       </div>
       <div class="job-cols">
         <div class="job-col up">
@@ -1576,27 +1662,33 @@
           </ul>
         </div>
       </div>
+      <div class="io-row">
+        <div class="io up"><b>+1.7亿</b><span>新岗位（雇主预期）</span></div>
+        <div class="io down"><b>−9200万</b><span>被替代的岗位</span></div>
+        <div class="io mid"><b>22%</b><span>现有正式工作会被改写</span></div>
+      </div>
     </div>
     <div class="labor-side">
       <div class="skill-pill">
-        <div class="tag">中国专项</div>
-        <h3>采用更急，缺口感知更低</h3>
-        <p>超 90% 组织视 AI 与机器人为关键转型技术。技能缺口仅 50% 视为障碍（全球 63%）。AI/ML 专家净增长高于全球（全球约 82%）；数据分析约 46%（全球约 41%）。</p>
+        <div class="tag">中国</div>
+        <h3>上 AI 更急，并不觉得缺人</h3>
+        <p>九成以上公司把 AI 当关键技术。觉得技能缺口是障碍的只有一半（全球 63%）。AI 人才需求涨得比全球平均更快。</p>
       </div>
       <div class="skill-pill">
-        <div class="tag">雇主要的技能</div>
-        <h3>分析、韧性、对人负责</h3>
-        <p>WEF：分析思维、灵活性、领导与社会影响、AI 与大数据、网络安全、技术素养、创造性思维、终身学习。多数岗位要的是使用与判断，不是人人造模型。</p>
+        <div class="tag">雇主要什么</div>
+        <h3>会分析、扛得住、对人负责</h3>
+        <p>不是人人去造模型。雇主要的是：想得清楚、变得快、能带人、会用 AI、守得住数据安全。</p>
       </div>
       <div class="skill-pill">
-        <div class="tag">情景，不是统计</div>
-        <h3>入门白领可能先承压</h3>
-        <p>Anthropic CEO Dario Amodei 公开观点：1–5 年内，法律、金融、咨询等文档审查类入门岗位可能大幅承压。这是 CEO 情景，不是同行评议预测。</p>
+        <div class="tag">判断，不是统计</div>
+        <h3>入门白领可能先被压</h3>
+        <p>Anthropic 老板的看法（不是论文）：一到五年内，法律、金融、咨询里看文件的入门岗，可能先承压。</p>
       </div>
     </div>
   </div>
-  <p class="src">World Economic Forum, Future of Jobs Report 2025（含中国分章）· McKinsey Global Institute · Axios / Dario Amodei, 2025。雇主预期 ≠ 已发生的裁员统计。</p>
-  <p class="takeaway"><span class="lbl">给家长</span>工作总量还在增加。被抽掉的是可模板化任务，和入门白领那一级台阶。押某一岗位名称会过时；押能换技能、能被核验的人，不会。</p>
+  <p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey · Axios / Dario Amodei, 2025。以上是雇主预期，不是已经发生的裁员统计。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>工作总数还在增加。先被拿走的是重复劳动，和刚入行的白领岗位。别押某一个职业名字，要押孩子会不会换本事。</p>
+  <img class="creature ants" src="assets/salon/creatures/ants.png" alt="">
 </section>
 
 <!-- P4b 2026 工具地图 -->
@@ -1607,65 +1699,69 @@
   </div>
   <div class="pyr">
     <div class="pyr-row">
-      <span class="band r">通用助手</span>
-      <div class="ptile"><div class="ico" style="background:#d97757">Cl</div><div class="n">Claude</div></div>
-      <div class="ptile"><div class="ico" style="background:#10a37f">GPT</div><div class="n">ChatGPT</div></div>
-      <div class="ptile"><div class="ico" style="background:#4285f4">G</div><div class="n">Gemini</div></div>
-      <div class="ptile"><div class="ico" style="background:#1d1d1f">K</div><div class="n">Kimi</div></div>
+      <span class="band r">聊天助手</span>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
     </div>
     <div class="pyr-row">
-      <span class="band l">构建 / 编程</span>
-      <div class="ptile"><div class="ico" style="background:#1d1d1f">Cu</div><div class="n">Cursor</div></div>
-      <div class="ptile"><div class="ico" style="background:#d97757">CC</div><div class="n">Claude Code</div></div>
-      <div class="ptile"><div class="ico" style="background:#f26207">Rp</div><div class="n">Replit</div></div>
-      <div class="ptile"><div class="ico" style="background:#ec4899">Lv</div><div class="n">Lovable</div></div>
-      <div class="ptile"><div class="ico" style="background:#24292f">Cp</div><div class="n">Copilot</div></div>
+      <span class="band l">写代码 / 做产品</span>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
     </div>
     <div class="pyr-row">
-      <span class="band r">内容生产</span>
-      <div class="ptile"><div class="ico" style="background:#8b5cf6">Hg</div><div class="n">HeyGen</div></div>
-      <div class="ptile"><div class="ico" style="background:#6d28d9">Sy</div><div class="n">Synthesia</div></div>
-      <div class="ptile"><div class="ico" style="background:#2563eb">De</div><div class="n">Descript</div></div>
-      <div class="ptile"><div class="ico" style="background:#111827">Ga</div><div class="n">Gamma</div></div>
-      <div class="ptile"><div class="ico" style="background:#0ea5e9">可</div><div class="n">可灵 Kling</div></div>
+      <span class="band r">做视频 / 做演示</span>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
     </div>
     <div class="pyr-row">
-      <span class="band l">效率办公</span>
-      <div class="ptile"><div class="ico" style="background:#15c39a">Nb</div><div class="n">NotebookLM</div></div>
-      <div class="ptile"><div class="ico" style="background:#000">No</div><div class="n">Notion</div></div>
-      <div class="ptile"><div class="ico" style="background:#15c39a">Gr</div><div class="n">Grammarly</div></div>
-      <div class="ptile"><div class="ico" style="background:#22c55e">Gn</div><div class="n">Granola</div></div>
-      <div class="ptile"><div class="ico" style="background:#6366f1">Px</div><div class="n">Perplexity</div></div>
+      <span class="band l">学习 / 办公</span>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
     </div>
     <div class="pyr-row">
-      <span class="band r">创意生成</span>
-      <div class="ptile"><div class="ico" style="background:#111">11</div><div class="n">ElevenLabs</div></div>
-      <div class="ptile"><div class="ico" style="background:#f59e0b">Su</div><div class="n">Suno</div></div>
-      <div class="ptile"><div class="ico" style="background:#1d1d1f">Mj</div><div class="n">Midjourney</div></div>
-      <div class="ptile"><div class="ico" style="background:#6366f1">Rw</div><div class="n">Runway</div></div>
-      <div class="ptile"><div class="ico" style="background:#a259ff">Fi</div><div class="n">Figma</div></div>
-      <div class="ptile"><div class="ico" style="background:#00c4cc">Ca</div><div class="n">Canva</div></div>
-      <div class="ptile"><div class="ico" style="background:#4285f4">Ve</div><div class="n">Veo</div></div>
+      <span class="band r">图像 / 声音 / 设计</span>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
     </div>
     <div class="pyr-base">
-      <div class="ptile"><div class="ico" style="background:#ea4b71">n8</div><div class="n">n8n</div></div>
-      <div class="ptile"><div class="ico" style="background:#ff4a00">Za</div><div class="n">Zapier</div></div>
-      <div class="ptile"><div class="ico" style="background:#6d00cc">Mk</div><div class="n">Make</div></div>
-      <div class="ptile"><div class="ico" style="background:#4d6bfe">DS</div><div class="n">DeepSeek</div></div>
-      <div class="ptile"><div class="ico" style="background:#10a37f">Cx</div><div class="n">Codex</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/n8n.png" alt=""><div class="n">n8n</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/zapier.png" alt=""><div class="n">Zapier</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/make.png" alt=""><div class="n">Make</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/deepseek.png" alt=""><div class="n">DeepSeek</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/codex.png" alt=""><div class="n">Codex</div></div>
     </div>
   </div>
-  <p class="src">截至 2026.9。已去掉 Manus（Meta 收购拆分、数据删除，不适合作为课堂工具）。课上会用到其中若干，不绑定单一产品。</p>
-  <p class="takeaway"><span class="lbl">给家长</span>工具层大约每 12–18 个月换一茬。值得练的是：选工具、核验输出、对结果负责——而不是背某一个 App 的操作。</p>
+  <p class="src">截至 2026.9。Manus 已不适合进课堂（收购后拆分、数据删除）。课上会用到其中若干，不绑死某一个。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>这些软件一两年就会换一批。要练的是会选、会查、敢负责，不是背某一个 App。</p>
+  <img class="creature lizard" src="assets/salon/creatures/lizard.png" alt="">
 </section>
 
 <!-- P5 能力结构 -->
 <section class="slide cap-slide paper">
   <div class="data-head">
     <div class="kicker">02 · 能力结构</div>
-    <h2>六所实验校公开课程里<br>反复出现的能力层</h2>
+    <h2>六所实验校都在练的<br>六件事</h2>
   </div>
   <div class="cap-main">
+    <div class="cap-figure">
+      <img class="neuron-side" src="assets/salon/creatures/neuron.png" alt="">
+    </div>
     <div class="cap-stage">
       <svg viewBox="0 0 220 460" xmlns="http://www.w3.org/2000/svg" aria-label="能力电池">
         <rect x="82" y="10" width="56" height="16" rx="5" fill="#1d1d1f"/>
@@ -1675,16 +1771,16 @@
       </svg>
     </div>
     <div class="cap-legend">
-      <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>主课掌握</h4><p>Alpha · Sabrewing — 自适应压缩主课，下午留给难事。</p></div></div>
-      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>判断与两难</h4><p>Astra Nova — Conundrums：无标准答案的开放题与辩论。</p></div></div>
-      <div class="cap-item"><i style="background:#34C759"></i><div><h4>项目交付</h4><p>Forge · 神山 — 可用产品、原创研究、地方课题。</p></div></div>
-      <div class="cap-item"><i style="background:#FF9500"></i><div><h4>创业闭环</h4><p>Founders · 神山 — 销售—验证—增长，市场给反馈。</p></div></div>
-      <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>教练制支持</h4><p>Forge · Sabrewing — 1:1 Guide，非整日讲授。</p></div></div>
-      <div class="cap-item"><i style="background:#007AFF"></i><div><h4>AI 工具层</h4><p>贯穿六校 — 加速主课与构建；判断与责任仍在人。</p></div></div>
+      <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>把主课学懂</h4><p>Alpha、Sabrewing：上午把课学透，下午去做难的事。</p></div></div>
+      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>会判断、敢辩论</h4><p>Astra Nova：没有标准答案的开放题，逼孩子站队并讲理。</p></div></div>
+      <div class="cap-item"><i style="background:#34C759"></i><div><h4>能交出真东西</h4><p>Forge、神山：可用的产品、研究、地方课题，不是练习本。</p></div></div>
+      <div class="cap-item"><i style="background:#FF9500"></i><div><h4>拿到市场反馈</h4><p>Founders、神山：卖、验证、再放大。对错由用户说了算。</p></div></div>
+      <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>有人带着练</h4><p>Forge、Sabrewing：一对一教练，不是老师讲一天。</p></div></div>
+      <div class="cap-item"><i style="background:#007AFF"></i><div><h4>会用 AI，不把责任交给 AI</h4><p>六校都用工具加速。判断和责任还在人身上。</p></div></div>
     </div>
   </div>
-  <p class="src">能力层来自六校公开课程口径。长期结果证据仍薄；多数成绩依赖校方内部测试。</p>
-  <p class="takeaway"><span class="lbl">给家长</span>值得学的是这六层结构：掌握、判断、交付、创业、教练、工具。工具会换；判断和责任换不了。</p>
+  <p class="src">这六件事来自六校公开课的共同点。长期成绩证据仍然薄，多数数字还是校方自己测的。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>要学的是这六件事：学懂、会判断、能交货、会创业、有人带、会用 AI。工具会换，判断和责任不会。</p>
 </section>
 
 <!-- P6 案例 -->
@@ -1736,32 +1832,33 @@
     </article>
   </div>
   <p class="cases-hint">点击任一案例放大聚焦 · 再点空白或按 Esc 复位</p>
-  <p class="takeaway"><span class="lbl">给家长</span>这些是极端样本，不是可复制配方。共同点只有三个：真问题、真交付、当面核验。不是「更会点软件」。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有：真问题、真产品、当面讲得清。</p>
 </section>
 
 <!-- P7 培养体系 -->
 <section class="slide frame-slide paper">
   <div class="kicker">03 · 如何培养</div>
-  <h2>回到本源：<br>能被世界<span class="em">核验</span>的判断力。</h2>
-  <p class="lede" style="margin-top:1.2vh;max-width:40em;color:var(--ink-2)">前面那些样本里跑在前面的人，赢的不是「更会操作软件」。是提出真问题、用证据站住脚、并对结果负责。WEF 说核心技能到 2030 约四成被重塑——教育要加重的，是那些改不了、骗不了、必须当面交代清楚的东西。</p>
+  <h2>回到本源：<br>能被当面问清楚的判断力。</h2>
+  <p class="lede" style="margin-top:1.2vh;max-width:40em;color:var(--ink-2)">跑在前面的人，赢的不是更会点软件。是能提出真问题、用证据站住脚、对结果负责。到 2030 年，干活要用的技能大约四成会换——学校要加重的，是那些改不了、骗不了、必须当面讲清楚的东西。</p>
   <div class="frame-trio">
     <div class="frame-card">
       <div class="num">本源 · 01</div>
-      <h3>五门根基仍是主渠道</h3>
-      <p>数理与自然、语言与古典、历史与人事、艺术、共同生活。不另起一套对抗课标的学科表；改的是重心——每门课经常碰到实验、原典、证明、史料与当众表达。</p>
+      <h3>五门根基还是主课</h3>
+      <p>数理、语言、历史、艺术、共同生活。不另起一套学科。改的是上课方式：多实验、多原典、多证明、多当众讲。</p>
     </div>
     <div class="frame-card">
       <div class="num">本源 · 02</div>
-      <h3>AI 只占三个职位</h3>
-      <p>一起学、自学、表达交流。人负责问题、证据、判断和责任；AI 负责草稿、对照和加速。职位可以随能力上移，责任不能上移给机器。</p>
+      <h3>AI 只做三件事</h3>
+      <p>一起学、自学、表达。问题、证据、判断、责任在人；草稿、对照、加速给 AI。能力可以上移，责任不能交给机器。</p>
     </div>
     <div class="frame-card">
       <div class="num">本源 · 03</div>
-      <h3>按能力进阶，不按年龄锁死</h3>
-      <p>接触真实 → 追究机理 → 形成判断。升级看门槛任务：能核验、能答辩、能处理反对意见——不看生日，也不看刷了多少题。</p>
+      <h3>按本事升级，不按年龄</h3>
+      <p>先接触真实，再追问为什么，再形成判断。能讲清、能答辩、能接住反对意见，就可以往上走。不看几岁，也不看刷了多少题。</p>
     </div>
   </div>
-  <p class="frame-bridge">我们把这条路径落成两门课：AI 通识，与青年创始人社区。</p>
+  <p class="frame-bridge">我们把这条路做成两门课：AI 通识，和青年创始人社区。</p>
+  <img class="creature lizard" src="assets/salon/creatures/lizard.png" alt="">
 </section>
 
 <!-- P8 课程海报 -->
@@ -1967,7 +2064,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v20';
+  const DRAFT_KEY='salon-ppt-draft-v21';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2039,7 +2136,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('js-story') || !raw.includes('takeaway') || !raw.includes('Oxford Undergraduate Admissions Statistical Report 2026')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('creatures/flock.png')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
