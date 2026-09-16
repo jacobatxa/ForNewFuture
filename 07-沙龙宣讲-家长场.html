@@ -837,24 +837,23 @@
 
 
 
-  /* Capability redesign */
+  /* Capability battery */
   .cap-main{
-    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
-    gap:2.4vw;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    gap:2.6vw;
+    align-items:center;
   }
   .cap-stage{
     position:relative;
     height:100%;
-    min-height:58vh;
+    min-height:56vh;
     display:flex;align-items:center;justify-content:center;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 40%, rgba(0,113,227,.06), transparent 70%),
-      #fafafa;
-    border-radius:24px;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
-    overflow:hidden;
+    background:transparent;
+    border-radius:0;
+    box-shadow:none;
+    overflow:visible;
   }
-  .cap-stage svg{width:min(92%,440px);height:auto;max-height:62vh}
+  .cap-stage svg{width:min(100%,280px);height:auto;max-height:64vh}
   .cap-legend{gap:.85vh}
   .cap-item{
     padding:1vh .95vw;
@@ -1463,65 +1462,11 @@
   </div>
   <div class="cap-main">
     <div class="cap-stage">
-      <svg viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg" aria-label="能力结构">
-        <defs>
-          <linearGradient id="figFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#ffffff"/>
-            <stop offset="100%" stop-color="#f0f0f3"/>
-          </linearGradient>
-          <filter id="figShadow" x="-30%" y="-20%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.07"/>
-          </filter>
-        </defs>
-        <circle cx="150" cy="220" r="175" fill="none" stroke="rgba(0,113,227,.07)" stroke-width="1"/>
-        <circle cx="150" cy="220" r="132" fill="none" stroke="rgba(0,113,227,.09)" stroke-width="1"/>
-        <g filter="url(#figShadow)" fill="url(#figFill)" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round">
-          <ellipse cx="150" cy="72" rx="32" ry="36"/>
-          <path d="M104 118 C104 104 122 96 150 96 C178 96 196 104 196 118
-            L206 200 C210 232 194 250 172 256 L172 400 C172 414 162 424 148 424 L132 424
-            C118 424 108 414 108 400 L108 256 C86 250 70 232 74 200 Z"/>
-        </g>
-        <!-- zone markers -->
-        <g>
-          <circle cx="150" cy="72" r="5.5" fill="#007AFF"/>
-          <circle cx="150" cy="155" r="5.5" fill="#FF3B30"/>
-          <circle cx="150" cy="195" r="5.5" fill="#5856D6"/>
-          <circle cx="150" cy="232" r="5.5" fill="#34C759"/>
-          <circle cx="98" cy="178" r="5" fill="#AF52DE"/>
-          <circle cx="202" cy="178" r="5" fill="#FF9500"/>
-          <circle cx="150" cy="330" r="5.5" fill="#FF2D55"/>
-        </g>
-        <!-- clean meters -->
-        <g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif">
-          <g transform="translate(240,48)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">AI 工具层</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="126" height="9" rx="4.5" fill="#007AFF"/>
-          </g>
-          <g transform="translate(240,100)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">主课掌握</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="118" height="9" rx="4.5" fill="#FF3B30"/>
-          </g>
-          <g transform="translate(240,152)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">判断与两难</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="98" height="9" rx="4.5" fill="#5856D6"/>
-          </g>
-          <g transform="translate(240,204)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">项目交付</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="112" height="9" rx="4.5" fill="#34C759"/>
-          </g>
-          <g transform="translate(240,256)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">创业闭环</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="91" height="9" rx="4.5" fill="#FF9500"/>
-          </g>
-          <g transform="translate(240,308)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">教练制支持</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="105" height="9" rx="4.5" fill="#AF52DE"/>
-          </g>
-          <g transform="translate(240,360)">
-            <text x="0" y="0" font-size="12" font-weight="600" fill="#1d1d1f">社区实作</text>
-            <rect x="0" y="8" width="140" height="9" rx="4.5" fill="#e8e8ed"/><rect x="0" y="8" width="84" height="9" rx="4.5" fill="#FF2D55"/>
-          </g>
-        </g>
+      <svg viewBox="0 0 220 460" xmlns="http://www.w3.org/2000/svg" aria-label="能力电池">
+        <rect x="82" y="10" width="56" height="16" rx="5" fill="#1d1d1f"/>
+        <rect x="28" y="22" width="164" height="426" rx="32" fill="#ffffff" stroke="#1d1d1f" stroke-width="3"/>
+        <rect x="42" y="38" width="136" height="394" rx="20" fill="#f5f5f7"/>
+        <rect x="51" y="364" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="82" y="364" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="113" y="364" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="144" y="364" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="51" y="395" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="82" y="395" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="113" y="395" width="26" height="26" rx="6" fill="#AF52DE"/><rect x="144" y="395" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="51" y="302" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="302" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="302" width="26" height="26" rx="6" fill="#FF9500"/><rect x="144" y="302" width="26" height="26" rx="6" fill="#FF9500"/><rect x="51" y="333" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="333" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="333" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="144" y="333" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="51" y="240" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="240" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="240" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="240" width="26" height="26" rx="6" fill="#34C759"/><rect x="51" y="271" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="271" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="271" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="271" width="26" height="26" rx="6" fill="#34C759"/><rect x="51" y="178" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="178" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="178" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="178" width="26" height="26" rx="6" fill="#5856D6"/><rect x="51" y="209" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="209" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="209" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="209" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="51" y="116" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="82" y="116" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="113" y="116" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="144" y="116" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="51" y="147" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="82" y="147" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="113" y="147" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="144" y="147" width="26" height="26" rx="6" fill="#FF3B30"/><rect x="51" y="54" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="54" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="54" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="54" width="26" height="26" rx="6" fill="#007AFF"/><rect x="51" y="85" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="85" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="85" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="85" width="26" height="26" rx="6" fill="#007AFF"/>
       </svg>
     </div>
     <div class="cap-legend">
@@ -1814,7 +1759,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v16';
+  const DRAFT_KEY='salon-ppt-draft-v17';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
