@@ -662,7 +662,8 @@
   .dico svg [fill="#fff"]{fill:#fff}
   .dico svg [fill="none"]{fill:none}
   .dico svg ellipse{fill:none;stroke:currentColor}
-  .dico.lg{width:clamp(52px, 6.4vmin, 84px);height:clamp(52px, 6.4vmin, 84px);border-radius:22px}
+  .dico.photo{overflow:hidden;padding:0;background:#fff}
+  .dico.photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
   .dico.sm{width:clamp(26px, 3vmin, 36px);height:clamp(26px, 3vmin, 36px);border-radius:10px}
   .dico.red{color:#FF3B30;background:rgba(255,59,48,.14)}
   .dico.green{color:#248A3D;background:rgba(52,199,89,.16)}
@@ -1008,7 +1009,7 @@
   .cp-left .bg{
     position:absolute;inset:0;
     background-size:cover;background-position:center;
-    opacity:.28;filter:saturate(1.05);
+    opacity:.42;filter:saturate(1.12);
   }
   .cp-left .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
   .cp-left .kicker{color:rgba(255,255,255,.55)}
@@ -1112,6 +1113,94 @@
     border-top:1px solid var(--line);
   }
   .slide.cap-slide .src{margin-top:1vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.4}
+
+  /* AI 指数 · 从拉到夯 */
+  .slide.idx-slide{
+    padding:3.2vh 3.4vw 2.4vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(196,138,42,.12), transparent 55%),
+      radial-gradient(ellipse 40% 35% at 0% 100%, rgba(232,93,76,.10), transparent 50%),
+      var(--paper);
+  }
+  .idx-pyr{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;
+    gap:.55vh;
+    padding-top:2vh;
+  }
+  .idx-band{
+    position:relative;
+    display:grid;
+    grid-template-columns:auto 7.2em 1fr;
+    align-items:center;
+    gap:.9vw;
+    padding:.55vh 1.3vw .55vh .4vw;
+    border-radius:18px;
+    min-height:0;
+    box-shadow:0 8px 24px rgba(0,0,0,.06);
+  }
+  .idx-band.hang{width:58%;background:linear-gradient(90deg,#fff8e8,#fff);}
+  .idx-band.ding{width:68%;background:linear-gradient(90deg,#eef5ff,#fff);}
+  .idx-band.ren{width:78%;background:linear-gradient(90deg,#eefaf1,#fff);}
+  .idx-band.npc{width:88%;background:linear-gradient(90deg,#f3f3f5,#fff);}
+  .idx-band.la{width:98%;background:linear-gradient(90deg,#fff1ee,#fff);}
+  .idx-fig{
+    height:clamp(72px, 13.5vh, 128px);
+    width:clamp(64px, 10vw, 120px);
+    display:flex;align-items:flex-end;justify-content:center;
+    margin-top:-2.8vh;
+    overflow:visible;
+  }
+  .idx-band.hang .idx-fig{width:clamp(88px, 14vw, 168px)}
+  .idx-fig img{
+    height:118%;width:auto;max-width:none;
+    object-fit:contain;object-position:bottom center;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.08))
+      drop-shadow(0 14px 22px rgba(0,0,0,.12));
+    pointer-events:none;
+  }
+  .idx-rank{
+    font-size:clamp(20px, 2.8vmin, 34px);
+    font-weight:700;
+    letter-spacing:-.04em;
+    line-height:1.05;
+  }
+  .idx-rank small{
+    display:block;
+    margin-top:.2vh;
+    font-size:var(--fs-src);
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    opacity:.7;
+  }
+  .idx-band.hang .idx-rank{color:#8A6419}
+  .idx-band.ding .idx-rank{color:#007AFF}
+  .idx-band.ren .idx-rank{color:#248A3D}
+  .idx-band.npc .idx-rank{color:#6e6e73}
+  .idx-band.la .idx-rank{color:#FF3B30}
+  .idx-copy q{
+    display:block;
+    font-size:var(--fs-small);
+    font-weight:650;
+    letter-spacing:-.02em;
+    quotes: "「" "」" "『" "』";
+    line-height:1.35;
+  }
+  .idx-copy q::before{content:open-quote}
+  .idx-copy q::after{content:close-quote}
+  .idx-copy p{
+    margin-top:.25vh;
+    font-size:var(--fs-src);
+    color:var(--ink-2);
+    line-height:1.4;
+  }
+  .idx-copy .tell{font-weight:650;color:var(--ink)}
+  .slide.idx-slide .src{margin-top:.8vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.35}
   .slide.cases-slide .takeaway{
     background:linear-gradient(90deg, rgba(0,113,227,.10), rgba(255,149,0,.12));
   }
@@ -1247,6 +1336,39 @@
   .fd-note{
     margin-top:1.4vh;font-size:var(--fs-body);color:var(--ink-2);line-height:1.45;
   }
+  .slide.atlas-slide > .atlas-bg,
+  .slide.co-slide > .co-bg{position:absolute;z-index:0}
+  .slide.atlas-slide > .atlas-shade,
+  .slide.co-slide > .co-shade{position:absolute;z-index:1}
+  .slide.atlas-slide > .atlas-ui,
+  .slide.co-slide > .co-ui{position:relative;z-index:3;height:100%}
+  .atlas-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:0}
+  .atlas-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(8,12,18,.62) 0%, rgba(8,12,18,.12) 26%, rgba(8,12,18,.08) 58%, rgba(8,12,18,.78) 100%),linear-gradient(90deg, rgba(8,12,18,.28) 0%, transparent 40%)}
+  .atlas-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .atlas-ui .kicker{color:rgba(255,255,255,.62)}
+  .atlas-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:16em;margin-bottom:0}
+  .atlas-nodes{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
+  .anode{background:rgba(255,255,255,.12);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:1.3vh .9vw 1.25vh;min-width:0}
+  .anode .mod{font-size:var(--fs-src);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8ec8ff;margin-bottom:.35vh}
+  .anode h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff;margin-bottom:.35vh}
+  .anode p{font-size:var(--fs-src);color:rgba(255,255,255,.78);line-height:1.4}
+  .anode .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:.7vh}
+  .anode .chips span{font-size:10px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border-radius:100px;background:rgba(255,255,255,.14);color:#fff}
+  .atlas-ui .takeaway{margin-top:1.1vh;background:linear-gradient(90deg, rgba(0,113,227,.35), rgba(255,149,0,.28));border-left-color:#64b5ff;color:#fff}
+  .atlas-ui .takeaway .lbl{color:#8ec8ff}
+  .slide.co-slide{padding:0;overflow:hidden;background:#1a1410;justify-content:stretch}
+  .co-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
+  .co-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(18,12,8,.58) 0%, rgba(18,12,8,.08) 30%, rgba(18,12,8,.1) 60%, rgba(18,12,8,.72) 100%)}
+  .co-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .co-ui .kicker{color:rgba(255,255,255,.62)}
+  .co-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:14em;margin-bottom:0}
+  .co-pins{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
+  .copin{background:rgba(20,14,10,.42);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,220,180,.22);border-radius:16px;padding:1.2vh .85vw 1.2vh;min-width:0}
+  .copin .ix{font-size:var(--fs-src);font-weight:700;letter-spacing:.12em;color:#ffd29a;margin-bottom:.35vh}
+  .copin h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff}
+  .copin p{font-size:var(--fs-src);color:rgba(255,255,255,.78);line-height:1.4;margin-top:.3vh}
+  .co-ui .takeaway{margin-top:1.1vh;background:linear-gradient(90deg, rgba(196,138,42,.38), rgba(0,113,227,.28));border-left-color:#ffd29a;color:#fff}
+  .co-ui .takeaway .lbl{color:#ffd29a}
 
 
   .facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;margin-top:.5vh}
@@ -1516,7 +1638,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v25">
+<div id="deck" data-rev="v27">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2072,20 +2194,20 @@
         <rect x="28" y="22" width="164" height="426" rx="32" fill="#ffffff" stroke="#1d1d1f" stroke-width="3"/>
         <rect x="42" y="38" width="136" height="394" rx="20" fill="#f5f5f7"/>
         <!-- 5 AI Native · top -->
-        <rect x="51" y="70" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="70" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="70" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="70" width="26" height="26" rx="6" fill="#1aa39a"/>
-        <rect x="51" y="101" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="101" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="101" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="101" width="26" height="26" rx="6" fill="#E5E5EA"/>
+        <rect x="51" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="54" width="26" height="26" rx="6" fill="#1aa39a"/>
+        <rect x="51" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="85" width="26" height="26" rx="6" fill="#E5E5EA"/>
         <!-- 4 商业思维 -->
-        <rect x="51" y="142" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="142" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="142" width="26" height="26" rx="6" fill="#FF9500"/><rect x="144" y="142" width="26" height="26" rx="6" fill="#FF9500"/>
-        <rect x="51" y="173" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="173" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="173" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="144" y="173" width="26" height="26" rx="6" fill="#E5E5EA"/>
+        <rect x="51" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="144" y="126" width="26" height="26" rx="6" fill="#FF9500"/>
+        <rect x="51" y="157" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="157" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="157" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="144" y="157" width="26" height="26" rx="6" fill="#E5E5EA"/>
         <!-- 3 世界探索 -->
-        <rect x="51" y="214" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="214" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="214" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="214" width="26" height="26" rx="6" fill="#34C759"/>
-        <rect x="51" y="245" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="245" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="245" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="245" width="26" height="26" rx="6" fill="#34C759"/>
+        <rect x="51" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="198" width="26" height="26" rx="6" fill="#34C759"/>
+        <rect x="51" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="229" width="26" height="26" rx="6" fill="#34C759"/>
         <!-- 2 思想构建 -->
-        <rect x="51" y="286" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="286" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="286" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="286" width="26" height="26" rx="6" fill="#5856D6"/>
-        <rect x="51" y="317" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="317" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="317" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="317" width="26" height="26" rx="6" fill="#E5E5EA"/>
+        <rect x="51" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="270" width="26" height="26" rx="6" fill="#5856D6"/>
+        <rect x="51" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="301" width="26" height="26" rx="6" fill="#E5E5EA"/>
         <!-- 1 万物机理 · bottom -->
-        <rect x="51" y="358" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="358" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="358" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="358" width="26" height="26" rx="6" fill="#007AFF"/>
-        <rect x="51" y="389" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="389" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="389" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="389" width="26" height="26" rx="6" fill="#007AFF"/>
+        <rect x="51" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="342" width="26" height="26" rx="6" fill="#007AFF"/>
+        <rect x="51" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="373" width="26" height="26" rx="6" fill="#007AFF"/>
       </svg>
     </div>
     <div class="cap-legend">
@@ -2093,11 +2215,63 @@
       <div class="cap-item"><span class="dico violet lg"><svg><use href="#i-speech"/></svg></span><div><h4>思想构建</h4><div class="en">Analyze inward · Speak outward</div><p>能把分析内化成自己的判断，也能当众讲清楚。想得清和说得出，是一件事。</p></div></div>
       <div class="cap-item"><span class="dico green lg"><svg><use href="#i-garden"/></svg></span><div><h4>世界探索</h4><div class="en">World as a lab / garden / playground</div><p>能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p></div></div>
       <div class="cap-item"><span class="dico orange lg"><svg><use href="#i-coin"/></svg></span><div><h4>商业思维</h4><div class="en">Hobby → product → sustainable</div><p>让爱好、产品、创作能持续下去。懂一点社会经济，懂公司和一群人怎么协作。</p></div></div>
-      <div class="cap-item"><span class="dico teal lg"><svg><use href="#i-ai"/></svg></span><div><h4>AI Native Mind</h4><div class="en">Default environment, not a special class</div><p>AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p></div></div>
+      <div class="cap-item"><span class="dico teal lg photo"><img src="assets/salon/icons/ai-native.png" alt=""></span><div><h4>AI Native Mind</h4><div class="en">Default environment, not a special class</div><p>AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p></div></div>
     </div>
   </div>
   <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。实验校可以对照，但不跟着他们的成绩广告走。</p>
   <p class="takeaway"><span class="lbl">一句话</span>底座是万物机理。上面是思想、真实世界、可持续。AI 是默认环境，不是目的。</p>
+</section>
+
+<!-- P5b AI 指数 -->
+<section class="slide idx-slide paper">
+  <div class="data-head">
+    <div class="kicker">02 · AI 指数</div>
+    <h2>听他怎么说话，<br>就知道他在哪一层。</h2>
+  </div>
+  <div class="idx-pyr">
+    <article class="idx-band hang">
+      <div class="idx-fig"><img src="assets/salon/index/hang.png" alt=""></div>
+      <div class="idx-rank">夯<small>Hang</small></div>
+      <div class="idx-copy">
+        <q>纯决策模型怎么建。这一层 attention 为什么要改。tokenizer 和语料配不上。</q>
+        <p><span class="tell">听出来：</span>能改结构、能讲取舍、能被当面追问。这是内行。</p>
+      </div>
+    </article>
+    <article class="idx-band ding">
+      <div class="idx-fig"><img src="assets/salon/index/ding.png" alt=""></div>
+      <div class="idx-rank">顶级<small>Top</small></div>
+      <div class="idx-copy">
+        <q>KV cache 把显存吃满了。LoRA rank 再高就过拟合。这个榜有数据污染。</q>
+        <p><span class="tell">听出来：</span>能讨论机制和评测，不是堆形容词。</p>
+      </div>
+    </article>
+    <article class="idx-band ren">
+      <div class="idx-fig"><img src="assets/salon/index/ren.png" alt=""></div>
+      <div class="idx-rank">人上人<small>Able</small></div>
+      <div class="idx-copy">
+        <q>我做了个自定义 GPT。Agent 工作流跑通了。这个需求我能交货。</q>
+        <p><span class="tell">听出来：</span>真会用工具、能交差。还没碰到模型内部。</p>
+      </div>
+    </article>
+    <article class="idx-band npc">
+      <div class="idx-fig"><img src="assets/salon/index/npc.png" alt=""></div>
+      <div class="idx-rank">NPC<small>Title</small></div>
+      <div class="idx-copy">
+        <q>高级提示词工程师。AI 操盘手。我用 AI 日入过万。一句话生成一家公司。</q>
+        <p><span class="tell">听出来：</span>头衔叠 buff。会打字，把模板当方法论卖。</p>
+      </div>
+    </article>
+    <article class="idx-band la">
+      <div class="idx-fig"><img src="assets/salon/index/la.png" alt=""></div>
+      <div class="idx-rank">拉完了<small>Fake</small></div>
+      <div class="idx-copy">
+        <q>我正在调我的大模型。闭关训练自己的 GPT。我的 Agent 已经能自主赚钱。</q>
+        <p><span class="tell">听出来：</span>多半在跟豆包对话。没有卡、没有数据、没有 loss 曲线。</p>
+      </div>
+    </article>
+  </div>
+  <p class="src">分层名来自网络流行评法：夯 → 顶级 → 人上人 → NPC → 拉完了。话术是听音样本，不是点名某个人。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>会说「我在调大模型」的，多半在跟聊天机器人说话。能讲结构、数据、评测的，才是真的在干。</p>
 </section>
 
 <!-- P6 案例 -->
@@ -2184,7 +2358,7 @@
 <!-- P8 课程海报 -->
 <section class="slide course-poster">
   <div class="cp-left">
-    <div class="bg" style="background-image:url('assets/salon/course/lab.jpg')"></div>
+    <div class="bg" style="background-image:url('assets/salon/course/atlas.png')"></div>
     <div class="inner">
       <div class="kicker">课程 A · AI 通识</div>
       <h2>从自然智慧<br>走到可交付产品</h2>
@@ -2225,7 +2399,7 @@
     </div>
   </div>
   <div class="cp-right">
-    <div class="bg" style="background-image:url('assets/salon/course/build.jpg')"></div>
+    <div class="bg" style="background-image:url('assets/salon/course/company.png')"></div>
     <div class="inner">
       <div class="kicker">课程 B · 青年创始人社区</div>
       <h2>真实问题里的<br>同伴与责任</h2>
@@ -2249,109 +2423,89 @@
   </div>
 </section>
 
-<!-- P9 AI通识展开 -->
-<section class="slide course-deep paper">
-  <div class="data-head">
-    <div class="kicker">03 · 课程 A 展开</div>
-    <h2>AI 通识：孩子手里会碰到什么</h2>
-  </div>
-  <div class="cd-grid">
-    <article class="cd-card">
-      <div class="pic"><img src="assets/salon/course/lab.jpg" alt=""></div>
-      <div class="body">
+<!-- P9 AI通识 · 能力图谱 -->
+<section class="slide atlas-slide">
+  <img class="atlas-bg" src="assets/salon/course/atlas.png" alt="">
+  <div class="atlas-shade"></div>
+  <div class="atlas-ui">
+    <div>
+      <div class="kicker">03 · 课程 A · 能力图谱</div>
+      <h2>一门通识课，<br>要覆盖这整张地图。</h2>
+    </div>
+    <div class="atlas-nodes">
+      <article class="anode">
         <div class="mod">模块 01 · 自然智慧</div>
-        <h3>分清「会说」和「真懂」</h3>
-        <p>自然智能 vs 人工智能；大模型在猜下一个顺口的词。亲手把模型问倒，建立查证习惯。</p>
-        <div class="cd-tools"><span>Kimi</span><span>Claude</span><span>ChatGPT</span><span>Gemini</span><span>DeepSeek</span></div>
-        <div class="cd-out">带走：查证三问卡 · 第一行 prompt</div>
-      </div>
-    </article>
-    <article class="cd-card">
-      <div class="pic"><img src="assets/salon/course/sketch.jpg" alt=""></div>
-      <div class="body">
+        <h3>万物机理</h3>
+        <p>先问世界怎么运转。历史、逻辑哲学、数学、基础物理，是后面所有判断的底座。</p>
+        <div class="chips"><span>历史</span><span>逻辑</span><span>数学</span><span>物理</span></div>
+      </article>
+      <article class="anode">
+        <div class="mod">贯穿四模块</div>
+        <h3>思想构建</h3>
+        <p>能把分析内化成自己的判断，也能当众讲清楚。查证、闭环、路演，都是这件事。</p>
+        <div class="chips"><span>内化</span><span>当众讲</span><span>查证三问</span></div>
+      </article>
+      <article class="anode">
         <div class="mod">模块 02 · 产品设计</div>
-        <h3>从真问题到逻辑闭环</h3>
-        <p>有人群、有频次、有痛感。识别常见逻辑谬误；用「因为…所以…」把问题定义写死，再画解决闭环。</p>
-        <div class="cd-tools"><span>用户访谈</span><span>问题卡</span><span>闭环草图</span><span>Claude 找茬</span></div>
-        <div class="cd-out">带走：问题定义卡 · 解决闭环图</div>
-      </div>
-    </article>
-    <article class="cd-card">
-      <div class="pic"><img src="assets/salon/course/pitch.jpg" alt=""></div>
-      <div class="body">
+        <h3>世界探索</h3>
+        <p>World as a lab / garden / playground。发现真问题，定义它，再动手解决。</p>
+        <div class="chips"><span>真问题</span><span>实验室</span><span>闭环图</span></div>
+      </article>
+      <article class="anode">
         <div class="mod">模块 03 · 商业思维</div>
-        <h3>谁付钱、为何留下、怎么讲清楚</h3>
-        <p>路演结构：痛点 → 演示 → 证据 → 愿景。AI 帮排练提问；真正的听众必须是人。</p>
-        <div class="cd-tools"><span>路演稿</span><span>GPT 模拟投资人</span><span>同伴互评</span></div>
-        <div class="cd-out">带走：3 分钟路演讲稿</div>
-      </div>
-    </article>
-    <article class="cd-card">
-      <div class="pic"><img src="assets/salon/course/laptop-code.jpg" alt=""></div>
-      <div class="body">
-        <div class="mod">模块 04 · AI 技术高阶</div>
-        <h3>Agent · 插件 · 多模态 · 安全</h3>
-        <p>搭私人助手、接工具与多模态、最小用户系统；在有限「能力预算」里取舍。数据与隐私清单进课堂。</p>
-        <div class="cd-tools"><span>Cursor</span><span>Claude Code</span><span>Replit</span><span>Lovable</span></div>
-        <div class="cd-out">带走：可演示 MVP · 用户反馈报告</div>
-      </div>
-    </article>
+        <h3>商业思维</h3>
+        <p>让爱好、产品、创作能持续。谁付钱、为何留下、一群人怎么协作。</p>
+        <div class="chips"><span>路演</span><span>可持续</span><span>协作</span></div>
+      </article>
+      <article class="anode">
+        <div class="mod">模块 04 · AI 技术</div>
+        <h3>AI Native Mind</h3>
+        <p>AI 是默认工作环境。会选、会查、敢负责；能力上移，责任不交出去。</p>
+        <div class="chips"><span>Agent</span><span>安全</span><span>可演示 MVP</span></div>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>不是四门互不相关的兴趣课。自然智慧垫机理，产品课练探索，商业课练可持续，技术课把 AI 变成默认环境。思想构建贯穿始终。</p>
   </div>
 </section>
 
-<!-- P10 创始人社区展开 -->
-<section class="slide founder-deep">
-  <div class="data-head">
-    <div class="kicker">03 · 课程 B 展开</div>
-    <h2>青年创始人社区：一个项目怎么走完</h2>
+<!-- P10 青年公司 -->
+<section class="slide co-slide">
+  <img class="co-bg" src="assets/salon/course/company.png" alt="">
+  <div class="co-shade"></div>
+  <div class="co-ui">
+    <div>
+      <div class="kicker">03 · 课程 B · 青年公司</div>
+      <h2>不是机房。<br>是一间正在运转的公司。</h2>
+    </div>
+    <div class="co-pins">
+      <article class="copin">
+        <div class="ix">01</div>
+        <h3>交换思想</h3>
+        <p>围桌争对错。同伴是同事，不是同班。</p>
+      </article>
+      <article class="copin">
+        <div class="ix">02</div>
+        <h3>白板表达</h3>
+        <p>逻辑树画在墙上。讲不清，就还没想清。</p>
+      </article>
+      <article class="copin">
+        <div class="ix">03</div>
+        <h3>企业级工具</h3>
+        <p>代码、设计、协作软件。和真公司同一套手感。</p>
+      </article>
+      <article class="copin">
+        <div class="ix">04</div>
+        <h3>电脑创作</h3>
+        <p>最小可演示的东西。AI 加速草稿，判断仍是自己的。</p>
+      </article>
+      <article class="copin">
+        <div class="ix">05</div>
+        <h3>3D 打印真实模具</h3>
+        <p>从屏幕走到手上。零件、模具、可被拒绝的实物。</p>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>选题、原型、用户、路演，都在这间房子里发生。有截止日期，有当面反对，有能拿起来的东西。</p>
   </div>
-  <div class="fd-rail">
-    <article class="fd-step">
-      <div class="pic">
-        <span class="num">01</span>
-        <img src="assets/salon/course/whiteboard.jpg" alt="">
-      </div>
-      <div class="body">
-        <h3>选题</h3>
-        <p>从生活与社区里捞可验证的麻烦，不是作文题。导师追问：谁痛、多痛、你怎么知道。</p>
-        <div class="tools"><span>访谈</span><span>Kimi 调研</span><span>选题答辩</span></div>
-      </div>
-    </article>
-    <article class="fd-step">
-      <div class="pic">
-        <span class="num">02</span>
-        <img src="assets/salon/course/laptop-code.jpg" alt="">
-      </div>
-      <div class="body">
-        <h3>原型</h3>
-        <p>最小可点击版本。AI 加速草稿与代码；孩子必须能讲清：哪些判断是我的。</p>
-        <div class="tools"><span>Cursor</span><span>Agent</span><span>纸面原型</span></div>
-      </div>
-    </article>
-    <article class="fd-step">
-      <div class="pic">
-        <span class="num">03</span>
-        <img src="assets/salon/course/build.jpg" alt="">
-      </div>
-      <div class="body">
-        <h3>用户测试</h3>
-        <p>给真人用。收集拒绝与修改；反馈进下一版，不进「感觉良好」。</p>
-        <div class="tools"><span>可用性测试</span><span>反馈表</span><span>迭代日志</span></div>
-      </div>
-    </article>
-    <article class="fd-step">
-      <div class="pic">
-        <span class="num">04</span>
-        <img src="assets/salon/course/pitch.jpg" alt="">
-      </div>
-      <div class="body">
-        <h3>路演</h3>
-        <p>当众演示，回答反对意见。责任留在人——模型不替你答辩。</p>
-        <div class="tools"><span>路演</span><span>Q&A</span><span>版本归档</span></div>
-      </div>
-    </article>
-  </div>
-  <p class="fd-note">家长能看见的进度：选题卡 → 可点原型 → 真实用户反馈 → 路演录像。工具会换代；这条交付链不会。招生办和雇主要的是同一件事：能证明判断是孩子自己的。</p>
 </section>
 
 
@@ -2384,7 +2538,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v25';
+  const DRAFT_KEY='salon-ppt-draft-v27';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2457,7 +2611,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v25"')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v27"') || !raw.includes('atlas-slide') || !raw.includes('co-slide')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
