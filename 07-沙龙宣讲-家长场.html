@@ -1461,12 +1461,12 @@
           <div class="where" data-edit>SpaceX 园区 Ad Astra → 全球线上</div>
           <h3 data-edit>Astra Nova</h3>
           <ul data-edit>
-            <li>前身 Ad Astra（2014–2020）在 SpaceX 园区；2020 转线上。</li>
-            <li>签名活动 <strong>Conundrums</strong>；课程含 AI、工程与人文。</li>
-            <li>11–18 岁；周约 4–16 课时；约 45 国（校方称）。</li>
+            <li>直播小班约 6–16 人。本季公开课约 90 门，每学期重做。</li>
+            <li>同一张课表里：生物伦理、决策、悖论，也有 C 语言、F1 设计、AI 技术史。</li>
+            <li>申请先录 30 秒–2 分钟 Conundrums：听怎么想，不听标准答案。</li>
           </ul>
           <button type="button" class="media-link js-story" data-story="astra">图文介绍 →</button>
-          <div class="note">astranova.org</div>
+          <div class="note">my.astranova.org/preview</div>
         </div>
       </article>
 
@@ -1772,7 +1772,7 @@
     </div>
     <div class="cap-legend">
       <div class="cap-item"><i style="background:#FF3B30"></i><div><h4>把主课学懂</h4><p>Alpha、Sabrewing：上午把课学透，下午去做难的事。</p></div></div>
-      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>会判断、敢辩论</h4><p>Astra Nova：没有标准答案的开放题，逼孩子站队并讲理。</p></div></div>
+      <div class="cap-item"><i style="background:#5856D6"></i><div><h4>会判断、敢辩论</h4><p>Astra Nova 本季课表里就有：悖论、生物伦理、决策课。没有标准答案，得站队并讲理。</p></div></div>
       <div class="cap-item"><i style="background:#34C759"></i><div><h4>能交出真东西</h4><p>Forge、神山：可用的产品、研究、地方课题，不是练习本。</p></div></div>
       <div class="cap-item"><i style="background:#FF9500"></i><div><h4>拿到市场反馈</h4><p>Founders、神山：卖、验证、再放大。对错由用户说了算。</p></div></div>
       <div class="cap-item"><i style="background:#AF52DE"></i><div><h4>有人带着练</h4><p>Forge、Sabrewing：一对一教练，不是老师讲一天。</p></div></div>
@@ -2064,7 +2064,7 @@
 </div>
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v22';
+  const DRAFT_KEY='salon-ppt-draft-v23';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2274,27 +2274,39 @@
       accent:'#007AFF', kicker:'SpaceX 渊源 · 全球线上',
       where:'Ad Astra（园区）→ Astra Nova（线上）',
       title:'Astra Nova',
-      tagline:'前身 Ad Astra 在 SpaceX 园区运行约六年（2014–2020），强调第一性原理、好奇心与智识勇气；Conundrums 与 Synthesis 源于此校。2020 转型为全球线上校 Astra Nova。',
+      tagline:'不是「AI 学校」。本季公开课表把吸血鬼文学、潮汐池、F1 设计、生物伦理、决策课和 C 语言排在一起。每学期重做课表；要听的是孩子怎么想。',
       hero:'assets/schools/stories/astra.jpg',
       video:'assets/schools/videos/astra-nasa.mp4',
       gallery:['assets/schools/stories/astra.jpg','assets/schools/stories/astra-2.jpg','assets/schools/stories/adastra.jpg'],
       facts:[
-        {k:'前身',v:'Ad Astra · SpaceX'},
-        {k:'现态',v:'线上 · 11–18 岁'},
-        {k:'班额',v:'约 6–16（校方称）'}
+        {k:'本季课',v:'约 90 门（预览课表）'},
+        {k:'班额',v:'约 6–16 人直播'},
+        {k:'申请',v:'Conundrums 30 秒–2 分钟'}
       ],
       sections:[
-        {h:'一条血统', items:[
-          'Ad Astra：园区内混龄实验；无现行独立官网。',
-          'Astra Nova：承接理念与教师网络，开放全球招生。',
-          '签名活动 Conundrums：开放题与建设性辩论。'
+        {h:'本季课表在干什么', items:[
+          '公开预览课表约 90 门，每学期重做。多数课每周 1–2 小时；代数、几何、微积分等数学课每周 3–4 小时，需分班。',
+          '入门课几乎不留作业；高中级、工程级才加重。直播英语课，学生来自约 45 国。',
+          '课名本身就说明取向：不是先上完一套大纲，再「加点综合素质」。'
         ]},
-        {h:'现行课程（校方公开）', items:[
-          '每周约 4–16 课时；技术向含生物科技、工程、AI；人文向含文学、哲学与心智模型。',
-          '学生约 45 国；2026 年起高中毕业轨道。'
+        {h:'抽样 · 判断', items:[
+          'Better Decision-Making：科学思维、实验设计、逻辑谬误。',
+          'Paradoxes & Thought Experiments：这句话是假的，是真是假？',
+          'BioEthics II：出生前消除遗传病？让已灭绝物种复活？',
+          'Lies, Damned Lies, and Data Science：数据不会自己说实话。'
+        ]},
+        {h:'抽样 · 工程与世界', items:[
+          'Technical History of AI：今天用的概念，很多十年前就有。',
+          'C Programming for Engineers、App Development、Software Engineering Intensive。',
+          'Formula 1 Design、Social Entrepreneurship、Classic Synthesis（给任何团队加不成比例的价值）。',
+          '高中毕业轨道已出现 Corporate Collaborative：为 2027 年 6 月加州 El Segundo 驻场协作做准备。'
+        ]},
+        {h:'和我们要练的东西', items:[
+          'Astra Nova 用九十门课把「判断」铺开。我们没有九十门课，但脊柱相同：真问题、站队、当面讲清、对结果负责。',
+          'Conundrums 仍是申请门槛：没有标准答案的短视频，听推理过程。'
         ]}
       ],
-      source:'astranova.org', sourceUrl:'https://astranova.org'
+      source:'my.astranova.org/preview（2026-09 公开课表）· astranova.org', sourceUrl:'https://my.astranova.org/preview'
     },
     sabre:{
       accent:'#AF52DE', kicker:'英国 · 伦敦',
