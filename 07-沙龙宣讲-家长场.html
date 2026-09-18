@@ -426,8 +426,8 @@
   .scard.c-forge{--accent:#34C759}
   .scard-media{
     position:relative;
-    height:clamp(36px, 5.4vmin, 72px);
-    min-height:36px;
+    height:clamp(32px, 4.4vmin, 58px);
+    min-height:32px;
     background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, #fff), #f0f0f5);
   }
   .scard-media img{
@@ -460,7 +460,7 @@
     padding:.55vh .7vw .65vh .9vw;
     display:flex;flex-direction:column;
     min-height:0;
-    overflow:hidden;
+    overflow:visible;
   }
   .scard .where{
     font-size:clamp(11px, 1.25vmin, 16px);
@@ -478,7 +478,7 @@
   .scard ul{
     list-style:none;
     display:flex;flex-direction:column;gap:.15vh;
-    flex:1;min-height:0;overflow:hidden;
+    min-height:0;overflow:visible;
   }
   .scard li{
     font-size:clamp(12px, 1.45vmin, 20px);
@@ -1078,11 +1078,27 @@
     margin-top:.4vh;
   }
   .pyr-row{
+    position:relative;
     display:flex;align-items:center;justify-content:center;
     gap:12px;
   }
+  /* 分类标签在行内左侧固定宽度，图标组居中：不再重叠 */
+  .pyramid-slide .pyr{
+    justify-content:center;
+    align-content:center;
+    align-items:stretch;
+    gap:0;
+  }
+  .pyramid-slide .pyr-row{
+    display:grid;
+    grid-template-columns:minmax(84px,128px) auto;
+    align-items:center;justify-content:center;
+    column-gap:10px;
+    padding:.35vh 0;
+  }
   .pyr-row .band{
-    position:absolute;
+    position:static;
+    justify-self:end;text-align:right;
     font-size:var(--fs-micro);font-weight:650;letter-spacing:.02em;
     color:var(--ink-3);
     background:var(--fill);
@@ -1092,14 +1108,24 @@
   }
   .pyr-row .band.l{left:0}
   .pyr-row .band.r{right:0}
+  .pyr-tiles{
+    display:flex;align-items:center;justify-content:center;
+    gap:12px;min-width:0;
+  }
   .ptile{
     display:flex;flex-direction:column;align-items:center;gap:4px;
     min-width:64px;
   }
   .ptile img.ico{
     width:clamp(52px, 6.2vmin, 88px);height:clamp(52px, 6.2vmin, 88px);border-radius:20px;
-    display:block;object-fit:cover;background:#fff;
+    display:block;object-fit:contain;
+    background:#e8e8ed;
     box-shadow:0 2px 8px rgba(0,0,0,.14), inset 0 0 0 1px rgba(0,0,0,.06);
+  }
+  /* 浅色 logo 在浅底上不可见 → 只加深底托 */
+  .slide.pyramid-slide .ptile img.ico{
+    background:#cfcfd6;
+    box-shadow:0 2px 8px rgba(0,0,0,.18), inset 0 0 0 1px rgba(0,0,0,.16);
   }
   .ptile .n{
     font-size:var(--fs-micro);font-weight:600;color:var(--ink);
@@ -1716,14 +1742,13 @@
           <div class="where" data-edit>美国 · 奥斯汀等地 · 全日制</div>
           <h3 data-edit>Alpha School</h3>
           <ul data-edit>
-            <li>主课约 2 小时/日，Guide 约 1:5（校方称）。</li>
-            <li>校方称 MAP 增长约 2–2.6×，全国顶尖 1–3%。</li>
-            <li>独立调查：部分合作校州考 19%→21%；亚利桑那英语 28%（预测 65%）。</li>
+            <li>主课约 2 小时/日，Guide 约 1:5。</li>
+            <li>校方称 MAP 增长 2–2.6×、全国顶尖。</li>
+            <li>独立调查：合作校州考 19%→21%。</li>
           </ul>
           <div class="schips">
             <span class="schip"><span class="dico red"><svg><use href="#i-users"/></svg></span>入学超 1000</span>
-            <span class="schip"><span class="dico red"><svg><use href="#i-money"/></svg></span>$10k–$40k</span>
-            <span class="schip"><span class="dico red"><svg><use href="#i-star"/></svg></span>旧金山约 $75k</span>
+            <span class="schip"><span class="dico red"><svg><use href="#i-money"/></svg></span>$10k–$75k</span>
           </div>
           <button type="button" class="media-link js-story" data-story="alpha">图文介绍 →</button>
           <div class="note">alpha.school</div>
@@ -1740,9 +1765,9 @@
           <div class="where" data-edit>SpaceX 园区 Ad Astra → 全球线上</div>
           <h3 data-edit>Astra Nova</h3>
           <ul data-edit>
-            <li>直播小班约 6–16 人。本季公开课约 90 门，每学期重做。</li>
-            <li>同一张课表里：生物伦理、决策、悖论，也有 C 语言、F1 设计、AI 技术史。</li>
-            <li>申请先录 30 秒–2 分钟 Conundrums：听怎么想，不听标准答案。</li>
+            <li>直播小班 6–16 人，每学期重做课表。</li>
+            <li>同一张课表：生物伦理、悖论、C 语言、F1 设计。</li>
+            <li>申请先录 30 秒–2 分钟 Conundrums。</li>
           </ul>
           <div class="schips">
             <span class="schip"><span class="dico blue"><svg><use href="#i-clock"/></svg></span>周约 4–16 课时</span>
@@ -1763,9 +1788,9 @@
           <div class="where" data-edit>英国 · 伦敦 · David Game College</div>
           <h3 data-edit>Sabrewing 项目</h3>
           <ul data-edit>
-            <li>到校约 9:10–16:30；上午 AI 自适应 GCSE / A Level。</li>
-            <li>教练 + AI 导师 Violet；下午 300+ 小时技能与项目（校方称）。</li>
-            <li>一年通常 5 门 GCSE 或 2–3 门 A Level（校方称）。</li>
+            <li>上午 AI 自适应 GCSE / A Level。</li>
+            <li>教练 + AI 导师 Violet；下午做技能与项目。</li>
+            <li>一年通常 5 门 GCSE 或 2–3 门 A Level。</li>
           </ul>
           <div class="schips">
             <span class="schip"><span class="dico violet"><svg><use href="#i-clock2"/></svg></span>下午 300+ 小时</span>
@@ -1806,15 +1831,15 @@
         </div>
         <div class="scard-body">
           <div class="where" data-edit>美国 · 纽约 · 9–12 · 2026 首届</div>
-          <h3 data-edit>The Founders School</h3>
+          <h3 data-edit>Founders School</h3>
           <ul data-edit>
-            <li>学术约 3 小时/日；一年五段 Sell→Scale（校方称）。</li>
-            <li>三柱：生活技能、创业、AI 协作构建；首届约 20 人。</li>
-            <li>承诺未达百万利润可退费（合同为准）。</li>
+            <li>学术约 3 小时/日；一年五段 Sell→Scale。</li>
+            <li>三柱：生活技能、创业、AI 协作构建。</li>
           </ul>
           <div class="schips">
             <span class="schip"><span class="dico orange"><svg><use href="#i-money"/></svg></span>$150,000</span>
             <span class="schip"><span class="dico orange"><svg><use href="#i-users"/></svg></span>首届约 20 人</span>
+            <span class="schip"><span class="dico orange"><svg><use href="#i-star"/></svg></span>未达百万可退费</span>
           </div>
           <button type="button" class="media-link js-story" data-story="founders">图文介绍 →</button>
           <div class="note">founders.school</div>
@@ -2126,44 +2151,54 @@
   <div class="pyr">
     <div class="pyr-row">
       <span class="band r">聊天助手</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
+      <div class="pyr-tiles">
+        <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
+      </div>
     </div>
     <div class="pyr-row">
       <span class="band l">写代码 / 做产品</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
+      <div class="pyr-tiles">
+        <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
+      </div>
     </div>
     <div class="pyr-row">
       <span class="band r">做视频 / 做演示</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
+      <div class="pyr-tiles">
+        <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
+      </div>
     </div>
     <div class="pyr-row">
       <span class="band l">学习 / 办公</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
+      <div class="pyr-tiles">
+        <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
+      </div>
     </div>
     <div class="pyr-row">
       <span class="band r">图像 / 声音 / 设计</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
+      <div class="pyr-tiles">
+        <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
+        <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
+      </div>
     </div>
     <div class="pyr-base">
       <div class="ptile"><img class="ico" src="assets/salon/icons/n8n.png" alt=""><div class="n">n8n</div></div>
@@ -2513,7 +2548,7 @@
 
 <div id="pager">
   <button id="prev" aria-label="上一页">←</button>
-  <span id="page-num">1 / 11</span>
+  <span id="page-num">1 / 12</span>
   <button id="next" aria-label="下一页">→</button>
 </div>
 <div id="hint">← → 方向键 / 空格 / 点击翻页 · 右上角可编辑文字</div>
