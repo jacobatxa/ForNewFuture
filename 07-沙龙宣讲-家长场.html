@@ -845,10 +845,22 @@
     line-height:1.28;
   }
   .cnd p{
-    margin:0;
-    font-size:clamp(12px, 1.28vmin, 15px);
+    margin:0 0 .35vh;
+    font-size:clamp(11px, 1.22vmin, 14px);
     line-height:1.4;
     color:rgba(244,240,230,.72);
+  }
+  .cnd .opts{
+    display:flex;flex-wrap:wrap;gap:5px;
+  }
+  .cnd .opts span{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:650;
+    color:#f3e2a4;
+    background:rgba(232,197,71,.1);
+    border:1px solid rgba(232,197,71,.22);
+    padding:3px 8px;
+    line-height:1.25;
   }
   .astra-foot{
     flex-shrink:0;
@@ -899,11 +911,80 @@
     max-width:22em;
     margin:0;
   }
-  .auth-facts{
-    flex:1;min-height:0;
+  .auth-kpis{
+    flex:none;
     display:grid;
-    grid-template-columns:1fr 1.12fr .96fr;
-    gap:.7vw;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:.45vw;
+    margin:0 0 1.1vh;
+  }
+  .auth-kpis .ak{
+    border-top:1px solid rgba(232,197,71,.5);
+    padding:.7vh .55vw .65vh 0;
+  }
+  .auth-kpis .n{
+    font-size:clamp(20px, 2.7vmin, 34px);
+    font-weight:600;
+    letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    color:#fff;
+    line-height:.95;
+  }
+  .auth-kpis .u{
+    margin-top:.25vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.62);
+    line-height:1.3;
+    font-weight:600;
+  }
+  .auth-spine{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    gap:.7vh;
+    justify-content:flex-start;
+  }
+  .arow{
+    flex:0 0 auto;
+    min-height:0;
+    display:grid;
+    grid-template-columns:2.2em minmax(0,1.05fr) minmax(0,1.15fr);
+    column-gap:.8vw;
+    align-items:center;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    padding:1.15vh .9vw 1.1vh .55vw;
+  }
+  .arow .num{
+    color:#e8c547;font-size:clamp(13px,1.4vmin,16px);font-weight:700;letter-spacing:.08em;
+  }
+  .arow h3{
+    font-size:clamp(15px, 1.7vmin, 21px);
+    font-weight:600;letter-spacing:-.025em;color:#fff;
+    margin:0 0 .25vh;line-height:1.25;
+  }
+  .arow .claim p{
+    margin:0;font-size:clamp(12px, 1.28vmin, 16px);
+    line-height:1.4;color:rgba(244,240,230,.74);
+  }
+  .arow .bits{
+    display:grid;grid-template-columns:1fr 1fr;gap:.45vw;
+  }
+  .arow .bit{
+    border-top:1px solid rgba(232,197,71,.35);
+    padding-top:.35vh;
+  }
+  .arow .bit .n{
+    font-size:clamp(16px, 2.1vmin, 26px);
+    font-weight:600;color:#fff;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;
+  }
+  .arow .bit .d{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.6);line-height:1.3;margin-top:.1vh;
+  }
+  .auth-facts{
+    display:none;
   }
   .afact{
     background:rgba(255,255,255,.05);
@@ -1223,14 +1304,9 @@
     color:rgba(244,240,230,.45);line-height:1.4;
   }
 
-  /* Capability body P5 */
+  /* Capability body — superseded by kg-stage below */
   .slide.cap-slide{
-    padding:4vh 4vw 3vh;
-    justify-content:flex-start;
-    overflow:hidden;
-    background:
-      radial-gradient(ellipse 50% 50% at 8% 70%, rgba(108,92,231,.09), transparent 55%),
-      var(--paper);
+    padding:0;
   }
   .cap-main{
     flex:1;min-height:0;
@@ -1402,181 +1478,365 @@
     text-transform:uppercase;color:var(--ink-3);
   }
 
-  /* AI tools pyramid */
+  /* Iceberg · tools above, theory below */
   .slide.pyramid-slide{
-    padding:3.4vh 4vw 2.6vh;
-    justify-content:flex-start;
+    padding:0;
+    justify-content:stretch;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(0,113,227,.08), transparent 55%),
-      radial-gradient(ellipse 40% 35% at 100% 100%, rgba(26,163,154,.10), transparent 50%),
-      var(--paper);
+    background:#070b14;
+    color:#f4f0e6;
   }
-  .pyramid-slide .data-head h2{max-width:18em}
-  .pyr{
+  .slide.pyramid-slide .creature{display:none}
+  .berg-stage{
     flex:1;min-height:0;
     display:flex;flex-direction:column;
-    align-items:center;justify-content:center;
-    gap:1.05vh;
-    margin-top:.4vh;
-  }
-  .pyr-row{
-    display:flex;align-items:center;justify-content:center;
-    gap:12px;
-  }
-  .pyr-row .band{
-    position:absolute;
-    font-size:var(--fs-micro);font-weight:650;letter-spacing:.02em;
-    color:var(--ink-3);
-    background:var(--fill);
-    border-radius:100px;
-    padding:4px 10px;
-    white-space:nowrap;
-  }
-  .pyr-row .band.l{left:0}
-  .pyr-row .band.r{right:0}
-  .ptile{
-    display:flex;flex-direction:column;align-items:center;gap:4px;
-    min-width:64px;
-  }
-  .ptile img.ico{
-    width:clamp(52px, 6.2vmin, 88px);height:clamp(52px, 6.2vmin, 88px);border-radius:20px;
-    display:block;object-fit:cover;background:#fff;
-    box-shadow:0 2px 8px rgba(0,0,0,.14), inset 0 0 0 1px rgba(0,0,0,.06);
-  }
-  .ptile .n{
-    font-size:var(--fs-micro);font-weight:600;color:var(--ink);
-    letter-spacing:-.01em;text-align:center;line-height:1.2;
-  }
-  .pyr-base{
-    display:flex;flex-wrap:wrap;justify-content:center;gap:10px 14px;
-    width:min(92%,1080px);
-    margin-top:.6vh;
-    padding-top:1.2vh;
-    border-top:1px solid var(--line);
-  }
-  .slide.cap-slide .src{margin-top:1vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.4}
-
-  /* AI 指数 · 从拉到夯 */
-  .slide.idx-slide{
-    padding:3.2vh 3.4vw 2.4vh;
-    justify-content:flex-start;
-    overflow:hidden;
-    background:
-      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(196,138,42,.12), transparent 55%),
-      radial-gradient(ellipse 40% 35% at 0% 100%, rgba(232,93,76,.10), transparent 50%),
-      var(--paper);
-  }
-  .idx-pyr{
-    flex:1;min-height:0;
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:flex-end;
-    gap:.55vh;
-    padding-top:2vh;
-  }
-  .idx-band{
+    padding:2.6vh 2.3vw 7.2vh;
     position:relative;
-    display:grid;
-    grid-template-columns:auto 7.2em 1fr;
-    align-items:center;
-    gap:.9vw;
-    padding:.55vh 1.3vw .55vh .4vw;
-    border-radius:18px;
-    min-height:0;
-    box-shadow:0 8px 24px rgba(0,0,0,.06);
   }
-  .idx-band.hang{width:58%;background:linear-gradient(90deg,#fff8e8,#fff);}
-  .idx-band.ding{width:68%;background:linear-gradient(90deg,#eef5ff,#fff);}
-  .idx-band.ren{width:78%;background:linear-gradient(90deg,#eefaf1,#fff);}
-  .idx-band.npc{width:88%;background:linear-gradient(90deg,#f3f3f5,#fff);}
-  .idx-band.la{width:98%;background:linear-gradient(90deg,#fff1ee,#fff);}
-  .idx-fig{
-    height:clamp(72px, 13.5vh, 128px);
-    width:clamp(64px, 10vw, 120px);
+  .berg-stage .data-head{margin:0 0 .7vh;position:relative;z-index:2}
+  .berg-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+  }
+  .berg-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .berg-body{
+    flex:1;min-height:0;
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .berg-svg{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    pointer-events:none;z-index:0;
+  }
+  .berg-air{
+    position:relative;z-index:1;
+    flex:0 0 auto;
     display:flex;align-items:flex-end;justify-content:center;
-    margin-top:-2.8vh;
-    overflow:visible;
+    padding:1.2vh 6vw .6vh;
   }
-  .idx-band.hang .idx-fig{width:clamp(88px, 14vw, 168px)}
-  .idx-fig img{
-    height:118%;width:auto;max-width:none;
-    object-fit:contain;object-position:bottom center;
-    filter:
-      drop-shadow(0 4px 8px rgba(0,0,0,.08))
-      drop-shadow(0 14px 22px rgba(0,0,0,.12));
-    pointer-events:none;
+  .berg-peak{
+    width:min(100%, 920px);
+    display:flex;flex-direction:column;gap:.32vh;
   }
-  .idx-rank{
-    font-size:clamp(20px, 2.8vmin, 34px);
-    font-weight:700;
-    letter-spacing:-.04em;
-    line-height:1.05;
+  .tstrip{
+    display:grid;
+    grid-template-columns:4.6em minmax(0,1fr);
+    column-gap:.4vw;
+    align-items:baseline;
   }
-  .idx-rank small{
-    display:block;
-    margin-top:.2vh;
-    font-size:var(--fs-src);
+  .tstrip b{
+    font-size:clamp(10px, 1.12vmin, 13px);
     font-weight:700;
     letter-spacing:.12em;
-    text-transform:uppercase;
-    opacity:.7;
+    color:#e8c547;
+    white-space:nowrap;
   }
-  .idx-band.hang .idx-rank{color:#8A6419}
-  .idx-band.ding .idx-rank{color:#007AFF}
-  .idx-band.ren .idx-rank{color:#248A3D}
-  .idx-band.npc .idx-rank{color:#6e6e73}
-  .idx-band.la .idx-rank{color:#FF3B30}
-  .idx-copy q{
-    display:block;
-    font-size:var(--fs-small);
-    font-weight:650;
-    letter-spacing:-.02em;
-    quotes: "「" "」" "『" "』";
+  .tstrip span{
+    font-size:clamp(11px, 1.28vmin, 16px);
+    font-weight:600;
+    color:#fff;
+    letter-spacing:.01em;
+    line-height:1.25;
+  }
+  .berg-water{
+    position:relative;z-index:2;
+    flex:none;
+    display:flex;align-items:center;gap:.8vw;
+    padding:.35vh 0 .45vh;
+  }
+  .berg-water i{
+    flex:1;height:1px;
+    background:linear-gradient(90deg, transparent, #e8c547, transparent);
+    font-style:normal;
+  }
+  .berg-water span{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.16em;
+    color:#e8c547;
+    white-space:nowrap;
+  }
+  .berg-deep{
+    position:relative;z-index:1;
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    justify-content:space-evenly;
+    padding:1vh 1.2vw .2vh;
+  }
+  .stratum{
+    display:grid;
+    grid-template-columns:6.2em minmax(0,1fr);
+    column-gap:.7vw;
+    align-items:start;
+    padding:.45vh 0;
+    border-bottom:1px solid rgba(232,197,71,.12);
+  }
+  .stratum:last-child{border-bottom:0}
+  .stratum b{
+    font-size:clamp(11px, 1.18vmin, 14px);
+    font-weight:700;
+    letter-spacing:.1em;
+    color:#e8c547;
+    padding-top:.15em;
+  }
+  .stratum .terms{
+    display:flex;flex-wrap:wrap;
+    gap:5px 11px;
+    align-items:baseline;
+  }
+  .stratum .terms i{
+    font-style:normal;
+    font-size:clamp(12px, 1.32vmin, 16px);
+    font-weight:550;
+    color:rgba(220,232,242,.78);
+    letter-spacing:.01em;
     line-height:1.35;
   }
-  .idx-copy q::before{content:open-quote}
-  .idx-copy q::after{content:close-quote}
-  .idx-copy p{
-    margin-top:.25vh;
-    font-size:var(--fs-src);
-    color:var(--ink-2);
-    line-height:1.4;
+  .stratum .terms i.lg{
+    font-size:clamp(13px, 1.5vmin, 18px);
+    font-weight:650;
+    color:#f4f0e6;
   }
-  .idx-copy .tell{font-weight:650;color:var(--ink)}
-  .slide.idx-slide .src{margin-top:.8vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.35}
+  .stratum .terms i.fm{
+    font-family:"SF Mono","Menlo","PingFang SC",monospace;
+    color:#f3e2a4;
+    font-size:clamp(11px, 1.22vmin, 15px);
+    font-weight:600;
+  }
+  .slide.pyramid-slide .src{
+    flex-shrink:0;margin-top:.55vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+  }
+  .slide.pyramid-slide .takeaway{
+    margin-top:.55vh;
+    background:rgba(232,197,71,.08);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.pyramid-slide .takeaway .lbl{color:#e8c547}
+
+  /* Capability · knowledge families */
+  .slide.cap-slide{
+    padding:0;
+    justify-content:stretch;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.cap-slide .creature{display:none}
+  .kg-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:2.6vh 2.2vw 7.2vh;
+  }
+  .kg-stage .data-head{margin:0 0 .8vh}
+  .kg-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+  }
+  .kg-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .kg{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:.55vw;
+  }
+  .fam{
+    min-width:0;min-height:0;
+    display:flex;flex-direction:column;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(232,197,71,.16);
+    border-top:3px solid #e8c547;
+    padding:.85vh .7vw .8vh;
+  }
+  .fam .fid{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;letter-spacing:.16em;color:#e8c547;
+  }
+  .fam h3{
+    font-size:clamp(16px, 1.85vmin, 22px);
+    font-weight:600;letter-spacing:-.03em;color:#fff;
+    margin:.2vh 0 .15vh;line-height:1.2;
+  }
+  .fam .en{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.5);
+    letter-spacing:.02em;
+    margin-bottom:.45vh;
+    line-height:1.35;
+    white-space:normal;
+  }
+  .fam .blurb{
+    display:block;
+    flex:none;
+    width:100%;
+    font-size:clamp(12px, 1.28vmin, 15px);
+    line-height:1.45;
+    color:rgba(244,240,230,.78);
+    margin:0 0 .8vh;
+    padding-bottom:.6vh;
+    border-bottom:1px solid rgba(232,197,71,.18);
+  }
+  .lattice{flex:1;min-height:0;display:flex;flex-direction:column;gap:.7vh;justify-content:space-between}
+  .branch{
+    flex:1;
+    display:grid;
+    grid-template-columns:4px 1fr;
+    column-gap:.45vw;
+    align-items:stretch;
+  }
+  .branch .spine{background:rgba(232,197,71,.55);border-radius:2px}
+  .branch .hub{
+    display:block;
+    font-size:clamp(12px, 1.32vmin, 16px);
+    font-weight:700;color:#f3e2a4;
+    letter-spacing:.04em;
+    margin-bottom:.2vh;
+  }
+  .branch .kids{
+    display:flex;flex-wrap:wrap;gap:4px;
+  }
+  .branch .kids span{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:600;
+    color:rgba(244,240,230,.82);
+    border:1px solid rgba(232,197,71,.2);
+    background:rgba(232,197,71,.06);
+    padding:2px 7px;
+    line-height:1.3;
+  }
+  .slide.cap-slide .src{
+    flex-shrink:0;margin-top:.6vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+  }
+  .slide.cap-slide .takeaway{
+    margin-top:.55vh;
+    background:rgba(232,197,71,.08);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.cap-slide .takeaway .lbl{color:#e8c547}
+
+  /* AI index · academic quadrant */
+  .slide.idx-slide{
+    padding:0;
+    justify-content:stretch;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.idx-slide .creature{display:none}
+  .idx-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:2.6vh 2.2vw 7.2vh;
+  }
+  .idx-stage .data-head{margin:0 0 .7vh}
+  .idx-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+  }
+  .idx-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .idx-split{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0,1.15fr) minmax(320px,.95fr);
+    gap:1.1vw;
+  }
+  .quad{
+    position:relative;
+    min-height:0;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(232,197,71,.16);
+    overflow:hidden;
+  }
+  .quad svg{position:absolute;inset:10px;width:calc(100% - 20px);height:calc(100% - 20px);display:block}
+  .memo{
+    min-width:0;min-height:0;
+    display:flex;flex-direction:column;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.18);
+    border-left:3px solid #e8c547;
+    padding:1.1vh 1vw 1vh;
+  }
+  .memo .mk{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;letter-spacing:.16em;color:#e8c547;
+  }
+  .memo h3{
+    font-size:clamp(16px, 1.8vmin, 22px);
+    font-weight:600;color:#fff;letter-spacing:-.03em;
+    margin:.25vh 0 .7vh;line-height:1.25;
+    white-space:normal;
+  }
+  .mrow{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:4.6em minmax(0,1fr);
+    column-gap:.55vw;
+    align-items:start;
+    padding:.5vh 0;
+    border-top:1px solid rgba(232,197,71,.14);
+  }
+  .mrow .rk{
+    font-size:clamp(13px, 1.45vmin, 17px);
+    font-weight:700;letter-spacing:-.02em;
+  }
+  .mrow .rk small{
+    display:block;font-size:clamp(9px, 1.02vmin, 11px);
+    letter-spacing:.1em;opacity:.7;font-weight:700;
+  }
+  .mrow.hang .rk{color:#e8c547}
+  .mrow.ding .rk{color:#9ecbff}
+  .mrow.ren .rk{color:#9ee0b0}
+  .mrow.npc .rk{color:rgba(244,240,230,.7)}
+  .mrow.la .rk{color:#ff8a7a}
+  .mrow q{
+    display:block;
+    quotes:"「" "」" "『" "』";
+    font-size:clamp(11px, 1.2vmin, 14px);
+    font-weight:600;color:#fff;line-height:1.35;
+  }
+  .mrow q::before{content:open-quote}
+  .mrow q::after{content:close-quote}
+  .mrow p{
+    margin:.12vh 0 0;
+    font-size:clamp(10px, 1.1vmin, 13px);
+    color:rgba(244,240,230,.62);line-height:1.3;
+  }
+  .slide.idx-slide .src{
+    flex-shrink:0;margin-top:.55vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+  }
+  .slide.idx-slide .takeaway{
+    margin-top:.55vh;
+    background:rgba(232,197,71,.08);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.idx-slide .takeaway .lbl{color:#e8c547}
   .slide.cases-slide .takeaway{
     background:linear-gradient(90deg, rgba(0,113,227,.10), rgba(255,149,0,.12));
   }
-  .slide.pyramid-slide .takeaway{margin-top:.8vh}
-
-  /* Capability battery */
-  .cap-main{
-    grid-template-columns:minmax(0,.7fr) minmax(0,.75fr) minmax(0,1.15fr);
-    gap:1.8vw;
-    align-items:center;
-  }
-  .cap-figure{
-    display:flex;align-items:center;justify-content:center;
-    min-height:0;
-  }
-  .cap-stage{
-    position:relative;
-    height:100%;
-    min-height:56vh;
-    display:flex;align-items:center;justify-content:center;
-    background:transparent;
-    border-radius:0;
-    box-shadow:none;
-    overflow:visible;
-  }
-  .cap-stage svg{width:min(100%,280px);height:auto;max-height:64vh}
-  .cap-legend{gap:1vh}
-  .cap-item{
-    padding:1.35vh 1.05vw;
-    border-radius:16px;
-  }
-  .cap-item h4{font-size:var(--fs-h3)}
-  .cap-item p{font-size:var(--fs-small)}
 
   /* Course deep-dive */
   .slide.course-deep{
@@ -1836,13 +2096,19 @@
   body:has(.slide.schools.active) #pager,
   body:has(.slide.astra-slide.active) #pager,
   body:has(.slide.auth-slide.active) #pager,
-  body:has(.slide.labor.active) #pager{
+  body:has(.slide.labor.active) #pager,
+  body:has(.slide.pyramid-slide.active) #pager,
+  body:has(.slide.cap-slide.active) #pager,
+  body:has(.slide.idx-slide.active) #pager{
     color:rgba(244,240,230,.5);
   }
   body:has(.slide.schools.active) #pager button,
   body:has(.slide.astra-slide.active) #pager button,
   body:has(.slide.auth-slide.active) #pager button,
-  body:has(.slide.labor.active) #pager button{
+  body:has(.slide.labor.active) #pager button,
+  body:has(.slide.pyramid-slide.active) #pager button,
+  body:has(.slide.cap-slide.active) #pager button,
+  body:has(.slide.idx-slide.active) #pager button{
     background:rgba(13,21,36,.78);
     border-color:rgba(232,197,71,.28);
     color:#f4f0e6;
@@ -1850,7 +2116,10 @@
   body:has(.slide.schools.active) #pager button:hover,
   body:has(.slide.astra-slide.active) #pager button:hover,
   body:has(.slide.auth-slide.active) #pager button:hover,
-  body:has(.slide.labor.active) #pager button:hover{
+  body:has(.slide.labor.active) #pager button:hover,
+  body:has(.slide.pyramid-slide.active) #pager button:hover,
+  body:has(.slide.cap-slide.active) #pager button:hover,
+  body:has(.slide.idx-slide.active) #pager button:hover{
     background:#e8c547;
     color:#070b14;
     border-color:#e8c547;
@@ -1858,12 +2127,20 @@
   body:has(.slide.schools.active) #progress,
   body:has(.slide.astra-slide.active) #progress,
   body:has(.slide.auth-slide.active) #progress,
-  body:has(.slide.labor.active) #progress{
+  body:has(.slide.labor.active) #progress,
+  body:has(.slide.pyramid-slide.active) #progress,
+  body:has(.slide.cap-slide.active) #progress,
+  body:has(.slide.idx-slide.active) #progress{
     background:#e8c547;
   }
   #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
   body:has(.slide.schools.active) #hint,
-  body:has(.slide.astra-slide.active) #hint{
+  body:has(.slide.astra-slide.active) #hint,
+  body:has(.slide.auth-slide.active) #hint,
+  body:has(.slide.labor.active) #hint,
+  body:has(.slide.pyramid-slide.active) #hint,
+  body:has(.slide.cap-slide.active) #hint,
+  body:has(.slide.idx-slide.active) #hint{
     color:rgba(244,240,230,.45);
   }
   #hint.hidden{opacity:0}
@@ -2019,7 +2296,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v32">
+<div id="deck" data-rev="v33">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2303,23 +2580,29 @@
       <img class="bg catalog" src="assets/salon/astra/preview-catalog.png" alt="Astra Nova Fall 2026 课表网站">
       <div class="veil"></div>
       <div class="brand">
-        <div class="kicker" data-edit>01 · ASTRA NOVA · 课表原页</div>
-        <h2 data-edit>这是现在的课表网站，不是宣传海报。</h2>
+        <div class="kicker" data-edit>01 · ASTRA NOVA · 申请与课余</div>
+        <h2 data-edit>全球面试：学生自己录视频答题。<br>课余安排很满，不只是社团。</h2>
       </div>
       <div class="astra-kpis">
+        <div class="ak"><div class="n" data-edit>45 国</div><div class="u">同一套英语直播面试</div></div>
+        <div class="ak"><div class="n" data-edit>30s–2min</div><div class="u">自己录，没有标准答案</div></div>
+        <div class="ak"><div class="n" data-edit>90 门</div><div class="u">课余是选课，不是只逛社团</div></div>
         <div class="ak"><div class="n" data-edit>Fall 2026</div><div class="u">my.astranova.org/preview</div></div>
-        <div class="ak"><div class="n" data-edit>直播小班</div><div class="u">时间多为中国凌晨</div></div>
       </div>
     </aside>
     <div class="astra-panel">
-      <p class="lede" data-edit>Conundrum 是学校自己出的开放题：没有标准答案，要你站队，并讲清为什么。下面三道是最常被提起的。</p>
+      <p class="lede" data-edit>Conundrum 是学校自己出的开放题：没有标准答案，要你站队，并讲清为什么。申请时任选一道，交视频或音频。下面三道最常被提起。</p>
       <div class="cnd-list">
         <article class="cnd">
           <img src="assets/salon/astra/chocolate.jpg" alt="Chocolate Conundrum">
           <div>
             <div class="en">Chocolate Conundrum</div>
             <h3 data-edit>员工找到了公司巧克力的秘密配方。自己开店，能不能用？</h3>
-            <p data-edit>一边是原公司的商业秘密，一边是发明人自己的劳动。选 Team Astra Sweets 或 Team Nova Sweets，并说出理由。</p>
+            <p data-edit>Astra Sweets 靠一种别人不知道的配方成为最好吃的巧克力。配方是员工 Nova 发现的。她要开 Nova Sweets，能不能把这个配方带走？</p>
+            <div class="opts">
+              <span>A 不能 · Team Astra Sweets</span>
+              <span>B 能 · Team Nova Sweets</span>
+            </div>
           </div>
         </article>
         <article class="cnd">
@@ -2327,7 +2610,16 @@
           <div>
             <div class="en">NASA Conundrum</div>
             <h3 data-edit>航天局有七个项目，钱只够做三个。你砍掉哪四个？</h3>
-            <p data-edit>载人上火星、机器人探未知、太空旅游、挡小行星、望远镜、研究地球、科学教育进课堂。选三个，等于公开你的优先级。</p>
+            <p data-edit>选三个，等于公开你的优先级：眼前的地球、人类的安全、还是更远的未知。</p>
+            <div class="opts">
+              <span>A 载人上火星</span>
+              <span>B 机器人探未知世界</span>
+              <span>C 太空旅游</span>
+              <span>D 挡小行星</span>
+              <span>E 最强太空望远镜</span>
+              <span>F 把地球研究清楚</span>
+              <span>G 每个学校都上行星科学</span>
+            </div>
           </div>
         </article>
         <article class="cnd">
@@ -2335,11 +2627,18 @@
           <div>
             <div class="en">Moonshot Conundrum</div>
             <h3 data-edit>一个国家想集中花钱，把生活变好。钱该优先给谁？</h3>
-            <p data-edit>探索、教育、环境、把人连起来的基础设施，还是能改变世界的新想法。没有标准配比，要能讲清取舍。</p>
+            <p data-edit>它不想撒胡椒面，想把大部分钱压在少数目标上，好更快看见进展。没有标准配比，要能讲清取舍。</p>
+            <div class="opts">
+              <span>A 探索 · 太空、深海、微观</span>
+              <span>B 教育 · 孩子爱去的学校</span>
+              <span>C 环境 · 动植物与空气水源</span>
+              <span>D 把人连起来 · 城市、路、网络</span>
+              <span>E 新想法 · 科研、技术与艺术</span>
+            </div>
           </div>
         </article>
       </div>
-      <p class="astra-foot"><span class="lbl">申请</span><span data-edit>学生任选一道 Conundrum，交 30 秒到 2 分钟视频或音频。听的是推理过程，不是背到了哪一个「正确」选项。</span></p>
+      <p class="astra-foot"><span class="lbl">听什么</span><span data-edit>听的是推理过程，不是背到了哪一个「正确」选项。社团是课外活动；这里的课余是九十门可选的真课。</span></p>
     </div>
   </div>
 </section>
@@ -2352,53 +2651,47 @@
       <div class="kicker" data-edit>01 · 名校选拔</div>
       <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
     </div>
-    <div class="auth-facts">
-      <article class="afact">
-        <div class="idx" data-edit>事实 01 · 通道</div>
-        <div class="anum neg"><span class="n" data-edit>−10.2%</span><span class="u">美国 · 中国本科</span></div>
-        <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
-        <p data-edit>2024/25 学年，中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。</p>
-        <p data-edit>同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。</p>
-        <p data-edit>英国：UCAS 2026 中国本科申请上升 12.2%，到 3.8 万人；学生签证签发下降 14.7%。申请的人还在挤，门没有变宽。</p>
-        <p class="so" data-edit>对中国学生来说，招生比例在持续收窄。</p>
-      </article>
-      <article class="afact">
-        <div class="idx" data-edit>事实 02 · 读数</div>
-        <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
-        <div class="cmp">
-          <div class="c">
-            <div class="lab">牛津 · 整体录取通知比例</div>
-            <div class="n">16.5%</div>
-            <div class="d">3,853 份通知 / 23,291 份申请</div>
-          </div>
-          <div class="c">
-            <div class="lab">牛津 · 中国大陆</div>
-            <div class="n">10.3%</div>
-            <div class="d">218 份通知 / 2,111 份申请</div>
-          </div>
+    <div class="auth-kpis">
+      <div class="ak"><div class="n" data-edit>−10.2%</div><div class="u">美国 · 中国本科 2024/25</div></div>
+      <div class="ak"><div class="n" data-edit>+4.5%</div><div class="u">美国国际生创纪录，饼在变大</div></div>
+      <div class="ak"><div class="n" data-edit>16.5%</div><div class="u">牛津整体录取通知比例</div></div>
+      <div class="ak"><div class="n" data-edit>10.3%</div><div class="u">牛津 · 中国大陆</div></div>
+      <div class="ak"><div class="n" data-edit>9.8%</div><div class="u">剑桥中国成功率（入学/申请）</div></div>
+      <div class="ak"><div class="n" data-edit>30%</div><div class="u">美国招生办明确禁止 AI 代写</div></div>
+    </div>
+    <div class="auth-spine">
+      <article class="arow">
+        <div class="num">01</div>
+        <div class="claim">
+          <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
+          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。印度 363,019 人，已经超过中国。英国这边：申请还在挤，签证签发在下降。</p>
         </div>
-        <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是「牛津歧视」，是中国学生之间的竞争更密。</p>
-        <p data-edit>剑桥口径更严：成功率 = 入学人数 ÷ 申请人数。2025 轮次中国 2,900 人申请、284 人入学，成功率 9.8%。海外申请里中国占 34.9%。</p>
-        <p class="so" data-edit>名额有限，申请池最密的那群人，通道最窄。</p>
-      </article>
-      <article class="afact">
-        <div class="idx" data-edit>事实 03 · 文书</div>
-        <div class="anum"><span class="n" data-edit>30%</span><span class="u">明确禁止 AI 撰写文书</span></div>
-        <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
-        <div class="cmp">
-          <div class="c">
-            <div class="lab">没有正式书面政策</div>
-            <div class="n">68%</div>
-            <div class="d">口径乱，不等于可以碰运气</div>
-          </div>
-          <div class="c">
-            <div class="lab">允许用 AI 帮忙想</div>
-            <div class="n">27%</div>
-            <div class="d">不允许代写交差</div>
-          </div>
+        <div class="bits">
+          <div class="bit"><div class="n">+12.2%</div><div class="d">UCAS 2026 中国本科申请</div></div>
+          <div class="bit"><div class="n">−14.7%</div><div class="d">英国学生签证签发</div></div>
         </div>
-        <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写从 2024 年的 25% 升到 30%。</p>
-        <p class="so" data-edit>作文写得顺不够。得能讲清楚是自己想的。</p>
+      </article>
+      <article class="arow">
+        <div class="num">02</div>
+        <div class="claim">
+          <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
+          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。</p>
+        </div>
+        <div class="bits">
+          <div class="bit"><div class="n">218 / 2,111</div><div class="d">牛津中国大陆：通知 / 申请</div></div>
+          <div class="bit"><div class="n">34.9%</div><div class="d">剑桥海外申请里来自中国</div></div>
+        </div>
+      </article>
+      <article class="arow">
+        <div class="num">03</div>
+        <div class="claim">
+          <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
+          <p data-edit>Kaplan 2025 调查 220 所美国高校。禁止代写从 25% 升到 30%。没有书面政策，不等于可以碰运气。作文写得顺不够，得能讲清楚是自己想的。</p>
+        </div>
+        <div class="bits">
+          <div class="bit"><div class="n">68%</div><div class="d">还没有正式书面政策</div></div>
+          <div class="bit"><div class="n">27%</div><div class="d">允许用 AI 帮忙想，不允许代写交差</div></div>
+        </div>
       </article>
     </div>
     <p class="auth-src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
@@ -2501,161 +2794,219 @@
   </div>
 </section>
 
-<!-- P4b 2026 工具地图 -->
-<section class="slide pyramid-slide paper">
-  <div class="data-head">
-    <div class="kicker">02 · 工具会换代</div>
-    <h2>这些是现在还能用的工具</h2>
-  </div>
-  <div class="pyr">
-    <div class="pyr-row">
-      <span class="band r">聊天助手</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
+<!-- P7 工具冰山 -->
+<section class="slide pyramid-slide">
+  <div class="berg-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>02 · 冰山</div>
+      <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
     </div>
-    <div class="pyr-row">
-      <span class="band l">写代码 / 做产品</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
-    </div>
-    <div class="pyr-row">
-      <span class="band r">做视频 / 做演示</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
-    </div>
-    <div class="pyr-row">
-      <span class="band l">学习 / 办公</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
-    </div>
-    <div class="pyr-row">
-      <span class="band r">图像 / 声音 / 设计</span>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
-    </div>
-    <div class="pyr-base">
-      <div class="ptile"><img class="ico" src="assets/salon/icons/n8n.png" alt=""><div class="n">n8n</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/zapier.png" alt=""><div class="n">Zapier</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/make.png" alt=""><div class="n">Make</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/deepseek.png" alt=""><div class="n">DeepSeek</div></div>
-      <div class="ptile"><img class="ico" src="assets/salon/icons/codex.png" alt=""><div class="n">Codex</div></div>
-    </div>
-  </div>
-  <p class="src">截至 2026.9。Manus 已不适合进课堂（收购后拆分、数据删除）。课上会用到其中若干，不绑死某一个。</p>
-  <p class="takeaway"><span class="lbl">一句话</span>这些软件一两年就会换一批。要练的是会选、会查、敢负责，不是背某一个 App。</p>
-  <img class="creature lizard" src="assets/salon/creatures/lizard.png" alt="">
-</section>
-
-<!-- P5 能力结构 -->
-<section class="slide cap-slide paper">
-  <div class="data-head">
-    <div class="kicker">02 · 能力口径</div>
-    <h2>我们要培养的人，<br>认这五件事。</h2>
-  </div>
-  <div class="cap-main">
-    <div class="cap-figure">
-      <img class="neuron-side" src="assets/salon/creatures/neuron.png" alt="">
-    </div>
-    <div class="cap-stage">
-      <svg viewBox="0 0 220 460" xmlns="http://www.w3.org/2000/svg" aria-label="五层能力">
-        <rect x="82" y="10" width="56" height="16" rx="5" fill="#1d1d1f"/>
-        <rect x="28" y="22" width="164" height="426" rx="32" fill="#ffffff" stroke="#1d1d1f" stroke-width="3"/>
-        <rect x="42" y="38" width="136" height="394" rx="20" fill="#f5f5f7"/>
-        <!-- 5 AI Native · top -->
-        <rect x="51" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="54" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="54" width="26" height="26" rx="6" fill="#1aa39a"/>
-        <rect x="51" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="82" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="113" y="85" width="26" height="26" rx="6" fill="#1aa39a"/><rect x="144" y="85" width="26" height="26" rx="6" fill="#E5E5EA"/>
-        <!-- 4 商业思维 -->
-        <rect x="51" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="126" width="26" height="26" rx="6" fill="#FF9500"/><rect x="144" y="126" width="26" height="26" rx="6" fill="#FF9500"/>
-        <rect x="51" y="157" width="26" height="26" rx="6" fill="#FF9500"/><rect x="82" y="157" width="26" height="26" rx="6" fill="#FF9500"/><rect x="113" y="157" width="26" height="26" rx="6" fill="#E5E5EA"/><rect x="144" y="157" width="26" height="26" rx="6" fill="#E5E5EA"/>
-        <!-- 3 世界探索 -->
-        <rect x="51" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="198" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="198" width="26" height="26" rx="6" fill="#34C759"/>
-        <rect x="51" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="82" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="113" y="229" width="26" height="26" rx="6" fill="#34C759"/><rect x="144" y="229" width="26" height="26" rx="6" fill="#34C759"/>
-        <!-- 2 思想构建 -->
-        <rect x="51" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="270" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="270" width="26" height="26" rx="6" fill="#5856D6"/>
-        <rect x="51" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="82" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="113" y="301" width="26" height="26" rx="6" fill="#5856D6"/><rect x="144" y="301" width="26" height="26" rx="6" fill="#E5E5EA"/>
-        <!-- 1 万物机理 · bottom -->
-        <rect x="51" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="342" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="342" width="26" height="26" rx="6" fill="#007AFF"/>
-        <rect x="51" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="82" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="113" y="373" width="26" height="26" rx="6" fill="#007AFF"/><rect x="144" y="373" width="26" height="26" rx="6" fill="#007AFF"/>
+    <div class="berg-body">
+      <svg class="berg-svg" viewBox="0 0 1200 720" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="ice-air" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#d7e7f4" stop-opacity=".28"/>
+            <stop offset="1" stop-color="#9fb8cc" stop-opacity=".10"/>
+          </linearGradient>
+          <linearGradient id="ice-deep" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7ea0b8" stop-opacity=".16"/>
+            <stop offset="1" stop-color="#1a3a52" stop-opacity=".28"/>
+          </linearGradient>
+          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#041018" stop-opacity=".0"/>
+            <stop offset=".08" stop-color="#0a2a44" stop-opacity=".55"/>
+            <stop offset="1" stop-color="#02080f" stop-opacity=".92"/>
+          </linearGradient>
+        </defs>
+        <path d="M430 18 L770 18 L980 268 L1188 720 L12 720 L220 268 Z" fill="url(#ice-air)" stroke="rgba(232,197,71,.22)" stroke-width="1.2"/>
+        <path d="M220 268 L980 268 L1188 720 L12 720 Z" fill="url(#ice-deep)"/>
+        <path d="M0 268 H1200 V720 H0 Z" fill="url(#sea)"/>
+        <path d="M220 268 L980 268" stroke="#e8c547" stroke-width="1.4" opacity=".85"/>
+        <path d="M430 18 L510 268 M770 18 L690 268 M500 18 L320 268 M700 18 L880 268" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
       </svg>
+      <div class="berg-air">
+        <div class="berg-peak">
+          <div class="tstrip"><b>聊天</b><span>Claude · ChatGPT · Gemini · Kimi</span></div>
+          <div class="tstrip"><b>写代码</b><span>Cursor · Claude Code · Replit · Lovable · Copilot · Codex</span></div>
+          <div class="tstrip"><b>做视频</b><span>HeyGen · Synthesia · Descript · Gamma · 可灵 · Runway · Veo</span></div>
+          <div class="tstrip"><b>学习办公</b><span>NotebookLM · Notion · Grammarly · Granola · Perplexity</span></div>
+          <div class="tstrip"><b>图像声音</b><span>Midjourney · ElevenLabs · Suno · Figma · Canva</span></div>
+          <div class="tstrip"><b>工作流</b><span>n8n · Zapier · Make · DeepSeek</span></div>
+        </div>
+      </div>
+      <div class="berg-water"><i></i><span>海面 · 用户能直接点开的工具</span><i></i></div>
+      <div class="berg-deep">
+        <div class="stratum">
+          <b>学习算法</b>
+          <div class="terms">
+            <i class="lg">Transformer</i><i class="lg">Attention</i><i>Softmax</i><i>反向传播</i><i>梯度下降</i><i>Adam</i><i>RNN / LSTM</i><i>CNN</i><i>MoE</i><i>Diffusion</i><i>RLHF</i><i>PPO</i><i>DPO</i><i>LoRA</i>
+          </div>
+        </div>
+        <div class="stratum">
+          <b>核心公式</b>
+          <div class="terms">
+            <i class="fm">softmax(QKᵀ/√d)V</i><i class="fm">∇θ ℒ</i><i class="fm">H = −Σ p log p</i><i class="fm">DKL(p∥q)</i><i class="fm">P(y|x)</i><i class="fm">Bayes</i><i class="fm">链式法则</i><i class="fm">最大似然</i>
+          </div>
+        </div>
+        <div class="stratum">
+          <b>组成原理</b>
+          <div class="terms">
+            <i class="lg">指令集</i><i>ALU / 流水线</i><i>缓存层次</i><i>虚拟内存</i><i>操作系统</i><i>编译与链接</i><i>CUDA</i><i>SIMD</i><i>GPU 并行</i><i>存储与总线</i>
+          </div>
+        </div>
+        <div class="stratum">
+          <b>互联网</b>
+          <div class="terms">
+            <i class="lg">TCP/IP</i><i>DNS</i><i>HTTP / TLS</i><i>BGP</i><i>CDN</i><i>REST</i><i>分布式</i><i>一致性</i><i>Raft</i><i>CAP</i><i>MapReduce</i>
+          </div>
+        </div>
+        <div class="stratum">
+          <b>实验室与公司</b>
+          <div class="terms">
+            <i class="lg">OpenAI</i><i class="lg">Anthropic</i><i>Google DeepMind</i><i>Meta FAIR</i><i>NVIDIA</i><i>月之暗面</i><i>DeepSeek</i><i>智谱</i><i>Stanford</i><i>MIT</i><i>清华</i><i>CMU</i>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="cap-legend">
-      <div class="cap-item"><span class="dico blue lg"><svg><use href="#i-atom"/></svg></span><div><h4>万物机理</h4><div class="en">History · Logic · Math · Physics</div><p>学本源：历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p></div></div>
-      <div class="cap-item"><span class="dico violet lg"><svg><use href="#i-speech"/></svg></span><div><h4>思想构建</h4><div class="en">Analyze inward · Speak outward</div><p>能把分析内化成自己的判断，也能当众讲清楚。想得清和说得出，是一件事。</p></div></div>
-      <div class="cap-item"><span class="dico green lg"><svg><use href="#i-garden"/></svg></span><div><h4>世界探索</h4><div class="en">World as a lab / garden / playground</div><p>能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p></div></div>
-      <div class="cap-item"><span class="dico orange lg"><svg><use href="#i-coin"/></svg></span><div><h4>商业思维</h4><div class="en">Hobby → product → sustainable</div><p>让爱好、产品、创作能持续下去。懂一点社会经济，懂公司和一群人怎么协作。</p></div></div>
-      <div class="cap-item"><span class="dico teal lg photo"><img src="assets/salon/icons/ai-native.png" alt=""></span><div><h4>AI Native Mind</h4><div class="en">Default environment, not a special class</div><p>AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p></div></div>
-    </div>
+    <p class="src">海面以上为 2026.9 仍可直接使用的产品。Manus 已不适合进课堂。课上会用到其中若干，不绑死某一个。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>聊天窗口只是露出来的那一角。真正的变革在算法、公式、系统和公司里，还会更强烈。</p>
   </div>
-  <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。实验校可以对照，但不跟着他们的成绩广告走。</p>
-  <p class="takeaway"><span class="lbl">一句话</span>底座是万物机理。上面是思想、真实世界、可持续。AI 是默认环境，不是目的。</p>
 </section>
 
-<!-- P5b AI 指数 -->
-<section class="slide idx-slide paper">
-  <div class="data-head">
-    <div class="kicker">02 · AI 指数</div>
-    <h2>听他怎么说话，<br>就知道他在哪一层。</h2>
+<!-- P8 能力结构 · 知识家族 -->
+<section class="slide cap-slide">
+  <div class="kg-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>02 · 课程核心架构</div>
+      <h2 data-edit>五件原始能力，各自长出一套知识家族。</h2>
+    </div>
+    <div class="kg">
+      <article class="fam">
+        <div class="fid">01</div>
+        <h3>万物机理</h3>
+        <div class="en">History · Logic · Math · Physics</div>
+        <p class="blurb">学本源：历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p>
+        <div class="lattice">
+          <div class="branch"><div class="spine"></div><div><span class="hub">历史</span><div class="kids"><span>史料</span><span>制度</span><span>技术史</span><span>编年</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">逻辑</span><div class="kids"><span>概念</span><span>论证</span><span>哲学</span><span>反例</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">数学</span><div class="kids"><span>证明</span><span>函数</span><span>概率</span><span>统计</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">物理</span><div class="kids"><span>力学</span><span>能量</span><span>测量</span><span>模型</span></div></div></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">02</div>
+        <h3>思想构建</h3>
+        <div class="en">Analyze inward · Speak outward</div>
+        <p class="blurb">能把分析内化成自己的判断，也能当众讲清楚。想得清和说得出，是一件事。</p>
+        <div class="lattice">
+          <div class="branch"><div class="spine"></div><div><span class="hub">内化</span><div class="kids"><span>分析</span><span>判断</span><span>取舍</span><span>概念</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">表达</span><div class="kids"><span>结构</span><span>当众讲</span><span>书面</span><span>听懂</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">对质</span><div class="kids"><span>追问</span><span>反例</span><span>修订</span><span>证据</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">听众</span><div class="kids"><span>当众</span><span>听懂</span><span>回应</span></div></div></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">03</div>
+        <h3>世界探索</h3>
+        <div class="en">World as a lab / garden / playground</div>
+        <p class="blurb">能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p>
+        <div class="lattice">
+          <div class="branch"><div class="spine"></div><div><span class="hub">发现</span><div class="kids"><span>观察</span><span>感知</span><span>现场</span><span>记录</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">定义</span><div class="kids"><span>边界</span><span>约束</span><span>真问题</span><span>优先级</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">动手</span><div class="kids"><span>实验</span><span>原型</span><span>复盘</span><span>迭代</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">实验室</span><div class="kids"><span>花园</span><span>操场</span><span>世界</span></div></div></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">04</div>
+        <h3>商业思维</h3>
+        <div class="en">Hobby → product → sustainable</div>
+        <p class="blurb">让爱好、产品、创作能持续下去。懂一点社会经济，懂公司和一群人怎么协作。</p>
+        <div class="lattice">
+          <div class="branch"><div class="spine"></div><div><span class="hub">价值</span><div class="kids"><span>爱好</span><span>产品</span><span>定价</span><span>交换</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">组织</span><div class="kids"><span>协作</span><span>分工</span><span>公司</span><span>一群人</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">持续</span><div class="kids"><span>现金流</span><span>规则</span><span>社会</span><span>创作</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">经济</span><div class="kids"><span>交换</span><span>协作</span><span>可持续</span></div></div></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">05</div>
+        <h3>AI Native</h3>
+        <div class="en">Default environment, not a special class</div>
+        <p class="blurb">AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p>
+        <div class="lattice">
+          <div class="branch"><div class="spine"></div><div><span class="hub">会选</span><div class="kids"><span>工具</span><span>场景</span><span>边界</span><span>换代</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">会查</span><div class="kids"><span>核验</span><span>评测</span><span>出处</span><span>反例</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">敢负责</span><div class="kids"><span>署名</span><span>追责</span><span>判断留下</span><span>能力上移</span></div></div></div>
+          <div class="branch"><div class="spine"></div><div><span class="hub">默认环境</span><div class="kids"><span>不是特开课</span><span>会选会查</span><span>责任不交</span></div></div></div>
+        </div>
+      </article>
+    </div>
+    <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。各家族下的词是该能力的知识根系，课程细目下一轮再加工。实验校可以对照，但不跟着他们的成绩广告走。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>底座是万物机理。上面是思想、真实世界、可持续。AI 是默认环境，不是目的。</p>
   </div>
-  <div class="idx-pyr">
-    <article class="idx-band hang">
-      <div class="idx-fig"><img src="assets/salon/index/hang.png" alt=""></div>
-      <div class="idx-rank">夯<small>Hang</small></div>
-      <div class="idx-copy">
-        <q>纯决策模型怎么建。这一层 attention 为什么要改。tokenizer 和语料配不上。</q>
-        <p><span class="tell">听出来：</span>能改结构、能讲取舍、能被当面追问。这是内行。</p>
+</section>
+
+<!-- P9 AI 指数 · 象限 -->
+<section class="slide idx-slide">
+  <div class="idx-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>02 · AI 能力坐标</div>
+      <h2 data-edit>AI 能力要画在坐标上，不能只听头衔。</h2>
+    </div>
+    <div class="idx-split">
+      <div class="quad" aria-label="AI 能力象限">
+        <svg viewBox="0 0 720 560" xmlns="http://www.w3.org/2000/svg" aria-label="主张强度对机制深度">
+          <rect x="86" y="36" width="292" height="232" fill="rgba(255,138,122,.07)"/>
+          <rect x="378" y="36" width="292" height="232" fill="rgba(232,197,71,.05)"/>
+          <rect x="86" y="268" width="292" height="232" fill="rgba(244,240,230,.03)"/>
+          <rect x="378" y="268" width="292" height="232" fill="rgba(158,224,176,.07)"/>
+          <text x="232" y="56" text-anchor="middle" fill="rgba(255,180,170,.7)" font-size="12" font-weight="700" letter-spacing="1.4">高调 · 机制仍空</text>
+          <text x="524" y="56" text-anchor="middle" fill="rgba(232,197,71,.55)" font-size="12" font-weight="700" letter-spacing="1.4">会讲 · 也能拆开看</text>
+          <text x="232" y="492" text-anchor="middle" fill="rgba(244,240,230,.38)" font-size="12" font-weight="700" letter-spacing="1.4">还没入门</text>
+          <text x="524" y="492" text-anchor="middle" fill="rgba(158,224,176,.75)" font-size="12" font-weight="700" letter-spacing="1.4">能改结构 · 不靠表演</text>
+          <line x1="86" y1="500" x2="670" y2="500" stroke="#e8c547" stroke-width="1.5"/>
+          <line x1="86" y1="500" x2="86" y2="36" stroke="#e8c547" stroke-width="1.5"/>
+          <polygon points="670,500 657,494 657,506" fill="#e8c547"/>
+          <polygon points="86,36 80,49 92,49" fill="#e8c547"/>
+          <line x1="86" y1="268" x2="670" y2="268" stroke="rgba(232,197,71,.2)" stroke-dasharray="4 6"/>
+          <line x1="378" y1="36" x2="378" y2="500" stroke="rgba(232,197,71,.2)" stroke-dasharray="4 6"/>
+          <path d="M179 101 C 230 160, 300 250, 413 305 S 540 350, 612 379" fill="none" stroke="rgba(232,197,71,.35)" stroke-width="1.6" stroke-dasharray="5 7"/>
+          <g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif">
+            <circle cx="179" cy="101" r="8" fill="#ff8a7a"/>
+            <text x="194" y="97" fill="#ff8a7a" font-size="15" font-weight="700">拉完了</text>
+            <text x="194" y="114" fill="rgba(244,240,230,.5)" font-size="10">无卡 · 无数据 · 无曲线</text>
+            <circle cx="238" cy="175" r="8" fill="rgba(244,240,230,.7)"/>
+            <text x="253" y="171" fill="rgba(244,240,230,.85)" font-size="15" font-weight="700">NPC</text>
+            <text x="253" y="188" fill="rgba(244,240,230,.5)" font-size="10">头衔叠 buff</text>
+            <circle cx="413" cy="305" r="8" fill="#9ee0b0"/>
+            <text x="428" y="301" fill="#9ee0b0" font-size="15" font-weight="700">人上人</text>
+            <text x="428" y="318" fill="rgba(244,240,230,.5)" font-size="10">能交货 · 深问会停</text>
+            <circle cx="542" cy="342" r="8" fill="#9ecbff"/>
+            <text x="542" y="322" text-anchor="middle" fill="#9ecbff" font-size="15" font-weight="700">顶级</text>
+            <text x="542" y="368" text-anchor="middle" fill="rgba(244,240,230,.5)" font-size="10">机制 · 评测</text>
+            <circle cx="612" cy="379" r="8" fill="#e8c547"/>
+            <text x="612" y="408" text-anchor="middle" fill="#e8c547" font-size="15" font-weight="700">夯</text>
+            <text x="612" y="424" text-anchor="middle" fill="rgba(244,240,230,.5)" font-size="10">经得起问</text>
+          </g>
+          <text x="378" y="546" text-anchor="middle" fill="#e8c547" font-size="13" font-weight="700" letter-spacing="1.8">会点开工具  →  能改结构与评测</text>
+          <text x="70" y="48" text-anchor="end" fill="#e8c547" font-size="12" font-weight="700">对外高调</text>
+          <text x="70" y="516" text-anchor="end" fill="#e8c547" font-size="12" font-weight="700">主张克制</text>
+        </svg>
       </div>
-    </article>
-    <article class="idx-band ding">
-      <div class="idx-fig"><img src="assets/salon/index/ding.png" alt=""></div>
-      <div class="idx-rank">顶级<small>Top</small></div>
-      <div class="idx-copy">
-        <q>KV cache 把显存吃满了。LoRA rank 再高就过拟合。这个榜有数据污染。</q>
-        <p><span class="tell">听出来：</span>能讨论机制和评测，不是堆形容词。</p>
-      </div>
-    </article>
-    <article class="idx-band ren">
-      <div class="idx-fig"><img src="assets/salon/index/ren.png" alt=""></div>
-      <div class="idx-rank">人上人<small>Able</small></div>
-      <div class="idx-copy">
-        <q>我做了个自定义 GPT。Agent 工作流跑通了。这个需求我能交货。</q>
-        <p><span class="tell">听出来：</span>真会用工具、能交差。还没碰到模型内部。</p>
-      </div>
-    </article>
-    <article class="idx-band npc">
-      <div class="idx-fig"><img src="assets/salon/index/npc.png" alt=""></div>
-      <div class="idx-rank">NPC<small>Title</small></div>
-      <div class="idx-copy">
-        <q>高级提示词工程师。AI 操盘手。我用 AI 日入过万。一句话生成一家公司。</q>
-        <p><span class="tell">听出来：</span>头衔叠 buff。会打字，把模板当方法论卖。</p>
-      </div>
-    </article>
-    <article class="idx-band la">
-      <div class="idx-fig"><img src="assets/salon/index/la.png" alt=""></div>
-      <div class="idx-rank">拉完了<small>Fake</small></div>
-      <div class="idx-copy">
-        <q>我正在调我的大模型。闭关训练自己的 GPT。我的 Agent 已经能自主赚钱。</q>
-        <p><span class="tell">听出来：</span>多半在跟豆包对话。没有卡、没有数据、没有 loss 曲线。</p>
-      </div>
-    </article>
+      <aside class="memo">
+        <div class="mk">家长速记</div>
+        <h3>听他怎么说话，对一下坐标。</h3>
+        <div class="mrow hang"><div class="rk">夯<small>HANG</small></div><div><q>纯决策模型怎么建。这一层 attention 为什么要改。</q><p>能改结构、能讲取舍、能被当面追问。</p></div></div>
+        <div class="mrow ding"><div class="rk">顶级<small>TOP</small></div><div><q>KV cache 把显存吃满了。这个榜有数据污染。</q><p>能讨论机制和评测，不是堆形容词。</p></div></div>
+        <div class="mrow ren"><div class="rk">人上人<small>ABLE</small></div><div><q>我做了个自定义 GPT。这个需求我能交货。</q><p>真会用工具、能交差。还没碰到模型内部。</p></div></div>
+        <div class="mrow npc"><div class="rk">NPC<small>TITLE</small></div><div><q>高级提示词工程师。我用 AI 日入过万。</q><p>头衔叠 buff。会打字，把模板当方法论卖。</p></div></div>
+        <div class="mrow la"><div class="rk">拉完了<small>FAKE</small></div><div><q>我正在调我的大模型。闭关训练自己的 GPT。</q><p>多半没有卡、没有数据、没有 loss 曲线。</p></div></div>
+      </aside>
+    </div>
+    <p class="src">分层名来自网络流行评法：夯 → 顶级 → 人上人 → NPC → 拉完了。话术是听音样本，不是点名某个人。坐标是识别框架，不是考试分数。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>越靠左上，越要怀疑。越靠右下，越像真的在干。会说「我在调大模型」的，多半在跟聊天机器人说话。</p>
   </div>
-  <p class="src">分层名来自网络流行评法：夯 → 顶级 → 人上人 → NPC → 拉完了。话术是听音样本，不是点名某个人。</p>
-  <p class="takeaway"><span class="lbl">一句话</span>会说「我在调大模型」的，多半在跟聊天机器人说话。能讲结构、数据、评测的，才是真的在干。</p>
 </section>
 
 <!-- P6 案例 -->
@@ -2911,7 +3262,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v32';
+  const DRAFT_KEY='salon-ppt-draft-v33';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2935,7 +3286,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.tstrip span','.fam h3','.fam .blurb','.memo h3','.mrow q','.mrow p'
   ].join(',');
 
   function go(n){
@@ -2985,7 +3336,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v32"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v33"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
