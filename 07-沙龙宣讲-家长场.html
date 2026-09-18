@@ -1469,28 +1469,30 @@
   }
   .slide.course-poster > .cp-art{
     position:absolute;inset:0;z-index:0;pointer-events:none;
-    display:grid;grid-template-columns:1fr 1fr;
     background:#05060c;
     overflow:hidden;
   }
+  /* Native aspect only — never stretch; keep below source pixel size so they stay sharp */
   .slide.course-poster > .cp-art img{
-    width:100%;height:100%;
+    position:absolute;
+    width:auto;height:auto;
+    max-width:min(28vw, 420px);
+    max-height:min(52vh, 520px);
     object-fit:contain;
+    object-position:center;
   }
   .slide.course-poster > .cp-art img:first-child{
-    object-position:62% 8%;
-    transform:scale(1.55);
-    transform-origin:58% 18%;
+    left:1.6vw; bottom:8.5vh;
+    opacity:.78;
   }
   .slide.course-poster > .cp-art img:last-child{
-    object-position:center 42%;
-    transform:scale(1.08);
-    transform-origin:center 40%;
+    right:1.6vw; bottom:7vh;
+    opacity:.72;
   }
   .slide.course-poster > .cp-veil{
     position:absolute;inset:0;z-index:1;pointer-events:none;
     background:
-      linear-gradient(180deg, rgba(5,6,12,.72) 0%, rgba(5,6,12,.28) 18%, rgba(5,6,12,.16) 48%, rgba(5,6,12,.78) 100%);
+      linear-gradient(180deg, rgba(5,6,12,.82) 0%, rgba(5,6,12,.42) 16%, rgba(5,6,12,.22) 42%, rgba(5,6,12,.55) 72%, rgba(5,6,12,.88) 100%);
   }
   .cp-stage{
     position:relative;z-index:2;
@@ -2501,7 +2503,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v44">
+<div id="deck" data-rev="v45">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -3340,8 +3342,8 @@
 <!-- P10 两门课概要 -->
 <section class="slide course-poster">
   <div class="cp-art">
-    <img src="assets/salon/course-neuron.png" alt="">
-    <img src="assets/salon/course-helix.jpg" alt="">
+    <img src="assets/salon/course-neuron-clean.png" alt="">
+    <img src="assets/salon/course-helix-clean.jpg" alt="">
   </div>
   <div class="cp-veil"></div>
   <div class="cp-stage">
@@ -3507,7 +3509,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v44';
+  const DRAFT_KEY='salon-ppt-draft-v45';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3581,7 +3583,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v44"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v45"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
