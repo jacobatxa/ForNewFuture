@@ -284,84 +284,84 @@
     margin-top:3.2vh;
   }
 
-  /* Schools overview — map + cards */
+  /* Schools overview — summit language, map as hero */
   .slide.schools{
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
+    justify-content:stretch;
     overflow:hidden;
-    padding:3.8vh 3.2vw 3vh;
-    background:
-      radial-gradient(ellipse 70% 45% at 0% 0%, rgba(255,59,48,.05), transparent 55%),
-      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(0,122,255,.05), transparent 50%),
-      var(--paper);
+    padding:0;
+    background:#070b14;
+    color:#f4f0e6;
   }
-  .schools-head{
-    display:flex;
-    align-items:flex-end;
-    justify-content:space-between;
-    gap:2vw;
-    margin-bottom:1.8vh;
-    flex-shrink:0;
-  }
-  .schools-head .kicker{
-    margin-bottom:.45vh;
-    font-size:clamp(12px, 1.35vmin, 18px);
-  }
-  .schools-head h2{
-    font-size:clamp(22px, 3.15vmin, 44px);
-    letter-spacing:-.03em;
-    line-height:1.15;
-    max-width:16em;
-  }
-  .schools-head .lede{
-    font-size:clamp(13px, 1.55vmin, 22px);
-    color:var(--ink-2);
-    line-height:1.45;
-    max-width:18em;
-    text-align:right;
-    flex:0 1 22em;
-  }
-  .schools-main{
-    flex:1;
-    min-height:0;
+  .slide.schools.paper{background:#070b14}
+  .slide.schools .creature{display:none}
+  .schools-stage{
+    flex:1;min-height:0;
     display:grid;
-    grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
-    gap:1.4vw;
-    align-items:stretch;
+    grid-template-columns:2fr 3fr;
   }
-  .schools-map-col{
+  .schools-hero{
+    position:relative;
+    overflow:hidden;
     min-width:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-start;
+    background:#05070c;
   }
   .schools-map-stage{
-    position:relative;
-    width:100%;
-    aspect-ratio:1280 / 712;
-    max-height:min(42vh, 480px);
-    border-radius:18px;
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    aspect-ratio:auto;
+    max-height:none;
+    border-radius:0;
     overflow:hidden;
     background:#0e1116;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
   }
   .schools-map-stage > img{
     position:absolute;inset:0;
     width:100%;height:100%;
     object-fit:fill;
-    opacity:.95;
-    filter:contrast(1.12) brightness(1.06);
+    opacity:.92;
+    filter:contrast(1.18) saturate(1.08) brightness(1.05);
     pointer-events:none;
     user-select:none;
   }
-  .schools-map-stage .mpin{
+  .schools-hero .veil{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(7,11,20,.08) 0%, rgba(7,11,20,.22) 58%, rgba(7,11,20,.88) 100%),
+      linear-gradient(180deg, rgba(7,11,20,.38) 0%, transparent 30%, rgba(7,11,20,.72) 100%);
+    z-index:1;
+    pointer-events:none;
+  }
+  .schools-hero .brand{
+    position:absolute;left:1.6vw;top:3.2vh;right:1.6vw;
+    z-index:2;
+  }
+  .schools-hero .brand .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);
+    font-weight:700;
+    margin:0 0 .55vh;
+  }
+  .schools-hero .brand h2{
+    font-size:clamp(22px, 3.1vmin, 42px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1.12;
+    max-width:11em;
+    margin:0;
+    color:#fff;
+    word-break:keep-all;
+    text-shadow:0 8px 28px rgba(0,0,0,.45);
+  }
+  .schools-hero .mpin{
     position:absolute;
     transform:translate(-50%,-50%);
     z-index:2;
     pointer-events:none;
   }
-  .schools-map-stage .mpin .dot{
+  .schools-hero .mpin .dot{
     width:clamp(12px, 1.45vmin, 22px);
     height:clamp(12px, 1.45vmin, 22px);
     border-radius:50%;
@@ -369,159 +369,189 @@
     box-shadow:0 0 0 5px color-mix(in srgb, var(--pin, #fff) 40%, transparent), 0 4px 14px rgba(0,0,0,.5);
     display:block;
   }
-  .schools-map-stage .mpin .label{display:none}
   .map-legend{
+    position:absolute;
+    left:1.6vw;right:1.8vw;bottom:3vh;
+    z-index:2;
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:.4vh .7vw;
-    margin-top:1vh;
+    gap:.55vh .8vw;
   }
   .map-legend .item{
-    display:flex;align-items:center;gap:8px;
-    font-size:clamp(12px, 1.4vmin, 18px);
-    color:var(--ink);
-    font-weight:500;
+    display:flex;align-items:baseline;gap:8px;
+    font-size:clamp(11px, 1.25vmin, 15px);
+    color:#fff;
+    font-weight:600;
     line-height:1.25;
+    border-top:1px solid rgba(232,197,71,.45);
+    padding-top:.4vh;
   }
   .map-legend .swatch{
     width:clamp(8px, 1.05vmin, 14px);
     height:clamp(8px, 1.05vmin, 14px);
     border-radius:50%;flex-shrink:0;
-    box-shadow:0 0 0 2px #fff, 0 1px 4px rgba(0,0,0,.15);
+    box-shadow:0 0 0 2px rgba(255,255,255,.35);
+    transform:translateY(1px);
   }
   .map-legend .item span.meta{
-    color:var(--ink-3);font-weight:400;
-    font-size:clamp(11px, 1.2vmin, 16px);
+    color:rgba(244,240,230,.7);font-weight:500;
+    font-size:clamp(10px, 1.12vmin, 13px);
   }
-  .map-caption{
-    margin-top:.9vh;
-    font-size:clamp(11px, 1.25vmin, 16px);
-    color:var(--ink-3);
-    line-height:1.4;
+  .schools-panel{
+    min-width:0;min-height:0;
+    overflow:hidden;
+    padding:3vh 2.4vw 8vh 2vw;
+    display:flex;flex-direction:column;
+    background:linear-gradient(180deg, #0d1524 0%, #090e18 100%);
+  }
+  .schools-panel .lede{
+    font-size:clamp(13px, 1.45vmin, 18px);
+    color:rgba(244,240,230,.72);
+    line-height:1.45;
+    max-width:38em;
+    margin:0 0 1.4vh;
+    text-align:left;
+    flex:none;
   }
   .gloss{
-    margin-top:auto;
-    padding:.7vh .75vw .75vh;
-    background:#f5f5f7;
-    border-radius:12px;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+    flex-shrink:0;
+    margin-top:1.1vh;
+    padding-top:.9vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    column-gap:1.1vw;
+    row-gap:.35vh;
+    background:transparent;
+    border-radius:0;
+    box-shadow:none;
   }
   .gloss h4{
+    grid-column:1 / -1;
     font-size:clamp(10px, 1.12vmin, 13px);
     font-weight:700;
-    letter-spacing:.12em;
-    color:var(--ink-3);
-    margin-bottom:.45vh;
+    letter-spacing:.14em;
+    color:#e8c547;
+    margin-bottom:.15vh;
   }
   .gloss p{
-    font-size:clamp(10px, 1.18vmin, 14px);
-    color:var(--ink-2);
-    line-height:1.45;
-    margin:0 0 .28vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.7);
+    line-height:1.4;
+    margin:0;
   }
   .gloss p strong{
-    color:var(--ink);
+    color:#fff;
     font-weight:650;
   }
   .schools-grid{
     min-width:0;min-height:0;
+    flex:1;
     display:grid;
     grid-template-columns:1fr 1fr;
     grid-template-rows:repeat(3,minmax(0,1fr));
-    gap:.65vh .7vw;
+    gap:.55vh .6vw;
   }
   .scard{
-    --accent:#007AFF;
+    --accent:#e8c547;
     display:grid;
     grid-template-rows:auto 1fr;
     min-height:0;
-    background:#fff;
-    border-radius:12px;
+    background:rgba(255,255,255,.05);
+    border-radius:0;
     overflow:hidden;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    box-shadow:none;
+    border:1px solid rgba(232,197,71,.14);
+    border-left:3px solid var(--accent);
     position:relative;
   }
-  .scard::before{
-    content:'';
-    position:absolute;left:0;top:0;bottom:0;width:3px;
-    background:var(--accent);
-    z-index:2;
-  }
+  .scard::before{display:none}
   .scard.c-alpha{--accent:#FF3B30}
-  .scard.c-astra{--accent:#007AFF}
+  .scard.c-astra{--accent:#e8c547}
   .scard.c-sabre{--accent:#AF52DE}
   .scard.c-kami{--accent:#FF2D55}
   .scard.c-founders{--accent:#FF9500}
   .scard.c-forge{--accent:#34C759}
   .scard-media{
     position:relative;
-    height:clamp(36px, 5.4vmin, 72px);
+    height:clamp(36px, 5vmin, 62px);
     min-height:36px;
-    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, #fff), #f0f0f5);
+    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 28%, #0d1524), #121826);
+  }
+  .scard-media::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 15%, rgba(9,14,24,.62) 100%);
+    pointer-events:none;
   }
   .scard-media img{
     width:100%;height:100%;
     object-fit:cover;
     display:block;
+    opacity:.9;
+    filter:saturate(1.08) contrast(1.06);
   }
   .scard-media .fallback{
     position:absolute;inset:0;
+    z-index:2;
     display:flex;align-items:flex-end;
-    padding:6px 10px;
-    font-size:clamp(10px, 1.15vmin, 14px);font-weight:700;
-    letter-spacing:.06em;
+    padding:5px 10px;
+    font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;
+    letter-spacing:.08em;
     text-transform:uppercase;
-    color:color-mix(in srgb, var(--accent) 75%, #1d1d1f);
+    color:#e8c547;
+    text-shadow:0 2px 10px rgba(0,0,0,.5);
   }
   .scard-body{
-    padding:.55vh .7vw .65vh .9vw;
+    padding:.5vh .7vw .55vh .85vw;
     display:flex;flex-direction:column;
     min-height:0;
     overflow:hidden;
   }
   .scard .where{
-    font-size:clamp(11px, 1.25vmin, 16px);
+    font-size:clamp(10px, 1.15vmin, 13px);
     font-weight:700;
     color:var(--accent);
-    letter-spacing:.03em;
-    margin-bottom:.1vh;
+    letter-spacing:.06em;
+    margin-bottom:.08vh;
   }
   .scard h3{
-    font-size:clamp(14px, 1.8vmin, 26px);
-    font-weight:650;
+    font-size:clamp(14px, 1.7vmin, 22px);
+    font-weight:600;
     letter-spacing:-.025em;
-    margin-bottom:.3vh;
+    margin-bottom:.25vh;
+    color:#fff;
   }
   .smeta{
     display:grid;
     grid-template-columns:2.7em minmax(0,1fr);
     column-gap:.45vw;
-    row-gap:.28vh;
+    row-gap:.22vh;
     flex:1;
     min-height:0;
     align-content:start;
   }
   .smeta dt{
-    font-size:clamp(10px, 1.12vmin, 13px);
+    font-size:clamp(10px, 1.1vmin, 12px);
     font-weight:700;
-    letter-spacing:.08em;
-    color:var(--accent);
+    letter-spacing:.1em;
+    color:#e8c547;
     padding-top:.12em;
     line-height:1.3;
   }
   .smeta dd{
-    font-size:clamp(11px, 1.32vmin, 16px);
-    line-height:1.38;
-    color:var(--ink);
+    font-size:clamp(11px, 1.28vmin, 15px);
+    line-height:1.35;
+    color:rgba(244,240,230,.86);
     min-width:0;
   }
   .smeta dd .mute{
-    color:var(--ink-3);
+    color:rgba(244,240,230,.55);
   }
   .scard .note{
-    margin-top:.15vh;
-    font-size:clamp(11px, 1.2vmin, 15px);
-    color:var(--ink-3);
+    margin-top:.12vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);
     line-height:1.25;
     flex-shrink:0;
   }
@@ -532,12 +562,12 @@
   }
   .schip{
     display:inline-flex;align-items:center;gap:5px;
-    background:color-mix(in srgb, var(--accent) 12%, #f5f5f7);
+    background:rgba(232,197,71,.12);
     border-radius:100px;
     padding:3px 8px 3px 3px;
     font-size:clamp(10px, 1.15vmin, 14px);
     font-weight:650;
-    color:var(--ink);
+    color:#f3e2a4;
     line-height:1.2;
     letter-spacing:-.01em;
   }
@@ -1723,7 +1753,31 @@
     transition:all .2s;font-family:inherit;
   }
   #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  body:has(.slide.schools.active) #pager,
+  body:has(.slide.astra-slide.active) #pager{
+    color:rgba(244,240,230,.5);
+  }
+  body:has(.slide.schools.active) #pager button,
+  body:has(.slide.astra-slide.active) #pager button{
+    background:rgba(13,21,36,.78);
+    border-color:rgba(232,197,71,.28);
+    color:#f4f0e6;
+  }
+  body:has(.slide.schools.active) #pager button:hover,
+  body:has(.slide.astra-slide.active) #pager button:hover{
+    background:#e8c547;
+    color:#070b14;
+    border-color:#e8c547;
+  }
+  body:has(.slide.schools.active) #progress,
+  body:has(.slide.astra-slide.active) #progress{
+    background:#e8c547;
+  }
   #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  body:has(.slide.schools.active) #hint,
+  body:has(.slide.astra-slide.active) #hint{
+    color:rgba(244,240,230,.45);
+  }
   #hint.hidden{opacity:0}
 
   #editor-bar{
@@ -1790,11 +1844,11 @@
     .astra-hero{min-height:38vh}
     .split,.split.reverse{grid-template-columns:1fr;padding:0}
     .split .pane-text,.split.reverse .pane-text{padding:7vh 7vw 4vh}
-    .slide.schools{overflow-y:auto;justify-content:flex-start}
-    .schools-head{flex-direction:column;align-items:flex-start}
-    .schools-head .lede{text-align:left}
-    .schools-main{grid-template-columns:1fr;overflow:visible}
+    .slide.schools{padding:0;overflow-y:auto}
+    .schools-stage{grid-template-columns:1fr}
+    .schools-hero{min-height:38vh}
     .schools-map-stage{max-height:32vh}
+    .gloss{grid-template-columns:1fr}
     .schools-grid{
       grid-template-columns:1fr;
       grid-template-rows:auto;
@@ -1874,7 +1928,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v29">
+<div id="deck" data-rev="v30">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -1909,45 +1963,36 @@
 </section>
 
 <!-- P2 创新学校 · 地图 + 六校 -->
-<section class="slide schools paper">
-  <div class="schools-head">
-    <div>
-      <div class="kicker" data-edit>01 · 实验学校</div>
-      <h2 data-edit>上午把课学懂，下午去做难的事。</h2>
-    </div>
-      <p class="lede" data-edit>先看一天怎么过，再看成绩广告。</p>
-  </div>
-
-  <div class="schools-main">
-    <aside class="schools-map-col">
+<section class="slide schools">
+  <div class="schools-stage">
+    <aside class="schools-hero">
       <div class="schools-map-stage">
         <img src="assets/world-map.png?v=3" alt="世界地图">
-        <!-- equirectangular: x=(lon+180)/360, y=(90-lat)/180；略向陆地微调 -->
-        <div class="mpin" style="left:22.50%;top:31.88%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
-        <div class="mpin" style="left:17.05%;top:31.05%;--pin:#007AFF" title="Ad Astra → Astra Nova"><span class="dot" style="background:#007AFF"></span></div>
-        <div class="mpin" style="left:49.95%;top:21.60%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
-        <div class="mpin" style="left:87.20%;top:31.20%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
-        <div class="mpin" style="left:29.35%;top:27.45%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
-        <div class="mpin" style="left:29.85%;top:28.05%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
+      </div>
+      <div class="veil"></div>
+      <div class="mpin" style="left:22.50%;top:31.88%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
+      <div class="mpin" style="left:17.05%;top:31.05%;--pin:#e8c547" title="Ad Astra → Astra Nova"><span class="dot" style="background:#e8c547"></span></div>
+      <div class="mpin" style="left:49.95%;top:21.60%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
+      <div class="mpin" style="left:87.20%;top:31.20%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
+      <div class="mpin" style="left:29.35%;top:27.45%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
+      <div class="mpin" style="left:29.85%;top:28.05%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
+      <div class="brand">
+        <div class="kicker" data-edit>01 · 实验学校 · 六所</div>
+        <h2 data-edit>上午把课学懂，下午去做难的事。</h2>
       </div>
       <div class="map-legend">
         <div class="item"><i class="swatch" style="background:#FF3B30"></i>Alpha <span class="meta">奥斯汀</span></div>
-        <div class="item"><i class="swatch" style="background:#007AFF"></i>Astra Nova <span class="meta">SpaceX 渊源</span></div>
+        <div class="item"><i class="swatch" style="background:#e8c547"></i>Astra Nova <span class="meta">SpaceX 渊源</span></div>
         <div class="item"><i class="swatch" style="background:#AF52DE"></i>Sabrewing <span class="meta">伦敦</span></div>
         <div class="item"><i class="swatch" style="background:#FF2D55"></i>神山高专 <span class="meta">德岛</span></div>
         <div class="item"><i class="swatch" style="background:#FF9500"></i>Founders <span class="meta">纽约</span></div>
         <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
       </div>
-      <div class="gloss">
-        <h4 data-edit>家长词条</h4>
-        <p data-edit><strong>引导员</strong>：不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
-        <p data-edit><strong>MAP</strong>：美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
-        <p data-edit><strong>GCSE / A Level</strong>：英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
-        <p data-edit><strong>全寮制</strong>：住校。<strong>校方称</strong>：学校自己公布的数字，还没被独立核对。</p>
-      </div>
     </aside>
 
-    <div class="schools-grid">
+    <div class="schools-panel">
+      <p class="lede" data-edit>先看一天怎么过，再看成绩广告。六所学校用同一把尺子：课时、学费、模式、特点。</p>
+      <div class="schools-grid">
       <article class="scard c-alpha">
         <div class="scard-media">
           <span class="fallback">Austin</span>
@@ -2055,6 +2100,14 @@
           <div class="note">forgeprep.com</div>
         </div>
       </article>
+      </div>
+      <div class="gloss">
+        <h4 data-edit>家长词条</h4>
+        <p data-edit><strong>引导员</strong>：不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
+        <p data-edit><strong>MAP</strong>：美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
+        <p data-edit><strong>GCSE / A Level</strong>：英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
+        <p data-edit><strong>全寮制</strong>：住校。<strong>校方称</strong>：学校自己公布的数字，还没被独立核对。</p>
+      </div>
     </div>
   </div>
 </section>
@@ -2789,7 +2842,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v29';
+  const DRAFT_KEY='salon-ppt-draft-v30';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2863,7 +2916,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v29"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('data-rev="v29"')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v30"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
