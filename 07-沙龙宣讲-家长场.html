@@ -192,6 +192,87 @@
     letter-spacing:-.01em;
   }
 
+  /* —— 封面 A · 线框地形 · 左右分栏 —— */
+  .slide.cover-mesh{
+    padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
+    display:grid;
+    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    gap:0;
+  }
+  .cover-mesh .cm-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7vh 3.5vw 7vh 6.2vw;
+    min-width:0;position:relative;z-index:2;
+  }
+  .cover-mesh .cm-text::after{
+    content:"";position:absolute;top:12%;right:0;bottom:12%;width:1px;
+    background:linear-gradient(180deg, transparent, rgba(232,197,71,.35), transparent);
+  }
+  .cover-mesh .mark{
+    color:#e8c547;margin-bottom:2.2vh;letter-spacing:.22em;
+  }
+  .cover-mesh .cover-title{
+    color:#fff;font-weight:650;white-space:nowrap;
+  }
+  .cover-mesh .cover-title .em{
+    background:linear-gradient(120deg,#e8c547 0%,#f0a36a 45%,#c56bff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cover-mesh .cover-sub{
+    color:rgba(245,245,247,.7);max-width:22em;margin-top:1.6vh;
+  }
+  .cm-agenda{
+    list-style:none;margin-top:3.8vh;max-width:28em;
+    display:flex;flex-direction:column;gap:1.55vh;
+  }
+  .cm-agenda li{
+    display:grid;grid-template-columns:2.3em 1fr;gap:10px;align-items:start;
+  }
+  .cm-agenda .num{
+    font-size:var(--fs-small);font-weight:700;color:#e8c547;
+    letter-spacing:.04em;padding-top:.18em;
+  }
+  .cm-agenda .txt{
+    font-size:var(--fs-lede);font-weight:550;letter-spacing:-.02em;
+    line-height:1.35;color:#fff;
+  }
+  .cm-agenda .desc{
+    display:block;margin-top:.35em;
+    font-size:var(--fs-small);font-weight:400;
+    color:rgba(245,245,247,.55);line-height:1.48;
+  }
+  .cm-foot{
+    margin-top:4vh;font-size:var(--fs-kicker);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(232,197,71,.55);
+  }
+  .cover-mesh .cm-art{
+    display:flex;align-items:center;justify-content:center;
+    padding:5vh 4vw 5vh 2vw;
+    min-width:0;background:#000;
+    position:relative;
+  }
+  .cover-mesh .cm-art::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(197,107,255,.12), transparent 62%),
+      radial-gradient(ellipse 50% 40% at 28% 48%, rgba(232,197,71,.1), transparent 55%);
+  }
+  .cover-mesh .cm-art img{
+    display:block;position:relative;z-index:1;
+    width:auto;height:auto;
+    max-width:100%;max-height:86vh;
+    object-fit:contain;
+    animation:cm-glow 7s ease-in-out infinite;
+  }
+  @keyframes cm-glow{
+    0%,100%{filter:drop-shadow(0 0 0 rgba(197,107,255,0)) brightness(1)}
+    50%{filter:drop-shadow(0 0 28px rgba(197,107,255,.28)) brightness(1.06)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cover-mesh .cm-art img{animation:none}
+  }
+
   /* —— 封面 B · 神经网络全幅 —— */
   .slide.cover-neural{
     padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
@@ -1773,6 +1854,14 @@
     z-index:2;pointer-events:none;
     clip-path:polygon(16% 0%, 84% 0%, 96% 22%, 84% 55%, 64% 86%, 50% 100%, 36% 86%, 16% 55%, 6% 22%);
   }
+  .slide.pyramid-wide .berg-photo{object-fit:cover;object-position:center 40%}
+  .slide.pyramid-wide .berg-cloud{
+    left:22%;right:22%;top:40%;bottom:9%;
+    clip-path:polygon(16% 0%, 84% 0%, 96% 22%, 84% 55%, 64% 86%, 50% 100%, 36% 86%, 16% 55%, 4% 22%);
+  }
+  .slide.pyramid-wide .berg-tip{top:10%}
+  .slide.pyramid-wide .berg-line{top:34.5%}
+  .slide.pyramid-compare .berg-frame .data-head .kicker{opacity:.85}
   .berg-cloud i{
     position:absolute;transform:translate(-50%,-50%);
     font-style:normal;white-space:nowrap;
@@ -2368,6 +2457,7 @@
     transition:all .2s;font-family:inherit;
   }
   #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  body:has(.slide.cover-mesh.active) #pager,
   body:has(.slide.cover-neural.active) #pager,
   body:has(.slide.schools.active) #pager,
   body:has(.slide.astra-slide.active) #pager,
@@ -2382,6 +2472,7 @@
   body:has(.slide.idx-slide.active) #pager{
     color:rgba(244,240,230,.5);
   }
+  body:has(.slide.cover-mesh.active) #pager button,
   body:has(.slide.cover-neural.active) #pager button,
   body:has(.slide.schools.active) #pager button,
   body:has(.slide.astra-slide.active) #pager button,
@@ -2398,6 +2489,7 @@
     border-color:rgba(232,197,71,.28);
     color:#f4f0e6;
   }
+  body:has(.slide.cover-mesh.active) #pager button:hover,
   body:has(.slide.cover-neural.active) #pager button:hover,
   body:has(.slide.schools.active) #pager button:hover,
   body:has(.slide.astra-slide.active) #pager button:hover,
@@ -2414,6 +2506,7 @@
     color:#070b14;
     border-color:#e8c547;
   }
+  body:has(.slide.cover-mesh.active) #progress,
   body:has(.slide.cover-neural.active) #progress,
   body:has(.slide.schools.active) #progress,
   body:has(.slide.astra-slide.active) #progress,
@@ -2429,6 +2522,7 @@
     background:#e8c547;
   }
   #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  body:has(.slide.cover-mesh.active) #hint,
   body:has(.slide.cover-neural.active) #hint,
   body:has(.slide.schools.active) #hint,
   body:has(.slide.astra-slide.active) #hint,
@@ -2596,15 +2690,48 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v49">
+<div id="deck" data-rev="v51">
 
-<!-- P1 封面 · 神经网络（新） -->
-<section class="slide cover-neural active">
+<!-- P1 封面 · 线框地形 -->
+<section class="slide cover-mesh active">
+  <div class="cm-text">
+    <div class="mark" data-edit>Natural Computation</div>
+    <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
+    <p class="cover-sub" data-edit>看清 AI 把教育改到哪里，再决定孩子练什么。</p>
+    <ol class="cm-agenda">
+      <li>
+        <span class="num">01</span>
+        <span class="txt" data-edit>学校怎么上课，名校怎么选人
+          <span class="desc">六所实验校在改什么；Astra Nova 课表与真题；对中国学生，通道在收窄。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span class="txt" data-edit>工作还在，能力结构在换
+          <span class="desc">岗位总数未塌；软件会换人；我们只认五件可练的能力。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span class="txt" data-edit>案例、培养路径与两门课
+          <span class="desc">四个少年不是模板；五件能力怎么落地；通识课与少年创始人能看见什么。</span>
+        </span>
+      </li>
+    </ol>
+    <div class="cm-foot" data-edit>Bilden Edu · 家长沙龙</div>
+  </div>
+  <div class="cm-art">
+    <img src="assets/salon/cover-wireframe.png?v=1" alt="">
+  </div>
+</section>
+
+<!-- P2 封面 · 神经网络（对照） -->
+<section class="slide cover-neural">
   <img class="cn-bg" src="assets/salon/course-bg-wide.jpg" alt="">
   <div class="cn-veil"></div>
   <div class="cn-pulse" aria-hidden="true"></div>
   <div class="cn-ui">
-    <div class="mark" data-edit>Natural Computation</div>
+    <div class="mark" data-edit>Natural Computation · 对照</div>
     <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
     <p class="cover-sub" data-edit>看清 AI 把教育改到哪里，再决定孩子练什么。</p>
     <ol class="cn-agenda">
@@ -2631,7 +2758,7 @@
   </div>
 </section>
 
-<!-- P2 封面 · 鸟图（对照） -->
+<!-- P3 封面 · 鸟图（对照） -->
 <section class="slide cover paper">
   <div class="pane-bird">
     <img class="cover-bird" src="assets/cover-bird.png?v=7" alt="">
@@ -3213,10 +3340,10 @@
   </div>
 </section>
 
-<!-- P7 工具冰山 -->
-<section class="slide pyramid-slide">
+<!-- P7 工具冰山 · 更宽版 -->
+<section class="slide pyramid-slide pyramid-wide">
   <div class="berg-frame">
-    <img class="berg-photo" src="assets/salon/iceberg-hi.jpg" alt="">
+    <img class="berg-photo" src="assets/salon/iceberg-wider-hi.jpg?v=5" alt="">
     <div class="berg-shift">
     <div class="data-head">
       <div class="kicker" data-edit>02 · 冰山</div>
@@ -3347,7 +3474,141 @@
   </div>
 </section>
 
-<!-- P8 如何培养 -->
+<!-- P8 工具冰山 · 对照 -->
+<section class="slide pyramid-slide pyramid-compare">
+  <div class="berg-frame">
+    <img class="berg-photo" src="assets/salon/iceberg-hi.jpg" alt="">
+    <div class="berg-shift">
+    <div class="data-head">
+      <div class="kicker" data-edit>02 · 冰山 · 对照</div>
+      <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
+    </div>
+    <div class="berg-tip">
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
+          <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
+          <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
+          <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
+          <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
+          <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
+          <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
+          <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
+          <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
+          <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
+          <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
+          <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
+          <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
+          <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
+          <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
+          <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
+          <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
+          <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
+          <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
+          <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
+          <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
+      </div>
+    </div>
+    <div class="berg-line"><i></i><span>海面 · 能直接点开的工具</span></div>
+    <div class="berg-cloud">
+        <i class="lg" style="left:54.9%;top:50.7%">Transformer</i>
+        <i class="lg" style="left:41.7%;top:39.9%">Attention</i>
+        <i class="lg" style="left:34.6%;top:51.9%">反向传播</i>
+        <i class="lg" style="left:56.1%;top:64.0%">梯度下降</i>
+        <i class="lg" style="left:67.9%;top:48.7%">Diffusion</i>
+        <i class="lg" style="left:62.2%;top:55.4%">RLHF</i>
+        <i class="lg" style="left:37.2%;top:66.0%">MoE</i>
+        <i class="lg" style="left:44.8%;top:47.6%">CUDA</i>
+        <i class="lg" style="left:25.3%;top:30.5%">指令集</i>
+        <i class="lg" style="left:63.3%;top:42.7%">操作系统</i>
+        <i class="lg" style="left:55.9%;top:15.0%">KV Cache</i>
+        <i class="lg" style="left:44.9%;top:29.0%">Embedding</i>
+        <i class="md" style="left:63.7%;top:66.3%">Softmax</i>
+        <i class="md" style="left:30.8%;top:31.0%">Adam</i>
+        <i class="md" style="left:73.8%;top:28.0%">LSTM</i>
+        <i class="md" style="left:40.3%;top:58.0%">CNN</i>
+        <i class="md" style="left:72.6%;top:34.9%">PPO</i>
+        <i class="md" style="left:78.9%;top:10.6%">DPO</i>
+        <i class="md" style="left:32.0%;top:44.1%">LoRA</i>
+        <i class="md" style="left:37.4%;top:71.8%">RoPE</i>
+        <i class="md" style="left:47.6%;top:13.7%">GQA</i>
+        <i class="md" style="left:42.6%;top:86.2%">GPU并行</i>
+        <i class="md" style="left:45.7%;top:93.3%">HTTP/TLS</i>
+        <i class="md" style="left:44.7%;top:67.7%">Raft</i>
+        <i class="md" style="left:48.2%;top:8.1%">B+树</i>
+        <i class="md" style="left:35.5%;top:26.8%">ACID</i>
+        <i class="md" style="left:48.4%;top:81.8%">CLIP</i>
+        <i class="md" style="left:56.9%;top:71.0%">ViT</i>
+        <i class="md" style="left:46.1%;top:52.3%">BPE</i>
+        <i class="md" style="left:58.7%;top:89.4%">蒸馏</i>
+        <i class="md" style="left:47.9%;top:74.7%">预训练</i>
+        <i class="md" style="left:55.4%;top:24.6%">微调</i>
+        <i class="md" style="left:41.6%;top:52.6%">流水线</i>
+        <i class="md" style="left:55.2%;top:56.5%">并发</i>
+        <i class="md" style="left:63.1%;top:22.1%">分布式</i>
+        <i class="md" style="left:24.3%;top:20.6%">FlashAttention</i>
+        <i class="fm" style="left:49.7%;top:67.1%">∇θℒ</i>
+        <i class="fm" style="left:56.0%;top:78.1%">H=−Σplogp</i>
+        <i class="fm" style="left:77.4%;top:22.7%">DKL(p∥q)</i>
+        <i class="fm" style="left:41.0%;top:21.2%">P(y|x)</i>
+        <i class="sm" style="left:43.7%;top:24.8%">Bayes</i>
+        <i class="sm" style="left:49.1%;top:22.3%">链式法则</i>
+        <i class="fm" style="left:61.5%;top:32.2%">softmax(QKᵀ/√d)V</i>
+        <i class="fm" style="left:53.2%;top:86.5%">W·x+b</i>
+        <i class="fm" style="left:48.6%;top:60.5%">σ(x)</i>
+        <i class="sm" style="left:58.4%;top:83.5%">ReLU</i>
+        <i class="fm" style="left:52.5%;top:28.3%">CE</i>
+        <i class="sm" style="left:41.5%;top:76.5%">GELU</i>
+        <i class="sm" style="left:62.4%;top:75.2%">ALU</i>
+        <i class="sm" style="left:68.4%;top:53.4%">DNS</i>
+        <i class="sm" style="left:50.8%;top:39.5%">CDN</i>
+        <i class="sm" style="left:37.0%;top:44.6%">NP-hard</i>
+        <i class="sm" style="left:31.1%;top:38.0%">红黑树</i>
+        <i class="sm" style="left:53.8%;top:68.6%">QKV</i>
+        <i class="sm" style="left:43.3%;top:64.0%">Dropout</i>
+        <i class="sm" style="left:54.4%;top:91.1%">交叉熵</i>
+        <i class="sm" style="left:34.7%;top:60.6%">过拟合</i>
+        <i class="sm" style="left:64.5%;top:14.0%">SGD</i>
+        <i class="sm" style="left:72.2%;top:41.8%">学习率</i>
+        <i class="sm" style="left:48.7%;top:89.3%">FP16</i>
+        <i class="sm" style="left:39.1%;top:34.4%">INT8</i>
+        <i class="sm" style="left:40.3%;top:82.3%">卷积</i>
+        <i class="sm" style="left:70.1%;top:23.7%">残差块</i>
+        <i class="sm" style="left:57.8%;top:43.5%">SSM</i>
+        <i class="sm" style="left:50.6%;top:44.6%">马尔可夫</i>
+        <i class="sm" style="left:41.1%;top:9.5%">策略梯度</i>
+        <i class="sm" style="left:50.4%;top:33.8%">涌现</i>
+        <i class="sm" style="left:38.7%;top:17.3%">FLOPs</i>
+        <i class="sm" style="left:79.2%;top:6.9%">幻觉</i>
+        <i class="sm" style="left:74.7%;top:15.6%">上下文窗</i>
+        <i class="sm" style="left:64.6%;top:36.9%">人类反馈</i>
+        <i class="sm" style="left:66.4%;top:27.3%">LayerNorm</i>
+    </div>
+    <p class="src">海面以上是 2026.9 仍能直接点开的产品，含国内常见应用。Manus 已不适合进课堂。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
+    </div>
+    <aside class="ear-card">
+      <p class="el" data-edit>自媒体和周围人，听他怎么说话。</p>
+      <ul>
+        <li><b class="hang">夯</b><span><i>「这一层 attention 为什么要改。」</i>能改结构，经得起问</span></li>
+        <li><b class="ding">顶级</b><span><i>「这个榜有数据污染。」</i>能讲机制和评测</span></li>
+        <li><b class="ren">人上人</b><span><i>「这个需求我能交货。」</i>会用工具，深问会停</span></li>
+        <li><b class="npc">NPC</b><span><i>「高级提示词工程师。」</i>头衔叠 buff</span></li>
+        <li><b class="la">拉完了</b><span><i>「我正在调我的大模型。」</i>没有卡，没有曲线</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- P9 如何培养 -->
 <section class="slide cap-slide">
   <img class="kg-photo" src="assets/salon/horizon-hi.jpg" alt="">
   <div class="kg-veil"></div>
@@ -3634,7 +3895,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v49';
+  const DRAFT_KEY='salon-ppt-draft-v51';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3654,6 +3915,7 @@
     '.compare-col h3','.compare-col .sub',
     '.cover-agenda .txt','.cover-agenda .desc','.cover-agenda .num',
     '.cn-agenda .txt','.cn-agenda .desc','.cn-agenda .num','.cn-foot',
+    '.cm-agenda .txt','.cm-agenda .desc','.cm-agenda .num','.cm-foot',
     '.school-panel h2','.school-panel .where','.school-panel .lab',
     '.school-panel p','.school-panel .school-src','.map-title','.map-hint',
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
@@ -3709,7 +3971,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v49"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('cover-mesh') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v51"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
