@@ -1467,16 +1467,30 @@
     color:#f4f0e6;
     justify-content:flex-start;
   }
-  .slide.course-poster > .cp-photo{
-    position:absolute;inset:0;z-index:0;
+  .slide.course-poster > .cp-art{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    display:grid;grid-template-columns:1fr 1fr;
+    background:#05060c;
+    overflow:hidden;
+  }
+  .slide.course-poster > .cp-art img{
     width:100%;height:100%;
-    object-fit:cover;object-position:center;
-    pointer-events:none;
+    object-fit:contain;
+  }
+  .slide.course-poster > .cp-art img:first-child{
+    object-position:62% 8%;
+    transform:scale(1.55);
+    transform-origin:58% 18%;
+  }
+  .slide.course-poster > .cp-art img:last-child{
+    object-position:center 42%;
+    transform:scale(1.08);
+    transform-origin:center 40%;
   }
   .slide.course-poster > .cp-veil{
     position:absolute;inset:0;z-index:1;pointer-events:none;
     background:
-      linear-gradient(180deg, rgba(5,6,12,.58) 0%, rgba(5,6,12,.14) 26%, rgba(5,6,12,.10) 58%, rgba(5,6,12,.72) 100%);
+      linear-gradient(180deg, rgba(5,6,12,.72) 0%, rgba(5,6,12,.28) 18%, rgba(5,6,12,.16) 48%, rgba(5,6,12,.78) 100%);
   }
   .cp-stage{
     position:relative;z-index:2;
@@ -1525,7 +1539,19 @@
   }
   .cp-pane > p{
     font-size:var(--fs-small);color:rgba(244,240,230,.78);
-    line-height:1.45;margin:0 0 .9vh;
+    line-height:1.45;margin:0 0 .7vh;
+  }
+  .cp-meta{
+    display:flex;flex-wrap:wrap;gap:6px;
+    margin:0 0 .8vh;
+  }
+  .cp-meta span{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.04em;
+    color:#e8c547;
+    border:1px solid rgba(232,197,71,.28);
+    background:rgba(232,197,71,.08);
+    padding:3px 8px;
+    line-height:1.3;
   }
   .cp-spine{list-style:none;margin:0 0 .8vh;padding:0;display:flex;flex-direction:column;gap:.45vh}
   .cp-spine li{
@@ -2061,30 +2087,75 @@
   .slide.co-slide > .co-ui{position:relative;z-index:3;height:100%}
   .atlas-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:0}
   .atlas-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(8,12,18,.62) 0%, rgba(8,12,18,.12) 26%, rgba(8,12,18,.08) 58%, rgba(8,12,18,.78) 100%),linear-gradient(90deg, rgba(8,12,18,.28) 0%, transparent 40%)}
-  .atlas-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .atlas-ui{position:relative;z-index:2;height:100%;padding:2.8vh 2.6vw 2.4vh;display:flex;flex-direction:column;color:#f5f5f7}
   .atlas-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
-  .atlas-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:16em;margin-bottom:0}
-  .atlas-nodes{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
-  .anode{background:rgba(255,255,255,.12);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:1.3vh .9vw 1.25vh;min-width:0}
-  .anode .mod{font-size:var(--fs-src);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8ec8ff;margin-bottom:.35vh}
-  .anode h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff;margin-bottom:.35vh}
-  .anode p{font-size:var(--fs-src);color:rgba(255,255,255,.78);line-height:1.4}
-  .anode .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:.7vh}
-  .anode .chips span{font-size:10px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border-radius:100px;background:rgba(255,255,255,.14);color:#fff}
-  .atlas-ui .takeaway{margin-top:1.1vh;background:linear-gradient(90deg, rgba(0,113,227,.35), rgba(255,149,0,.28));border-left-color:#64b5ff;color:#fff}
-  .atlas-ui .takeaway .lbl{color:#8ec8ff}
+  .atlas-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:18em;margin:.35vh 0 .5vh}
+  .atlas-ui .lede{font-size:var(--fs-small);color:rgba(255,255,255,.72);line-height:1.45;max-width:52em;margin:0 0 .7vh}
+  .atlas-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 1vh}
+  .atlas-meta span,.co-meta span{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.04em;
+    color:#e8c547;border:1px solid rgba(232,197,71,.28);
+    background:rgba(232,197,71,.08);padding:3px 8px;line-height:1.3;
+  }
+  .atlas-units{
+    flex:1;min-height:0;
+    display:grid;grid-template-columns:1.05fr .9fr 1.15fr;gap:.7vw;
+  }
+  .atlas-unit{
+    min-width:0;
+    background:rgba(8,12,18,.48);
+    border:1px solid rgba(255,255,255,.16);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    padding:1.1vh .9vw 1vh;
+    display:flex;flex-direction:column;
+  }
+  .atlas-unit .uh{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.14em;color:#e8c547;margin:0 0 .45vh;
+  }
+  .atlas-unit .lessons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35vh;flex:1}
+  .atlas-unit .lessons li{
+    display:grid;grid-template-columns:2.8em 1fr;gap:.45vw;
+    padding:.4vh 0;border-top:1px solid rgba(255,255,255,.12);
+    font-size:var(--fs-small);color:rgba(255,255,255,.86);line-height:1.35;
+  }
+  .atlas-unit .lessons b{color:#8ec8ff;font-weight:700;white-space:nowrap}
+  .atlas-unit .lessons .ttl{display:block;font-weight:600}
+  .atlas-unit .lessons .sub{display:block;font-size:var(--fs-micro);color:rgba(255,255,255,.58);margin-top:.12vh;line-height:1.4}
+  .atlas-unit .lessons .out{display:block;font-size:var(--fs-micro);color:rgba(142,200,255,.78);margin-top:.1vh}
+  .atlas-unit .atlas-note{
+    margin-top:auto;padding-top:.6vh;
+    font-size:var(--fs-micro);color:rgba(255,255,255,.62);line-height:1.4;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .atlas-bands{
+    display:grid;grid-template-columns:1fr 1fr;gap:.6vw;margin-top:.8vh;
+  }
+  .atlas-bands article{
+    border:1px solid rgba(232,197,71,.2);
+    background:rgba(232,197,71,.07);
+    padding:.55vh .7vw;
+  }
+  .atlas-bands h4{font-size:var(--fs-kicker);font-weight:700;letter-spacing:.1em;color:#e8c547;margin:0 0 .25vh}
+  .atlas-bands p{font-size:var(--fs-micro);color:rgba(255,255,255,.72);line-height:1.4;margin:0}
+  .atlas-ui .takeaway{margin-top:.8vh;background:rgba(7,11,18,.5);border-left-color:#e8c547;color:#fff}
+  .atlas-ui .takeaway .lbl{color:#e8c547}
   .slide.co-slide{padding:0;overflow:hidden;background:#1a1410;justify-content:stretch}
   .co-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
   .co-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(18,12,8,.58) 0%, rgba(18,12,8,.08) 30%, rgba(18,12,8,.1) 60%, rgba(18,12,8,.72) 100%)}
-  .co-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .co-ui{position:relative;z-index:2;height:100%;padding:2.8vh 2.6vw 2.4vh;display:flex;flex-direction:column;color:#f5f5f7}
   .co-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
-  .co-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:14em;margin-bottom:0}
-  .co-pins{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
-  .copin{background:rgba(20,14,10,.42);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,220,180,.22);border-radius:16px;padding:1.2vh .85vw 1.2vh;min-width:0}
-  .copin .ix{font-size:var(--fs-src);font-weight:700;letter-spacing:.12em;color:#ffd29a;margin-bottom:.35vh}
+  .co-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:16em;margin:.35vh 0 .5vh}
+  .co-ui .lede{font-size:var(--fs-small);color:rgba(255,255,255,.72);line-height:1.45;max-width:52em;margin:0 0 .7vh}
+  .co-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 1vh}
+  .co-pins{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.55vw;align-items:start}
+  .copin{background:rgba(20,14,10,.48);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,220,180,.22);padding:1.1vh .8vw 1.05vh;min-width:0;display:flex;flex-direction:column}
+  .copin .ix{font-size:var(--fs-kicker);font-weight:700;letter-spacing:.12em;color:#ffd29a;margin-bottom:.3vh}
   .copin h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff}
-  .copin p{font-size:var(--fs-src);color:rgba(255,255,255,.78);line-height:1.4;margin-top:.3vh}
-  .co-ui .takeaway{margin-top:1.1vh;background:linear-gradient(90deg, rgba(196,138,42,.38), rgba(0,113,227,.28));border-left-color:#ffd29a;color:#fff}
+  .copin p{font-size:var(--fs-micro);color:rgba(255,255,255,.78);line-height:1.4;margin-top:.35vh}
+  .copin .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:.55vh}
+  .copin .chips span{font-size:10px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border:1px solid rgba(255,220,180,.22);color:#ffd29a}
+  .co-ui .takeaway{margin-top:.8vh;background:rgba(18,12,8,.5);border-left-color:#ffd29a;color:#fff}
   .co-ui .takeaway .lbl{color:#ffd29a}
 
 
@@ -2430,7 +2501,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v43">
+<div id="deck" data-rev="v44">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -3268,19 +3339,23 @@
 
 <!-- P10 两门课概要 -->
 <section class="slide course-poster">
-  <img class="cp-photo" src="assets/salon/course-hi.jpg" alt="">
+  <div class="cp-art">
+    <img src="assets/salon/course-neuron.png" alt="">
+    <img src="assets/salon/course-helix.jpg" alt="">
+  </div>
   <div class="cp-veil"></div>
   <div class="cp-stage">
     <div class="data-head">
       <div class="kicker" data-edit>03 · 两门课</div>
-      <h2 data-edit>一条通识主线，一间正在运转的青年公司。</h2>
-      <p class="lede" data-edit>这一页只看结构。下一页展开通识能力地图，再一页走进青年创始人现场。</p>
+      <h2 data-edit>一条通识主线，一间正在运转的少年公司。</h2>
+      <p class="lede" data-edit>这一页只看结构、档期和价格。下一页展开通识 12 课时，再一页走进少年创始人现场。</p>
     </div>
     <div class="cp-pair">
       <article class="cp-pane">
-        <div class="kicker" data-edit>课程 A · AI 通识</div>
+        <div class="kicker" data-edit>课程 A · AI 通识素养课</div>
         <h3>12 课时，懂 AI，会思考，造产品。</h3>
-        <p>同一条主线，两档难度。启航班把抽象落到身体和故事；创造营用真工具、真用户。可压成 3–5 天营，也可按周末展开。</p>
+        <div class="cp-meta"><span>10–12 月</span><span>¥2,980</span><span>9–15 岁</span></div>
+        <p>同一条主线，两档难度。年纪小的把抽象落到身体和故事；年纪大的用真工具、真用户。可压成 3–5 天营，也可按周末展开。</p>
         <ol class="cp-spine">
           <li><b>懂 AI</b><span>3 课时。智能谱系、大模型边界、第一个私人 Agent。</span></li>
           <li><b>会思考</b><span>2 课时。真问题三筛，主张—证据—反例，画出产品闭环。</span></li>
@@ -3288,18 +3363,19 @@
         </ol>
         <div class="cp-duo">
           <div>
-            <h4>启航班 · 约 10 岁</h4>
-            <p>具象、卡片、教师眼皮底下。每课带走可看见的产出。评价看说清楚、做出来、改得动、防得住。</p>
+            <h4>偏具象</h4>
+            <p>卡片、教师眼皮底下。每课带走可看见的产出。评价看说清楚、做出来、改得动、防得住。</p>
           </div>
           <div>
-            <h4>创造营 · 初二</h4>
-            <p>机制讲透，Cursor 类真工具，真实部署。没有「学完」，只有「做出来」。评价看逻辑硬度和真实责任。</p>
+            <h4>偏机制</h4>
+            <p>Cursor 类真工具，真实部署。没有「学完」，只有「做出来」。评价看逻辑硬度和真实责任。</p>
           </div>
         </div>
       </article>
       <article class="cp-pane">
-        <div class="kicker" data-edit>课程 B · 青年创始人计划</div>
+        <div class="kicker" data-edit>课程 B · 少年创始人高阶课</div>
         <h3>真实问题里的同伴与责任</h3>
+        <div class="cp-meta"><span>10 月–2 月</span><span>¥8,800</span><span>12–18 岁</span></div>
         <p>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。跨年龄围桌，成人是教练，不是代写。</p>
         <ul class="cp-beats">
           <li><b>真问题</b>从生活与社区里选可验证的麻烦。有人群、有频次、有痛感。伪需求当场拆掉。</li>
@@ -3310,7 +3386,7 @@
         </ul>
       </article>
     </div>
-    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。青年创始人计划把判断放进会运转的公司。共同底线：问题真实、产出可见、AI 产出必须经人核验。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。少年创始人高阶课把判断放进会运转的公司。共同底线：问题真实、产出可见、AI 产出必须经人核验。</p>
   </div>
 </section>
 
@@ -3320,42 +3396,48 @@
   <div class="atlas-shade"></div>
   <div class="atlas-ui">
     <div>
-      <div class="kicker">03 · 课程 A · 能力图谱</div>
-      <h2>一门通识课，<br>要覆盖这整张地图。</h2>
+      <div class="kicker">03 · 课程 A · AI 通识素养课</div>
+      <h2>12 课时细目：懂 AI，会思考，造产品。</h2>
+      <div class="atlas-meta"><span>10–12 月</span><span>¥2,980</span><span>9–15 岁</span><span>12 课时</span></div>
+      <p class="lede">同一骨架，按认知调难度。年纪小的用身体、卡片、故事；年纪大的讲机制、真工具、真用户。每课都有可带走的产出。</p>
     </div>
-    <div class="atlas-nodes">
-      <article class="anode">
-        <div class="mod">模块 01 · 自然智慧</div>
-        <h3>万物机理</h3>
-        <p>先问世界怎么运转。历史、逻辑哲学、数学、基础物理，是后面所有判断的底座。</p>
-        <div class="chips"><span>历史</span><span>逻辑</span><span>数学</span><span>物理</span></div>
+    <div class="atlas-units">
+      <article class="atlas-unit">
+        <div class="uh">单元一 · 懂 AI · 3 课时</div>
+        <ul class="lessons">
+          <li><b>01</b><span><span class="ttl">初识智能：自然智能 vs 人工智能</span><span class="sub">乌鸦喝水对人脸识别；智能是谱系不是开关。中文房间。大模型是下文预测机。</span><span class="out">产出：四格漫画 30 秒讲 / 一页智能地图</span></span></li>
+          <li><b>02</b><span><span class="ttl">大模型边界：第一行 prompt，把模型问倒</span><span class="sub">幻觉是流畅不是真实。查证三问：有来源吗，能查到吗，问大人了吗。</span><span class="out">产出：防骗三问卡 / 10 题边界评测</span></span></li>
+          <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><span class="sub">Agent = 模型 + 工作说明书。会做什么、绝不做什么。教师眼皮底下或责任自负。</span><span class="out">产出：可演示 Agent v1 / 系统提示词文档</span></span></li>
+        </ul>
       </article>
-      <article class="anode">
-        <div class="mod">贯穿四模块</div>
-        <h3>思想构建</h3>
-        <p>能把分析内化成自己的判断，也能当众讲清楚。查证、闭环、路演，都是这件事。</p>
-        <div class="chips"><span>内化</span><span>当众讲</span><span>查证三问</span></div>
+      <article class="atlas-unit">
+        <div class="uh">单元二 · 会思考 · 2 课时</div>
+        <ul class="lessons">
+          <li><b>04</b><span><span class="ttl">真问题从哪来</span><span class="sub">三筛：有人群、有频次、有痛感。采访真实的人，伪需求当场拆掉。</span><span class="out">产出：问题卡 / 问题定义文档 v1</span></span></li>
+          <li><b>05</b><span><span class="ttl">逻辑学与产品闭环</span><span class="sub">主张—证据—反例—边界。生活化找茬，或十个高频谬误压力测试。再画闭环。</span><span class="out">产出：任务书 + 闭环图 / 问题定义 v2</span></span></li>
+        </ul>
+        <p class="atlas-note">评价看说清楚、做出来、改得动、防得住。难度可在类比 / 机制 / 论文三档里调。</p>
       </article>
-      <article class="anode">
-        <div class="mod">模块 02 · 产品设计</div>
-        <h3>世界探索</h3>
-        <p>World as a lab / garden / playground。发现真问题，定义它，再动手解决。</p>
-        <div class="chips"><span>真问题</span><span>实验室</span><span>闭环图</span></div>
-      </article>
-      <article class="anode">
-        <div class="mod">模块 03 · 商业思维</div>
-        <h3>商业思维</h3>
-        <p>让爱好、产品、创作能持续。谁付钱、为何留下、一群人怎么协作。</p>
-        <div class="chips"><span>路演</span><span>可持续</span><span>协作</span></div>
-      </article>
-      <article class="anode">
-        <div class="mod">模块 04 · AI 技术</div>
-        <h3>AI Native Mind</h3>
-        <p>AI 是默认工作环境。会选、会查、敢负责；能力上移，责任不交出去。</p>
-        <div class="chips"><span>Agent</span><span>安全</span><span>可演示 MVP</span></div>
+      <article class="atlas-unit">
+        <div class="uh">单元三 · 造产品 · 7 课时 · RPS</div>
+        <ul class="lessons">
+          <li><b>06–07</b><span><span class="ttl">初级：最小可用原型</span><span class="sub">先做能给人试用的最小版本。纸面或 AI 编程工作流。跨组测试。</span><span class="out">产出：MVP + 用户意见 / README</span></span></li>
+          <li><b>08–09</b><span><span class="ttl">进阶：插件、多模态、用户系统</span><span class="sub">能力要取舍。路演结构：痛点 → 演示 → 证据 → 愿景。</span><span class="out">产出：路演版 + 讲稿 / Pitch 答辩</span></span></li>
+          <li><b>10–12</b><span><span class="ttl">高阶：存储、托管、运营、安全</span><span class="sub">密码、家庭住址、身份证号绝不告诉 AI。家人试用或真实投放，再按反馈改一版。</span><span class="out">产出：发布版 + 反馈 / 上线 + 看板 + 安全自查</span></span></li>
+        </ul>
       </article>
     </div>
-    <p class="takeaway"><span class="lbl">一句话</span>不是四门互不相关的兴趣课。自然智慧垫机理，产品课练探索，商业课练可持续，技术课把 AI 变成默认环境。思想构建贯穿始终。</p>
+    <div class="atlas-bands">
+      <article>
+        <h4>偏具象 · 多用身体</h4>
+        <p>三条铁律：能用卡片讲清的不用幻灯片；AI 在教师眼皮底下；每课带走漫画、问题卡、可点 demo。毕业展摆摊。</p>
+      </article>
+      <article>
+        <h4>偏机制 · 真工具真用户</h4>
+        <p>三条原则：Cursor 类工具、真实部署；幻觉按概率生成理解；没有「学完」只有「做出来」。终期路演看数据和安全报告。</p>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>共同底线：问题必须真实、产出必须可见、AI 产出必须经人核验。允许跳级，不允许跳过。</p>
   </div>
 </section>
 
@@ -3365,37 +3447,44 @@
   <div class="co-shade"></div>
   <div class="co-ui">
     <div>
-      <div class="kicker">03 · 课程 B · 青年公司</div>
-      <h2>不是机房。<br>是一间正在运转的公司。</h2>
+      <div class="kicker">03 · 课程 B · 少年创始人高阶课</div>
+      <h2>不是机房。是一间正在运转的公司。</h2>
+      <div class="co-meta"><span>10 月–2 月</span><span>¥8,800</span><span>12–18 岁</span></div>
+      <p class="lede">把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。选题、原型、用户、路演都在这间房子里发生。成人是教练，不是代写。</p>
     </div>
     <div class="co-pins">
       <article class="copin">
         <div class="ix">01</div>
         <h3>交换思想</h3>
-        <p>围桌争对错。同伴是同事，不是同班。</p>
+        <p>围桌争对错。同伴是同事，不是同班。跨年龄协作。先把主张说清楚，再让别人来拆。</p>
+        <div class="chips"><span>围桌</span><span>跨年龄</span><span>当面反对</span></div>
       </article>
       <article class="copin">
         <div class="ix">02</div>
         <h3>白板表达</h3>
-        <p>逻辑树画在墙上。讲不清，就还没想清。</p>
+        <p>逻辑树画在墙上。主张—证据—反例—边界。讲不清，就还没想清。路演前先过白板。</p>
+        <div class="chips"><span>逻辑树</span><span>主张证据</span><span>路演预演</span></div>
       </article>
       <article class="copin">
         <div class="ix">03</div>
         <h3>企业级工具</h3>
-        <p>代码、设计、协作软件。和真公司同一套手感。</p>
+        <p>代码、设计、协作软件。和真公司同一套手感。Cursor 类工具可以加速草稿，判断仍是自己的。</p>
+        <div class="chips"><span>Cursor</span><span>设计</span><span>协作</span></div>
       </article>
       <article class="copin">
         <div class="ix">04</div>
         <h3>电脑创作</h3>
-        <p>最小可演示的东西。AI 加速草稿，判断仍是自己的。</p>
+        <p>最小可演示的东西。有链接、能给人试用。AI 加速草稿，核验和署名留在人。有截止日期。</p>
+        <div class="chips"><span>MVP</span><span>可演示</span><span>截止日期</span></div>
       </article>
       <article class="copin">
         <div class="ix">05</div>
         <h3>真实世界模型学习</h3>
-        <p>从屏幕走到真实约束。对着真实场景建立模型，可被拒绝、可被改，而不是只停在聊天窗口。</p>
+        <p>从屏幕走到真实约束。对着真实场景、真实用户建立模型，可被拒绝、可被改，而不是只停在聊天窗口。</p>
+        <div class="chips"><span>真场景</span><span>真用户</span><span>可被拒绝</span></div>
       </article>
     </div>
-    <p class="takeaway"><span class="lbl">一句话</span>选题、原型、用户、路演，都在这间房子里发生。有截止日期，有当面反对，有能拿起来的东西。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>真问题三筛，当面反对，责任留在人。密码和家庭住址绝不告诉 AI。结束时要有能拿起来的东西。</p>
   </div>
 </section>
 
@@ -3418,7 +3507,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v43';
+  const DRAFT_KEY='salon-ppt-draft-v44';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3442,7 +3531,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.ear-card li span','.cp-pane h3','.cp-pane p','.cp-spine span','.cp-beats li','.cp-duo p'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.ear-card li span','.cp-pane h3','.cp-pane p','.cp-spine span','.cp-beats li','.cp-duo p','.cp-meta span','.atlas-unit .lessons span','.atlas-bands p','.co-meta span'
   ].join(',');
 
   function go(n){
@@ -3492,7 +3581,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v43"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v44"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
