@@ -558,111 +558,207 @@
 
 
 
-  /* Astra Nova curriculum teardown */
+  /* Astra Nova — Back to School summit language */
   .slide.astra-slide{
-    padding:3.2vh 3.4vw 2.2vh;
-    justify-content:flex-start;
+    padding:0;
+    justify-content:stretch;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0,122,255,.08), transparent 55%),
-      radial-gradient(ellipse 50% 35% at 100% 100%, rgba(88,86,214,.07), transparent 50%),
-      var(--paper);
+    background:#070b14;
+    color:#f4f0e6;
   }
-  .astra-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2vw;margin-bottom:1.3vh;flex-shrink:0}
-  .astra-head h2{font-size:clamp(22px, 3.05vmin, 42px);letter-spacing:-.03em;line-height:1.15;max-width:16em;margin:0}
-  .astra-head .lede{font-size:clamp(13px, 1.5vmin, 20px);color:var(--ink-2);line-height:1.45;max-width:22em;text-align:right}
-  .astra-main{
+  .slide.astra-slide .creature{display:none}
+  .astra-stage{
     flex:1;min-height:0;
     display:grid;
-    grid-template-columns:1.22fr .78fr;
-    gap:1vw;
+    grid-template-columns:2fr 3fr;
   }
-  .astra-cats{
+  .astra-hero{
+    position:relative;
+    overflow:hidden;
+    min-width:0;
+    background:#05070c;
+  }
+  .astra-hero .bg{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:62% 42%;
+    filter:saturate(1.12) contrast(1.08);
+  }
+  .astra-hero .veil{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(7,11,20,.12) 0%, rgba(7,11,20,.18) 55%, rgba(7,11,20,.92) 100%),
+      linear-gradient(180deg, rgba(7,11,20,.28) 0%, transparent 28%, rgba(7,11,20,.72) 100%);
+  }
+  .astra-hero .brand{
+    position:absolute;left:1.6vw;top:3.2vh;
+    z-index:2;
+  }
+  .astra-hero .brand .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);
+    font-weight:700;
+    margin:0 0 .55vh;
+  }
+  .astra-hero .brand h2{
+    font-size:clamp(22px, 3.1vmin, 42px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1.12;
+    max-width:11.5em;
+    margin:0;
+    color:#fff;
+    word-break:keep-all;
+    text-shadow:0 8px 28px rgba(0,0,0,.45);
+  }
+  .astra-kpis{
+    position:absolute;left:1.6vw;bottom:3.2vh;right:2.2vw;
+    z-index:2;
     display:grid;
     grid-template-columns:1fr 1fr;
-    grid-template-rows:repeat(3,minmax(0,1fr));
-    gap:.65vh .7vw;
-    min-height:0;
+    gap:.7vh .8vw;
   }
-  .acat{
-    background:#fff;
-    border-radius:14px;
-    padding:1.05vh .9vw 1vh;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    display:flex;flex-direction:column;min-height:0;overflow:hidden;
+  .astra-kpis .ak{
+    border-top:1px solid rgba(232,197,71,.55);
+    padding-top:.55vh;
+  }
+  .astra-kpis .n{
+    font-size:clamp(22px, 3.2vmin, 40px);
+    font-weight:600;
+    letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    line-height:.95;
+    color:#fff;
+  }
+  .astra-kpis .u{
+    margin-top:.2vh;
+    font-size:clamp(11px, 1.2vmin, 14px);
+    color:rgba(244,240,230,.78);
+    letter-spacing:.04em;
+    font-weight:600;
+  }
+  .astra-inset{
+    position:absolute;
+    right:1.4vw;bottom:26vh;
+    width:min(42%, 240px);
+    z-index:2;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+    border:1px solid rgba(255,255,255,.18);
+    overflow:hidden;
+  }
+  .astra-inset img{
+    display:block;width:100%;aspect-ratio:16/10;
+    object-fit:cover;
+  }
+  .astra-inset figcaption{
+    background:rgba(7,11,20,.82);
+    color:#e8c547;
+    font-size:clamp(9px, 1.05vmin, 12px);
+    font-weight:700;
+    letter-spacing:.12em;
+    padding:.45vh .55vw;
+  }
+  .astra-panel{
+    min-width:0;min-height:0;
+    padding:3vh 2.4vw 8vh 2vw;
+    display:flex;flex-direction:column;
+    background:
+      linear-gradient(180deg, #0d1524 0%, #090e18 100%);
+  }
+  .astra-panel .lede{
+    font-size:clamp(13px, 1.45vmin, 18px);
+    color:rgba(244,240,230,.72);
+    line-height:1.45;
+    max-width:38em;
+    margin:0 0 1.4vh;
+  }
+  .track{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
     position:relative;
+    padding-left:.35vw;
   }
-  .acat::before{
-    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,#007AFF);
+  .track::before{
+    content:'';
+    position:absolute;
+    left:1.15em;top:.8vh;bottom:.8vh;
+    width:1px;
+    background:linear-gradient(180deg, rgba(232,197,71,.15), #e8c547 12%, #e8c547 88%, rgba(232,197,71,.15));
   }
-  .acat.c1{--accent:#007AFF}
-  .acat.c2{--accent:#AF52DE}
-  .acat.c3{--accent:#34C759}
-  .acat.c4{--accent:#FF9500}
-  .acat.c5{--accent:#FF3B30;grid-column:1 / -1}
-  .acat .cap{
-    font-size:clamp(10px, 1.12vmin, 13px);
-    font-weight:700;letter-spacing:.08em;color:var(--accent);
+  .tstep{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:2.6em minmax(0,1fr);
+    column-gap:.85vw;
+    align-items:center;
+    position:relative;
+    padding:.55vh 0 .55vh .15vw;
   }
-  .acat h3{
-    font-size:clamp(14px, 1.7vmin, 22px);
-    font-weight:650;letter-spacing:-.02em;margin:.15vh 0 .35vh;
+  .tstep .num{
+    width:2.15em;height:2.15em;
+    border-radius:50%;
+    border:1px solid #e8c547;
+    background:#0d1524;
+    color:#e8c547;
+    font-size:clamp(11px, 1.25vmin, 14px);
+    font-weight:700;
+    letter-spacing:.06em;
+    display:grid;place-items:center;
+    z-index:1;
   }
-  .acat p{
-    font-size:clamp(11px, 1.28vmin, 16px);
-    color:var(--ink-2);line-height:1.4;
-    margin-bottom:.4vh;
-  }
-  .acat .chips{margin-top:.35vh}
-  .astra-side{
-    display:flex;flex-direction:column;gap:.65vh;min-height:0;
-  }
-  .aside{
-    background:#fff;
-    border-radius:14px;
-    padding:1.15vh 1vw 1.1vh;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    min-height:0;
-  }
-  .aside.grow{flex:1;display:flex;flex-direction:column}
-  .aside h3{
-    font-size:clamp(13px, 1.5vmin, 18px);
-    font-weight:650;letter-spacing:-.02em;margin-bottom:.5vh;
-  }
-  .aside ol, .aside ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4vh}
-  .aside li{
-    font-size:clamp(12px, 1.32vmin, 16px);
-    line-height:1.4;color:var(--ink);
-    padding-left:1.5em;position:relative;
-  }
-  .aside ol li{counter-increment:w}
-  .aside ol{counter-reset:w}
-  .aside ol li::before{
-    content:counter(w);
-    position:absolute;left:0;top:.05em;
-    font-size:.85em;font-weight:700;color:var(--blue);
-  }
-  .aside ul li::before{
-    content:'';position:absolute;left:.2em;top:.55em;
-    width:5px;height:5px;border-radius:50%;background:var(--blue);
-  }
-  .day-row{
-    display:grid;grid-template-columns:5.2em 1fr;gap:.3vh .6vw;
-    font-size:clamp(12px, 1.32vmin, 16px);line-height:1.4;
-  }
-  .day-row dt{font-weight:700;color:var(--blue);letter-spacing:.02em}
-  .day-row dd{color:var(--ink)}
-  .cap-map{
-    display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:.45vw;margin-top:.7vh;flex-shrink:0;
-  }
-  .cap-map .cm{
-    background:#fff;border-radius:12px;padding:.85vh .55vw;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  .tstep .body{
     min-width:0;
+    padding:.7vh .9vw .75vh;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
   }
-  .cap-map h4{font-size:clamp(12px, 1.32vmin, 16px);font-weight:650;letter-spacing:-.02em;margin-bottom:.25vh}
-  .cap-map p{font-size:clamp(11px, 1.22vmin, 14px);color:var(--ink-2);line-height:1.35;margin:0}
+  .tstep .cap{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;
+    letter-spacing:.14em;
+    color:#e8c547;
+    margin-bottom:.15vh;
+  }
+  .tstep h3{
+    font-size:clamp(15px, 1.75vmin, 22px);
+    font-weight:600;
+    letter-spacing:-.025em;
+    color:#fff;
+    margin:0 0 .2vh;
+  }
+  .tstep p{
+    font-size:clamp(11px, 1.25vmin, 15px);
+    color:rgba(244,240,230,.72);
+    line-height:1.4;
+    margin:0 0 .35vh;
+  }
+  .tstep .chips{margin:0}
+  .tstep .chip{
+    background:rgba(232,197,71,.12);
+    color:#f3e2a4;
+    border:1px solid rgba(232,197,71,.22);
+    margin:0 5px 4px 0;
+  }
+  .astra-foot{
+    flex-shrink:0;
+    margin-top:1.1vh;
+    padding-top:.9vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    font-size:clamp(13px, 1.4vmin, 17px);
+    line-height:1.4;
+    color:#fff;
+    font-weight:500;
+  }
+  .astra-foot .lbl{
+    color:#e8c547;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.14em;
+    margin-right:.55em;
+  }
 
   /* Authoritative admissions layout */
   .slide.auth-slide{
@@ -1670,7 +1766,8 @@
   }
 
   @media (max-aspect-ratio: 5/4){
-    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.astra-slide,.slide.auth-slide{padding:2.8vh 2.8vw 2vh;overflow-y:auto}
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.auth-slide{padding:2.8vh 2.8vw 2vh;overflow-y:auto}
+    .slide.astra-slide{padding:0;overflow-y:auto}
     .data-grid{grid-template-columns:1.15fr .85fr;gap:.8vw}
     .path-kpis{grid-template-columns:repeat(3,1fr)}
     .labor-main{grid-template-columns:1.15fr .85fr;gap:1vw}
@@ -1688,7 +1785,9 @@
   }
   @media (max-width:800px){
     .slide{padding:7vh 7vw 12vh;overflow-y:auto;justify-content:flex-start}
-    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.astra-slide,.slide.auth-slide{overflow-y:auto}
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.auth-slide{overflow-y:auto}
+    .slide.astra-slide{padding:0;overflow-y:auto}
+    .astra-hero{min-height:38vh}
     .split,.split.reverse{grid-template-columns:1fr;padding:0}
     .split .pane-text,.split.reverse .pane-text{padding:7vh 7vw 4vh}
     .slide.schools{overflow-y:auto;justify-content:flex-start}
@@ -1707,7 +1806,7 @@
     .photo-band{height:26vh}
     .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
     .creature,.neuron-side{display:none}
-    .path-kpis,.fact-strip,.labor-stats,.ox-chips,.kpi-stack,.cn-grid,.auth-facts,.astra-main,.astra-cats,.cap-map{grid-template-columns:1fr 1fr}
+    .path-kpis,.fact-strip,.labor-stats,.ox-chips,.kpi-stack,.cn-grid,.auth-facts,.astra-stage{grid-template-columns:1fr}
     .data-grid,.labor-main{grid-template-columns:1fr}
     .job-cols{grid-template-columns:1fr}
   }
@@ -1775,7 +1874,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v28">
+<div id="deck" data-rev="v29">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -1962,104 +2061,103 @@
 
 
 <!-- P3 Astra Nova 课表拆解 -->
-<section class="slide astra-slide paper">
-  <div class="astra-head">
-    <div>
-      <div class="kicker" data-edit>01 · Astra Nova 课表</div>
-      <h2 data-edit>九十门课，不是把大纲上完，是把问题摊开。</h2>
+<section class="slide astra-slide">
+  <div class="astra-stage">
+    <aside class="astra-hero">
+      <img class="bg" src="assets/salon/astra/launch.jpg" alt="SpaceX 发射场">
+      <div class="veil"></div>
+      <div class="brand">
+        <div class="kicker" data-edit>01 · ASTRA NOVA · SPACEX 渊源</div>
+        <h2 data-edit>九十门课，不是把大纲上完，是把问题摊开。</h2>
+      </div>
+      <figure class="astra-inset">
+        <img src="assets/salon/astra/conundrum-nasa.jpg" alt="NASA Conundrum">
+        <figcaption data-edit>Astra Nova 实题 · NASA Conundrum</figcaption>
+      </figure>
+      <div class="astra-kpis">
+        <div class="ak"><div class="n" data-edit>90</div><div class="u">门课 / 每学期重做</div></div>
+        <div class="ak"><div class="n" data-edit>6–16</div><div class="u">人 · 英语直播小班</div></div>
+        <div class="ak"><div class="n" data-edit>45</div><div class="u">个国家的同学</div></div>
+        <div class="ak"><div class="n" data-edit>4–16</div><div class="u">小时 / 周</div></div>
+      </div>
+    </aside>
+    <div class="astra-panel">
+      <p class="lede" data-edit>课表不是五堆选修。先站住不能造假的底盘，再练判断，再把世界当现场，最后把东西交出去。动手贯穿全程——不是另开一门「人工智能」。</p>
+      <div class="track">
+        <article class="tstep">
+          <div class="num">01</div>
+          <div class="body">
+            <div class="cap" data-edit>底盘 · 万物机理</div>
+            <h3 data-edit>先问世界怎么转</h3>
+            <p data-edit>数学每周 3–4 小时、要分班。定量底盘装不了假。其余课每周 1–2 小时直播讨论或做项目。</p>
+            <div class="chips">
+              <span class="chip">代数 → 微积分</span>
+              <span class="chip">牛顿力学</span>
+              <span class="chip">C 语言工程</span>
+              <span class="chip">F1 设计</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">02</div>
+          <div class="body">
+            <div class="cap" data-edit>判断 · 思想构建</div>
+            <h3 data-edit>伦理课紧挨工程课</h3>
+            <p data-edit>会造、不会判断，是 AI 时代最贵的缺陷。申请交 30 秒–2 分钟没有标准答案的短视频，听怎么想。</p>
+            <div class="chips">
+              <span class="chip">更好的决策</span>
+              <span class="chip">悖论与思想实验</span>
+              <span class="chip">生物伦理</span>
+              <span class="chip">数据会说谎</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">03</div>
+          <div class="body">
+            <div class="cap" data-edit>现场 · 世界探索</div>
+            <h3 data-edit>课名先是潮汐池，不是地理第一章</h3>
+            <p data-edit>先撞上世界，再碰到学科。同学来自约 45 个国家——现场比课文大。对中国家庭，不少课会落在凌晨，这是全球直播班的代价。</p>
+            <div class="chips">
+              <span class="chip">潮汐池 / 海洋</span>
+              <span class="chip">罗马帝国 / 二战</span>
+              <span class="chip">世界地理</span>
+              <span class="chip">模拟联合国</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">04</div>
+          <div class="body">
+            <div class="cap" data-edit>交付 · 商业思维</div>
+            <h3 data-edit>价值要交得出去</h3>
+            <p data-edit>经济学、广告、社会创业，毕业轨道还有企业协作驻场。练的是把东西讲清楚、交出去。</p>
+            <div class="chips">
+              <span class="chip">实用经济学</span>
+              <span class="chip">社会创业</span>
+              <span class="chip">广告</span>
+              <span class="chip">企业协作</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">05</div>
+          <div class="body">
+            <div class="cap" data-edit>动手 · AI Native</div>
+            <h3 data-edit>做出来，不是上「人工智能课」</h3>
+            <p data-edit>有一门 AI 技术史，但更多是编程、做 App、拍电影、写歌。工具会换，要会开工。</p>
+            <div class="chips">
+              <span class="chip">AI 技术史</span>
+              <span class="chip">Python / C# / Lua</span>
+              <span class="chip">网页与 App</span>
+              <span class="chip">软件工程强化</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>Astra Nova 用九十门课把判断铺开。我们没有九十门，脊柱相同：真问题、站队、当面讲清、对结果负责。</span></p>
     </div>
-    <p class="lede" data-edit>SpaceX 园区那所 Ad Astra，现在变成全球线上的 Astra Nova。本季公开课表约 90 门，每学期重做。下面按「实际在讲什么」分类，并对照我们认的五件能力。</p>
   </div>
-  <div class="astra-main">
-    <div class="astra-cats">
-      <article class="acat c1">
-        <div class="cap" data-edit>对应 · 思想构建</div>
-        <h3 data-edit>判断力课</h3>
-        <p data-edit>没有标准答案。听的是推理过程：实验怎么设计、数据会不会说谎、该不该改基因。</p>
-        <div class="chips">
-          <span class="chip">更好的决策</span>
-          <span class="chip">悖论与思想实验</span>
-          <span class="chip">生物伦理</span>
-          <span class="chip">数据会说谎</span>
-        </div>
-      </article>
-      <article class="acat c2">
-        <div class="cap" data-edit>对应 · 万物机理</div>
-        <h3 data-edit>世界怎么运转</h3>
-        <p data-edit>数学是唯一的重课时轨道。物理、化学、天文、工程挨着开，先问世界如何运行。</p>
-        <div class="chips">
-          <span class="chip">代数 → 微积分</span>
-          <span class="chip">牛顿力学</span>
-          <span class="chip">C 语言工程</span>
-          <span class="chip">F1 设计</span>
-        </div>
-      </article>
-      <article class="acat c3">
-        <div class="cap" data-edit>对应 · 世界探索</div>
-        <h3 data-edit>把世界当现场</h3>
-        <p data-edit>课名先是潮汐池、罗马帝国、二战，不是「地理第一章」。同学来自约 45 个国家。</p>
-        <div class="chips">
-          <span class="chip">潮汐池 / 海洋</span>
-          <span class="chip">罗马帝国 / 二战</span>
-          <span class="chip">世界地理</span>
-          <span class="chip">模拟联合国</span>
-        </div>
-      </article>
-      <article class="acat c4">
-        <div class="cap" data-edit>对应 · 商业思维</div>
-        <h3 data-edit>协作与生意</h3>
-        <p data-edit>经济学、广告、社会创业，毕业轨道还有企业协作驻场。练的是把价值讲清楚、交出去。</p>
-        <div class="chips">
-          <span class="chip">实用经济学</span>
-          <span class="chip">社会创业</span>
-          <span class="chip">广告</span>
-          <span class="chip">企业协作</span>
-          <span class="chip">比特币入门</span>
-        </div>
-      </article>
-      <article class="acat c5">
-        <div class="cap" data-edit>对应 · AI Native Mind</div>
-        <h3 data-edit>动手做，而不是上「人工智能课」</h3>
-        <p data-edit>有一门 AI 技术史，但更多是编程、做 App、做游戏、拍电影、写歌。工具会换，要会开工。</p>
-        <div class="chips">
-          <span class="chip">AI 技术史</span>
-          <span class="chip">Python / C# / Lua</span>
-          <span class="chip">网页与 App</span>
-          <span class="chip">软件工程强化</span>
-          <span class="chip">影像 / 作曲 / 游戏</span>
-          <span class="chip">经典综合课 Synthesis</span>
-        </div>
-      </article>
-    </div>
-    <div class="astra-side">
-      <article class="aside grow">
-        <h3 data-edit>为什么课表长这样</h3>
-        <ol>
-          <li data-edit>数学每周 3–4 小时、要分班，因为定量底盘装不了假。其余课每周 1–2 小时直播讨论或做项目。</li>
-          <li data-edit>课名先是问题：吸血鬼文学、潮汐池、F1。先撞上世界，再碰到学科，避免「上完大纲再贴综合素质」。</li>
-          <li data-edit>伦理课紧挨工程课。会造、不会判断，是 AI 时代最贵的缺陷。</li>
-          <li data-edit>申请交 30 秒–2 分钟没有标准答案的短视频，选的是怎么想，不是背了哪套词。</li>
-        </ol>
-      </article>
-      <article class="aside">
-        <h3 data-edit>上课怎么发生</h3>
-        <dl>
-          <div class="day-row"><dt>环境</dt><dd data-edit>英语直播小班，约 6–16 人，学生来自约 45 国。</dd></div>
-          <div class="day-row"><dt>负荷</dt><dd data-edit>每周约 4–16 小时。入门课几乎不留作业；高中级、工程级才加到每周 1 小时以上。</dd></div>
-          <div class="day-row"><dt>时差</dt><dd data-edit>课表按美国时间排。对中国家庭，不少课会落在凌晨——这是线上全球班的代价，不是排错了。</dd></div>
-          <div class="day-row"><dt>课表</dt><dd data-edit>每学期重做约 90 门。不是一本冻住的教学大纲。</dd></div>
-        </dl>
-      </article>
-    </div>
-  </div>
-  <div class="cap-map">
-    <div class="cm"><h4 data-edit>万物机理</h4><p data-edit>数学、力学、化学、天文、工程。先问世界怎么转。</p></div>
-    <div class="cm"><h4 data-edit>思想构建</h4><p data-edit>决策、悖论、伦理、辩论。能被当面问清楚。</p></div>
-    <div class="cm"><h4 data-edit>世界探索</h4><p data-edit>潮汐池、战争史、45 国同学。现场比课文大。</p></div>
-    <div class="cm"><h4 data-edit>商业思维</h4><p data-edit>经济、创业、广告、企业协作。价值要交得出去。</p></div>
-    <div class="cm"><h4 data-edit>AI Native</h4><p data-edit>技术史加动手做。不是堆「人工智能」课名。</p></div>
-  </div>
-  <p class="takeaway"><span class="lbl">一句话</span>Astra Nova 用九十门课把判断铺开。我们没有九十门，脊柱相同：真问题、站队、当面讲清、对结果负责。</p>
 </section>
 
 
@@ -2691,7 +2789,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v28';
+  const DRAFT_KEY='salon-ppt-draft-v29';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2714,7 +2812,8 @@
     '.school-panel p','.school-panel .school-src','.map-title','.map-hint',
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
-    '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd'
+    '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption'
   ].join(',');
 
   function go(n){
@@ -2764,7 +2863,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v28"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-slide') || !raw.includes('auth-slide') || !raw.includes('smeta')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v29"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('data-rev="v29"')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
