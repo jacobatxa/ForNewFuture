@@ -191,6 +191,103 @@
     font-weight:400;
     letter-spacing:-.01em;
   }
+
+  /* —— 封面 B · 神经网络全幅 —— */
+  .slide.cover-neural{
+    padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
+  }
+  .slide.cover-neural > .cn-bg{
+    position:absolute;inset:-4%;
+    width:108%;height:108%;
+    object-fit:cover;object-position:center 46%;
+    z-index:0;
+    animation:cn-drift 28s ease-in-out infinite alternate;
+    will-change:transform;
+  }
+  @keyframes cn-drift{
+    from{transform:scale(1.02) translate3d(-1.2%,.6%,0)}
+    to{transform:scale(1.08) translate3d(1.4%,-1%,0)}
+  }
+  .slide.cover-neural > .cn-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(105deg, rgba(7,11,20,.78) 0%, rgba(7,11,20,.42) 34%, rgba(7,11,20,.08) 58%, rgba(7,11,20,.35) 100%),
+      linear-gradient(180deg, rgba(7,11,20,.28) 0%, transparent 22%, transparent 62%, rgba(7,11,20,.55) 100%);
+  }
+  .slide.cover-neural > .cn-pulse{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse 58% 52% at 72% 48%, rgba(64,156,255,.32), transparent 70%);
+    animation:cn-pulse 6.5s ease-in-out infinite;
+    mix-blend-mode:screen;
+  }
+  @keyframes cn-pulse{
+    0%,100%{opacity:.45;transform:scale(1)}
+    50%{opacity:.85;transform:scale(1.06)}
+  }
+  .slide.cover-neural > .cn-ui{
+    position:relative;z-index:3;
+    height:100%;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 8vw 8vh 6.5vw;
+    max-width:48vw;
+  }
+  .slide.cover-neural .mark{
+    color:#e8c547;margin-bottom:2.4vh;letter-spacing:.22em;
+    opacity:0;animation:cn-rise .9s ease .15s forwards;
+  }
+  .slide.cover-neural .cover-title{
+    color:#fff;font-weight:650;
+    opacity:0;animation:cn-rise .95s ease .28s forwards;
+  }
+  .slide.cover-neural .cover-title .em{color:#e8c547}
+  .slide.cover-neural .cover-sub{
+    color:rgba(245,245,247,.72);max-width:22em;margin-top:1.8vh;
+    opacity:0;animation:cn-rise .95s ease .4s forwards;
+  }
+  .cn-agenda{
+    list-style:none;margin-top:4.2vh;max-width:32em;
+    display:flex;flex-direction:column;gap:1.7vh;
+  }
+  .cn-agenda li{
+    display:grid;grid-template-columns:2.4em 1fr;gap:12px;align-items:start;
+    opacity:0;animation:cn-rise .85s ease forwards;
+  }
+  .cn-agenda li:nth-child(1){animation-delay:.55s}
+  .cn-agenda li:nth-child(2){animation-delay:.68s}
+  .cn-agenda li:nth-child(3){animation-delay:.81s}
+  .cn-agenda .num{
+    font-size:var(--fs-small);font-weight:700;color:#e8c547;
+    letter-spacing:.04em;padding-top:.2em;
+  }
+  .cn-agenda .txt{
+    font-size:var(--fs-lede);font-weight:550;letter-spacing:-.02em;
+    line-height:1.35;color:#fff;
+  }
+  .cn-agenda .desc{
+    display:block;margin-top:.4em;
+    font-size:var(--fs-small);font-weight:400;
+    color:rgba(245,245,247,.58);line-height:1.5;
+  }
+  .cn-foot{
+    margin-top:4.5vh;font-size:var(--fs-kicker);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(232,197,71,.55);
+    opacity:0;animation:cn-rise .9s ease .95s forwards;
+  }
+  @keyframes cn-rise{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .slide.cover-neural > .cn-bg,
+    .slide.cover-neural > .cn-pulse,
+    .slide.cover-neural .mark,
+    .slide.cover-neural .cover-title,
+    .slide.cover-neural .cover-sub,
+    .cn-agenda li,
+    .cn-foot{animation:none;opacity:1;transform:none}
+  }
+
   h2{
     font-size:var(--fs-h2);
     line-height:1.12;
@@ -2271,6 +2368,7 @@
     transition:all .2s;font-family:inherit;
   }
   #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  body:has(.slide.cover-neural.active) #pager,
   body:has(.slide.schools.active) #pager,
   body:has(.slide.astra-slide.active) #pager,
   body:has(.slide.auth-slide.active) #pager,
@@ -2284,6 +2382,7 @@
   body:has(.slide.idx-slide.active) #pager{
     color:rgba(244,240,230,.5);
   }
+  body:has(.slide.cover-neural.active) #pager button,
   body:has(.slide.schools.active) #pager button,
   body:has(.slide.astra-slide.active) #pager button,
   body:has(.slide.auth-slide.active) #pager button,
@@ -2299,6 +2398,7 @@
     border-color:rgba(232,197,71,.28);
     color:#f4f0e6;
   }
+  body:has(.slide.cover-neural.active) #pager button:hover,
   body:has(.slide.schools.active) #pager button:hover,
   body:has(.slide.astra-slide.active) #pager button:hover,
   body:has(.slide.auth-slide.active) #pager button:hover,
@@ -2314,6 +2414,7 @@
     color:#070b14;
     border-color:#e8c547;
   }
+  body:has(.slide.cover-neural.active) #progress,
   body:has(.slide.schools.active) #progress,
   body:has(.slide.astra-slide.active) #progress,
   body:has(.slide.auth-slide.active) #progress,
@@ -2328,6 +2429,7 @@
     background:#e8c547;
   }
   #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  body:has(.slide.cover-neural.active) #hint,
   body:has(.slide.schools.active) #hint,
   body:has(.slide.astra-slide.active) #hint,
   body:has(.slide.auth-slide.active) #hint,
@@ -2494,15 +2596,48 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v48">
+<div id="deck" data-rev="v49">
 
-<!-- P1 封面 -->
+<!-- P1 封面 · 神经网络（新） -->
+<section class="slide cover-neural active">
+  <img class="cn-bg" src="assets/salon/course-bg-wide.jpg" alt="">
+  <div class="cn-veil"></div>
+  <div class="cn-pulse" aria-hidden="true"></div>
+  <div class="cn-ui">
+    <div class="mark" data-edit>Natural Computation</div>
+    <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
+    <p class="cover-sub" data-edit>看清 AI 把教育改到哪里，再决定孩子练什么。</p>
+    <ol class="cn-agenda">
+      <li>
+        <span class="num">01</span>
+        <span class="txt" data-edit>学校怎么上课，名校怎么选人
+          <span class="desc">六所实验校在改什么；Astra Nova 课表与真题；对中国学生，通道在收窄。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span class="txt" data-edit>工作还在，能力结构在换
+          <span class="desc">岗位总数未塌；软件会换人；我们只认五件可练的能力。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span class="txt" data-edit>案例、培养路径与两门课
+          <span class="desc">四个少年不是模板；五件能力怎么落地；通识课与少年创始人能看见什么。</span>
+        </span>
+      </li>
+    </ol>
+    <div class="cn-foot" data-edit>Bilden Edu · 家长沙龙</div>
+  </div>
+</section>
+
+<!-- P2 封面 · 鸟图（对照） -->
 <section class="slide cover paper">
   <div class="pane-bird">
     <img class="cover-bird" src="assets/cover-bird.png?v=7" alt="">
   </div>
   <div class="pane-text">
-    <div class="mark">Natural Computation</div>
+    <div class="mark">Natural Computation · 对照</div>
     <h1 class="cover-title">「<span class="em">机</span>」遇未来</h1>
     <p class="cover-sub">AI 对教育变革的分析及选择</p>
     <ol class="cover-agenda">
@@ -3499,7 +3634,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v48';
+  const DRAFT_KEY='salon-ppt-draft-v49';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3518,6 +3653,7 @@
     '.role p','.role h3','.fact .n','.fact h3','.fact p',
     '.compare-col h3','.compare-col .sub',
     '.cover-agenda .txt','.cover-agenda .desc','.cover-agenda .num',
+    '.cn-agenda .txt','.cn-agenda .desc','.cn-agenda .num','.cn-foot',
     '.school-panel h2','.school-panel .where','.school-panel .lab',
     '.school-panel p','.school-panel .school-src','.map-title','.map-hint',
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
@@ -3573,7 +3709,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v48"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v49"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
