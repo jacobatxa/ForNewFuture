@@ -883,11 +883,40 @@
   /* Authoritative admissions layout */
   .slide.auth-slide{
     padding:0;
-    justify-content:stretch;
+    justify-content:flex-start;
     overflow:hidden;
     background:#070b14;
     color:#f4f0e6;
   }
+  .slide.auth-slide .lrow{
+    align-items:stretch;
+    padding:1.15vh 1.05vw 1.1vh .65vw;
+  }
+  .slide.auth-slide .lrow .claim,
+  .slide.auth-slide .lrow .proof{
+    justify-content:flex-start;
+    gap:.7vh;
+    height:100%;
+  }
+  .slide.auth-slide .lrow .claim p{flex:1}
+  .slide.auth-slide .lrow .proof .jobs{flex:1}
+  .slide.auth-slide .lrow h3{
+    font-size:clamp(17px, 2.05vmin, 26px);
+  }
+  .slide.auth-slide .lrow .claim p{
+    font-size:clamp(13px, 1.48vmin, 18px);
+    line-height:1.45;
+  }
+  .slide.auth-slide .lnums{flex:1;align-items:stretch}
+  .slide.auth-slide .lnum{
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding-top:.5vh;
+  }
+  .slide.auth-slide .lnum .n{
+    font-size:clamp(24px, 3.4vmin, 44px);
+  }
+  .slide.auth-slide .jobs{flex:1;align-items:stretch}
+  .slide.auth-slide .jobs .j{display:flex;flex-direction:column;justify-content:flex-start}
   .slide.auth-slide .creature{display:none}
   .auth-stage{
     flex:1;min-height:0;
@@ -1221,14 +1250,16 @@
 
   .slide.labor{
     padding:0;
-    justify-content:stretch;
+    justify-content:flex-start;
     overflow:hidden;
     background:#070b14;
     color:#f4f0e6;
   }
   .slide.labor .creature{display:none}
   .labor-stage{
-    flex:1;min-height:0;
+    flex:1 1 auto;
+    min-height:0;
+    height:100%;
     display:flex;flex-direction:column;
     padding:2.8vh 2.4vw 7.4vh;
   }
@@ -2300,7 +2331,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v34">
+<div id="deck" data-rev="v35">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2661,7 +2692,7 @@
         <div class="claim">
           <div class="cap">通道</div>
           <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
-          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。印度 363,019 人，已经超过中国。英国这边：申请还在挤，签证签发在下降。</p>
+          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。英国：UCAS 2026 中国本科申请上升 12.2%；学生签证签发下降 14.7%。申请还在挤，门没有变宽。</p>
         </div>
         <div class="proof">
           <div class="lnums">
@@ -2669,10 +2700,31 @@
             <div class="lnum"><div class="n">+4.5%</div><div class="u">美国国际生创纪录，饼在变大</div></div>
             <div class="lnum"><div class="n">265,919</div><div class="u">中国在美留学生，连续下降 4.1%</div></div>
           </div>
-          <div class="hire-row">
-            <span>印度 363,019，已经超过中国</span>
-            <span>+12.2% UCAS 2026 中国本科申请</span>
-            <span>−14.7% 英国学生签证签发</span>
+          <div class="jobs">
+            <div class="j">
+              <h4>美国这条</h4>
+              <ul>
+                <li>国际生 1,177,766，创纪录</li>
+                <li>中国本科 78,583，下降 10.2%</li>
+                <li>饼在变大，中国这块在变小</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>英国这条</h4>
+              <ul>
+                <li>UCAS 申请 +12.2%，到 3.8 万</li>
+                <li>学生签证签发 −14.7%</li>
+                <li>人还在挤，签发在下降</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>谁上来了</h4>
+              <ul>
+                <li>印度 363,019，+9.5%</li>
+                <li>已经超过中国</li>
+                <li>对中国学生：通道在收窄</li>
+              </ul>
+            </div>
           </div>
         </div>
       </article>
@@ -2681,21 +2733,43 @@
         <div class="claim">
           <div class="cap">读数</div>
           <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
-          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。</p>
+          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。剑桥口径更严：成功率 = 入学人数 ÷ 申请人数。名额有限，申请池最密的那群人，通道最窄。</p>
         </div>
         <div class="proof">
           <div class="lnums">
-            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体录取通知比例</div></div>
-            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津 · 中国大陆（218 / 2,111）</div></div>
-            <div class="lnum"><div class="n">9.8%</div><div class="u">剑桥中国成功率（入学/申请）</div></div>
+            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体：3,853 份通知 / 23,291 份申请</div></div>
+            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津中国大陆：218 / 2,111</div></div>
+            <div class="lnum"><div class="n">9.8%</div><div class="u">剑桥中国成功率（284 入学 / 2,900 申请）</div></div>
           </div>
           <div class="ox-split" aria-label="牛津整体与中国大陆">
             <span class="all">整体 16.5%</span>
             <span class="cn">中国大陆 10.3%</span>
           </div>
-          <div class="hire-row">
-            <span>218 / 2,111 牛津中国：通知 / 申请</span>
-            <span>34.9% 剑桥海外申请来自中国</span>
+          <div class="jobs">
+            <div class="j">
+              <h4>牛津怎么读</h4>
+              <ul>
+                <li>整体通知比例 16.5%</li>
+                <li>中国大陆 10.3%，不是同一回事</li>
+                <li>中国是最大海外申请来源</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>剑桥怎么读</h4>
+              <ul>
+                <li>成功率 = 入学 ÷ 申请</li>
+                <li>2025 轮次中国 9.8%</li>
+                <li>海外申请里中国占 34.9%</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>听什么</h4>
+              <ul>
+                <li>不是「牛津歧视」</li>
+                <li>是中国学生之间更密</li>
+                <li>申请池最密，通道最窄</li>
+              </ul>
+            </div>
           </div>
         </div>
       </article>
@@ -2704,18 +2778,39 @@
         <div class="claim">
           <div class="cap">文书</div>
           <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
-          <p data-edit>Kaplan 2025 调查 220 所美国高校。禁止代写从 25% 升到 30%。没有书面政策，不等于可以碰运气。作文写得顺不够，得能讲清楚是自己想的。</p>
+          <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写从 2024 年的 25% 升到 30%。68% 还没有正式书面政策，不等于可以碰运气。27% 允许用 AI 帮忙想，不允许代写交差。作文写得顺不够，得能讲清楚是自己想的。</p>
         </div>
         <div class="proof">
           <div class="lnums">
             <div class="lnum"><div class="n">30%</div><div class="u">明确禁止 AI 代写文书</div></div>
             <div class="lnum"><div class="n">68%</div><div class="u">还没有正式书面政策</div></div>
-            <div class="lnum"><div class="n">27%</div><div class="u">允许用 AI 帮忙想，不允许代写交差</div></div>
+            <div class="lnum"><div class="n">27%</div><div class="u">允许帮忙想，不允许代写交差</div></div>
           </div>
-          <div class="hire-row">
-            <span>Kaplan 2025 · n=220</span>
-            <span>禁止代写 25% → 30%</span>
-            <span>作文写得顺不够，得能讲清楚是自己想的</span>
+          <div class="jobs">
+            <div class="j">
+              <h4>禁止</h4>
+              <ul>
+                <li>明确禁止代写：25% → 30%</li>
+                <li>Kaplan 2025，n=220</li>
+                <li>查的是交差，不是禁思考</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>空白</h4>
+              <ul>
+                <li>68% 没有正式书面政策</li>
+                <li>口径乱，不等于可以赌</li>
+                <li>规则不写清，风险更高</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>能做什么</h4>
+              <ul>
+                <li>27% 允许用 AI 帮忙想</li>
+                <li>不允许代写交差</li>
+                <li>要能讲清楚是自己想的</li>
+              </ul>
+            </div>
           </div>
         </div>
       </article>
@@ -3288,7 +3383,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v34';
+  const DRAFT_KEY='salon-ppt-draft-v35';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3362,7 +3457,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v34"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v35"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
