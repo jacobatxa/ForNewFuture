@@ -1376,12 +1376,11 @@
     padding:3.5vh 3.5vw 3vh;
     justify-content:flex-start;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0,122,255,.08), transparent 50%),
-      var(--bg);
+    background:#070b14;
+    color:#f4f0e6;
   }
   .slide.cases-slide .kicker{
-    color:var(--gold);
+    color:#e8c547;
     letter-spacing:.18em;
     font-size:var(--fs-kicker);
     font-weight:700;
@@ -1391,6 +1390,7 @@
     font-size:var(--fs-h2-data);
     letter-spacing:-.03em;
     margin:0 0 1.4vh;
+    color:#fff;
   }
   .cases-grid{
     flex:1;min-height:0;
@@ -1433,7 +1433,7 @@
     box-shadow:0 20px 60px rgba(0,0,0,.35);
   }
   .cases-grid.focus-on .case-card.is-focus img{opacity:.88;transform:scale(1.04)}
-  .cases-hint{font-size:var(--fs-src);color:var(--ink-3);margin-top:1vh}
+  .cases-hint{font-size:var(--fs-src);color:rgba(244,240,230,.45);margin-top:1vh}
 
   /* Framework P7 */
   .slide.frame-slide{
@@ -1458,126 +1458,109 @@
     font-weight:550;letter-spacing:-.02em;color:var(--ink);
   }
 
-  /* Course poster */
+  /* Course poster · overview of two tracks */
   .slide.course-poster{
-    padding:0;display:grid;
-    grid-template-columns:1.22fr .78fr;
+    padding:0;
+    display:flex;
     overflow:hidden;
+    background:#05060c;
+    color:#f4f0e6;
+    justify-content:flex-start;
   }
-  .cp-left{
-    position:relative;
-    padding:3.2vh 2.6vw 2.6vh 3.2vw;
+  .slide.course-poster > .cp-photo{
+    position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center;
+    pointer-events:none;
+  }
+  .slide.course-poster > .cp-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(5,6,12,.58) 0%, rgba(5,6,12,.14) 26%, rgba(5,6,12,.10) 58%, rgba(5,6,12,.72) 100%);
+  }
+  .cp-stage{
+    position:relative;z-index:2;
+    height:100%;width:100%;
     display:flex;flex-direction:column;
-    background:#0c0c0e;
-    color:#f5f5f7;
-    overflow:hidden;
+    padding:2.6vh 2.4vw 6.6vh;
   }
-  .cp-left .bg{
-    position:absolute;inset:0;
-    background-size:cover;background-position:center;
-    opacity:.38;filter:saturate(1.12);
+  .cp-stage .data-head{margin:0 0 1.2vh}
+  .cp-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
-  .cp-left .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
-  .cp-left .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700;margin:0}
-  .cp-left h2{font-size:clamp(20px, 2.7vmin, 34px);letter-spacing:-.035em;line-height:1.12;margin:.45vh 0 .7vh}
-  .cp-left .lede{font-size:var(--fs-small);color:rgba(255,255,255,.7);line-height:1.4;max-width:54em;margin:0 0 .9vh}
-  .cp-units{flex:1;min-height:0;display:flex;flex-direction:column;gap:.2vh}
-  .cp-unit{
-    border-top:1px solid rgba(255,255,255,.12);
-    padding:.55vh 0 .1vh;
+  .cp-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.16;
+    color:#fff;max-width:22em;margin:0;
+    text-shadow:0 2px 14px rgba(0,0,0,.55);
   }
-  .cp-unit .uh{
-    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.14em;color:#e8c547;margin-bottom:.35vh;
+  .cp-stage .lede{
+    font-size:var(--fs-small);color:rgba(244,240,230,.7);
+    line-height:1.45;max-width:46em;margin:.6vh 0 0;
   }
-  .cp-unit .lessons{display:flex;flex-direction:column;gap:.28vh;list-style:none;margin:0;padding:0}
-  .cp-unit .lessons li{
-    display:grid;grid-template-columns:3.6em minmax(0,1fr);
-    column-gap:8px;align-items:start;
-    font-size:var(--fs-small);color:rgba(255,255,255,.88);line-height:1.32;
-    list-style:none;
+  .cp-pair{
+    flex:1;min-height:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:.8vw;
+    align-items:start;
   }
-  .cp-unit .lessons li > b{color:#8ec8ff;font-weight:700;padding-top:.12vh;white-space:nowrap}
-  .cp-unit .lessons span{min-width:0}
-  .cp-unit .lessons .ttl{display:block;font-weight:600}
-  .cp-unit .lessons .dual{
-    display:block;font-style:normal;
-    font-size:var(--fs-micro);color:rgba(255,255,255,.58);
-    line-height:1.4;margin-top:.12vh;
-  }
-  .cp-unit .lessons .dual .qi{color:#e8c547;font-weight:700;margin-right:.25em}
-  .cp-unit .lessons .dual .chuang{color:#8ec8ff;font-weight:700;margin:0 .25em 0 .7em}
-  .cp-unit .lessons .out{
-    display:block;font-style:normal;
-    color:rgba(142,200,255,.72);font-size:var(--fs-micro);margin-top:.08vh;
-  }
-  .cp-bands{
-    display:grid;grid-template-columns:1fr 1fr;gap:.55vw;
-    margin-top:.7vh;
-  }
-  .cp-bands article{
-    border:1px solid rgba(232,197,71,.22);
-    background:rgba(232,197,71,.07);
-    padding:.55vh .7vw .6vh;
-  }
-  .cp-bands h4{
-    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.1em;color:#e8c547;margin:0 0 .3vh;
-  }
-  .cp-bands p{font-size:var(--fs-micro);color:rgba(255,255,255,.7);line-height:1.4;margin:0 0 .35vh}
-  .cp-bands p:last-child{margin:0}
-  .cp-floor{
-    margin-top:.55vh;
-    font-size:var(--fs-micro);color:rgba(244,240,230,.62);line-height:1.4;
-  }
-  .cp-path{display:flex;flex-direction:column;gap:0;flex:1}
-  .cp-step{
-    display:grid;grid-template-columns:48px 1fr;gap:14px;
-    padding:1.5vh 0;
-    border-top:1px solid rgba(255,255,255,.12);
-  }
-  .cp-step:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
-  .cp-step .ix{
-    width:40px;height:40px;border-radius:12px;
-    display:grid;place-items:center;
-    font-size:14px;font-weight:700;
-    background:rgba(0,113,227,.9);color:#fff;
-  }
-  .cp-step h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.02em}
-  .cp-step p{font-size:var(--fs-small);color:rgba(255,255,255,.7);line-height:1.45;margin-top:.35vh}
-  .cp-step .out{font-size:var(--fs-micro);color:#64b5ff;margin-top:.45vh;font-weight:600}
-  .cp-right{
-    padding:3.2vh 2.4vw 2.6vh;
+  .cp-pane{
+    min-width:0;
     display:flex;flex-direction:column;
-    background:#fff;
-    position:relative;
+    background:rgba(7,11,18,.40);
+    border:1px solid rgba(232,197,71,.16);
+    padding:1.4vh 1.2vw 1.3vh;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
   }
-  .cp-right .bg{
-    position:absolute;right:0;bottom:0;width:70%;height:55%;
-    background-size:cover;background-position:center;
-    opacity:.14;pointer-events:none;
+  .cp-pane .kicker{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.16em;
+    color:#e8c547;margin:0 0 .4vh;
   }
-  .cp-right .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
-  .cp-right .kicker{font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700;color:#0071e3;margin:0}
-  .cp-right h2{font-size:clamp(20px, 2.7vmin, 34px);letter-spacing:-.03em;line-height:1.15;margin:.5vh 0 .7vh}
-  .cp-right .lede{font-size:var(--fs-small);color:var(--ink-2);line-height:1.45;margin-bottom:1.2vh}
-  .cp-flow{display:flex;flex-direction:column;gap:.7vh;flex:1}
-  .cp-flow .node{
-    padding:1.05vh .9vw;
-    border-radius:12px;
-    background:var(--fill);
-    border-left:4px solid var(--blue);
+  .cp-pane h3{
+    font-size:clamp(18px, 2.15vmin, 26px);
+    font-weight:600;letter-spacing:-.03em;color:#fff;
+    line-height:1.2;margin:0 0 .55vh;
   }
-  .cp-flow .node h3{font-size:var(--fs-h3);font-weight:650}
-  .cp-flow .node p{font-size:var(--fs-small);color:var(--ink-2);margin-top:.25vh;line-height:1.4}
-  .cp-line{
+  .cp-pane > p{
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);
+    line-height:1.45;margin:0 0 .9vh;
+  }
+  .cp-spine{list-style:none;margin:0 0 .8vh;padding:0;display:flex;flex-direction:column;gap:.45vh}
+  .cp-spine li{
+    display:grid;grid-template-columns:5.2em 1fr;gap:.6vw;
+    padding:.45vh 0;border-top:1px solid rgba(232,197,71,.12);
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);line-height:1.4;
+  }
+  .cp-spine b{color:#8ec8ff;font-weight:700;letter-spacing:.04em}
+  .cp-duo{
+    display:grid;grid-template-columns:1fr 1fr;gap:.5vw;
+    margin-top:.9vh;
+  }
+  .cp-duo div{
+    border:1px solid rgba(232,197,71,.18);
+    background:rgba(232,197,71,.06);
+    padding:.55vh .55vw;
+  }
+  .cp-duo h4{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.08em;color:#e8c547;margin:0 0 .25vh;
+  }
+  .cp-duo p{font-size:var(--fs-micro);color:rgba(244,240,230,.7);line-height:1.4;margin:0}
+  .cp-beats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.2vh}
+  .cp-beats li{
+    padding:.5vh 0;
+    border-top:1px solid rgba(232,197,71,.12);
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);line-height:1.4;
+  }
+  .cp-beats b{display:block;color:#fff;font-weight:650;margin-bottom:.08vh}
+  .slide.course-poster .takeaway{
     margin-top:.8vh;
-    font-size:var(--fs-micro);color:var(--ink-2);line-height:1.45;
-    padding-top:.7vh;border-top:1px solid var(--line);
+    background:rgba(7,11,18,.5);
+    border-left-color:#e8c547;
+    color:#fff;
   }
-  .cp-brand{
-    margin-top:auto;padding-top:1.2vh;
-    font-size:var(--fs-kicker);font-weight:650;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--ink-3);
-  }
+  .slide.course-poster .takeaway .lbl{color:#e8c547}
 
   /* Iceberg · full-bleed 16:9 plate, ice unstretched */
   .slide.pyramid-slide{
@@ -1631,7 +1614,7 @@
   }
   .berg-tip{
     position:absolute;left:50%;top:11.5%;
-    transform:translateX(-50%);
+    transform:translateX(calc(-50% - 1cm));
     width:auto;
     display:flex;flex-direction:column;align-items:center;
     gap:4px;
@@ -1710,34 +1693,34 @@
   }
   .slide.pyramid-slide .takeaway .lbl{color:#e8c547}
   .ear-card{
-    position:absolute;right:2.2vw;top:8.4vh;
-    width:min(20.5vw, 248px);
+    position:absolute;right:1.8vw;top:8.2vh;
+    width:min(26vw, 340px);
     z-index:4;
-    padding:.85vh .75vw .8vh;
-    background:rgba(7,11,18,.42);
+    padding:1vh .85vw .95vh;
+    background:rgba(7,11,18,.48);
     border:1px solid rgba(232,197,71,.16);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     box-shadow:0 10px 28px rgba(0,0,0,.22);
   }
-  .ear-card .ek{
-    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.16em;color:#e8c547;
-    margin:0 0 .35vh;
-  }
   .ear-card .el{
-    font-size:clamp(11px, 1.2vmin, 14px);font-weight:600;color:#fff;
-    line-height:1.35;margin:0 0 .7vh;
+    font-size:clamp(12px, 1.28vmin, 15px);font-weight:600;color:#fff;
+    line-height:1.35;margin:0 0 .55vh;
   }
   .ear-card ul{list-style:none;margin:0;padding:0}
   .ear-card li{
-    display:grid;grid-template-columns:4.2em 1fr;column-gap:.4vw;
-    align-items:baseline;
-    padding:.32vh 0;
+    display:grid;grid-template-columns:3.6em 1fr;column-gap:.45vw;
+    align-items:start;
+    padding:.42vh 0;
     border-top:1px solid rgba(232,197,71,.12);
     font-size:clamp(10px, 1.08vmin, 13px);
-    color:rgba(244,240,230,.7);line-height:1.3;
+    color:rgba(244,240,230,.7);line-height:1.32;
   }
-  .ear-card li b{font-weight:700;letter-spacing:.02em}
+  .ear-card li b{font-weight:700;letter-spacing:.02em;padding-top:.08vh}
+  .ear-card li i{
+    display:block;font-style:normal;font-weight:600;color:rgba(244,240,230,.92);
+    margin-bottom:.08vh;
+  }
   .ear-card .hang{color:#e8c547}
   .ear-card .ding{color:#9ecbff}
   .ear-card .ren{color:#9ee0b0}
@@ -1762,15 +1745,16 @@
   .slide.cap-slide > .kg-veil{
     position:absolute;inset:0;z-index:1;pointer-events:none;
     background:
-      linear-gradient(180deg, rgba(7,11,18,.78) 0%, rgba(7,11,18,.18) 18%, rgba(7,11,18,.06) 42%, rgba(7,11,18,.22) 62%, rgba(7,11,18,.78) 100%);
+      linear-gradient(180deg, rgba(7,11,18,.70) 0%, rgba(7,11,18,.12) 22%, rgba(7,11,18,.08) 50%, rgba(7,11,18,.20) 72%, rgba(7,11,18,.78) 100%);
   }
   .kg-stage{
     flex:1;min-height:0;height:100%;
-    display:flex;flex-direction:column;
+    display:grid;
+    grid-template-rows:auto 1fr auto auto;
     padding:2.4vh 2vw 6.8vh;
     position:relative;z-index:2;
   }
-  .kg-stage .data-head{margin:0;flex:none}
+  .kg-stage .data-head{margin:0;align-self:start}
   .kg-stage .data-head .kicker{
     color:#e8c547;letter-spacing:.18em;
     font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
@@ -1783,12 +1767,11 @@
     text-shadow:0 2px 14px rgba(0,0,0,.55);
   }
   .kg{
-    flex:none;
-    margin-top:auto;
+    align-self:center;
+    width:100%;
     display:grid;
     grid-template-columns:repeat(5,minmax(0,1fr));
     gap:.5vw;
-    align-items:stretch;
   }
   .fam{
     min-width:0;
@@ -1963,8 +1946,11 @@
   }
   .slide.idx-slide .takeaway .lbl{color:#e8c547}
   .slide.cases-slide .takeaway{
-    background:linear-gradient(90deg, rgba(0,113,227,.10), rgba(255,149,0,.12));
+    background:rgba(7,11,18,.5);
+    border-left-color:#e8c547;
+    color:#fff;
   }
+  .slide.cases-slide .takeaway .lbl{color:#e8c547}
 
   /* Course deep-dive */
   .slide.course-deep{
@@ -2227,6 +2213,10 @@
   body:has(.slide.labor.active) #pager,
   body:has(.slide.pyramid-slide.active) #pager,
   body:has(.slide.cap-slide.active) #pager,
+  body:has(.slide.cases-slide.active) #pager,
+  body:has(.slide.course-poster.active) #pager,
+  body:has(.slide.atlas-slide.active) #pager,
+  body:has(.slide.co-slide.active) #pager,
   body:has(.slide.idx-slide.active) #pager{
     color:rgba(244,240,230,.5);
   }
@@ -2236,6 +2226,10 @@
   body:has(.slide.labor.active) #pager button,
   body:has(.slide.pyramid-slide.active) #pager button,
   body:has(.slide.cap-slide.active) #pager button,
+  body:has(.slide.cases-slide.active) #pager button,
+  body:has(.slide.course-poster.active) #pager button,
+  body:has(.slide.atlas-slide.active) #pager button,
+  body:has(.slide.co-slide.active) #pager button,
   body:has(.slide.idx-slide.active) #pager button{
     background:rgba(13,21,36,.78);
     border-color:rgba(232,197,71,.28);
@@ -2247,6 +2241,10 @@
   body:has(.slide.labor.active) #pager button:hover,
   body:has(.slide.pyramid-slide.active) #pager button:hover,
   body:has(.slide.cap-slide.active) #pager button:hover,
+  body:has(.slide.cases-slide.active) #pager button:hover,
+  body:has(.slide.course-poster.active) #pager button:hover,
+  body:has(.slide.atlas-slide.active) #pager button:hover,
+  body:has(.slide.co-slide.active) #pager button:hover,
   body:has(.slide.idx-slide.active) #pager button:hover{
     background:#e8c547;
     color:#070b14;
@@ -2258,6 +2256,10 @@
   body:has(.slide.labor.active) #progress,
   body:has(.slide.pyramid-slide.active) #progress,
   body:has(.slide.cap-slide.active) #progress,
+  body:has(.slide.cases-slide.active) #progress,
+  body:has(.slide.course-poster.active) #progress,
+  body:has(.slide.atlas-slide.active) #progress,
+  body:has(.slide.co-slide.active) #progress,
   body:has(.slide.idx-slide.active) #progress{
     background:#e8c547;
   }
@@ -2268,6 +2270,10 @@
   body:has(.slide.labor.active) #hint,
   body:has(.slide.pyramid-slide.active) #hint,
   body:has(.slide.cap-slide.active) #hint,
+  body:has(.slide.cases-slide.active) #hint,
+  body:has(.slide.course-poster.active) #hint,
+  body:has(.slide.atlas-slide.active) #hint,
+  body:has(.slide.co-slide.active) #hint,
   body:has(.slide.idx-slide.active) #hint{
     color:rgba(244,240,230,.45);
   }
@@ -2424,7 +2430,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v42">
+<div id="deck" data-rev="v43">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -3011,7 +3017,7 @@
 <!-- P7 工具冰山 -->
 <section class="slide pyramid-slide">
   <div class="berg-frame">
-    <img class="berg-photo" src="assets/salon/iceberg-wide.jpg" alt="">
+    <img class="berg-photo" src="assets/salon/iceberg-hi.jpg" alt="">
     <div class="berg-shift">
     <div class="data-head">
       <div class="kicker" data-edit>02 · 冰山</div>
@@ -3130,14 +3136,13 @@
     <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
     </div>
     <aside class="ear-card">
-      <div class="ek" data-edit>家长速记 · 听音</div>
       <p class="el" data-edit>自媒体和周围人，听他怎么说话。</p>
       <ul>
-        <li><b class="hang">夯</b><span>能改结构，经得起问</span></li>
-        <li><b class="ding">顶级</b><span>能讲机制和评测</span></li>
-        <li><b class="ren">人上人</b><span>能交货，深问会停</span></li>
-        <li><b class="npc">NPC</b><span>头衔叠 buff</span></li>
-        <li><b class="la">拉完了</b><span>没有卡，没有曲线</span></li>
+        <li><b class="hang">夯</b><span><i>「这一层 attention 为什么要改。」</i>能改结构，经得起问</span></li>
+        <li><b class="ding">顶级</b><span><i>「这个榜有数据污染。」</i>能讲机制和评测</span></li>
+        <li><b class="ren">人上人</b><span><i>「这个需求我能交货。」</i>会用工具，深问会停</span></li>
+        <li><b class="npc">NPC</b><span><i>「高级提示词工程师。」</i>头衔叠 buff</span></li>
+        <li><b class="la">拉完了</b><span><i>「我正在调我的大模型。」</i>没有卡，没有曲线</span></li>
       </ul>
     </aside>
   </div>
@@ -3145,7 +3150,7 @@
 
 <!-- P8 如何培养 -->
 <section class="slide cap-slide">
-  <img class="kg-photo" src="assets/salon/horizon-arc.jpg" alt="">
+  <img class="kg-photo" src="assets/salon/horizon-hi.jpg" alt="">
   <div class="kg-veil"></div>
   <div class="kg-stage">
     <div class="data-head">
@@ -3261,81 +3266,51 @@
   <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有：真问题、真产品、当面讲得清。</p>
 </section>
 
-<!-- P10 课程海报 -->
+<!-- P10 两门课概要 -->
 <section class="slide course-poster">
-  <div class="cp-left">
-    <div class="bg" style="background-image:url('assets/salon/course/atlas.png')"></div>
-    <div class="inner">
-      <div class="kicker" data-edit>03 · 课程 A · AI 通识</div>
-      <h2 data-edit>12 课时，懂 AI，会思考，造产品。</h2>
-      <p class="lede" data-edit>同一条主线，两档难度。启航班把抽象落到身体和故事；创造营用真工具、真用户。可压成 3–5 天营，也可按周末展开。金标是启航班，蓝标是创造营。</p>
-      <div class="cp-units">
-        <div class="cp-unit">
-          <div class="uh">单元一 · 懂 AI · 3 课时</div>
-          <ul class="lessons">
-            <li><b>01</b><span><span class="ttl">初识智能：自然智能 vs 人工智能</span><em class="dual"><b class="qi">启</b>乌鸦喝水、人脸识别；分类大挑战；图灵小游戏<b class="chuang">创</b>智能谱系；下文预测机；中文房间辩论</em><i class="out">产出：四格漫画 30 秒讲 / 一页智能地图 + 立场声明</i></span></li>
-            <li><b>02</b><span><span class="ttl">大模型边界：第一行 prompt，把模型问倒</span><em class="dual"><b class="qi">启</b>藏头诗；问倒大赛；查证三问随身卡<b class="chuang">创</b>幻觉是流畅不是真实；提示词阶梯；10 题边界评测</em><i class="out">产出：防骗三问卡 / 模型边界评测报告</i></span></li>
-            <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><em class="dual"><b class="qi">启</b>助手说明书；教师投屏生成；小组互测<b class="chuang">创</b>模型层→应用层→Agent；系统提示词 + 工具 + 记忆</em><i class="out">产出：可演示 Agent v1 / 可运行 Agent + 工程文档</i></span></li>
-          </ul>
-        </div>
-        <div class="cp-unit">
-          <div class="uh">单元二 · 会思考 · 2 课时</div>
-          <ul class="lessons">
-            <li><b>04</b><span><span class="ttl">真问题从哪来：有人群、有频次、有痛感</span><em class="dual"><b class="qi">启</b>烦恼收集箱；采访同桌；全班票选<b class="chuang">创</b>双钻；同理心地图；校园田野调查；伪需求解剖</em><i class="out">产出：问题卡 / 问题定义文档 v1</i></span></li>
-            <li><b>05</b><span><span class="ttl">逻辑学与产品闭环：主张—证据—反例</span><em class="dual"><b class="qi">启</b>四个生活化谬误找茬；因为所以；解决闭环草图<b class="chuang">创</b>十个高频谬误；质疑委员会压力测试；闭环图冻结</em><i class="out">产出：任务书 + 闭环草图 / 问题定义 v2 + 蓝图</i></span></li>
-          </ul>
-        </div>
-        <div class="cp-unit">
-          <div class="uh">单元三 · 造产品 · 7 课时 · RPS Real Problem Solution</div>
-          <ul class="lessons">
-            <li><b>06–07</b><span><span class="ttl">初级：最小可用原型，能给人试用</span><em class="dual"><b class="qi">启</b>A3 纸面原型；模板化可点 demo；跨组用户测试<b class="chuang">创</b>AI 编程工作流；范围切割；结对编程 + Bug 榜</em><i class="out">产出：MVP + 3 条用户意见 / 可运行 MVP + README</i></span></li>
-            <li><b>08–09</b><span><span class="ttl">进阶：插件、多模态、用户系统</span><em class="dual"><b class="qi">启</b>能力卡牌选购（10 金币取舍）；3 分钟路演预演<b class="chuang">创</b>API 与多模态接入；最小用户系统；5 分钟 Pitch 答辩</em><i class="out">产出：路演版 + 讲稿 / 路演级产品 + 现场答辩</i></span></li>
-            <li><b>10–12</b><span><span class="ttl">高阶：存储、托管、运营、AI 安全</span><em class="dual"><b class="qi">启</b>不告诉 AI 的秘密；家人试用 3 条反馈；毕业展摆摊<b class="chuang">创</b>上线投放 20–50 人；运营漏斗；安全红队；终期路演</em><i class="out">产出：发布版 + 反馈报告 / 上线产品 + 看板 + 安全自查</i></span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="cp-bands">
-        <article>
-          <h4>启航班 · 约 10 岁 · 具象</h4>
-          <p>三条铁律：多用身体少用屏幕；AI 永远在教师眼皮底下；每课带走可看见的产出。</p>
-          <p>评价看说清楚、做出来、改得动、防得住。不看术语，不看界面漂不漂亮。</p>
-        </article>
-        <article>
-          <h4>创造营 · 初二 · 形式运算</h4>
-          <p>三条原则：真工具、真代码、真用户；幻觉按概率生成理解；没有「学完」，只有「做出来」。</p>
-          <p>评价看机制理解、逻辑硬度、工程完整、真实责任。Cursor 类工具，真实部署。</p>
-        </article>
-      </div>
-      <p class="cp-floor">共同底线：问题必须真实、产出必须可见、AI 产出必须经人核验。难度可在类比 / 机制 / 论文三档里调，允许跳级，不允许跳过。</p>
+  <img class="cp-photo" src="assets/salon/course-hi.jpg" alt="">
+  <div class="cp-veil"></div>
+  <div class="cp-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>03 · 两门课</div>
+      <h2 data-edit>一条通识主线，一间正在运转的青年公司。</h2>
+      <p class="lede" data-edit>这一页只看结构。下一页展开通识能力地图，再一页走进青年创始人现场。</p>
     </div>
-  </div>
-  <div class="cp-right">
-    <div class="bg" style="background-image:url('assets/salon/course/company.png')"></div>
-    <div class="inner">
-      <div class="kicker" data-edit>03 · 课程 B · 青年创始人社区</div>
-      <h2 data-edit>真实问题里的同伴与责任</h2>
-      <p class="lede" data-edit>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。</p>
-      <div class="cp-flow">
-        <div class="node">
-          <h3>真问题</h3>
-          <p>从生活与社区里选可验证的麻烦，而不是选题作文。先有人群、频次、痛感，再动手。伪需求当场拆掉。</p>
+    <div class="cp-pair">
+      <article class="cp-pane">
+        <div class="kicker" data-edit>课程 A · AI 通识</div>
+        <h3>12 课时，懂 AI，会思考，造产品。</h3>
+        <p>同一条主线，两档难度。启航班把抽象落到身体和故事；创造营用真工具、真用户。可压成 3–5 天营，也可按周末展开。</p>
+        <ol class="cp-spine">
+          <li><b>懂 AI</b><span>3 课时。智能谱系、大模型边界、第一个私人 Agent。</span></li>
+          <li><b>会思考</b><span>2 课时。真问题三筛，主张—证据—反例，画出产品闭环。</span></li>
+          <li><b>造产品</b><span>7 课时。RPS 从最小可用原型做到上线、运营和安全。</span></li>
+        </ol>
+        <div class="cp-duo">
+          <div>
+            <h4>启航班 · 约 10 岁</h4>
+            <p>具象、卡片、教师眼皮底下。每课带走可看见的产出。评价看说清楚、做出来、改得动、防得住。</p>
+          </div>
+          <div>
+            <h4>创造营 · 初二</h4>
+            <p>机制讲透，Cursor 类真工具，真实部署。没有「学完」，只有「做出来」。评价看逻辑硬度和真实责任。</p>
+          </div>
         </div>
-        <div class="node">
-          <h3>同伴 / 导师</h3>
-          <p>跨年龄协作。成人是教练与提问者，不是代写。围桌争对错。逻辑树画在墙上，讲不清就还没想清。</p>
-        </div>
-        <div class="node">
-          <h3>路演与迭代</h3>
-          <p>叙事是痛点 → 演示 → 证据 → 愿景。向真人演示，收集拒绝与修改。有截止日期，判断仍是自己的。</p>
-        </div>
-        <div class="node">
-          <h3>上线与安全</h3>
-          <p>能拿起来的东西：链接、模具、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。责任留在人，不留给模型。</p>
-        </div>
-      </div>
-      <p class="cp-line">现场还会碰到：交换思想、白板表达、企业级工具、电脑创作、3D 打印真实模具。选题、原型、用户、路演，都在这间房子里发生。</p>
-      <div class="cp-brand">Natural Computation</div>
+      </article>
+      <article class="cp-pane">
+        <div class="kicker" data-edit>课程 B · 青年创始人计划</div>
+        <h3>真实问题里的同伴与责任</h3>
+        <p>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。跨年龄围桌，成人是教练，不是代写。</p>
+        <ul class="cp-beats">
+          <li><b>真问题</b>从生活与社区里选可验证的麻烦。有人群、有频次、有痛感。伪需求当场拆掉。</li>
+          <li><b>同伴 / 导师</b>同伴是同事，不是同班。逻辑树画在墙上。讲不清，就还没想清。</li>
+          <li><b>路演与迭代</b>叙事是痛点 → 演示 → 证据 → 愿景。向真人演示，收集拒绝与修改。</li>
+          <li><b>上线与安全</b>能拿起来的东西：链接、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。</li>
+          <li><b>真实世界模型学习</b>从屏幕走到真实约束。对着真实场景建立模型，而不是只在聊天窗口里完成。</li>
+        </ul>
+      </article>
     </div>
+    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。青年创始人计划把判断放进会运转的公司。共同底线：问题真实、产出可见、AI 产出必须经人核验。</p>
   </div>
 </section>
 
@@ -3416,8 +3391,8 @@
       </article>
       <article class="copin">
         <div class="ix">05</div>
-        <h3>3D 打印真实模具</h3>
-        <p>从屏幕走到手上。零件、模具、可被拒绝的实物。</p>
+        <h3>真实世界模型学习</h3>
+        <p>从屏幕走到真实约束。对着真实场景建立模型，可被拒绝、可被改，而不是只停在聊天窗口。</p>
       </article>
     </div>
     <p class="takeaway"><span class="lbl">一句话</span>选题、原型、用户、路演，都在这间房子里发生。有截止日期，有当面反对，有能拿起来的东西。</p>
@@ -3443,7 +3418,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v42';
+  const DRAFT_KEY='salon-ppt-draft-v43';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3467,7 +3442,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.cp-unit .lessons span','.cp-unit .lessons .dual','.cp-bands p','.cp-floor','.cp-line'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.ear-card li span','.cp-pane h3','.cp-pane p','.cp-spine span','.cp-beats li','.cp-duo p'
   ].join(',');
 
   function go(n){
@@ -3517,7 +3492,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v42"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-floor') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v43"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
