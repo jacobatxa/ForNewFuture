@@ -317,7 +317,7 @@
   .schools-hero .brand .kicker{
     color:#e8c547;
     letter-spacing:.18em;
-    font-size:clamp(10px, 1.15vmin, 13px);
+    font-size:var(--fs-kicker);
     font-weight:700;
     margin:0 0 .55vh;
   }
@@ -656,7 +656,7 @@
   .astra-hero .brand .kicker{
     color:#e8c547;
     letter-spacing:.18em;
-    font-size:clamp(10px, 1.15vmin, 13px);
+    font-size:var(--fs-kicker);
     font-weight:700;
     margin:0 0 .55vh;
   }
@@ -927,7 +927,7 @@
   .auth-head .kicker{
     color:#e8c547;
     letter-spacing:.18em;
-    font-size:clamp(10px, 1.15vmin, 13px);
+    font-size:var(--fs-kicker);
     font-weight:700;
     margin:0 0 .55vh;
   }
@@ -1266,7 +1266,7 @@
   .labor-stage .data-head{margin:0 0 1.2vh}
   .labor-stage .data-head .kicker{
     color:#e8c547;letter-spacing:.18em;
-    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .5vh;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .5vh;
   }
   .labor-stage .data-head h2{
     font-size:clamp(22px, 3vmin, 38px);
@@ -1380,6 +1380,18 @@
       radial-gradient(ellipse 50% 40% at 100% 0%, rgba(0,122,255,.08), transparent 50%),
       var(--bg);
   }
+  .slide.cases-slide .kicker{
+    color:var(--gold);
+    letter-spacing:.18em;
+    font-size:var(--fs-kicker);
+    font-weight:700;
+    margin:0 0 .8vh;
+  }
+  .slide.cases-slide h2{
+    font-size:var(--fs-h2-data);
+    letter-spacing:-.03em;
+    margin:0 0 1.4vh;
+  }
   .cases-grid{
     flex:1;min-height:0;
     display:grid;
@@ -1446,15 +1458,15 @@
     font-weight:550;letter-spacing:-.02em;color:var(--ink);
   }
 
-  /* Course poster P8 */
+  /* Course poster */
   .slide.course-poster{
     padding:0;display:grid;
-    grid-template-columns:1.15fr .85fr;
+    grid-template-columns:1.22fr .78fr;
     overflow:hidden;
   }
   .cp-left{
     position:relative;
-    padding:5vh 3.5vw 4vh 4.5vw;
+    padding:3.2vh 2.6vw 2.6vh 3.2vw;
     display:flex;flex-direction:column;
     background:#0c0c0e;
     color:#f5f5f7;
@@ -1463,11 +1475,59 @@
   .cp-left .bg{
     position:absolute;inset:0;
     background-size:cover;background-position:center;
-    opacity:.42;filter:saturate(1.12);
+    opacity:.38;filter:saturate(1.12);
   }
   .cp-left .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
-  .cp-left .kicker{color:rgba(255,255,255,.55)}
-  .cp-left h2{font-size:var(--fs-h2-data);letter-spacing:-.035em;line-height:1.12;margin:1vh 0 2.5vh}
+  .cp-left .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700;margin:0}
+  .cp-left h2{font-size:clamp(20px, 2.7vmin, 34px);letter-spacing:-.035em;line-height:1.12;margin:.45vh 0 .7vh}
+  .cp-left .lede{font-size:var(--fs-small);color:rgba(255,255,255,.7);line-height:1.4;max-width:54em;margin:0 0 .9vh}
+  .cp-units{flex:1;min-height:0;display:flex;flex-direction:column;gap:.2vh}
+  .cp-unit{
+    border-top:1px solid rgba(255,255,255,.12);
+    padding:.55vh 0 .1vh;
+  }
+  .cp-unit .uh{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.14em;color:#e8c547;margin-bottom:.35vh;
+  }
+  .cp-unit .lessons{display:flex;flex-direction:column;gap:.28vh;list-style:none;margin:0;padding:0}
+  .cp-unit .lessons li{
+    display:grid;grid-template-columns:3.6em minmax(0,1fr);
+    column-gap:8px;align-items:start;
+    font-size:var(--fs-small);color:rgba(255,255,255,.88);line-height:1.32;
+    list-style:none;
+  }
+  .cp-unit .lessons li > b{color:#8ec8ff;font-weight:700;padding-top:.12vh;white-space:nowrap}
+  .cp-unit .lessons span{min-width:0}
+  .cp-unit .lessons .ttl{display:block;font-weight:600}
+  .cp-unit .lessons .dual{
+    display:block;font-style:normal;
+    font-size:var(--fs-micro);color:rgba(255,255,255,.58);
+    line-height:1.4;margin-top:.12vh;
+  }
+  .cp-unit .lessons .dual .qi{color:#e8c547;font-weight:700;margin-right:.25em}
+  .cp-unit .lessons .dual .chuang{color:#8ec8ff;font-weight:700;margin:0 .25em 0 .7em}
+  .cp-unit .lessons .out{
+    display:block;font-style:normal;
+    color:rgba(142,200,255,.72);font-size:var(--fs-micro);margin-top:.08vh;
+  }
+  .cp-bands{
+    display:grid;grid-template-columns:1fr 1fr;gap:.55vw;
+    margin-top:.7vh;
+  }
+  .cp-bands article{
+    border:1px solid rgba(232,197,71,.22);
+    background:rgba(232,197,71,.07);
+    padding:.55vh .7vw .6vh;
+  }
+  .cp-bands h4{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.1em;color:#e8c547;margin:0 0 .3vh;
+  }
+  .cp-bands p{font-size:var(--fs-micro);color:rgba(255,255,255,.7);line-height:1.4;margin:0 0 .35vh}
+  .cp-bands p:last-child{margin:0}
+  .cp-floor{
+    margin-top:.55vh;
+    font-size:var(--fs-micro);color:rgba(244,240,230,.62);line-height:1.4;
+  }
   .cp-path{display:flex;flex-direction:column;gap:0;flex:1}
   .cp-step{
     display:grid;grid-template-columns:48px 1fr;gap:14px;
@@ -1485,7 +1545,7 @@
   .cp-step p{font-size:var(--fs-small);color:rgba(255,255,255,.7);line-height:1.45;margin-top:.35vh}
   .cp-step .out{font-size:var(--fs-micro);color:#64b5ff;margin-top:.45vh;font-weight:600}
   .cp-right{
-    padding:5vh 3.5vw 4vh;
+    padding:3.2vh 2.4vw 2.6vh;
     display:flex;flex-direction:column;
     background:#fff;
     position:relative;
@@ -1496,20 +1556,26 @@
     opacity:.14;pointer-events:none;
   }
   .cp-right .inner{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
-  .cp-right h2{font-size:var(--fs-h2-data);letter-spacing:-.03em;line-height:1.15;margin:1vh 0 2vh}
-  .cp-right .lede{font-size:var(--fs-body);color:var(--ink-2);line-height:1.5;margin-bottom:2.5vh}
-  .cp-flow{display:flex;flex-direction:column;gap:1.2vh;flex:1}
+  .cp-right .kicker{font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700;color:#0071e3;margin:0}
+  .cp-right h2{font-size:clamp(20px, 2.7vmin, 34px);letter-spacing:-.03em;line-height:1.15;margin:.5vh 0 .7vh}
+  .cp-right .lede{font-size:var(--fs-small);color:var(--ink-2);line-height:1.45;margin-bottom:1.2vh}
+  .cp-flow{display:flex;flex-direction:column;gap:.7vh;flex:1}
   .cp-flow .node{
-    padding:1.6vh 1.2vw;
-    border-radius:14px;
+    padding:1.05vh .9vw;
+    border-radius:12px;
     background:var(--fill);
     border-left:4px solid var(--blue);
   }
   .cp-flow .node h3{font-size:var(--fs-h3);font-weight:650}
-  .cp-flow .node p{font-size:var(--fs-small);color:var(--ink-2);margin-top:.3vh;line-height:1.4}
+  .cp-flow .node p{font-size:var(--fs-small);color:var(--ink-2);margin-top:.25vh;line-height:1.4}
+  .cp-line{
+    margin-top:.8vh;
+    font-size:var(--fs-micro);color:var(--ink-2);line-height:1.45;
+    padding-top:.7vh;border-top:1px solid var(--line);
+  }
   .cp-brand{
-    margin-top:auto;padding-top:2vh;
-    font-size:12px;font-weight:650;letter-spacing:.12em;
+    margin-top:auto;padding-top:1.2vh;
+    font-size:var(--fs-kicker);font-weight:650;letter-spacing:.12em;
     text-transform:uppercase;color:var(--ink-3);
   }
 
@@ -1537,6 +1603,14 @@
     pointer-events:none;
     z-index:0;
   }
+  .berg-shift{
+    position:absolute;inset:0;
+    transform:translateX(1cm);
+    z-index:2;
+    pointer-events:none;
+  }
+  .berg-shift .data-head,
+  .berg-shift .takeaway{pointer-events:auto}
   .berg-frame .data-head{
     position:absolute;
     left:3.2%;top:3.6%;
@@ -1546,34 +1620,38 @@
   }
   .berg-frame .data-head .kicker{
     color:#e8c547;letter-spacing:.18em;
-    font-size:clamp(10px, 1.12vmin, 13px);font-weight:700;margin:0 0 .45vh;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
     text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
   .berg-frame .data-head h2{
-    font-size:clamp(18px, 2.45vmin, 30px);
+    font-size:clamp(20px, 2.6vmin, 34px);
     font-weight:600;letter-spacing:-.03em;line-height:1.22;
     color:#fff;max-width:none;margin:0;
     text-shadow:0 2px 14px rgba(0,0,0,.55);
   }
   .berg-tip{
-    position:absolute;left:52%;top:13.5%;
+    position:absolute;left:50%;top:11.5%;
     transform:translateX(-50%);
-    width:min(30%, 400px);
-    display:flex;flex-wrap:wrap;justify-content:center;
-    gap:5px 7px;
+    width:auto;
+    display:flex;flex-direction:column;align-items:center;
+    gap:4px;
     z-index:3;
   }
+  .tip-row{
+    display:flex;justify-content:center;align-items:flex-end;
+    gap:5px;
+  }
   .app{
-    width:42px;
-    display:flex;flex-direction:column;align-items:center;gap:2px;
+    width:34px;
+    display:flex;flex-direction:column;align-items:center;gap:1px;
   }
   .app img{
-    width:32px;height:32px;
-    border-radius:9px;object-fit:cover;background:#fff;
+    width:26px;height:26px;
+    border-radius:8px;object-fit:cover;background:#fff;
     box-shadow:0 3px 10px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.18);
   }
   .app b{
-    font-size:9px;
+    font-size:8px;
     font-weight:650;color:#fff;letter-spacing:0;
     text-shadow:0 1px 4px rgba(0,0,0,.8);
     line-height:1.1;text-align:center;
@@ -1615,7 +1693,7 @@
     font-size:clamp(10px, 1.05vmin, 13px);font-weight:600;color:#f3e2a4;
   }
   .slide.pyramid-slide .src{
-    position:absolute;left:3.2%;right:3.2%;bottom:8.4%;
+    position:absolute;left:3.2%;width:min(42%, 560px);bottom:8.4%;
     margin:0;
     font-size:clamp(10px, 1.08vmin, 13px);
     color:rgba(244,240,230,.48);line-height:1.35;max-width:none;
@@ -1631,109 +1709,149 @@
     border-radius:0;
   }
   .slide.pyramid-slide .takeaway .lbl{color:#e8c547}
+  .ear-card{
+    position:absolute;right:2.2vw;top:8.4vh;
+    width:min(20.5vw, 248px);
+    z-index:4;
+    padding:.85vh .75vw .8vh;
+    background:rgba(7,11,18,.42);
+    border:1px solid rgba(232,197,71,.16);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+  }
+  .ear-card .ek{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.16em;color:#e8c547;
+    margin:0 0 .35vh;
+  }
+  .ear-card .el{
+    font-size:clamp(11px, 1.2vmin, 14px);font-weight:600;color:#fff;
+    line-height:1.35;margin:0 0 .7vh;
+  }
+  .ear-card ul{list-style:none;margin:0;padding:0}
+  .ear-card li{
+    display:grid;grid-template-columns:4.2em 1fr;column-gap:.4vw;
+    align-items:baseline;
+    padding:.32vh 0;
+    border-top:1px solid rgba(232,197,71,.12);
+    font-size:clamp(10px, 1.08vmin, 13px);
+    color:rgba(244,240,230,.7);line-height:1.3;
+  }
+  .ear-card li b{font-weight:700;letter-spacing:.02em}
+  .ear-card .hang{color:#e8c547}
+  .ear-card .ding{color:#9ecbff}
+  .ear-card .ren{color:#9ee0b0}
+  .ear-card .npc{color:rgba(244,240,230,.72)}
+  .ear-card .la{color:#ff8a7a}
 
-  /* Capability · knowledge families */
+  /* Capability · how we cultivate */
   .slide.cap-slide{
     padding:0;
-    justify-content:stretch;
+    justify-content:flex-start;
     overflow:hidden;
-    background:#070b14;
+    background:#070b12;
     color:#f4f0e6;
   }
   .slide.cap-slide .creature{display:none}
-  .kg-stage{
-    flex:1;min-height:0;
-    display:flex;flex-direction:column;
-    padding:2.6vh 2.2vw 7.2vh;
+  .slide.cap-slide > .kg-photo{
+    position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 48%;
+    pointer-events:none;
   }
-  .kg-stage .data-head{margin:0 0 .8vh}
+  .slide.cap-slide > .kg-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(7,11,18,.78) 0%, rgba(7,11,18,.18) 18%, rgba(7,11,18,.06) 42%, rgba(7,11,18,.22) 62%, rgba(7,11,18,.78) 100%);
+  }
+  .kg-stage{
+    flex:1;min-height:0;height:100%;
+    display:flex;flex-direction:column;
+    padding:2.4vh 2vw 6.8vh;
+    position:relative;z-index:2;
+  }
+  .kg-stage .data-head{margin:0;flex:none}
   .kg-stage .data-head .kicker{
     color:#e8c547;letter-spacing:.18em;
-    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
   .kg-stage .data-head h2{
     font-size:clamp(22px, 3vmin, 38px);
     font-weight:600;letter-spacing:-.035em;line-height:1.18;
     color:#fff;max-width:22em;margin:0;
+    text-shadow:0 2px 14px rgba(0,0,0,.55);
   }
   .kg{
-    flex:1;min-height:0;
+    flex:none;
+    margin-top:auto;
     display:grid;
     grid-template-columns:repeat(5,minmax(0,1fr));
-    gap:.55vw;
+    gap:.5vw;
+    align-items:stretch;
   }
   .fam{
-    min-width:0;min-height:0;
+    min-width:0;
     display:flex;flex-direction:column;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(232,197,71,.16);
-    border-top:3px solid #e8c547;
-    padding:.85vh .7vw .8vh;
+    background:rgba(7,11,18,.58);
+    border:1px solid rgba(232,197,71,.18);
+    border-top:2px solid #e8c547;
+    padding:.75vh .65vw .7vh;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
   }
   .fam .fid{
-    font-size:clamp(10px, 1.1vmin, 12px);
+    font-size:var(--fs-kicker);
     font-weight:700;letter-spacing:.16em;color:#e8c547;
   }
   .fam h3{
     font-size:clamp(16px, 1.85vmin, 22px);
     font-weight:600;letter-spacing:-.03em;color:#fff;
-    margin:.2vh 0 .15vh;line-height:1.2;
-  }
-  .fam .en{
-    font-size:clamp(10px, 1.12vmin, 13px);
-    color:rgba(244,240,230,.5);
-    letter-spacing:.02em;
-    margin-bottom:.45vh;
-    line-height:1.35;
-    white-space:normal;
+    margin:.15vh 0 .4vh;line-height:1.2;
   }
   .fam .blurb{
     display:block;
     flex:none;
     width:100%;
-    font-size:clamp(12px, 1.28vmin, 15px);
-    line-height:1.45;
+    font-size:clamp(11px, 1.22vmin, 15px);
+    line-height:1.4;
+    color:rgba(244,240,230,.82);
+    margin:0 0 .5vh;
+    padding-bottom:.45vh;
+    border-bottom:1px solid rgba(232,197,71,.16);
+  }
+  .ideas{flex:none;display:flex;flex-direction:column}
+  .ideas .ilab{
+    font-size:var(--fs-kicker);
+    font-weight:700;letter-spacing:.14em;color:#e8c547;
+    margin:0 0 .28vh;
+  }
+  .ideas p{
+    font-size:clamp(11px, 1.18vmin, 14px);
+    line-height:1.4;
     color:rgba(244,240,230,.78);
-    margin:0 0 .8vh;
-    padding-bottom:.6vh;
-    border-bottom:1px solid rgba(232,197,71,.18);
+    margin:0 0 .45vh;
   }
-  .lattice{flex:1;min-height:0;display:flex;flex-direction:column;gap:.7vh;justify-content:space-between}
-  .branch{
-    flex:1;
-    display:grid;
-    grid-template-columns:4px 1fr;
-    column-gap:.45vw;
-    align-items:stretch;
-  }
-  .branch .spine{background:rgba(232,197,71,.55);border-radius:2px}
-  .branch .hub{
-    display:block;
-    font-size:clamp(12px, 1.32vmin, 16px);
-    font-weight:700;color:#f3e2a4;
-    letter-spacing:.04em;
-    margin-bottom:.2vh;
-  }
-  .branch .kids{
+  .ideas .kids{
     display:flex;flex-wrap:wrap;gap:4px;
   }
-  .branch .kids span{
-    font-size:clamp(10px, 1.12vmin, 13px);
+  .ideas .kids span{
+    font-size:clamp(10px, 1.08vmin, 12px);
     font-weight:600;
     color:rgba(244,240,230,.82);
     border:1px solid rgba(232,197,71,.2);
-    background:rgba(232,197,71,.06);
-    padding:2px 7px;
+    background:rgba(232,197,71,.08);
+    padding:2px 6px;
     line-height:1.3;
   }
   .slide.cap-slide .src{
-    flex-shrink:0;margin-top:.6vh;
-    font-size:clamp(10px, 1.12vmin, 13px);
-    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+    flex-shrink:0;margin-top:.55vh;
+    font-size:var(--fs-src);
+    color:rgba(244,240,230,.48);line-height:1.4;max-width:none;
   }
   .slide.cap-slide .takeaway{
-    margin-top:.55vh;
-    background:rgba(232,197,71,.08);
+    margin-top:.4vh;
+    background:rgba(7,11,18,.5);
     border-left-color:#e8c547;
     color:#fff;
     border-radius:0;
@@ -1958,7 +2076,7 @@
   .atlas-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:0}
   .atlas-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(8,12,18,.62) 0%, rgba(8,12,18,.12) 26%, rgba(8,12,18,.08) 58%, rgba(8,12,18,.78) 100%),linear-gradient(90deg, rgba(8,12,18,.28) 0%, transparent 40%)}
   .atlas-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
-  .atlas-ui .kicker{color:rgba(255,255,255,.62)}
+  .atlas-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
   .atlas-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:16em;margin-bottom:0}
   .atlas-nodes{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
   .anode{background:rgba(255,255,255,.12);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);border:1px solid rgba(255,255,255,.22);border-radius:16px;padding:1.3vh .9vw 1.25vh;min-width:0}
@@ -1973,7 +2091,7 @@
   .co-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
   .co-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(18,12,8,.58) 0%, rgba(18,12,8,.08) 30%, rgba(18,12,8,.1) 60%, rgba(18,12,8,.72) 100%)}
   .co-ui{position:relative;z-index:2;height:100%;padding:3.6vh 3.6vw 2.6vh;display:flex;flex-direction:column;color:#f5f5f7}
-  .co-ui .kicker{color:rgba(255,255,255,.62)}
+  .co-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
   .co-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:14em;margin-bottom:0}
   .co-pins{margin-top:auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7vw}
   .copin{background:rgba(20,14,10,.42);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,220,180,.22);border-radius:16px;padding:1.2vh .85vw 1.2vh;min-width:0}
@@ -2306,7 +2424,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v40">
+<div id="deck" data-rev="v42">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2332,8 +2450,8 @@
       </li>
       <li>
         <span class="num">03</span>
-        <span class="txt">案例、本源培养与课程
-          <span class="desc">四个少年不是模板；判断力怎么练；两门课能看见什么。</span>
+        <span class="txt">案例、如何培养与两门课
+          <span class="desc">四个少年不是模板；五件能力怎么练；12 课时能看见什么。</span>
         </span>
       </li>
     </ol>
@@ -2894,35 +3012,44 @@
 <section class="slide pyramid-slide">
   <div class="berg-frame">
     <img class="berg-photo" src="assets/salon/iceberg-wide.jpg" alt="">
+    <div class="berg-shift">
     <div class="data-head">
       <div class="kicker" data-edit>02 · 冰山</div>
       <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
     </div>
     <div class="berg-tip">
-        <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
-        <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
-        <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
-        <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
-        <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
-        <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
-        <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
-        <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
-        <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
-        <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
-        <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
-        <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
-        <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
-        <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
-        <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
-        <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
-        <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
-        <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
-        <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
-        <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
-        <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
-        <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
-        <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
-        <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
+          <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
+          <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
+          <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
+          <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
+          <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
+          <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
+          <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
+          <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
+          <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
+          <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
+          <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
+          <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
+          <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
+          <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
+          <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
+          <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
+          <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
+          <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
+          <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
+          <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
+      </div>
     </div>
     <div class="berg-line"><i></i><span>海面 · 能直接点开的工具</span></div>
     <div class="berg-cloud">
@@ -3001,142 +3128,84 @@
     </div>
     <p class="src">海面以上是 2026.9 仍能直接点开的产品，含国内常见应用。Manus 已不适合进课堂。</p>
     <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
+    </div>
+    <aside class="ear-card">
+      <div class="ek" data-edit>家长速记 · 听音</div>
+      <p class="el" data-edit>自媒体和周围人，听他怎么说话。</p>
+      <ul>
+        <li><b class="hang">夯</b><span>能改结构，经得起问</span></li>
+        <li><b class="ding">顶级</b><span>能讲机制和评测</span></li>
+        <li><b class="ren">人上人</b><span>能交货，深问会停</span></li>
+        <li><b class="npc">NPC</b><span>头衔叠 buff</span></li>
+        <li><b class="la">拉完了</b><span>没有卡，没有曲线</span></li>
+      </ul>
+    </aside>
   </div>
 </section>
 
-<!-- P8 能力结构 · 知识家族 -->
+<!-- P8 如何培养 -->
 <section class="slide cap-slide">
+  <img class="kg-photo" src="assets/salon/horizon-arc.jpg" alt="">
+  <div class="kg-veil"></div>
   <div class="kg-stage">
     <div class="data-head">
-      <div class="kicker" data-edit>02 · 课程核心架构</div>
+      <div class="kicker" data-edit>03 · 如何培养</div>
       <h2 data-edit>五件原始能力，各自长出一套知识家族。</h2>
     </div>
     <div class="kg">
       <article class="fam">
         <div class="fid">01</div>
         <h3>万物机理</h3>
-        <div class="en">History · Logic · Math · Physics</div>
         <p class="blurb">学本源：历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p>
-        <div class="lattice">
-          <div class="branch"><div class="spine"></div><div><span class="hub">历史</span><div class="kids"><span>史料</span><span>制度</span><span>技术史</span><span>编年</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">逻辑</span><div class="kids"><span>概念</span><span>论证</span><span>哲学</span><span>反例</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">数学</span><div class="kids"><span>证明</span><span>函数</span><span>概率</span><span>统计</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">物理</span><div class="kids"><span>力学</span><span>能量</span><span>测量</span><span>模型</span></div></div></div>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>初识智能：自然智能 vs 人工智能。中文房间。智能是一个谱系，不是开关。大模型是下文预测机。</p>
+          <div class="kids"><span>历史</span><span>逻辑</span><span>数学</span><span>物理</span></div>
         </div>
       </article>
       <article class="fam">
         <div class="fid">02</div>
         <h3>思想构建</h3>
-        <div class="en">Analyze inward · Speak outward</div>
         <p class="blurb">能把分析内化成自己的判断，也能当众讲清楚。想得清和说得出，是一件事。</p>
-        <div class="lattice">
-          <div class="branch"><div class="spine"></div><div><span class="hub">内化</span><div class="kids"><span>分析</span><span>判断</span><span>取舍</span><span>概念</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">表达</span><div class="kids"><span>结构</span><span>当众讲</span><span>书面</span><span>听懂</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">对质</span><div class="kids"><span>追问</span><span>反例</span><span>修订</span><span>证据</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">听众</span><div class="kids"><span>当众</span><span>听懂</span><span>回应</span></div></div></div>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>查证三问；主张—证据—反例。逻辑谬误找茬。当众讲和路演叙事。判断留在人身上。</p>
+          <div class="kids"><span>查证</span><span>谬误</span><span>当众讲</span><span>路演</span></div>
         </div>
       </article>
       <article class="fam">
         <div class="fid">03</div>
         <h3>世界探索</h3>
-        <div class="en">World as a lab / garden / playground</div>
         <p class="blurb">能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p>
-        <div class="lattice">
-          <div class="branch"><div class="spine"></div><div><span class="hub">发现</span><div class="kids"><span>观察</span><span>感知</span><span>现场</span><span>记录</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">定义</span><div class="kids"><span>边界</span><span>约束</span><span>真问题</span><span>优先级</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">动手</span><div class="kids"><span>实验</span><span>原型</span><span>复盘</span><span>迭代</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">实验室</span><div class="kids"><span>花园</span><span>操场</span><span>世界</span></div></div></div>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>真问题三筛：有人群、有频次、有痛感。问题卡，再画解决闭环。世界就是实验室。</p>
+          <div class="kids"><span>真问题</span><span>问题卡</span><span>闭环</span><span>实验室</span></div>
         </div>
       </article>
       <article class="fam">
         <div class="fid">04</div>
         <h3>商业思维</h3>
-        <div class="en">Hobby → product → sustainable</div>
         <p class="blurb">让爱好、产品、创作能持续下去。懂一点社会经济，懂公司和一群人怎么协作。</p>
-        <div class="lattice">
-          <div class="branch"><div class="spine"></div><div><span class="hub">价值</span><div class="kids"><span>爱好</span><span>产品</span><span>定价</span><span>交换</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">组织</span><div class="kids"><span>协作</span><span>分工</span><span>公司</span><span>一群人</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">持续</span><div class="kids"><span>现金流</span><span>规则</span><span>社会</span><span>创作</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">经济</span><div class="kids"><span>交换</span><span>协作</span><span>可持续</span></div></div></div>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>谁付钱、为何留下。路演结构是痛点 → 演示 → 证据 → 愿景。可持续，不是一次性表演。</p>
+          <div class="kids"><span>交换</span><span>协作</span><span>路演</span><span>可持续</span></div>
         </div>
       </article>
       <article class="fam">
         <div class="fid">05</div>
         <h3>AI Native</h3>
-        <div class="en">Default environment, not a special class</div>
         <p class="blurb">AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p>
-        <div class="lattice">
-          <div class="branch"><div class="spine"></div><div><span class="hub">会选</span><div class="kids"><span>工具</span><span>场景</span><span>边界</span><span>换代</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">会查</span><div class="kids"><span>核验</span><span>评测</span><span>出处</span><span>反例</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">敢负责</span><div class="kids"><span>署名</span><span>追责</span><span>判断留下</span><span>能力上移</span></div></div></div>
-          <div class="branch"><div class="spine"></div><div><span class="hub">默认环境</span><div class="kids"><span>不是特开课</span><span>会选会查</span><span>责任不交</span></div></div></div>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>第一行 prompt；私人 Agent；MVP 到上线。安全清单：密码和家庭住址绝不告诉 AI。</p>
+          <div class="kids"><span>Prompt</span><span>Agent</span><span>MVP</span><span>安全</span></div>
         </div>
       </article>
     </div>
-    <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。各家族下的词是该能力的知识根系，课程细目下一轮再加工。实验校可以对照，但不跟着他们的成绩广告走。</p>
+    <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。各家族下的词是该能力的知识根系，课程细目在后面两门课里展开。实验校可以对照，但不跟着他们的成绩广告走。</p>
     <p class="takeaway"><span class="lbl">一句话</span>底座是万物机理。上面是思想、真实世界、可持续。AI 是默认环境，不是目的。</p>
-  </div>
-</section>
-
-<!-- P9 AI 指数 · 象限 -->
-<section class="slide idx-slide">
-  <div class="idx-stage">
-    <div class="data-head">
-      <div class="kicker" data-edit>02 · AI 能力坐标</div>
-      <h2 data-edit>AI 能力要画在坐标上，不能只听头衔。</h2>
-    </div>
-    <div class="idx-split">
-      <div class="quad" aria-label="AI 能力象限">
-        <svg viewBox="0 0 720 560" xmlns="http://www.w3.org/2000/svg" aria-label="主张强度对机制深度">
-          <rect x="86" y="36" width="292" height="232" fill="rgba(255,138,122,.07)"/>
-          <rect x="378" y="36" width="292" height="232" fill="rgba(232,197,71,.05)"/>
-          <rect x="86" y="268" width="292" height="232" fill="rgba(244,240,230,.03)"/>
-          <rect x="378" y="268" width="292" height="232" fill="rgba(158,224,176,.07)"/>
-          <text x="232" y="56" text-anchor="middle" fill="rgba(255,180,170,.7)" font-size="12" font-weight="700" letter-spacing="1.4">高调 · 机制仍空</text>
-          <text x="524" y="56" text-anchor="middle" fill="rgba(232,197,71,.55)" font-size="12" font-weight="700" letter-spacing="1.4">会讲 · 也能拆开看</text>
-          <text x="232" y="492" text-anchor="middle" fill="rgba(244,240,230,.38)" font-size="12" font-weight="700" letter-spacing="1.4">还没入门</text>
-          <text x="524" y="492" text-anchor="middle" fill="rgba(158,224,176,.75)" font-size="12" font-weight="700" letter-spacing="1.4">能改结构 · 不靠表演</text>
-          <line x1="86" y1="500" x2="670" y2="500" stroke="#e8c547" stroke-width="1.5"/>
-          <line x1="86" y1="500" x2="86" y2="36" stroke="#e8c547" stroke-width="1.5"/>
-          <polygon points="670,500 657,494 657,506" fill="#e8c547"/>
-          <polygon points="86,36 80,49 92,49" fill="#e8c547"/>
-          <line x1="86" y1="268" x2="670" y2="268" stroke="rgba(232,197,71,.2)" stroke-dasharray="4 6"/>
-          <line x1="378" y1="36" x2="378" y2="500" stroke="rgba(232,197,71,.2)" stroke-dasharray="4 6"/>
-          <path d="M179 101 C 230 160, 300 250, 413 305 S 540 350, 612 379" fill="none" stroke="rgba(232,197,71,.35)" stroke-width="1.6" stroke-dasharray="5 7"/>
-          <g font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif">
-            <circle cx="179" cy="101" r="8" fill="#ff8a7a"/>
-            <text x="194" y="97" fill="#ff8a7a" font-size="15" font-weight="700">拉完了</text>
-            <text x="194" y="114" fill="rgba(244,240,230,.5)" font-size="10">无卡 · 无数据 · 无曲线</text>
-            <circle cx="238" cy="175" r="8" fill="rgba(244,240,230,.7)"/>
-            <text x="253" y="171" fill="rgba(244,240,230,.85)" font-size="15" font-weight="700">NPC</text>
-            <text x="253" y="188" fill="rgba(244,240,230,.5)" font-size="10">头衔叠 buff</text>
-            <circle cx="413" cy="305" r="8" fill="#9ee0b0"/>
-            <text x="428" y="301" fill="#9ee0b0" font-size="15" font-weight="700">人上人</text>
-            <text x="428" y="318" fill="rgba(244,240,230,.5)" font-size="10">能交货 · 深问会停</text>
-            <circle cx="542" cy="342" r="8" fill="#9ecbff"/>
-            <text x="542" y="322" text-anchor="middle" fill="#9ecbff" font-size="15" font-weight="700">顶级</text>
-            <text x="542" y="368" text-anchor="middle" fill="rgba(244,240,230,.5)" font-size="10">机制 · 评测</text>
-            <circle cx="612" cy="379" r="8" fill="#e8c547"/>
-            <text x="612" y="408" text-anchor="middle" fill="#e8c547" font-size="15" font-weight="700">夯</text>
-            <text x="612" y="424" text-anchor="middle" fill="rgba(244,240,230,.5)" font-size="10">经得起问</text>
-          </g>
-          <text x="378" y="546" text-anchor="middle" fill="#e8c547" font-size="13" font-weight="700" letter-spacing="1.8">会点开工具  →  能改结构与评测</text>
-          <text x="70" y="48" text-anchor="end" fill="#e8c547" font-size="12" font-weight="700">对外高调</text>
-          <text x="70" y="516" text-anchor="end" fill="#e8c547" font-size="12" font-weight="700">主张克制</text>
-        </svg>
-      </div>
-      <aside class="memo">
-        <div class="mk">家长速记</div>
-        <h3>听他怎么说话，对一下坐标。</h3>
-        <div class="mrow hang"><div class="rk">夯<small>HANG</small></div><div><q>纯决策模型怎么建。这一层 attention 为什么要改。</q><p>能改结构、能讲取舍、能被当面追问。</p></div></div>
-        <div class="mrow ding"><div class="rk">顶级<small>TOP</small></div><div><q>KV cache 把显存吃满了。这个榜有数据污染。</q><p>能讨论机制和评测，不是堆形容词。</p></div></div>
-        <div class="mrow ren"><div class="rk">人上人<small>ABLE</small></div><div><q>我做了个自定义 GPT。这个需求我能交货。</q><p>真会用工具、能交差。还没碰到模型内部。</p></div></div>
-        <div class="mrow npc"><div class="rk">NPC<small>TITLE</small></div><div><q>高级提示词工程师。我用 AI 日入过万。</q><p>头衔叠 buff。会打字，把模板当方法论卖。</p></div></div>
-        <div class="mrow la"><div class="rk">拉完了<small>FAKE</small></div><div><q>我正在调我的大模型。闭关训练自己的 GPT。</q><p>多半没有卡、没有数据、没有 loss 曲线。</p></div></div>
-      </aside>
-    </div>
-    <p class="src">分层名来自网络流行评法：夯 → 顶级 → 人上人 → NPC → 拉完了。话术是听音样本，不是点名某个人。坐标是识别框架，不是考试分数。</p>
-    <p class="takeaway"><span class="lbl">一句话</span>越靠左上，越要怀疑。越靠右下，越像真的在干。会说「我在调大模型」的，多半在跟聊天机器人说话。</p>
   </div>
 </section>
 
@@ -3192,98 +3261,79 @@
   <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有：真问题、真产品、当面讲得清。</p>
 </section>
 
-<!-- P7 培养体系 -->
-<section class="slide frame-slide paper">
-  <div class="kicker">03 · 如何培养</div>
-  <h2>回到本源：<br>能被当面问清楚的判断力。</h2>
-  <p class="lede" style="margin-top:1.2vh;max-width:40em;color:var(--ink-2)">跑在前面的人，赢的不是更会点软件。是能提出真问题、用证据站住脚、对结果负责。到 2030 年，干活要用的技能大约四成会换——学校要加重的，是那些改不了、骗不了、必须当面讲清楚的东西。</p>
-  <div class="frame-trio">
-    <div class="frame-card">
-      <span class="dico blue lg" aria-hidden="true"><svg><use href="#i-book"/></svg></span>
-      <div class="num">本源 · 01</div>
-      <h3>五门根基还是主课</h3>
-      <p>数理、语言、历史、艺术、共同生活。不另起一套学科。改的是上课方式：多实验、多原典、多证明、多当众讲。</p>
-    </div>
-    <div class="frame-card">
-      <span class="dico orange lg" aria-hidden="true"><svg><use href="#i-ai"/></svg></span>
-      <div class="num">本源 · 02</div>
-      <h3>AI 只做三件事</h3>
-      <p>一起学、自学、表达。问题、证据、判断、责任在人；草稿、对照、加速给 AI。能力可以上移，责任不能交给机器。</p>
-    </div>
-    <div class="frame-card">
-      <span class="dico green lg" aria-hidden="true"><svg><use href="#i-target"/></svg></span>
-      <div class="num">本源 · 03</div>
-      <h3>按本事升级，不按年龄</h3>
-      <p>先接触真实，再追问为什么，再形成判断。能讲清、能答辩、能接住反对意见，就可以往上走。不看几岁，也不看刷了多少题。</p>
-    </div>
-  </div>
-  <p class="frame-bridge">我们把这条路做成两门课：AI 通识，和青年创始人社区。</p>
-  <img class="creature lizard" src="assets/salon/creatures/lizard.png" alt="">
-</section>
-
-<!-- P8 课程海报 -->
+<!-- P10 课程海报 -->
 <section class="slide course-poster">
   <div class="cp-left">
     <div class="bg" style="background-image:url('assets/salon/course/atlas.png')"></div>
     <div class="inner">
-      <div class="kicker">课程 A · AI 通识</div>
-      <h2>从自然智慧<br>走到可交付产品</h2>
-      <div class="cp-path">
-        <div class="cp-step">
-          <div class="ix">01</div>
-          <div>
-            <h3>自然智慧</h3>
-            <p>生物智能与机器智能的边界；大模型会流畅地猜，不等于懂。</p>
-            <div class="out">产出：查证三问 · 第一行 prompt</div>
-          </div>
+      <div class="kicker" data-edit>03 · 课程 A · AI 通识</div>
+      <h2 data-edit>12 课时，懂 AI，会思考，造产品。</h2>
+      <p class="lede" data-edit>同一条主线，两档难度。启航班把抽象落到身体和故事；创造营用真工具、真用户。可压成 3–5 天营，也可按周末展开。金标是启航班，蓝标是创造营。</p>
+      <div class="cp-units">
+        <div class="cp-unit">
+          <div class="uh">单元一 · 懂 AI · 3 课时</div>
+          <ul class="lessons">
+            <li><b>01</b><span><span class="ttl">初识智能：自然智能 vs 人工智能</span><em class="dual"><b class="qi">启</b>乌鸦喝水、人脸识别；分类大挑战；图灵小游戏<b class="chuang">创</b>智能谱系；下文预测机；中文房间辩论</em><i class="out">产出：四格漫画 30 秒讲 / 一页智能地图 + 立场声明</i></span></li>
+            <li><b>02</b><span><span class="ttl">大模型边界：第一行 prompt，把模型问倒</span><em class="dual"><b class="qi">启</b>藏头诗；问倒大赛；查证三问随身卡<b class="chuang">创</b>幻觉是流畅不是真实；提示词阶梯；10 题边界评测</em><i class="out">产出：防骗三问卡 / 模型边界评测报告</i></span></li>
+            <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><em class="dual"><b class="qi">启</b>助手说明书；教师投屏生成；小组互测<b class="chuang">创</b>模型层→应用层→Agent；系统提示词 + 工具 + 记忆</em><i class="out">产出：可演示 Agent v1 / 可运行 Agent + 工程文档</i></span></li>
+          </ul>
         </div>
-        <div class="cp-step">
-          <div class="ix">02</div>
-          <div>
-            <h3>产品设计</h3>
-            <p>真问题三筛：有人群、有频次、有痛感；逻辑闭环代替空想功能。</p>
-            <div class="out">产出：问题卡 · 解决闭环图</div>
-          </div>
+        <div class="cp-unit">
+          <div class="uh">单元二 · 会思考 · 2 课时</div>
+          <ul class="lessons">
+            <li><b>04</b><span><span class="ttl">真问题从哪来：有人群、有频次、有痛感</span><em class="dual"><b class="qi">启</b>烦恼收集箱；采访同桌；全班票选<b class="chuang">创</b>双钻；同理心地图；校园田野调查；伪需求解剖</em><i class="out">产出：问题卡 / 问题定义文档 v1</i></span></li>
+            <li><b>05</b><span><span class="ttl">逻辑学与产品闭环：主张—证据—反例</span><em class="dual"><b class="qi">启</b>四个生活化谬误找茬；因为所以；解决闭环草图<b class="chuang">创</b>十个高频谬误；质疑委员会压力测试；闭环图冻结</em><i class="out">产出：任务书 + 闭环草图 / 问题定义 v2 + 蓝图</i></span></li>
+          </ul>
         </div>
-        <div class="cp-step">
-          <div class="ix">03</div>
-          <div>
-            <h3>商业思维</h3>
-            <p>谁付钱、为何留下、如何迭代；路演叙事：痛点 → 演示 → 证据。</p>
-            <div class="out">产出：3 分钟路演讲稿</div>
-          </div>
-        </div>
-        <div class="cp-step">
-          <div class="ix">04</div>
-          <div>
-            <h3>AI 技术高阶</h3>
-            <p>Agent、插件、多模态、数据与安全；在有限预算里做能力取舍。</p>
-            <div class="out">产出：可演示 MVP · 用户反馈报告</div>
-          </div>
+        <div class="cp-unit">
+          <div class="uh">单元三 · 造产品 · 7 课时 · RPS Real Problem Solution</div>
+          <ul class="lessons">
+            <li><b>06–07</b><span><span class="ttl">初级：最小可用原型，能给人试用</span><em class="dual"><b class="qi">启</b>A3 纸面原型；模板化可点 demo；跨组用户测试<b class="chuang">创</b>AI 编程工作流；范围切割；结对编程 + Bug 榜</em><i class="out">产出：MVP + 3 条用户意见 / 可运行 MVP + README</i></span></li>
+            <li><b>08–09</b><span><span class="ttl">进阶：插件、多模态、用户系统</span><em class="dual"><b class="qi">启</b>能力卡牌选购（10 金币取舍）；3 分钟路演预演<b class="chuang">创</b>API 与多模态接入；最小用户系统；5 分钟 Pitch 答辩</em><i class="out">产出：路演版 + 讲稿 / 路演级产品 + 现场答辩</i></span></li>
+            <li><b>10–12</b><span><span class="ttl">高阶：存储、托管、运营、AI 安全</span><em class="dual"><b class="qi">启</b>不告诉 AI 的秘密；家人试用 3 条反馈；毕业展摆摊<b class="chuang">创</b>上线投放 20–50 人；运营漏斗；安全红队；终期路演</em><i class="out">产出：发布版 + 反馈报告 / 上线产品 + 看板 + 安全自查</i></span></li>
+          </ul>
         </div>
       </div>
+      <div class="cp-bands">
+        <article>
+          <h4>启航班 · 约 10 岁 · 具象</h4>
+          <p>三条铁律：多用身体少用屏幕；AI 永远在教师眼皮底下；每课带走可看见的产出。</p>
+          <p>评价看说清楚、做出来、改得动、防得住。不看术语，不看界面漂不漂亮。</p>
+        </article>
+        <article>
+          <h4>创造营 · 初二 · 形式运算</h4>
+          <p>三条原则：真工具、真代码、真用户；幻觉按概率生成理解；没有「学完」，只有「做出来」。</p>
+          <p>评价看机制理解、逻辑硬度、工程完整、真实责任。Cursor 类工具，真实部署。</p>
+        </article>
+      </div>
+      <p class="cp-floor">共同底线：问题必须真实、产出必须可见、AI 产出必须经人核验。难度可在类比 / 机制 / 论文三档里调，允许跳级，不允许跳过。</p>
     </div>
   </div>
   <div class="cp-right">
     <div class="bg" style="background-image:url('assets/salon/course/company.png')"></div>
     <div class="inner">
-      <div class="kicker">课程 B · 青年创始人社区</div>
-      <h2>真实问题里的<br>同伴与责任</h2>
-      <p class="lede">不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。</p>
+      <div class="kicker" data-edit>03 · 课程 B · 青年创始人社区</div>
+      <h2 data-edit>真实问题里的同伴与责任</h2>
+      <p class="lede" data-edit>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。</p>
       <div class="cp-flow">
         <div class="node">
           <h3>真问题</h3>
-          <p>从生活与社区里选可验证的麻烦，而不是选题作文。</p>
+          <p>从生活与社区里选可验证的麻烦，而不是选题作文。先有人群、频次、痛感，再动手。伪需求当场拆掉。</p>
         </div>
         <div class="node">
           <h3>同伴 / 导师</h3>
-          <p>跨年龄协作；成人角色是教练与提问者，不是代写。</p>
+          <p>跨年龄协作。成人是教练与提问者，不是代写。围桌争对错。逻辑树画在墙上，讲不清就还没想清。</p>
         </div>
         <div class="node">
           <h3>路演与迭代</h3>
-          <p>向真人演示；收集拒绝与修改；责任留在人，不留给模型。</p>
+          <p>叙事是痛点 → 演示 → 证据 → 愿景。向真人演示，收集拒绝与修改。有截止日期，判断仍是自己的。</p>
+        </div>
+        <div class="node">
+          <h3>上线与安全</h3>
+          <p>能拿起来的东西：链接、模具、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。责任留在人，不留给模型。</p>
         </div>
       </div>
+      <p class="cp-line">现场还会碰到：交换思想、白板表达、企业级工具、电脑创作、3D 打印真实模具。选题、原型、用户、路演，都在这间房子里发生。</p>
       <div class="cp-brand">Natural Computation</div>
     </div>
   </div>
@@ -3393,7 +3443,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v40';
+  const DRAFT_KEY='salon-ppt-draft-v42';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3417,7 +3467,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.memo h3','.mrow q','.mrow p'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.cp-unit .lessons span','.cp-unit .lessons .dual','.cp-bands p','.cp-floor','.cp-line'
   ].join(',');
 
   function go(n){
@@ -3467,7 +3517,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v40"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v42"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-floor') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
