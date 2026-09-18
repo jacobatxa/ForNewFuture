@@ -21,6 +21,10 @@
     --violet:#6c5ce7;
     --orange:#ff9500;
     --green:#34c759;
+    --navy:#0b1f3a;
+    --navy-2:#1b3654;
+    --burgundy:#7a1f2b;
+    --paper-warm:#f4f1ea;
     --fs-kicker: clamp(11px, 1.3vmin, 16px);
     --fs-h1: clamp(36px, 6vmin, 88px);
     --fs-cover: clamp(30px, 5vmin, 68px);
@@ -330,12 +334,13 @@
     min-width:0;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
   }
   .schools-map-stage{
     position:relative;
     width:100%;
     aspect-ratio:1280 / 712;
+    max-height:min(42vh, 480px);
     border-radius:18px;
     overflow:hidden;
     background:#0e1116;
@@ -394,6 +399,30 @@
     color:var(--ink-3);
     line-height:1.4;
   }
+  .gloss{
+    margin-top:auto;
+    padding:.7vh .75vw .75vh;
+    background:#f5f5f7;
+    border-radius:12px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+  }
+  .gloss h4{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.12em;
+    color:var(--ink-3);
+    margin-bottom:.45vh;
+  }
+  .gloss p{
+    font-size:clamp(10px, 1.18vmin, 14px);
+    color:var(--ink-2);
+    line-height:1.45;
+    margin:0 0 .28vh;
+  }
+  .gloss p strong{
+    color:var(--ink);
+    font-weight:650;
+  }
   .schools-grid{
     min-width:0;min-height:0;
     display:grid;
@@ -403,13 +432,15 @@
   }
   .scard{
     --accent:#007AFF;
-    display:flex;flex-direction:column;min-height:0;
-    padding:.7vh .7vw .7vh 1vw;
-    background:#fff;border-radius:12px;overflow:hidden;
+    display:grid;
+    grid-template-rows:auto 1fr;
+    min-height:0;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
     box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
     position:relative;
   }
-
   .scard::before{
     content:'';
     position:absolute;left:0;top:0;bottom:0;width:3px;
@@ -422,201 +453,83 @@
   .scard.c-kami{--accent:#FF2D55}
   .scard.c-founders{--accent:#FF9500}
   .scard.c-forge{--accent:#34C759}
-  /* ---- 学校卡片：结构化维度 ---- */
-  .scard-head{
-    display:flex;flex-wrap:wrap;align-items:baseline;
-    gap:.1em .6em;
-    padding-bottom:.45vh;margin-bottom:.45vh;
-    border-bottom:1px solid rgba(0,0,0,.07);
+  .scard-media{
+    position:relative;
+    height:clamp(36px, 5.4vmin, 72px);
+    min-height:36px;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 24%, #fff), #f0f0f5);
   }
-  .scard-head h3{
-    font-size:clamp(14px, 1.7vmin, 23px);
-    font-weight:700;letter-spacing:-.02em;color:var(--ink);
+  .scard-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
   }
-  .scard-head .where{
-    font-size:var(--fs-src);font-weight:600;
-    color:var(--accent);letter-spacing:.02em;
+  .scard-media .fallback{
+    position:absolute;inset:0;
+    display:flex;align-items:flex-end;
+    padding:6px 10px;
+    font-size:clamp(10px, 1.15vmin, 14px);font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:color-mix(in srgb, var(--accent) 75%, #1d1d1f);
   }
-  .dims{display:flex;flex-direction:column;justify-content:space-evenly;flex:1;min-height:0;gap:0}
-  .drow{
-    display:grid;grid-template-columns:3.6em 1fr;gap:.6em;
-    align-items:baseline;font-size:var(--fs-body);line-height:1.3;
-  }
-  .drow .dk{
-    color:var(--ink-3);font-weight:600;font-size:var(--fs-small);
-    letter-spacing:.02em;white-space:nowrap;
-  }
-  .drow .dv{color:var(--ink);min-width:0}
-  /* ---- 名校选拔：结论 + 事实 ---- */
-  .slide.data-slide.dq{ padding:3.6vh 3.4vw 2.6vh; justify-content:flex-start; overflow:hidden;
-    background:linear-gradient(180deg,#fbfbfd 0%, #fff 42%); }
-  .dq-claim{
-    font-size:clamp(20px,2.85vmin,38px);
-    font-weight:700;letter-spacing:-.03em;line-height:1.25;
-    color:var(--ink);max-width:26em;
-  }
-  .dq-claim em{font-style:normal;color:var(--dq-accent,#0b3a6f)}
-  .dq-sub{
-    margin-top:.5vh;font-size:var(--fs-body);color:var(--ink-2);
-    max-width:40em;line-height:1.5;
-  }
-  .dq-cols{
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);
-    gap:1.3vw;margin-top:1.5vh;min-height:0;flex:1;
-  }
-  .dq-facts{display:flex;flex-direction:column;gap:.75vh;min-height:0}
-  .dq-fact{
-    display:grid;grid-template-columns:auto 1fr;gap:.85em;
-    align-items:start;
-    background:#fff;border-radius:12px;
-    padding:1.05vh .9vw 1.05vh 1vw;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.075);
-    border-left:3px solid var(--dq-accent,#0b3a6f);
-  }
-  .dq-fact .fig{
-    text-align:right;min-width:4.6em;
-  }
-  .dq-fact .fig .n{
-    font-size:clamp(19px,2.5vmin,34px);font-weight:800;
-    letter-spacing:-.035em;line-height:1;
-    color:var(--dq-accent,#0b3a6f);
-    font-variant-numeric:tabular-nums lining-nums;
-  }
-  .dq-fact .fig .u{
-    display:block;font-size:var(--fs-src);font-weight:650;
-    color:var(--ink-3);margin-top:.35em;letter-spacing:.02em;
-  }
-  .dq-fact h3{
-    font-size:var(--fs-h3);font-weight:700;letter-spacing:-.02em;
-    color:var(--ink);margin-bottom:.25vh;
-  }
-  .dq-fact p{font-size:var(--fs-small);color:var(--ink-2);line-height:1.5}
-  .dq-fact p b{color:var(--ink);font-weight:650}
-
-  .dq-side{display:flex;flex-direction:column;gap:.75vh;min-height:0}
-  .dq-panel{
-    background:#fff;border-radius:12px;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.075);
-    padding:1.05vh .95vw;
-    display:flex;flex-direction:column;min-height:0;
-  }
-  .dq-panel > h4{
-    font-size:var(--fs-src);font-weight:750;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--dq-accent,#0b3a6f);
-    margin-bottom:.7vh;
-  }
-  /* 对比条：用基线对齐读出“差距” */
-  .dq-bars{display:flex;flex-direction:column;gap:.75vh}
-  .dq-bar .lab{
-    display:flex;justify-content:space-between;align-items:baseline;
-    font-size:var(--fs-small);color:var(--ink);margin-bottom:.3vh;
-  }
-  .dq-bar .lab b{
-    font-size:clamp(15px,1.75vmin,23px);font-weight:800;
-    letter-spacing:-.03em;font-variant-numeric:tabular-nums lining-nums;
-  }
-  .dq-bar .lab .who{font-weight:600}
-  .dq-bar .track{
-    height:clamp(8px,1.05vh,12px);border-radius:100px;
-    background:var(--fill-2);overflow:hidden;
-  }
-  .dq-bar .fill{height:100%;border-radius:100px;background:var(--dq-accent,#0b3a6f)}
-  .dq-bar.gap .fill{background:#c8102e}
-  .dq-bar .diff{
-    display:block;font-size:var(--fs-src);color:#c8102e;
-    font-weight:650;margin-top:.28vh;
-  }
-  .dq-hint{
-    font-size:var(--fs-src);color:var(--ink-3);line-height:1.45;
-    margin-top:.6vh;
-  }
-  .dq-panel.tight{padding:.9vh .95vw}
-  .dq-panel.tight p{font-size:var(--fs-small);color:var(--ink-2);line-height:1.5}
-  .dq-panel.tight p b{color:var(--ink)}
-  /* ---- Astra Nova 展开页 ---- */
-  .slide.astra-slide{
-    padding:3.6vh 3.4vw 2.6vh;
-    justify-content:flex-start;
+  .scard-body{
+    padding:.55vh .7vw .65vh .9vw;
+    display:flex;flex-direction:column;
+    min-height:0;
     overflow:hidden;
-    background:var(--paper);
   }
-  .av-top{
-    display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);
-    gap:1.2vw;align-items:center;
-    margin-bottom:.9vh;
+  .scard .where{
+    font-size:clamp(11px, 1.25vmin, 16px);
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:.03em;
+    margin-bottom:.1vh;
   }
-  .av-strip{
-    display:flex;flex-wrap:wrap;gap:.3em .55em;align-items:center;
+  .scard h3{
+    font-size:clamp(14px, 1.8vmin, 26px);
+    font-weight:650;
+    letter-spacing:-.025em;
+    margin-bottom:.3vh;
   }
-  .av-pill{
-    display:inline-flex;align-items:baseline;gap:.4em;
-    padding:.32em .7em;border-radius:100px;
-    background:var(--fill);
-    font-size:var(--fs-small);color:var(--ink);
+  .smeta{
+    display:grid;
+    grid-template-columns:2.7em minmax(0,1fr);
+    column-gap:.45vw;
+    row-gap:.28vh;
+    flex:1;
+    min-height:0;
+    align-content:start;
   }
-  .av-pill b{color:var(--ink-3);font-weight:700;font-size:var(--fs-src)}
-  .av-note{
-    font-size:var(--fs-small);color:var(--ink-2);
-    line-height:1.45;max-width:34em;
+  .smeta dt{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.08em;
+    color:var(--accent);
+    padding-top:.12em;
+    line-height:1.3;
   }
-  .av-cols{
-    display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);
-    gap:1.1vw;min-height:0;flex:1;
+  .smeta dd{
+    font-size:clamp(11px, 1.32vmin, 16px);
+    line-height:1.38;
+    color:var(--ink);
+    min-width:0;
   }
-  .av-cats{display:flex;flex-direction:column;gap:.7vh;min-height:0;height:100%}
-  .av-cat{flex:1;align-content:center}
-  .av-cat{
-    display:grid;grid-template-columns:2.6em 1fr;gap:.7em;
-    align-items:center;
-    background:#fff;border-radius:11px;
-    padding:.85vh .8vw .85vh .85vw;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.07);
+  .smeta dd .mute{
+    color:var(--ink-3);
   }
-  .av-cat .ix{
-    font-size:var(--fs-src);font-weight:700;letter-spacing:.04em;
-    color:var(--blue);padding-top:.15em;
+  .scard .note{
+    margin-top:.15vh;
+    font-size:clamp(11px, 1.2vmin, 15px);
+    color:var(--ink-3);
+    line-height:1.25;
+    flex-shrink:0;
   }
-  .av-cat h3{
-    font-size:var(--fs-h3);font-weight:700;letter-spacing:-.02em;
-    color:var(--ink);margin-bottom:.2vh;
+  .schips{
+    display:flex;flex-wrap:wrap;gap:4px;
+    margin-top:.45vh;
+    flex-shrink:0;
   }
-  .av-cat .courses{
-    font-size:var(--fs-small);color:var(--ink);line-height:1.4;
-  }
-  .av-cat .why{
-    font-size:var(--fs-src);color:var(--ink-3);
-    line-height:1.4;margin-top:.3vh;
-  }
-  .av-right{display:flex;flex-direction:column;gap:.7vh;min-height:0;height:100%}
-  .av-right .av-block{flex:1;display:flex;flex-direction:column;justify-content:center}
-  .av-block{
-    background:var(--fill);border-radius:11px;
-    padding:.9vh .85vw;
-  }
-  .av-block h4{
-    font-size:var(--fs-small);font-weight:700;letter-spacing:.04em;
-    color:var(--ink-3);text-transform:uppercase;margin-bottom:.4vh;
-  }
-  .av-block p{font-size:var(--fs-small);color:var(--ink);line-height:1.5}
-  .av-block p + p{margin-top:.35vh}
-  .av-map{display:flex;flex-direction:column;gap:.22vh}
-  .av-map .row{
-    display:grid;grid-template-columns:6.4em 1fr;gap:.5em;
-    font-size:var(--fs-src);line-height:1.4;
-  }
-  .av-map .row span:first-child{color:var(--blue);font-weight:700}
-  .av-map .row span:last-child{color:var(--ink-2)}
-  /* ---- 术语表 ---- */
-  .glossary{
-    display:flex;flex-wrap:wrap;gap:.2em .55em;
-    margin-top:.6vh;padding-top:.6vh;
-    border-top:1px solid var(--line);
-    font-size:var(--fs-src);color:var(--ink-2);
-    line-height:1.4;flex-shrink:0;
-  }
-  .glossary b{font-weight:700;color:var(--ink);margin-right:.15em}
-  .glossary span{white-space:nowrap}
-
   .schip{
     display:inline-flex;align-items:center;gap:5px;
     background:color-mix(in srgb, var(--accent) 12%, #f5f5f7);
@@ -630,8 +543,248 @@
   }
   .schip .dico{width:18px;height:18px;border-radius:7px}
   .schip .dico svg{width:62%;height:62%}
+  .chip{
+    display:inline-flex;align-items:center;
+    background:var(--fill);
+    border-radius:100px;
+    padding:3px 9px;
+    font-size:clamp(10px, 1.15vmin, 13px);
+    font-weight:600;
+    color:var(--ink-2);
+    line-height:1.3;
+    margin:0 4px 4px 0;
+  }
 
-  /* In-page school story lightbox */
+
+
+
+  /* Astra Nova curriculum teardown */
+  .slide.astra-slide{
+    padding:3.2vh 3.4vw 2.2vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 60% 40% at 0% 0%, rgba(0,122,255,.08), transparent 55%),
+      radial-gradient(ellipse 50% 35% at 100% 100%, rgba(88,86,214,.07), transparent 50%),
+      var(--paper);
+  }
+  .astra-head{display:flex;align-items:flex-end;justify-content:space-between;gap:2vw;margin-bottom:1.3vh;flex-shrink:0}
+  .astra-head h2{font-size:clamp(22px, 3.05vmin, 42px);letter-spacing:-.03em;line-height:1.15;max-width:16em;margin:0}
+  .astra-head .lede{font-size:clamp(13px, 1.5vmin, 20px);color:var(--ink-2);line-height:1.45;max-width:22em;text-align:right}
+  .astra-main{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1.22fr .78fr;
+    gap:1vw;
+  }
+  .astra-cats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(3,minmax(0,1fr));
+    gap:.65vh .7vw;
+    min-height:0;
+  }
+  .acat{
+    background:#fff;
+    border-radius:14px;
+    padding:1.05vh .9vw 1vh;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;min-height:0;overflow:hidden;
+    position:relative;
+  }
+  .acat::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,#007AFF);
+  }
+  .acat.c1{--accent:#007AFF}
+  .acat.c2{--accent:#AF52DE}
+  .acat.c3{--accent:#34C759}
+  .acat.c4{--accent:#FF9500}
+  .acat.c5{--accent:#FF3B30;grid-column:1 / -1}
+  .acat .cap{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;letter-spacing:.08em;color:var(--accent);
+  }
+  .acat h3{
+    font-size:clamp(14px, 1.7vmin, 22px);
+    font-weight:650;letter-spacing:-.02em;margin:.15vh 0 .35vh;
+  }
+  .acat p{
+    font-size:clamp(11px, 1.28vmin, 16px);
+    color:var(--ink-2);line-height:1.4;
+    margin-bottom:.4vh;
+  }
+  .acat .chips{margin-top:.35vh}
+  .astra-side{
+    display:flex;flex-direction:column;gap:.65vh;min-height:0;
+  }
+  .aside{
+    background:#fff;
+    border-radius:14px;
+    padding:1.15vh 1vw 1.1vh;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    min-height:0;
+  }
+  .aside.grow{flex:1;display:flex;flex-direction:column}
+  .aside h3{
+    font-size:clamp(13px, 1.5vmin, 18px);
+    font-weight:650;letter-spacing:-.02em;margin-bottom:.5vh;
+  }
+  .aside ol, .aside ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4vh}
+  .aside li{
+    font-size:clamp(12px, 1.32vmin, 16px);
+    line-height:1.4;color:var(--ink);
+    padding-left:1.5em;position:relative;
+  }
+  .aside ol li{counter-increment:w}
+  .aside ol{counter-reset:w}
+  .aside ol li::before{
+    content:counter(w);
+    position:absolute;left:0;top:.05em;
+    font-size:.85em;font-weight:700;color:var(--blue);
+  }
+  .aside ul li::before{
+    content:'';position:absolute;left:.2em;top:.55em;
+    width:5px;height:5px;border-radius:50%;background:var(--blue);
+  }
+  .day-row{
+    display:grid;grid-template-columns:5.2em 1fr;gap:.3vh .6vw;
+    font-size:clamp(12px, 1.32vmin, 16px);line-height:1.4;
+  }
+  .day-row dt{font-weight:700;color:var(--blue);letter-spacing:.02em}
+  .day-row dd{color:var(--ink)}
+  .cap-map{
+    display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:.45vw;margin-top:.7vh;flex-shrink:0;
+  }
+  .cap-map .cm{
+    background:#fff;border-radius:12px;padding:.85vh .55vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    min-width:0;
+  }
+  .cap-map h4{font-size:clamp(12px, 1.32vmin, 16px);font-weight:650;letter-spacing:-.02em;margin-bottom:.25vh}
+  .cap-map p{font-size:clamp(11px, 1.22vmin, 14px);color:var(--ink-2);line-height:1.35;margin:0}
+
+  /* Authoritative admissions layout */
+  .slide.auth-slide{
+    padding:3.4vh 3.6vw 2.4vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:
+      linear-gradient(180deg, #f7f4ee 0%, #f3efe6 100%);
+    color:var(--navy);
+  }
+  .slide.auth-slide .creature{display:none}
+  .auth-head{margin-bottom:1.35vh;flex-shrink:0}
+  .auth-head .kicker{
+    color:#6b6458;
+    letter-spacing:.14em;
+    font-size:clamp(11px, 1.2vmin, 14px);
+    font-weight:700;
+    margin-bottom:.6vh;
+  }
+  .auth-head h2{
+    font-size:clamp(22px, 3.2vmin, 44px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1.18;
+    color:var(--navy);
+    max-width:18em;
+    margin:0;
+  }
+  .auth-facts{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1.22fr .96fr;
+    gap:.85vw;
+  }
+  .afact{
+    background:#fff;
+    border-radius:4px;
+    padding:1.5vh 1.15vw 1.3vh;
+    box-shadow:0 1px 0 rgba(11,31,58,.06);
+    border-top:3px solid var(--navy);
+    display:flex;flex-direction:column;min-width:0;min-height:0;
+  }
+  .afact .idx{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.16em;
+    color:#6b6458;
+    margin-bottom:.55vh;
+  }
+  .afact h3{
+    font-size:clamp(16px, 1.9vmin, 24px);
+    font-weight:600;
+    letter-spacing:-.03em;
+    color:var(--navy);
+    margin-bottom:.8vh;
+    line-height:1.25;
+  }
+  .anum{
+    display:flex;align-items:baseline;gap:.45em;
+    margin-bottom:.35vh;
+  }
+  .anum .n{
+    font-size:clamp(28px, 4.2vmin, 56px);
+    font-weight:600;
+    letter-spacing:-.05em;
+    font-variant-numeric:tabular-nums;
+    color:var(--navy);
+    line-height:.92;
+  }
+  .anum .u{
+    font-size:clamp(12px, 1.3vmin, 16px);
+    color:#6b6458;
+    font-weight:600;
+  }
+  .anum.neg .n{color:var(--burgundy)}
+  .afact p{
+    font-size:clamp(12px, 1.35vmin, 17px);
+    line-height:1.45;
+    color:#2c3340;
+    margin:0 0 .55vh;
+  }
+  .afact .so{
+    margin-top:auto;
+    padding-top:.7vh;
+    border-top:1px solid rgba(11,31,58,.12);
+    font-size:clamp(12px, 1.32vmin, 16px);
+    line-height:1.4;
+    color:var(--navy);
+    font-weight:550;
+  }
+  .cmp{
+    display:grid;grid-template-columns:1fr 1fr;gap:.55vw;
+    margin:.5vh 0 .7vh;
+  }
+  .cmp .c{
+    background:var(--paper-warm);
+    border-radius:4px;
+    padding:.7vh .65vw .65vh;
+  }
+  .cmp .lab{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;letter-spacing:.08em;color:#6b6458;
+  }
+  .cmp .n{
+    font-size:clamp(22px, 3vmin, 36px);
+    font-weight:600;letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    color:var(--navy);line-height:1.05;margin:.15vh 0;
+  }
+  .cmp .d{
+    font-size:clamp(11px, 1.2vmin, 14px);
+    color:#4a5160;line-height:1.35;
+  }
+  .auth-src{
+    flex-shrink:0;
+    margin-top:1vh;
+    font-size:clamp(10px, 1.15vmin, 13px);
+    color:#6b6458;
+    letter-spacing:.02em;
+    line-height:1.4;
+  }
+
   /* Data charts P3/P4 */
   .dico{
     width:clamp(44px, 5.4vmin, 72px);
@@ -1062,27 +1215,11 @@
     margin-top:.4vh;
   }
   .pyr-row{
-    position:relative;
     display:flex;align-items:center;justify-content:center;
     gap:12px;
   }
-  /* 分类标签在行内左侧固定宽度，图标组居中：不再重叠 */
-  .pyramid-slide .pyr{
-    justify-content:center;
-    align-content:center;
-    align-items:stretch;
-    gap:0;
-  }
-  .pyramid-slide .pyr-row{
-    display:grid;
-    grid-template-columns:minmax(84px,128px) auto;
-    align-items:center;justify-content:center;
-    column-gap:10px;
-    padding:.35vh 0;
-  }
   .pyr-row .band{
-    position:static;
-    justify-self:end;text-align:right;
+    position:absolute;
     font-size:var(--fs-micro);font-weight:650;letter-spacing:.02em;
     color:var(--ink-3);
     background:var(--fill);
@@ -1092,24 +1229,14 @@
   }
   .pyr-row .band.l{left:0}
   .pyr-row .band.r{right:0}
-  .pyr-tiles{
-    display:flex;align-items:center;justify-content:center;
-    gap:12px;min-width:0;
-  }
   .ptile{
     display:flex;flex-direction:column;align-items:center;gap:4px;
     min-width:64px;
   }
   .ptile img.ico{
     width:clamp(52px, 6.2vmin, 88px);height:clamp(52px, 6.2vmin, 88px);border-radius:20px;
-    display:block;object-fit:contain;
-    background:#e8e8ed;
+    display:block;object-fit:cover;background:#fff;
     box-shadow:0 2px 8px rgba(0,0,0,.14), inset 0 0 0 1px rgba(0,0,0,.06);
-  }
-  /* 浅色 logo 在浅底上不可见 → 只加深底托 */
-  .slide.pyramid-slide .ptile img.ico{
-    background:#cfcfd6;
-    box-shadow:0 2px 8px rgba(0,0,0,.18), inset 0 0 0 1px rgba(0,0,0,.16);
   }
   .ptile .n{
     font-size:var(--fs-micro);font-weight:600;color:var(--ink);
@@ -1543,7 +1670,7 @@
   }
 
   @media (max-aspect-ratio: 5/4){
-    .slide.data-slide,.slide.labor,.slide.cap-slide{padding:2.8vh 2.8vw 2vh;overflow-y:auto}
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.astra-slide,.slide.auth-slide{padding:2.8vh 2.8vw 2vh;overflow-y:auto}
     .data-grid{grid-template-columns:1.15fr .85fr;gap:.8vw}
     .path-kpis{grid-template-columns:repeat(3,1fr)}
     .labor-main{grid-template-columns:1.15fr .85fr;gap:1vw}
@@ -1561,7 +1688,7 @@
   }
   @media (max-width:800px){
     .slide{padding:7vh 7vw 12vh;overflow-y:auto;justify-content:flex-start}
-    .slide.data-slide,.slide.labor,.slide.cap-slide{overflow-y:auto}
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.astra-slide,.slide.auth-slide{overflow-y:auto}
     .split,.split.reverse{grid-template-columns:1fr;padding:0}
     .split .pane-text,.split.reverse .pane-text{padding:7vh 7vw 4vh}
     .slide.schools{overflow-y:auto;justify-content:flex-start}
@@ -1574,17 +1701,13 @@
       grid-template-rows:auto;
     }
     .scard{min-height:auto}
-    .scard-body{
-    display:flex;flex-direction:column;
-    justify-content:flex-start;
-    min-height:0;overflow:visible;
-  }
-
-    .scard ul{overflow:visible}
+    .scard-media{height:12vh;max-height:100px}
+    .scard-body{overflow:visible}
+    .smeta{overflow:visible}
     .photo-band{height:26vh}
     .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
     .creature,.neuron-side{display:none}
-    .path-kpis,.fact-strip,.labor-stats,.ox-chips,.kpi-stack,.cn-grid{grid-template-columns:1fr 1fr}
+    .path-kpis,.fact-strip,.labor-stats,.ox-chips,.kpi-stack,.cn-grid,.auth-facts,.astra-main,.astra-cats,.cap-map{grid-template-columns:1fr 1fr}
     .data-grid,.labor-main{grid-template-columns:1fr}
     .job-cols{grid-template-columns:1fr}
   }
@@ -1652,7 +1775,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v27">
+<div id="deck" data-rev="v28">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -1667,7 +1790,7 @@
       <li>
         <span class="num">01</span>
         <span class="txt">学校怎么上课，名校怎么选人
-          <span class="desc">六所实验校；美国更难进，英国申请在涨；作文开始被查。</span>
+          <span class="desc">六所实验校；Astra Nova 课表拆开看；中国学生通道在收窄。</span>
         </span>
       </li>
       <li>
@@ -1716,257 +1839,291 @@
         <div class="item"><i class="swatch" style="background:#FF9500"></i>Founders <span class="meta">纽约</span></div>
         <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
       </div>
-      <p class="map-caption" data-edit>先看课怎么上。校方说的成绩，和独立调查经常对不上。</p>
+      <div class="gloss">
+        <h4 data-edit>家长词条</h4>
+        <p data-edit><strong>引导员</strong>：不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
+        <p data-edit><strong>MAP</strong>：美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
+        <p data-edit><strong>GCSE / A Level</strong>：英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
+        <p data-edit><strong>全寮制</strong>：住校。<strong>校方称</strong>：学校自己公布的数字，还没被独立核对。</p>
+      </div>
     </aside>
 
     <div class="schools-grid">
       <article class="scard c-alpha">
+        <div class="scard-media">
+          <span class="fallback">Austin</span>
+          <img src="assets/schools/stories/alpha.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>Alpha School</h3>
-            <div class="where" data-edit>美国 · 奥斯汀等地</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">全日制 · 可跨年级</span></div>
-            <div class="drow"><span class="dk">课时</span><span class="dv">主课约 2 小时/日</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">AI 自学主课 + 成人教练带下午项目</span></div>
-            <div class="drow"><span class="dk">学费</span><span class="dv">$10,000–$75,000</span></div>
-          </div>
+          <div class="where" data-edit>美国 · 奥斯汀等地 · 全日制</div>
+          <h3 data-edit>Alpha School</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>主课约 2 小时/日；下午做项目和生活技能。</dd>
+            <dt>学费</dt><dd data-edit>约 1–4 万美元/年；旧金山校约 7.5 万美元。</dd>
+            <dt>模式</dt><dd data-edit>到校上课。约 5 个学生配 1 名引导员，负责动机和带项目，不是整日讲授。</dd>
+            <dt>特点</dt><dd data-edit>校方称测验进步很快；独立调查：部分合作校州考几乎没动。广告和第三方核对经常对不上。</dd>
+          </dl>
+          <div class="note">alpha.school · 入学超 1000 人</div>
         </div>
       </article>
 
       <article class="scard c-astra">
+        <div class="scard-media">
+          <span class="fallback">SpaceX → Online</span>
+          <img src="assets/schools/stories/astra.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>Astra Nova</h3>
-            <div class="where" data-edit>SpaceX 园区 → 全球线上</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">线上 · 高中部 2026 开办</span></div>
-            <div class="drow"><span class="dk">课时</span><span class="dv">每周 4–16 小时直播</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">直播小班 6–16 人 · 每学期重做课表</span></div>
-            <div class="drow"><span class="dk">规模</span><span class="dv">学生来自约 45 国</span></div>
-          </div>
+          <div class="where" data-edit>SpaceX 园区 Ad Astra → 全球线上</div>
+          <h3 data-edit>Astra Nova</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>每周约 4–16 小时。多数课每周 1–2 小时；数学每周 3–4 小时。</dd>
+            <dt>学费</dt><dd data-edit>线上按学期选课，费用以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>英语直播小班，约 6–16 人；学生来自约 45 个国家。</dd>
+            <dt>特点</dt><dd data-edit>本季约 90 门课，每学期重做。申请要交一段没有标准答案的短视频，听怎么想。下一页拆课表。</dd>
+          </dl>
+          <div class="note">my.astranova.org/preview</div>
         </div>
       </article>
 
       <article class="scard c-sabre">
+        <div class="scard-media">
+          <span class="fallback">London</span>
+          <img src="assets/schools/stories/london.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>Sabrewing 项目</h3>
-            <div class="where" data-edit>英国 · 伦敦 · David Game College</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">一年制 · 15–17 岁</span></div>
-            <div class="drow"><span class="dk">班级</span><span class="dv">约 20 人 · 3 名教练</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">上午 AI 自适应主课 + 下午技能项目</span></div>
-            <div class="drow"><span class="dk">证书</span><span class="dv">5 门 GCSE 或 2–3 门 A Level</span></div>
-          </div>
+          <div class="where" data-edit>英国 · 伦敦 · David Game College</div>
+          <h3 data-edit>Sabrewing 项目</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>到校约 9:10–16:30。下午技能与项目累计 300 小时以上/年（校方称）。</dd>
+            <dt>学费</dt><dd data-edit>走学院学费，以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>伦敦到校。上午用自适应软件推进英国中学考试科目，教练加 AI 导师辅导。</dd>
+            <dt>特点</dt><dd data-edit>一年通常考 5 门 GCSE，或 2–3 门 A Level（校方称）。正规升学轨道，下午做难的事。</dd>
+          </dl>
+          <div class="note">davidgamecollege.com</div>
         </div>
       </article>
 
       <article class="scard c-kami">
+        <div class="scard-media">
+          <span class="fallback">Tokushima</span>
+          <img src="assets/schools/stories/kamiyama.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>神山まるごと高専</h3>
-            <div class="where" data-edit>日本 · 德岛神山</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">五年一贯 · 约 15 岁入学</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">全寄宿 · 科技 × 设计 × 企业家精神</span></div>
-            <div class="drow"><span class="dk">学费</span><span class="dv">奖学金覆盖 · 实际近零</span></div>
-            <div class="drow"><span class="dk">规模</span><span class="dv">约 40 人/年</span></div>
-          </div>
+          <div class="where" data-edit>日本 · 德岛神山 · 五年制高等专门学校</div>
+          <h3 data-edit>神山まるごと高専</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>五年贯通。一日约 9:00 上课，一节 90 分钟。</dd>
+            <dt>学费</dt><dd data-edit>日本高专标准，以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>约 15 岁入学，住校。</dd>
+            <dt>特点</dt><dd data-edit>科技 × 设计 × 创业。每年约 40 人。编程、物联网、AI，也做地方真实课题。</dd>
+          </dl>
+          <div class="note">kamiyama.ac.jp</div>
         </div>
       </article>
 
       <article class="scard c-founders">
+        <div class="scard-media">
+          <span class="fallback">NYC</span>
+          <img src="assets/schools/stories/nyc.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>Founders School</h3>
-            <div class="where" data-edit>美国 · 纽约 · 9–12</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">最短四年 · 2026 首届</span></div>
-            <div class="drow"><span class="dk">课时</span><span class="dv">学术约 3 小时/日</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">三柱：生活技能 · 创业 · AI 协作</span></div>
-            <div class="drow"><span class="dk">学费</span><span class="dv">$150,000/年 · 未达百万利润可退费</span></div>
-          </div>
+          <div class="where" data-edit>美国 · 纽约 · 9–12 年级 · 2026 首届</div>
+          <h3 data-edit>The Founders School</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>学术约 3 小时/日。一年五段：卖 → 做 → 验证 → 增长 → 放大（校方称）。</dd>
+            <dt>学费</dt><dd data-edit>约 15 万美元/年。承诺未达百万利润可退费，以合同为准。</dd>
+            <dt>模式</dt><dd data-edit>纽约全日制创业高中。首届约 20 人。</dd>
+            <dt>特点</dt><dd data-edit>三柱：生活技能、创业、和 AI 一起做产品。</dd>
+          </dl>
+          <div class="note">founders.school</div>
         </div>
       </article>
 
       <article class="scard c-forge">
+        <div class="scard-media">
+          <span class="fallback">New Jersey</span>
+          <img src="assets/schools/stories/forge.jpg" alt="" onerror="this.style.display='none'">
+        </div>
         <div class="scard-body">
-          <div class="scard-head">
-            <h3 data-edit>Forge Prep</h3>
-            <div class="where" data-edit>美国 · 新泽西 · 5–8 年级</div>
-          </div>
-          <div class="dims">
-            <div class="drow"><span class="dk">学制</span><span class="dv">2026 新开 · 首年 $24k–$36k</span></div>
-            <div class="drow"><span class="dk">课时</span><span class="dv">上午深度专注 · 下午工作室</span></div>
-            <div class="drow"><span class="dk">模式</span><span class="dv">1:1 导师 · 真实业务与产品</span></div>
-            <div class="drow"><span class="dk">规模</span><span class="dv">首届约 30 人 · 30% 获助学</span></div>
-          </div>
+          <div class="where" data-edit>美国 · 新泽西 · 2026 新开</div>
+          <h3 data-edit>Forge Prep</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>上午深度专注，下午工作室动手。</dd>
+            <dt>学费</dt><dd data-edit>2.4–3.6 万美元/年；校方称约 30% 可获助学。</dd>
+            <dt>模式</dt><dd data-edit>1 人对 1 人引导员，多年跟进学业和生活技能。</dd>
+            <dt>特点</dt><dd data-edit>强调真实业务和能交货的产品。约 30 个创始家庭（校方称）。</dd>
+          </dl>
+          <div class="note">forgeprep.com</div>
         </div>
       </article>
     </div>
   </div>
-  <div class="glossary">
-    <span><b>Guide</b>教练：不讲课，管进度与动力</span>
-    <span><b>MAP</b>美国学业成长测评，看进步幅度</span>
-    <span><b>GCSE / A Level</b>英国 16 / 18 岁升学考试</span>
-    <span><b>Conundrums</b>没有标准答案的视频题</span>
-    <span>学费为公开口径，各校差异大</span>
-  </div>
 </section>
 
-<!-- P3 Astra Nova 课程展开 -->
+
+<!-- P3 Astra Nova 课表拆解 -->
 <section class="slide astra-slide paper">
-  <div class="data-head">
-    <div class="kicker">01 · 实验学校 · 展开</div>
-    <h2>Astra Nova 的课表，<br>本身就是一份能力清单。</h2>
-  </div>
-
-  <div class="av-top">
-    <div class="av-strip">
-      <span class="av-pill"><b>学制</b>全球线上 · 高中部 2026 开办</span>
-      <span class="av-pill"><b>课时</b>每周 4–16 小时直播</span>
-      <span class="av-pill"><b>班级</b>直播小班 6–16 人</span>
-      <span class="av-pill"><b>规模</b>学生来自约 45 国</span>
-      <span class="av-pill"><b>课表</b>每学期重做</span>
+  <div class="astra-head">
+    <div>
+      <div class="kicker" data-edit>01 · Astra Nova 课表</div>
+      <h2 data-edit>九十门课，不是把大纲上完，是把问题摊开。</h2>
     </div>
-    <p class="av-note">上午的课表里同时排着生物伦理、悖论推理和 C 语言。它不在“先上完大纲、再加点素质”这条路上。</p>
+    <p class="lede" data-edit>SpaceX 园区那所 Ad Astra，现在变成全球线上的 Astra Nova。本季公开课表约 90 门，每学期重做。下面按「实际在讲什么」分类，并对照我们认的五件能力。</p>
   </div>
-
-  <div class="av-cols">
-    <div class="av-cats">
-      <article class="av-cat">
-        <div class="ix">01</div>
-        <div>
-          <h3>怎么想 · 判断与推理</h3>
-          <div class="courses">Better Decision-Making · Paradoxes &amp; Thought Experiments · Lies, Damned Lies, and Data Science</div>
-          <div class="why">教的是科学思维、实验设计、逻辑谬误——以及“数据不会自己说实话”。</div>
+  <div class="astra-main">
+    <div class="astra-cats">
+      <article class="acat c1">
+        <div class="cap" data-edit>对应 · 思想构建</div>
+        <h3 data-edit>判断力课</h3>
+        <p data-edit>没有标准答案。听的是推理过程：实验怎么设计、数据会不会说谎、该不该改基因。</p>
+        <div class="chips">
+          <span class="chip">更好的决策</span>
+          <span class="chip">悖论与思想实验</span>
+          <span class="chip">生物伦理</span>
+          <span class="chip">数据会说谎</span>
         </div>
       </article>
-      <article class="av-cat">
-        <div class="ix">02</div>
-        <div>
-          <h3>怎么做 · 工程与创造</h3>
-          <div class="courses">Technical History of AI · C Programming for Engineers · App Development · Software Engineering Intensive · Formula 1 Design</div>
-          <div class="why">先讲清一个概念从哪来，再动手把它做出来，而不是先背语法。</div>
+      <article class="acat c2">
+        <div class="cap" data-edit>对应 · 万物机理</div>
+        <h3 data-edit>世界怎么运转</h3>
+        <p data-edit>数学是唯一的重课时轨道。物理、化学、天文、工程挨着开，先问世界如何运行。</p>
+        <div class="chips">
+          <span class="chip">代数 → 微积分</span>
+          <span class="chip">牛顿力学</span>
+          <span class="chip">C 语言工程</span>
+          <span class="chip">F1 设计</span>
         </div>
       </article>
-      <article class="av-cat">
-        <div class="ix">03</div>
-        <div>
-          <h3>怎么看人 · 伦理与表达</h3>
-          <div class="courses">BioEthics II · Vampire Literature · Social Entrepreneurship · Classic Synthesis</div>
-          <div class="why">把技术放回人和社会的语境里追问：该不该做、对谁负责。</div>
+      <article class="acat c3">
+        <div class="cap" data-edit>对应 · 世界探索</div>
+        <h3 data-edit>把世界当现场</h3>
+        <p data-edit>课名先是潮汐池、罗马帝国、二战，不是「地理第一章」。同学来自约 45 个国家。</p>
+        <div class="chips">
+          <span class="chip">潮汐池 / 海洋</span>
+          <span class="chip">罗马帝国 / 二战</span>
+          <span class="chip">世界地理</span>
+          <span class="chip">模拟联合国</span>
         </div>
       </article>
-      <article class="av-cat">
-        <div class="ix">04</div>
-        <div>
-          <h3>世界的语言 · 数学</h3>
-          <div class="courses">代数 · 几何 · 微积分</div>
-          <div class="why">唯一按周加密到 3–4 小时并需要分班的科目——底层工具不省。</div>
+      <article class="acat c4">
+        <div class="cap" data-edit>对应 · 商业思维</div>
+        <h3 data-edit>协作与生意</h3>
+        <p data-edit>经济学、广告、社会创业，毕业轨道还有企业协作驻场。练的是把价值讲清楚、交出去。</p>
+        <div class="chips">
+          <span class="chip">实用经济学</span>
+          <span class="chip">社会创业</span>
+          <span class="chip">广告</span>
+          <span class="chip">企业协作</span>
+          <span class="chip">比特币入门</span>
+        </div>
+      </article>
+      <article class="acat c5">
+        <div class="cap" data-edit>对应 · AI Native Mind</div>
+        <h3 data-edit>动手做，而不是上「人工智能课」</h3>
+        <p data-edit>有一门 AI 技术史，但更多是编程、做 App、做游戏、拍电影、写歌。工具会换，要会开工。</p>
+        <div class="chips">
+          <span class="chip">AI 技术史</span>
+          <span class="chip">Python / C# / Lua</span>
+          <span class="chip">网页与 App</span>
+          <span class="chip">软件工程强化</span>
+          <span class="chip">影像 / 作曲 / 游戏</span>
+          <span class="chip">经典综合课 Synthesis</span>
         </div>
       </article>
     </div>
-
-    <div class="av-right">
-      <div class="av-block">
-        <h4>为什么这么排</h4>
-        <p>它把“判断”当成主科，而不是选修。入门课几乎不留作业，高中与工程级才加重——先让孩子愿意想，再要求想得深。</p>
-        <p>课名本身就是问题。读“这句话是假的，是真是假”的孩子，不会只习惯等一个标准答案。</p>
-      </div>
-      <div class="av-block">
-        <h4>它对应的，正是我们要的五件事</h4>
-        <div class="av-map">
-          <div class="row"><span>万物机理</span><span>数学按周加密 · 技术史先讲来源</span></div>
-          <div class="row"><span>思想构建</span><span>悖论、决策、谬误 · 辩论与写作</span></div>
-          <div class="row"><span>世界探索</span><span>F1 设计、社会创业：真场景真约束</span></div>
-          <div class="row"><span>商业思维</span><span>社会创业 · 给团队加不成比例的价值</span></div>
-          <div class="row"><span>AI Native</span><span>AI 技术史与工程课：AI 是默认环境</span></div>
-        </div>
-      </div>
-      <div class="av-block">
-        <h4>我们和它差在哪</h4>
-        <p>它有九十门课把“判断”铺开，我们只有 12 课时。脊柱相同——真问题、站队、当面讲清、对结果负责；差别是我们要求孩子在结课时交出一个能被真人用的东西。</p>
-      </div>
+    <div class="astra-side">
+      <article class="aside grow">
+        <h3 data-edit>为什么课表长这样</h3>
+        <ol>
+          <li data-edit>数学每周 3–4 小时、要分班，因为定量底盘装不了假。其余课每周 1–2 小时直播讨论或做项目。</li>
+          <li data-edit>课名先是问题：吸血鬼文学、潮汐池、F1。先撞上世界，再碰到学科，避免「上完大纲再贴综合素质」。</li>
+          <li data-edit>伦理课紧挨工程课。会造、不会判断，是 AI 时代最贵的缺陷。</li>
+          <li data-edit>申请交 30 秒–2 分钟没有标准答案的短视频，选的是怎么想，不是背了哪套词。</li>
+        </ol>
+      </article>
+      <article class="aside">
+        <h3 data-edit>上课怎么发生</h3>
+        <dl>
+          <div class="day-row"><dt>环境</dt><dd data-edit>英语直播小班，约 6–16 人，学生来自约 45 国。</dd></div>
+          <div class="day-row"><dt>负荷</dt><dd data-edit>每周约 4–16 小时。入门课几乎不留作业；高中级、工程级才加到每周 1 小时以上。</dd></div>
+          <div class="day-row"><dt>时差</dt><dd data-edit>课表按美国时间排。对中国家庭，不少课会落在凌晨——这是线上全球班的代价，不是排错了。</dd></div>
+          <div class="day-row"><dt>课表</dt><dd data-edit>每学期重做约 90 门。不是一本冻住的教学大纲。</dd></div>
+        </dl>
+      </article>
     </div>
   </div>
-
-  <p class="src">依据 my.astranova.org/preview 公开课表（2026-09）与 astranova.org 整理。课表每学期重做，具体课程会变。</p>
+  <div class="cap-map">
+    <div class="cm"><h4 data-edit>万物机理</h4><p data-edit>数学、力学、化学、天文、工程。先问世界怎么转。</p></div>
+    <div class="cm"><h4 data-edit>思想构建</h4><p data-edit>决策、悖论、伦理、辩论。能被当面问清楚。</p></div>
+    <div class="cm"><h4 data-edit>世界探索</h4><p data-edit>潮汐池、战争史、45 国同学。现场比课文大。</p></div>
+    <div class="cm"><h4 data-edit>商业思维</h4><p data-edit>经济、创业、广告、企业协作。价值要交得出去。</p></div>
+    <div class="cm"><h4 data-edit>AI Native</h4><p data-edit>技术史加动手做。不是堆「人工智能」课名。</p></div>
+  </div>
+  <p class="takeaway"><span class="lbl">一句话</span>Astra Nova 用九十门课把判断铺开。我们没有九十门，脊柱相同：真问题、站队、当面讲清、对结果负责。</p>
 </section>
 
-<section class="slide data-slide dq paper">
-  <div class="data-head" style="margin-bottom:0">
-    <div class="kicker">01 · 名校选拔</div>
+
+<!-- P4 名校选拔数据 -->
+<section class="slide auth-slide">
+  <div class="auth-head">
+    <div class="kicker" data-edit>01 · 名校选拔</div>
+    <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
   </div>
-  <h2 class="dq-claim">国际名校的竞争在变激烈，<em>优质教育资源更稀缺，中国学生的通道在变窄。</em></h2>
-  <p class="dq-sub">三条事实指向同一个方向。数字都来自官方招生与签证统计，不是学校宣传。</p>
-
-  <div class="dq-cols">
-    <div class="dq-facts">
-      <article class="dq-fact">
-        <div class="fig"><span class="n">−10.2%</span><span class="u">美国 · 中国本科</span></div>
-        <div>
-          <h3>人数在减，通道在收</h3>
-          <p>在美中国留学生 <b>265,919 人，同比 −4.1%</b>，其中<b>本科 78,583 人、−10.2%</b>，接近十年低位。同期美国整体国际生反而 <b>+4.5%</b>——总盘子创纪录，中国这一支在缩。</p>
+  <div class="auth-facts">
+    <article class="afact">
+      <div class="idx" data-edit>事实 01 · 通道</div>
+      <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
+      <div class="anum neg"><span class="n" data-edit>−10.2%</span><span class="u">美国 · 中国本科</span></div>
+      <p data-edit>2024/25 学年，中国在美留学生 265,919 人，连续下降 4.1%。其中本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。</p>
+      <p data-edit>同一年，美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。</p>
+      <p data-edit>英国方向：UCAS 2026 中国本科申请上升 12.2%，到 3.8 万人；学生签证签发下降 14.7%。申请的人还在挤，门没有变宽。</p>
+      <p class="so" data-edit>对中国学生来说，招生比例在持续收窄。</p>
+    </article>
+    <article class="afact">
+      <div class="idx" data-edit>事实 02 · 读数</div>
+      <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
+      <div class="cmp">
+        <div class="c">
+          <div class="lab">牛津 · 整体录取通知比例</div>
+          <div class="n">16.5%</div>
+          <div class="d">3,853 份录取通知 / 23,291 份申请</div>
         </div>
-      </article>
-      <article class="dq-fact">
-        <div class="fig"><span class="n">+12.2%</span><span class="u">英国 · 中国本科申请</span></div>
-        <div>
-          <h3>出口挤向英国，名额没变多</h3>
-          <p>UCAS 2026 中国大陆本科申请约 <b>38,000 人</b>，同比 <b>+12.2%</b>。申请在涨，录取规模并没有同步扩大，等于同一批名额上的人更多了。</p>
+        <div class="c">
+          <div class="lab">牛津 · 中国大陆</div>
+          <div class="n">10.3%</div>
+          <div class="d">218 份录取通知 / 2,111 份申请</div>
         </div>
-      </article>
-      <article class="dq-fact" style="--dq-accent:#c8102e">
-        <div class="fig"><span class="n">30%</span><span class="u">招生办 · 禁 AI 文书</span></div>
-        <div>
-          <h3>文书这一环，风险在上升</h3>
-          <p>美国高校招生办中 <b>30% 明确禁止用 AI 撰写文书</b>（2024 年为 25%），<b>68% 仍无正式书面政策</b>，27% 只允许用 AI 帮忙构思。规则不清时，代写的代价由学生承担。</p>
-        </div>
-      </article>
-    </div>
-
-    <div class="dq-side">
-      <div class="dq-panel">
-        <h4>中国学生的录取率，比整体低近一半</h4>
-        <div class="dq-bars">
-          <div class="dq-bar">
-            <div class="lab"><span class="who">牛津 · 全部申请者</span><b>16.7%</b></div>
-            <div class="track"><div class="fill" style="width:83.5%"></div></div>
-          </div>
-          <div class="dq-bar gap">
-            <div class="lab"><span class="who">牛津 · 中国大陆申请者</span><b>10.3%</b></div>
-            <div class="track"><div class="fill" style="width:51.5%"></div></div>
-            <span class="diff">低 6.4 个百分点</span>
-          </div>
-          <div class="dq-bar gap">
-            <div class="lab"><span class="who">牛津 · 中国大陆（三年平均）</span><b>9.3%</b></div>
-            <div class="track"><div class="fill" style="width:46.5%"></div></div>
-          </div>
-          <div class="dq-bar gap">
-            <div class="lab"><span class="who">牛津 · 数学（中国大陆）</span><b>8.6%</b></div>
-            <div class="track"><div class="fill" style="width:43%"></div></div>
-          </div>
-        </div>
-        <p class="dq-hint">同一所学校、同一批名额：整体 16.7%，中国大陆 10.3%。<b>这不是更难考，是同一张考卷上人更多、位置更少。</b>三年平均 9.3%；热门专业再低一档，数学只有 8.6%。</p>
       </div>
-
-      <div class="dq-panel tight">
-        <h4>所以结论只有一句</h4>
-        <p>名校录取不是一条“努力就能换来确定性”的路。真正能带走的，是<b>能当面讲清楚的判断力</b>——而不是一份漂亮的申请材料。</p>
+      <p data-edit>中国大陆是牛津最大的海外申请来源。同一套标准下，挤在这条赛道上的人最多，录取通知没有按人数同比例增加。所以整体 16.5%，中国学生只有 10.3%——不是「牛津歧视」，是中国学生之间的竞争更密。</p>
+      <p data-edit>剑桥口径更严：官方「成功率」= 最终入学人数 ÷ 申请人数。2025 轮次，中国 2,900 人申请、360 份通知、284 人入学，成功率 9.8%。海外申请里，中国占 34.9%，几乎每 3 个海外申请就有 1 个来自中国。</p>
+      <p data-edit>不要把牛津的「发出通知比例」和剑桥的「入学成功率」横着比。前者是发了通知，后者是真正报到。热门专业更窄：牛津数学 8.6%（454 人申请、39 份通知），生化 4.9%。</p>
+      <p class="so" data-edit>名额有限，申请池最密的那群人，通道最窄。</p>
+    </article>
+    <article class="afact">
+      <div class="idx" data-edit>事实 03 · 文书</div>
+      <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
+      <div class="anum"><span class="n" data-edit>30%</span><span class="u">明确禁止 AI 撰写文书</span></div>
+      <div class="cmp">
+        <div class="c">
+          <div class="lab">没有正式书面政策</div>
+          <div class="n">68%</div>
+          <div class="d">口径乱，不等于可以碰运气</div>
+        </div>
+        <div class="c">
+          <div class="lab">允许用 AI 帮忙想</div>
+          <div class="n">27%</div>
+          <div class="d">不允许代写交差</div>
+        </div>
       </div>
-    </div>
+      <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写的比例从 2024 年的 25% 升到 30%。</p>
+      <p data-edit>口径不统一，不等于可以碰运气。审核在变严，被判定代写的成本和不确定性都在加大。</p>
+      <p class="so" data-edit>作文写得顺不够。得能讲清楚是自己想的。</p>
+    </article>
   </div>
-
-  <p class="src">IIE Open Doors 2025（2024/25 学年）· UCAS 2026 终期数据 · University of Oxford Annual Admissions Statistical Report 2026（2025 入学周期）· Kaplan 2025 美国高校招生办调查。牛津各专业比例为“中国大陆申请者”口径，非全校比例。</p>
-  <img class="creature flock" src="assets/salon/creatures/flock.png" alt="">
+  <p class="auth-src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS 终期数据 · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
 </section>
+
+
 <!-- P4 行业用人 -->
 <section class="slide labor">
   <div class="data-head">
@@ -2000,7 +2157,7 @@
         <div class="lstat">
           <div class="pk-top">
             <span class="dico blue lg"><svg><use href="#i-clock"/></svg></span>
-            <div class="n">~30%</div>
+            <div class="n">30%</div>
           </div>
           <p>美国到 2030 年约三成工时可被自动化（含 genAI）。说的是任务。</p>
         </div>
@@ -2119,7 +2276,7 @@
       </div>
     </div>
   </div>
-<p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey Global Institute · Axios / Dario Amodei, 2025。以上是雇主预期，不是已经发生的裁员统计。</p>
+  <p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey Global Institute · Axios / Dario Amodei, 2025。以上是雇主预期，不是已经发生的裁员统计。</p>
   <p class="takeaway"><span class="lbl">一句话</span>工作总数还在增加。先被拿走的是重复劳动，和刚入行的白领岗位。别押某一个职业名字，要押孩子会不会换本事。</p>
   <img class="creature ants" src="assets/salon/creatures/ants.png" alt="">
 </section>
@@ -2133,54 +2290,44 @@
   <div class="pyr">
     <div class="pyr-row">
       <span class="band r">聊天助手</span>
-      <div class="pyr-tiles">
-        <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
-      </div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/claude.png" alt=""><div class="n">Claude</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/chatgpt.png" alt=""><div class="n">ChatGPT</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/gemini.png" alt=""><div class="n">Gemini</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/kimi.png" alt=""><div class="n">Kimi</div></div>
     </div>
     <div class="pyr-row">
       <span class="band l">写代码 / 做产品</span>
-      <div class="pyr-tiles">
-        <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
-      </div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/cursor.png" alt=""><div class="n">Cursor</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/claude-code.png" alt=""><div class="n">Claude Code</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/replit.png" alt=""><div class="n">Replit</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/lovable.png" alt=""><div class="n">Lovable</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/copilot.png" alt=""><div class="n">Copilot</div></div>
     </div>
     <div class="pyr-row">
       <span class="band r">做视频 / 做演示</span>
-      <div class="pyr-tiles">
-        <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
-      </div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/heygen.png" alt=""><div class="n">HeyGen</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/synthesia.png" alt=""><div class="n">Synthesia</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/descript.png" alt=""><div class="n">Descript</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/gamma.png" alt=""><div class="n">Gamma</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/kling.png" alt=""><div class="n">可灵 Kling</div></div>
     </div>
     <div class="pyr-row">
       <span class="band l">学习 / 办公</span>
-      <div class="pyr-tiles">
-        <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
-      </div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/notebooklm.png" alt=""><div class="n">NotebookLM</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/notion.png" alt=""><div class="n">Notion</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/grammarly.png" alt=""><div class="n">Grammarly</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/granola.png" alt=""><div class="n">Granola</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/perplexity.png" alt=""><div class="n">Perplexity</div></div>
     </div>
     <div class="pyr-row">
       <span class="band r">图像 / 声音 / 设计</span>
-      <div class="pyr-tiles">
-        <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
-        <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
-      </div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/elevenlabs.png" alt=""><div class="n">ElevenLabs</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/suno.png" alt=""><div class="n">Suno</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/midjourney.png" alt=""><div class="n">Midjourney</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/runway.png" alt=""><div class="n">Runway</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/figma.png" alt=""><div class="n">Figma</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/canva.png" alt=""><div class="n">Canva</div></div>
+      <div class="ptile"><img class="ico" src="assets/salon/icons/veo.png" alt=""><div class="n">Veo</div></div>
     </div>
     <div class="pyr-base">
       <div class="ptile"><img class="ico" src="assets/salon/icons/n8n.png" alt=""><div class="n">n8n</div></div>
@@ -2544,7 +2691,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v27';
+  const DRAFT_KEY='salon-ppt-draft-v28';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2566,7 +2713,8 @@
     '.school-panel h2','.school-panel .where','.school-panel .lab',
     '.school-panel p','.school-panel .school-src','.map-title','.map-hint',
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
-    '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p'
+    '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
+    '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd'
   ].join(',');
 
   function go(n){
@@ -2616,7 +2764,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v27"') || !raw.includes('atlas-slide') || !raw.includes('co-slide')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-map-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v28"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-slide') || !raw.includes('auth-slide') || !raw.includes('smeta')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
@@ -2712,7 +2860,7 @@
   });
   document.getElementById('deck').addEventListener('click',e=>{
     if(editing) return;
-    if(e.target.closest('a,button,[data-edit],.media-link,.case-card,.cases-grid')) return;
+    if(e.target.closest('a,button,[data-edit],.scard-media,.case-card,.cases-grid')) return;
     go(cur+1);
   });
 
