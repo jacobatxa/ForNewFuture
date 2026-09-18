@@ -1513,144 +1513,125 @@
     text-transform:uppercase;color:var(--ink-3);
   }
 
-  /* Iceberg · tools above, theory below */
+  /* Iceberg · real photo + icon tip + theory cloud */
   .slide.pyramid-slide{
     padding:0;
-    justify-content:stretch;
+    justify-content:flex-start;
     overflow:hidden;
     background:#070b14;
     color:#f4f0e6;
   }
   .slide.pyramid-slide .creature{display:none}
-  .berg-stage{
-    flex:1;min-height:0;
-    display:flex;flex-direction:column;
-    padding:2.6vh 2.3vw 7.2vh;
-    position:relative;
+  .slide.pyramid-slide > .berg-photo{
+    position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:50% 42%;
+    pointer-events:none;
   }
-  .berg-stage .data-head{margin:0 0 .7vh;position:relative;z-index:2}
+  .slide.pyramid-slide > .berg-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg,
+        rgba(7,11,20,.82) 0%,
+        rgba(7,11,20,.32) 14%,
+        rgba(7,11,20,.08) 28%,
+        rgba(4,18,32,.18) 42%,
+        rgba(3,16,28,.42) 52%,
+        rgba(2,10,18,.68) 100%);
+  }
+  .berg-stage{
+    flex:1;min-height:0;height:100%;
+    display:flex;flex-direction:column;
+    padding:2.4vh 2.2vw 7.2vh;
+    position:relative;z-index:2;
+  }
+  .berg-stage .data-head{margin:0 0 .55vh;flex:none}
   .berg-stage .data-head .kicker{
     color:#e8c547;letter-spacing:.18em;
     font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.45);
   }
   .berg-stage .data-head h2{
     font-size:clamp(22px, 3vmin, 38px);
     font-weight:600;letter-spacing:-.035em;line-height:1.18;
     color:#fff;max-width:22em;margin:0;
+    text-shadow:0 2px 16px rgba(0,0,0,.45);
   }
-  .berg-body{
+  .berg-scene{
     flex:1;min-height:0;
     position:relative;
-    display:flex;flex-direction:column;
   }
-  .berg-svg{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    pointer-events:none;z-index:0;
+  .berg-tip{
+    position:absolute;left:47%;top:5%;
+    transform:translateX(-50%);
+    width:720px;
+    display:flex;flex-wrap:wrap;justify-content:center;
+    gap:5px 6px;
+    z-index:3;
   }
-  .berg-air{
-    position:relative;z-index:1;
-    flex:0 0 auto;
-    display:flex;align-items:flex-end;justify-content:center;
-    padding:1.2vh 6vw .6vh;
+  .app{
+    width:46px;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
   }
-  .berg-peak{
-    width:min(100%, 920px);
-    display:flex;flex-direction:column;gap:.32vh;
+  .app img{
+    width:36px;height:36px;
+    border-radius:10px;object-fit:cover;background:#fff;
+    box-shadow:0 4px 14px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.18);
   }
-  .tstrip{
-    display:grid;
-    grid-template-columns:4.6em minmax(0,1fr);
-    column-gap:.4vw;
-    align-items:baseline;
+  .app b{
+    font-size:clamp(9px, 1.05vmin, 12px);
+    font-weight:650;color:#fff;letter-spacing:.01em;
+    text-shadow:0 1px 4px rgba(0,0,0,.75);
+    line-height:1.1;text-align:center;
   }
-  .tstrip b{
-    font-size:clamp(10px, 1.12vmin, 13px);
-    font-weight:700;
-    letter-spacing:.12em;
-    color:#e8c547;
-    white-space:nowrap;
-  }
-  .tstrip span{
-    font-size:clamp(11px, 1.28vmin, 16px);
-    font-weight:600;
-    color:#fff;
-    letter-spacing:.01em;
-    line-height:1.25;
-  }
-  .berg-water{
-    position:relative;z-index:2;
-    flex:none;
+  .berg-line{
+    position:absolute;left:0;right:0;top:40%;
     display:flex;align-items:center;gap:.8vw;
-    padding:.35vh 0 .45vh;
+    z-index:3;pointer-events:none;
   }
-  .berg-water i{
+  .berg-line i{
     flex:1;height:1px;
     background:linear-gradient(90deg, transparent, #e8c547, transparent);
     font-style:normal;
   }
-  .berg-water span{
+  .berg-line span{
     font-size:clamp(10px, 1.12vmin, 13px);
-    font-weight:700;
-    letter-spacing:.16em;
-    color:#e8c547;
+    font-weight:700;letter-spacing:.16em;color:#e8c547;
     white-space:nowrap;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
-  .berg-deep{
-    position:relative;z-index:1;
-    flex:1;min-height:0;
-    display:flex;flex-direction:column;
-    justify-content:space-evenly;
-    padding:1vh 1.2vw .2vh;
+  .berg-cloud{
+    position:absolute;left:13%;right:11%;top:43%;bottom:3%;
+    z-index:2;pointer-events:none;
+    clip-path:polygon(3% 0%, 97% 0%, 100% 20%, 96% 46%, 86% 72%, 70% 92%, 56% 100%, 40% 98%, 22% 80%, 8% 52%, 1% 24%, 0% 6%);
   }
-  .stratum{
-    display:grid;
-    grid-template-columns:6.2em minmax(0,1fr);
-    column-gap:.7vw;
-    align-items:start;
-    padding:.45vh 0;
-    border-bottom:1px solid rgba(232,197,71,.12);
+  .berg-cloud i{
+    position:absolute;transform:translate(-50%,-50%);
+    font-style:normal;white-space:nowrap;
+    text-shadow:0 1px 10px rgba(0,12,28,.75);
   }
-  .stratum:last-child{border-bottom:0}
-  .stratum b{
-    font-size:clamp(11px, 1.18vmin, 14px);
-    font-weight:700;
-    letter-spacing:.1em;
-    color:#e8c547;
-    padding-top:.15em;
+  .berg-cloud .lg{
+    font-size:clamp(13px, 1.55vmin, 19px);font-weight:700;color:#f4f0e6;
   }
-  .stratum .terms{
-    display:flex;flex-wrap:wrap;
-    gap:5px 11px;
-    align-items:baseline;
+  .berg-cloud .md{
+    font-size:clamp(11px, 1.28vmin, 15px);font-weight:650;color:#d6eef6;
   }
-  .stratum .terms i{
-    font-style:normal;
-    font-size:clamp(12px, 1.32vmin, 16px);
-    font-weight:550;
-    color:rgba(220,232,242,.78);
-    letter-spacing:.01em;
-    line-height:1.35;
+  .berg-cloud .sm{
+    font-size:clamp(10px, 1.08vmin, 13px);font-weight:550;color:rgba(196,226,236,.74);
   }
-  .stratum .terms i.lg{
-    font-size:clamp(13px, 1.5vmin, 18px);
-    font-weight:650;
-    color:#f4f0e6;
-  }
-  .stratum .terms i.fm{
+  .berg-cloud .fm{
     font-family:"SF Mono","Menlo","PingFang SC",monospace;
-    color:#f3e2a4;
-    font-size:clamp(11px, 1.22vmin, 15px);
-    font-weight:600;
+    font-size:clamp(10px, 1.08vmin, 13px);font-weight:600;color:#f3e2a4;
   }
   .slide.pyramid-slide .src{
-    flex-shrink:0;margin-top:.55vh;
+    flex-shrink:0;margin-top:.45vh;
     font-size:clamp(10px, 1.12vmin, 13px);
-    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+    color:rgba(244,240,230,.5);line-height:1.4;max-width:none;
+    text-shadow:0 1px 6px rgba(0,0,0,.45);
   }
   .slide.pyramid-slide .takeaway{
-    margin-top:.55vh;
-    background:rgba(232,197,71,.08);
+    margin-top:.5vh;
+    background:rgba(7,11,20,.55);
     border-left-color:#e8c547;
     color:#fff;
     border-radius:0;
@@ -2331,7 +2312,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v35">
+<div id="deck" data-rev="v37">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2917,80 +2898,239 @@
 
 <!-- P7 工具冰山 -->
 <section class="slide pyramid-slide">
+  <img class="berg-photo" src="assets/salon/iceberg-arctic.jpg" alt="">
+  <div class="berg-veil"></div>
   <div class="berg-stage">
     <div class="data-head">
       <div class="kicker" data-edit>02 · 冰山</div>
       <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
     </div>
-    <div class="berg-body">
-      <svg class="berg-svg" viewBox="0 0 1200 720" preserveAspectRatio="none" aria-hidden="true">
-        <defs>
-          <linearGradient id="ice-air" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#d7e7f4" stop-opacity=".28"/>
-            <stop offset="1" stop-color="#9fb8cc" stop-opacity=".10"/>
-          </linearGradient>
-          <linearGradient id="ice-deep" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#7ea0b8" stop-opacity=".16"/>
-            <stop offset="1" stop-color="#1a3a52" stop-opacity=".28"/>
-          </linearGradient>
-          <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#041018" stop-opacity=".0"/>
-            <stop offset=".08" stop-color="#0a2a44" stop-opacity=".55"/>
-            <stop offset="1" stop-color="#02080f" stop-opacity=".92"/>
-          </linearGradient>
-        </defs>
-        <path d="M430 18 L770 18 L980 268 L1188 720 L12 720 L220 268 Z" fill="url(#ice-air)" stroke="rgba(232,197,71,.22)" stroke-width="1.2"/>
-        <path d="M220 268 L980 268 L1188 720 L12 720 Z" fill="url(#ice-deep)"/>
-        <path d="M0 268 H1200 V720 H0 Z" fill="url(#sea)"/>
-        <path d="M220 268 L980 268" stroke="#e8c547" stroke-width="1.4" opacity=".85"/>
-        <path d="M430 18 L510 268 M770 18 L690 268 M500 18 L320 268 M700 18 L880 268" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-      </svg>
-      <div class="berg-air">
-        <div class="berg-peak">
-          <div class="tstrip"><b>聊天</b><span>Claude · ChatGPT · Gemini · Kimi</span></div>
-          <div class="tstrip"><b>写代码</b><span>Cursor · Claude Code · Replit · Lovable · Copilot · Codex</span></div>
-          <div class="tstrip"><b>做视频</b><span>HeyGen · Synthesia · Descript · Gamma · 可灵 · Runway · Veo</span></div>
-          <div class="tstrip"><b>学习办公</b><span>NotebookLM · Notion · Grammarly · Granola · Perplexity</span></div>
-          <div class="tstrip"><b>图像声音</b><span>Midjourney · ElevenLabs · Suno · Figma · Canva</span></div>
-          <div class="tstrip"><b>工作流</b><span>n8n · Zapier · Make · DeepSeek</span></div>
-        </div>
+    <div class="berg-scene">
+      <div class="berg-tip">
+          <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
+          <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
+          <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
+          <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
+          <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
+          <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
+          <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
+          <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
+          <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
+          <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
+          <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
+          <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
+          <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
+          <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
+          <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
+          <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
+          <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
+          <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
+          <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
+          <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
+          <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
+          <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
+          <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
+          <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
       </div>
-      <div class="berg-water"><i></i><span>海面 · 用户能直接点开的工具</span><i></i></div>
-      <div class="berg-deep">
-        <div class="stratum">
-          <b>学习算法</b>
-          <div class="terms">
-            <i class="lg">Transformer</i><i class="lg">Attention</i><i>Softmax</i><i>反向传播</i><i>梯度下降</i><i>Adam</i><i>RNN / LSTM</i><i>CNN</i><i>MoE</i><i>Diffusion</i><i>RLHF</i><i>PPO</i><i>DPO</i><i>LoRA</i>
-          </div>
-        </div>
-        <div class="stratum">
-          <b>核心公式</b>
-          <div class="terms">
-            <i class="fm">softmax(QKᵀ/√d)V</i><i class="fm">∇θ ℒ</i><i class="fm">H = −Σ p log p</i><i class="fm">DKL(p∥q)</i><i class="fm">P(y|x)</i><i class="fm">Bayes</i><i class="fm">链式法则</i><i class="fm">最大似然</i>
-          </div>
-        </div>
-        <div class="stratum">
-          <b>组成原理</b>
-          <div class="terms">
-            <i class="lg">指令集</i><i>ALU / 流水线</i><i>缓存层次</i><i>虚拟内存</i><i>操作系统</i><i>编译与链接</i><i>CUDA</i><i>SIMD</i><i>GPU 并行</i><i>存储与总线</i>
-          </div>
-        </div>
-        <div class="stratum">
-          <b>互联网</b>
-          <div class="terms">
-            <i class="lg">TCP/IP</i><i>DNS</i><i>HTTP / TLS</i><i>BGP</i><i>CDN</i><i>REST</i><i>分布式</i><i>一致性</i><i>Raft</i><i>CAP</i><i>MapReduce</i>
-          </div>
-        </div>
-        <div class="stratum">
-          <b>实验室与公司</b>
-          <div class="terms">
-            <i class="lg">OpenAI</i><i class="lg">Anthropic</i><i>Google DeepMind</i><i>Meta FAIR</i><i>NVIDIA</i><i>月之暗面</i><i>DeepSeek</i><i>智谱</i><i>Stanford</i><i>MIT</i><i>清华</i><i>CMU</i>
-          </div>
-        </div>
+      <div class="berg-line"><i></i><span>海面 · 能直接点开的工具</span><i></i></div>
+      <div class="berg-cloud">
+        <i class="lg" style="left:69.2%;top:49.1%">Transformer</i>
+        <i class="lg" style="left:52.5%;top:43.1%">Attention</i>
+        <i class="lg" style="left:61.0%;top:59.2%">反向传播</i>
+        <i class="lg" style="left:40.1%;top:69.8%">梯度下降</i>
+        <i class="lg" style="left:48.6%;top:68.4%">Diffusion</i>
+        <i class="lg" style="left:58.9%;top:67.1%">RLHF</i>
+        <i class="lg" style="left:67.8%;top:67.5%">MoE</i>
+        <i class="lg" style="left:76.6%;top:6.6%">CUDA</i>
+        <i class="lg" style="left:68.4%;top:61.0%">TCP/IP</i>
+        <i class="lg" style="left:48.4%;top:52.7%">指令集</i>
+        <i class="lg" style="left:56.0%;top:94.2%">操作系统</i>
+        <i class="lg" style="left:47.8%;top:90.3%">分布式</i>
+        <i class="lg" style="left:34.6%;top:40.5%">KV Cache</i>
+        <i class="lg" style="left:38.9%;top:56.3%">Embedding</i>
+        <i class="lg" style="left:61.6%;top:73.9%">FlashAttention</i>
+        <i class="md" style="left:56.8%;top:23.5%">Softmax</i>
+        <i class="md" style="left:60.5%;top:84.9%">Adam</i>
+        <i class="md" style="left:55.5%;top:83.2%">LSTM</i>
+        <i class="md" style="left:67.9%;top:43.6%">CNN</i>
+        <i class="md" style="left:60.4%;top:51.8%">PPO</i>
+        <i class="md" style="left:18.3%;top:18.4%">DPO</i>
+        <i class="md" style="left:53.5%;top:59.6%">LoRA</i>
+        <i class="md" style="left:35.6%;top:20.2%">GAN</i>
+        <i class="md" style="left:51.0%;top:48.6%">VAE</i>
+        <i class="md" style="left:47.0%;top:61.1%">LayerNorm</i>
+        <i class="md" style="left:53.0%;top:87.0%">RoPE</i>
+        <i class="md" style="left:43.0%;top:77.4%">GQA</i>
+        <i class="md" style="left:42.1%;top:65.0%">SIMD</i>
+        <i class="md" style="left:42.8%;top:73.7%">GPU并行</i>
+        <i class="md" style="left:25.7%;top:35.7%">虚拟内存</i>
+        <i class="md" style="left:66.5%;top:7.7%">编译链接</i>
+        <i class="md" style="left:59.6%;top:32.7%">HTTP/TLS</i>
+        <i class="md" style="left:47.3%;top:19.8%">Raft</i>
+        <i class="md" style="left:46.6%;top:78.8%">CAP</i>
+        <i class="md" style="left:38.7%;top:61.2%">B+树</i>
+        <i class="md" style="left:56.2%;top:52.9%">ACID</i>
+        <i class="md" style="left:56.7%;top:90.3%">MapReduce</i>
+        <i class="md" style="left:66.3%;top:53.0%">死锁</i>
+        <i class="md" style="left:33.3%;top:50.5%">Q-learning</i>
+        <i class="md" style="left:69.4%;top:32.1%">MCTS</i>
+        <i class="md" style="left:62.4%;top:25.2%">CLIP</i>
+        <i class="md" style="left:71.3%;top:52.7%">ViT</i>
+        <i class="md" style="left:55.2%;top:37.2%">U-Net</i>
+        <i class="md" style="left:44.4%;top:31.3%">BPE</i>
+        <i class="md" style="left:32.0%;top:34.6%">Residual</i>
+        <i class="md" style="left:70.3%;top:22.5%">Quantization</i>
+        <i class="md" style="left:27.2%;top:39.2%">蒸馏</i>
+        <i class="md" style="left:42.7%;top:50.8%">预训练</i>
+        <i class="md" style="left:57.1%;top:86.8%">微调</i>
+        <i class="md" style="left:67.7%;top:36.4%">共识算法</i>
+        <i class="md" style="left:48.4%;top:56.3%">负载均衡</i>
+        <i class="md" style="left:35.4%;top:59.9%">哈希</i>
+        <i class="md" style="left:42.8%;top:23.2%">动态规划</i>
+        <i class="md" style="left:71.1%;top:26.1%">复杂度</i>
+        <i class="md" style="left:27.2%;top:29.2%">垃圾回收</i>
+        <i class="md" style="left:63.5%;top:43.5%">中断</i>
+        <i class="md" style="left:28.5%;top:45.2%">内核</i>
+        <i class="md" style="left:50.2%;top:76.4%">流水线</i>
+        <i class="md" style="left:45.5%;top:84.8%">缓存层次</i>
+        <i class="md" style="left:47.9%;top:72.5%">寄存器</i>
+        <i class="md" style="left:51.3%;top:35.1%">分页</i>
+        <i class="md" style="left:48.8%;top:94.2%">并发</i>
+        <i class="md" style="left:64.2%;top:80.4%">事务</i>
+        <i class="md" style="left:79.7%;top:18.6%">索引</i>
+        <i class="md" style="left:25.9%;top:24.9%">Tokenization</i>
+        <i class="fm" style="left:50.3%;top:82.5%">∇θℒ</i>
+        <i class="fm" style="left:29.7%;top:9.3%">H=−Σplogp</i>
+        <i class="fm" style="left:36.4%;top:65.8%">DKL(p∥q)</i>
+        <i class="fm" style="left:74.5%;top:31.8%">P(y|x)</i>
+        <i class="sm" style="left:28.2%;top:20.1%">Bayes</i>
+        <i class="sm" style="left:43.0%;top:43.5%">链式法则</i>
+        <i class="sm" style="left:58.5%;top:79.9%">最大似然</i>
+        <i class="fm" style="left:43.2%;top:35.3%">softmax(QKᵀ/√d)V</i>
+        <i class="fm" style="left:38.9%;top:47.2%">W·x+b</i>
+        <i class="fm" style="left:47.9%;top:32.3%">σ(x)</i>
+        <i class="sm" style="left:54.3%;top:78.8%">ReLU</i>
+        <i class="sm" style="left:55.2%;top:68.8%">GELU</i>
+        <i class="fm" style="left:43.5%;top:81.2%">CE</i>
+        <i class="fm" style="left:61.6%;top:89.4%">MSE</i>
+        <i class="fm" style="left:76.6%;top:41.7%">L2</i>
+        <i class="sm" style="left:47.5%;top:49.0%">AdamW</i>
+        <i class="fm" style="left:66.0%;top:18.1%">ηₜ</i>
+        <i class="fm" style="left:57.9%;top:46.7%">β₁β₂</i>
+        <i class="sm" style="left:61.2%;top:93.3%">ALU</i>
+        <i class="sm" style="left:64.7%;top:70.3%">DNS</i>
+        <i class="sm" style="left:45.5%;top:65.0%">BGP</i>
+        <i class="sm" style="left:63.4%;top:54.8%">CDN</i>
+        <i class="sm" style="left:32.7%;top:47.6%">REST</i>
+        <i class="sm" style="left:74.5%;top:44.7%">NP-hard</i>
+        <i class="sm" style="left:53.3%;top:54.0%">AST</i>
+        <i class="sm" style="left:42.5%;top:17.2%">RAID</i>
+        <i class="sm" style="left:30.8%;top:12.0%">红黑树</i>
+        <i class="sm" style="left:66.2%;top:27.7%">图论</i>
+        <i class="sm" style="left:63.3%;top:65.4%">正则</i>
+        <i class="sm" style="left:47.6%;top:24.3%">幂等</i>
+        <i class="sm" style="left:51.4%;top:79.5%">调度</i>
+        <i class="sm" style="left:53.7%;top:63.9%">总线</i>
+        <i class="sm" style="left:76.9%;top:26.0%">段式</i>
+        <i class="sm" style="left:51.9%;top:19.9%">文件系统</i>
+        <i class="sm" style="left:34.5%;top:24.9%">消息队列</i>
+        <i class="sm" style="left:65.2%;top:77.4%">微服务</i>
+        <i class="sm" style="left:78.7%;top:34.3%">容器</i>
+        <i class="sm" style="left:50.1%;top:29.0%">虚拟机</i>
+        <i class="sm" style="left:73.3%;top:15.2%">Top-k</i>
+        <i class="sm" style="left:62.2%;top:39.3%">Temperature</i>
+        <i class="sm" style="left:68.4%;top:56.7%">Beam Search</i>
+        <i class="sm" style="left:58.9%;top:29.8%">Dropout</i>
+        <i class="sm" style="left:21.8%;top:19.4%">PosEnc</i>
+        <i class="sm" style="left:25.8%;top:13.3%">QKV</i>
+        <i class="sm" style="left:63.4%;top:11.0%">Multi-Head</i>
+        <i class="sm" style="left:23.4%;top:32.8%">SpecDecode</i>
+        <i class="sm" style="left:60.1%;top:43.6%">Noise</i>
+        <i class="sm" style="left:77.2%;top:37.6%">Latent</i>
+        <i class="sm" style="left:45.4%;top:38.8%">Contrastive</i>
+        <i class="sm" style="left:43.0%;top:27.6%">Reward Model</i>
+        <i class="sm" style="left:37.2%;top:31.4%">Policy Gradient</i>
+        <i class="sm" style="left:52.7%;top:72.4%">BLEU</i>
+        <i class="sm" style="left:49.7%;top:15.3%">Perplexity</i>
+        <i class="fm" style="left:38.1%;top:12.8%">1/√dₖ</i>
+        <i class="fm" style="left:38.9%;top:73.6%">KL</i>
+        <i class="sm" style="left:19.3%;top:8.0%">Tokenizer</i>
+        <i class="sm" style="left:47.6%;top:10.8%">Scheduler</i>
+        <i class="sm" style="left:61.7%;top:21.8%">交叉熵</i>
+        <i class="sm" style="left:48.0%;top:64.8%">似然</i>
+        <i class="sm" style="left:33.8%;top:44.4%">先验</i>
+        <i class="sm" style="left:49.7%;top:86.4%">后验</i>
+        <i class="sm" style="left:72.2%;top:40.8%">信息熵</i>
+        <i class="sm" style="left:57.6%;top:20.5%">互信息</i>
+        <i class="sm" style="left:51.1%;top:24.7%">正则化</i>
+        <i class="sm" style="left:74.8%;top:34.8%">过拟合</i>
+        <i class="sm" style="left:59.2%;top:55.4%">泛化</i>
+        <i class="sm" style="left:44.7%;top:46.4%">偏差方差</i>
+        <i class="sm" style="left:38.6%;top:44.2%">特征值</i>
+        <i class="sm" style="left:46.4%;top:42.5%">SVD</i>
+        <i class="sm" style="left:42.7%;top:20.3%">PCA</i>
+        <i class="sm" style="left:36.7%;top:27.6%">EM算法</i>
+        <i class="sm" style="left:55.9%;top:49.4%">SGD</i>
+        <i class="sm" style="left:54.4%;top:33.4%">动量</i>
+        <i class="sm" style="left:80.9%;top:27.8%">学习率</i>
+        <i class="sm" style="left:84.8%;top:13.7%">BatchNorm</i>
+        <i class="sm" style="left:34.1%;top:6.3%">RMSNorm</i>
+        <i class="sm" style="left:33.3%;top:16.3%">ALiBi</i>
+        <i class="sm" style="left:65.9%;top:31.3%">MQA</i>
+        <i class="sm" style="left:39.3%;top:51.2%">MLA</i>
+        <i class="sm" style="left:57.9%;top:63.4%">FP16</i>
+        <i class="sm" style="left:69.6%;top:18.9%">INT8</i>
+        <i class="sm" style="left:22.3%;top:29.1%">AWQ</i>
+        <i class="sm" style="left:57.1%;top:17.5%">GPTQ</i>
+        <i class="sm" style="left:55.4%;top:12.2%">NCCL</i>
+        <i class="sm" style="left:35.7%;top:62.9%">HBM</i>
+        <i class="sm" style="left:19.7%;top:23.7%">TPU</i>
+        <i class="sm" style="left:61.0%;top:70.4%">ISA</i>
+        <i class="sm" style="left:72.7%;top:9.3%">TLB</i>
+        <i class="sm" style="left:79.5%;top:31.1%">MESI</i>
+        <i class="sm" style="left:62.6%;top:35.7%">NUMA</i>
+        <i class="sm" style="left:76.4%;top:13.2%">DMA</i>
+        <i class="sm" style="left:22.5%;top:12.5%">PCIe</i>
+        <i class="sm" style="left:32.3%;top:28.5%">NVLink</i>
+        <i class="sm" style="left:32.1%;top:53.7%">Paxos</i>
+        <i class="sm" style="left:63.4%;top:86.5%">WAL</i>
+        <i class="sm" style="left:55.7%;top:6.3%">LSM</i>
+        <i class="sm" style="left:82.1%;top:24.7%">Bloom</i>
+        <i class="sm" style="left:58.5%;top:77.3%">跳表</i>
+        <i class="sm" style="left:76.6%;top:21.2%">Trie</i>
+        <i class="sm" style="left:74.4%;top:18.5%">Dijkstra</i>
+        <i class="sm" style="left:41.7%;top:62.0%">FFT</i>
+        <i class="sm" style="left:55.0%;top:28.1%">卷积</i>
+        <i class="sm" style="left:60.4%;top:16.3%">池化</i>
+        <i class="sm" style="left:84.8%;top:8.5%">感受野</i>
+        <i class="sm" style="left:81.2%;top:9.1%">残差块</i>
+        <i class="sm" style="left:65.0%;top:14.7%">注意力掩码</i>
+        <i class="sm" style="left:16.5%;top:13.4%">因果掩码</i>
+        <i class="sm" style="left:71.3%;top:12.0%">线性注意力</i>
+        <i class="sm" style="left:75.7%;top:28.9%">SSM</i>
+        <i class="sm" style="left:37.1%;top:16.3%">Mamba</i>
+        <i class="sm" style="left:62.3%;top:62.8%">词表</i>
+        <i class="sm" style="left:40.4%;top:39.9%">子词</i>
+        <i class="sm" style="left:51.3%;top:39.7%">语料</i>
+        <i class="sm" style="left:50.5%;top:65.1%">对齐</i>
+        <i class="sm" style="left:22.1%;top:15.6%">强化学习</i>
+        <i class="sm" style="left:51.5%;top:5.9%">价值函数</i>
+        <i class="sm" style="left:71.6%;top:29.1%">优势函数</i>
+        <i class="sm" style="left:26.8%;top:16.1%">马尔可夫</i>
+        <i class="sm" style="left:45.3%;top:7.6%">贝尔曼方程</i>
+        <i class="sm" style="left:24.9%;top:6.2%">策略梯度</i>
+        <i class="sm" style="left:83.6%;top:19.6%">人类反馈</i>
+        <i class="sm" style="left:82.9%;top:16.5%">涌现</i>
+        <i class="sm" style="left:17.9%;top:10.8%">缩放定律</i>
+        <i class="sm" style="left:79.8%;top:13.2%">FLOPs</i>
+        <i class="sm" style="left:61.7%;top:5.2%">参数量</i>
+        <i class="sm" style="left:36.8%;top:10.2%">上下文窗</i>
+        <i class="sm" style="left:58.2%;top:26.9%">幻觉</i>
+        <i class="sm" style="left:26.9%;top:42.1%">Chinchilla</i>
       </div>
     </div>
-    <p class="src">海面以上为 2026.9 仍可直接使用的产品。Manus 已不适合进课堂。课上会用到其中若干，不绑死某一个。</p>
-    <p class="takeaway"><span class="lbl">一句话</span>聊天窗口只是露出来的那一角。真正的变革在算法、公式、系统和公司里，还会更强烈。</p>
+    <p class="src">海面以上是 2026.9 仍能直接点开的产品，含国内常见应用。照片 Andreas Weith / Wikimedia Commons，CC BY-SA 4.0。Manus 已不适合进课堂。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
   </div>
 </section>
 
@@ -3383,7 +3523,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v35';
+  const DRAFT_KEY='salon-ppt-draft-v37';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3407,7 +3547,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.tstrip span','.fam h3','.fam .blurb','.memo h3','.mrow q','.mrow p'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.memo h3','.mrow q','.mrow p'
   ].join(',');
 
   function go(n){
@@ -3457,7 +3597,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v35"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v37"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
