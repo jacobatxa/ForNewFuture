@@ -400,30 +400,39 @@
     min-height:0;
     display:flex;
     flex-direction:column;
-    padding:.4vh 1.6vw 7.2vh;
+    padding:.5vh 1.6vw 7.2vh;
+  }
+  .theses-kicker{
+    flex:none;
+    color:#e8c547;
+    letter-spacing:.16em;
+    font-size:clamp(11px, 1.25vmin, 14px);
+    font-weight:700;
+    padding:.15vh 0 .45vh;
   }
   .thesis{
     flex:1;
     min-height:0;
     display:grid;
-    grid-template-columns:2.1em minmax(0,1fr);
-    column-gap:.65vw;
+    grid-template-columns:2.2em minmax(0,1fr);
+    column-gap:.7vw;
     align-items:start;
-    padding:.55vh 0 .45vh;
+    padding:.65vh 0 .5vh;
     border-top:1px solid rgba(232,197,71,.35);
   }
   .thesis .num{
     color:#e8c547;
-    font-size:clamp(11px, 1.22vmin, 14px);
+    font-size:clamp(14px, 1.55vmin, 18px);
     font-weight:700;
     letter-spacing:.08em;
     padding-top:.12em;
   }
   .thesis p{
     margin:0;
-    font-size:clamp(12px, 1.32vmin, 16px);
+    font-size:clamp(15px, 1.7vmin, 20px);
     line-height:1.42;
-    color:rgba(244,240,230,.86);
+    color:rgba(244,240,230,.92);
+    font-weight:500;
   }
   .schools-panel{
     min-width:0;min-height:0;
@@ -791,6 +800,56 @@
     border:1px solid rgba(232,197,71,.22);
     margin:0 5px 4px 0;
   }
+  .astra-hero .bg.catalog{
+    object-fit:cover;
+    object-position:48% 8%;
+    filter:saturate(1.02) contrast(1.04);
+  }
+  .cnd-list{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    gap:.7vh;
+  }
+  .cnd{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:minmax(88px, 7.4vw) minmax(0,1fr);
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    overflow:hidden;
+  }
+  .cnd img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .cnd > div{
+    min-width:0;min-height:0;
+    padding:.7vh .9vw .75vh;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .cnd .en{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;
+    letter-spacing:.12em;
+    color:#e8c547;
+    margin-bottom:.2vh;
+  }
+  .cnd h3{
+    font-size:clamp(14px, 1.65vmin, 20px);
+    font-weight:600;
+    letter-spacing:-.025em;
+    color:#fff;
+    margin:0 0 .25vh;
+    line-height:1.28;
+  }
+  .cnd p{
+    margin:0;
+    font-size:clamp(12px, 1.28vmin, 15px);
+    line-height:1.4;
+    color:rgba(244,240,230,.72);
+  }
   .astra-foot{
     flex-shrink:0;
     margin-top:1.1vh;
@@ -811,121 +870,127 @@
 
   /* Authoritative admissions layout */
   .slide.auth-slide{
-    padding:3.4vh 3.6vw 2.4vh;
-    justify-content:flex-start;
+    padding:0;
+    justify-content:stretch;
     overflow:hidden;
-    background:
-      linear-gradient(180deg, #f7f4ee 0%, #f3efe6 100%);
-    color:var(--navy);
+    background:#070b14;
+    color:#f4f0e6;
   }
   .slide.auth-slide .creature{display:none}
-  .auth-head{margin-bottom:1.35vh;flex-shrink:0}
+  .auth-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:3vh 2.4vw 7.6vh;
+  }
+  .auth-head{flex:none;margin:0 0 1.4vh}
   .auth-head .kicker{
-    color:#6b6458;
-    letter-spacing:.14em;
-    font-size:clamp(11px, 1.2vmin, 14px);
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);
     font-weight:700;
-    margin-bottom:.6vh;
+    margin:0 0 .55vh;
   }
   .auth-head h2{
-    font-size:clamp(22px, 3.2vmin, 44px);
+    font-size:clamp(22px, 3.05vmin, 40px);
     font-weight:600;
     letter-spacing:-.035em;
     line-height:1.18;
-    color:var(--navy);
-    max-width:18em;
+    color:#fff;
+    max-width:22em;
     margin:0;
   }
   .auth-facts{
     flex:1;min-height:0;
     display:grid;
-    grid-template-columns:1fr 1.22fr .96fr;
-    gap:.85vw;
+    grid-template-columns:1fr 1.12fr .96fr;
+    gap:.7vw;
   }
   .afact{
-    background:#fff;
-    border-radius:4px;
-    padding:1.5vh 1.15vw 1.3vh;
-    box-shadow:0 1px 0 rgba(11,31,58,.06);
-    border-top:3px solid var(--navy);
+    background:rgba(255,255,255,.05);
+    border-radius:0;
+    padding:1.5vh 1.15vw 1.4vh;
+    box-shadow:none;
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
     display:flex;flex-direction:column;min-width:0;min-height:0;
   }
   .afact .idx{
     font-size:clamp(10px, 1.12vmin, 13px);
     font-weight:700;
     letter-spacing:.16em;
-    color:#6b6458;
-    margin-bottom:.55vh;
+    color:#e8c547;
+    margin-bottom:.5vh;
   }
   .afact h3{
-    font-size:clamp(16px, 1.9vmin, 24px);
+    font-size:clamp(16px, 1.85vmin, 23px);
     font-weight:600;
     letter-spacing:-.03em;
-    color:var(--navy);
-    margin-bottom:.8vh;
+    color:#fff;
+    margin-bottom:.7vh;
     line-height:1.25;
   }
   .anum{
     display:flex;align-items:baseline;gap:.45em;
-    margin-bottom:.35vh;
+    margin-bottom:.45vh;
   }
   .anum .n{
-    font-size:clamp(28px, 4.2vmin, 56px);
+    font-size:clamp(32px, 4.6vmin, 58px);
     font-weight:600;
     letter-spacing:-.05em;
     font-variant-numeric:tabular-nums;
-    color:var(--navy);
+    color:#fff;
     line-height:.92;
   }
   .anum .u{
-    font-size:clamp(12px, 1.3vmin, 16px);
-    color:#6b6458;
+    font-size:clamp(12px, 1.28vmin, 16px);
+    color:rgba(244,240,230,.7);
     font-weight:600;
   }
-  .anum.neg .n{color:var(--burgundy)}
+  .anum.neg .n{color:#e8c547}
   .afact p{
-    font-size:clamp(12px, 1.35vmin, 17px);
-    line-height:1.45;
-    color:#2c3340;
-    margin:0 0 .55vh;
+    font-size:clamp(13px, 1.4vmin, 17px);
+    line-height:1.42;
+    color:rgba(244,240,230,.78);
+    margin:0 0 .45vh;
   }
   .afact .so{
     margin-top:auto;
-    padding-top:.7vh;
-    border-top:1px solid rgba(11,31,58,.12);
-    font-size:clamp(12px, 1.32vmin, 16px);
+    padding-top:.75vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    font-size:clamp(13px, 1.4vmin, 17px);
     line-height:1.4;
-    color:var(--navy);
+    color:#fff;
     font-weight:550;
   }
   .cmp{
-    display:grid;grid-template-columns:1fr 1fr;gap:.55vw;
-    margin:.5vh 0 .7vh;
+    display:grid;grid-template-columns:1fr 1fr;gap:.5vw;
+    margin:.45vh 0 .65vh;
   }
   .cmp .c{
-    background:var(--paper-warm);
-    border-radius:4px;
-    padding:.7vh .65vw .65vh;
+    background:rgba(0,0,0,.22);
+    border-radius:0;
+    padding:.65vh .55vw .6vh;
+    border-top:1px solid rgba(232,197,71,.4);
   }
   .cmp .lab{
-    font-size:clamp(10px, 1.12vmin, 13px);
-    font-weight:700;letter-spacing:.08em;color:#6b6458;
+    font-size:clamp(10px, 1.1vmin, 13px);
+    font-weight:700;letter-spacing:.08em;color:rgba(244,240,230,.55);
   }
   .cmp .n{
-    font-size:clamp(22px, 3vmin, 36px);
+    font-size:clamp(24px, 3.2vmin, 38px);
     font-weight:600;letter-spacing:-.04em;
     font-variant-numeric:tabular-nums;
-    color:var(--navy);line-height:1.05;margin:.15vh 0;
+    color:#fff;line-height:1.05;margin:.12vh 0;
   }
   .cmp .d{
-    font-size:clamp(11px, 1.2vmin, 14px);
-    color:#4a5160;line-height:1.35;
+    font-size:clamp(11px, 1.18vmin, 14px);
+    color:rgba(244,240,230,.62);line-height:1.35;
   }
   .auth-src{
     flex-shrink:0;
     margin-top:1vh;
-    font-size:clamp(10px, 1.15vmin, 13px);
-    color:#6b6458;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);
     letter-spacing:.02em;
     line-height:1.4;
   }
@@ -1074,93 +1139,89 @@
   .fact-strip p{font-size:var(--fs-src);color:var(--ink-2);margin-top:.15vh;line-height:1.25}
 
   .slide.labor{
-    padding:3.4vh 3.6vw 2.4vh;
-    justify-content:flex-start;
+    padding:0;
+    justify-content:stretch;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse 50% 40% at 0% 100%, rgba(196,138,42,.12), transparent 55%),
-      radial-gradient(ellipse 40% 30% at 100% 0%, rgba(232,93,76,.08), transparent 50%),
-      var(--bg);
+    background:#070b14;
+    color:#f4f0e6;
   }
-  .slide.labor .creature.ants{width:min(24vw,300px);opacity:.4;top:auto;bottom:6vh;right:-3vw}
-  .labor-main{
+  .slide.labor .creature{display:none}
+  .labor-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:2.8vh 2.4vw 7.4vh;
+  }
+  .labor-stage .data-head{margin:0 0 1.2vh}
+  .labor-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .5vh;
+  }
+  .labor-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .labor-track{flex:1;min-height:0;display:flex;flex-direction:column;gap:.65vh}
+  .lrow{
     flex:1;min-height:0;
     display:grid;
-    grid-template-columns:1.22fr .78fr;
-    gap:1.1vw;
+    grid-template-columns:2.3em minmax(0,.9fr) minmax(0,1.25fr);
+    column-gap:.7vw;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    padding:.7vh .8vw .7vh .55vw;
   }
-  .labor-left{display:flex;flex-direction:column;min-height:0}
-  .labor-stats{
-    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7vh .7vw;
+  .lrow .num{
+    color:#e8c547;font-size:clamp(13px, 1.45vmin, 16px);font-weight:700;
+    letter-spacing:.08em;padding-top:.35em;
   }
-  .lstat{
-    background:#fff;border-radius:16px;padding:1.2vh .9vw 1.25vh;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    display:flex;flex-direction:column;gap:.4vh;min-width:0;
+  .lrow .claim{min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .lrow .cap{
+    font-size:clamp(10px, 1.1vmin, 12px);font-weight:700;
+    letter-spacing:.14em;color:#e8c547;margin-bottom:.2vh;
   }
-  .lstat .pk-top{display:flex;align-items:center;gap:10px}
-  .lstat .n{font-size:var(--fs-num-sm);font-weight:650;letter-spacing:-.04em;color:var(--blue);line-height:1}
-  .lstat.up .n{color:var(--green)}
-  .lstat.down .n{color:var(--coral)}
-  .lstat.gold .n{color:var(--gold)}
-  .lstat p{font-size:var(--fs-src);color:var(--ink-2);line-height:1.35}
-  .mck-bar{
-    margin-top:.8vh;
-    background:#fff;border-radius:16px;padding:1.2vh 1vw 1.3vh;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+  .lrow h3{
+    font-size:clamp(15px, 1.75vmin, 22px);font-weight:600;
+    letter-spacing:-.025em;color:#fff;margin:0 0 .25vh;line-height:1.25;
   }
-  .mck-bar .pk-top{display:flex;align-items:center;gap:12px;margin-bottom:.7vh}
-  .mck-bar .n{font-size:var(--fs-num-sm);font-weight:650;letter-spacing:-.03em;line-height:1}
-  .mck-bar .k{font-size:var(--fs-micro);font-weight:700;color:var(--ink-3)}
-  .mck-split{display:flex;height:clamp(28px,3.4vmin,42px);border-radius:10px;overflow:hidden;font-size:var(--fs-src);font-weight:700;color:#fff}
+  .lrow .claim p{
+    margin:0;font-size:clamp(12px, 1.28vmin, 16px);
+    line-height:1.4;color:rgba(244,240,230,.74);
+  }
+  .lrow .proof{
+    min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.45vh;
+  }
+  .lnums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45vw}
+  .lnum{border-top:1px solid rgba(232,197,71,.4);padding-top:.35vh}
+  .lnum .n{
+    font-size:clamp(18px, 2.4vmin, 30px);font-weight:600;
+    letter-spacing:-.04em;color:#fff;font-variant-numeric:tabular-nums;line-height:1;
+  }
+  .lnum .u{margin-top:.15vh;font-size:clamp(10px, 1.12vmin, 13px);color:rgba(244,240,230,.62);line-height:1.3}
+  .lrow .jobs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5vw}
+  .jobs .j{border-top:1px solid rgba(232,197,71,.35);padding-top:.3vh}
+  .jobs h4{
+    font-size:clamp(10px, 1.1vmin, 12px);font-weight:700;letter-spacing:.08em;
+    margin:0 0 .25vh;color:#e8c547;
+  }
+  .jobs ul{list-style:none;margin:0;padding:0}
+  .jobs li{font-size:clamp(11px, 1.22vmin, 14px);color:rgba(244,240,230,.84);line-height:1.4}
+  .mck-split{display:flex;height:clamp(22px,2.6vmin,32px);overflow:hidden;font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;color:#fff;margin-top:.2vh}
   .mck-split span{display:flex;align-items:center;justify-content:center;padding:0 6px;white-space:nowrap}
-  .mck-split .agent{width:44%;background:#007AFF}
-  .mck-split .bot{width:13%;background:#FF9500}
-  .mck-split .rest{flex:1;background:#e8e8ed;color:var(--ink-2)}
-  .mck-note{font-size:var(--fs-src);color:var(--ink-3);margin-top:.55vh;line-height:1.35}
-  .job-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7vw;margin-top:.8vh;flex:1;min-height:0}
-  .job-col{
-    background:#fff;border-radius:16px;padding:1.2vh .85vw 1.15vh;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    display:flex;flex-direction:column;min-height:0;
+  .mck-split .agent{width:44%;background:#c9a227}
+  .mck-split .bot{width:13%;background:#8a6d1a}
+  .mck-split .rest{flex:1;background:rgba(255,255,255,.1);color:rgba(244,240,230,.7)}
+  .hire-row{display:flex;flex-wrap:wrap;gap:6px}
+  .hire-row span{
+    background:rgba(232,197,71,.12);border:1px solid rgba(232,197,71,.22);
+    color:#f3e2a4;padding:4px 9px;font-size:clamp(10px, 1.15vmin, 13px);font-weight:650;
   }
-  .job-col h4{font-size:var(--fs-micro);font-weight:700;letter-spacing:.04em;margin-bottom:.65vh;display:flex;align-items:center;gap:8px}
-  .job-col.up h4{color:#248A3D}
-  .job-col.down h4{color:#FF3B30}
-  .job-col.mid h4{color:#C93400}
-  .job-col ul{list-style:none;display:flex;flex-direction:column;gap:.45vh;flex:1;justify-content:space-evenly}
-  .job-col li{font-size:var(--fs-small);font-weight:550;line-height:1.25;display:flex;align-items:center;gap:8px}
-  .labor-side{
-    display:flex;flex-direction:column;gap:.7vh;min-height:0;
+  .labor-stage .src{
+    flex-shrink:0;margin-top:.85vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;
   }
-  .cn-grid{
-    display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
-    gap:.65vh .65vw;flex:1.15;min-height:0;
-  }
-  .cn-stat{
-    background:#fff;border-radius:16px;padding:1.1vh .85vw;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    display:flex;flex-direction:column;justify-content:center;gap:.35vh;
-    min-width:0;
-  }
-  .cn-stat .pk-top{display:flex;align-items:center;gap:8px}
-  .cn-stat .n{font-size:var(--fs-num-sm);font-weight:650;letter-spacing:-.04em;color:var(--blue);line-height:1}
-  .cn-stat p{font-size:var(--fs-src);color:var(--ink-2);line-height:1.3}
-  .skill-pill{
-    flex:1;background:#fff;border-radius:16px;padding:1.2vh 1.05vw;
-    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-    display:flex;align-items:flex-start;gap:12px;min-height:0;
-  }
-  .skill-pill .pill-txt{min-width:0}
-  .skill-pill .tag{font-size:var(--fs-micro);font-weight:700;color:var(--blue);letter-spacing:.04em;margin-bottom:.25vh}
-  .skill-pill h3{font-size:var(--fs-small);font-weight:650;letter-spacing:-.02em}
-  .skill-pill p{font-size:var(--fs-src);color:var(--ink-2);line-height:1.4;margin-top:.3vh}
-  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:.7vh}
-  .tag-row span{
-    background:var(--fill);border-radius:100px;padding:5px 10px;
-    font-size:var(--fs-micro);font-weight:650;color:var(--ink);
-  }
-  .labor .src{margin-top:.85vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.4}
 
   /* Capability body P5 */
   .slide.cap-slide{
@@ -1773,23 +1834,31 @@
   }
   #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
   body:has(.slide.schools.active) #pager,
-  body:has(.slide.astra-slide.active) #pager{
+  body:has(.slide.astra-slide.active) #pager,
+  body:has(.slide.auth-slide.active) #pager,
+  body:has(.slide.labor.active) #pager{
     color:rgba(244,240,230,.5);
   }
   body:has(.slide.schools.active) #pager button,
-  body:has(.slide.astra-slide.active) #pager button{
+  body:has(.slide.astra-slide.active) #pager button,
+  body:has(.slide.auth-slide.active) #pager button,
+  body:has(.slide.labor.active) #pager button{
     background:rgba(13,21,36,.78);
     border-color:rgba(232,197,71,.28);
     color:#f4f0e6;
   }
   body:has(.slide.schools.active) #pager button:hover,
-  body:has(.slide.astra-slide.active) #pager button:hover{
+  body:has(.slide.astra-slide.active) #pager button:hover,
+  body:has(.slide.auth-slide.active) #pager button:hover,
+  body:has(.slide.labor.active) #pager button:hover{
     background:#e8c547;
     color:#070b14;
     border-color:#e8c547;
   }
   body:has(.slide.schools.active) #progress,
-  body:has(.slide.astra-slide.active) #progress{
+  body:has(.slide.astra-slide.active) #progress,
+  body:has(.slide.auth-slide.active) #progress,
+  body:has(.slide.labor.active) #progress{
     background:#e8c547;
   }
   #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
@@ -1843,8 +1912,10 @@
     .slide.astra-slide{padding:0;overflow-y:auto}
     .data-grid{grid-template-columns:1.15fr .85fr;gap:.8vw}
     .path-kpis{grid-template-columns:repeat(3,1fr)}
-    .labor-main{grid-template-columns:1.15fr .85fr;gap:1vw}
-    .labor-stats{grid-template-columns:1fr 1fr 1fr}
+    .slide.labor,.slide.auth-slide,.slide.astra-slide{padding:0;overflow-y:auto}
+    .labor-track{gap:1vh}
+    .lrow{grid-template-columns:2.2em 1fr;grid-template-rows:auto auto}
+    .lrow .proof{grid-column:2}
     .job-cols{gap:.5vw}
     .fact-strip{grid-template-columns:repeat(3,1fr)}
     .takeaway{font-size:var(--fs-small);padding:.9vh 1vw}
@@ -1880,8 +1951,8 @@
     .photo-band{height:26vh}
     .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
     .creature,.neuron-side{display:none}
-    .path-kpis,.fact-strip,.labor-stats,.ox-chips,.kpi-stack,.cn-grid,.auth-facts,.astra-stage{grid-template-columns:1fr}
-    .data-grid,.labor-main{grid-template-columns:1fr}
+    .path-kpis,.fact-strip,.ox-chips,.kpi-stack,.auth-facts,.astra-stage{grid-template-columns:1fr}
+    .data-grid{grid-template-columns:1fr}
     .job-cols{grid-template-columns:1fr}
   }
   @media print{
@@ -1948,7 +2019,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v31">
+<div id="deck" data-rev="v32">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -1963,7 +2034,7 @@
       <li>
         <span class="num">01</span>
         <span class="txt">学校怎么上课，名校怎么选人
-          <span class="desc">六所实验校；Astra Nova 课表拆开看；中国学生通道在收窄。</span>
+          <span class="desc">六所实验校；Astra Nova 课表与真题；中国学生通道在收窄。</span>
         </span>
       </li>
       <li>
@@ -1993,12 +2064,12 @@
       <div class="schools-map-stage">
         <img src="assets/world-map.png?v=3" alt="世界地图">
         <div class="veil"></div>
-        <div class="mpin" style="left:22.50%;top:31.88%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
-        <div class="mpin" style="left:17.05%;top:31.05%;--pin:#e8c547" title="Ad Astra → Astra Nova"><span class="dot" style="background:#e8c547"></span></div>
-        <div class="mpin" style="left:49.95%;top:21.60%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
-        <div class="mpin" style="left:87.20%;top:31.20%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
-        <div class="mpin" style="left:29.35%;top:27.45%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
-        <div class="mpin" style="left:29.85%;top:28.05%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
+        <div class="mpin" style="left:22.40%;top:31.70%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
+        <div class="mpin" style="left:16.50%;top:32.30%;--pin:#e8c547" title="Ad Astra → Astra Nova"><span class="dot" style="background:#e8c547"></span></div>
+        <div class="mpin" style="left:52.30%;top:21.40%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
+        <div class="mpin" style="left:82.90%;top:31.00%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
+        <div class="mpin" style="left:25.90%;top:26.80%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
+        <div class="mpin" style="left:25.40%;top:27.50%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
       </div>
       <div class="map-legend">
         <div class="item"><i class="swatch" style="background:#FF3B30"></i>Alpha <span class="meta">奥斯汀</span></div>
@@ -2009,6 +2080,7 @@
         <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
       </div>
       <div class="theses">
+        <div class="theses-kicker" data-edit>核心共同点</div>
         <div class="thesis">
           <div class="num">01</div>
           <p data-edit>学校要把孩子从「解题的人」变成「解决问题的人」。学习由真实问题来驱动，而不是死板训练。</p>
@@ -2158,11 +2230,11 @@
       <div class="veil"></div>
       <div class="brand">
         <div class="kicker" data-edit>01 · ASTRA NOVA · SPACEX 渊源</div>
-        <h2 data-edit>九十门课，不是把大纲上完，是把问题摊开。</h2>
+        <h2 data-edit>九十门课，连着真实世界的问题。</h2>
       </div>
       <figure class="astra-inset">
         <img src="assets/salon/astra/conundrum-nasa.jpg" alt="NASA Conundrum">
-        <figcaption data-edit>Astra Nova 实题 · NASA Conundrum</figcaption>
+        <figcaption data-edit>Astra Nova · NASA Conundrum</figcaption>
       </figure>
       <div class="astra-kpis">
         <div class="ak"><div class="n" data-edit>90</div><div class="u">门课 / 每学期重做</div></div>
@@ -2172,80 +2244,102 @@
       </div>
     </aside>
     <div class="astra-panel">
-      <p class="lede" data-edit>课表不是五堆选修。先站住不能造假的底盘，再练判断，再把世界当现场，最后把东西交出去。动手贯穿全程——不是另开一门「人工智能」。</p>
+      <p class="lede" data-edit>课表每学期重做。家长先看三件事：是不是连着真实世界的问题，文明和科技是不是一起学，孩子能不能把想法讲清楚、讲有条理。</p>
       <div class="track">
         <article class="tstep">
           <div class="num">01</div>
           <div class="body">
-            <div class="cap" data-edit>底盘 · 万物机理</div>
-            <h3 data-edit>先问世界怎么转</h3>
-            <p data-edit>数学每周 3–4 小时、要分班。定量底盘装不了假。其余课每周 1–2 小时直播讨论或做项目。</p>
+            <div class="cap" data-edit>真实世界</div>
+            <h3 data-edit>链接真实世界的问题</h3>
+            <p data-edit>课名先是潮汐池、登月、经济学游戏，不是「地理第一章」。同学来自约 45 个国家。对中国家庭，不少课会落在凌晨，这是全球直播班的代价。</p>
             <div class="chips">
-              <span class="chip">代数 → 微积分</span>
-              <span class="chip">牛顿力学</span>
-              <span class="chip">C 语言工程</span>
-              <span class="chip">F1 设计</span>
+              <span class="chip">Adventuring into Tide Pools</span>
+              <span class="chip">Walking on the Moon</span>
+              <span class="chip">Practical Economics</span>
+              <span class="chip">Model United Nations</span>
             </div>
           </div>
         </article>
         <article class="tstep">
           <div class="num">02</div>
           <div class="body">
-            <div class="cap" data-edit>判断 · 思想构建</div>
-            <h3 data-edit>伦理课紧挨工程课</h3>
-            <p data-edit>会造、不会判断，是 AI 时代最贵的缺陷。申请交 30 秒–2 分钟没有标准答案的短视频，听怎么想。</p>
+            <div class="cap" data-edit>文明与科技</div>
+            <h3 data-edit>文明史和硬科学放在同一张课表</h3>
+            <p data-edit>数学要分班，每周 3–4 小时；其余课每周 1–2 小时。罗马帝国、第二次世界大战，和微积分、牛顿力学、AI 技术史排在一起。不是只学工具，也不只背人文。</p>
             <div class="chips">
-              <span class="chip">更好的决策</span>
-              <span class="chip">悖论与思想实验</span>
-              <span class="chip">生物伦理</span>
-              <span class="chip">数据会说谎</span>
+              <span class="chip">Algebra → Calculus</span>
+              <span class="chip">Classical (Newtonian) Mechanics</span>
+              <span class="chip">Technical History of AI</span>
+              <span class="chip">Imperial Rome</span>
+              <span class="chip">The Second World War</span>
             </div>
           </div>
         </article>
         <article class="tstep">
           <div class="num">03</div>
           <div class="body">
-            <div class="cap" data-edit>现场 · 世界探索</div>
-            <h3 data-edit>课名先是潮汐池，不是地理第一章</h3>
-            <p data-edit>先撞上世界，再碰到学科。同学来自约 45 个国家——现场比课文大。对中国家庭，不少课会落在凌晨，这是全球直播班的代价。</p>
+            <div class="cap" data-edit>表达与逻辑</div>
+            <h3 data-edit>注重表达与逻辑</h3>
+            <p data-edit>申请要交 30 秒到 2 分钟、没有标准答案的短视频，听怎么想。课上练决策、悖论、生物伦理、数据会不会骗人。先能讲清楚，再谈做出来。</p>
             <div class="chips">
-              <span class="chip">潮汐池 / 海洋</span>
-              <span class="chip">罗马帝国 / 二战</span>
-              <span class="chip">世界地理</span>
-              <span class="chip">模拟联合国</span>
-            </div>
-          </div>
-        </article>
-        <article class="tstep">
-          <div class="num">04</div>
-          <div class="body">
-            <div class="cap" data-edit>交付 · 商业思维</div>
-            <h3 data-edit>价值要交得出去</h3>
-            <p data-edit>经济学、广告、社会创业，毕业轨道还有企业协作驻场。练的是把东西讲清楚、交出去。</p>
-            <div class="chips">
-              <span class="chip">实用经济学</span>
-              <span class="chip">社会创业</span>
-              <span class="chip">广告</span>
-              <span class="chip">企业协作</span>
-            </div>
-          </div>
-        </article>
-        <article class="tstep">
-          <div class="num">05</div>
-          <div class="body">
-            <div class="cap" data-edit>动手 · AI Native</div>
-            <h3 data-edit>做出来，不是上「人工智能课」</h3>
-            <p data-edit>有一门 AI 技术史，但更多是编程、做 App、拍电影、写歌。工具会换，要会开工。</p>
-            <div class="chips">
-              <span class="chip">AI 技术史</span>
-              <span class="chip">Python / C# / Lua</span>
-              <span class="chip">网页与 App</span>
-              <span class="chip">软件工程强化</span>
+              <span class="chip">Better Decision-Making</span>
+              <span class="chip">Paradoxes & Thought Experiments</span>
+              <span class="chip">BioEthics II</span>
+              <span class="chip">Lies, Damned Lies, and Data Science</span>
             </div>
           </div>
         </article>
       </div>
-      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>Astra Nova 用九十门课把判断铺开。我们没有九十门，脊柱相同：真问题、站队、当面讲清、对结果负责。</span></p>
+      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>我们没有九十门。要学的是同一根脊柱：真问题、文明与科技、能把想法讲清楚。</span></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- P3b 课表原页 + Conundrum -->
+<section class="slide astra-slide astra-lab">
+  <div class="astra-stage">
+    <aside class="astra-hero">
+      <img class="bg catalog" src="assets/salon/astra/preview-catalog.png" alt="Astra Nova Fall 2026 课表网站">
+      <div class="veil"></div>
+      <div class="brand">
+        <div class="kicker" data-edit>01 · ASTRA NOVA · 课表原页</div>
+        <h2 data-edit>这是现在的课表网站，不是宣传海报。</h2>
+      </div>
+      <div class="astra-kpis">
+        <div class="ak"><div class="n" data-edit>Fall 2026</div><div class="u">my.astranova.org/preview</div></div>
+        <div class="ak"><div class="n" data-edit>直播小班</div><div class="u">时间多为中国凌晨</div></div>
+      </div>
+    </aside>
+    <div class="astra-panel">
+      <p class="lede" data-edit>Conundrum 是学校自己出的开放题：没有标准答案，要你站队，并讲清为什么。下面三道是最常被提起的。</p>
+      <div class="cnd-list">
+        <article class="cnd">
+          <img src="assets/salon/astra/chocolate.jpg" alt="Chocolate Conundrum">
+          <div>
+            <div class="en">Chocolate Conundrum</div>
+            <h3 data-edit>员工找到了公司巧克力的秘密配方。自己开店，能不能用？</h3>
+            <p data-edit>一边是原公司的商业秘密，一边是发明人自己的劳动。选 Team Astra Sweets 或 Team Nova Sweets，并说出理由。</p>
+          </div>
+        </article>
+        <article class="cnd">
+          <img src="assets/salon/astra/conundrum-nasa.jpg" alt="NASA Conundrum">
+          <div>
+            <div class="en">NASA Conundrum</div>
+            <h3 data-edit>航天局有七个项目，钱只够做三个。你砍掉哪四个？</h3>
+            <p data-edit>载人上火星、机器人探未知、太空旅游、挡小行星、望远镜、研究地球、科学教育进课堂。选三个，等于公开你的优先级。</p>
+          </div>
+        </article>
+        <article class="cnd">
+          <img src="assets/salon/astra/moonshot.jpg" alt="Moonshot Conundrum">
+          <div>
+            <div class="en">Moonshot Conundrum</div>
+            <h3 data-edit>一个国家想集中花钱，把生活变好。钱该优先给谁？</h3>
+            <p data-edit>探索、教育、环境、把人连起来的基础设施，还是能改变世界的新想法。没有标准配比，要能讲清取舍。</p>
+          </div>
+        </article>
+      </div>
+      <p class="astra-foot"><span class="lbl">申请</span><span data-edit>学生任选一道 Conundrum，交 30 秒到 2 分钟视频或音频。听的是推理过程，不是背到了哪一个「正确」选项。</span></p>
     </div>
   </div>
 </section>
@@ -2253,220 +2347,158 @@
 
 <!-- P4 名校选拔数据 -->
 <section class="slide auth-slide">
-  <div class="auth-head">
-    <div class="kicker" data-edit>01 · 名校选拔</div>
-    <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
+  <div class="auth-stage">
+    <div class="auth-head">
+      <div class="kicker" data-edit>01 · 名校选拔</div>
+      <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
+    </div>
+    <div class="auth-facts">
+      <article class="afact">
+        <div class="idx" data-edit>事实 01 · 通道</div>
+        <div class="anum neg"><span class="n" data-edit>−10.2%</span><span class="u">美国 · 中国本科</span></div>
+        <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
+        <p data-edit>2024/25 学年，中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。</p>
+        <p data-edit>同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。</p>
+        <p data-edit>英国：UCAS 2026 中国本科申请上升 12.2%，到 3.8 万人；学生签证签发下降 14.7%。申请的人还在挤，门没有变宽。</p>
+        <p class="so" data-edit>对中国学生来说，招生比例在持续收窄。</p>
+      </article>
+      <article class="afact">
+        <div class="idx" data-edit>事实 02 · 读数</div>
+        <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
+        <div class="cmp">
+          <div class="c">
+            <div class="lab">牛津 · 整体录取通知比例</div>
+            <div class="n">16.5%</div>
+            <div class="d">3,853 份通知 / 23,291 份申请</div>
+          </div>
+          <div class="c">
+            <div class="lab">牛津 · 中国大陆</div>
+            <div class="n">10.3%</div>
+            <div class="d">218 份通知 / 2,111 份申请</div>
+          </div>
+        </div>
+        <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是「牛津歧视」，是中国学生之间的竞争更密。</p>
+        <p data-edit>剑桥口径更严：成功率 = 入学人数 ÷ 申请人数。2025 轮次中国 2,900 人申请、284 人入学，成功率 9.8%。海外申请里中国占 34.9%。</p>
+        <p class="so" data-edit>名额有限，申请池最密的那群人，通道最窄。</p>
+      </article>
+      <article class="afact">
+        <div class="idx" data-edit>事实 03 · 文书</div>
+        <div class="anum"><span class="n" data-edit>30%</span><span class="u">明确禁止 AI 撰写文书</span></div>
+        <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
+        <div class="cmp">
+          <div class="c">
+            <div class="lab">没有正式书面政策</div>
+            <div class="n">68%</div>
+            <div class="d">口径乱，不等于可以碰运气</div>
+          </div>
+          <div class="c">
+            <div class="lab">允许用 AI 帮忙想</div>
+            <div class="n">27%</div>
+            <div class="d">不允许代写交差</div>
+          </div>
+        </div>
+        <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写从 2024 年的 25% 升到 30%。</p>
+        <p class="so" data-edit>作文写得顺不够。得能讲清楚是自己想的。</p>
+      </article>
+    </div>
+    <p class="auth-src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
   </div>
-  <div class="auth-facts">
-    <article class="afact">
-      <div class="idx" data-edit>事实 01 · 通道</div>
-      <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
-      <div class="anum neg"><span class="n" data-edit>−10.2%</span><span class="u">美国 · 中国本科</span></div>
-      <p data-edit>2024/25 学年，中国在美留学生 265,919 人，连续下降 4.1%。其中本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。</p>
-      <p data-edit>同一年，美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。</p>
-      <p data-edit>英国方向：UCAS 2026 中国本科申请上升 12.2%，到 3.8 万人；学生签证签发下降 14.7%。申请的人还在挤，门没有变宽。</p>
-      <p class="so" data-edit>对中国学生来说，招生比例在持续收窄。</p>
-    </article>
-    <article class="afact">
-      <div class="idx" data-edit>事实 02 · 读数</div>
-      <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
-      <div class="cmp">
-        <div class="c">
-          <div class="lab">牛津 · 整体录取通知比例</div>
-          <div class="n">16.5%</div>
-          <div class="d">3,853 份录取通知 / 23,291 份申请</div>
-        </div>
-        <div class="c">
-          <div class="lab">牛津 · 中国大陆</div>
-          <div class="n">10.3%</div>
-          <div class="d">218 份录取通知 / 2,111 份申请</div>
-        </div>
-      </div>
-      <p data-edit>中国大陆是牛津最大的海外申请来源。同一套标准下，挤在这条赛道上的人最多，录取通知没有按人数同比例增加。所以整体 16.5%，中国学生只有 10.3%——不是「牛津歧视」，是中国学生之间的竞争更密。</p>
-      <p data-edit>剑桥口径更严：官方「成功率」= 最终入学人数 ÷ 申请人数。2025 轮次，中国 2,900 人申请、360 份通知、284 人入学，成功率 9.8%。海外申请里，中国占 34.9%，几乎每 3 个海外申请就有 1 个来自中国。</p>
-      <p data-edit>不要把牛津的「发出通知比例」和剑桥的「入学成功率」横着比。前者是发了通知，后者是真正报到。热门专业更窄：牛津数学 8.6%（454 人申请、39 份通知），生化 4.9%。</p>
-      <p class="so" data-edit>名额有限，申请池最密的那群人，通道最窄。</p>
-    </article>
-    <article class="afact">
-      <div class="idx" data-edit>事实 03 · 文书</div>
-      <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
-      <div class="anum"><span class="n" data-edit>30%</span><span class="u">明确禁止 AI 撰写文书</span></div>
-      <div class="cmp">
-        <div class="c">
-          <div class="lab">没有正式书面政策</div>
-          <div class="n">68%</div>
-          <div class="d">口径乱，不等于可以碰运气</div>
-        </div>
-        <div class="c">
-          <div class="lab">允许用 AI 帮忙想</div>
-          <div class="n">27%</div>
-          <div class="d">不允许代写交差</div>
-        </div>
-      </div>
-      <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写的比例从 2024 年的 25% 升到 30%。</p>
-      <p data-edit>口径不统一，不等于可以碰运气。审核在变严，被判定代写的成本和不确定性都在加大。</p>
-      <p class="so" data-edit>作文写得顺不够。得能讲清楚是自己想的。</p>
-    </article>
-  </div>
-  <p class="auth-src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS 终期数据 · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
 </section>
 
 
-<!-- P4 行业用人 -->
+<!-- P5 行业用人 -->
 <section class="slide labor">
-  <div class="data-head">
-    <div class="kicker">02 · 行业用人</div>
-    <h2>工作总数还在增加。<br>先被拿走的是入门岗。</h2>
-  </div>
-  <div class="labor-main">
-    <div class="labor-left">
-      <div class="labor-stats">
-        <div class="lstat up">
-          <div class="pk-top">
-            <span class="dico green lg"><svg><use href="#i-up"/></svg></span>
-            <div class="n">+7800万</div>
-          </div>
-          <p>2025–2030 全球就业净增（雇主预期）。创造约 1.7 亿，替代约 9200 万。</p>
-        </div>
-        <div class="lstat">
-          <div class="pk-top">
-            <span class="dico violet lg"><svg><use href="#i-refresh"/></svg></span>
-            <div class="n">39–40%</div>
-          </div>
-          <p>到 2030 年，干活要用的核心技能会换掉将近四成。最大推手是数字和 AI。</p>
-        </div>
-        <div class="lstat gold">
-          <div class="pk-top">
-            <span class="dico gold lg"><svg><use href="#i-users"/></svg></span>
-            <div class="n">59 / 100</div>
-          </div>
-          <p>59 人需再培训；约 11 人可能培训不到（对应超 1.2 亿人）。</p>
-        </div>
-        <div class="lstat">
-          <div class="pk-top">
-            <span class="dico blue lg"><svg><use href="#i-clock"/></svg></span>
-            <div class="n">30%</div>
-          </div>
-          <p>美国到 2030 年约三成工时可被自动化（含 genAI）。说的是任务。</p>
-        </div>
-        <div class="lstat down">
-          <div class="pk-top">
-            <span class="dico red lg"><svg><use href="#i-down"/></svg></span>
-            <div class="n">−9200万</div>
-          </div>
-          <p>被替代的岗位（雇主预期）。同时新岗位约 +1.7 亿。</p>
-        </div>
-        <div class="lstat gold">
-          <div class="pk-top">
-            <span class="dico orange lg"><svg><use href="#i-split"/></svg></span>
-            <div class="n">22%</div>
-          </div>
-          <p>现有正式工作会被结构性改写，不是整行业消失。</p>
-        </div>
-      </div>
-      <div class="mck-bar">
-        <div class="pk-top">
-          <span class="dico orange lg"><svg><use href="#i-robot"/></svg></span>
-          <div>
-            <div class="k">McKinsey · 美国工时理论潜力</div>
-            <div class="n">57% = Agent 44% + 机器人 13%</div>
-          </div>
-        </div>
-        <div class="mck-split" aria-label="自动化潜力拆分">
-          <span class="agent">Agent 44%</span>
-          <span class="bot">机器人 13%</span>
-          <span class="rest">其余任务</span>
-        </div>
-        <p class="mck-note">含 genAI 后约 30% 工时到 2030 可被自动化；57% 是理论上限。任务层，不是岗位立刻消失。</p>
-      </div>
-      <div class="job-cols">
-        <div class="job-col up">
-          <h4><span class="dico sm green"><svg><use href="#i-up"/></svg></span>增长更快（%）</h4>
-          <ul>
-            <li><span class="dico sm green"><svg><use href="#i-db"/></svg></span>大数据专家</li>
-            <li><span class="dico sm green"><svg><use href="#i-coin"/></svg></span>金融科技工程</li>
-            <li><span class="dico sm green"><svg><use href="#i-brain"/></svg></span>AI / 机器学习</li>
-            <li><span class="dico sm green"><svg><use href="#i-code"/></svg></span>软件与应用开发</li>
-          </ul>
-        </div>
-        <div class="job-col down">
-          <h4><span class="dico sm red"><svg><use href="#i-down"/></svg></span>承压更快</h4>
-          <ul>
-            <li><span class="dico sm red"><svg><use href="#i-cash"/></svg></span>收银 / 票务</li>
-            <li><span class="dico sm red"><svg><use href="#i-desk"/></svg></span>行政秘书</li>
-            <li><span class="dico sm red"><svg><use href="#i-bank"/></svg></span>银行柜员</li>
-            <li><span class="dico sm red"><svg><use href="#i-keys"/></svg></span>数据录入</li>
-          </ul>
-        </div>
-        <div class="job-col mid">
-          <h4><span class="dico sm orange"><svg><use href="#i-trend"/></svg></span>绝对量大</h4>
-          <ul>
-            <li><span class="dico sm orange"><svg><use href="#i-farm"/></svg></span>农场工人</li>
-            <li><span class="dico sm orange"><svg><use href="#i-truck"/></svg></span>配送司机</li>
-            <li><span class="dico sm orange"><svg><use href="#i-hardhat"/></svg></span>建筑工人</li>
-            <li><span class="dico sm orange"><svg><use href="#i-cart"/></svg></span>销售 / 食品加工</li>
-          </ul>
-        </div>
-      </div>
+  <div class="labor-stage">
+    <div class="data-head">
+      <div class="kicker">02 · 行业用人</div>
+      <h2>岗位看起来变多了。真正变的是技能、对手，以及谁在改规则。</h2>
     </div>
-    <div class="labor-side">
-      <div class="cn-grid">
-        <div class="cn-stat">
-          <div class="pk-top">
-            <span class="dico red"><svg><use href="#i-star"/></svg></span>
-            <div class="n">&gt;90%</div>
-          </div>
-          <p>中国组织视 AI 与机器人为关键技术（高于全球）。</p>
+    <div class="labor-track">
+      <article class="lrow">
+        <div class="num">01</div>
+        <div class="claim">
+          <div class="cap">再培训</div>
+          <h3>岗位变多，不等于现在这样培养还能直接上岗</h3>
+          <p>雇主预期 2025–2030 全球就业净增约 7800 万：新岗位约 1.7 亿，被替代约 9200 万。技能会换掉将近四成，100 个在职者里约 59 人要再培训。</p>
         </div>
-        <div class="cn-stat">
-          <div class="pk-top">
-            <span class="dico gold"><svg><use href="#i-gap"/></svg></span>
-            <div class="n">50%</div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">+7800万</div><div class="u">净增（创造 1.7 亿 − 替代 9200 万）</div></div>
+            <div class="lnum"><div class="n">39–40%</div><div class="u">到 2030 年核心技能会换掉将近四成</div></div>
+            <div class="lnum"><div class="n">59 / 100</div><div class="u">需要再培训；约 11 人可能培训不到</div></div>
           </div>
-          <p>视技能缺口为障碍（全球 63%）。再培训投入更高。</p>
-        </div>
-        <div class="cn-stat">
-          <div class="pk-top">
-            <span class="dico violet"><svg><use href="#i-brain"/></svg></span>
-            <div class="n">&gt;82%</div>
-          </div>
-          <p>中国 AI/ML 专家净增高于全球（全球约 82%）。</p>
-        </div>
-        <div class="cn-stat">
-          <div class="pk-top">
-            <span class="dico teal"><svg><use href="#i-db"/></svg></span>
-            <div class="n">46%</div>
-          </div>
-          <p>中国数据分析与科学家净增（全球约 41%）。</p>
-        </div>
-      </div>
-      <div class="skill-pill">
-        <span class="dico blue lg"><svg><use href="#i-target"/></svg></span>
-        <div class="pill-txt">
-          <div class="tag">雇主要什么</div>
-          <h3>会分析、扛得住、对人负责</h3>
-          <p>分析思维、韧性、领导与社会影响、AI 与大数据、网络安全、技术素养、创造性、终身学习。</p>
-          <div class="tag-row">
-            <span>分析思维</span><span>韧性</span><span>领导力</span><span>AI / 数据</span><span>安全</span><span>终身学习</span>
-          </div>
-        </div>
-      </div>
-      <div class="skill-pill">
-        <span class="dico orange lg"><svg><use href="#i-doc"/></svg></span>
-        <div class="pill-txt">
-          <div class="tag">判断，不是统计</div>
-          <h3>入门白领可能先被压</h3>
-          <p>Anthropic CEO Dario Amodei 的看法（不是论文）：1–5 年内，法律、金融、咨询里看文件的入门岗可能先承压。</p>
-          <div class="tag-row">
-            <span>法律文书</span><span>金融审核</span><span>咨询调研</span><span>1–5 年</span>
+          <div class="jobs">
+            <div class="j">
+              <h4>增速最快</h4>
+              <ul>
+                <li>大数据专家</li>
+                <li>金融科技工程</li>
+                <li>AI / 机器学习</li>
+                <li>软件与应用开发</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>下降最快（承压）</h4>
+              <ul>
+                <li>收银 / 票务</li>
+                <li>行政秘书</li>
+                <li>银行柜员</li>
+                <li>数据录入</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>净增人数最多</h4>
+              <ul>
+                <li>农场工人</li>
+                <li>配送司机</li>
+                <li>建筑工人</li>
+                <li>销售 / 食品加工</li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      </article>
+      <article class="lrow">
+        <div class="num">02</div>
+        <div class="claim">
+          <div class="cap">对手变了</div>
+          <h3>竞争不只是人和人，而是人和 Agents</h3>
+          <p>麦肯锡把美国的工作拆成工时来算：理论上最多约 57% 的工时能被自动化——约 44 个百分点是软件 Agent，约 13 个百分点是机器人。这不是说明天一半岗位消失，而是说大量任务会被改写。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">57%</div><div class="u">美国工时理论上限（麦肯锡）</div></div>
+            <div class="lnum"><div class="n">30%</div><div class="u">到 2030 年约三成工时可能被自动化</div></div>
+            <div class="lnum"><div class="n">1–5 年</div><div class="u">入门白领可能先承压（Amodei 个人判断）</div></div>
+          </div>
+          <div class="mck-split" aria-label="自动化潜力拆分">
+            <span class="agent">Agent 44%</span>
+            <span class="bot">机器人 13%</span>
+            <span class="rest">其余任务</span>
+          </div>
+        </div>
+      </article>
+      <article class="lrow">
+        <div class="num">03</div>
+        <div class="claim">
+          <div class="cap">谁在改规则</div>
+          <h3>中国顶级 AI 人才在推革新，资本会倒逼行业重组</h3>
+          <p>中国组织把 AI 与机器人当关键技术的比例高于全球。AI/机器学习专家、数据分析岗位的净增预期也更高。钱会跟着能用 AI 的人走，用不了的环节会被改写或关掉。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">&gt;90%</div><div class="u">中国组织视 AI / 机器人为关键技术</div></div>
+            <div class="lnum"><div class="n">&gt;82%</div><div class="u">中国雇主预期 AI/ML 专家净增</div></div>
+            <div class="lnum"><div class="n">46%</div><div class="u">中国数据分析岗净增（全球约 41%）</div></div>
+          </div>
+          <div class="hire-row">
+            <span>雇主要：分析思维</span><span>韧性</span><span>领导与社会影响</span><span>AI / 大数据</span><span>网络安全</span><span>技术素养</span><span>创造性</span><span>终身学习</span>
+          </div>
+        </div>
+      </article>
     </div>
+    <p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey Global Institute · Axios / Dario Amodei, 2025。以上是雇主预期或研究估算，不是已经发生的裁员统计。</p>
   </div>
-  <p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey Global Institute · Axios / Dario Amodei, 2025。以上是雇主预期，不是已经发生的裁员统计。</p>
-  <p class="takeaway"><span class="lbl">一句话</span>工作总数还在增加。先被拿走的是重复劳动，和刚入行的白领岗位。别押某一个职业名字，要押孩子会不会换本事。</p>
-  <img class="creature ants" src="assets/salon/creatures/ants.png" alt="">
 </section>
 
 <!-- P4b 2026 工具地图 -->
@@ -2879,7 +2911,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v31';
+  const DRAFT_KEY='salon-ppt-draft-v32';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -2903,7 +2935,7 @@
     '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
     '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
     '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
-    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p'
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u'
   ].join(',');
 
   function go(n){
@@ -2953,7 +2985,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v31"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v32"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
