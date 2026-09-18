@@ -1293,6 +1293,10 @@
   .mck-split .agent{width:44%;background:#c9a227}
   .mck-split .bot{width:13%;background:#8a6d1a}
   .mck-split .rest{flex:1;background:rgba(255,255,255,.1);color:rgba(244,240,230,.7)}
+  .ox-split{display:flex;height:clamp(22px,2.6vmin,32px);overflow:hidden;font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;color:#fff;margin-top:.2vh}
+  .ox-split span{display:flex;align-items:center;justify-content:center;padding:0 8px;white-space:nowrap}
+  .ox-split .all{width:61.6%;background:#c9a227}
+  .ox-split .cn{width:38.4%;background:#8a6d1a}
   .hire-row{display:flex;flex-wrap:wrap;gap:6px}
   .hire-row span{
     background:rgba(232,197,71,.12);border:1px solid rgba(232,197,71,.22);
@@ -2296,7 +2300,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v33">
+<div id="deck" data-rev="v34">
 
 <!-- P1 封面 -->
 <section class="slide cover paper">
@@ -2644,57 +2648,79 @@
 </section>
 
 
-<!-- P4 名校选拔数据 -->
-<section class="slide auth-slide">
-  <div class="auth-stage">
-    <div class="auth-head">
+<!-- P5 名校选拔数据 -->
+<section class="slide labor auth-slide">
+  <div class="labor-stage">
+    <div class="data-head">
       <div class="kicker" data-edit>01 · 名校选拔</div>
       <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
     </div>
-    <div class="auth-kpis">
-      <div class="ak"><div class="n" data-edit>−10.2%</div><div class="u">美国 · 中国本科 2024/25</div></div>
-      <div class="ak"><div class="n" data-edit>+4.5%</div><div class="u">美国国际生创纪录，饼在变大</div></div>
-      <div class="ak"><div class="n" data-edit>16.5%</div><div class="u">牛津整体录取通知比例</div></div>
-      <div class="ak"><div class="n" data-edit>10.3%</div><div class="u">牛津 · 中国大陆</div></div>
-      <div class="ak"><div class="n" data-edit>9.8%</div><div class="u">剑桥中国成功率（入学/申请）</div></div>
-      <div class="ak"><div class="n" data-edit>30%</div><div class="u">美国招生办明确禁止 AI 代写</div></div>
-    </div>
-    <div class="auth-spine">
-      <article class="arow">
+    <div class="labor-track">
+      <article class="lrow">
         <div class="num">01</div>
         <div class="claim">
+          <div class="cap">通道</div>
           <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
           <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。印度 363,019 人，已经超过中国。英国这边：申请还在挤，签证签发在下降。</p>
         </div>
-        <div class="bits">
-          <div class="bit"><div class="n">+12.2%</div><div class="d">UCAS 2026 中国本科申请</div></div>
-          <div class="bit"><div class="n">−14.7%</div><div class="d">英国学生签证签发</div></div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">−10.2%</div><div class="u">美国 · 中国本科 2024/25</div></div>
+            <div class="lnum"><div class="n">+4.5%</div><div class="u">美国国际生创纪录，饼在变大</div></div>
+            <div class="lnum"><div class="n">265,919</div><div class="u">中国在美留学生，连续下降 4.1%</div></div>
+          </div>
+          <div class="hire-row">
+            <span>印度 363,019，已经超过中国</span>
+            <span>+12.2% UCAS 2026 中国本科申请</span>
+            <span>−14.7% 英国学生签证签发</span>
+          </div>
         </div>
       </article>
-      <article class="arow">
+      <article class="lrow">
         <div class="num">02</div>
         <div class="claim">
+          <div class="cap">读数</div>
           <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
           <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。</p>
         </div>
-        <div class="bits">
-          <div class="bit"><div class="n">218 / 2,111</div><div class="d">牛津中国大陆：通知 / 申请</div></div>
-          <div class="bit"><div class="n">34.9%</div><div class="d">剑桥海外申请里来自中国</div></div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体录取通知比例</div></div>
+            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津 · 中国大陆（218 / 2,111）</div></div>
+            <div class="lnum"><div class="n">9.8%</div><div class="u">剑桥中国成功率（入学/申请）</div></div>
+          </div>
+          <div class="ox-split" aria-label="牛津整体与中国大陆">
+            <span class="all">整体 16.5%</span>
+            <span class="cn">中国大陆 10.3%</span>
+          </div>
+          <div class="hire-row">
+            <span>218 / 2,111 牛津中国：通知 / 申请</span>
+            <span>34.9% 剑桥海外申请来自中国</span>
+          </div>
         </div>
       </article>
-      <article class="arow">
+      <article class="lrow">
         <div class="num">03</div>
         <div class="claim">
+          <div class="cap">文书</div>
           <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
           <p data-edit>Kaplan 2025 调查 220 所美国高校。禁止代写从 25% 升到 30%。没有书面政策，不等于可以碰运气。作文写得顺不够，得能讲清楚是自己想的。</p>
         </div>
-        <div class="bits">
-          <div class="bit"><div class="n">68%</div><div class="d">还没有正式书面政策</div></div>
-          <div class="bit"><div class="n">27%</div><div class="d">允许用 AI 帮忙想，不允许代写交差</div></div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">30%</div><div class="u">明确禁止 AI 代写文书</div></div>
+            <div class="lnum"><div class="n">68%</div><div class="u">还没有正式书面政策</div></div>
+            <div class="lnum"><div class="n">27%</div><div class="u">允许用 AI 帮忙想，不允许代写交差</div></div>
+          </div>
+          <div class="hire-row">
+            <span>Kaplan 2025 · n=220</span>
+            <span>禁止代写 25% → 30%</span>
+            <span>作文写得顺不够，得能讲清楚是自己想的</span>
+          </div>
         </div>
       </article>
     </div>
-    <p class="auth-src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
+    <p class="src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
   </div>
 </section>
 
@@ -3262,7 +3288,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v33';
+  const DRAFT_KEY='salon-ppt-draft-v34';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3336,7 +3362,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v33"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split')){
+    if(!raw.includes('cover-agenda') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('data-rev="v34"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-peak') || !raw.includes('kg-stage') || !raw.includes('idx-split') || !raw.includes('ox-split')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
