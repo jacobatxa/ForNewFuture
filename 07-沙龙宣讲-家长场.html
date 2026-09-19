@@ -973,7 +973,6 @@
     font-size:clamp(10px, 1.05vmin, 12px);
     line-height:1.25;
     max-width:100%;
-  }
     background:rgba(232,197,71,.12);
     color:#f3e2a4;
     border:1px solid rgba(232,197,71,.22);
@@ -2691,7 +2690,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v53">
+<div id="deck" data-rev="v54">
 
 <!-- P1 封面 · 线框地形 -->
 <section class="slide cover-mesh active">
@@ -3538,13 +3537,13 @@
     <div class="data-head">
       <div class="kicker" data-edit>03 · 两门课</div>
       <h2 data-edit>一条通识主线，一间正在运转的少年公司。</h2>
-      <p class="lede" data-edit>这一页只看结构、档期和价格。下一页展开通识 12 课时，再一页走进少年创始人现场。</p>
+      <p class="lede" data-edit>这一页只看结构与档期。下一页展开通识 12 课时，再一页走进少年创始人现场。</p>
     </div>
     <div class="cp-pair">
       <article class="cp-pane">
         <div class="kicker" data-edit>课程 A · AI 通识素养课</div>
         <h3>12 课时，懂 AI，会思考，造产品。</h3>
-        <div class="cp-meta"><span>10–12 月</span><span>¥2,980</span><span>9–15 岁</span></div>
+        <div class="cp-meta"><span>10–12 月</span><span>9–15 岁</span></div>
         <p>同一条主线，两档难度。年纪小的把抽象落到身体和故事；年纪大的用真工具、真用户。可压成 3–5 天营，也可按周末展开。</p>
         <ol class="cp-spine">
           <li><b>懂 AI</b><span>3 课时。智能谱系、大模型边界、第一个私人 Agent。</span></li>
@@ -3565,7 +3564,7 @@
       <article class="cp-pane">
         <div class="kicker" data-edit>课程 B · 少年创始人高阶课</div>
         <h3>真实问题里的同伴与责任</h3>
-        <div class="cp-meta"><span>10 月–2 月</span><span>¥8,800</span><span>12–18 岁</span></div>
+        <div class="cp-meta"><span>10 月–2 月</span><span>12–18 岁</span></div>
         <p>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。跨年龄围桌，成人是教练，不是代写。</p>
         <ul class="cp-beats">
           <li><b>真问题</b>从生活与社区里选可验证的麻烦。有人群、有频次、有痛感。伪需求当场拆掉。</li>
@@ -3697,7 +3696,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v53';
+  const DRAFT_KEY='salon-ppt-draft-v54';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3773,7 +3772,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v53"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
+    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v54"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
