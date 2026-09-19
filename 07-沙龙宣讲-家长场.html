@@ -2540,27 +2540,47 @@
   #hint.hidden{opacity:0}
 
   #editor-bar{
-    position:fixed;top:14px;right:14px;z-index:30;
-    display:flex;align-items:center;gap:8px;
-    font-size:12px;font-family:inherit;
+    position:fixed;top:12px;right:12px;z-index:30;
+    display:flex;align-items:center;gap:6px;
+    font-size:11px;font-family:inherit;
   }
-  #editor-bar button{
-    background:rgba(255,255,255,.92);
-    border:1px solid var(--line);
-    color:var(--ink);
-    padding:8px 12px;
+  #editor-bar button#btn-edit{
+    width:22px;height:22px;padding:0;
+    border-radius:50%;
+    background:#111;
+    border:1px solid rgba(255,255,255,.12);
+    color:#fff;
+    font-size:10px;font-weight:650;letter-spacing:0;
+    line-height:1;
+    box-shadow:none;
+    opacity:.38;
+  }
+  #editor-bar button#btn-edit:hover{opacity:.72;background:#111;color:#fff;border-color:rgba(255,255,255,.2)}
+  body.editing #editor-bar button#btn-edit{
+    opacity:.85;
+    background:#111;
+    color:#e8c547;
+    border-color:rgba(232,197,71,.45);
+    box-shadow:0 0 0 1px rgba(232,197,71,.2);
+  }
+  #editor-bar button#btn-save,
+  #editor-bar button#btn-clear{
+    background:rgba(17,17,17,.82);
+    border:1px solid rgba(255,255,255,.14);
+    color:rgba(255,255,255,.75);
+    padding:5px 9px;
     border-radius:980px;
     cursor:pointer;
     font:inherit;
-    font-size:12px;
+    font-size:11px;
     font-weight:600;
-    box-shadow:0 6px 20px rgba(0,0,0,.06);
+    box-shadow:none;
   }
-  #editor-bar button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  #editor-bar button.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
-  #editor-bar button.primary:hover{filter:brightness(.95)}
-  #editor-bar .status{color:var(--ink-3);padding:0 4px;max-width:12em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  body.editing #editor-bar button#btn-edit{background:var(--ink);color:#fff;border-color:var(--ink)}
+  #editor-bar button#btn-save:hover,
+  #editor-bar button#btn-clear:hover{background:#111;color:#fff;border-color:rgba(255,255,255,.28)}
+  #editor-bar button.primary{background:#111;color:#e8c547;border-color:rgba(232,197,71,.35)}
+  #editor-bar button.primary:hover{filter:none;background:#111;color:#fff}
+  #editor-bar .status{color:var(--ink-3);padding:0 4px;max-width:12em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.7}
   body.editing .slide [data-edit]{
     outline:1.5px dashed rgba(0,113,227,.35);
     outline-offset:4px;
@@ -2690,7 +2710,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v54">
+<div id="deck" data-rev="v55">
 
 <!-- P1 封面 · 线框地形 -->
 <section class="slide cover-mesh active">
@@ -3685,18 +3705,18 @@
   <span id="page-num">1 / 13</span>
   <button id="next" aria-label="下一页">→</button>
 </div>
-<div id="hint">← → 方向键 / 空格 / 点击翻页 · 右上角可编辑文字</div>
+<div id="hint">← → 方向键 / 空格 / 点击翻页</div>
 
 <div id="editor-bar">
   <span class="status" id="edit-status"></span>
-  <button type="button" id="btn-edit">编辑文字</button>
-  <button type="button" id="btn-save" class="primary" hidden>保存文件</button>
-  <button type="button" id="btn-clear" hidden>清除草稿</button>
+  <button type="button" id="btn-edit" aria-label="编辑文字" title="编辑">E</button>
+  <button type="button" id="btn-save" class="primary" hidden>保存</button>
+  <button type="button" id="btn-clear" hidden>清除</button>
 </div>
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v54';
+  const DRAFT_KEY='salon-ppt-draft-v55';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3747,7 +3767,9 @@
   function setEditing(on){
     editing=on;
     document.body.classList.toggle('editing',on);
-    btnEdit.textContent=on?'完成编辑':'编辑文字';
+    btnEdit.textContent='E';
+    btnEdit.setAttribute('aria-label', on ? '完成编辑' : '编辑文字');
+    btnEdit.title=on?'完成':'编辑';
     btnSave.hidden=!on;
     btnClear.hidden=!on;
     document.querySelectorAll('[data-edit]').forEach(el=>{
@@ -3772,7 +3794,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v54"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
+    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v55"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
