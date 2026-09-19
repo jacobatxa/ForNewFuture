@@ -196,17 +196,32 @@
   .slide.cover-mesh{
     padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
     display:grid;
-    grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+    grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
     gap:0;
+  }
+  .cover-mesh .cm-art{
+    display:flex;align-items:center;justify-content:center;
+    padding:5vh 2vw 5vh 4vw;
+    min-width:0;background:#070b14;
+    position:relative;
+  }
+  .cover-mesh .cm-art::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(197,107,255,.12), transparent 62%),
+      radial-gradient(ellipse 50% 40% at 28% 48%, rgba(232,197,71,.1), transparent 55%);
+  }
+  .cover-mesh .cm-art img{
+    display:block;position:relative;z-index:1;
+    width:auto;height:auto;
+    max-width:100%;max-height:86vh;
+    object-fit:contain;
+    animation:cm-glow 7s ease-in-out infinite;
   }
   .cover-mesh .cm-text{
     display:flex;flex-direction:column;justify-content:center;
-    padding:7vh 3.5vw 7vh 6.2vw;
+    padding:7vh 6.2vw 7vh 2.8vw;
     min-width:0;position:relative;z-index:2;
-  }
-  .cover-mesh .cm-text::after{
-    content:"";position:absolute;top:12%;right:0;bottom:12%;width:1px;
-    background:linear-gradient(180deg, transparent, rgba(232,197,71,.35), transparent);
   }
   .cover-mesh .mark{
     color:#e8c547;margin-bottom:2.2vh;letter-spacing:.22em;
@@ -245,25 +260,6 @@
     margin-top:4vh;font-size:var(--fs-kicker);font-weight:600;
     letter-spacing:.14em;text-transform:uppercase;
     color:rgba(232,197,71,.55);
-  }
-  .cover-mesh .cm-art{
-    display:flex;align-items:center;justify-content:center;
-    padding:5vh 4vw 5vh 2vw;
-    min-width:0;background:#000;
-    position:relative;
-  }
-  .cover-mesh .cm-art::before{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(197,107,255,.12), transparent 62%),
-      radial-gradient(ellipse 50% 40% at 28% 48%, rgba(232,197,71,.1), transparent 55%);
-  }
-  .cover-mesh .cm-art img{
-    display:block;position:relative;z-index:1;
-    width:auto;height:auto;
-    max-width:100%;max-height:86vh;
-    object-fit:contain;
-    animation:cm-glow 7s ease-in-out infinite;
   }
   @keyframes cm-glow{
     0%,100%{filter:drop-shadow(0 0 0 rgba(197,107,255,0)) brightness(1)}
@@ -2690,10 +2686,13 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v51">
+<div id="deck" data-rev="v52">
 
 <!-- P1 封面 · 线框地形 -->
 <section class="slide cover-mesh active">
+  <div class="cm-art">
+    <img src="assets/salon/cover-wireframe.png?v=1" alt="">
+  </div>
   <div class="cm-text">
     <div class="mark" data-edit>Natural Computation</div>
     <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
@@ -2701,27 +2700,24 @@
     <ol class="cm-agenda">
       <li>
         <span class="num">01</span>
-        <span class="txt" data-edit>学校怎么上课，名校怎么选人
+        <span class="txt" data-edit>国际教育的变革趋势
           <span class="desc">六所实验校在改什么；Astra Nova 课表与真题；对中国学生，通道在收窄。</span>
         </span>
       </li>
       <li>
         <span class="num">02</span>
-        <span class="txt" data-edit>工作还在，能力结构在换
+        <span class="txt" data-edit>就业形势的预估分析
           <span class="desc">岗位总数未塌；软件会换人；我们只认五件可练的能力。</span>
         </span>
       </li>
       <li>
         <span class="num">03</span>
-        <span class="txt" data-edit>案例、培养路径与两门课
+        <span class="txt" data-edit>我们在如何构建新的知识体系
           <span class="desc">四个少年不是模板；五件能力怎么落地；通识课与少年创始人能看见什么。</span>
         </span>
       </li>
     </ol>
     <div class="cm-foot" data-edit>Bilden Edu · 家长沙龙</div>
-  </div>
-  <div class="cm-art">
-    <img src="assets/salon/cover-wireframe.png?v=1" alt="">
   </div>
 </section>
 
@@ -3895,7 +3891,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v51';
+  const DRAFT_KEY='salon-ppt-draft-v52';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3971,7 +3967,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('cover-mesh') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v51"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-agenda') || !raw.includes('cover-mesh') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v52"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
