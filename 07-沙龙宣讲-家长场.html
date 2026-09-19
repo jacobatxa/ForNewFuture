@@ -192,36 +192,37 @@
     letter-spacing:-.01em;
   }
 
-  /* —— 封面 A · 线框地形 · 左右分栏 —— */
+  /* —— 封面 · 线框地形 · 左右分栏 —— */
   .slide.cover-mesh{
     padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
     display:grid;
-    grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
     gap:0;
   }
   .cover-mesh .cm-art{
     display:flex;align-items:center;justify-content:center;
-    padding:5vh 2vw 5vh 4vw;
+    padding:0;
     min-width:0;background:#070b14;
     position:relative;
-  }
-  .cover-mesh .cm-art::before{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:
-      radial-gradient(ellipse 70% 55% at 50% 58%, rgba(197,107,255,.12), transparent 62%),
-      radial-gradient(ellipse 50% 40% at 28% 48%, rgba(232,197,71,.1), transparent 55%);
+    overflow:hidden;
   }
   .cover-mesh .cm-art img{
-    display:block;position:relative;z-index:1;
-    width:auto;height:auto;
-    max-width:100%;max-height:86vh;
-    object-fit:contain;
+    display:block;position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 55%;
     animation:cm-glow 7s ease-in-out infinite;
+  }
+  .cover-mesh .cm-art::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg, transparent 55%, rgba(7,11,20,.35) 78%, #070b14 100%),
+      radial-gradient(ellipse 70% 60% at 42% 58%, transparent 40%, rgba(7,11,20,.28) 100%);
   }
   .cover-mesh .cm-text{
     display:flex;flex-direction:column;justify-content:center;
-    padding:7vh 6.2vw 7vh 2.8vw;
+    padding:7vh 5.5vw 7vh 2.2vw;
     min-width:0;position:relative;z-index:2;
+    background:linear-gradient(90deg, rgba(7,11,20,.55) 0%, #070b14 18%);
   }
   .cover-mesh .mark{
     color:#e8c547;margin-bottom:2.2vh;letter-spacing:.22em;
@@ -262,8 +263,8 @@
     color:rgba(232,197,71,.55);
   }
   @keyframes cm-glow{
-    0%,100%{filter:drop-shadow(0 0 0 rgba(197,107,255,0)) brightness(1)}
-    50%{filter:drop-shadow(0 0 28px rgba(197,107,255,.28)) brightness(1.06)}
+    0%,100%{filter:brightness(1)}
+    50%{filter:brightness(1.08)}
   }
   @media (prefers-reduced-motion:reduce){
     .cover-mesh .cm-art img{animation:none}
@@ -969,6 +970,10 @@
   }
   .tstep .chips{margin:0}
   .tstep .chip{
+    font-size:clamp(10px, 1.05vmin, 12px);
+    line-height:1.25;
+    max-width:100%;
+  }
     background:rgba(232,197,71,.12);
     color:#f3e2a4;
     border:1px solid rgba(232,197,71,.22);
@@ -2686,12 +2691,12 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v52">
+<div id="deck" data-rev="v53">
 
 <!-- P1 封面 · 线框地形 -->
 <section class="slide cover-mesh active">
   <div class="cm-art">
-    <img src="assets/salon/cover-wireframe.png?v=1" alt="">
+    <img src="assets/salon/cover-wireframe-blend-hi.jpg?v=1" alt="">
   </div>
   <div class="cm-text">
     <div class="mark" data-edit>Natural Computation</div>
@@ -2718,71 +2723,6 @@
       </li>
     </ol>
     <div class="cm-foot" data-edit>Bilden Edu · 家长沙龙</div>
-  </div>
-</section>
-
-<!-- P2 封面 · 神经网络（对照） -->
-<section class="slide cover-neural">
-  <img class="cn-bg" src="assets/salon/course-bg-wide.jpg" alt="">
-  <div class="cn-veil"></div>
-  <div class="cn-pulse" aria-hidden="true"></div>
-  <div class="cn-ui">
-    <div class="mark" data-edit>Natural Computation · 对照</div>
-    <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
-    <p class="cover-sub" data-edit>看清 AI 把教育改到哪里，再决定孩子练什么。</p>
-    <ol class="cn-agenda">
-      <li>
-        <span class="num">01</span>
-        <span class="txt" data-edit>学校怎么上课，名校怎么选人
-          <span class="desc">六所实验校在改什么；Astra Nova 课表与真题；对中国学生，通道在收窄。</span>
-        </span>
-      </li>
-      <li>
-        <span class="num">02</span>
-        <span class="txt" data-edit>工作还在，能力结构在换
-          <span class="desc">岗位总数未塌；软件会换人；我们只认五件可练的能力。</span>
-        </span>
-      </li>
-      <li>
-        <span class="num">03</span>
-        <span class="txt" data-edit>案例、培养路径与两门课
-          <span class="desc">四个少年不是模板；五件能力怎么落地；通识课与少年创始人能看见什么。</span>
-        </span>
-      </li>
-    </ol>
-    <div class="cn-foot" data-edit>Bilden Edu · 家长沙龙</div>
-  </div>
-</section>
-
-<!-- P3 封面 · 鸟图（对照） -->
-<section class="slide cover paper">
-  <div class="pane-bird">
-    <img class="cover-bird" src="assets/cover-bird.png?v=7" alt="">
-  </div>
-  <div class="pane-text">
-    <div class="mark">Natural Computation · 对照</div>
-    <h1 class="cover-title">「<span class="em">机</span>」遇未来</h1>
-    <p class="cover-sub">AI 对教育变革的分析及选择</p>
-    <ol class="cover-agenda">
-      <li>
-        <span class="num">01</span>
-        <span class="txt">学校怎么上课，名校怎么选人
-          <span class="desc">六所实验校；Astra Nova 课表与真题；中国学生通道在收窄。</span>
-        </span>
-      </li>
-      <li>
-        <span class="num">02</span>
-        <span class="txt">用人市场与能力结构
-          <span class="desc">工作总数还在增；软件会换；我们认的五件能力。</span>
-        </span>
-      </li>
-      <li>
-        <span class="num">03</span>
-        <span class="txt">案例、如何培养与两门课
-          <span class="desc">四个少年不是模板；五件能力怎么练；12 课时能看见什么。</span>
-        </span>
-      </li>
-    </ol>
   </div>
 </section>
 
@@ -2820,7 +2760,7 @@
         </div>
         <div class="thesis">
           <div class="num">02</div>
-          <p data-edit>留出更多时间让孩子接触真实世界：看世界怎么运转，参与企业正在发生的事，而不是坐在教室里看电子屏。</p>
+          <p data-edit>留出更多时间让孩子接触真实世界——看世界怎么运转，参与企业正在发生的事，而不是坐在教室里看电子屏。</p>
         </div>
         <div class="thesis">
           <div class="num">03</div>
@@ -2828,7 +2768,7 @@
         </div>
         <div class="thesis">
           <div class="num">04</div>
-          <p data-edit>这几所学校都在强调同一件事：基础知识原理（教材里的问题）、社会与商业如何运转、独立思考和当众表达、动手把想法做成（ideas into practice）。</p>
+          <p data-edit>这几所学校都在强调同一件事——基础知识原理（教材里的问题）、社会与商业如何运转、独立思考和当众表达、动手把想法做成（ideas into practice）。</p>
         </div>
       </div>
     </aside>
@@ -2847,7 +2787,7 @@
             <dt>课时</dt><dd data-edit>主课约 2 小时/日；下午做项目和生活技能。</dd>
             <dt>学费</dt><dd data-edit>约 1–4 万美元/年；旧金山校约 7.5 万美元。</dd>
             <dt>模式</dt><dd data-edit>到校上课。约 5 个学生配 1 名引导员，负责动机和带项目，不是整日讲授。</dd>
-            <dt>特点</dt><dd data-edit>校方称测验进步很快；独立调查：部分合作校州考几乎没动。广告和第三方核对经常对不上。</dd>
+            <dt>特点</dt><dd data-edit>校方称测验进步很快；独立调查显示，部分合作校州考几乎没动。广告和第三方核对经常对不上。</dd>
           </dl>
           <div class="note">alpha.school · 入学超 1000 人</div>
         </div>
@@ -2916,10 +2856,10 @@
           <div class="where" data-edit>美国 · 纽约 · 9–12 年级 · 2026 首届</div>
           <h3 data-edit>The Founders School</h3>
           <dl class="smeta">
-            <dt>课时</dt><dd data-edit>学术约 3 小时/日。一年五段：卖 → 做 → 验证 → 增长 → 放大（校方称）。</dd>
+            <dt>课时</dt><dd data-edit>学术约 3 小时/日。一年五段——卖 → 做 → 验证 → 增长 → 放大（校方称）。</dd>
             <dt>学费</dt><dd data-edit>约 15 万美元/年。承诺未达百万利润可退费，以合同为准。</dd>
             <dt>模式</dt><dd data-edit>纽约全日制创业高中。首届约 20 人。</dd>
-            <dt>特点</dt><dd data-edit>三柱：生活技能、创业、和 AI 一起做产品。</dd>
+            <dt>特点</dt><dd data-edit>三柱——生活技能、创业、和 AI 一起做产品。</dd>
           </dl>
           <div class="note">founders.school</div>
         </div>
@@ -2945,10 +2885,10 @@
       </div>
       <div class="gloss">
         <h4 data-edit>家长词条</h4>
-        <p data-edit><strong>引导员</strong>：不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
-        <p data-edit><strong>MAP</strong>：美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
-        <p data-edit><strong>GCSE / A Level</strong>：英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
-        <p data-edit><strong>全寮制</strong>：住校。<strong>校方称</strong>：学校自己公布的数字，还没被独立核对。</p>
+        <p data-edit><strong>引导员</strong>不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
+        <p data-edit><strong>MAP</strong>是美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
+        <p data-edit><strong>GCSE / A Level</strong>是英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
+        <p data-edit><strong>全寮制</strong>即住校。<strong>校方称</strong>指学校自己公布的数字，还没被独立核对。</p>
       </div>
     </div>
   </div>
@@ -2977,7 +2917,7 @@
       </div>
     </aside>
     <div class="astra-panel">
-      <p class="lede" data-edit>课表每学期重做。家长先看三件事：是不是连着真实世界的问题，文明和科技是不是一起学，孩子能不能把想法讲清楚、讲有条理。</p>
+      <p class="lede" data-edit>课表每学期重做。家长先看三件事——是不是连着真实世界的问题，文明和科技是不是一起学，孩子能不能把想法讲清楚、讲有条理。</p>
       <div class="track">
         <article class="tstep">
           <div class="num">01</div>
@@ -2986,10 +2926,10 @@
             <h3 data-edit>链接真实世界的问题</h3>
             <p data-edit>课名先是潮汐池、登月、经济学游戏，不是「地理第一章」。同学来自约 45 个国家。对中国家庭，不少课会落在凌晨，这是全球直播班的代价。</p>
             <div class="chips">
-              <span class="chip">Adventuring into Tide Pools</span>
-              <span class="chip">Walking on the Moon</span>
-              <span class="chip">Practical Economics</span>
-              <span class="chip">Model United Nations</span>
+              <span class="chip">Tide Pools · 潮汐池探险</span>
+              <span class="chip">Walking on the Moon · 登月行走</span>
+              <span class="chip">Practical Economics · 实用经济学</span>
+              <span class="chip">Model UN · 模拟联合国</span>
             </div>
           </div>
         </article>
@@ -3000,11 +2940,11 @@
             <h3 data-edit>文明史和硬科学放在同一张课表</h3>
             <p data-edit>数学要分班，每周 3–4 小时；其余课每周 1–2 小时。罗马帝国、第二次世界大战，和微积分、牛顿力学、AI 技术史排在一起。不是只学工具，也不只背人文。</p>
             <div class="chips">
-              <span class="chip">Algebra → Calculus</span>
-              <span class="chip">Classical (Newtonian) Mechanics</span>
-              <span class="chip">Technical History of AI</span>
-              <span class="chip">Imperial Rome</span>
-              <span class="chip">The Second World War</span>
+              <span class="chip">Algebra → Calculus · 代数到微积分</span>
+              <span class="chip">Newtonian Mechanics · 经典牛顿力学</span>
+              <span class="chip">Technical History of AI · AI 技术史</span>
+              <span class="chip">Imperial Rome · 罗马帝国</span>
+              <span class="chip">WWII · 第二次世界大战</span>
             </div>
           </div>
         </article>
@@ -3015,15 +2955,15 @@
             <h3 data-edit>注重表达与逻辑</h3>
             <p data-edit>申请要交 30 秒到 2 分钟、没有标准答案的短视频，听怎么想。课上练决策、悖论、生物伦理、数据会不会骗人。先能讲清楚，再谈做出来。</p>
             <div class="chips">
-              <span class="chip">Better Decision-Making</span>
-              <span class="chip">Paradoxes & Thought Experiments</span>
-              <span class="chip">BioEthics II</span>
-              <span class="chip">Lies, Damned Lies, and Data Science</span>
+              <span class="chip">Better Decision-Making · 更好的决策</span>
+              <span class="chip">Paradoxes · 悖论与思想实验</span>
+              <span class="chip">BioEthics II · 生物伦理</span>
+              <span class="chip">Data Science · 数据会不会骗人</span>
             </div>
           </div>
         </article>
       </div>
-      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>我们没有九十门。要学的是同一根脊柱：真问题、文明与科技、能把想法讲清楚。</span></p>
+      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>我们没有九十门。要学的是同一根脊柱——真问题、文明与科技、能把想法讲清楚。</span></p>
     </div>
   </div>
 </section>
@@ -3037,7 +2977,7 @@
       <div class="veil"></div>
       <div class="brand">
         <div class="kicker" data-edit>01 · ASTRA NOVA · 申请与课余</div>
-        <h2 data-edit>全球面试：学生自己录视频答题。<br>课余安排很满，不只是社团。</h2>
+        <h2 data-edit>全球面试——学生自己录视频答题。<br>课余安排很满，不只是社团。</h2>
       </div>
       <div class="astra-kpis">
         <div class="ak"><div class="n" data-edit>45 国</div><div class="u">同一套英语直播面试</div></div>
@@ -3047,7 +2987,7 @@
       </div>
     </aside>
     <div class="astra-panel">
-      <p class="lede" data-edit>Conundrum 是学校自己出的开放题：没有标准答案，要你站队，并讲清为什么。申请时任选一道，交视频或音频。下面三道最常被提起。</p>
+      <p class="lede" data-edit>Conundrum 是学校自己出的开放题——没有标准答案，要你站队，并讲清为什么。申请时任选一道，交视频或音频。下面三道最常被提起。</p>
       <div class="cnd-list">
         <article class="cnd">
           <img src="assets/salon/astra/chocolate.jpg" alt="Chocolate Conundrum">
@@ -3066,7 +3006,7 @@
           <div>
             <div class="en">NASA Conundrum</div>
             <h3 data-edit>航天局有七个项目，钱只够做三个。你砍掉哪四个？</h3>
-            <p data-edit>选三个，等于公开你的优先级：眼前的地球、人类的安全、还是更远的未知。</p>
+            <p data-edit>选三个，等于公开你的优先级——眼前的地球、人类的安全、还是更远的未知。</p>
             <div class="opts">
               <span>A 载人上火星</span>
               <span>B 机器人探未知世界</span>
@@ -3113,7 +3053,7 @@
         <div class="claim">
           <div class="cap">通道</div>
           <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
-          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。英国：UCAS 2026 中国本科申请上升 12.2%；学生签证签发下降 14.7%。申请还在挤，门没有变宽。</p>
+          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。英国——UCAS 2026 中国本科申请上升 12.2%；学生签证签发下降 14.7%。申请还在挤，门没有变宽。</p>
         </div>
         <div class="proof">
           <div class="lnums">
@@ -3143,7 +3083,7 @@
               <ul>
                 <li>印度 363,019，+9.5%</li>
                 <li>已经超过中国</li>
-                <li>对中国学生：通道在收窄</li>
+                <li>对中国学生，通道在收窄</li>
               </ul>
             </div>
           </div>
@@ -3154,12 +3094,12 @@
         <div class="claim">
           <div class="cap">读数</div>
           <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
-          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。剑桥口径更严：成功率 = 入学人数 ÷ 申请人数。名额有限，申请池最密的那群人，通道最窄。</p>
+          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。剑桥口径更严——成功率 = 入学人数 ÷ 申请人数。名额有限，申请池最密的那群人，通道最窄。</p>
         </div>
         <div class="proof">
           <div class="lnums">
-            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体：3,853 份通知 / 23,291 份申请</div></div>
-            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津中国大陆：218 / 2,111</div></div>
+            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体 3,853 份通知 / 23,291 份申请</div></div>
+            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津中国大陆 218 / 2,111</div></div>
             <div class="lnum"><div class="n">9.8%</div><div class="u">剑桥中国成功率（284 入学 / 2,900 申请）</div></div>
           </div>
           <div class="ox-split" aria-label="牛津整体与中国大陆">
@@ -3211,7 +3151,7 @@
             <div class="j">
               <h4>禁止</h4>
               <ul>
-                <li>明确禁止代写：25% → 30%</li>
+                <li>明确禁止代写 25% → 30%</li>
                 <li>Kaplan 2025，n=220</li>
                 <li>查的是交差，不是禁思考</li>
               </ul>
@@ -3254,7 +3194,7 @@
         <div class="claim">
           <div class="cap">再培训</div>
           <h3>岗位变多，不等于现在这样培养还能直接上岗</h3>
-          <p>雇主预期 2025–2030 全球就业净增约 7800 万：新岗位约 1.7 亿，被替代约 9200 万。技能会换掉将近四成，100 个在职者里约 59 人要再培训。</p>
+          <p>雇主预期 2025–2030 全球就业净增约 7800 万——新岗位约 1.7 亿，被替代约 9200 万。技能会换掉将近四成，100 个在职者里约 59 人要再培训。</p>
         </div>
         <div class="proof">
           <div class="lnums">
@@ -3298,7 +3238,7 @@
         <div class="claim">
           <div class="cap">对手变了</div>
           <h3>竞争不只是人和人，而是人和 Agents</h3>
-          <p>麦肯锡把美国的工作拆成工时来算：理论上最多约 57% 的工时能被自动化——约 44 个百分点是软件 Agent，约 13 个百分点是机器人。这不是说明天一半岗位消失，而是说大量任务会被改写。</p>
+          <p>麦肯锡把美国的工作拆成工时来算——理论上最多约 57% 的工时能被自动化——约 44 个百分点是软件 Agent，约 13 个百分点是机器人。这不是说明天一半岗位消失，而是说大量任务会被改写。</p>
         </div>
         <div class="proof">
           <div class="lnums">
@@ -3327,7 +3267,7 @@
             <div class="lnum"><div class="n">46%</div><div class="u">中国数据分析岗净增（全球约 41%）</div></div>
           </div>
           <div class="hire-row">
-            <span>雇主要：分析思维</span><span>韧性</span><span>领导与社会影响</span><span>AI / 大数据</span><span>网络安全</span><span>技术素养</span><span>创造性</span><span>终身学习</span>
+            <span>雇主要分析思维</span><span>韧性</span><span>领导与社会影响</span><span>AI / 大数据</span><span>网络安全</span><span>技术素养</span><span>创造性</span><span>终身学习</span>
           </div>
         </div>
       </article>
@@ -3470,140 +3410,6 @@
   </div>
 </section>
 
-<!-- P8 工具冰山 · 对照 -->
-<section class="slide pyramid-slide pyramid-compare">
-  <div class="berg-frame">
-    <img class="berg-photo" src="assets/salon/iceberg-hi.jpg" alt="">
-    <div class="berg-shift">
-    <div class="data-head">
-      <div class="kicker" data-edit>02 · 冰山 · 对照</div>
-      <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
-    </div>
-    <div class="berg-tip">
-      <div class="tip-row">
-          <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
-          <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
-          <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
-      </div>
-      <div class="tip-row">
-          <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
-          <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
-          <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
-          <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
-          <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
-      </div>
-      <div class="tip-row">
-          <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
-          <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
-          <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
-          <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
-          <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
-          <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
-          <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
-      </div>
-      <div class="tip-row">
-          <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
-          <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
-          <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
-          <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
-          <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
-          <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
-          <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
-          <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
-          <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
-      </div>
-    </div>
-    <div class="berg-line"><i></i><span>海面 · 能直接点开的工具</span></div>
-    <div class="berg-cloud">
-        <i class="lg" style="left:54.9%;top:50.7%">Transformer</i>
-        <i class="lg" style="left:41.7%;top:39.9%">Attention</i>
-        <i class="lg" style="left:34.6%;top:51.9%">反向传播</i>
-        <i class="lg" style="left:56.1%;top:64.0%">梯度下降</i>
-        <i class="lg" style="left:67.9%;top:48.7%">Diffusion</i>
-        <i class="lg" style="left:62.2%;top:55.4%">RLHF</i>
-        <i class="lg" style="left:37.2%;top:66.0%">MoE</i>
-        <i class="lg" style="left:44.8%;top:47.6%">CUDA</i>
-        <i class="lg" style="left:25.3%;top:30.5%">指令集</i>
-        <i class="lg" style="left:63.3%;top:42.7%">操作系统</i>
-        <i class="lg" style="left:55.9%;top:15.0%">KV Cache</i>
-        <i class="lg" style="left:44.9%;top:29.0%">Embedding</i>
-        <i class="md" style="left:63.7%;top:66.3%">Softmax</i>
-        <i class="md" style="left:30.8%;top:31.0%">Adam</i>
-        <i class="md" style="left:73.8%;top:28.0%">LSTM</i>
-        <i class="md" style="left:40.3%;top:58.0%">CNN</i>
-        <i class="md" style="left:72.6%;top:34.9%">PPO</i>
-        <i class="md" style="left:78.9%;top:10.6%">DPO</i>
-        <i class="md" style="left:32.0%;top:44.1%">LoRA</i>
-        <i class="md" style="left:37.4%;top:71.8%">RoPE</i>
-        <i class="md" style="left:47.6%;top:13.7%">GQA</i>
-        <i class="md" style="left:42.6%;top:86.2%">GPU并行</i>
-        <i class="md" style="left:45.7%;top:93.3%">HTTP/TLS</i>
-        <i class="md" style="left:44.7%;top:67.7%">Raft</i>
-        <i class="md" style="left:48.2%;top:8.1%">B+树</i>
-        <i class="md" style="left:35.5%;top:26.8%">ACID</i>
-        <i class="md" style="left:48.4%;top:81.8%">CLIP</i>
-        <i class="md" style="left:56.9%;top:71.0%">ViT</i>
-        <i class="md" style="left:46.1%;top:52.3%">BPE</i>
-        <i class="md" style="left:58.7%;top:89.4%">蒸馏</i>
-        <i class="md" style="left:47.9%;top:74.7%">预训练</i>
-        <i class="md" style="left:55.4%;top:24.6%">微调</i>
-        <i class="md" style="left:41.6%;top:52.6%">流水线</i>
-        <i class="md" style="left:55.2%;top:56.5%">并发</i>
-        <i class="md" style="left:63.1%;top:22.1%">分布式</i>
-        <i class="md" style="left:24.3%;top:20.6%">FlashAttention</i>
-        <i class="fm" style="left:49.7%;top:67.1%">∇θℒ</i>
-        <i class="fm" style="left:56.0%;top:78.1%">H=−Σplogp</i>
-        <i class="fm" style="left:77.4%;top:22.7%">DKL(p∥q)</i>
-        <i class="fm" style="left:41.0%;top:21.2%">P(y|x)</i>
-        <i class="sm" style="left:43.7%;top:24.8%">Bayes</i>
-        <i class="sm" style="left:49.1%;top:22.3%">链式法则</i>
-        <i class="fm" style="left:61.5%;top:32.2%">softmax(QKᵀ/√d)V</i>
-        <i class="fm" style="left:53.2%;top:86.5%">W·x+b</i>
-        <i class="fm" style="left:48.6%;top:60.5%">σ(x)</i>
-        <i class="sm" style="left:58.4%;top:83.5%">ReLU</i>
-        <i class="fm" style="left:52.5%;top:28.3%">CE</i>
-        <i class="sm" style="left:41.5%;top:76.5%">GELU</i>
-        <i class="sm" style="left:62.4%;top:75.2%">ALU</i>
-        <i class="sm" style="left:68.4%;top:53.4%">DNS</i>
-        <i class="sm" style="left:50.8%;top:39.5%">CDN</i>
-        <i class="sm" style="left:37.0%;top:44.6%">NP-hard</i>
-        <i class="sm" style="left:31.1%;top:38.0%">红黑树</i>
-        <i class="sm" style="left:53.8%;top:68.6%">QKV</i>
-        <i class="sm" style="left:43.3%;top:64.0%">Dropout</i>
-        <i class="sm" style="left:54.4%;top:91.1%">交叉熵</i>
-        <i class="sm" style="left:34.7%;top:60.6%">过拟合</i>
-        <i class="sm" style="left:64.5%;top:14.0%">SGD</i>
-        <i class="sm" style="left:72.2%;top:41.8%">学习率</i>
-        <i class="sm" style="left:48.7%;top:89.3%">FP16</i>
-        <i class="sm" style="left:39.1%;top:34.4%">INT8</i>
-        <i class="sm" style="left:40.3%;top:82.3%">卷积</i>
-        <i class="sm" style="left:70.1%;top:23.7%">残差块</i>
-        <i class="sm" style="left:57.8%;top:43.5%">SSM</i>
-        <i class="sm" style="left:50.6%;top:44.6%">马尔可夫</i>
-        <i class="sm" style="left:41.1%;top:9.5%">策略梯度</i>
-        <i class="sm" style="left:50.4%;top:33.8%">涌现</i>
-        <i class="sm" style="left:38.7%;top:17.3%">FLOPs</i>
-        <i class="sm" style="left:79.2%;top:6.9%">幻觉</i>
-        <i class="sm" style="left:74.7%;top:15.6%">上下文窗</i>
-        <i class="sm" style="left:64.6%;top:36.9%">人类反馈</i>
-        <i class="sm" style="left:66.4%;top:27.3%">LayerNorm</i>
-    </div>
-    <p class="src">海面以上是 2026.9 仍能直接点开的产品，含国内常见应用。Manus 已不适合进课堂。</p>
-    <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
-    </div>
-    <aside class="ear-card">
-      <p class="el" data-edit>自媒体和周围人，听他怎么说话。</p>
-      <ul>
-        <li><b class="hang">夯</b><span><i>「这一层 attention 为什么要改。」</i>能改结构，经得起问</span></li>
-        <li><b class="ding">顶级</b><span><i>「这个榜有数据污染。」</i>能讲机制和评测</span></li>
-        <li><b class="ren">人上人</b><span><i>「这个需求我能交货。」</i>会用工具，深问会停</span></li>
-        <li><b class="npc">NPC</b><span><i>「高级提示词工程师。」</i>头衔叠 buff</span></li>
-        <li><b class="la">拉完了</b><span><i>「我正在调我的大模型。」</i>没有卡，没有曲线</span></li>
-      </ul>
-    </aside>
-  </div>
-</section>
-
 <!-- P9 如何培养 -->
 <section class="slide cap-slide">
   <img class="kg-photo" src="assets/salon/horizon-hi.jpg" alt="">
@@ -3617,10 +3423,10 @@
       <article class="fam">
         <div class="fid">01</div>
         <h3>万物机理</h3>
-        <p class="blurb">学本源：历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p>
+        <p class="blurb">学本源——历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p>
         <div class="ideas">
           <div class="ilab">课程与思想</div>
-          <p>初识智能：自然智能 vs 人工智能。中文房间。智能是一个谱系，不是开关。大模型是下文预测机。</p>
+          <p>初识智能——自然智能 vs 人工智能。中文房间。智能是一个谱系，不是开关。大模型是下文预测机。</p>
           <div class="kids"><span>历史</span><span>逻辑</span><span>数学</span><span>物理</span></div>
         </div>
       </article>
@@ -3640,7 +3446,7 @@
         <p class="blurb">能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p>
         <div class="ideas">
           <div class="ilab">课程与思想</div>
-          <p>真问题三筛：有人群、有频次、有痛感。问题卡，再画解决闭环。世界就是实验室。</p>
+          <p>真问题三筛——有人群、有频次、有痛感。问题卡，再画解决闭环。世界就是实验室。</p>
           <div class="kids"><span>真问题</span><span>问题卡</span><span>闭环</span><span>实验室</span></div>
         </div>
       </article>
@@ -3660,7 +3466,7 @@
         <p class="blurb">AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p>
         <div class="ideas">
           <div class="ilab">课程与思想</div>
-          <p>第一行 prompt；私人 Agent；MVP 到上线。安全清单：密码和家庭住址绝不告诉 AI。</p>
+          <p>第一行 prompt；私人 Agent；MVP 到上线。安全清单——密码和家庭住址绝不告诉 AI。</p>
           <div class="kids"><span>Prompt</span><span>Agent</span><span>MVP</span><span>安全</span></div>
         </div>
       </article>
@@ -3693,7 +3499,7 @@
       <div class="body">
         <div class="who">硅谷 · 高中毕业即入职路径</div>
         <h3>Palantir Meritocracy Fellowship</h3>
-        <p>面向未上大学的美国高中毕业生：带薪约 4 个月实习；SAT ≥1460 / ACT ≥33。</p>
+        <p>面向未上大学的美国高中毕业生——带薪约 4 个月实习；SAT ≥1460 / ACT ≥33。</p>
         <div class="src">Business Insider, 2025 · Palantir 项目公开条件</div>
       </div>
     </article>
@@ -3719,7 +3525,7 @@
     </article>
   </div>
   <p class="cases-hint">点击任一案例放大聚焦 · 再点空白或按 Esc 复位</p>
-  <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有：真问题、真产品、当面讲得清。</p>
+  <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有——真问题、真产品、当面讲得清。</p>
 </section>
 
 <!-- P10 两门课概要 -->
@@ -3765,12 +3571,12 @@
           <li><b>真问题</b>从生活与社区里选可验证的麻烦。有人群、有频次、有痛感。伪需求当场拆掉。</li>
           <li><b>同伴 / 导师</b>同伴是同事，不是同班。逻辑树画在墙上。讲不清，就还没想清。</li>
           <li><b>路演与迭代</b>叙事是痛点 → 演示 → 证据 → 愿景。向真人演示，收集拒绝与修改。</li>
-          <li><b>上线与安全</b>能拿起来的东西：链接、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。</li>
+          <li><b>上线与安全</b>能拿起来的东西——链接、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。</li>
           <li><b>真实世界模型学习</b>从屏幕走到真实约束。对着真实场景建立模型，而不是只在聊天窗口里完成。</li>
         </ul>
       </article>
     </div>
-    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。少年创始人高阶课把判断放进会运转的公司。共同底线：问题真实、产出可见、AI 产出必须经人核验。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。少年创始人高阶课把判断放进会运转的公司。共同底线——问题真实、产出可见、AI 产出必须经人核验。</p>
   </div>
 </section>
 
@@ -3781,7 +3587,7 @@
   <div class="atlas-ui">
     <div>
       <div class="kicker">03 · 课程 A · AI 通识素养课</div>
-      <h2>12 课时细目：懂 AI，会思考，造产品。</h2>
+      <h2>12 课时细目——懂 AI，会思考，造产品。</h2>
       <div class="atlas-meta"><span>10–12 月</span><span>¥2,980</span><span>9–15 岁</span><span>12 课时</span></div>
       <p class="lede">同一骨架，按认知调难度。年纪小的用身体、卡片、故事；年纪大的讲机制、真工具、真用户。每课都有可带走的产出。</p>
     </div>
@@ -3789,39 +3595,39 @@
       <article class="atlas-unit">
         <div class="uh">单元一 · 懂 AI · 3 课时</div>
         <ul class="lessons">
-          <li><b>01</b><span><span class="ttl">初识智能：自然智能 vs 人工智能</span><span class="sub">乌鸦喝水对人脸识别；智能是谱系不是开关。中文房间。大模型是下文预测机。</span><span class="out">产出：四格漫画 30 秒讲 / 一页智能地图</span></span></li>
-          <li><b>02</b><span><span class="ttl">大模型边界：第一行 prompt，把模型问倒</span><span class="sub">幻觉是流畅不是真实。查证三问：有来源吗，能查到吗，问大人了吗。</span><span class="out">产出：防骗三问卡 / 10 题边界评测</span></span></li>
-          <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><span class="sub">Agent = 模型 + 工作说明书。会做什么、绝不做什么。教师眼皮底下或责任自负。</span><span class="out">产出：可演示 Agent v1 / 系统提示词文档</span></span></li>
+          <li><b>01</b><span><span class="ttl">初识智能——自然智能 vs 人工智能</span><span class="sub">乌鸦喝水对人脸识别；智能是谱系不是开关。中文房间。大模型是下文预测机。</span><span class="out">产出——四格漫画 30 秒讲 / 一页智能地图</span></span></li>
+          <li><b>02</b><span><span class="ttl">大模型边界——第一行 prompt，把模型问倒</span><span class="sub">幻觉是流畅不是真实。查证三问——有来源吗，能查到吗，问大人了吗。</span><span class="out">产出——防骗三问卡 / 10 题边界评测</span></span></li>
+          <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><span class="sub">Agent = 模型 + 工作说明书。会做什么、绝不做什么。教师眼皮底下或责任自负。</span><span class="out">产出——可演示 Agent v1 / 系统提示词文档</span></span></li>
         </ul>
       </article>
       <article class="atlas-unit">
         <div class="uh">单元二 · 会思考 · 2 课时</div>
         <ul class="lessons">
-          <li><b>04</b><span><span class="ttl">真问题从哪来</span><span class="sub">三筛：有人群、有频次、有痛感。采访真实的人，伪需求当场拆掉。</span><span class="out">产出：问题卡 / 问题定义文档 v1</span></span></li>
-          <li><b>05</b><span><span class="ttl">逻辑学与产品闭环</span><span class="sub">主张—证据—反例—边界。生活化找茬，或十个高频谬误压力测试。再画闭环。</span><span class="out">产出：任务书 + 闭环图 / 问题定义 v2</span></span></li>
+          <li><b>04</b><span><span class="ttl">真问题从哪来</span><span class="sub">三筛——有人群、有频次、有痛感。采访真实的人，伪需求当场拆掉。</span><span class="out">产出——问题卡 / 问题定义文档 v1</span></span></li>
+          <li><b>05</b><span><span class="ttl">逻辑学与产品闭环</span><span class="sub">主张—证据—反例—边界。生活化找茬，或十个高频谬误压力测试。再画闭环。</span><span class="out">产出——任务书 + 闭环图 / 问题定义 v2</span></span></li>
         </ul>
         <p class="atlas-note">评价看说清楚、做出来、改得动、防得住。难度可在类比 / 机制 / 论文三档里调。</p>
       </article>
       <article class="atlas-unit">
         <div class="uh">单元三 · 造产品 · 7 课时 · RPS</div>
         <ul class="lessons">
-          <li><b>06–07</b><span><span class="ttl">初级：最小可用原型</span><span class="sub">先做能给人试用的最小版本。纸面或 AI 编程工作流。跨组测试。</span><span class="out">产出：MVP + 用户意见 / README</span></span></li>
-          <li><b>08–09</b><span><span class="ttl">进阶：插件、多模态、用户系统</span><span class="sub">能力要取舍。路演结构：痛点 → 演示 → 证据 → 愿景。</span><span class="out">产出：路演版 + 讲稿 / Pitch 答辩</span></span></li>
-          <li><b>10–12</b><span><span class="ttl">高阶：存储、托管、运营、安全</span><span class="sub">密码、家庭住址、身份证号绝不告诉 AI。家人试用或真实投放，再按反馈改一版。</span><span class="out">产出：发布版 + 反馈 / 上线 + 看板 + 安全自查</span></span></li>
+          <li><b>06–07</b><span><span class="ttl">初级——最小可用原型</span><span class="sub">先做能给人试用的最小版本。纸面或 AI 编程工作流。跨组测试。</span><span class="out">产出——MVP + 用户意见 / README</span></span></li>
+          <li><b>08–09</b><span><span class="ttl">进阶——插件、多模态、用户系统</span><span class="sub">能力要取舍。路演结构——痛点 → 演示 → 证据 → 愿景。</span><span class="out">产出——路演版 + 讲稿 / Pitch 答辩</span></span></li>
+          <li><b>10–12</b><span><span class="ttl">高阶——存储、托管、运营、安全</span><span class="sub">密码、家庭住址、身份证号绝不告诉 AI。家人试用或真实投放，再按反馈改一版。</span><span class="out">产出——发布版 + 反馈 / 上线 + 看板 + 安全自查</span></span></li>
         </ul>
       </article>
     </div>
     <div class="atlas-bands">
       <article>
         <h4>偏具象 · 多用身体</h4>
-        <p>三条铁律：能用卡片讲清的不用幻灯片；AI 在教师眼皮底下；每课带走漫画、问题卡、可点 demo。毕业展摆摊。</p>
+        <p>三条铁律——能用卡片讲清的不用幻灯片；AI 在教师眼皮底下；每课带走漫画、问题卡、可点 demo。毕业展摆摊。</p>
       </article>
       <article>
         <h4>偏机制 · 真工具真用户</h4>
-        <p>三条原则：Cursor 类工具、真实部署；幻觉按概率生成理解；没有「学完」只有「做出来」。终期路演看数据和安全报告。</p>
+        <p>三条原则——Cursor 类工具、真实部署；幻觉按概率生成理解；没有「学完」只有「做出来」。终期路演看数据和安全报告。</p>
       </article>
     </div>
-    <p class="takeaway"><span class="lbl">一句话</span>共同底线：问题必须真实、产出必须可见、AI 产出必须经人核验。允许跳级，不允许跳过。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>共同底线——问题必须真实、产出必须可见、AI 产出必须经人核验。允许跳级，不允许跳过。</p>
   </div>
 </section>
 
@@ -3891,7 +3697,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v52';
+  const DRAFT_KEY='salon-ppt-draft-v53';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3967,7 +3773,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-agenda') || !raw.includes('cover-mesh') || !raw.includes('cover-neural') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v52"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生：通道在收窄')){
+    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v53"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
