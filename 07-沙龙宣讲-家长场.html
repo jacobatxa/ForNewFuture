@@ -39,6 +39,30 @@
     --fs-src: clamp(10px, 1.15vmin, 13px);
     --fs-num-sm: clamp(20px, 2.9vmin, 38px);
   }
+
+  /* Back-row type · pages 1, 8–12 only */
+  .slide.cover-mesh,
+  .slide.cap-slide,
+  .slide.cases-slide,
+  .slide.course-poster,
+  .slide.atlas-slide,
+  .slide.co-slide{
+    --fs-kicker: clamp(12px, 1.5vmin, 18px);
+    --fs-cover: clamp(34px, 5.7vmin, 78px);
+    --fs-h2: clamp(24px, 3.9vmin, 56px);
+    --fs-h2-data: clamp(23px, 3.45vmin, 46px);
+    --fs-h3: clamp(16px, 2.1vmin, 27px);
+    --fs-lede: clamp(16px, 1.9vmin, 25px);
+    --fs-body: clamp(14px, 1.7vmin, 20px);
+    --fs-small: clamp(13px, 1.55vmin, 18px);
+    --fs-micro: clamp(12px, 1.38vmin, 16px);
+    --fs-src: clamp(11px, 1.25vmin, 14px);
+  }
+  .slide.atlas-slide{
+    --fs-small: clamp(13px, 1.48vmin, 17px);
+    --fs-micro: clamp(12px, 1.32vmin, 15px);
+  }
+
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -229,13 +253,16 @@
   }
   .cover-mesh .cover-title{
     color:#fff;font-weight:650;white-space:nowrap;
+    font-size:var(--fs-cover);
+    text-shadow:0 2px 18px rgba(0,0,0,.45);
   }
   .cover-mesh .cover-title .em{
     background:linear-gradient(120deg,#e8c547 0%,#f0a36a 45%,#c56bff 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
   .cover-mesh .cover-sub{
-    color:rgba(245,245,247,.7);max-width:22em;margin-top:1.6vh;
+    color:rgba(245,245,247,.78);max-width:22em;margin-top:1.6vh;
+    text-shadow:0 1px 10px rgba(0,0,0,.35);
   }
   .cm-agenda{
     list-style:none;margin-top:3.8vh;max-width:28em;
@@ -251,6 +278,7 @@
   .cm-agenda .txt{
     font-size:var(--fs-lede);font-weight:550;letter-spacing:-.02em;
     line-height:1.35;color:#fff;
+    text-shadow:0 1px 10px rgba(0,0,0,.35);
   }
   .cm-agenda .desc{
     display:block;margin-top:.35em;
@@ -1676,7 +1704,7 @@
     text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
   .cp-stage .data-head h2{
-    font-size:clamp(22px, 3vmin, 38px);
+    font-size:clamp(24px, 3.35vmin, 42px);
     font-weight:600;letter-spacing:-.035em;line-height:1.16;
     color:#fff;max-width:22em;margin:0;
     text-shadow:0 2px 14px rgba(0,0,0,.55);
@@ -1704,7 +1732,7 @@
     color:#e8c547;margin:0 0 .4vh;
   }
   .cp-pane h3{
-    font-size:clamp(18px, 2.15vmin, 26px);
+    font-size:clamp(19px, 2.35vmin, 28px);
     font-weight:600;letter-spacing:-.03em;color:#fff;
     line-height:1.2;margin:0 0 .55vh;
   }
@@ -1966,7 +1994,7 @@
     text-shadow:0 1px 8px rgba(0,0,0,.55);
   }
   .kg-stage .data-head h2{
-    font-size:clamp(22px, 3vmin, 38px);
+    font-size:clamp(24px, 3.35vmin, 42px);
     font-weight:600;letter-spacing:-.035em;line-height:1.18;
     color:#fff;max-width:22em;margin:0;
     text-shadow:0 2px 14px rgba(0,0,0,.55);
@@ -1993,7 +2021,7 @@
     font-weight:700;letter-spacing:.16em;color:#e8c547;
   }
   .fam h3{
-    font-size:clamp(16px, 1.85vmin, 22px);
+    font-size:clamp(17px, 2.05vmin, 24px);
     font-weight:600;letter-spacing:-.03em;color:#fff;
     margin:.15vh 0 .4vh;line-height:1.2;
   }
@@ -2001,7 +2029,7 @@
     display:block;
     flex:none;
     width:100%;
-    font-size:clamp(11px, 1.22vmin, 15px);
+    font-size:clamp(12px, 1.38vmin, 16px);
     line-height:1.4;
     color:rgba(244,240,230,.82);
     margin:0 0 .5vh;
@@ -2015,7 +2043,7 @@
     margin:0 0 .28vh;
   }
   .ideas p{
-    font-size:clamp(11px, 1.18vmin, 14px);
+    font-size:clamp(12px, 1.32vmin, 15px);
     line-height:1.4;
     color:rgba(244,240,230,.78);
     margin:0 0 .45vh;
@@ -2024,7 +2052,7 @@
     display:flex;flex-wrap:wrap;gap:4px;
   }
   .ideas .kids span{
-    font-size:clamp(10px, 1.08vmin, 12px);
+    font-size:clamp(11px, 1.2vmin, 13px);
     font-weight:600;
     color:rgba(244,240,230,.82);
     border:1px solid rgba(232,197,71,.2);
@@ -2333,7 +2361,7 @@
   .copin h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff}
   .copin p{font-size:var(--fs-micro);color:rgba(255,255,255,.78);line-height:1.4;margin-top:.35vh}
   .copin .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:.55vh}
-  .copin .chips span{font-size:10px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border:1px solid rgba(255,220,180,.22);color:#ffd29a}
+  .copin .chips span{font-size:11px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border:1px solid rgba(255,220,180,.22);color:#ffd29a}
   .co-ui .takeaway{margin-top:.8vh;background:rgba(18,12,8,.5);border-left-color:#ffd29a;color:#fff}
   .co-ui .takeaway .lbl{color:#ffd29a}
 
@@ -2710,7 +2738,7 @@
   <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
   <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
 </svg>
-<div id="deck" data-rev="v55">
+<div id="deck" data-rev="v56">
 
 <!-- P1 封面 · 线框地形 -->
 <section class="slide cover-mesh active">
@@ -3716,7 +3744,7 @@
 
 
 <script>
-  const DRAFT_KEY='salon-ppt-draft-v55';
+  const DRAFT_KEY='salon-ppt-draft-v56';
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
   let editing=false;
@@ -3794,7 +3822,7 @@
     const raw=localStorage.getItem(DRAFT_KEY);
     if(!raw) return false;
     // Ignore drafts that don't match current deck structure
-    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v55"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
+    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v56"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
       localStorage.removeItem(DRAFT_KEY);
       return false;
     }
