@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创想营课件 · 第3页视觉方案挑选</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&family=IBM+Plex+Sans:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#09090b;color:#fafafa;font-family:"IBM Plex Sans",system-ui,sans-serif;padding:28px 24px 80px}
+  .top{max-width:1280px;margin:0 auto 22px}
+  .top h1{font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .top p{margin-top:8px;color:#a1a1aa;line-height:1.55;max-width:760px}
+  .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .tabs button{border:1px solid #27272a;background:#18181b;color:#e4e4e7;border-radius:999px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer}
+  .tabs button.on{background:#fff;color:#09090b;border-color:#fff}
+  .stage-wrap{max-width:1280px;margin:0 auto}
+  .stage{
+    width:min(100%,1200px);aspect-ratio:16/9;margin:0 auto;border:1px solid #27272a;border-radius:18px;
+    overflow:hidden;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.45)
+  }
+  .variant{position:absolute;inset:0;display:none;padding:34px 42px 28px}
+  .variant.on{display:flex;flex-direction:column}
+  .note{max-width:1200px;margin:16px auto 0;color:#a1a1aa;font-size:14px;line-height:1.5}
+  .pick{margin-top:10px}
+  .pick a{color:#22d3ee;font-weight:700;text-decoration:none}
+
+  /* shared demo content bits */
+  .kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+  h2{font-size:34px;line-height:1.15;font-weight:800;letter-spacing:-.03em}
+  .cite{font-size:12px;opacity:.65;margin-top:6px}
+  .flow{display:grid;grid-template-columns:1.05fr 40px 1.1fr;gap:0;align-items:stretch;flex:1;min-height:0;margin-top:18px}
+  .panel{border-radius:16px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:12px;min-height:0}
+  .bridge{display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{padding:6px 10px;border-radius:999px;font-size:13px;font-weight:600}
+  .mark{padding:12px 14px;border-radius:12px;font-weight:800;font-size:16px;line-height:1.35}
+  .mark small{display:block;margin-top:4px;font-size:12px;font-weight:600;opacity:.8}
+  .vlist{display:flex;flex-direction:column;gap:8px;overflow:auto}
+  .vitem{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .vitem:last-child{border:0;padding:0}
+  .vitem b{font-size:14px}
+  .vitem p{font-size:12px;opacity:.72;margin-top:2px;line-height:1.4}
+  .tag{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;white-space:nowrap}
+  .foot{font-size:11px;opacity:.55;margin-top:auto;line-height:1.4}
+
+  /* A: Vercel / Linear signal */
+  #a{background:#0a0a0a;font-family:Geist,"IBM Plex Sans",system-ui,sans-serif;color:#fafafa}
+  #a .kicker{color:#60a5fa}
+  #a .panel{background:#141414;border:1px solid #262626}
+  #a .bridge{color:#60a5fa}
+  #a .pill{background:#1a1a1a;border:1px solid #333;color:#e5e5e5}
+  #a .mark{background:#172554;border:1px solid #3b82f6;color:#dbeafe}
+  #a .tag.best{background:#f59e0b;color:#111}
+  #a .tag.some{background:#164e63;color:#67e8f9}
+  #a .tag.narrow{background:#3f3f46;color:#fbbf24}
+  #a .tag.no{background:#27272a;color:#a1a1aa}
+  #a .gridish{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:22px 22px;opacity:.35;pointer-events:none}
+  #a .content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+
+  /* B: Electric studio / neon path */
+  #b{background:radial-gradient(1200px 600px at 10% -10%,#123047 0%,transparent 55%),radial-gradient(900px 500px at 100% 0%,#2a1040 0%,transparent 45%),#070b16;font-family:"Space Grotesk","IBM Plex Sans",system-ui,sans-serif;color:#e8f0ff}
+  #b .kicker{color:#22d3ee;font-family:"JetBrains Mono",monospace}
+  #b h2{font-family:Syne,"Space Grotesk",sans-serif}
+  #b .panel{background:rgba(10,18,36,.72);border:1px solid rgba(34,211,238,.28);backdrop-filter:blur(10px);box-shadow:0 0 40px rgba(34,211,238,.08)}
+  #b .bridge{color:#22d3ee;text-shadow:0 0 18px rgba(34,211,238,.8)}
+  #b .pill{background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.35);color:#cffafe}
+  #b .mark{background:linear-gradient(90deg,rgba(249,115,22,.2),rgba(34,211,238,.12));border:1px solid rgba(249,115,22,.7);color:#fff}
+  #b .mark small{color:#fdba74}
+  #b .tag.best{background:#f97316;color:#fff}
+  #b .tag.some{background:rgba(34,211,238,.2);color:#22d3ee}
+  #b .tag.narrow{background:rgba(249,115,22,.18);color:#fdba74}
+  #b .tag.no{background:rgba(255,255,255,.06);color:#9aa6bd}
+  #b .scan{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(34,211,238,.05),transparent);background-size:100% 220%;animation:scan 4s linear infinite}
+  @keyframes scan{from{background-position:0 -40%}to{background-position:0 140%}}
+  #b .content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
+
+  /* C: Editorial board — fewer boxes, big type, numbered spine */
+  #c{background:#10131a;font-family:"IBM Plex Sans",system-ui,sans-serif;color:#f3f4f6}
+  #c .kicker{color:#fb7185;letter-spacing:.28em}
+  #c h2{font-size:40px;max-width:14ch}
+  #c .flow{grid-template-columns:1fr 1fr;gap:28px}
+  #c .bridge{display:none}
+  #c .panel{background:transparent;border:0;border-radius:0;padding:0;position:relative}
+  #c .panel.left{padding-right:28px;border-right:1px solid rgba(255,255,255,.12)}
+  #c .stepno{font-size:56px;font-weight:800;color:rgba(251,113,133,.35);line-height:1;margin-bottom:4px}
+  #c .pill{border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.16);color:#e5e7eb}
+  #c .mark{border-radius:0;border:0;border-left:4px solid #fb7185;background:rgba(251,113,133,.08);padding-left:14px}
+  #c .mark small{color:#fda4af}
+  #c .vitem{border-bottom-color:rgba(255,255,255,.1);grid-template-columns:28px 1fr auto;gap:10px}
+  #c .vitem .idx{font-family:"JetBrains Mono",monospace;font-size:12px;color:#fb7185;padding-top:2px}
+  #c .tag.best{background:#fb7185;color:#111}
+  #c .tag.some{background:#334155;color:#67e8f9}
+  #c .tag.narrow{background:#3f3f46;color:#fbbf24}
+  #c .tag.no{background:#1f2937;color:#9ca3af}
+  #c .rule{height:1px;background:linear-gradient(90deg,#fb7185,transparent);margin:10px 0 14px;border:0}
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>第3页 · 三个视觉方案</h1>
+    <p>同一页知识内容，三种风格。重点都改了：左边「定义」→ 中间箭头 → 右边「套到第2页」，先解决文字堆在一起、区块没有关系的问题。整体气质分别参考 GitHub 上常见的 deck 方向：Vercel/Linear 冷静信号、Neon/Electric 赛博课堂、Editorial 大字编辑感。</p>
+    <div class="tabs">
+      <button type="button" class="on" data-v="a">A · Signal Dark</button>
+      <button type="button" data-v="b">B · Electric Lab</button>
+      <button type="button" data-v="c">C · Editorial</button>
+    </div>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage">
+      <!-- A -->
+      <section class="variant on" id="a">
+        <div class="gridish"></div>
+        <div class="content">
+          <div class="kicker">什么叫智能</div>
+          <h2>环境再变，照样办得成</h2>
+          <div class="cite"><i>achieve goals in a wide range of environments</i> · Legg & Hutter, 2007</div>
+          <div class="flow">
+            <div class="panel">
+              <div style="font-size:13px;font-weight:700;color:#60a5fa">01 · 先给出尺子</div>
+              <p style="font-size:15px;line-height:1.5;color:#d4d4d8">会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
+              <div class="pills">
+                <span class="pill">perceive</span><span class="pill">world model</span><span class="pill">plan</span><span class="pill">act</span><span class="pill">learn</span>
+              </div>
+              <div class="mark">划重点 · 懂得学习，并给出更优化的解决方案。<small>learn, and produce better solutions</small></div>
+              <div class="foot">出处完整英文保留在讲义脚注，课堂先记这一句。</div>
+            </div>
+            <div class="bridge">→</div>
+            <div class="panel">
+              <div style="font-size:13px;font-weight:700;color:#f59e0b">02 · 再用尺子看第 2 页</div>
+              <div class="vlist">
+                <div class="vitem"><div><b>语音助手</b><p>会听会说，目标是你给的</p></div><span class="tag some">有一点</span></div>
+                <div class="vitem"><div><b>人脸闸机</b><p>基本只会做这一件事</p></div><span class="tag narrow">很窄</span></div>
+                <div class="vitem"><div><b>这扇门</b><p>智能在推门的人身上</p></div><span class="tag no">物件</span></div>
+                <div class="vitem"><div><b>扫地机器人</b><p>能看路、记地图、自己走</p></div><span class="tag best">最接近</span></div>
+                <div class="vitem"><div><b>空调 / 投影仪 / 温度计</b><p>目标极窄，或只是物件</p></div><span class="tag no">很窄 / 物件</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- B -->
+      <section class="variant" id="b">
+        <div class="scan"></div>
+        <div class="content">
+          <div class="kicker">WHAT IS INTELLIGENCE</div>
+          <h2>环境再变，照样办得成</h2>
+          <div class="cite"><i>achieve goals in a wide range of environments</i> · Legg & Hutter, 2007</div>
+          <div class="flow">
+            <div class="panel">
+              <div style="font-size:13px;font-weight:700;color:#22d3ee">STEP 01 · 专业说法</div>
+              <p style="font-size:15px;line-height:1.5">会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
+              <div class="pills">
+                <span class="pill">能感知 · perceive</span>
+                <span class="pill">世界模型 · world model</span>
+                <span class="pill">判断 · plan</span>
+                <span class="pill">行动 · act</span>
+                <span class="pill">学习 · learn</span>
+              </div>
+              <div class="mark">划重点 · 懂得学习，并给出更优化的解决方案。<small>learn, and produce better solutions</small></div>
+            </div>
+            <div class="bridge">⚡</div>
+            <div class="panel">
+              <div style="font-size:13px;font-weight:700;color:#f97316">STEP 02 · 套到刚才那张图</div>
+              <div class="vlist">
+                <div class="vitem"><div><b>1 语音助手</b><p>会听会说。目标是你给的</p></div><span class="tag some">有一点</span></div>
+                <div class="vitem"><div><b>2 人脸闸机</b><p>处境几乎只有这一种</p></div><span class="tag narrow">很窄</span></div>
+                <div class="vitem"><div><b>3 门</b><p>自己不会看，也不会想</p></div><span class="tag no">物件</span></div>
+                <div class="vitem"><div><b>4 扫地机</b><p>能看路、记地图、自己走</p></div><span class="tag best">最接近</span></div>
+                <div class="vitem"><div><b>5–7 空调 / 投影 / 温度计</b><p>目标极窄，或只是物件</p></div><span class="tag no">很窄 / 物件</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- C -->
+      <section class="variant" id="c">
+        <div class="kicker">什么叫智能</div>
+        <h2>环境再变，照样办得成</h2>
+        <div class="cite"><i>achieve goals in a wide range of environments</i> · Legg & Hutter, 2007</div>
+        <hr class="rule">
+        <div class="flow" style="flex:1;min-height:0">
+          <div class="panel left">
+            <div class="stepno">01</div>
+            <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:6px">先立尺子</div>
+            <p style="font-size:16px;line-height:1.55;color:#e5e7eb">会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
+            <div class="pills" style="margin-top:12px">
+              <span class="pill">perceive</span><span class="pill">model</span><span class="pill">plan</span><span class="pill">act</span><span class="pill">learn</span>
+            </div>
+            <div class="mark" style="margin-top:14px">划重点 · 懂得学习，并给出更优化的解决方案。<small>learn, and produce better solutions</small></div>
+          </div>
+          <div class="panel">
+            <div class="stepno">02</div>
+            <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:6px">再量第 2 页</div>
+            <div class="vlist">
+              <div class="vitem"><div class="idx">01</div><div><b>语音助手</b><p>会听会说，目标是你给的</p></div><span class="tag some">有一点</span></div>
+              <div class="vitem"><div class="idx">02</div><div><b>人脸闸机</b><p>基本只会做这一件事</p></div><span class="tag narrow">很窄</span></div>
+              <div class="vitem"><div class="idx">03</div><div><b>门</b><p>智能在推门的人身上</p></div><span class="tag no">物件</span></div>
+              <div class="vitem"><div class="idx">04</div><div><b>扫地机</b><p>能看路、记地图、自己走</p></div><span class="tag best">最接近</span></div>
+              <div class="vitem"><div class="idx">05</div><div><b>空调等</b><p>目标极窄，或只是物件</p></div><span class="tag no">很窄</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="note">
+    <div><b style="color:#fff">A Signal Dark</b>：冷静、点阵底、少发光。适合看起来「专业课」。</div>
+    <div style="margin-top:6px"><b style="color:#fff">B Electric Lab</b>：青橙脉冲、玻璃面板。更贴你们已经有的机房/脉冲气质。</div>
+    <div style="margin-top:6px"><b style="color:#fff">C Editorial</b>：大数字、竖分割、少卡片。文字最疏，逻辑靠 01→02 引导。</div>
+    <div class="pick">回消息里直接说选 A / B / C。选定后我会按该风格改整套课件，并顺手把第4页做成同样的「先判断 → 再规则 → 再当场验」流。</div>
+  </div>
+
+<script>
+document.querySelectorAll('.tabs button').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b===btn));
+    document.querySelectorAll('.variant').forEach(v=>v.classList.toggle('on',v.id===btn.dataset.v));
+  };
+});
+</script>
+</body>
+</html>

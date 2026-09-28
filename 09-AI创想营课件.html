@@ -112,8 +112,10 @@
   .shot span{display:block;color:var(--muted);font-size:12px;line-height:1.4}
 
   .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .flow .card{min-height:140px}
-  .flow .n{font-size:28px;font-weight:900;color:var(--cyan)}
+  .flow .card{min-height:auto;padding:12px 14px}
+  .flow .n{font-size:22px;font-weight:900;color:var(--cyan)}
+  .tx-shot{border:0;padding:0;background:transparent;cursor:zoom-in;text-align:left;color:inherit;display:block;width:100%}
+  .tx-shot img{width:100%;height:min(38vh,340px);object-fit:cover;object-position:top;border-radius:14px;border:1px solid var(--line);display:block}
   a.link{color:var(--cyan);font-weight:700;text-decoration:none;font-size:18px}
 
   #mapwrap{position:relative;height:min(46vh,420px);border:1px solid var(--line);border-radius:16px;background:
@@ -307,17 +309,16 @@
   <section class="slide">
     <div class="kicker">看清黑盒</div>
     <h2>进了机房，它怎么算出下一个词</h2>
+    <button class="tx-shot" type="button" id="txShot">
+      <img src="assets/camp/transformer-teaser.jpg" alt="Transformer Explainer 界面截图：从输入句子到预测下一个词的可视化">
+    </button>
     <div class="flow">
       <div class="card"><div class="n">1</div><p>字被切成小块，叫做 token</p></div>
-      <div class="card"><div class="n">2</div><p>每块变成一个坐标。下一页的地图，就是这种坐标压扁之后的样子</p></div>
-      <div class="card"><div class="n">3</div><p>每一层看看这句话里，哪些词彼此相关</p></div>
-      <div class="card"><div class="n">4</div><p>算出下一个词的可能性，挑一个，再重复</p></div>
+      <div class="card"><div class="n">2</div><p>每块变成一个坐标</p></div>
+      <div class="card"><div class="n">3</div><p>看哪些词彼此相关</p></div>
+      <div class="card"><div class="n">4</div><p>挑下一个最可能的词</p></div>
     </div>
-    <div class="card">
-      <p>开源项目 <b>Transformer Explainer</b> 在浏览器里跑一个小 GPT，能一步步看见它怎样预测下一个词。这页由老师来操作。全班只盯一件事：它在挑下一个词，不是在查你们学校。</p>
-      <p style="margin-top:10px"><a class="link" href="https://poloclub.github.io/transformer-explainer/" target="_blank">打开 poloclub.github.io/transformer-explainer</a></p>
-      <p class="small" style="margin-top:6px">Georgia Tech Polo Club 的开源项目，论文 Transformer Explainer，CHI 2026。界面是英文。网络打不开就用上面四步讲完。</p>
-    </div>
+    <p class="small">上图来自开源项目 <b>Transformer Explainer</b>（Georgia Tech Polo Club，MIT License）。课堂上打开原站，由老师操作：<a class="link" href="https://poloclub.github.io/transformer-explainer/" target="_blank">poloclub.github.io/transformer-explainer</a>。全班只盯一件事：它在挑下一个词，不是在查你们学校。</p>
   </section>
 
   <section class="slide">
@@ -546,6 +547,7 @@ window.addEventListener("resize",()=>{
 
 document.getElementById("airMain").onclick=()=>openPhoto("assets/camp/aerial-bluffs.jpg","实拍。谷歌在美国爱荷华的机房，无人机航拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。");
 document.getElementById("airInside").onclick=()=>openPhoto("assets/camp/sierra.jpg","实拍。美国能源部拍摄的 Sierra。航拍里的厂房，钻进去就是这种一排排机器。");
+document.getElementById("txShot").onclick=()=>openPhoto("assets/camp/transformer-teaser.jpg","Transformer Explainer 界面截图。Georgia Tech Polo Club / MIT License。课堂上打开原站操作。");
 const box=document.getElementById("lightbox");
 function openPhoto(src,cap){
   box.classList.add("show");
