@@ -83,6 +83,8 @@
   .logic{display:grid;grid-template-columns:.92fr 1.08fr;gap:16px;align-items:stretch}
   .ruler ol{margin:8px 0 0 1.15em}
   .ruler li{padding:3px 0;font-size:16px}
+  .mark{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(249,115,22,.16);border:1px solid rgba(249,115,22,.6);font-size:17px;font-weight:800;line-height:1.4}
+  .mark b{color:var(--orange);margin-right:6px}
   .air{display:grid;grid-template-columns:1.5fr .85fr;gap:14px;align-items:stretch}
   .air .hero{border:0;padding:0;background:transparent;cursor:zoom-in;text-align:left;color:inherit}
   .air .hero img{width:100%;height:min(56vh,480px);object-fit:cover;border-radius:16px;display:block;border:1px solid var(--line)}
@@ -191,22 +193,23 @@
     <h2>换个地方，还能把事做成</h2>
     <div class="logic">
       <div class="card ruler">
-        <h3 class="accent">先有一把尺子</h3>
-        <p>空调能感到冷热，也能自己开关。<br>换一件事给它，它就不会了。</p>
-        <ol>
-          <li>能看见、听见</li>
-          <li>心里有一张地图</li>
-          <li>会想下一步</li>
-          <li>会动手</li>
-          <li>没见过的情况，也能应付一点</li>
-        </ol>
+        <h3 class="accent">专业说法</h3>
+        <p>会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的，是处境一换，它还能不能把目标做成。</p>
+        <div class="pills">
+          <span class="pill">能感知</span>
+          <span class="pill">脑子里有个世界</span>
+          <span class="pill">会判断下一步</span>
+          <span class="pill">会行动</span>
+          <span class="pill">没见过也能应付一点</span>
+        </div>
+        <div class="mark"><b>划重点</b>懂得学习，并给出更优化的解决方案。</div>
+        <p class="small" style="margin-top:10px">对应 Shane Legg 与 Marcus Hutter，2007：Intelligence measures an agent's ability to achieve goals in a wide range of environments. 上面五条来自 Russell 与 Norvig，再加上会不会学习。</p>
       </div>
       <div class="card">
         <h3 class="org">再用尺子看第 2 页</h3>
         <div id="verdicts"></div>
       </div>
     </div>
-    <p class="small">这句话来自 Legg 与 Hutter，2007：智能是在很多不同的环境里，把目标做成的能力。上面五条是课堂上的检查清单。</p>
   </section>
 
   <section class="slide">
