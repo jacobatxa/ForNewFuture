@@ -47,7 +47,7 @@
   .tag.some{background:rgba(34,211,238,.15);color:var(--cyan)}
   .tag.best{background:var(--orange);color:#fff}
 
-  .stage{position:relative;margin:0 auto;width:min(100%,calc((100vh - 250px) * 1.5));aspect-ratio:2508/1672}
+  .stage{position:relative;margin:0 auto;width:min(100%,calc((100vh - 220px) * 16 / 9));aspect-ratio:16/9}
   .stage img{width:100%;height:100%;object-fit:contain;border-radius:16px;display:block}
   .hs{position:absolute;width:36px;height:36px;border-radius:50%;border:2px solid var(--cyan);
     background:rgba(11,17,32,.78);color:#fff;font-weight:800;transform:translate(-50%,-50%)}
@@ -69,14 +69,24 @@
   .pyramid{display:flex;flex-direction:column;gap:6px;align-items:center}
   .pyramid div{color:#fff;text-align:center;padding:8px 10px;border-radius:8px;font-weight:700;font-size:15px}
 
-  .steps{display:flex;flex-direction:column;gap:8px}
-  .step{text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:12px;padding:10px 12px}
+  .steps{display:flex;flex-direction:column;gap:6px}
+  .step{text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:12px;padding:7px 12px}
   .step.on{border-color:var(--orange);background:rgba(249,115,22,.12)}
   .step b{display:block;font-size:15px}
   .step span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
   .photo{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:320px;background:#07101f;cursor:zoom-in}
-  .photo img{width:100%;height:420px;object-fit:cover;display:block}
+  .photo img{width:100%;height:min(48vh,400px);object-fit:cover;display:block}
   .photo .cap{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.82));font-size:14px}
+  .photo .sweep{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 35%,rgba(34,211,238,.42) 50%,transparent 65%);background-size:220% 100%;animation:sweep 2.6s linear infinite;mix-blend-mode:screen}
+  @keyframes sweep{from{background-position:140% 0}to{background-position:-140% 0}}
+  .step b{font-size:14px}
+  .logic{display:grid;grid-template-columns:.92fr 1.08fr;gap:16px;align-items:stretch}
+  .ruler ol{margin:8px 0 0 1.15em}
+  .ruler li{padding:3px 0;font-size:16px}
+  .air{display:grid;grid-template-columns:1.5fr .85fr;gap:14px;align-items:stretch}
+  .air .hero{border:0;padding:0;background:transparent;cursor:zoom-in;text-align:left;color:inherit}
+  .air .hero img{width:100%;height:min(56vh,480px);object-fit:cover;border-radius:16px;display:block;border:1px solid var(--line)}
+  .air-side{display:flex;flex-direction:column;gap:12px;justify-content:space-between}
   .phone{width:230px;margin:20px auto;background:#0a0f1c;border:8px solid #1f2a44;border-radius:28px;padding:16px;min-height:280px}
   .bubble{border-radius:14px;padding:10px 12px;margin:8px 0;font-size:14px;line-height:1.45}
   .bubble.me{background:#1d4ed8}
@@ -165,53 +175,55 @@
     <h2>这张图里，哪些东西算智能？</h2>
     <div class="stage" id="voteStage">
       <img src="assets/camp/vote.jpg" alt="学校门厅里有手机助手、人脸闸机、门、扫地机、空调、投影仪和温度计">
-      <button class="hs" style="left:39%;top:63%" data-n="1" type="button">1</button>
-      <button class="hs" style="left:57%;top:51%" data-n="2" type="button">2</button>
-      <button class="hs" style="left:79%;top:46%" data-n="3" type="button">3</button>
-      <button class="hs" style="left:72%;top:86%" data-n="4" type="button">4</button>
-      <button class="hs" style="left:56%;top:23%" data-n="5" type="button">5</button>
-      <button class="hs" style="left:88%;top:13%" data-n="6" type="button">6</button>
-      <button class="hs" style="left:64%;top:41%" data-n="7" type="button">7</button>
+      <button class="hs" style="left:24%;top:68%" data-n="1" type="button">1</button>
+      <button class="hs" style="left:49%;top:52%" data-n="2" type="button">2</button>
+      <button class="hs" style="left:84%;top:48%" data-n="3" type="button">3</button>
+      <button class="hs" style="left:60%;top:78%" data-n="4" type="button">4</button>
+      <button class="hs" style="left:34%;top:16%" data-n="5" type="button">5</button>
+      <button class="hs" style="left:70%;top:11%" data-n="6" type="button">6</button>
+      <button class="hs" style="left:37%;top:40%" data-n="7" type="button">7</button>
     </div>
     <div class="legend" id="voteLegend"></div>
   </section>
 
   <section class="slide">
-    <div class="kicker">定义</div>
-    <h2>智能，是在很多不一样的处境里，还能把目标做成</h2>
-    <div class="grid2" style="align-items:start">
-      <div>
-        <p>会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的，是处境一换，它还能不能把目标做成。</p>
-        <div class="pills">
-          <span class="pill">能感知</span>
-          <span class="pill">脑子里有个世界</span>
-          <span class="pill">会判断下一步</span>
-          <span class="pill">会行动</span>
-          <span class="pill">没见过的情况也能应付一点</span>
-        </div>
-        <p class="small" style="margin-top:12px">课堂这句话，对应 Shane Legg 与 Marcus Hutter 2007 年的定义：Intelligence measures an agent's ability to achieve goals in a wide range of environments. 五个部件是课堂上的尺子，来自 Russell 与 Norvig 对「能感知并行动的主体」的讲法，加上会不会学习。</p>
+    <div class="kicker">什么叫智能</div>
+    <h2>换个地方，还能把事做成</h2>
+    <div class="logic">
+      <div class="card ruler">
+        <h3 class="accent">先有一把尺子</h3>
+        <p>空调能感到冷热，也能自己开关。<br>换一件事给它，它就不会了。</p>
+        <ol>
+          <li>能看见、听见</li>
+          <li>心里有一张地图</li>
+          <li>会想下一步</li>
+          <li>会动手</li>
+          <li>没见过的情况，也能应付一点</li>
+        </ol>
       </div>
-      <div class="card" id="verdicts"></div>
+      <div class="card">
+        <h3 class="org">再用尺子看第 2 页</h3>
+        <div id="verdicts"></div>
+      </div>
     </div>
+    <p class="small">这句话来自 Legg 与 Hutter，2007：智能是在很多不同的环境里，把目标做成的能力。上面五条是课堂上的检查清单。</p>
   </section>
 
   <section class="slide">
-    <div class="kicker">边界</div>
-    <h2>它能帮你做什么，哪些事必须留在你自己手里</h2>
+    <div class="kicker">别交出去</div>
+    <h2>它能搭把手。拿主意的是你。</h2>
     <div class="grid2">
-      <div class="card"><h3 class="accent">它很擅长</h3><p>列提纲、把一道题再出两道、翻译、陪你背单词、把笔记整理短一点。</p></div>
-      <div class="card"><h3 class="org">这些事它做不了</h3><p>它没去过你们学校，也不认识你。它不会因为你难过就真的懂你。它会把没发生的事说圆。</p></div>
+      <div class="card"><h3 class="accent">这些它拿手</h3><p>列提纲，把一道题再出两道，翻译，陪你背单词，把笔记收短。</p></div>
+      <div class="card"><h3 class="org">这些别交给它</h3><p>它没进过你们学校，也不认识你。你难过的时候，它不懂，只会接一句顺的。</p></div>
     </div>
-    <div class="card">
-      <ul class="clean">
-        <li><b>思考权留在自己这儿。</b>「作文让它写完我抄上」——练的是它，生锈的是你。</li>
-        <li><b>心情和重大选择去找真人。</b>和朋友吵架、被孤立、跟爸妈闹矛盾。它只是在猜下一句顺耳的话。</li>
-        <li><b>它会一本正经地编。</b>答案自己核对。密码、住址、学号不要贴进去。</li>
-      </ul>
+    <div class="grid3">
+      <div class="card"><h3>1　脑子自己用</h3><p class="mini">作文让它写完你来抄，练的是它，荒的是你。</p></div>
+      <div class="card"><h3>2　心事找人说</h3><p class="mini">吵架、被孤立、跟爸妈闹。这种事问真人。</p></div>
+      <div class="card"><h3>3　它会编</h3><p class="mini">答案自己核对。密码、住址、学号不要贴进去。</p></div>
     </div>
     <div class="card" style="border-color:rgba(249,115,22,.45)">
-      <b>现场实验</b>
-      <p style="margin-top:6px">假设豆包回答：「你们学校门口有 17 棵树。昨天食堂 11:40 就卖完了。」这不是它的真实截图，是这类问题里它常会交出的那种答案。</p>
+      <h3 class="org">来对一下</h3>
+      <p>豆包要是说：「你们学校门口有 17 棵树。」你信吗？</p>
       <div class="choice" id="expBtns">
         <button type="button" data-v="信">信</button>
         <button type="button" data-v="不信">不信</button>
@@ -234,13 +246,13 @@
       </div>
       <div>
         <ul class="clean">
-          <li><b>L1</b>　打开豆包，提问、生图、做一段简单视频</li>
-          <li><b class="org">L2</b>　给它目标、记忆和技能，搭一个自己的 Agent</li>
-          <li><b>L3</b>　做成同学真的能用的小系统。后面几天走到这里</li>
-          <li><b>L4</b>　知道什么该存、谁能看、怎么放到网上</li>
           <li><b>L5</b>　能改工具、写插件，再往后才碰到训练模型</li>
+          <li><b>L4</b>　知道什么该存、谁能看、怎么放到网上</li>
+          <li><b>L3</b>　做成同学真的能用的小系统。后面几天走到这里</li>
+          <li><b class="org">L2</b>　给它目标、记忆和技能，搭一个自己的 Agent · 今天</li>
+          <li><b>L1</b>　打开豆包，提问、生图、做一段简单视频</li>
         </ul>
-        <p class="small" style="margin-top:10px">会用 App，还不是会搭智能体。今天的终点是 L2。寻物系统是朝 L3 走的第一小步。</p>
+        <p class="small" style="margin-top:10px">从上往下，左右是同一层。今天停在 L2。寻物是朝 L3 走的第一步。</p>
       </div>
     </div>
   </section>
@@ -252,14 +264,31 @@
       <div class="steps" id="journeySteps"></div>
       <div class="photo" id="journeyView"></div>
     </div>
-    <p class="small">豆包走国内网络，进字节跳动的机房。下面的照片是同一类地方的实拍，并不是豆包那一间的监控画面。点照片可以放大。</p>
+    <p class="small">豆包走国内网络，进字节跳动的机房。标了「实拍」的是真机房；标了「示意图」的是为了看清脉冲和下钻，不是监控画面。点图可以放大。</p>
   </section>
 
   <section class="slide">
-    <div class="kicker">算力长什么样</div>
-    <h2>这些是真的机房。Grok、OpenAI 用的也是这种地方</h2>
-    <div class="gallery" id="gallery"></div>
-    <p class="small">Grok 的机房叫 Colossus，在美国孟菲斯，十万张以上的英伟达显卡。OpenAI 的很多算力在微软的数据中心，新的大项目叫 Stargate，在美国得州阿比林。这两处的新闻照片有版权，没有嵌进课件。课堂上可以打开：<a class="link" href="https://www.servethehome.com/inside-100000-nvidia-gpu-xai-colossus-cluster-supermicro-helped-build-for-elon-musk/" target="_blank">Colossus 内部参观</a>　<a class="link" href="https://www.reporternews.com/picture-gallery/news/2025/09/25/inside-abilenes-massive-1100-acre-500-billion-project-stargate-texas-newspaper/86332564007/" target="_blank">Stargate 现场</a></p>
+    <div class="kicker">从天上看</div>
+    <h2>一座机房，大得像一小块城</h2>
+    <div class="air">
+      <button class="hero" type="button" id="airMain">
+        <img src="assets/camp/aerial-bluffs.jpg" alt="无人机航拍的大型机房，夕阳下的厂房和一排冷却设备">
+      </button>
+      <div class="air-side">
+        <div class="card">
+          <h3 class="org">马斯克在孟菲斯修的那座</h3>
+          <p>Grok 的机房叫 Colossus。他把一座旧工厂改成算力中心，旁边停着一排燃气轮机，专门给显卡供电。从天上拍，比左边还大一圈。</p>
+          <p style="margin-top:8px"><a class="link" href="https://www.theguardian.com/technology/2025/apr/24/elon-musk-xai-memphis" target="_blank">打开孟菲斯航拍</a></p>
+          <p class="small">那组航拍是新闻照片，有版权，所以放不进课件。课堂上点开给大家看。</p>
+        </div>
+        <button class="shot" type="button" id="airInside">
+          <img src="assets/camp/sierra.jpg" alt="机房内部一排排机器">
+          <b>钻进去，是一排排机器</b>
+          <span>美国能源部拍摄的 Sierra。左边那座厂房，里面就是这种。</span>
+        </button>
+      </div>
+    </div>
+    <p class="small">左边是谷歌在美国爱荷华的机房，无人机实拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。</p>
   </section>
 
   <section class="slide">
@@ -411,8 +440,8 @@ const hints=[
   "用这把尺子，把刚才点过的东西收回来",
   "先让大家选：信、不信，还是要查",
   "今天停在会搭。后面几天走到做成别人能用的",
-  "一步一步点，看一句话离开手机之后去了哪",
-  "点照片可以放大。这些是真实机房",
+  "从左往下点。每一站都有图，一直钻到显卡、算法和存储",
+  "左边是航拍。马斯克那座点链接，课堂上打开",
   "这页由老师操作，只看它怎么预测下一个词",
   "先放下猫、狗、卡车，再点两个词看远近",
   "点左边的词，再点右边的解释",
@@ -450,56 +479,38 @@ document.querySelectorAll(".hs").forEach(hs=>{
 document.getElementById("expBtns").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
   document.querySelectorAll("#expBtns button").forEach(x=>x.classList.toggle("on",x===b));
-  document.getElementById("expReveal").textContent="它没去过你们学校，也没在食堂排过队。它在把话说顺。这种事要查，或者问一个真的在场的人。";
+  document.getElementById("expReveal").textContent="它没去过你们学校。这句话是编圆的。自己去看，或者问在场的人。";
 });
 
 const journey=[
-  {t:"1 你按下发送",s:"在豆包里打一句话。这一刻，它还只是你手机上的字。",kind:"phone"},
-  {t:"2 走进国内网络",s:"字变成数字，离开手机，送到字节跳动的服务器。这一程在国内，不穿过海底。",kind:"net"},
-  {t:"3 机房从外面看",s:"到了，是一座大厂房，旁边是冷却设备。豆包的机房在国内。这张是谷歌在美国俄勒冈州达尔斯的机房，让你看见外面长什么样。",img:"assets/camp/google-dalles.jpg",cap:"谷歌达尔斯机房外景 · Tony Webster / CC BY 2.0"},
-  {t:"4 进门是一排排机器",s:"算一句话的时候，房间就是这样。这是美国劳伦斯利弗莫尔国家实验室的 Sierra，里面是显卡。",img:"assets/camp/sierra.jpg",cap:"Sierra 超算通道 · 美国能源部，公有领域"},
-  {t:"5 一次吐出一个词",s:"机器会发烫，所以有冷却。显卡一起猜下一个词，连成一句，再流回你的屏幕。",img:"assets/camp/frontier-cooling.jpg",cap:"橡树岭 Frontier 的冷却柜 · Oak Ridge National Laboratory / CC BY 2.0"}
+  {t:"1 从手机发出去",s:"你按下发送。这一刻，它还只是屏幕上的字。",img:"assets/camp/pulse-phone.jpg",cap:"示意图 · 电脉冲离开手机"},
+  {t:"2 变成电信号",s:"字变成数字，沿国内网络送到字节跳动。这一程不穿海底。",img:"assets/camp/pulse-fiber.jpg",cap:"示意图 · 光纤里的脉冲"},
+  {t:"3 落到一座厂房",s:"到了。豆包的机房在国内。这张是谷歌在爱荷华的机房，无人机实拍，让你看见外面有多大。",img:"assets/camp/aerial-bluffs.jpg",cap:"实拍 · 谷歌爱荷华机房航拍 · Chad Davis / CC BY 2.0"},
+  {t:"4 走进机柜",s:"进门是一排排机器。这是美国能源部的 Sierra，通道两边都是算力。",img:"assets/camp/sierra.jpg",cap:"实拍 · Sierra 超算通道 · 美国能源部，公有领域"},
+  {t:"5 显卡同时开算",s:"一块板子上有许多核心，同时算。你这句话被拆开，一起算。",img:"assets/camp/pulse-gpu.jpg",cap:"示意图 · 显卡上的电脉冲"},
+  {t:"6 算法挑下一个词",s:"算完不是直接给你整句话。它一次挑一个最可能的下一个词，再连起来。",img:"assets/camp/pulse-algo.jpg",cap:"示意图 · 下一个词被点亮"},
+  {t:"7 模型躺在存储里",s:"那些「会说话」的数字，平时存在硬盘和内存里。有人提问，才被搬上显卡。",img:"assets/camp/pulse-storage.jpg",cap:"示意图 · 模型存在一排存储里"}
 ];
 const jSteps=document.getElementById("journeySteps");
 const jView=document.getElementById("journeyView");
 function showJourney(i){
   jSteps.querySelectorAll(".step").forEach((el,k)=>el.classList.toggle("on",k===i));
   const s=journey[i];
-  if(s.img){
-    jView.style.cursor="zoom-in";
-    jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="cap">${s.cap}<br>${s.s}</div>`;
-    jView.onclick=()=>openPhoto(s.img,s.cap+"。"+s.s);
-  }else if(s.kind==="phone"){
-    jView.onclick=null; jView.style.cursor="default";
-    jView.innerHTML=`<div class="phone"><div class="small">豆包</div><div class="bubble me">图书馆三楼，我丢了一个蓝色水壶</div><div class="bubble ai">字还在手机上。发送之后，它才出发。</div></div>`;
-  }else{
-    jView.onclick=null; jView.style.cursor="default";
-    jView.innerHTML=`<div class="hops"><span>你的手机</span><i>→</i><span>国内网络</span><i>→</i><span>字节跳动的服务器</span></div>`;
-  }
+  jView.style.cursor="zoom-in";
+  jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="sweep"></div><div class="cap">${s.cap}<br>${s.s}</div>`;
+  jView.onclick=()=>openPhoto(s.img,s.cap+"。"+s.s);
 }
 journey.forEach((s,i)=>{
   const b=document.createElement("button");
   b.type="button"; b.className="step";
-  b.innerHTML=`<b>${s.t}</b><span>${s.s}</span>`;
+  b.innerHTML=`<b>${s.t}</b>`;
   b.onclick=()=>showJourney(i);
   jSteps.appendChild(b);
 });
 showJourney(0);
 
-const gallery=[
-  ["assets/camp/sierra.jpg","一排排机器","美国劳伦斯实验室 Sierra，显卡超算的通道。Grok 的 Colossus 也是这种机柜一路排开，规模更大。美国能源部，公有领域。"],
-  ["assets/camp/frontier-racks.jpg","线和机柜","橡树岭 Frontier。曾经的世界最快计算机之一。算力从近处看，就是电缆、电源和一柜柜机器。Oak Ridge / CC BY 2.0。"],
-  ["assets/camp/frontier-cooling.jpg","算力会发烫","同一座 Frontier 的冷却柜。没有散热，这些机器撑不住。Oak Ridge / CC BY 2.0。"],
-  ["assets/camp/google-dalles.jpg","外面是大厂房","谷歌在达尔斯的机房。OpenAI 用的微软数据中心、Stargate 的工地，从外面看也是这种大房子加冷却设备。Tony Webster / CC BY 2.0。"]
-];
-const gal=document.getElementById("gallery");
-gallery.forEach(([src,title,cap])=>{
-  const b=document.createElement("button");
-  b.type="button"; b.className="shot";
-  b.innerHTML=`<img src="${src}" alt="${title}"><b>${title}</b><span>${cap}</span>`;
-  b.onclick=()=>openPhoto(src,title+"。"+cap);
-  gal.appendChild(b);
-});
+document.getElementById("airMain").onclick=()=>openPhoto("assets/camp/aerial-bluffs.jpg","实拍。谷歌在美国爱荷华的机房，无人机航拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。");
+document.getElementById("airInside").onclick=()=>openPhoto("assets/camp/sierra.jpg","实拍。美国能源部拍摄的 Sierra。航拍里的厂房，钻进去就是这种一排排机器。");
 const box=document.getElementById("lightbox");
 function openPhoto(src,cap){
   box.classList.add("show");
