@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 创想营 · 把好奇变成能力</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▚</text></svg>">
+<style>
+  :root{
+    --bg:#0b1120; --ink:#e8edf7; --muted:#9aa6bd;
+    --blue:#3b82f6; --cyan:#22d3ee; --orange:#f97316; --pink:#fb7185; --line:rgba(255,255,255,.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--bg);color:var(--ink);
+    font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;overflow:hidden}
+  button,input{font-family:inherit;color:inherit}
+  button{cursor:pointer}
+  #deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;padding:28px 78px 58px;display:none;
+    flex-direction:column;justify-content:center;gap:14px;overflow:auto}
+  .slide.active{display:flex}
+  .kicker{font-size:13px;letter-spacing:3px;color:var(--orange);font-weight:700}
+  h1{font-size:58px;line-height:1.08;font-weight:900}
+  h2{font-size:36px;line-height:1.2;font-weight:900}
+  h3{font-size:18px;font-weight:700}
+  p{line-height:1.55}
+  .accent{color:var(--cyan)}
+  .org{color:var(--orange)}
+  .mut{color:var(--muted)}
+  .small{font-size:13px;color:var(--muted);line-height:1.45}
+  #bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--blue));width:0;z-index:70}
+  #pager{position:fixed;bottom:16px;right:28px;color:var(--muted);font-size:13px;z-index:70}
+  #hint{position:fixed;bottom:16px;left:28px;right:220px;color:var(--muted);font-size:13px;z-index:70}
+  .navbtn{position:fixed;top:50%;transform:translateY(-50%);z-index:70;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(11,17,32,.72);color:var(--ink);font-size:22px}
+  #prev{left:14px}#next{right:14px}
+  .navbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .bg-glow{position:absolute;border-radius:50%;filter:blur(120px);opacity:.18;pointer-events:none}
+  ul.clean{list-style:none}
+  ul.clean li{padding:7px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:700}
+  .tag.no{background:rgba(255,255,255,.08);color:var(--muted)}
+  .tag.narrow{background:rgba(249,115,22,.18);color:#fdba74}
+  .tag.some{background:rgba(34,211,238,.15);color:var(--cyan)}
+  .tag.best{background:var(--orange);color:#fff}
+
+  .stage{position:relative;margin:0 auto;width:min(100%,calc((100vh - 250px) * 1.5));aspect-ratio:2508/1672}
+  .stage img{width:100%;height:100%;object-fit:contain;border-radius:16px;display:block}
+  .hs{position:absolute;width:36px;height:36px;border-radius:50%;border:2px solid var(--cyan);
+    background:rgba(11,17,32,.78);color:#fff;font-weight:800;transform:translate(-50%,-50%)}
+  .hs.on{background:var(--orange);border-color:var(--orange)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px}
+  .lg{padding:4px 10px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:13px}
+  .lg.on{background:rgba(249,115,22,.25);border-color:var(--orange)}
+
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .pill{padding:6px 10px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);font-size:14px}
+  .verdict{padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .verdict .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .verdict p{margin-top:2px;color:var(--muted);font-size:14px}
+  .choice{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .choice button,.chip{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:8px 14px;font-size:15px}
+  .choice button.on{background:rgba(249,115,22,.25);border-color:var(--orange)}
+  #expReveal{margin-top:8px;font-size:16px}
+
+  .pyramid{display:flex;flex-direction:column;gap:6px;align-items:center}
+  .pyramid div{color:#fff;text-align:center;padding:8px 10px;border-radius:8px;font-weight:700;font-size:15px}
+
+  .steps{display:flex;flex-direction:column;gap:8px}
+  .step{text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:12px;padding:10px 12px}
+  .step.on{border-color:var(--orange);background:rgba(249,115,22,.12)}
+  .step b{display:block;font-size:15px}
+  .step span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+  .photo{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:320px;background:#07101f;cursor:zoom-in}
+  .photo img{width:100%;height:420px;object-fit:cover;display:block}
+  .photo .cap{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.82));font-size:14px}
+  .phone{width:230px;margin:20px auto;background:#0a0f1c;border:8px solid #1f2a44;border-radius:28px;padding:16px;min-height:280px}
+  .bubble{border-radius:14px;padding:10px 12px;margin:8px 0;font-size:14px;line-height:1.45}
+  .bubble.me{background:#1d4ed8}
+  .bubble.ai{background:rgba(255,255,255,.08)}
+  .hops{display:flex;align-items:center;justify-content:center;gap:10px;height:100%;min-height:280px;font-weight:700}
+  .hops i{font-style:normal;color:var(--cyan)}
+
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .shot{border:0;padding:0;background:transparent;text-align:left;color:inherit;cursor:zoom-in}
+  .shot img{width:100%;height:180px;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block}
+  .shot b{display:block;margin-top:6px;font-size:14px}
+  .shot span{display:block;color:var(--muted);font-size:12px;line-height:1.4}
+
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .flow .card{min-height:140px}
+  .flow .n{font-size:28px;font-weight:900;color:var(--cyan)}
+  a.link{color:var(--cyan);font-weight:700;text-decoration:none;font-size:18px}
+
+  #mapwrap{position:relative;height:min(46vh,420px);border:1px solid var(--line);border-radius:16px;background:
+    radial-gradient(circle at 20% 30%,rgba(59,130,246,.08),transparent 40%),
+    radial-gradient(circle at 80% 40%,rgba(249,115,22,.08),transparent 42%),
+    #0c1528}
+  .wdot{position:absolute;transform:translate(-50%,-50%);border:0;background:transparent;font-weight:800;font-size:15px;
+    text-shadow:0 1px 4px #000;padding:4px}
+  .wdot i{display:block;width:10px;height:10px;border-radius:50%;margin:0 auto 2px}
+  .wdot.sel{outline:2px solid #fff;border-radius:10px}
+  .bank{display:flex;flex-wrap:wrap;gap:6px}
+  .bank button{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:4px 10px;font-size:13px}
+  .bank button.placed{opacity:.35}
+  #pairbox{min-height:48px;font-size:16px}
+
+  .gmatch{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .gmatch button{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border-radius:12px;
+    border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:15px}
+  .gmatch button.pick{border-color:var(--cyan)}
+  .gmatch button.ok{border-color:#34d399;background:rgba(52,211,153,.12)}
+  .gmatch button.bad{border-color:#fb7185}
+
+  .agent-board{display:grid;grid-template-columns:minmax(180px,1fr) 200px minmax(180px,1fr);grid-template-rows:auto auto auto;gap:12px 16px;align-items:center;justify-items:center;max-width:920px;margin:0 auto;width:100%}
+  .agent-board .part{width:min(280px,100%)}
+  .agent-board .part[data-part="memory"],.agent-board .part[data-part="brain"]{justify-self:end}
+  .agent-board .part[data-part="skill"],.agent-board .part[data-part="spec"]{justify-self:start}
+  .agent-core{grid-column:2;grid-row:2;width:180px;height:180px;border-radius:50%;margin:auto;
+    display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:22px;
+    background:radial-gradient(circle at 40% 35%,#38bdf8,#1d4ed8 55%,#0b1120);border:1px solid rgba(255,255,255,.3)}
+  .part{text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:14px;padding:12px}
+  .part.on{border-color:var(--orange);background:rgba(249,115,22,.12)}
+  #partDetail{min-height:72px;font-size:16px}
+
+  .mini{font-size:13px;color:var(--muted);margin-top:6px}
+  .lost-grid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;align-items:start}
+  label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+  input[type=text]{width:100%;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(0,0,0,.25)}
+  .go{margin-top:10px;padding:8px 14px;border-radius:10px;border:0;background:var(--orange);color:#fff;font-weight:700}
+  .mem{font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .lights{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+  .lights span{padding:4px 8px;border-radius:99px;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+  .lights span.on{border-color:var(--cyan);color:var(--cyan);background:rgba(34,211,238,.12)}
+  #resultLine{font-size:16px;font-weight:700;min-height:48px}
+  .task{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+  #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:90;display:none;flex-direction:column;
+    align-items:center;justify-content:center;padding:28px;gap:12px}
+  #lightbox.show{display:flex}
+  #lightbox img{max-width:94vw;max-height:80vh;object-fit:contain;border-radius:12px}
+  #lightbox p{max-width:900px;text-align:center}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="deck">
+
+  <section class="slide active">
+    <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
+    <div class="kicker">BILDEN EDU · 青少年 AI 创想营</div>
+    <h1>AI 创想营<br><span class="accent">把好奇变成能力</span></h1>
+    <p class="mut">10–15 岁一起。今天只走完一条线：先认出智能，再看见一句话怎么被算出来，最后认出什么才是真的智能体。</p>
+    <div class="grid3">
+      <div class="card"><b class="org">01</b><p>什么算智能？从图里认出来</p></div>
+      <div class="card"><b class="accent">02</b><p>一句 Prompt 离开手机之后，去了哪</p></div>
+      <div class="card"><b style="color:var(--blue)">03</b><p>真智能体长什么样，并用它碰一个校园问题</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">先选一选</div>
+    <h2>这张图里，哪些东西算智能？</h2>
+    <div class="stage" id="voteStage">
+      <img src="assets/camp/vote.jpg" alt="学校门厅里有手机助手、人脸闸机、门、扫地机、空调、投影仪和温度计">
+      <button class="hs" style="left:39%;top:63%" data-n="1" type="button">1</button>
+      <button class="hs" style="left:57%;top:51%" data-n="2" type="button">2</button>
+      <button class="hs" style="left:79%;top:46%" data-n="3" type="button">3</button>
+      <button class="hs" style="left:72%;top:86%" data-n="4" type="button">4</button>
+      <button class="hs" style="left:56%;top:23%" data-n="5" type="button">5</button>
+      <button class="hs" style="left:88%;top:13%" data-n="6" type="button">6</button>
+      <button class="hs" style="left:64%;top:41%" data-n="7" type="button">7</button>
+    </div>
+    <div class="legend" id="voteLegend"></div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">定义</div>
+    <h2>智能，是在很多不一样的处境里，还能把目标做成</h2>
+    <div class="grid2" style="align-items:start">
+      <div>
+        <p>会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的，是处境一换，它还能不能把目标做成。</p>
+        <div class="pills">
+          <span class="pill">能感知</span>
+          <span class="pill">脑子里有个世界</span>
+          <span class="pill">会判断下一步</span>
+          <span class="pill">会行动</span>
+          <span class="pill">没见过的情况也能应付一点</span>
+        </div>
+        <p class="small" style="margin-top:12px">课堂这句话，对应 Shane Legg 与 Marcus Hutter 2007 年的定义：Intelligence measures an agent's ability to achieve goals in a wide range of environments. 五个部件是课堂上的尺子，来自 Russell 与 Norvig 对「能感知并行动的主体」的讲法，加上会不会学习。</p>
+      </div>
+      <div class="card" id="verdicts"></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">边界</div>
+    <h2>它能帮你做什么，哪些事必须留在你自己手里</h2>
+    <div class="grid2">
+      <div class="card"><h3 class="accent">它很擅长</h3><p>列提纲、把一道题再出两道、翻译、陪你背单词、把笔记整理短一点。</p></div>
+      <div class="card"><h3 class="org">这些事它做不了</h3><p>它没去过你们学校，也不认识你。它不会因为你难过就真的懂你。它会把没发生的事说圆。</p></div>
+    </div>
+    <div class="card">
+      <ul class="clean">
+        <li><b>思考权留在自己这儿。</b>「作文让它写完我抄上」——练的是它，生锈的是你。</li>
+        <li><b>心情和重大选择去找真人。</b>和朋友吵架、被孤立、跟爸妈闹矛盾。它只是在猜下一句顺耳的话。</li>
+        <li><b>它会一本正经地编。</b>答案自己核对。密码、住址、学号不要贴进去。</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(249,115,22,.45)">
+      <b>现场实验</b>
+      <p style="margin-top:6px">假设豆包回答：「你们学校门口有 17 棵树。昨天食堂 11:40 就卖完了。」这不是它的真实截图，是这类问题里它常会交出的那种答案。</p>
+      <div class="choice" id="expBtns">
+        <button type="button" data-v="信">信</button>
+        <button type="button" data-v="不信">不信</button>
+        <button type="button" data-v="要查">要查</button>
+      </div>
+      <p id="expReveal" class="accent"></p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">这门课的台阶</div>
+    <h2>使用 AI 的五个台阶，今天停在第二级</h2>
+    <div class="grid2" style="align-items:center">
+      <div class="pyramid">
+        <div style="width:46%;background:#0d2a5e">L5 能自己做工具</div>
+        <div style="width:58%;background:#1e40af">L4 管得住数据和上线</div>
+        <div style="width:70%;background:#2563eb">L3 做成别人能用的</div>
+        <div style="width:82%;background:#f97316;box-shadow:0 0 24px rgba(249,115,22,.45)">L2 会搭自己的 Agent · 今天</div>
+        <div style="width:94%;background:#93c5fd;color:#0b1120">L1 会用现成的 App</div>
+      </div>
+      <div>
+        <ul class="clean">
+          <li><b>L1</b>　打开豆包，提问、生图、做一段简单视频</li>
+          <li><b class="org">L2</b>　给它目标、记忆和技能，搭一个自己的 Agent</li>
+          <li><b>L3</b>　做成同学真的能用的小系统。后面几天走到这里</li>
+          <li><b>L4</b>　知道什么该存、谁能看、怎么放到网上</li>
+          <li><b>L5</b>　能改工具、写插件，再往后才碰到训练模型</li>
+        </ul>
+        <p class="small" style="margin-top:10px">会用 App，还不是会搭智能体。今天的终点是 L2。寻物系统是朝 L3 走的第一小步。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">一句话的旅程</div>
+    <h2>你给豆包发一句话，中间发生了什么</h2>
+    <div class="grid2" style="align-items:stretch;flex:1">
+      <div class="steps" id="journeySteps"></div>
+      <div class="photo" id="journeyView"></div>
+    </div>
+    <p class="small">豆包走国内网络，进字节跳动的机房。下面的照片是同一类地方的实拍，并不是豆包那一间的监控画面。点照片可以放大。</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">算力长什么样</div>
+    <h2>这些是真的机房。Grok、OpenAI 用的也是这种地方</h2>
+    <div class="gallery" id="gallery"></div>
+    <p class="small">Grok 的机房叫 Colossus，在美国孟菲斯，十万张以上的英伟达显卡。OpenAI 的很多算力在微软的数据中心，新的大项目叫 Stargate，在美国得州阿比林。这两处的新闻照片有版权，没有嵌进课件。课堂上可以打开：<a class="link" href="https://www.servethehome.com/inside-100000-nvidia-gpu-xai-colossus-cluster-supermicro-helped-build-for-elon-musk/" target="_blank">Colossus 内部参观</a>　<a class="link" href="https://www.reporternews.com/picture-gallery/news/2025/09/25/inside-abilenes-massive-1100-acre-500-billion-project-stargate-texas-newspaper/86332564007/" target="_blank">Stargate 现场</a></p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">黑盒里面 · 另一页</div>
+    <h2>进了机房，它怎么算出下一个词</h2>
+    <div class="flow">
+      <div class="card"><div class="n">1</div><p>字被切成小块，叫做 token</p></div>
+      <div class="card"><div class="n">2</div><p>每块变成一个坐标。下一页的地图，就是这种坐标压扁之后的样子</p></div>
+      <div class="card"><div class="n">3</div><p>每一层看看这句话里，哪些词彼此相关</p></div>
+      <div class="card"><div class="n">4</div><p>算出下一个词的可能性，挑一个，再重复</p></div>
+    </div>
+    <div class="card">
+      <p>开源项目 <b>Transformer Explainer</b> 在浏览器里跑一个小 GPT，能一步步看见它预测下一个词。这页由老师来点。全班只看一件事：它在挑下一个词，不是在查你们学校。</p>
+      <p style="margin-top:10px"><a class="link" href="https://poloclub.github.io/transformer-explainer/" target="_blank">打开 poloclub.github.io/transformer-explainer</a></p>
+      <p class="small" style="margin-top:6px">Georgia Tech Polo Club 的开源项目，论文 Transformer Explainer，CHI 2026。界面是英文。网络打不开就用上面四步讲完。</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">游戏 · 词落在哪</div>
+    <h2>在它眼里，有的词很近，有的词很远</h2>
+    <div id="mapwrap"></div>
+    <div class="bank" id="wordBank"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="chip" type="button" id="dropTrio">放下猫、狗、卡车</button>
+      <button class="chip" type="button" id="dropFeel">放下开心和难过</button>
+      <button class="chip" type="button" id="dropAll">全部放下</button>
+      <button class="chip" type="button" id="clearMap">清空</button>
+    </div>
+    <p id="pairbox"></p>
+    <p class="small">坐标来自苹果系统自带的简体中文词向量，压到平面上。接近程度按真实向量计算，越接近 1 越近。这不是豆包内部那张原图，豆包不会把坐标交出来。颜色是为了好看标的。</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">歇一下 · 把词对上</div>
+    <h2>这些词，我们都见过了</h2>
+    <div class="gmatch">
+      <div id="termCol"></div>
+      <div id="defCol"></div>
+    </div>
+    <p class="small" id="matchScore">点左边一个词，再点右边一句解释。</p>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">新主角</div>
+    <h2>真智能体是中心。周围这些，才是它的零件</h2>
+    <div class="agent-board" id="agentBoard">
+      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1">目标</button>
+      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2">记忆 Memory</button>
+      <div class="agent-core">Agent<br><span style="font-size:13px;font-weight:500">真智能体</span></div>
+      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2">技能 Skills</button>
+      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3">大脑 · 大模型</button>
+      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3">说明书</button>
+    </div>
+    <div class="card" id="partDetail">点一个零件。会聊天的只是大脑。真智能体还要记得住、做得到、知道自己的目标，并且知道什么绝不能做。</div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">老师师范 · 这里切到我的屏幕</div>
+    <h2>我养的 Agent，拆开就是这五个零件</h2>
+    <div class="card" style="border-color:rgba(34,211,238,.4)">
+      <h3 class="accent">资讯早报 · 只拆透这一个</h3>
+      <div class="grid3" style="margin-top:8px">
+        <div><b>目标</b><p class="mini">每个上学日早上，给我 3 条和我有关的事</p></div>
+        <div><b>记忆</b><p class="mini">我关心课程、学校通知，不关心娱乐八卦</p></div>
+        <div><b>技能</b><p class="mini">去查，每条都要带来源</p></div>
+        <div><b>说明书</b><p class="mini">没有来源就空着，不许编</p></div>
+        <div><b>大脑</b><p class="mini">把查到的写成我能扫一眼的话</p></div>
+        <div><b>你们的孪生</b><p class="mini">社团通知早报：明天训练改到几点</p></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h3>审批代表</h3><p class="mini">它按我的规则把待办整理好，点不点头仍然是我。你们可以做：请假条先写成草稿，自己交。</p></div>
+      <div class="card"><h3>差旅预定</h3><p class="mini">它排行程、对时间。你们可以做：周末出门清单，几点出门、带什么。决定仍然是你。</p></div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">真问题 · 全班一起做</div>
+    <h2>校园寻物：这才是一个真智能体</h2>
+    <p>会聊天的豆包，说完就忘。这个寻物 Agent 有目标（帮两边对上）、有记忆（记下失物和拾物）、有技能（比对并通知）。对不上，它必须说不知道。</p>
+    <div class="lost-grid">
+      <div class="card">
+        <h3>我丢了</h3>
+        <label>什么东西</label><input id="lostWhat" type="text" placeholder="蓝色水壶">
+        <label>在哪里</label><input id="lostWhere" type="text" placeholder="图书馆三楼">
+        <button class="go" type="button" id="addLost">告诉 Agent</button>
+        <div class="choice" style="margin-top:8px">
+          <button class="chip" type="button" data-fill="lost" data-what="蓝色水壶" data-where="图书馆三楼">蓝色水壶</button>
+          <button class="chip" type="button" data-fill="lost" data-what="黑色书包" data-where="操场">黑色书包</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="lights" id="lights">
+          <span data-l="goal">目标</span><span data-l="memory">记忆</span><span data-l="skill">技能</span><span data-l="spec">说明书</span><span data-l="brain">大脑</span>
+        </div>
+        <p id="resultLine">记忆还是空的。先登记一件失物，再登记一件拾物。</p>
+        <div id="memList"></div>
+        <button class="chip" type="button" id="resetLost" style="margin-top:8px">清空记忆</button>
+      </div>
+      <div class="card">
+        <h3>我捡到了</h3>
+        <label>什么东西</label><input id="foundWhat" type="text" placeholder="蓝色水壶">
+        <label>在哪里</label><input id="foundWhere" type="text" placeholder="图书馆门口">
+        <button class="go" type="button" id="addFound">告诉 Agent</button>
+        <div class="choice" style="margin-top:8px">
+          <button class="chip" type="button" data-fill="found" data-what="蓝色水壶" data-where="图书馆门口">蓝色水壶</button>
+          <button class="chip" type="button" data-fill="found" data-what="红色笔袋" data-where="食堂">红色笔袋</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="kicker">接下一天的现场课</div>
+    <h2>明天，带一个真问题来</h2>
+    <div class="task">
+      <div class="card">
+        <h3 class="accent">任务书 · 现在就可以写</h3>
+        <label>谁遇到的</label><input id="qWho" type="text" placeholder="例如：七年级的同学">
+        <label>什么时候最麻烦</label><input id="qWhen" type="text" placeholder="例如：放学找水壶的时候">
+        <label>现在他们怎么办</label><input id="qNow" type="text" placeholder="例如：在班级群里喊一嗓子">
+        <label>你希望 Agent 达成的目标</label><input id="qGoal" type="text" placeholder="写成目标，先不要写死每一步">
+      </div>
+      <div class="card">
+        <h3 class="org">给 Agent 指令的四条</h3>
+        <ul class="clean">
+          <li>给目标，别把步骤卡死</li>
+          <li>给处境：谁、在哪、已经试过什么</li>
+          <li>允许它先问你，问清再做</li>
+          <li>不确定就说不知道，不许编</li>
+        </ul>
+        <p class="small" style="margin-top:10px">明天用这张卡开工。人负责判断，Agent 负责记住、去办、把结果交回来给你核对。</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
+<button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
+<div id="pager">1 / 1</div>
+<div id="hint"></div>
+<div id="lightbox"><img alt=""><p></p></div>
+<script id="word-data" type="application/json">{"points":[{"name":"猫","x":21.16,"y":19.73},{"name":"狗","x":20.6,"y":33.58},{"name":"小狗","x":25.59,"y":24.97},{"name":"老虎","x":31.46,"y":12.01},{"name":"鸟","x":28.08,"y":18.33},{"name":"鱼","x":24.81,"y":12.04},{"name":"汽车","x":88.0,"y":24.13},{"name":"卡车","x":66.96,"y":17.11},{"name":"公交车","x":61.75,"y":32.89},{"name":"自行车","x":69.39,"y":28.32},{"name":"火车","x":55.7,"y":28.93},{"name":"书包","x":51.38,"y":52.19},{"name":"铅笔","x":46.89,"y":46.61},{"name":"教室","x":58.47,"y":68.99},{"name":"老师","x":39.42,"y":88.2},{"name":"同学","x":37.67,"y":81.25},{"name":"作业","x":51.42,"y":68.66},{"name":"手机","x":58.68,"y":52.87},{"name":"电脑","x":64.04,"y":57.6},{"name":"笔记本","x":71.15,"y":56.57},{"name":"开心","x":8.71,"y":49.17},{"name":"难过","x":11.94,"y":61.9},{"name":"生气","x":10.29,"y":55.4},{"name":"害怕","x":15.19,"y":50.55},{"name":"妈妈","x":16.87,"y":57.44},{"name":"爸爸","x":21.95,"y":52.87},{"name":"米饭","x":30.18,"y":30.32},{"name":"面条","x":32.69,"y":23.86},{"name":"学校","x":54.49,"y":74.79},{"name":"朋友","x":27.82,"y":63.6},{"name":"投影仪","x":66.75,"y":51.27}],"sim":{"猫":{"猫":1.0,"狗":0.57,"小狗":0.644,"老虎":0.437,"鸟":0.391,"鱼":0.39,"汽车":-0.13,"卡车":0.048,"公交车":0.026,"自行车":0.012,"火车":0.039,"书包":0.185,"铅笔":0.118,"教室":0.073,"老师":-0.058,"同学":0.055,"作业":0.011,"手机":0.059,"电脑":0.091,"笔记本":0.036,"开心":0.183,"难过":0.058,"生气":0.13,"害怕":0.087,"妈妈":0.26,"爸爸":0.293,"米饭":0.111,"面条":0.149,"学校":-0.112,"朋友":0.064,"投影仪":0.069},"狗":{"猫":0.57,"狗":1.0,"小狗":0.608,"老虎":0.331,"鸟":0.307,"鱼":0.234,"汽车":-0.188,"卡车":0.047,"公交车":0.086,"自行车":0.08,"火车":0.087,"书包":0.177,"铅笔":0.065,"教室":0.105,"老师":0.058,"同学":0.153,"作业":0.103,"手机":0.053,"电脑":0.102,"笔记本":-0.012,"开心":0.214,"难过":0.215,"生气":0.237,"害怕":0.199,"妈妈":0.246,"爸爸":0.324,"米饭":0.022,"面条":0.091,"学校":0.022,"朋友":0.116,"投影仪":0.004},"小狗":{"猫":0.644,"狗":0.608,"小狗":1.0,"老虎":0.468,"鸟":0.243,"鱼":0.273,"汽车":-0.019,"卡车":0.191,"公交车":0.243,"自行车":0.216,"火车":0.188,"书包":0.255,"铅笔":0.129,"教室":0.149,"老师":-0.029,"同学":0.164,"作业":0.039,"手机":0.075,"电脑":0.103,"笔记本":0.018,"开心":0.208,"难过":0.227,"生气":0.226,"害怕":0.233,"妈妈":0.406,"爸爸":0.422,"米饭":0.124,"面条":0.18,"学校":0.004,"朋友":0.15,"投影仪":0.043},"老虎":{"猫":0.437,"狗":0.331,"小狗":0.468,"老虎":1.0,"鸟":0.285,"鱼":0.237,"汽车":0.003,"卡车":0.135,"公交车":0.017,"自行车":0.036,"火车":0.045,"书包":0.029,"铅笔":0.109,"教室":-0.045,"老师":-0.111,"同学":-0.063,"作业":-0.11,"手机":-0.013,"电脑":-0.033,"笔记本":-0.072,"开心":0.019,"难过":0.047,"生气":0.046,"害怕":0.088,"妈妈":0.155,"爸爸":0.154,"米饭":0.008,"面条":0.07,"学校":-0.118,"朋友":-0.062,"投影仪":-0.053},"鸟":{"猫":0.391,"狗":0.307,"小狗":0.243,"老虎":0.285,"鸟":1.0,"鱼":0.407,"汽车":-0.161,"卡车":0.021,"公交车":-0.014,"自行车":0.04,"火车":0.041,"书包":0.113,"铅笔":0.208,"教室":0.013,"老师":-0.07,"同学":-0.077,"作业":-0.009,"手机":0.029,"电脑":-0.017,"笔记本":-0.008,"开心":0.137,"难过":0.038,"生气":0.08,"害怕":0.035,"妈妈":0.064,"爸爸":0.069,"米饭":0.055,"面条":0.112,"学校":-0.11,"朋友":-0.119,"投影仪":0.012},"鱼":{"猫":0.39,"狗":0.234,"小狗":0.273,"老虎":0.237,"鸟":0.407,"鱼":1.0,"汽车":-0.135,"卡车":-0.04,"公交车":0.052,"自行车":0.03,"火车":0.029,"书包":0.131,"铅笔":0.078,"教室":-0.076,"老师":-0.118,"同学":-0.1,"作业":-0.045,"手机":-0.059,"电脑":-0.056,"笔记本":-0.004,"开心":0.044,"难过":-0.038,"生气":0.02,"害怕":-0.116,"妈妈":0.126,"爸爸":0.101,"米饭":0.328,"面条":0.377,"学校":-0.073,"朋友":-0.02,"投影仪":-0.018},"汽车":{"猫":-0.13,"狗":-0.188,"小狗":-0.019,"老虎":0.003,"鸟":-0.161,"鱼":-0.135,"汽车":1.0,"卡车":0.499,"公交车":0.331,"自行车":0.485,"火车":0.256,"书包":-0.008,"铅笔":-0.025,"教室":0.02,"老师":-0.188,"同学":-0.185,"作业":-0.011,"手机":0.185,"电脑":0.184,"笔记本":0.221,"开心":-0.237,"难过":-0.249,"生气":-0.25,"害怕":-0.25,"妈妈":-0.229,"爸爸":-0.224,"米饭":-0.138,"面条":-0.119,"学校":-0.026,"朋友":-0.12,"投影仪":0.203},"卡车":{"猫":0.048,"狗":0.047,"小狗":0.191,"老虎":0.135,"鸟":0.021,"鱼":-0.04,"汽车":0.499,"卡车":1.0,"公交车":0.443,"自行车":0.437,"火车":0.474,"书包":0.169,"铅笔":0.019,"教室":0.085,"老师":-0.2,"同学":-0.073,"作业":0.077,"手机":0.056,"电脑":0.075,"笔记本":0.072,"开心":-0.086,"难过":-0.058,"生气":-0.075,"害怕":-0.066,"妈妈":-0.061,"爸爸":-0.02,"米饭":-0.01,"面条":0.042,"学校":-0.009,"朋友":-0.09,"投影仪":0.05},"公交车":{"猫":0.026,"狗":0.086,"小狗":0.243,"老虎":0.017,"鸟":-0.014,"鱼":0.052,"汽车":0.331,"卡车":0.443,"公交车":1.0,"自行车":0.47,"火车":0.64,"书包":0.218,"铅笔":-0.028,"教室":0.27,"老师":-0.029,"同学":0.084,"作业":0.053,"手机":0.151,"电脑":0.133,"笔记本":0.056,"开心":-0.027,"难过":0.005,"生气":0.045,"害怕":0.014,"妈妈":0.076,"爸爸":0.047,"米饭":-0.003,"面条":0.021,"学校":0.199,"朋友":0.081,"投影仪":0.019},"自行车":{"猫":0.012,"狗":0.08,"小狗":0.216,"老虎":0.036,"鸟":0.04,"鱼":0.03,"汽车":0.485,"卡车":0.437,"公交车":0.47,"自行车":1.0,"火车":0.351,"书包":0.277,"铅笔":0.067,"教室":0.185,"老师":-0.087,"同学":0.02,"作业":0.026,"手机":0.181,"电脑":0.173,"笔记本":0.157,"开心":-0.041,"难过":-0.101,"生气":-0.099,"害怕":-0.094,"妈妈":0.049,"爸爸":0.06,"米饭":-0.055,"面条":0.032,"学校":0.148,"朋友":0.008,"投影仪":0.14},"火车":{"猫":0.039,"狗":0.087,"小狗":0.188,"老虎":0.045,"鸟":0.041,"鱼":0.029,"汽车":0.256,"卡车":0.474,"公交车":0.64,"自行车":0.351,"火车":1.0,"书包":0.156,"铅笔":0.02,"教室":0.207,"老师":-0.139,"同学":0.045,"作业":0.077,"手机":0.106,"电脑":0.157,"笔记本":0.026,"开心":0.092,"难过":0.051,"生气":0.051,"害怕":0.071,"妈妈":0.101,"爸爸":0.117,"米饭":0.082,"面条":0.103,"学校":0.089,"朋友":0.132,"投影仪":0.039},"书包":{"猫":0.185,"狗":0.177,"小狗":0.255,"老虎":0.029,"鸟":0.113,"鱼":0.131,"汽车":-0.008,"卡车":0.169,"公交车":0.218,"自行车":0.277,"火车":0.156,"书包":1.0,"铅笔":0.314,"教室":0.458,"老师":0.159,"同学":0.268,"作业":0.29,"手机":0.268,"电脑":0.272,"笔记本":0.393,"开心":0.106,"难过":0.063,"生气":0.091,"害怕":0.009,"妈妈":0.309,"爸爸":0.29,"米饭":0.074,"面条":0.154,"学校":0.273,"朋友":-0.002,"投影仪":0.205},"铅笔":{"猫":0.118,"狗":0.065,"小狗":0.129,"老虎":0.109,"鸟":0.208,"鱼":0.078,"汽车":-0.025,"卡车":0.019,"公交车":-0.028,"自行车":0.067,"火车":0.02,"书包":0.314,"铅笔":1.0,"教室":0.203,"老师":0.109,"同学":0.106,"作业":0.221,"手机":0.116,"电脑":0.188,"笔记本":0.309,"开心":0.033,"难过":0.03,"生气":0.002,"害怕":0.032,"妈妈":0.135,"爸爸":0.085,"米饭":0.025,"面条":0.138,"学校":0.015,"朋友":-0.001,"投影仪":0.209},"教室":{"猫":0.073,"狗":0.105,"小狗":0.149,"老虎":-0.045,"鸟":0.013,"鱼":-0.076,"汽车":0.02,"卡车":0.085,"公交车":0.27,"自行车":0.185,"火车":0.207,"书包":0.458,"铅笔":0.203,"教室":1.0,"老师":0.378,"同学":0.406,"作业":0.395,"手机":0.236,"电脑":0.346,"笔记本":0.327,"开心":0.076,"难过":0.072,"生气":0.088,"害怕":0.073,"妈妈":0.182,"爸爸":0.178,"米饭":0.015,"面条":0.005,"学校":0.525,"朋友":0.008,"投影仪":0.318},"老师":{"猫":-0.058,"狗":0.058,"小狗":-0.029,"老虎":-0.111,"鸟":-0.07,"鱼":-0.118,"汽车":-0.188,"卡车":-0.2,"公交车":-0.029,"自行车":-0.087,"火车":-0.139,"书包":0.159,"铅笔":0.109,"教室":0.378,"老师":1.0,"同学":0.597,"作业":0.405,"手机":-0.012,"电脑":0.03,"笔记本":0.063,"开心":0.076,"难过":0.006,"生气":0.073,"害怕":-0.034,"妈妈":0.223,"爸爸":0.236,"米饭":-0.155,"面条":-0.133,"学校":0.365,"朋友":0.165,"投影仪":0.081},"同学":{"猫":0.055,"狗":0.153,"小狗":0.164,"老虎":-0.063,"鸟":-0.077,"鱼":-0.1,"汽车":-0.185,"卡车":-0.073,"公交车":0.084,"自行车":0.02,"火车":0.045,"书包":0.268,"铅笔":0.106,"教室":0.406,"老师":0.597,"同学":1.0,"作业":0.282,"手机":0.071,"电脑":0.122,"笔记本":0.102,"开心":0.146,"难过":0.07,"生气":0.081,"害怕":0.068,"妈妈":0.334,"爸爸":0.33,"米饭":-0.062,"面条":-0.023,"学校":0.417,"朋友":0.511,"投影仪":0.111},"作业":{"猫":0.011,"狗":0.103,"小狗":0.039,"老虎":-0.11,"鸟":-0.009,"鱼":-0.045,"汽车":-0.011,"卡车":0.077,"公交车":0.053,"自行车":0.026,"火车":0.077,"书包":0.29,"铅笔":0.221,"教室":0.395,"老师":0.405,"同学":0.282,"作业":1.0,"手机":0.176,"电脑":0.284,"笔记本":0.282,"开心":0.077,"难过":0.065,"生气":0.105,"害怕":-0.0,"妈妈":0.14,"爸爸":0.085,"米饭":-0.036,"面条":0.049,"学校":0.292,"朋友":-0.021,"投影仪":0.154},"手机":{"猫":0.059,"狗":0.053,"小狗":0.075,"老虎":-0.013,"鸟":0.029,"鱼":-0.059,"汽车":0.185,"卡车":0.056,"公交车":0.151,"自行车":0.181,"火车":0.106,"书包":0.268,"铅笔":0.116,"教室":0.236,"老师":-0.012,"同学":0.071,"作业":0.176,"手机":1.0,"电脑":0.59,"笔记本":0.529,"开心":0.073,"难过":0.068,"生气":0.139,"害怕":0.083,"妈妈":0.133,"爸爸":0.145,"米饭":0.001,"面条":0.011,"学校":0.013,"朋友":0.15,"投影仪":0.45},"电脑":{"猫":0.091,"狗":0.102,"小狗":0.103,"老虎":-0.033,"鸟":-0.017,"鱼":-0.056,"汽车":0.184,"卡车":0.075,"公交车":0.133,"自行车":0.173,"火车":0.157,"书包":0.272,"铅笔":0.188,"教室":0.346,"老师":0.03,"同学":0.122,"作业":0.284,"手机":0.59,"电脑":1.0,"笔记本":0.696,"开心":0.015,"难过":0.044,"生气":0.043,"害怕":0.004,"妈妈":0.058,"爸爸":0.104,"米饭":0.024,"面条":0.04,"学校":0.145,"朋友":0.089,"投影仪":0.54},"笔记本":{"猫":0.036,"狗":-0.012,"小狗":0.018,"老虎":-0.072,"鸟":-0.008,"鱼":-0.004,"汽车":0.221,"卡车":0.072,"公交车":0.056,"自行车":0.157,"火车":0.026,"书包":0.393,"铅笔":0.309,"教室":0.327,"老师":0.063,"同学":0.102,"作业":0.282,"手机":0.529,"电脑":0.696,"笔记本":1.0,"开心":-0.064,"难过":-0.029,"生气":-0.068,"害怕":-0.086,"妈妈":0.033,"爸爸":0.026,"米饭":0.026,"面条":0.026,"学校":0.06,"朋友":0.004,"投影仪":0.583},"开心":{"猫":0.183,"狗":0.214,"小狗":0.208,"老虎":0.019,"鸟":0.137,"鱼":0.044,"汽车":-0.237,"卡车":-0.086,"公交车":-0.027,"自行车":-0.041,"火车":0.092,"书包":0.106,"铅笔":0.033,"教室":0.076,"老师":0.076,"同学":0.146,"作业":0.077,"手机":0.073,"电脑":0.015,"笔记本":-0.064,"开心":1.0,"难过":0.588,"生气":0.5,"害怕":0.347,"妈妈":0.364,"爸爸":0.351,"米饭":0.083,"面条":0.085,"学校":0.0,"朋友":0.279,"投影仪":-0.053},"难过":{"猫":0.058,"狗":0.215,"小狗":0.227,"老虎":0.047,"鸟":0.038,"鱼":-0.038,"汽车":-0.249,"卡车":-0.058,"公交车":0.005,"自行车":-0.101,"火车":0.051,"书包":0.063,"铅笔":0.03,"教室":0.072,"老师":0.006,"同学":0.07,"作业":0.065,"手机":0.068,"电脑":0.044,"笔记本":-0.029,"开心":0.588,"难过":1.0,"生气":0.615,"害怕":0.647,"妈妈":0.357,"爸爸":0.26,"米饭":0.065,"面条":0.032,"学校":-0.004,"朋友":0.222,"投影仪":-0.062},"生气":{"猫":0.13,"狗":0.237,"小狗":0.226,"老虎":0.046,"鸟":0.08,"鱼":0.02,"汽车":-0.25,"卡车":-0.075,"公交车":0.045,"自行车":-0.099,"火车":0.051,"书包":0.091,"铅笔":0.002,"教室":0.088,"老师":0.073,"同学":0.081,"作业":0.105,"手机":0.139,"电脑":0.043,"笔记本":-0.068,"开心":0.5,"难过":0.615,"生气":1.0,"害怕":0.48,"妈妈":0.349,"爸爸":0.315,"米饭":0.094,"面条":0.014,"学校":0.034,"朋友":0.183,"投影仪":-0.094},"害怕":{"猫":0.087,"狗":0.199,"小狗":0.233,"老虎":0.088,"鸟":0.035,"鱼":-0.116,"汽车":-0.25,"卡车":-0.066,"公交车":0.014,"自行车":-0.094,"火车":0.071,"书包":0.009,"铅笔":0.032,"教室":0.073,"老师":-0.034,"同学":0.068,"作业":-0.0,"手机":0.083,"电脑":0.004,"笔记本":-0.086,"开心":0.347,"难过":0.647,"生气":0.48,"害怕":1.0,"妈妈":0.317,"爸爸":0.221,"米饭":0.059,"面条":-0.008,"学校":-0.049,"朋友":0.196,"投影仪":-0.047},"妈妈":{"猫":0.26,"狗":0.246,"小狗":0.406,"老虎":0.155,"鸟":0.064,"鱼":0.126,"汽车":-0.229,"卡车":-0.061,"公交车":0.076,"自行车":0.049,"火车":0.101,"书包":0.309,"铅笔":0.135,"教室":0.182,"老师":0.223,"同学":0.334,"作业":0.14,"手机":0.133,"电脑":0.058,"笔记本":0.033,"开心":0.364,"难过":0.357,"生气":0.349,"害怕":0.317,"妈妈":1.0,"爸爸":0.772,"米饭":0.189,"面条":0.262,"学校":0.099,"朋友":0.341,"投影仪":0.025},"爸爸":{"猫":0.293,"狗":0.324,"小狗":0.422,"老虎":0.154,"鸟":0.069,"鱼":0.101,"汽车":-0.224,"卡车":-0.02,"公交车":0.047,"自行车":0.06,"火车":0.117,"书包":0.29,"铅笔":0.085,"教室":0.178,"老师":0.236,"同学":0.33,"作业":0.085,"手机":0.145,"电脑":0.104,"笔记本":0.026,"开心":0.351,"难过":0.26,"生气":0.315,"害怕":0.221,"妈妈":0.772,"爸爸":1.0,"米饭":0.155,"面条":0.223,"学校":0.119,"朋友":0.282,"投影仪":0.038},"米饭":{"猫":0.111,"狗":0.022,"小狗":0.124,"老虎":0.008,"鸟":0.055,"鱼":0.328,"汽车":-0.138,"卡车":-0.01,"公交车":-0.003,"自行车":-0.055,"火车":0.082,"书包":0.074,"铅笔":0.025,"教室":0.015,"老师":-0.155,"同学":-0.062,"作业":-0.036,"手机":0.001,"电脑":0.024,"笔记本":0.026,"开心":0.083,"难过":0.065,"生气":0.094,"害怕":0.059,"妈妈":0.189,"爸爸":0.155,"米饭":1.0,"面条":0.714,"学校":0.008,"朋友":0.041,"投影仪":-0.006},"面条":{"猫":0.149,"狗":0.091,"小狗":0.18,"老虎":0.07,"鸟":0.112,"鱼":0.377,"汽车":-0.119,"卡车":0.042,"公交车":0.021,"自行车":0.032,"火车":0.103,"书包":0.154,"铅笔":0.138,"教室":0.005,"老师":-0.133,"同学":-0.023,"作业":0.049,"手机":0.011,"电脑":0.04,"笔记本":0.026,"开心":0.085,"难过":0.032,"生气":0.014,"害怕":-0.008,"妈妈":0.262,"爸爸":0.223,"米饭":0.714,"面条":1.0,"学校":0.004,"朋友":-0.014,"投影仪":0.042},"学校":{"猫":-0.112,"狗":0.022,"小狗":0.004,"老虎":-0.118,"鸟":-0.11,"鱼":-0.073,"汽车":-0.026,"卡车":-0.009,"公交车":0.199,"自行车":0.148,"火车":0.089,"书包":0.273,"铅笔":0.015,"教室":0.525,"老师":0.365,"同学":0.417,"作业":0.292,"手机":0.013,"电脑":0.145,"笔记本":0.06,"开心":0.0,"难过":-0.004,"生气":0.034,"害怕":-0.049,"妈妈":0.099,"爸爸":0.119,"米饭":0.008,"面条":0.004,"学校":1.0,"朋友":0.048,"投影仪":0.068},"朋友":{"猫":0.064,"狗":0.116,"小狗":0.15,"老虎":-0.062,"鸟":-0.119,"鱼":-0.02,"汽车":-0.12,"卡车":-0.09,"公交车":0.081,"自行车":0.008,"火车":0.132,"书包":-0.002,"铅笔":-0.001,"教室":0.008,"老师":0.165,"同学":0.511,"作业":-0.021,"手机":0.15,"电脑":0.089,"笔记本":0.004,"开心":0.279,"难过":0.222,"生气":0.183,"害怕":0.196,"妈妈":0.341,"爸爸":0.282,"米饭":0.041,"面条":-0.014,"学校":0.048,"朋友":1.0,"投影仪":0.042},"投影仪":{"猫":0.069,"狗":0.004,"小狗":0.043,"老虎":-0.053,"鸟":0.012,"鱼":-0.018,"汽车":0.203,"卡车":0.05,"公交车":0.019,"自行车":0.14,"火车":0.039,"书包":0.205,"铅笔":0.209,"教室":0.318,"老师":0.081,"同学":0.111,"作业":0.154,"手机":0.45,"电脑":0.54,"笔记本":0.583,"开心":-0.053,"难过":-0.062,"生气":-0.094,"害怕":-0.047,"妈妈":0.025,"爸爸":0.038,"米饭":-0.006,"面条":0.042,"学校":0.068,"朋友":0.042,"投影仪":1.0}}}</script>
+<script>
+const hints=[
+  "方向键或两侧圆按钮翻页",
+  "点你觉得算智能的东西，可以多选。先别急着公布",
+  "用这把尺子，把刚才点过的东西收回来",
+  "先让大家选：信、不信，还是要查",
+  "今天停在会搭。后面几天走到做成别人能用的",
+  "一步一步点，看一句话离开手机之后去了哪",
+  "点照片可以放大。这些是真实机房",
+  "这页由老师操作，只看它怎么预测下一个词",
+  "先放下猫、狗、卡车，再点两个词看远近",
+  "点左边的词，再点右边的解释",
+  "点开 Agent 周围的零件",
+  "这里切到老师自己的屏幕，只拆透早报",
+  "先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的",
+  "每人写一张任务书，明天带来"
+];
+const objs=["手机里的语音助手","人脸识别闸机","这扇门","扫地机器人","空调","投影仪","温度计"];
+const verdicts=[
+  ["有一点","some","会听会说。目标是你给的，它不认识你的学校"],
+  ["很窄","narrow","能认脸，也能放行。处境几乎只有这一种"],
+  ["只是物件","no","自己不会看，也不会想。智能在推门的人身上"],
+  ["最接近","best","能看路、记一点地图、自己走。世界仍然很小"],
+  ["很窄","narrow","能感到冷热，并开关。目标只有调节温度"],
+  ["只是物件","no","只会把画面投出去"],
+  ["只是物件","no","只会显示一个数字"]
+];
+const vbox=document.getElementById("verdicts");
+verdicts.forEach((v,i)=>{
+  const row=document.createElement("div");
+  row.className="verdict";
+  row.innerHTML=`<div class="top"><b>${i+1} ${objs[i]}</b><span class="tag ${v[1]}">${v[0]}</span></div><p>${v[2]}</p>`;
+  vbox.appendChild(row);
+});
+const legend=document.getElementById("voteLegend");
+document.querySelectorAll(".hs").forEach(hs=>{
+  const n=+hs.dataset.n;
+  const lg=document.createElement("span");
+  lg.className="lg"; lg.textContent=n+" "+objs[n-1];
+  legend.appendChild(lg);
+  hs.addEventListener("click",e=>{e.stopPropagation(); hs.classList.toggle("on"); lg.classList.toggle("on");});
+});
+
+document.getElementById("expBtns").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#expBtns button").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("expReveal").textContent="它没去过你们学校，也没在食堂排过队。它在把话说顺。这种事要查，或者问一个真的在场的人。";
+});
+
+const journey=[
+  {t:"1 你按下发送",s:"在豆包里打一句话。这一刻，它还只是你手机上的字。",kind:"phone"},
+  {t:"2 走进国内网络",s:"字变成数字，离开手机，送到字节跳动的服务器。这一程在国内，不穿过海底。",kind:"net"},
+  {t:"3 机房从外面看",s:"到了，是一座大厂房，旁边是冷却设备。豆包的机房在国内。这张是谷歌在美国俄勒冈州达尔斯的机房，让你看见外面长什么样。",img:"assets/camp/google-dalles.jpg",cap:"谷歌达尔斯机房外景 · Tony Webster / CC BY 2.0"},
+  {t:"4 进门是一排排机器",s:"算一句话的时候，房间就是这样。这是美国劳伦斯利弗莫尔国家实验室的 Sierra，里面是显卡。",img:"assets/camp/sierra.jpg",cap:"Sierra 超算通道 · 美国能源部，公有领域"},
+  {t:"5 一次吐出一个词",s:"机器会发烫，所以有冷却。显卡一起猜下一个词，连成一句，再流回你的屏幕。",img:"assets/camp/frontier-cooling.jpg",cap:"橡树岭 Frontier 的冷却柜 · Oak Ridge National Laboratory / CC BY 2.0"}
+];
+const jSteps=document.getElementById("journeySteps");
+const jView=document.getElementById("journeyView");
+function showJourney(i){
+  jSteps.querySelectorAll(".step").forEach((el,k)=>el.classList.toggle("on",k===i));
+  const s=journey[i];
+  if(s.img){
+    jView.style.cursor="zoom-in";
+    jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="cap">${s.cap}<br>${s.s}</div>`;
+    jView.onclick=()=>openPhoto(s.img,s.cap+"。"+s.s);
+  }else if(s.kind==="phone"){
+    jView.onclick=null; jView.style.cursor="default";
+    jView.innerHTML=`<div class="phone"><div class="small">豆包</div><div class="bubble me">图书馆三楼，我丢了一个蓝色水壶</div><div class="bubble ai">字还在手机上。发送之后，它才出发。</div></div>`;
+  }else{
+    jView.onclick=null; jView.style.cursor="default";
+    jView.innerHTML=`<div class="hops"><span>你的手机</span><i>→</i><span>国内网络</span><i>→</i><span>字节跳动的服务器</span></div>`;
+  }
+}
+journey.forEach((s,i)=>{
+  const b=document.createElement("button");
+  b.type="button"; b.className="step";
+  b.innerHTML=`<b>${s.t}</b><span>${s.s}</span>`;
+  b.onclick=()=>showJourney(i);
+  jSteps.appendChild(b);
+});
+showJourney(0);
+
+const gallery=[
+  ["assets/camp/sierra.jpg","一排排机器","美国劳伦斯实验室 Sierra，显卡超算的通道。Grok 的 Colossus 也是这种机柜一路排开，规模更大。美国能源部，公有领域。"],
+  ["assets/camp/frontier-racks.jpg","线和机柜","橡树岭 Frontier。曾经的世界最快计算机之一。算力从近处看，就是电缆、电源和一柜柜机器。Oak Ridge / CC BY 2.0。"],
+  ["assets/camp/frontier-cooling.jpg","算力会发烫","同一座 Frontier 的冷却柜。没有散热，这些机器撑不住。Oak Ridge / CC BY 2.0。"],
+  ["assets/camp/google-dalles.jpg","外面是大厂房","谷歌在达尔斯的机房。OpenAI 用的微软数据中心、Stargate 的工地，从外面看也是这种大房子加冷却设备。Tony Webster / CC BY 2.0。"]
+];
+const gal=document.getElementById("gallery");
+gallery.forEach(([src,title,cap])=>{
+  const b=document.createElement("button");
+  b.type="button"; b.className="shot";
+  b.innerHTML=`<img src="${src}" alt="${title}"><b>${title}</b><span>${cap}</span>`;
+  b.onclick=()=>openPhoto(src,title+"。"+cap);
+  gal.appendChild(b);
+});
+const box=document.getElementById("lightbox");
+function openPhoto(src,cap){
+  box.classList.add("show");
+  box.querySelector("img").src=src;
+  box.querySelector("p").textContent=cap;
+}
+box.addEventListener("click",()=>box.classList.remove("show"));
+
+const WORDMAP=JSON.parse(document.getElementById("word-data").textContent);
+const groupColor={};
+["猫","狗","小狗","老虎","鸟","鱼"].forEach(w=>groupColor[w]="#3b82f6");
+["汽车","卡车","公交车","自行车","火车"].forEach(w=>groupColor[w]="#f97316");
+["书包","铅笔","教室","老师","同学","作业","学校","朋友"].forEach(w=>groupColor[w]="#22d3ee");
+["手机","电脑","笔记本","投影仪"].forEach(w=>groupColor[w]="#a78bfa");
+["开心","难过","生气","害怕"].forEach(w=>groupColor[w]="#fb7185");
+["妈妈","爸爸"].forEach(w=>groupColor[w]="#fbbf24");
+const mapwrap=document.getElementById("mapwrap");
+const bank=document.getElementById("wordBank");
+const placed=new Set();
+let sel=[];
+function simOf(a,b){return WORDMAP.sim[a][b];}
+function place(name){
+  if(placed.has(name)) return;
+  placed.add(name);
+  const p=WORDMAP.points.find(x=>x.name===name);
+  const d=document.createElement("button");
+  d.type="button"; d.className="wdot"; d.dataset.name=name;
+  d.style.left=p.x+"%"; d.style.top=p.y+"%";
+  d.innerHTML=`<i style="background:${groupColor[name]||'#fff'}"></i>${name}`;
+  d.onclick=()=>pick(name,d);
+  mapwrap.appendChild(d);
+  bank.querySelector(`[data-w="${name}"]`).classList.add("placed");
+}
+function clearMap(){
+  placed.clear(); sel=[];
+  mapwrap.querySelectorAll(".wdot").forEach(n=>n.remove());
+  bank.querySelectorAll("button").forEach(b=>b.classList.remove("placed"));
+  document.getElementById("pairbox").textContent="先把词放到地图上，再点两个词。";
+}
+function comment(a,b,s){
+  const key=[a,b].sort().join("-");
+  const special={
+    "狗-猫":"猫和狗常出现在同一类句子里，所以近。",
+    "卡车-猫":"一个是动物，一个是车，几乎不在同一类句子里，所以远。",
+    "卡车-汽车":"都是车，所以近。",
+    "开心-难过":"意思相反，离得却不远。它们都常出现在「我感到……」这种句子里。它知道这是一类词，并没有体验过难过。"
+  };
+  if(special[key]) return special[key];
+  if(s>=0.5) return "很近。它觉得这两个词常待在一起。";
+  if(s>=0.3) return "有一点近。";
+  return "很远。";
+}
+function pick(name,el){
+  if(sel.length===1 && sel[0]===name){sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel")); return;}
+  if(sel.length>=2){sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel"));}
+  sel.push(name); el.classList.add("sel");
+  if(sel.length===2){
+    const s=simOf(sel[0],sel[1]);
+    document.getElementById("pairbox").innerHTML=`<b>${sel[0]}</b> 和 <b>${sel[1]}</b>　接近程度 ${s.toFixed(2)}。${comment(sel[0],sel[1],s)}`;
+  }
+}
+WORDMAP.points.forEach(p=>{
+  const b=document.createElement("button");
+  b.type="button"; b.textContent=p.name; b.dataset.w=p.name;
+  b.onclick=()=>place(p.name);
+  bank.appendChild(b);
+});
+document.getElementById("dropTrio").onclick=()=>["猫","狗","卡车"].forEach(place);
+document.getElementById("dropFeel").onclick=()=>{["开心","难过"].forEach(place); setTimeout(()=>{
+  const a=mapwrap.querySelector('[data-name="开心"]'); const b=mapwrap.querySelector('[data-name="难过"]');
+  sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel"));
+  if(a&&b){pick("开心",a); pick("难过",b);}
+},0);};
+document.getElementById("dropAll").onclick=()=>WORDMAP.points.forEach(p=>place(p.name));
+document.getElementById("clearMap").onclick=clearMap;
+
+const glossary=[
+  ["大模型","住在机房里、会猜下一个词的系统"],
+  ["Prompt","你发给它的那句指令"],
+  ["词向量","一个词在那张地图上的坐标"],
+  ["幻觉","把没发生的事说得像真的一样"],
+  ["Agent","有目标、能记住、能动手的助手"],
+  ["记忆","它记下的人和事"],
+  ["技能","它被允许做的动作，比如查找、通知"],
+  ["目标","你要它做成的那件事"]
+];
+const termCol=document.getElementById("termCol");
+const defCol=document.getElementById("defCol");
+let pickedTerm=null, matched=0;
+glossary.forEach((g,i)=>{
+  const b=document.createElement("button"); b.type="button"; b.textContent=g[0]; b.dataset.i=i;
+  b.onclick=()=>{ if(b.classList.contains("ok")) return; termCol.querySelectorAll("button").forEach(x=>x.classList.remove("pick")); b.classList.add("pick"); pickedTerm=i; };
+  termCol.appendChild(b);
+});
+[3,7,1,5,0,6,2,4].forEach(i=>{
+  const b=document.createElement("button"); b.type="button"; b.textContent=glossary[i][1]; b.dataset.i=i;
+  b.onclick=()=>{
+    if(!pickedTerm && pickedTerm!==0) return;
+    if(b.classList.contains("ok")) return;
+    const termBtn=termCol.querySelector(`button[data-i="${pickedTerm}"]`);
+    if(+b.dataset.i===pickedTerm){
+      b.classList.add("ok"); termBtn.classList.add("ok"); termBtn.classList.remove("pick");
+      matched++; document.getElementById("matchScore").textContent=`对上了 ${matched} / ${glossary.length}`;
+      pickedTerm=null;
+    }else{
+      b.classList.add("bad"); setTimeout(()=>b.classList.remove("bad"),400);
+    }
+  };
+  defCol.appendChild(b);
+});
+
+const partText={
+  goal:"目标：你要它做成的事。寻物的目标是帮失主和拾主对上。告诉它目标，别把每一步都写死。",
+  memory:"记忆：记下谁丢了什么、谁捡到什么。关掉这一句对话，它还记得。普通聊天做不到这一点。",
+  skill:"技能：它被允许做的动作。寻物里是比对，还有通知双方。没有技能，它只会说「好的」。",
+  brain:"大脑：大模型。负责听懂「蓝色水壶」是一件东西。它自己不会去图书馆三楼。",
+  spec:"说明书：它是谁，以及绝不能做什么。寻物必须写上：对不上就说不知道，不许编一个捡到的人。"
+};
+document.getElementById("agentBoard").addEventListener("click",e=>{
+  const b=e.target.closest(".part"); if(!b) return;
+  document.querySelectorAll(".part").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("partDetail").textContent=partText[b.dataset.part];
+});
+
+const losts=[], founds=[];
+function sameItem(a,b){
+  a=a.replace(/\s/g,""); b=b.replace(/\s/g,"");
+  if(!a||!b) return false;
+  if(a===b) return true;
+  const short=a.length<=b.length?a:b, long=a.length<=b.length?b:a;
+  return short.length>=2 && long.includes(short);
+}
+function renderMem(){
+  const box=document.getElementById("memList");
+  const rows=[...losts.map(x=>`丢 · ${x.what} · ${x.where}`), ...founds.map(x=>`捡 · ${x.what} · ${x.where}`)];
+  box.innerHTML=rows.map(r=>`<div class="mem">${r}</div>`).join("") || "";
+}
+function light(keys){
+  document.querySelectorAll("#lights span").forEach(s=>s.classList.toggle("on",keys.includes(s.dataset.l)));
+}
+function addItem(side){
+  const what=document.getElementById(side==="lost"?"lostWhat":"foundWhat").value.trim();
+  const where=document.getElementById(side==="lost"?"lostWhere":"foundWhere").value.trim();
+  if(!what){ document.getElementById("resultLine").textContent="先写下是什么东西。"; return; }
+  const item={what,where:where||"地点没写"};
+  (side==="lost"?losts:founds).push(item);
+  const other=side==="lost"?founds:losts;
+  const hit=other.find(x=>sameItem(x.what,what));
+  light(["goal","memory","brain","skill","spec"]);
+  if(hit){
+    document.getElementById("resultLine").textContent=`对上了：${what}。请两边自己确认是不是同一件。我只负责通知，不替你们做主。线索：${item.where} / ${hit.where}`;
+  }else{
+    document.getElementById("resultLine").textContent=`记下了。还没有能对上的「${what}」。我不会编一个捡到的人。`;
+  }
+  renderMem();
+}
+document.getElementById("addLost").onclick=()=>addItem("lost");
+document.getElementById("addFound").onclick=()=>addItem("found");
+document.querySelectorAll("[data-fill]").forEach(b=>b.onclick=()=>{
+  const side=b.dataset.fill;
+  document.getElementById(side==="lost"?"lostWhat":"foundWhat").value=b.dataset.what;
+  document.getElementById(side==="lost"?"lostWhere":"foundWhere").value=b.dataset.where;
+  addItem(side);
+});
+document.getElementById("resetLost").onclick=()=>{
+  losts.length=0; founds.length=0; renderMem(); light([]);
+  document.getElementById("resultLine").textContent="记忆清空了。";
+};
+
+const slides=[...document.querySelectorAll(".slide")];
+let cur=0;
+function typing(el){return el && (el.tagName==="INPUT"||el.tagName==="TEXTAREA");}
+function show(i){
+  if(box.classList.contains("show")) return;
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle("active",k===cur));
+  document.getElementById("bar").style.width=((cur+1)/slides.length*100)+"%";
+  document.getElementById("pager").textContent=(cur+1)+" / "+slides.length;
+  document.getElementById("hint").textContent=hints[cur]||"";
+}
+document.getElementById("prev").onclick=()=>show(cur-1);
+document.getElementById("next").onclick=()=>show(cur+1);
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){box.classList.remove("show"); return;}
+  if(box.classList.contains("show")) return;
+  if(typing(e.target)) return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault(); show(cur+1);}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault(); show(cur-1);}
+});
+show(0);
+</script>
+</body>
+</html>
