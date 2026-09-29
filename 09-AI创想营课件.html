@@ -182,7 +182,7 @@
   .tag.no { background: rgba(255,255,255,.07); color: var(--muted); }
   .tag.narrow { background: rgba(249,115,22,.16); color: #fdba74; }
   .tag.some { background: rgba(34,211,238,.14); color: var(--cyan); }
-  .tag.best { background: var(--orange); color: #fff; box-shadow: 0 0 10px var(--orange-glow); }
+  .tag.best { background: #10b981; color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.45); }
 
   /* Slide 2: Hotspots Stage */
   .stage { position: relative; margin: 0 auto; width: min(100%, calc((100vh - 200px) * 16 / 9)); aspect-ratio: 16/9; }
@@ -652,14 +652,14 @@
     <div class="kicker">01 辨智能 <span class="en">· Interactive Poll</span></div>
     <h2>这张图里，哪些东西算智能？ <span class="sub-en">Which of These Objects Possess Real Intelligence?</span></h2>
     <div class="stage" id="voteStage">
-      <img src="assets/camp/vote.jpg" alt="学校门厅里有手机助手、人脸闸机、门、扫地机、空调、投影仪和温度计">
-      <button class="hs" style="left:24%;top:68%" data-n="1" type="button">1</button>
-      <button class="hs" style="left:49%;top:52%" data-n="2" type="button">2</button>
-      <button class="hs" style="left:84%;top:48%" data-n="3" type="button">3</button>
-      <button class="hs" style="left:60%;top:78%" data-n="4" type="button">4</button>
-      <button class="hs" style="left:34%;top:16%" data-n="5" type="button">5</button>
-      <button class="hs" style="left:70%;top:11%" data-n="6" type="button">6</button>
-      <button class="hs" style="left:37%;top:40%" data-n="7" type="button">7</button>
+      <img src="assets/camp/vote.jpg" alt="阳光明媚的校园草坪上，有金毛犬、自动配送小车、拿着AI助手的同学、门禁闸机、大楼玻璃门、自动喷淋器与户外温度计">
+      <button class="hs" style="left:23%;top:56%" data-n="1" type="button">1</button>
+      <button class="hs" style="left:78.5%;top:68%" data-n="2" type="button">2</button>
+      <button class="hs" style="left:57%;top:35%" data-n="3" type="button">3</button>
+      <button class="hs" style="left:48.5%;top:53.5%" data-n="4" type="button">4</button>
+      <button class="hs" style="left:72.5%;top:44.5%" data-n="5" type="button">5</button>
+      <button class="hs" style="left:34%;top:57%" data-n="6" type="button">6</button>
+      <button class="hs" style="left:92%;top:34%" data-n="7" type="button">7</button>
     </div>
     <div class="legend" id="voteLegend"></div>
   </section>
@@ -1068,15 +1068,23 @@ const hints=[
   "先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的",
   "每人写一张任务书，明天带来"
 ];
-const objs=["手机里的语音助手","人脸识别闸机","这扇门","扫地机器人","空调","投影仪","温度计"];
+const objs=[
+  "草坪上的金毛犬",
+  "校园自动配送车",
+  "手机里的 AI 助手",
+  "智能门禁闸机",
+  "创新大楼的玻璃门",
+  "草坪自动喷淋器",
+  "柱子上的户外温度计"
+];
 const verdicts=[
-  ["有一点","some","会听会说。目标是你给的，它不认识你的学校"],
-  ["很窄","narrow","能认脸，也能放行。基本只会做这一件事"],
-  ["只是物件","no","自己不会看，也不会想。智能在推门的人身上"],
-  ["最接近","best","能看路、记一点地图、自己走。世界仍然很小"],
-  ["很窄","narrow","能感到冷热，并开关。目标只有调节温度"],
-  ["只是物件","no","只会把画面投出去"],
-  ["只是物件","no","只会显示一个数字"]
+  ["真正智能","best","有完整感官与世界模型，能随机应变并终身学习。大自然演化的标杆"],
+  ["具身接近","some","能看路避障送快递。但只要地图一变或掉进坑里就懵了，世界极小"],
+  ["语言大脑","some","懂很多科学知识。但它没有肉身，看不到眼前的草坪和风，更不认识你"],
+  ["很窄算法","narrow","能认人脸并放行。但只专精这一件事，让它看旁边的小狗它完全不懂"],
+  ["只是物件","no","自己不会看、不会想、不会动。智能在推门走进去的人身上"],
+  ["自动化","narrow","按定时或土壤湿度开关水阀。这是人类写死的固定规则，它自己不会思考"],
+  ["只是刻度","no","利用热胀冷缩显示数字。它根本不知道什么是冷和热"]
 ];
 const vbox=document.getElementById("verdicts");
 verdicts.forEach((v,i)=>{
