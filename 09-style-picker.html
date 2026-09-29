@@ -77,25 +77,25 @@
   @keyframes scan{from{background-position:0 -40%}to{background-position:0 140%}}
   #b .content{position:relative;z-index:1;display:flex;flex-direction:column;height:100%}
 
-  /* C: Editorial board — fewer boxes, big type, numbered spine */
-  #c{background:#10131a;font-family:"IBM Plex Sans",system-ui,sans-serif;color:#f3f4f6}
-  #c .kicker{color:#fb7185;letter-spacing:.28em}
+  /* C: Editorial — deck palette (cyan / orange / deep navy) */
+  #c{background:#0b1120;font-family:"PingFang SC","Noto Sans SC","IBM Plex Sans",system-ui,sans-serif;color:#e8edf7}
+  #c .kicker{color:#f97316;letter-spacing:.28em}
   #c h2{font-size:40px;max-width:14ch}
   #c .flow{grid-template-columns:1fr 1fr;gap:28px}
   #c .bridge{display:none}
   #c .panel{background:transparent;border:0;border-radius:0;padding:0;position:relative}
-  #c .panel.left{padding-right:28px;border-right:1px solid rgba(255,255,255,.12)}
-  #c .stepno{font-size:56px;font-weight:800;color:rgba(251,113,133,.35);line-height:1;margin-bottom:4px}
-  #c .pill{border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.16);color:#e5e7eb}
-  #c .mark{border-radius:0;border:0;border-left:4px solid #fb7185;background:rgba(251,113,133,.08);padding-left:14px}
-  #c .mark small{color:#fda4af}
+  #c .panel.left{padding-right:28px;border-right:1px solid rgba(255,255,255,.1)}
+  #c .stepno{font-size:56px;font-weight:800;color:rgba(34,211,238,.28);line-height:1;margin-bottom:4px}
+  #c .pill{border-radius:8px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);color:#e8edf7}
+  #c .mark{border-radius:0;border:0;border-left:4px solid #f97316;background:rgba(249,115,22,.08);padding-left:14px}
+  #c .mark small{color:#fdba74}
   #c .vitem{border-bottom-color:rgba(255,255,255,.1);grid-template-columns:28px 1fr auto;gap:10px}
-  #c .vitem .idx{font-family:"JetBrains Mono",monospace;font-size:12px;color:#fb7185;padding-top:2px}
-  #c .tag.best{background:#fb7185;color:#111}
-  #c .tag.some{background:#334155;color:#67e8f9}
-  #c .tag.narrow{background:#3f3f46;color:#fbbf24}
-  #c .tag.no{background:#1f2937;color:#9ca3af}
-  #c .rule{height:1px;background:linear-gradient(90deg,#fb7185,transparent);margin:10px 0 14px;border:0}
+  #c .vitem .idx{font-family:ui-monospace,monospace;font-size:12px;color:#22d3ee;padding-top:2px}
+  #c .tag.best{background:#f97316;color:#fff}
+  #c .tag.some{background:rgba(34,211,238,.15);color:#22d3ee}
+  #c .tag.narrow{background:rgba(249,115,22,.18);color:#fdba74}
+  #c .tag.no{background:rgba(255,255,255,.08);color:#9aa6bd}
+  #c .rule{height:1px;background:linear-gradient(90deg,#f97316,transparent);margin:10px 0 14px;border:0}
 </style>
 </head>
 <body>
@@ -103,16 +103,16 @@
     <h1>第3页 · 三个视觉方案</h1>
     <p>同一页知识内容，三种风格。重点都改了：左边「定义」→ 中间箭头 → 右边「套到第2页」，先解决文字堆在一起、区块没有关系的问题。整体气质分别参考 GitHub 上常见的 deck 方向：Vercel/Linear 冷静信号、Neon/Electric 赛博课堂、Editorial 大字编辑感。</p>
     <div class="tabs">
-      <button type="button" class="on" data-v="a">A · Signal Dark</button>
+      <button type="button" data-v="a">A · Signal Dark</button>
       <button type="button" data-v="b">B · Electric Lab</button>
-      <button type="button" data-v="c">C · Editorial</button>
+      <button type="button" class="on" data-v="c">C · Editorial ✓</button>
     </div>
   </div>
 
   <div class="stage-wrap">
     <div class="stage">
       <!-- A -->
-      <section class="variant on" id="a">
+      <section class="variant" id="a">
         <div class="gridish"></div>
         <div class="content">
           <div class="kicker">什么叫智能</div>
@@ -179,7 +179,7 @@
       </section>
 
       <!-- C -->
-      <section class="variant" id="c">
+      <section class="variant on" id="c">
         <div class="kicker">什么叫智能</div>
         <h2>环境再变，照样办得成</h2>
         <div class="cite"><i>achieve goals in a wide range of environments</i> · Legg & Hutter, 2007</div>
@@ -187,8 +187,8 @@
         <div class="flow" style="flex:1;min-height:0">
           <div class="panel left">
             <div class="stepno">01</div>
-            <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:6px">先立尺子</div>
-            <p style="font-size:16px;line-height:1.55;color:#e5e7eb">会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
+            <div style="font-size:13px;font-weight:700;color:#22d3ee;margin-bottom:6px">先立尺子</div>
+            <p style="font-size:16px;line-height:1.55;color:#e8edf7">会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
             <div class="pills" style="margin-top:12px">
               <span class="pill">perceive</span><span class="pill">model</span><span class="pill">plan</span><span class="pill">act</span><span class="pill">learn</span>
             </div>
@@ -196,7 +196,7 @@
           </div>
           <div class="panel">
             <div class="stepno">02</div>
-            <div style="font-size:13px;font-weight:700;color:#fb7185;margin-bottom:6px">再量第 2 页</div>
+            <div style="font-size:13px;font-weight:700;color:#f97316;margin-bottom:6px">再量第 2 页</div>
             <div class="vlist">
               <div class="vitem"><div class="idx">01</div><div><b>语音助手</b><p>会听会说，目标是你给的</p></div><span class="tag some">有一点</span></div>
               <div class="vitem"><div class="idx">02</div><div><b>人脸闸机</b><p>基本只会做这一件事</p></div><span class="tag narrow">很窄</span></div>
@@ -214,7 +214,7 @@
     <div><b style="color:#fff">A Signal Dark</b>：冷静、点阵底、少发光。适合看起来「专业课」。</div>
     <div style="margin-top:6px"><b style="color:#fff">B Electric Lab</b>：青橙脉冲、玻璃面板。更贴你们已经有的机房/脉冲气质。</div>
     <div style="margin-top:6px"><b style="color:#fff">C Editorial</b>：大数字、竖分割、少卡片。文字最疏，逻辑靠 01→02 引导。</div>
-    <div class="pick">回消息里直接说选 A / B / C。选定后我会按该风格改整套课件，并顺手把第4页做成同样的「先判断 → 再规则 → 再当场验」流。</div>
+    <div class="pick">已选定 <b style="color:#fff">C · Editorial</b>，配色改回课件原有的青 / 橙 / 深蓝。第3、4页已按此落地。</div>
   </div>
 
 <script>

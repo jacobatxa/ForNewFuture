@@ -57,10 +57,11 @@
   .lg.on{background:rgba(249,115,22,.25);border-color:var(--orange)}
 
   .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-  .pill{padding:6px 10px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);font-size:14px}
-  .verdict{padding:7px 0;border-bottom:1px solid var(--line);font-size:15px}
-  .verdict .top{display:flex;justify-content:space-between;gap:8px;align-items:center}
-  .verdict p{margin-top:2px;color:var(--muted);font-size:14px}
+  .pill{padding:6px 10px;border-radius:8px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);font-size:14px}
+  .verdict{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .verdict .idx{font-size:12px;font-weight:800;color:var(--cyan);padding-top:3px;font-variant-numeric:tabular-nums}
+  .verdict b{font-size:14px}
+  .verdict p{margin-top:2px;color:var(--muted);font-size:13px}
   .choice{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
   .choice button,.chip{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:8px 14px;font-size:15px}
   .choice button.on{background:rgba(249,115,22,.25);border-color:var(--orange)}
@@ -89,11 +90,25 @@
   .photo{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:320px;background:#07101f;cursor:zoom-in}
   .photo img{width:100%;height:min(48vh,400px);object-fit:cover;display:block}
   .photo .cap{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(transparent,rgba(0,0,0,.82));font-size:14px}
-  .logic{display:grid;grid-template-columns:.92fr 1.08fr;gap:16px;align-items:stretch}
+  .logic{display:none}
+  .edboard{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;flex:1;min-height:0;margin-top:4px}
+  .edcol{padding:4px 28px 0 0;min-height:0;display:flex;flex-direction:column}
+  .edcol + .edcol{padding:4px 0 0 28px;border-left:1px solid var(--line)}
+  .stepno{font-size:52px;font-weight:900;line-height:1;color:rgba(34,211,238,.28);letter-spacing:-.04em}
+  .edlabel{font-size:13px;font-weight:800;color:var(--cyan);margin:2px 0 10px;letter-spacing:.04em}
+  .edlabel.org{color:var(--orange)}
+  .edrule{height:1px;border:0;margin:8px 0 12px;background:linear-gradient(90deg,var(--orange),transparent)}
   .ruler ol{margin:8px 0 0 1.15em}
   .ruler li{padding:3px 0;font-size:16px}
-  .mark{margin-top:12px;padding:10px 12px;border-radius:12px;background:rgba(249,115,22,.16);border:1px solid rgba(249,115,22,.6);font-size:17px;font-weight:800;line-height:1.4}
+  .mark{margin-top:14px;padding:10px 0 10px 14px;border-radius:0;background:rgba(249,115,22,.08);border:0;border-left:4px solid var(--orange);font-size:17px;font-weight:800;line-height:1.4}
   .mark b{color:var(--orange);margin-right:6px}
+  .bound{display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
+  .bound-compare{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .bound-compare > div{padding-right:24px}
+  .bound-compare > div + div{padding:0 0 0 24px;border-left:1px solid var(--line)}
+  .bound-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:2px 0}
+  .bound-rules .n{font-size:28px;font-weight:900;color:rgba(34,211,238,.35);line-height:1}
+  .bound-check{padding:14px 0 8px 16px;border-left:4px solid var(--orange);background:rgba(249,115,22,.08)}
   .air{display:grid;grid-template-columns:1.5fr .85fr;gap:14px;align-items:stretch}
   .air .hero{border:0;padding:0;background:transparent;cursor:zoom-in;text-align:left;color:inherit}
   .air .hero img{width:100%;height:min(56vh,480px);object-fit:cover;border-radius:16px;display:block;border:1px solid var(--line)}
@@ -203,22 +218,25 @@
     <div class="kicker">什么叫智能</div>
     <h2>环境再变，照样办得成</h2>
     <p class="small" style="margin-top:-6px"><i>achieve goals in a wide range of environments</i> · Legg & Hutter, 2007</p>
-    <div class="logic">
-      <div class="card ruler">
-        <h3 class="accent">专业说法</h3>
+    <hr class="edrule">
+    <div class="edboard">
+      <div class="edcol">
+        <div class="stepno">01</div>
+        <div class="edlabel">先立尺子</div>
         <p>会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
         <div class="pills">
           <span class="pill">能感知 · perceive</span>
-          <span class="pill">脑子里有个世界 · world model</span>
-          <span class="pill">会判断下一步 · plan</span>
-          <span class="pill">会行动 · act</span>
-          <span class="pill">没见过也能应付一点 · learn</span>
+          <span class="pill">世界模型 · world model</span>
+          <span class="pill">判断 · plan</span>
+          <span class="pill">行动 · act</span>
+          <span class="pill">学习 · learn</span>
         </div>
         <div class="mark"><b>划重点</b>懂得学习，并给出更优化的解决方案。<span style="display:block;margin-top:4px;font-size:14px;font-weight:600;color:#fdba74">learn, and produce better solutions</span></div>
-        <p class="small" style="margin-top:10px">出处 · Shane Legg & Marcus Hutter, 2007：<i>Intelligence measures an agent's ability to achieve goals in a wide range of environments.</i><br>上面五条，参考 Russell & Norvig 对 agent 的讲法（perceive → model → plan → act），再加上 learn。</p>
+        <p class="small" style="margin-top:auto;padding-top:12px">出处 · Shane Legg & Marcus Hutter, 2007：<i>Intelligence measures an agent's ability to achieve goals in a wide range of environments.</i> 五条参考 Russell & Norvig（perceive → model → plan → act），再加上 learn。</p>
       </div>
-      <div class="card">
-        <h3 class="org">再用尺子看第 2 页</h3>
+      <div class="edcol">
+        <div class="stepno">02</div>
+        <div class="edlabel org">再量第 2 页</div>
         <div id="verdicts"></div>
       </div>
     </div>
@@ -227,24 +245,41 @@
   <section class="slide">
     <div class="kicker">边界</div>
     <h2>它能帮忙，决定还是你来做</h2>
-    <div class="grid2">
-      <div class="card"><h3 class="accent">这些它拿手</h3><p>列提纲，把一道题再出两道，翻译，陪你背单词，把笔记收短。</p></div>
-      <div class="card"><h3 class="org">这些别交给它</h3><p>它没进过你们学校，也不认识你。你难过的时候，它不懂，只会顺着接话。</p></div>
-    </div>
-    <div class="grid3">
-      <div class="card"><h3>1　脑子自己用</h3><p class="mini">作文让它写完你来抄，练的是它，不是你。</p></div>
-      <div class="card"><h3>2　心事找人说</h3><p class="mini">吵架、被孤立、跟爸妈闹。这种事问真人。</p></div>
-      <div class="card"><h3>3　它会编</h3><p class="mini">答案自己核对。密码、住址、学号不要贴进去。</p></div>
-    </div>
-    <div class="card" style="border-color:rgba(249,115,22,.45)">
-      <h3 class="org">当场验一下</h3>
-      <p>如果豆包说：「你们学校门口有 17 棵树。」你信吗？</p>
-      <div class="choice" id="expBtns">
-        <button type="button" data-v="信">信</button>
-        <button type="button" data-v="不信">不信</button>
-        <button type="button" data-v="要查">要查</button>
+    <hr class="edrule">
+    <div class="bound">
+      <div>
+        <div class="stepno" style="font-size:40px">01</div>
+        <div class="edlabel">先分清能帮什么、别交什么</div>
+        <div class="bound-compare">
+          <div>
+            <h3 class="accent">这些它拿手</h3>
+            <p style="margin-top:6px">列提纲，把一道题再出两道，翻译，陪你背单词，把笔记收短。</p>
+          </div>
+          <div>
+            <h3 class="org">这些别交给它</h3>
+            <p style="margin-top:6px">它没进过你们学校，也不认识你。你难过的时候，它不懂，只会顺着接话。</p>
+          </div>
+        </div>
       </div>
-      <p id="expReveal" class="accent"></p>
+      <div>
+        <div class="stepno" style="font-size:40px">02</div>
+        <div class="edlabel">再记住三条</div>
+        <div class="bound-rules">
+          <div><div class="n">1</div><h3 style="margin-top:4px">脑子自己用</h3><p class="mini">作文让它写完你来抄，练的是它，不是你。</p></div>
+          <div><div class="n">2</div><h3 style="margin-top:4px">心事找人说</h3><p class="mini">吵架、被孤立、跟爸妈闹。这种事问真人。</p></div>
+          <div><div class="n">3</div><h3 style="margin-top:4px">它会编</h3><p class="mini">答案自己核对。密码、住址、学号不要贴进去。</p></div>
+        </div>
+      </div>
+      <div class="bound-check">
+        <div class="edlabel org" style="margin:0 0 6px">03 · 当场验一下</div>
+        <p>如果豆包说：「你们学校门口有 17 棵树。」你信吗？</p>
+        <div class="choice" id="expBtns">
+          <button type="button" data-v="信">信</button>
+          <button type="button" data-v="不信">不信</button>
+          <button type="button" data-v="要查">要查</button>
+        </div>
+        <p id="expReveal" class="accent"></p>
+      </div>
     </div>
   </section>
 
@@ -451,8 +486,8 @@
 const hints=[
   "方向键或两侧圆按钮翻页",
   "点你觉得算智能的东西，可以多选。先别公布答案",
-  "用左边的定义，回头看刚才点过的东西",
-  "先让大家选：信、不信，还是要查",
+  "先看左边 01 尺子，再看右边 02 怎么量刚才点过的",
+  "从上往下：能帮什么 → 三条规则 → 当场验一下",
   "今天讲到会搭 Agent。后面几天再做成别人能用的",
   "从左往下点。光点走在步骤之间的路径上，一直看到显卡、算法和存储",
   "左边是航拍。马斯克那座点链接，课堂上打开",
@@ -478,7 +513,7 @@ const vbox=document.getElementById("verdicts");
 verdicts.forEach((v,i)=>{
   const row=document.createElement("div");
   row.className="verdict";
-  row.innerHTML=`<div class="top"><b>${i+1} ${objs[i]}</b><span class="tag ${v[1]}">${v[0]}</span></div><p>${v[2]}</p>`;
+  row.innerHTML=`<span class="idx">${String(i+1).padStart(2,"0")}</span><div><b>${objs[i]}</b><p>${v[2]}</p></div><span class="tag ${v[1]}">${v[0]}</span>`;
   vbox.appendChild(row);
 });
 const legend=document.getElementById("voteLegend");
