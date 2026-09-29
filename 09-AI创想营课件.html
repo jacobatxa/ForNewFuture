@@ -372,38 +372,173 @@
   .flow .card { min-height: auto; padding: 10px 12px; }
   .flow .n { font-family: var(--font-mono); font-size: 20px; font-weight: 900; color: var(--cyan); }
 
-  /* Slide 9: Vector Embedding Space Game */
-  #mapwrap {
-    position: relative;
-    height: min(42vh, 360px);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    background:
-      radial-gradient(circle at center, rgba(34, 211, 238, 0.05) 0%, transparent 70%),
-      radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.08), transparent 40%),
-      radial-gradient(circle at 80% 40%, rgba(249, 115, 22, 0.08), transparent 42%),
-      #080f20;
-    overflow: hidden;
+  /* Slide 10: Semantic Vector Space Console (Option B - Optimized) */
+  .vector-console {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
   }
-  .wdot {
+  .radar-panel {
+    position: relative;
+    background:
+      radial-gradient(circle at center, rgba(34, 211, 238, 0.09) 0%, transparent 68%),
+      radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.08), transparent 45%),
+      radial-gradient(circle at 75% 25%, rgba(251, 146, 60, 0.08), transparent 45%),
+      radial-gradient(circle at 75% 75%, rgba(34, 211, 238, 0.08), transparent 45%),
+      radial-gradient(circle at 20% 70%, rgba(244, 63, 94, 0.08), transparent 45%),
+      #060c1d;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 14px;
+    overflow: hidden;
+    height: 100%;
+    min-height: 330px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+  }
+  .radar-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .radar-axis { stroke: rgba(255, 255, 255, 0.12); stroke-width: 0.5; stroke-dasharray: 2 2; }
+  .radar-circle { stroke: rgba(34, 211, 238, 0.14); stroke-dasharray: 2 2; fill: none; stroke-width: 0.5; }
+  .radar-label { font-family: var(--font-mono); font-size: 2.2px; fill: rgba(148, 163, 184, 0.5); font-weight: 600; }
+  .radar-quadrant { font-family: var(--font-mono); font-size: 2.3px; fill: rgba(255, 255, 255, 0.18); font-weight: 700; }
+  .beam-line { stroke: #22d3ee; stroke-width: 0.8; stroke-dasharray: 2 1.5; animation: beam-dash 1s linear infinite; filter: drop-shadow(0 0 4px #22d3ee); }
+  @keyframes beam-dash { to { stroke-dashoffset: -7; } }
+  .beam-badge {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(6, 12, 29, 0.95);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    box-shadow: 0 0 12px var(--cyan-glow);
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .vector-points { position: absolute; inset: 0; }
+  .v-dot {
     position: absolute;
     transform: translate(-50%, -50%);
     border: 0;
-    background: transparent;
-    font-weight: 800;
-    font-size: 14px;
-    text-shadow: 0 1px 4px #000;
-    padding: 4px;
-    font-family: var(--font-en);
-    transition: transform .15s ease;
+    background: rgba(6, 12, 29, 0.6);
+    font-weight: 700;
+    font-size: 12.5px;
+    color: #f1f5f9;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
   }
-  .wdot:hover { transform: translate(-50%, -50%) scale(1.2); }
-  .wdot i { display: block; width: 10px; height: 10px; border-radius: 50%; margin: 0 auto 2px; }
-  .wdot.sel { outline: 2px solid #fff; border-radius: 8px; background: rgba(0,0,0,.6); box-shadow: 0 0 14px rgba(255,255,255,.5); }
-  .bank { display: flex; flex-wrap: wrap; gap: 5px; }
-  .bank button { border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 999px; padding: 3px 9px; font-size: 12.5px; font-family: var(--font-en); }
-  .bank button.placed { opacity: .35; }
-  #pairbox { min-height: 40px; font-size: 15px; }
+  .v-dot i { display: block; width: 7px; height: 7px; border-radius: 50%; box-shadow: 0 0 6px currentColor; flex-shrink: 0; }
+  .v-dot:hover { transform: translate(-50%, -50%) scale(1.18); z-index: 10; background: rgba(15, 23, 42, 0.95); border-color: rgba(255,255,255,0.4); }
+  .v-dot.sel {
+    outline: 2px solid #fff;
+    background: rgba(14, 165, 233, 0.25);
+    border-color: #38bdf8;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    z-index: 15;
+    transform: translate(-50%, -50%) scale(1.15);
+    color: #fff;
+    font-weight: 800;
+  }
+  .insight-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+    min-height: 0;
+  }
+  .insight-box {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 11px;
+    backdrop-filter: blur(4px);
+  }
+  .insight-box h3 {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .preset-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .preset-btn {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .preset-btn:hover { border-color: var(--cyan); background: rgba(34, 211, 238, 0.08); color: #fff; transform: translateY(-1px); }
+  .preset-btn span { font-size: 10px; color: var(--muted); font-weight: 400; font-family: var(--font-mono); }
+  
+  .readout-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    font-weight: 700;
+    border: 1px solid var(--line);
+  }
+  .readout-tag.active {
+    background: rgba(34, 211, 238, 0.15);
+    color: var(--cyan);
+    border-color: rgba(34, 211, 238, 0.4);
+  }
+  .readout { min-height: 52px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .readout-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .readout-score { font-family: var(--font-mono); font-size: 13.5px; font-weight: 800; color: #fff; }
+  .readout-score b { color: #fff; }
+  .readout-score span { font-size: 11px; color: var(--cyan); font-weight: 600; margin-left: 4px; }
+  .sim-bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .sim-bar { width: 65px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; }
+  .sim-bar-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #34d399); border-radius: 999px; transition: width .3s ease; }
+  .sim-bar-val { font-family: var(--font-mono); font-size: 11px; color: var(--emerald); font-weight: 800; }
+  .readout-desc { font-size: 11.5px; color: var(--ink); line-height: 1.45; }
+  
+  .cat-pills { display: flex; flex-wrap: wrap; gap: 3.5px; max-height: 80px; overflow-y: auto; padding-right: 2px; }
+  .cat-pill {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s ease;
+    font-family: var(--font-en);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .cat-pill i { display: inline-block; width: 5px; height: 5px; border-radius: 50%; }
+  .cat-pill:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
+  .cat-pill.placed { opacity: 0.35; text-decoration: line-through; }
 
   /* Slide 10: Terminology Matcher */
   .gmatch { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; }
@@ -724,18 +859,78 @@
 
   <!-- SLIDE 10: Word Vector Space Game -->
   <section class="slide">
-    <div class="kicker">02 空间游戏 <span class="en">· Semantic Vector Space</span></div>
-    <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Semantic Distance in 2D Embedding Space</span></h2>
-    <div id="mapwrap"></div>
-    <div class="bank" id="wordBank"></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="chip" type="button" id="dropTrio">放下猫、狗、卡车</button>
-      <button class="chip" type="button" id="dropFeel">放下开心和难过</button>
-      <button class="chip" type="button" id="dropAll">全部放下</button>
-      <button class="chip" type="button" id="clearMap">清空</button>
+    <div class="kicker">02 语义空间几何 <span class="en">· Semantic Vector Space</span></div>
+    <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Words with Similar Contexts Cluster Together in Embedding Space</span></h2>
+    <div class="vector-console">
+      <!-- Left: 2D Radar Vector Space -->
+      <div class="radar-panel" id="mapwrap">
+        <svg class="radar-svg" id="radarSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <!-- Center Axes -->
+          <line x1="50" y1="0" x2="50" y2="100" class="radar-axis" />
+          <line x1="0" y1="50" x2="100" y2="50" class="radar-axis" />
+          <!-- Concentric Circles (Sim Distance 0.75, 0.5, 0.25) -->
+          <circle cx="50" cy="50" r="16" class="radar-circle" />
+          <circle cx="50" cy="50" r="32" class="radar-circle" />
+          <circle cx="50" cy="50" r="46" class="radar-circle" />
+          <!-- Quadrant Watermarks -->
+          <text x="8" y="10" class="radar-quadrant">🐾 动物聚类区</text>
+          <text x="68" y="10" class="radar-quadrant">🚗 交通工具区</text>
+          <text x="8" y="93" class="radar-quadrant">🎭 情绪心理区</text>
+          <text x="68" y="93" class="radar-quadrant">🏫 校园日常区</text>
+          <!-- Coordinates & Semantics -->
+          <text x="51" y="4" class="radar-label">+Y 抽象实体</text>
+          <text x="78" y="48.5" class="radar-label">+X 工具设备</text>
+          <text x="2" y="48.5" class="radar-label">-X 情绪体验</text>
+          <text x="51" y="98" class="radar-label">-Y 社会环境</text>
+          <!-- Dynamic Measurement Beam -->
+          <line id="beamLine" x1="0" y1="0" x2="0" y2="0" class="beam-line" style="display:none" />
+        </svg>
+        <div class="vector-points" id="pointsContainer"></div>
+        <div id="beamBadge" class="beam-badge" style="display:none">相似度 0.57</div>
+      </div>
+
+      <!-- Right: Insight & Explorer Panel -->
+      <div class="insight-panel">
+        <!-- Preset Experiments -->
+        <div class="insight-box">
+          <h3>🔬 课堂探究实验 <span class="sub-en">· Guided Tests</span></h3>
+          <div class="preset-btns">
+            <button class="preset-btn" type="button" id="dropTrio">🐾 猫 vs 狗 vs 卡车 <span>同类聚类 vs 跨界遥远</span></button>
+            <button class="preset-btn" type="button" id="dropFeel">🎭 开心 vs 难过 <span>反义却邻近 (语法同构)</span></button>
+            <button class="preset-btn" type="button" id="dropSchool">🏫 老师·同学·作业 <span>高频校园共现</span></button>
+            <button class="preset-btn" type="button" id="dropAll">🌐 31 个词全景 <span>全局语义降维投影</span></button>
+          </div>
+        </div>
+
+        <!-- Realtime Distance Readout -->
+        <div class="insight-box" style="border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.04)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <h3 style="color:#fff;margin:0">📐 实时空间测距透视 <span class="sub-en">· Distance Insight</span></h3>
+            <span id="readoutTag" class="readout-tag">等待测距</span>
+          </div>
+          <div class="readout" id="readoutBox">
+            <div class="readout-header">
+              <div class="readout-score" id="readoutScore">👈 点击地图两点或上方实验</div>
+              <div class="sim-bar-wrap" id="meterWrap" style="display:none">
+                <div class="sim-bar"><div class="sim-bar-fill" id="meterFill" style="width:0%"></div></div>
+                <span class="sim-bar-val" id="meterVal">0.00</span>
+              </div>
+            </div>
+            <div class="readout-desc" id="readoutDesc">大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。</div>
+          </div>
+        </div>
+
+        <!-- Word Bank -->
+        <div class="insight-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <h3 style="margin:0;font-size:12px;color:var(--muted)">分类词库 <span style="font-weight:400;font-size:10.5px">(点击放置单个词)</span></h3>
+            <button style="border:none;background:transparent;color:var(--orange);font-size:11px;cursor:pointer;font-weight:700" type="button" id="clearMap">清空重置</button>
+          </div>
+          <div class="cat-pills" id="wordBank"></div>
+        </div>
+      </div>
     </div>
-    <p id="pairbox"></p>
-    <p class="small">坐标来自苹果系统自带的简体中文词向量，压到平面上。接近程度按真实向量计算，越接近 1 越近。这不是豆包内部那张原图，豆包不会把坐标交出来。颜色是为了分类标的。</p>
+    <p class="small">坐标来自简体中文语义向量降维投影。<b>核心认知：</b>两个词意思相反（如开心/难过），在空间中依然很近，因为句式结构高度一致；模型没有情感体验，只计算向量夹角。</p>
   </section>
 
   <!-- SLIDE 11: Terminology Matcher -->
@@ -866,7 +1061,7 @@ const hints=[
   "左边是航拍。马斯克那座点链接，课堂上打开",
   "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
   "这页由老师操作，只看它怎么预测下一个词",
-  "先放下猫、狗、卡车，再点两个词看远近",
+  "点选探究实验或词汇，观察大模型雷达测距光束与余弦相似度计算",
   "点左边的词，再点右边的解释",
   "点开 Agent 周围的零件",
   "切到老师自己的屏幕，把早报这一个讲透",
@@ -967,72 +1162,197 @@ function openPhoto(src,cap){
 box.addEventListener("click",()=>box.classList.remove("show"));
 
 const WORDMAP=JSON.parse(document.getElementById("word-data").textContent);
-const groupColor={};
-["猫","狗","小狗","老虎","鸟","鱼"].forEach(w=>groupColor[w]="#3b82f6");
-["汽车","卡车","公交车","自行车","火车"].forEach(w=>groupColor[w]="#f97316");
-["书包","铅笔","教室","老师","同学","作业","学校","朋友"].forEach(w=>groupColor[w]="#22d3ee");
-["手机","电脑","笔记本","投影仪"].forEach(w=>groupColor[w]="#a78bfa");
-["开心","难过","生气","害怕"].forEach(w=>groupColor[w]="#fb7185");
-["妈妈","爸爸"].forEach(w=>groupColor[w]="#fbbf24");
+const groupMeta = {
+  "猫": {color:"#38bdf8"}, "狗": {color:"#38bdf8"}, "小狗": {color:"#38bdf8"}, "老虎": {color:"#38bdf8"}, "鸟": {color:"#38bdf8"}, "鱼": {color:"#38bdf8"},
+  "汽车": {color:"#fb923c"}, "卡车": {color:"#fb923c"}, "公交车": {color:"#fb923c"}, "自行车": {color:"#fb923c"}, "火车": {color:"#fb923c"},
+  "书包": {color:"#22d3ee"}, "铅笔": {color:"#22d3ee"}, "教室": {color:"#22d3ee"}, "老师": {color:"#22d3ee"}, "同学": {color:"#22d3ee"}, "作业": {color:"#22d3ee"}, "学校": {color:"#22d3ee"}, "朋友": {color:"#22d3ee"},
+  "手机": {color:"#c084fc"}, "电脑": {color:"#c084fc"}, "笔记本": {color:"#c084fc"}, "投影仪": {color:"#c084fc"},
+  "开心": {color:"#f43f5e"}, "难过": {color:"#f43f5e"}, "生气": {color:"#f43f5e"}, "害怕": {color:"#f43f5e"},
+  "妈妈": {color:"#facc15"}, "爸爸": {color:"#facc15"}, "米饭": {color:"#a3e635"}, "面条": {color:"#a3e635"}
+};
+
 const mapwrap=document.getElementById("mapwrap");
 const bank=document.getElementById("wordBank");
+const pointsContainer=document.getElementById("pointsContainer");
+const beamLine=document.getElementById("beamLine");
+const beamBadge=document.getElementById("beamBadge");
+const readoutScore=document.getElementById("readoutScore");
+const readoutDesc=document.getElementById("readoutDesc");
+const readoutTag=document.getElementById("readoutTag");
+const meterWrap=document.getElementById("meterWrap");
+const meterFill=document.getElementById("meterFill");
+const meterVal=document.getElementById("meterVal");
+
 const placed=new Set();
 let sel=[];
-function simOf(a,b){return WORDMAP.sim[a][b];}
+
+function simOf(a,b){return WORDMAP.sim[a]&&WORDMAP.sim[a][b]!==undefined?WORDMAP.sim[a][b]:0;}
+
 function place(name){
   if(placed.has(name)) return;
   placed.add(name);
   const p=WORDMAP.points.find(x=>x.name===name);
+  if(!p) return;
   const d=document.createElement("button");
-  d.type="button"; d.className="wdot"; d.dataset.name=name;
+  d.type="button"; d.className="v-dot"; d.dataset.name=name;
   d.style.left=p.x+"%"; d.style.top=p.y+"%";
-  d.innerHTML=`<i style="background:${groupColor[name]||'#fff'}"></i>${name}`;
+  const c=(groupMeta[name]&&groupMeta[name].color)||'#38bdf8';
+  d.innerHTML=`<i style="background:${c};color:${c}"></i><span>${name}</span>`;
   d.onclick=()=>pick(name,d);
-  mapwrap.appendChild(d);
-  bank.querySelector(`[data-w="${name}"]`).classList.add("placed");
+  pointsContainer.appendChild(d);
+  const pill=bank.querySelector(`[data-w="${name}"]`);
+  if(pill) pill.classList.add("placed");
 }
+
 function clearMap(){
   placed.clear(); sel=[];
-  mapwrap.querySelectorAll(".wdot").forEach(n=>n.remove());
+  pointsContainer.innerHTML="";
   bank.querySelectorAll("button").forEach(b=>b.classList.remove("placed"));
-  document.getElementById("pairbox").textContent="先把词放到地图上，再点两个词。";
+  beamLine.style.display="none";
+  beamBadge.style.display="none";
+  meterWrap.style.display="none";
+  readoutTag.className="readout-tag";
+  readoutTag.textContent="等待测距";
+  readoutScore.innerHTML="👈 点击地图两点或上方实验";
+  readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。";
 }
+
+function updateBeam(){
+  if(sel.length<2){
+    beamLine.style.display="none";
+    beamBadge.style.display="none";
+    return;
+  }
+  const p1=WORDMAP.points.find(x=>x.name===sel[0]);
+  const p2=WORDMAP.points.find(x=>x.name===sel[1]);
+  if(!p1||!p2) return;
+
+  beamLine.setAttribute("x1", p1.x);
+  beamLine.setAttribute("y1", p1.y);
+  beamLine.setAttribute("x2", p2.x);
+  beamLine.setAttribute("y2", p2.y);
+  beamLine.style.display="block";
+
+  const s=simOf(sel[0],sel[1]);
+  beamBadge.textContent=`相似度 ${s.toFixed(2)}`;
+  beamBadge.style.left=((p1.x+p2.x)/2)+"%";
+  beamBadge.style.top=((p1.y+p2.y)/2)+"%";
+  beamBadge.style.display="block";
+}
+
 function comment(a,b,s){
   const key=[a,b].sort().join("-");
   const special={
-    "狗-猫":"猫和狗常出现在同一类句子里，所以近。",
-    "卡车-猫":"一个是动物，一个是车，几乎不在同一类句子里，所以远。",
-    "卡车-汽车":"都是车，所以近。",
-    "开心-难过":"意思相反，离得却不远。它们都常出现在「我感到……」这种句子里。它知道这是一类词，并没有体验过难过。"
+    "狗-猫":"【同类聚类】猫和狗在海量网页语料中共享『宠物/喂养/陪伴』等上下文，几何夹角极小。",
+    "卡车-猫":"【跨界遥远】一个是动物一个是载重工具，在语义网络中几乎没有重合关联，相隔遥远。",
+    "卡车-汽车":"【同属交通】同在交通工具聚类中心，方向与功能高度重合。",
+    "开心-难过":"【反义却邻近】它们虽然情感对立，但在句式里（如『我感到…』『他看起来很…』）语法槽位完全一致！模型靠上下文统计，因此放得极近。"
   };
   if(special[key]) return special[key];
-  if(s>=0.5) return "很近。它觉得这两个词常待在一起。";
-  if(s>=0.3) return "有一点近。";
-  return "很远。";
+  if(s>=0.5) return `【高度紧密】几何距离极近（${s.toFixed(2)}），经常在相同的话题与句式中一起出现。`;
+  if(s>=0.25) return `【中度关联】有一定上下文联系（${s.toFixed(2)}），处于相近的语义分支。`;
+  return `【低关联/遥远】（${s.toFixed(2)}）在语料库中几乎不共享相似的上下文环境。`;
 }
+
 function pick(name,el){
-  if(sel.length===1 && sel[0]===name){sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel")); return;}
-  if(sel.length>=2){sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel"));}
-  sel.push(name); el.classList.add("sel");
-  if(sel.length===2){
+  if(sel.length===1 && sel[0]===name){
+    sel=[];
+    pointsContainer.querySelectorAll(".v-dot").forEach(d=>d.classList.remove("sel"));
+    updateBeam();
+    meterWrap.style.display="none";
+    readoutTag.className="readout-tag";
+    readoutTag.textContent="等待测距";
+    readoutScore.innerHTML="👈 点击地图两点或上方实验";
+    readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。";
+    return;
+  }
+  if(sel.length>=2){
+    sel=[];
+    pointsContainer.querySelectorAll(".v-dot").forEach(d=>d.classList.remove("sel"));
+  }
+  sel.push(name);
+  el.classList.add("sel");
+
+  if(sel.length===1){
+    beamLine.style.display="none";
+    beamBadge.style.display="none";
+    meterWrap.style.display="none";
+    readoutTag.className="readout-tag active";
+    readoutTag.textContent="已选 1 词";
+    readoutScore.innerHTML=`已选: <b>${name}</b> <span>请再点一个词发射测距光束</span>`;
+    readoutDesc.textContent="观察两词在大模型高维空间映射下的空间几何距离。";
+  }else if(sel.length===2){
     const s=simOf(sel[0],sel[1]);
-    document.getElementById("pairbox").innerHTML=`<b>${sel[0]}</b> 和 <b>${sel[1]}</b>　接近程度 ${s.toFixed(2)}。${comment(sel[0],sel[1],s)}`;
+    const key=[sel[0],sel[1]].sort().join("-");
+    readoutTag.className="readout-tag active";
+    if(key==="开心-难过") readoutTag.textContent="反义邻近";
+    else if(s>=0.5) readoutTag.textContent="极高聚类";
+    else if(s>=0.25) readoutTag.textContent="中度关联";
+    else readoutTag.textContent="跨界遥远";
+
+    readoutScore.innerHTML=`<b>${sel[0]}</b> ↔ <b>${sel[1]}</b>`;
+    meterWrap.style.display="flex";
+    const pct=Math.max(0,Math.min(100,Math.round(((s+0.3)/1.3)*100)));
+    meterFill.style.width=pct+"%";
+    meterVal.textContent=s.toFixed(2);
+    readoutDesc.textContent=comment(sel[0],sel[1],s);
+    updateBeam();
   }
 }
+
 WORDMAP.points.forEach(p=>{
   const b=document.createElement("button");
-  b.type="button"; b.textContent=p.name; b.dataset.w=p.name;
+  b.type="button"; b.className="cat-pill"; b.dataset.w=p.name;
+  const c=(groupMeta[p.name]&&groupMeta[p.name].color)||'#38bdf8';
+  b.innerHTML=`<i style="background:${c}"></i><span>${p.name}</span>`;
   b.onclick=()=>place(p.name);
   bank.appendChild(b);
 });
-document.getElementById("dropTrio").onclick=()=>["猫","狗","卡车"].forEach(place);
-document.getElementById("dropFeel").onclick=()=>{["开心","难过"].forEach(place); setTimeout(()=>{
-  const a=mapwrap.querySelector('[data-name="开心"]'); const b=mapwrap.querySelector('[data-name="难过"]');
-  sel=[]; document.querySelectorAll(".wdot").forEach(d=>d.classList.remove("sel"));
-  if(a&&b){pick("开心",a); pick("难过",b);}
-},0);};
-document.getElementById("dropAll").onclick=()=>WORDMAP.points.forEach(p=>place(p.name));
+
+document.getElementById("dropTrio").onclick=()=>{
+  clearMap();
+  ["猫","狗","卡车"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="猫"]');
+    const b=pointsContainer.querySelector('[data-name="狗"]');
+    if(a&&b){pick("猫",a); pick("狗",b);}
+  },30);
+};
+
+document.getElementById("dropFeel").onclick=()=>{
+  clearMap();
+  ["开心","难过","生气","害怕"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="开心"]');
+    const b=pointsContainer.querySelector('[data-name="难过"]');
+    if(a&&b){pick("开心",a); pick("难过",b);}
+  },30);
+};
+
+document.getElementById("dropSchool").onclick=()=>{
+  clearMap();
+  ["老师","同学","作业","教室","学校"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="老师"]');
+    const b=pointsContainer.querySelector('[data-name="同学"]');
+    if(a&&b){pick("老师",a); pick("同学",b);}
+  },30);
+};
+
+document.getElementById("dropAll").onclick=()=>{
+  clearMap();
+  WORDMAP.points.forEach(p=>place(p.name));
+};
+
 document.getElementById("clearMap").onclick=clearMap;
+
+// Initial setup on page load
+["猫","狗","卡车"].forEach(place);
+setTimeout(()=>{
+  const a=pointsContainer.querySelector('[data-name="猫"]');
+  const b=pointsContainer.querySelector('[data-name="狗"]');
+  if(a&&b){pick("猫",a); pick("狗",b);}
+},50);
 
 const glossary=[
   ["大模型","住在机房里、会猜下一个词的系统"],
