@@ -699,7 +699,14 @@
     <p class="small">左边是谷歌在美国爱荷华的机房，无人机实拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。</p>
   </section>
 
-  <!-- SLIDE 8: Transformer Explainer -->
+  <!-- SLIDE 8: Terafab Scale -->
+  <section class="slide" style="padding:18px 48px;align-items:center;justify-content:center">
+    <div style="position:relative;width:min(100%,calc((100vh - 84px) * 16 / 9));aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 40px rgba(0,0,0,0.6);cursor:zoom-in" id="teraShot">
+      <img src="assets/camp/terafab.png" alt="TERAFAB 100M+ Sq Ft 算力中心规模对比" style="width:100%;height:100%;object-fit:contain;display:block;background:#050912">
+    </div>
+  </section>
+
+  <!-- SLIDE 9: Transformer Explainer -->
   <section class="slide">
     <div class="kicker">02 透视黑盒 <span class="en">· Inside the Transformer</span></div>
     <h2>进了机房，它怎么算出下一个词 <span class="sub-en">Next-Token Prediction & Self-Attention</span></h2>
@@ -715,7 +722,7 @@
     <p class="small">上图来自开源项目 <b>Transformer Explainer</b>（Georgia Tech Polo Club，MIT License）。课堂上打开原站，由老师操作：<a class="link" style="font-size:13px" href="https://poloclub.github.io/transformer-explainer/" target="_blank">poloclub.github.io/transformer-explainer ↗</a>。全班只盯一件事：它在挑下一个词，不是在查你们学校。</p>
   </section>
 
-  <!-- SLIDE 9: Word Vector Space Game -->
+  <!-- SLIDE 10: Word Vector Space Game -->
   <section class="slide">
     <div class="kicker">02 空间游戏 <span class="en">· Semantic Vector Space</span></div>
     <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Semantic Distance in 2D Embedding Space</span></h2>
@@ -731,7 +738,7 @@
     <p class="small">坐标来自苹果系统自带的简体中文词向量，压到平面上。接近程度按真实向量计算，越接近 1 越近。这不是豆包内部那张原图，豆包不会把坐标交出来。颜色是为了分类标的。</p>
   </section>
 
-  <!-- SLIDE 10: Terminology Matcher -->
+  <!-- SLIDE 11: Terminology Matcher -->
   <section class="slide">
     <div class="kicker">知识巩固 <span class="en">· Key Concept Matcher</span></div>
     <h2>这些核心概念，我们都见过了 <span class="sub-en">Connecting Concepts to Practical Meanings</span></h2>
@@ -742,7 +749,7 @@
     <p class="small" id="matchScore">点左边一个词，再点右边一句解释。</p>
   </section>
 
-  <!-- SLIDE 11: Agent Architecture -->
+  <!-- SLIDE 12: Agent Architecture -->
   <section class="slide">
     <div class="kicker">03 核心架构 <span class="en">· Anatomy of an AI Agent</span></div>
     <h2>真正的智能体在中间，周围才是它的零件 <span class="sub-en">The 5 Core Components of an Agent Loop</span></h2>
@@ -757,7 +764,7 @@
     <div class="card" id="partDetail">点一个零件。会聊天的只是大脑。真正的智能体还要记得住、做得到、知道自己的目标，并且知道什么绝不能做。</div>
   </section>
 
-  <!-- SLIDE 12: Teacher's Demonstrations -->
+  <!-- SLIDE 13: Teacher's Demonstrations -->
   <section class="slide">
     <div class="kicker">03 老师示范 <span class="en">· Teacher's Real-World Agents</span></div>
     <h2>我自己用的 Agent，拆开就是这五个零件 <span class="sub-en">Deconstructing 3 Practical Personal Agents</span></h2>
@@ -778,7 +785,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 13: Live Campus Practice -->
+  <!-- SLIDE 14: Live Campus Practice -->
   <section class="slide">
     <div class="kicker">03 课堂实操 <span class="en">· Live Agent Practice</span></div>
     <h2>校园寻物：这才算真正的智能体 <span class="sub-en">Building a Campus Lost & Found Agent</span></h2>
@@ -815,7 +822,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 14: Mission Card -->
+  <!-- SLIDE 15: Mission Card -->
   <section class="slide">
     <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission Card</span></div>
     <h2>明天，带一个真问题来 <span class="sub-en">Define a Real Problem for Your First Agent</span></h2>
@@ -843,7 +850,7 @@
 
 <button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
 <button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
-<div id="pager">1 / 14</div>
+<div id="pager">1 / 15</div>
 <div id="hint"></div>
 <div id="lightbox"><img alt=""><p></p></div>
 
@@ -857,6 +864,7 @@ const hints=[
   "今天讲到会搭 Agent。后面几天再做成别人能用的",
   "从左往下点。光点走在步骤之间的路径上，一直看到显卡、算法和存储",
   "左边是航拍。马斯克那座点链接，课堂上打开",
+  "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
   "这页由老师操作，只看它怎么预测下一个词",
   "先放下猫、狗、卡车，再点两个词看远近",
   "点左边的词，再点右边的解释",
@@ -948,6 +956,7 @@ window.addEventListener("resize",()=>{
 
 document.getElementById("airMain").onclick=()=>openPhoto("assets/camp/aerial-bluffs.jpg","实拍。谷歌在美国爱荷华的机房，无人机航拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。");
 document.getElementById("airInside").onclick=()=>openPhoto("assets/camp/sierra.jpg","实拍。美国能源部拍摄的 Sierra。航拍里的厂房，钻进去就是这种一排排机器。");
+document.getElementById("teraShot").onclick=()=>openPhoto("assets/camp/terafab.png","TERAFAB 100M+ Sq Ft 算力中心规模对比（对比 Giga Texas、五角大楼、Apple Park 与美国商城）。");
 document.getElementById("txShot").onclick=()=>openPhoto("assets/camp/transformer-teaser.jpg","Transformer Explainer 界面截图。Georgia Tech Polo Club / MIT License。课堂上打开原站操作。");
 const box=document.getElementById("lightbox");
 function openPhoto(src,cap){
