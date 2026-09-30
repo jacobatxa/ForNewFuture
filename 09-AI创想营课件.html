@@ -875,7 +875,7 @@
   .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
   .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
   .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.55; }
-  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-grid) > h2 { font-size: 42px; margin-bottom: 14px; }
   .terminal-card.lab { max-width: 960px; }
   .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
   .terminal-card.lab .claim-text { font-size: 28px; }
@@ -971,18 +971,17 @@
   .step.done::before { border-color: var(--cyan); background: rgba(34,211,238,.35); }
   .step b { display: block; font-size: 13.5px; }
 
-  .photo { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); min-height: 280px; background: #060b16; cursor: zoom-in; }
-  .photo img { width: 100%; height: min(44vh, 380px); object-fit: cover; display: block; }
+  .photo { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #060b16; cursor: zoom-in; }
+  .photo img { width: 100%; height: min(54vh, 500px); object-fit: cover; display: block; }
   .photo .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px; background: linear-gradient(transparent, rgba(7,13,26,.92)); font-size: 13px; }
 
   /* Slide 6: Physical Prompt Rail Steps & Facilities */
   .journey-board {
     display: grid;
     grid-template-columns: 1fr 1.15fr;
-    gap: 16px;
-    flex: 1;
-    min-height: 0;
-    align-items: stretch;
+    gap: 24px;
+    max-width: 1560px;
+    align-items: center;
   }
   .facility-dock {
     display: grid;
@@ -1029,12 +1028,9 @@
     line-height: 1.3;
   }
 
-  /* Slide 8: Transformer Flow */
+  /* Transformer screenshot */
   .tx-shot { border: 0; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: inherit; display: block; width: 100%; }
-  .tx-shot img { width: 100%; height: min(34vh, 300px); object-fit: cover; object-position: top; border-radius: 14px; border: 1px solid var(--line); display: block; }
-  .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .flow .card { min-height: auto; padding: 10px 12px; }
-  .flow .n { font-family: var(--font-mono); font-size: 20px; font-weight: 900; color: var(--cyan); }
+  .tx-shot img { width: 100%; border-radius: 14px; border: 1px solid var(--line); display: block; }
 
   /* Slide 10: Semantic Vector Space Console (Option B - Optimized) */
   .vector-console {
@@ -1204,146 +1200,232 @@
   .cat-pill:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
   .cat-pill.placed { opacity: 0.35; text-decoration: line-through; }
 
-  /* Slide 10: Concept Visual Landscape (Replaces old matcher) */
-  .concept-map-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-    min-height: 0;
+  /* Capability ladder */
+  .ladder { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 1160px; max-width: 100%; }
+  .ld-row {
+    width: var(--w); display: flex; align-items: center; gap: 18px;
+    padding: 18px 30px; border-radius: 14px; background: var(--c);
+    border: 1px solid rgba(255,255,255,.14); color: #fff;
   }
-  .concept-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    flex: 1;
-    min-height: 0;
+  .ld-lv { font-family: var(--font-mono); font-size: 22px; font-weight: 800; opacity: .7; }
+  .ld-row b { font-size: 28px; font-weight: 900; white-space: nowrap; }
+  .ld-desc { font-size: 22px; color: rgba(255,255,255,.82); margin-left: auto; text-align: right; }
+  .ld-row.today { box-shadow: 0 0 26px var(--orange-glow); border-color: rgba(255,255,255,.5); }
+
+  /* Journey */
+  .journey-left { display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .journey-board .steps { gap: 9px; }
+  .journey-board .step { padding: 11px 18px; }
+  .journey-board .step b { font-size: 20px; }
+  .journey-board .facility-chip b { font-size: 16px; }
+  .journey-board .facility-chip span { font-size: 13px; }
+  .journey-board .facility-chip img { width: 56px; height: 56px; }
+  .journey-board .photo img { height: min(60vh, 600px); }
+  .journey-board .photo .cap { font-size: 17px; padding: 16px 20px; }
+
+  /* Transformer steps */
+  .guess-box { display: flex; flex-direction: column; align-items: center; gap: 26px; width: 100%; max-width: 900px; }
+  .guess-sent { font-size: 56px; font-weight: 900; color: #fff; }
+  .guess-blank {
+    display: inline-block; min-width: 120px; text-align: center; padding: 0 16px;
+    border-bottom: 4px dashed var(--orange); color: var(--orange);
   }
-  .concept-col {
-    background: rgba(13, 23, 44, 0.65);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
+  .guess-blank.on { border-bottom-style: solid; color: var(--cyan); border-color: var(--cyan); }
+  .prob-list { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 760px; }
+  .prob-row { display: grid; grid-template-columns: 90px 1fr 80px; align-items: center; gap: 16px; }
+  .prob-word { font-size: 26px; font-weight: 800; color: #fff; text-align: right; }
+  .prob-bar { height: 22px; border-radius: 99px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .prob-bar i { display: block; height: 100%; border-radius: 99px; background: rgba(34,211,238,.6); transition: width .5s ease; }
+  .prob-row.top .prob-bar i { background: var(--orange); box-shadow: 0 0 12px var(--orange-glow); }
+  .prob-pct { font-family: var(--font-mono); font-size: 20px; color: var(--ink); }
+  .go.big { font-size: 22px; padding: 14px 34px; border-radius: 99px; margin-top: 0; text-decoration: none; display: inline-block; }
+  .tk-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .tk-chip {
+    font-size: 40px; font-weight: 900; color: #fff; padding: 14px 26px; border-radius: 14px;
+    border: 2px dashed rgba(34,211,238,.55); background: rgba(34,211,238,.07); font-family: inherit;
   }
-  .concept-col::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--col-accent, var(--cyan));
+  .tk-row.att .tk-chip { cursor: pointer; border-style: solid; border-color: var(--line); background: rgba(255,255,255,.04); transition: all .25s ease; }
+  .tk-row.att .tk-chip.lit { border-color: rgba(34,211,238,calc(.3 + var(--a) * .7)); background: rgba(34,211,238,calc(var(--a) * .35)); box-shadow: 0 0 calc(var(--a) * 26px) var(--cyan-glow); }
+  .tk-row.att .tk-chip.self { border-color: var(--orange); background: rgba(249,115,22,.22); }
+  .att-note { font-size: 26px; font-weight: 700; color: var(--ink); text-align: center; }
+  .emb-rows { display: flex; flex-direction: column; gap: 12px; }
+  .emb-row { display: flex; align-items: center; gap: 22px; padding: 12px 26px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-card); }
+  .emb-row.near { border-color: rgba(34,211,238,.45); }
+  .emb-row.far { border-color: rgba(249,115,22,.45); }
+  .emb-word { font-size: 32px; font-weight: 900; color: #fff; width: 90px; text-align: center; }
+  .emb-nums { font-family: var(--font-mono); font-size: 26px; color: var(--ink); }
+  .site-hint { display: flex; align-items: center; gap: 14px; font-size: 22px; color: var(--ink); padding: 10px 24px; border-radius: 12px; border: 1px dashed rgba(255,255,255,.25); }
+  .site-hint b { font-size: 14px; padding: 3px 10px; border-radius: 99px; background: rgba(255,255,255,.14); color: #fff; }
+  .temp-box { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; max-width: 860px; }
+  .temp-ctl { display: flex; align-items: center; gap: 16px; font-size: 20px; color: var(--muted); }
+  .temp-ctl input { width: 360px; accent-color: var(--orange); }
+  .temp-ctl b { font-family: var(--font-mono); color: var(--orange); font-size: 20px; min-width: 110px; }
+
+  /* Try the explainer */
+  .try-wrap { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: center; max-width: 1400px; }
+  .try-wrap .tx-shot img { height: min(56vh, 520px); object-fit: contain; background: #fff; }
+  .try-tasks { display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+  .try-tasks .go.big { text-align: center; }
+  .try-card { display: flex; align-items: center; gap: 20px; padding: 16px 22px; border-radius: 16px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); }
+  .try-card .rl-num { font-size: 40px; }
+  .try-card p { font-size: 24px; color: #fff; line-height: 1.4; }
+
+  /* Review flip cards */
+  .flip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1400px; }
+  .flip-card {
+    position: relative; height: min(260px, 30vh); border-radius: 18px; border: 1px solid var(--line);
+    background: var(--bg-card); color: #fff; font-family: inherit; cursor: pointer; padding: 0;
+    perspective: 900px;
   }
-  .col-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+  .flip-card > span {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; padding: 18px 22px; border-radius: 18px; text-align: center;
+    backface-visibility: hidden; transition: transform .5s ease;
   }
-  .col-title {
-    font-size: 14px;
-    font-weight: 800;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .flip-front b { font-size: 48px; font-weight: 900; }
+  .flip-front i, .flip-back i { font-style: normal; font-size: 19px; color: var(--muted); }
+  .flip-back { transform: rotateY(180deg); background: rgba(34,211,238,.1); }
+  .flip-back b { font-size: 28px; line-height: 1.4; }
+  .flip-back i { color: var(--cyan); font-weight: 700; font-size: 22px; }
+  .flip-card.flipped .flip-front { transform: rotateY(-180deg); }
+  .flip-card.flipped .flip-back { transform: rotateY(0); }
+  .flip-card.c1 { border-color: rgba(34,211,238,.4); }
+  .flip-card.c2 { border-color: rgba(249,115,22,.4); }
+  .flip-card.c2 .flip-back { background: rgba(249,115,22,.1); }
+  .flip-card.c2 .flip-back i { color: #fdba74; }
+
+  /* Agent chapter */
+  .bd-sub { font-size: 20px; color: var(--muted); margin: -6px 0 16px; }
+  .agent-core span { display: block; font-size: 20px; font-weight: 600; opacity: .85; margin-top: 4px; }
+  #agentBoard { max-width: 1160px; grid-template-columns: minmax(200px,1fr) 240px minmax(200px,1fr); gap: 18px 28px; }
+  #agentBoard .part { width: min(320px, 100%); padding: 18px 24px; }
+  #agentBoard .agent-core { width: 210px; height: 210px; font-size: 30px; }
+  .part b { display: block; font-size: 32px; color: #fff; }
+  .part span { display: block; font-size: 20px; color: var(--muted); margin-top: 4px; }
+  .part-detail { max-width: 960px; font-size: 22px !important; line-height: 1.5; text-align: center; padding: 18px 26px; }
+  .loop-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; width: 100%; }
+  .loop-step {
+    position: relative; text-align: center; padding: 26px 18px; border-radius: 18px;
+    border: 1px solid var(--line); background: var(--bg-card); transition: all .3s ease;
   }
-  .col-tag {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.06);
-    color: var(--muted);
+  .loop-step:not(:last-child)::after {
+    content: "→"; position: absolute; right: -29px; top: 50%; transform: translateY(-50%);
+    font-size: 28px; color: var(--cyan);
   }
-  .concept-cards-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-    overflow-y: auto;
-  }
-  .concept-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 9px;
-    padding: 10px 12px;
-    cursor: pointer;
-    transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    text-align: left;
-    color: inherit;
-  }
-  .concept-card:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: var(--col-accent, var(--cyan));
-    transform: translateY(-2px);
-  }
-  .concept-card.active {
-    background: rgba(34, 211, 238, 0.12);
-    border-color: var(--cyan);
-    box-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
-  }
-  .concept-term {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .concept-term-en {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--muted);
-    font-weight: 500;
-  }
-  .concept-brief {
-    font-size: 11.5px;
-    color: var(--ink);
-    line-height: 1.4;
-  }
-  .concept-memory-hook {
-    margin-top: 5px;
-    font-size: 11px;
-    color: var(--cyan);
-    font-family: var(--font-mono);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .concept-detail-box {
-    background: rgba(4, 9, 20, 0.8);
-    border: 1px solid rgba(34, 211, 238, 0.35);
-    border-radius: 10px;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    min-height: 52px;
-  }
-  .detail-headline {
-    font-size: 13px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .detail-headline b {
-    color: var(--orange);
-    font-family: var(--font-mono);
-  }
-  .detail-desc {
-    font-size: 12.5px;
-    color: var(--ink);
+  .loop-step .rl-num { font-size: 34px; }
+  .loop-step b { display: block; font-size: 34px; color: #fff; margin: 6px 0 10px; }
+  .loop-step p { font-size: 21px; color: var(--ink); line-height: 1.45; }
+  .loop-step.on { border-color: var(--orange); background: rgba(249,115,22,.14); box-shadow: 0 0 22px var(--orange-glow); transform: translateY(-6px); }
+  .loop-back { font-size: 22px; color: var(--muted); padding: 8px 24px; border-radius: 99px; border: 1px dashed rgba(34,211,238,.4); transition: all .3s ease; }
+  .loop-back.on { color: #fff; border-color: var(--cyan); box-shadow: 0 0 16px var(--cyan-glow); }
+  .ps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; width: 100%; }
+  .ps-card { padding: 22px 18px; border-radius: 16px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); text-align: center; }
+  .ps-card b { display: block; font-size: 28px; color: var(--cyan); margin-bottom: 10px; }
+  .ps-card p { font-size: 21px; color: #fff; line-height: 1.45; }
+
+  /* Prompt chapter */
+  .ic-case .ic-result { font-size: 20px; color: var(--muted); margin-top: 12px; }
+  .hb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 1500px; }
+  .hb-card { position: relative; padding: 26px 20px; border-radius: 18px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); text-align: center; }
+  .hb-card .rl-num { font-size: 38px; }
+  .hb-card b { display: block; font-size: 26px; color: #fff; margin: 8px 0 12px; }
+  .hb-card p { font-size: 19px; color: var(--ink); line-height: 1.5; }
+  .hb-card.key { border-color: rgba(249,115,22,.6); background: rgba(249,115,22,.1); box-shadow: 0 0 22px rgba(249,115,22,.18); }
+  .hb-card.key .rl-num { color: var(--orange); text-shadow: 0 0 20px var(--orange-glow); }
+  .pb-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; max-width: 1440px; align-items: stretch; }
+  .pb-card { border-radius: 20px; padding: 24px 28px; border: 1px solid var(--line); background: var(--bg-card); display: flex; flex-direction: column; gap: 14px; }
+  .pb-card.old { border-color: rgba(249,115,22,.4); }
+  .pb-card.old .bd-head { color: var(--orange); margin: 0; }
+  .pb-card.new { border-color: rgba(34,211,238,.4); }
+  .pb-card.new .bd-head { color: var(--cyan); margin: 0; }
+  .pb-text { font-size: 24px; color: #fff; line-height: 1.5; }
+  .pb-note { font-size: 19px; color: var(--muted); line-height: 1.5; }
+  .pb-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pb-btns button { font-size: 18px; font-weight: 700; padding: 8px 16px; border-radius: 99px; border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.06); color: var(--cyan); cursor: pointer; }
+  .pb-btns button.on { background: var(--cyan); color: #04121a; }
+  .pb-box { min-height: 260px; border-radius: 14px; padding: 16px 20px; background: rgba(0,0,0,.3); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .pb-box p { font-size: 20px; color: #fff; line-height: 1.5; animation: pbIn .35s ease; }
+  .pb-box p b { font-size: 14px; padding: 2px 10px; border-radius: 99px; background: rgba(34,211,238,.2); color: var(--cyan); margin-right: 10px; vertical-align: 2px; }
+  .pb-empty { font-size: 18px; color: var(--muted); margin: auto; }
+  .pb-text { font-size: 28px; }
+  .pb-note { font-size: 21px; }
+  .pb-btns button { font-size: 20px; padding: 10px 18px; }
+  .pb-box { min-height: 300px; }
+  .pb-box p { font-size: 22px; }
+  .hb-card b { font-size: 28px; }
+  .hb-card p { font-size: 21px; }
+
+  /* Mission + lost & found: classroom-size type */
+  .slide .task { max-width: 1400px; gap: 22px; }
+  .task .card { padding: 24px 28px; }
+  .task h3 { font-size: 26px; margin-bottom: 8px; }
+  .task label { font-size: 18px; margin: 12px 0 6px; }
+  .task input[type=text] { font-size: 20px; padding: 12px 14px; }
+  .task .clean li { font-size: 22px; padding: 10px 0; }
+  .task .small { font-size: 18px; }
+  .slide:has(.lost-grid) > p.small { font-size: 20px; color: var(--ink); }
+  .slide .lost-grid { max-width: 1500px; gap: 18px; }
+  .lost-grid .card { padding: 22px 24px; }
+  .lost-grid h3 { font-size: 24px; }
+  .lost-grid label { font-size: 17px; }
+  .lost-grid input[type=text] { font-size: 19px; padding: 10px 12px; }
+  .lost-grid .go { font-size: 18px; padding: 10px 18px; }
+  .lost-grid .chip { font-size: 16px; }
+  .lost-grid .lights span { font-size: 16px; padding: 5px 12px; }
+  .lost-grid #resultLine { font-size: 21px; line-height: 1.5; }
+  .lost-grid .mem { font-size: 17px; }
+  @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Word map: larger type for the classroom */
+  .vector-console .insight-panel { justify-content: safe center; gap: 16px; overflow: hidden; }
+  .vector-console .insight-box { padding: 16px 20px; }
+  .vector-console .insight-box h3 { font-size: 22px; margin-bottom: 10px; }
+  .vector-console .preset-btns { gap: 10px; }
+  .vector-console .preset-btn { font-size: 20px; padding: 12px 14px; }
+  .vector-console .preset-btn span { display: block; font-size: 15px; font-family: inherit; margin-top: 4px; }
+  .vector-console .readout-tag { font-size: 14px; }
+  .vector-console .readout-score { font-size: 24px; }
+  .vector-console .readout-score span { font-size: 15px; }
+  .vector-console .sim-bar { width: 130px; height: 10px; }
+  .vector-console .sim-bar-val { font-size: 20px; }
+  .vector-console .readout-desc { font-size: 18px; line-height: 1.55; }
+  .vector-console .cat-pills { gap: 6px; max-height: 150px; }
+  .vector-console .cat-pill { font-size: 17px; padding: 4px 10px; }
+
+  /* Word bank drawer */
+  .bank-drawer summary { cursor: pointer; font-size: 20px; font-weight: 700; color: #fff; list-style: none; }
+  .bank-drawer summary::-webkit-details-marker { display: none; }
+  .bank-drawer summary::before { content: "+ "; color: var(--cyan); }
+  .bank-drawer[open] summary::before { content: "− "; }
+  .bank-drawer summary span { font-size: 15px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .bank-top { display: flex; justify-content: flex-end; margin: 6px 0; }
+  .bank-clear { border: none; background: transparent; color: var(--orange); font-size: 16px; cursor: pointer; font-weight: 700; }
+  @media (max-height: 820px) {
+    .ic-wrap { gap: 18px; }
+    .ic-num { font-size: 64px; }
+    .ic-title { font-size: 54px; }
+    .ic-title .en { font-size: 18px; margin-top: 4px; }
+    .ic-lead { font-size: 26px; }
+    .ic-remember { font-size: 22px; padding: 10px 26px; }
+    .tk-chip { font-size: 32px; padding: 10px 20px; }
+    .emb-row { padding: 8px 22px; }
+    .emb-word { font-size: 26px; }
+    .emb-nums { font-size: 21px; }
+    .site-hint { font-size: 18px; padding: 8px 20px; }
+    .prob-list { gap: 6px; }
+    .prob-word { font-size: 21px; }
+    .prob-bar { height: 16px; }
+    .temp-box { gap: 10px; }
+    .att-note { font-size: 21px; }
+    .guess-sent { font-size: 44px; }
+    .vector-console .insight-box { padding: 10px 14px; }
+    .vector-console .insight-box h3 { font-size: 18px; margin-bottom: 6px; }
+    .vector-console .preset-btn { font-size: 16px; padding: 8px 10px; }
+    .vector-console .preset-btn span { display: none; }
+    .vector-console .readout-score { font-size: 18px; }
+    .vector-console .readout-desc { font-size: 14px; }
+    .vector-console .cat-pills { max-height: 64px; }
+    .vector-console .cat-pill { font-size: 14px; padding: 3px 8px; }
   }
 
   /* Slide 11: Agent Board Architecture */
@@ -1433,7 +1515,7 @@
 <div id="deck">
 
   <!-- SLIDE 1: Cover -->
-  <section class="slide cover-slide active">
+  <section class="slide cover-slide active" data-hint="方向键或两侧圆按钮翻页">
     <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
     <div class="bg-glow" style="width:340px;height:340px;background:var(--cyan);bottom:-150px;left:-110px;opacity:.14"></div>
     <div class="bg-glow" style="width:260px;height:260px;background:var(--orange);top:34%;right:14%;opacity:.12"></div>
@@ -1447,7 +1529,7 @@
   </section>
 
   <!-- SLIDE 2: Interactive Poll -->
-  <section class="slide">
+  <section class="slide" data-hint="点你觉得算智能的东西，可以多选。先别公布答案">
     <div class="kicker">01 辨智能 <span class="en">· Interactive Poll</span></div>
     <h2>这张图里，哪些东西算智能？ <span class="sub-en">Which of These Objects Possess Real Intelligence?</span></h2>
     <div class="stage" id="voteStage">
@@ -1471,7 +1553,7 @@
   </section>
 
   <!-- SLIDE 3: What Is Intelligence -->
-  <section class="slide">
+  <section class="slide" data-hint="先问学生：喷淋器和金毛犬，谁更聪明？为什么">
     <div class="kicker">01 什么是智能 <span class="en">· What Is Intelligence</span></div>
     <h2>什么才算智能？ <span class="sub-en">A Simple Test</span></h2>
     <div class="ic-wrap">
@@ -1503,7 +1585,7 @@
   </section>
 
   <!-- SLIDE 4: Ability 1 Perceive -->
-  <section class="slide">
+  <section class="slide" data-hint="本领 1/5：让学生再举一个身边会「察觉」的例子">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 1 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span><span></span></div>
@@ -1524,7 +1606,7 @@
   </section>
 
   <!-- SLIDE 5: Ability 2 Understand -->
-  <section class="slide">
+  <section class="slide" data-hint="本领 2/5：追问一句，它知道「为什么」吗">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 2 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span><span></span></div>
@@ -1545,7 +1627,7 @@
   </section>
 
   <!-- SLIDE 6: Ability 3 Plan -->
-  <section class="slide">
+  <section class="slide" data-hint="本领 3/5：有好几条路时，它会不会挑">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 3 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span><span></span></div>
@@ -1566,7 +1648,7 @@
   </section>
 
   <!-- SLIDE 7: Ability 4 Act -->
-  <section class="slide">
+  <section class="slide" data-hint="本领 4/5：只会说、不会做，算不算智能">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 4 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
@@ -1587,7 +1669,7 @@
   </section>
 
   <!-- SLIDE 8: Ability 5 Learn -->
-  <section class="slide">
+  <section class="slide" data-hint="本领 5/5：这是最关键的一项，停下来多讲一会儿">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 5 of 5 · 最关键的一项</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="on key"></span></div>
@@ -1608,7 +1690,7 @@
   </section>
 
   <!-- SLIDE 9: Reveal -->
-  <section class="slide">
+  <section class="slide" data-hint="对照五格亮灯，揭晓刚才的投票">
     <div class="kicker">01 揭晓答案 <span class="en">· The Verdict</span></div>
     <h2>用 5 项本领，给 7 个东西打分 <span class="sub-en">Perceive · Understand · Plan · Act · Learn</span></h2>
     <div class="rv-grid" id="verdicts"></div>
@@ -1616,7 +1698,7 @@
   </section>
 
   <!-- SLIDE 10: What AI Can and Cannot Do -->
-  <section class="slide">
+  <section class="slide" data-hint="先让学生说：哪些事你愿意交给 AI">
     <div class="kicker">01 能力边界 <span class="en">· AI Is Your Copilot</span></div>
     <h2>它能帮忙，决定还是你来做 <span class="sub-en">You Remain the Captain</span></h2>
     <div class="ic-wrap">
@@ -1642,10 +1724,10 @@
     </div>
   </section>
 
-  <!-- SLIDE 11: Three Golden Rules -->
-  <section class="slide">
-    <div class="kicker">01 使用铁律 <span class="en">· 3 Golden Rules</span></div>
-    <h2>所以，用 AI 有三条铁律 <span class="sub-en">Three Rules to Keep</span></h2>
+  <!-- SLIDE 11: Three Tips -->
+  <section class="slide" data-hint="三条建议，请全班齐读一遍">
+    <div class="kicker">01 使用建议 <span class="en">· 3 Tips</span></div>
+    <h2>所以，用 AI 的三条建议 <span class="sub-en">Three Tips to Keep</span></h2>
     <div class="rl-grid">
       <div class="rl-card">
         <span class="rl-num">01</span>
@@ -1666,7 +1748,7 @@
   </section>
 
   <!-- SLIDE 12: Hallucination Lab -->
-  <section class="slide">
+  <section class="slide" data-hint="先让大家举手投票，再点按钮揭晓">
     <div class="kicker">01 现场实验 <span class="en">· Live Hallucination Lab</span></div>
     <h2>它说的话，你信不信？ <span class="sub-en">Fact-Check Terminal</span></h2>
     <div class="terminal-card lab">
@@ -1694,37 +1776,28 @@
     </div>
   </section>
 
-  <!-- SLIDE 5: Capability Ladder -->
-  <section class="slide">
+  <!-- SLIDE 13: Capability Ladder -->
+  <section class="slide" data-hint="今天从第一级走到第二级：自己搭一个 Agent">
     <div class="kicker">这门课的台阶 <span class="en">· AI Capability Ladder</span></div>
     <h2>使用 AI 的五个台阶 <span class="sub-en">5 Levels of AI Usage</span></h2>
-    <div class="grid2" style="align-items:center;margin-top:6px">
-      <div class="pyramid">
-        <div style="width:46%;background:#0d2a5e">L5 造模型 · Model Maker</div>
-        <div style="width:58%;background:#1e40af">L4 会管 · Platform Manager</div>
-        <div style="width:70%;background:#2563eb">L3 会做 · Solution Builder</div>
-        <div style="width:84%;background:#f97316;box-shadow:0 0 24px rgba(249,115,22,.45)">L2 会搭 · Agent Architect</div>
-        <div style="width:96%;background:#93c5fd;color:#0b1120">L1 会用 · App User</div>
-      </div>
-      <div>
-        <ul class="clean">
-          <li><span class="tier-badge">L5</span> <b>Model Maker</b>　懂模型怎么训练、怎么推理，甚至能自己训一个小模型。OpenAI、DeepSeek 的研究员，就站在这一层</li>
-          <li><span class="tier-badge">L4</span> <b>Platform Manager</b>　发布、运营、管理企业级应用——给一整个公司用的那种：懂商业级产品架构，也知道数据什么能存、谁能看</li>
-          <li><span class="tier-badge">L3</span> <b>Solution Builder</b>　做成同学真的能用的网站或小程序，发到网上（后面几天走到这里）</li>
-          <li><span class="tier-badge org">L2</span> <b class="org">Agent Architect · 今天</b>　给它目标、记忆和技能，搭一个专属自己的 Agent</li>
-          <li><span class="tier-badge">L1</span> <b>App User</b>　打开豆包，提问、生图、做一段简单视频</li>
-        </ul>
-        <p class="small" style="margin-top:12px">一层比一层难：用、搭、做、管、造。今天到第二级。校园寻物，就是往第三级迈的第一步。</p>
-      </div>
+    <div class="ic-wrap">
+    <div class="ladder">
+      <div class="ld-row" style="--w:56%;--c:#0d2a5e"><span class="ld-lv">L5</span><b>造模型</b><span class="ld-desc">自己训练一个 AI，研究员做的事</span></div>
+      <div class="ld-row" style="--w:66%;--c:#1e40af"><span class="ld-lv">L4</span><b>会管</b><span class="ld-desc">管好一整个公司都在用的 AI 应用</span></div>
+      <div class="ld-row" style="--w:76%;--c:#2563eb"><span class="ld-lv">L3</span><b>会做</b><span class="ld-desc">做出同学真能用的网站或小程序</span></div>
+      <div class="ld-row today" style="--w:88%;--c:#f97316"><span class="ld-lv">L2</span><b>会搭 · 今天</b><span class="ld-desc">给 AI 目标、记忆和工具，搭一个 Agent</span></div>
+      <div class="ld-row" style="--w:100%;--c:#1e3a5f"><span class="ld-lv">L1</span><b>会用</b><span class="ld-desc">打开豆包，提问、画图、做视频</span></div>
+    </div>
+    <div class="ic-remember"><b>记住</b>今天从「会用」走到「会搭」</div>
     </div>
   </section>
 
   <!-- SLIDE 6: Journey of a Prompt & Physical Facilities -->
-  <section class="slide">
+  <section class="slide" data-hint="从上往下点，跟着光点走一遍；下面三张卡能看真实机房">
     <div class="kicker">02 物理旅程 <span class="en">· Physical Journey of a Prompt</span></div>
-    <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Output: The 7-Step Physical Pipeline</span></h2>
+    <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Answer</span></h2>
     <div class="journey-board">
-      <div style="display:flex;flex-direction:column;justify-content:space-between">
+      <div class="journey-left">
         <div class="steps" id="journeySteps"></div>
         <div class="facility-dock">
           <button class="facility-chip" type="button" id="airMain">
@@ -1752,36 +1825,65 @@
       </div>
       <div class="photo" id="journeyView"></div>
     </div>
-    <p class="small">豆包走国内骨干网，直连字节跳动大型超算机房。左边光点即单句指令的下钻旅程；下方附属港湾可点看真实机房全貌与内部实拍。点图可放大。</p>
+    <p class="small">点左边的步骤，跟着你的一句话走一遍。点图可以放大。</p>
   </section>
 
   <!-- SLIDE 7: Terafab Scale -->
-  <section class="slide" style="padding:18px 48px;align-items:center;justify-content:center">
+  <section class="slide" data-hint="机房到底有多大？和身边的建筑比一比" style="padding:18px 48px;align-items:center;justify-content:center">
     <div style="position:relative;width:min(100%,calc((100vh - 84px) * 16 / 9));aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 40px rgba(0,0,0,0.6);cursor:zoom-in" id="teraShot">
       <img src="assets/camp/terafab.png" alt="TERAFAB 100M+ Sq Ft 算力中心规模对比" style="width:100%;height:100%;object-fit:contain;display:block;background:#050912">
     </div>
   </section>
 
-  <!-- SLIDE 8: Transformer Explainer -->
-  <section class="slide">
-    <div class="kicker">02 透视黑盒 <span class="en">· Inside the Transformer</span></div>
-    <h2>进了机房，它怎么算出下一个词 <span class="sub-en">Next-Token Prediction & Self-Attention</span></h2>
-    <button class="tx-shot" type="button" id="txShot">
-      <img src="assets/camp/transformer-teaser.jpg" alt="Transformer Explainer 界面截图：从输入句子到预测下一个词的可视化">
-    </button>
-    <div class="flow">
-      <div class="card"><div class="n">01</div><b>拆积木切块 (Token)</b><p class="small" style="margin-top:2px">把一整句话咔嚓剪成一个个小碎片，就像把拼图打散成零件</p></div>
-      <div class="card"><div class="n">02</div><b>空间经纬度 (Vector)</b><p class="small" style="margin-top:2px">每个碎片在宇宙地图里都有专属坐标，意思像的离得特别近</p></div>
-      <div class="card"><div class="n">03</div><b>找熟搭档 (Attention)</b><p class="small" style="margin-top:2px">快速扫描：看到「水」，模型注意力雷达立刻锁定「喝」或「杯子」</p></div>
-      <div class="card"><div class="n">04</div><b>接龙猜下一个词</b><p class="small" style="margin-top:2px">掷骰子选出概率最高的那块积木拼上去，一次只算一个字！</p></div>
+  <!-- SLIDE 16: Next-word guessing -->
+  <section class="slide" data-hint="先让学生猜空格里填什么，再点按钮看 AI 的答案">
+    <div class="kicker">02 AI 怎么想 <span class="en">· How AI Writes</span></div>
+    <h2>AI 说的每句话，都是一个词一个词猜出来的 <span class="sub-en">Next-Word Prediction</span></h2>
+    <div class="ic-wrap">
+      <div class="guess-box">
+        <p class="guess-sent">我口渴了，想喝一杯 <span class="guess-blank" id="guessBlank">？</span></p>
+        <div class="prob-list" id="probOverview"></div>
+        <button class="go big" type="button" id="guessReveal">看看 AI 怎么猜</button>
+      </div>
+      <div class="ic-remember"><b>记住</b>它不是「查到」答案，而是猜下一个最可能的词</div>
     </div>
-    <p class="small">上图来自开源项目 <b>Transformer Explainer</b>（Georgia Tech Polo Club，MIT License）。课堂上打开原站，由老师操作：<a class="link" style="font-size:13px" href="https://poloclub.github.io/transformer-explainer/" target="_blank">poloclub.github.io/transformer-explainer ↗</a>。<b>核心认知：</b>AI 从没去过你们学校，它所做的一切，不过是一场极其算力狂暴的「超级成语接龙」。</p>
+  </section>
+
+  <!-- SLIDE 17: Step 1 Token -->
+  <section class="slide" data-hint="第 1 步：一起数一数，这句话被切成了几块">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 1 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">01</span><div class="ic-title">切成小块<span class="en">Token · 像把乐高拆成积木</span></div></div>
+      <p class="ic-lead">AI 读不了一整句话，要先把句子剪成一小块一小块。<br>每一块，叫一个 Token。</p>
+      <div class="tk-row">
+        <span class="tk-chip">我</span><span class="tk-chip">口渴</span><span class="tk-chip">了</span><span class="tk-chip">，</span><span class="tk-chip">想</span><span class="tk-chip">喝</span><span class="tk-chip">一杯</span>
+      </div>
+      <div class="site-hint"><b>网站上看哪里</b>最左边一列，每一行就是一块 Token</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 18: Step 2 Embedding -->
+  <section class="slide" data-hint="第 2 步：比一比猫、狗、卡车的数字，哪两个更像">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 2 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">02</span><div class="ic-title">变成数字<span class="en">Embedding · 每个词都有一串坐标</span></div></div>
+      <p class="ic-lead">电脑不认识字，只认识数字。<br>每一块都会换成一长串数字，就像它在地图上的坐标。</p>
+      <div class="emb-rows">
+        <div class="emb-row near"><span class="emb-word">猫</span><span class="emb-nums">0.21 · -0.53 · 0.88 · 0.07 · …</span></div>
+        <div class="emb-row near"><span class="emb-word">狗</span><span class="emb-nums">0.19 · -0.49 · 0.85 · 0.11 · …</span></div>
+        <div class="emb-row far"><span class="emb-word">卡车</span><span class="emb-nums">-0.72 · 0.34 · -0.10 · 0.66 · …</span></div>
+      </div>
+      <div class="site-hint"><b>网站上看哪里</b>Embedding 那一列的彩色小格子</div>
+      <div class="ic-remember"><b>记住</b>意思越像的词，数字越像。下一页亲手试</div>
+    </div>
   </section>
 
   <!-- SLIDE 10: Word Vector Space Game -->
-  <section class="slide">
-    <div class="kicker">02 语义空间几何 <span class="en">· Semantic Vector Space</span></div>
-    <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Words with Similar Contexts Cluster Together in Embedding Space</span></h2>
+  <section class="slide" data-hint="先点三组实验，再让学生从抽屉里挑词放上去">
+    <div class="kicker">02 亲手试 <span class="en">· Word Map</span></div>
+    <h2>在 AI 的地图上，意思像的词住得近 <span class="sub-en">Similar Words Live Close</span></h2>
     <div class="vector-console">
       <!-- Left: 2D Radar Vector Space -->
       <div class="radar-panel" id="mapwrap">
@@ -1814,214 +1916,252 @@
       <div class="insight-panel">
         <!-- Preset Experiments -->
         <div class="insight-box">
-          <h3>课堂探究实验 <span class="sub-en">· Guided Tests</span></h3>
+          <h3>先试这三组</h3>
           <div class="preset-btns">
-            <button class="preset-btn" type="button" id="dropTrio">猫 vs 狗 vs 卡车 <span>同类聚类 vs 跨界遥远</span></button>
-            <button class="preset-btn" type="button" id="dropFeel">开心 vs 难过 <span>反义却邻近（句式结构几乎一样）</span></button>
-            <button class="preset-btn" type="button" id="dropSchool">老师·同学·作业 <span>在学校话题里经常一起出现</span></button>
-            <button class="preset-btn" type="button" id="dropAll">31 个词全景 <span>全局语义降维投影</span></button>
+            <button class="preset-btn" type="button" id="dropTrio">猫 vs 狗 vs 卡车 <span>猫狗是邻居，卡车住得远</span></button>
+            <button class="preset-btn" type="button" id="dropFeel">开心 vs 难过 <span>意思相反，却住得很近</span></button>
+            <button class="preset-btn" type="button" id="dropSchool">老师·同学·作业 <span>常在同一句话里出现</span></button>
+            <button class="preset-btn" type="button" id="dropAll">31 个词全景 <span>看看全部的词</span></button>
           </div>
         </div>
 
         <!-- Realtime Distance Readout -->
         <div class="insight-box" style="border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.04)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-            <h3 style="color:#fff;margin:0">实时空间测距透视 <span class="sub-en">· Distance Insight</span></h3>
+            <h3 style="color:#fff;margin:0">它们有多近</h3>
             <span id="readoutTag" class="readout-tag">等待测距</span>
           </div>
           <div class="readout" id="readoutBox">
             <div class="readout-header">
-              <div class="readout-score" id="readoutScore">点击地图两点或上方实验</div>
+              <div class="readout-score" id="readoutScore">点地图上的两个词</div>
               <div class="sim-bar-wrap" id="meterWrap" style="display:none">
                 <div class="sim-bar"><div class="sim-bar-fill" id="meterFill" style="width:0%"></div></div>
                 <span class="sim-bar-val" id="meterVal">0.00</span>
               </div>
             </div>
-            <div class="readout-desc" id="readoutDesc">大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。</div>
+            <div class="readout-desc" id="readoutDesc">点地图上的两个词，看看它们离得多近。</div>
           </div>
         </div>
 
-        <!-- Word Bank -->
-        <div class="insight-box">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-            <h3 style="margin:0;font-size:12px;color:var(--muted)">分类词库 <span style="font-weight:400;font-size:10.5px">(点击放置单个词)</span></h3>
-            <button style="border:none;background:transparent;color:var(--orange);font-size:11px;cursor:pointer;font-weight:700" type="button" id="clearMap">清空重置</button>
-          </div>
+        <details class="insight-box bank-drawer">
+          <summary>更多词语 <span>点开，挑词放上地图</span></summary>
+          <div class="bank-top"><button class="bank-clear" type="button" id="clearMap">清空地图</button></div>
           <div class="cat-pills" id="wordBank"></div>
-        </div>
+        </details>
       </div>
     </div>
-    <p class="small">坐标来自简体中文语义向量降维投影。<b>核心认知：</b>两个词意思相反（如开心/难过），在空间中依然很近，因为句式结构高度一致；模型没有情感体验，只计算向量夹角。</p>
+    <p class="small">开心和难过常出现在一样的句子里，所以住得近。AI 算的是距离，它自己并没有感情。</p>
   </section>
 
-  <!-- SLIDE 10: Concept Visual Landscape -->
-  <section class="slide">
-    <div class="kicker">全景回顾 <span class="en">· Visual Concept Architecture</span></div>
-    <h2>前面学到的核心认知，一张图串起来 <span class="sub-en">The Complete Architecture: From Reality, Math to Autonomous Action</span></h2>
-    <div class="concept-map-container">
-      <div class="concept-grid">
-        <!-- Column 1: Reality & Intelligence -->
-        <div class="concept-col" style="--col-accent:#38bdf8">
-          <div class="col-head">
-            <span class="col-title"><span style="color:#38bdf8">01</span> 现实与边界判定</span>
-            <span class="col-tag">认知基准</span>
-          </div>
-          <div class="concept-cards-wrap">
-            <div class="concept-card active" data-concept="intelligence">
-              <div class="concept-term">
-                <span>真正智能 vs 自动化</span>
-                <span class="concept-term-en">True Intelligence</span>
-              </div>
-              <div class="concept-brief">金毛犬有生物感官与世界模型；闸机和喷淋只是固定死规则。</div>
-              <div class="concept-memory-hook">[记忆口诀] 随机应变算智能，死板执行是机器</div>
-            </div>
-            <div class="concept-card" data-concept="hallucination">
-              <div class="concept-term">
-                <span>模型幻觉</span>
-                <span class="concept-term-en">Hallucination</span>
-              </div>
-              <div class="concept-brief">一本正经胡说八道。模型没有物理眼睛，它根本没看过校门。</div>
-              <div class="concept-memory-hook">[记忆口诀] 越是自信报细节，越要动手去查证</div>
-            </div>
-            <div class="concept-card" data-concept="mastery">
-              <div class="concept-term">
-                <span>掌握思考的主动权</span>
-                <span class="concept-term-en">Human Agency</span>
-              </div>
-              <div class="concept-brief">作文让模型写完你来抄，锻炼的是模型。人类负责提问、判断与终审。</div>
-              <div class="concept-memory-hook">[记忆口诀] 它是超级副驾驶，握方向盘的是你</div>
-            </div>
-          </div>
-        </div>
+  <!-- SLIDE 20: Step 3 Attention -->
+  <section class="slide" data-hint="第 3 步：点不同的词，看看它最在意谁">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 3 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">03</span><div class="ic-title">互相看一眼<span class="en">Attention · 找出谁跟谁有关系</span></div></div>
+      <p class="ic-lead">每个词都会回头看看句子里的其他词，<br>找出跟自己最有关系的那几个。</p>
+      <div class="tk-row att" id="attRow"></div>
+      <p class="att-note" id="attNote">点一个词，看看它最在意谁</p>
+      <div class="site-hint"><b>网站上看哪里</b>中间 Attention 的彩色连线，线越粗越在意</div>
+    </div>
+  </section>
 
-        <!-- Column 2: Math & Computing -->
-        <div class="concept-col" style="--col-accent:#22d3ee">
-          <div class="col-head">
-            <span class="col-title"><span style="color:#22d3ee">02</span> 物理机房与数学本质</span>
-            <span class="col-tag">底层机理</span>
-          </div>
-          <div class="concept-cards-wrap">
-            <div class="concept-card" data-concept="pipeline">
-              <div class="concept-term">
-                <span>Prompt 指令链路</span>
-                <span class="concept-term-en">Prompt to Pipeline</span>
-              </div>
-              <div class="concept-brief">你敲下的一句话，穿过基站骨干网，直达占地千亩的物理机房。</div>
-              <div class="concept-memory-hook">[记忆口诀] 不是云里有仙气，全是厂房与电费</div>
-            </div>
-            <div class="concept-card" data-concept="token_vector">
-              <div class="concept-term">
-                <span>Token 与 语义向量</span>
-                <span class="concept-term-en">Token & Vector Space</span>
-              </div>
-              <div class="concept-brief">把句子剪成积木碎片，扔进高维地图算经纬度坐标与夹角。</div>
-              <div class="concept-memory-hook">[记忆口诀] 词不看字面意思，算的是空间几何距离</div>
-            </div>
-            <div class="concept-card" data-concept="next_token">
-              <div class="concept-term">
-                <span>下一个词概率预测</span>
-                <span class="concept-term-en">Next-Token Prediction</span>
-              </div>
-              <div class="concept-brief">大模型本质上不“懂”世界，它是靠狂暴算力驱动的“超级成语接龙”。</div>
-              <div class="concept-memory-hook">[记忆口诀] 掷骰子挑下一个字，堆出惊艳的长回答</div>
-            </div>
-          </div>
+  <!-- SLIDE 21: Step 4 Probabilities -->
+  <section class="slide" data-hint="第 4 步：拖动温度滑块，让学生说说变化">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 4 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span></div>
+      <div class="ic-hero"><span class="ic-num">04</span><div class="ic-title">打分，挑一个<span class="en">Probabilities · 选出下一个词</span></div></div>
+      <p class="ic-lead">给每个可能的词打分，挑一个接到句尾，再从头猜下一个。</p>
+      <div class="temp-box">
+        <div class="prob-list" id="probTemp"></div>
+        <div class="temp-ctl">
+          <span>稳一点</span>
+          <input type="range" id="tempSlider" min="0.2" max="2" step="0.1" value="1" aria-label="温度">
+          <span>大胆一点</span>
+          <b id="tempVal">温度 1.0</b>
         </div>
-
-        <!-- Column 3: Agent Evolution -->
-        <div class="concept-col" style="--col-accent:#f97316">
-          <div class="col-head">
-            <span class="col-title"><span style="color:#f97316">03</span> 从聊天跃迁到智能体</span>
-            <span class="col-tag">行动架构</span>
-          </div>
-          <div class="concept-cards-wrap">
-            <div class="concept-card" data-concept="agent_def">
-              <div class="concept-term">
-                <span>Agent 智能体</span>
-                <span class="concept-term-en">Autonomous Agent</span>
-              </div>
-              <div class="concept-brief">普通 AI 聊完就忘只会说；真正的 Agent 能主动记住、动手干活。</div>
-              <div class="concept-memory-hook">[记忆口诀] 会聊天只是大脑，能行动才是助手</div>
-            </div>
-            <div class="concept-card" data-concept="agent_loop">
-              <div class="concept-term">
-                <span>五大闭环零件</span>
-                <span class="concept-term-en">5 Core Components</span>
-              </div>
-              <div class="concept-brief">目标 (Goal) + 记忆 (Memory) + 技能 (Skills) + 大脑 (LLM) + 说明书 (Spec)。</div>
-              <div class="concept-memory-hook">[记忆口诀] 目标定方向，记忆存档案，规则防瞎编</div>
-            </div>
-            <div class="concept-card" data-concept="ladder">
-              <div class="concept-term">
-                <span>能力五台阶</span>
-                <span class="concept-term-en">Capability Ladder</span>
-              </div>
-              <div class="concept-brief">L1会用、L2会搭(今天)、L3会做、L4会管、L5造模型。</div>
-              <div class="concept-memory-hook">[记忆口诀] 别当被动消费者，动手搭出自己的工具</div>
-            </div>
-          </div>
-        </div>
+        <p class="att-note" id="tempNote">温度正常：大多数时候选「水」，偶尔选别的</p>
       </div>
+      <div class="site-hint"><b>网站上看哪里</b>右边 Probabilities 的条形，和顶上的 Temperature 滑块</div>
+    </div>
+  </section>
 
-      <!-- Realtime Detail Readout Bar -->
-      <div class="concept-detail-box" id="conceptDetailBox">
-        <div class="detail-headline">
-          <span style="font-size:11px;color:var(--muted);text-transform:uppercase">[聚焦术语]</span>
-          <b id="conceptDetailTitle">真正智能 vs 自动化 · True Intelligence</b>
-        </div>
-        <div class="detail-desc" id="conceptDetailDesc">金毛犬有生物感官与世界模型；闸机和喷淋只是固定死规则。记住口诀：随机应变算智能，死板执行是机器。</div>
+  <!-- SLIDE 22: Try the Explainer -->
+  <section class="slide" data-hint="切到 Transformer Explainer，按三个任务带学生操作">
+    <div class="kicker">02 动手试 <span class="en">· Try It Yourself</span></div>
+    <h2>现在，换你们来操作 <span class="sub-en">Transformer Explainer</span></h2>
+    <div class="try-wrap">
+      <button class="tx-shot" type="button" id="txShot">
+        <img src="assets/camp/transformer-teaser.jpg" alt="Transformer Explainer 界面截图">
+      </button>
+      <div class="try-tasks">
+        <div class="try-card"><span class="rl-num">1</span><p>输入一句话，<br>看它猜的下一个词</p></div>
+        <div class="try-card"><span class="rl-num">2</span><p>把 Temperature 往右拖，<br>看猜的词怎么变</p></div>
+        <div class="try-card"><span class="rl-num">3</span><p>点一个词，<br>看它最在意哪几个词</p></div>
+        <a class="go big" href="https://poloclub.github.io/transformer-explainer/" target="_blank">打开网站 ↗</a>
       </div>
     </div>
-    <p class="small">点击任意知识卡片即可调出深度透视。这就是贯穿整堂课的认知主线：<b>分清真假智能 → 看透物理与数学本质 → 亲手搭出可用的智能体。</b></p>
+    <p class="small">Transformer Explainer · Georgia Tech Polo Club · MIT License</p>
   </section>
 
-  <!-- SLIDE 11: Agent Architecture -->
-  <section class="slide">
-    <div class="kicker">03 核心架构 <span class="en">· Anatomy of an AI Agent</span></div>
-    <h2>真正的智能体在中间，周围才是它的零件 <span class="sub-en">The 5 Core Components of an Agent Loop</span></h2>
+  <!-- SLIDE 23: Review flip cards -->
+  <section class="slide" data-hint="先让学生说答案，再点卡片翻面核对">
+    <div class="kicker">复习一下 <span class="en">· Quick Review</span></div>
+    <h2>前两章，你记住了什么？ <span class="sub-en">Tap a Card to Check</span></h2>
+    <div class="flip-grid" id="flipGrid">
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>智能</b><i>点一下看答案</i></span><span class="flip-back"><b>环境变了，还能想办法把事办成</b><i>会随机应变，才算聪明</i></span></button>
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>五项本领</b><i>点一下看答案</i></span><span class="flip-back"><b>感知、理解、判断、行动、学习</b><i>学习是最关键的一项</i></span></button>
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>幻觉</b><i>点一下看答案</i></span><span class="flip-back"><b>AI 不知道答案时，也会说得很流畅</b><i>说得越具体，越要去查证</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>机房</b><i>点一下看答案</i></span><span class="flip-back"><b>你的一句话，会跑到很远的机房里被计算</b><i>不是云里有仙气，是厂房和电费</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>Token 和数字</b><i>点一下看答案</i></span><span class="flip-back"><b>句子先切成小块，每块变成一串数字</b><i>意思越像，数字越近</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>猜下一个词</b><i>点一下看答案</i></span><span class="flip-back"><b>一次猜一个最可能的词，再接着猜</b><i>一场超级成语接龙</i></span></button>
+    </div>
+  </section>
+
+  <!-- SLIDE 24: Chat vs Agent -->
+  <section class="slide" data-hint="先问学生：你用豆包的时候，它会记得你昨天说过什么吗">
+    <div class="kicker">03 什么是 Agent <span class="en">· From Chat to Agent</span></div>
+    <h2>会聊天的 AI，和会办事的 Agent <span class="sub-en">Chatbot vs Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="bd-pair">
+        <div class="bd-card human">
+          <span class="bd-head">普通聊天</span>
+          <p class="bd-sub">像一本会说话的百科全书</p>
+          <ul>
+            <li>你问一句，它答一句</li>
+            <li>关掉窗口，就忘了你</li>
+            <li>只会说，不会去做</li>
+          </ul>
+        </div>
+        <div class="bd-card assist">
+          <span class="bd-head">Agent</span>
+          <p class="bd-sub">像你请来的一个小助手</p>
+          <ul>
+            <li>交代一件事，它一直做到办完</li>
+            <li>记得你之前说过什么</li>
+            <li>会用工具：查资料、发消息</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>聊天是回答问题，Agent 是帮你把事办成</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 25: Agent Parts -->
+  <section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
+    <div class="kicker">03 Agent 的零件 <span class="en">· Anatomy of an Agent</span></div>
+    <h2>一个 Agent，由五个零件组成 <span class="sub-en">5 Core Parts</span></h2>
     <div class="agent-board" id="agentBoard">
-      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1"><b>目标 · Goal</b><br><span class="small">你要它做成什么</span></button>
-      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2"><b>记忆 · Memory</b><br><span class="small">记住人和历史</span></button>
-      <div class="agent-core">Agent<br><span style="font-size:12px;font-weight:500;color:#94a3b8">真智能体</span></div>
-      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2"><b>技能 · Skills</b><br><span class="small">调工具、去行动</span></button>
-      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3"><b>大脑 · LLM Brain</b><br><span class="small">大语言模型</span></button>
-      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3"><b>说明书 · Spec</b><br><span class="small">边界与安全红线</span></button>
+      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1"><b>目标</b><span>要办成的事</span></button>
+      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2"><b>记忆</b><span>它的小本子</span></button>
+      <div class="agent-core">Agent<span>小助手</span></div>
+      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2"><b>工具</b><span>它的手和脚</span></button>
+      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3"><b>大脑</b><span>会想办法的 AI</span></button>
+      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3"><b>规矩</b><span>什么绝对不能做</span></button>
     </div>
-    <div class="card" id="partDetail">点一个零件。会聊天的只是大脑。真正的智能体还要记得住、做得到、知道自己的目标，并且知道什么绝不能做。</div>
+    <div class="card part-detail" id="partDetail">点一个零件，看看它是做什么的。我们用「帮同学找回丢失的水壶」来举例。</div>
   </section>
 
-  <!-- SLIDE 12: Teacher's Demonstrations -->
-  <section class="slide">
-    <div class="kicker">03 老师示范 <span class="en">· Teacher's Real-World Agents</span></div>
-    <h2>我自己用的 Agent，拆开就是这五个零件 <span class="sub-en">Deconstructing 3 Practical Personal Agents</span></h2>
-    <div class="card" style="border-color:rgba(34,211,238,.4)">
-      <h3 class="accent">资讯早报 · 先把这一个讲透 <span class="sub-en">Daily News Briefing Agent</span></h3>
-      <div class="grid3" style="margin-top:8px">
-        <div><b>目标 Goal</b><p class="mini">每个上学日早上，给我 3 条和我有关的事</p></div>
-        <div><b>记忆 Memory</b><p class="mini">我关心课程、学校通知，不关心娱乐八卦</p></div>
-        <div><b>技能 Skills</b><p class="mini">去查真实网页，每条都要带可靠来源</p></div>
-        <div><b>说明书 Spec</b><p class="mini">没有来源就空着，绝不许瞎编</p></div>
-        <div><b>大脑 LLM Brain</b><p class="mini">把查到的写成我能扫一眼就懂的话</p></div>
-        <div><b class="org">你们也可以做</b><p class="mini">社团通知早报：明天训练改到几点</p></div>
+  <!-- SLIDE 26: Agent Loop -->
+  <section class="slide" data-hint="点「转一圈」，跟着亮起的步骤讲">
+    <div class="kicker">03 Agent 怎么干活 <span class="en">· The Agent Loop</span></div>
+    <h2>Agent 做事，是一圈一圈转的 <span class="sub-en">Look · Think · Act · Check</span></h2>
+    <div class="ic-wrap">
+      <div class="loop-row" id="loopRow">
+        <div class="loop-step"><span class="rl-num">01</span><b>看一看</b><p>收到消息：<br>小明丢了蓝色水壶</p></div>
+        <div class="loop-step"><span class="rl-num">02</span><b>想一想</b><p>翻小本子：<br>有没有人捡到过？</p></div>
+        <div class="loop-step"><span class="rl-num">03</span><b>做一做</b><p>找到了，<br>就给两个人各发一条消息</p></div>
+        <div class="loop-step"><span class="rl-num">04</span><b>查一查</b><p>对上了吗？<br>没对上就说「还没找到」</p></div>
+      </div>
+      <div class="loop-back">没办完？回到第 1 步，再转一圈</div>
+      <button class="go big" type="button" id="loopPlay">转一圈</button>
+    </div>
+  </section>
+
+  <!-- SLIDE 27: Teacher's Agent -->
+  <section class="slide" data-hint="切到老师自己的屏幕，把早报小助手讲透">
+    <div class="kicker">03 老师示范 <span class="en">· Teacher's Agent</span></div>
+    <h2>我每天都在用的「早报小助手」 <span class="sub-en">Daily News Briefing Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="ps-grid">
+        <div class="ps-card"><b>目标</b><p>每个上学日早上，给我 3 条跟我有关的消息</p></div>
+        <div class="ps-card"><b>记忆</b><p>记得我关心课程和学校通知，不看八卦</p></div>
+        <div class="ps-card"><b>工具</b><p>去真实的网页上查，每条带上出处</p></div>
+        <div class="ps-card"><b>大脑</b><p>把查到的写成一眼能看懂的话</p></div>
+        <div class="ps-card"><b>规矩</b><p>查不到出处就空着，不许编</p></div>
+      </div>
+      <div class="ic-remember"><b>你也能做</b>社团通知小助手：明天训练改到几点？</div>
+      <p class="ic-foot">老师还在用请假条草稿助手、周末出行清单助手，拆开都是这五个零件。它们都搭在豆包里，放进飞书群运行。</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 28: What Is a Prompt -->
+  <section class="slide" data-hint="让学生先说：如果是你，会怎么交代同学帮你带午饭">
+    <div class="kicker">03 动手第一步 <span class="en">· What Is a Prompt</span></div>
+    <h2>Prompt，就是你交给 AI 的任务单 <span class="sub-en">A Prompt Is a Task Sheet</span></h2>
+    <div class="ic-wrap">
+      <p class="ic-lead">AI 很能干，但它猜不到你心里想什么。<br>你说得越清楚，它办得越好。</p>
+      <div class="ic-pair">
+        <div class="ic-case no">
+          <div><span class="ic-label">说得含糊</span><p>「帮我带个吃的。」</p><p class="ic-result">结果：带回来一包辣条，可你不吃辣。</p></div>
+        </div>
+        <div class="ic-case yes">
+          <div><span class="ic-label">说得清楚</span><p>「帮我从食堂二楼带一份不辣的面，12:10 前送到教室。没有面就先发消息问我。」</p><p class="ic-result">结果：正好是你想要的。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>任务单写得清楚，事情才办得对</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 29: Five Habits -->
+  <section class="slide" data-hint="重点讲 03 和 04：让 AI 多想几种办法，由你来做决定">
+    <div class="kicker">03 写好 Prompt <span class="en">· 5 Good Habits</span></div>
+    <h2>写任务单的五个好习惯 <span class="sub-en">Goal · Context · Options · Decide · Check</span></h2>
+    <div class="hb-grid">
+      <div class="hb-card"><span class="rl-num">01</span><b>说清目标</b><p>说你想要什么结果，不用一步步教它怎么做</p></div>
+      <div class="hb-card"><span class="rl-num">02</span><b>讲清情况</b><p>你是谁、在哪里、已经试过什么</p></div>
+      <div class="hb-card key"><span class="rl-num">03</span><b>让它多想几种办法</b><p>请它给出 2 到 3 种不同的方法，说说好处和难处</p></div>
+      <div class="hb-card key"><span class="rl-num">04</span><b>你来做决定</b><p>你选一种，说清楚为什么，再让它接着做</p></div>
+      <div class="hb-card"><span class="rl-num">05</span><b>对照目标检查</b><p>办成了吗？不确定的地方，让它说「不知道」</p></div>
+    </div>
+    <p class="ic-foot">网上很多技巧教你背模板、写「你是一个专家」。我们更看重三件事：目标清楚、办法多样、决定在你。</p>
+  </section>
+
+  <!-- SLIDE 30: Build a Prompt -->
+  <section class="slide" data-hint="按 01 到 05 依次点，每加一句问学生：它现在会怎么回答">
+    <div class="kicker">03 现场拼一个 <span class="en">· Build a Prompt</span></div>
+    <h2>一起拼出一张好任务单 <span class="sub-en">From a Template to a Real Task</span></h2>
+    <div class="pb-wrap">
+      <div class="pb-card old">
+        <span class="bd-head">常见写法</span>
+        <p class="pb-text">「你是一位资深的阅读推广专家。请帮我写一份班级读书角方案。」</p>
+        <p class="pb-note">AI 会直接交给你一份看起来很完整的方案，但它不认识你们班，你也没得选。</p>
+      </div>
+      <div class="pb-card new">
+        <span class="bd-head">我们的写法</span>
+        <div class="pb-btns" id="pbBtns">
+          <button type="button" data-i="0">01 目标</button>
+          <button type="button" data-i="1">02 情况</button>
+          <button type="button" data-i="2">03 多种办法</button>
+          <button type="button" data-i="3">04 你来决定</button>
+          <button type="button" data-i="4">05 检查</button>
+        </div>
+        <div class="pb-box" id="pbBox"><span class="pb-empty">依次点上面的按钮，任务单会一句一句长出来</span></div>
       </div>
     </div>
-    <div class="grid2">
-      <div class="card"><h3>审批代表 <span class="sub-en">Approval Assistant</span></h3><p class="mini">它按我的规则把待办整理好，点不点头仍然是我。你们可以做：请假条先写成草稿，自己交。</p></div>
-      <div class="card"><h3>差旅预定 <span class="sub-en">Travel Assistant</span></h3><p class="mini">它排行程、对时间。你们可以做：周末出门清单，几点出门、带什么。决定仍然是你。</p></div>
-    </div>
-    <p class="small" style="margin-top:14px">演示平台：老师在 <b>豆包工作</b> 里搭这些 Agent，放进 <b>飞书群聊</b> 里跑起来。今天你们也这么干。</p>
   </section>
 
   <!-- SLIDE 13: Live Campus Practice -->
-  <section class="slide">
+  <section class="slide" data-hint="先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的">
     <div class="kicker">03 课堂实操 <span class="en">· Live Agent Practice</span></div>
-    <h2>校园寻物：这才算真正的智能体 <span class="sub-en">Building a Campus Lost & Found Agent</span></h2>
-    <p class="small">会聊天的豆包，说完就忘。这个寻物 Agent 有目标（帮两边对上）、有记忆（记下失物和拾物）、有技能（比对并通知）。对不上，它必须说不知道。</p>
+    <h2>校园寻物：一个真正的 Agent <span class="sub-en">Lost & Found Agent</span></h2>
+    <p class="small">它的目标是帮两边对上号，小本子记下失物和拾物，工具是比对和通知。对不上，它必须说不知道。</p>
     <div class="lost-grid">
       <div class="card">
         <h3>我丢了 <span class="sub-en">Lost Item</span></h3>
-        <label>什么东西 What</label><input id="lostWhat" type="text" placeholder="例如：蓝色水壶">
-        <label>在哪里 Where</label><input id="lostWhere" type="text" placeholder="例如：图书馆三楼">
+        <label>什么东西</label><input id="lostWhat" type="text" placeholder="例如：蓝色水壶">
+        <label>在哪里</label><input id="lostWhere" type="text" placeholder="例如：图书馆三楼">
         <button class="go" type="button" id="addLost">告诉 Agent</button>
         <div class="choice" style="margin-top:8px">
           <button class="chip" type="button" data-fill="lost" data-what="蓝色水壶" data-where="图书馆三楼">蓝色水壶</button>
@@ -2030,7 +2170,7 @@
       </div>
       <div class="card">
         <div class="lights" id="lights">
-          <span data-l="goal">目标 Goal</span><span data-l="memory">记忆 Memory</span><span data-l="skill">技能 Skill</span><span data-l="spec">说明书 Spec</span><span data-l="brain">大脑 Brain</span>
+          <span data-l="goal">目标</span><span data-l="memory">记忆</span><span data-l="skill">工具</span><span data-l="spec">规矩</span><span data-l="brain">大脑</span>
         </div>
         <p id="resultLine">记忆还是空的。先登记一件失物，再登记一件拾物。</p>
         <div id="memList"></div>
@@ -2038,8 +2178,8 @@
       </div>
       <div class="card">
         <h3>我捡到了 <span class="sub-en">Found Item</span></h3>
-        <label>什么东西 What</label><input id="foundWhat" type="text" placeholder="例如：蓝色水壶">
-        <label>在哪里 Where</label><input id="foundWhere" type="text" placeholder="例如：图书馆门口">
+        <label>什么东西</label><input id="foundWhat" type="text" placeholder="例如：蓝色水壶">
+        <label>在哪里</label><input id="foundWhere" type="text" placeholder="例如：图书馆门口">
         <button class="go" type="button" id="addFound">告诉 Agent</button>
         <div class="choice" style="margin-top:8px">
           <button class="chip" type="button" data-fill="found" data-what="蓝色水壶" data-where="图书馆门口">蓝色水壶</button>
@@ -2049,27 +2189,28 @@
     </div>
   </section>
 
-  <!-- SLIDE 14: Mission Card -->
-  <section class="slide">
-    <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission Card</span></div>
-    <h2>明天，带一个真问题来 <span class="sub-en">Define a Real Problem for Your First Agent</span></h2>
+  <!-- SLIDE 32: Mission Card -->
+  <section class="slide" data-hint="每人写一张任务单，明天带来">
+    <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission</span></div>
+    <h2>明天，带一个真问题来 <span class="sub-en">Bring a Real Problem</span></h2>
     <div class="task">
       <div class="card">
-        <h3 class="accent">任务书 · 现在就可以写 <span class="sub-en">Mission Form</span></h3>
-        <label>谁遇到的 (Target User)</label><input id="qWho" type="text" placeholder="例如：七年级的同学">
-        <label>什么时候最麻烦 (Pain Point)</label><input id="qWhen" type="text" placeholder="例如：放学找水壶的时候">
-        <label>现在他们怎么办 (Current Workaround)</label><input id="qNow" type="text" placeholder="例如：在班级群里喊一嗓子">
-        <label>你希望 Agent 达成的目标 (Agent Goal)</label><input id="qGoal" type="text" placeholder="写成目标，先不要写死每一步">
+        <h3 class="accent">我的任务单</h3>
+        <label>谁遇到了这个麻烦</label><input id="qWho" type="text" placeholder="例如：七年级的同学">
+        <label>什么时候最麻烦</label><input id="qWhen" type="text" placeholder="例如：放学找水壶的时候">
+        <label>他们现在怎么解决</label><input id="qNow" type="text" placeholder="例如：在班级群里喊一嗓子">
+        <label>你希望 Agent 帮忙办成什么</label><input id="qGoal" type="text" placeholder="写结果，先不要写死每一步">
       </div>
       <div class="card">
-        <h3 class="org">给 Agent 指令的四条铁律 <span class="sub-en">4 Golden Prompting Rules</span></h3>
+        <h3 class="org">写任务单的五个好习惯</h3>
         <ul class="clean">
-          <li><b>1 给目标</b>　别把步骤卡死，说明想要的结果</li>
-          <li><b>2 给处境</b>　告诉它谁、在哪、已经试过什么</li>
-          <li><b>3 允许提问</b>　允许它先问你，问清再行动</li>
-          <li><b>4 严禁瞎编</b>　不确定就说不知道，绝不许幻觉</li>
+          <li><b>1 说清目标</b>　想要什么结果</li>
+          <li><b>2 讲清情况</b>　谁、在哪、试过什么</li>
+          <li><b>3 让它多想几种办法</b>　要 2 到 3 种</li>
+          <li><b>4 你来做决定</b>　选一种，说为什么</li>
+          <li><b>5 对照目标检查</b>　不确定就说不知道</li>
         </ul>
-        <p class="small" style="margin-top:10px">明天用这张卡开工。人负责判断，Agent 负责记住、去办、把结果交回来给你核对。</p>
+        <p class="small" style="margin-top:10px">你负责做决定，Agent 负责记住、去办，再把结果交给你检查。</p>
       </div>
     </div>
   </section>
@@ -2077,36 +2218,12 @@
 
 <button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
 <button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
-<div id="pager">1 / 22</div>
+<div id="pager">1 / 32</div>
 <div id="hint"></div>
 <div id="lightbox"><img alt=""><p></p></div>
 
 <script id="word-data" type="application/json">{"points":[{"name":"猫","x":21.16,"y":19.73},{"name":"狗","x":20.6,"y":33.58},{"name":"小狗","x":25.59,"y":24.97},{"name":"老虎","x":31.46,"y":12.01},{"name":"鸟","x":28.08,"y":18.33},{"name":"鱼","x":24.81,"y":12.04},{"name":"汽车","x":88.0,"y":24.13},{"name":"卡车","x":66.96,"y":17.11},{"name":"公交车","x":61.75,"y":32.89},{"name":"自行车","x":69.39,"y":28.32},{"name":"火车","x":55.7,"y":28.93},{"name":"书包","x":51.38,"y":52.19},{"name":"铅笔","x":46.89,"y":46.61},{"name":"教室","x":58.47,"y":68.99},{"name":"老师","x":39.42,"y":88.2},{"name":"同学","x":37.67,"y":81.25},{"name":"作业","x":51.42,"y":68.66},{"name":"手机","x":58.68,"y":52.87},{"name":"电脑","x":64.04,"y":57.6},{"name":"笔记本","x":71.15,"y":56.57},{"name":"开心","x":8.71,"y":49.17},{"name":"难过","x":11.94,"y":61.9},{"name":"生气","x":10.29,"y":55.4},{"name":"害怕","x":15.19,"y":50.55},{"name":"妈妈","x":16.87,"y":57.44},{"name":"爸爸","x":21.95,"y":52.87},{"name":"米饭","x":30.18,"y":30.32},{"name":"面条","x":32.69,"y":23.86},{"name":"学校","x":54.49,"y":74.79},{"name":"朋友","x":27.82,"y":63.6},{"name":"投影仪","x":66.75,"y":51.27}],"sim":{"猫":{"猫":1.0,"狗":0.57,"小狗":0.644,"老虎":0.437,"鸟":0.391,"鱼":0.39,"汽车":-0.13,"卡车":0.048,"公交车":0.026,"自行车":0.012,"火车":0.039,"书包":0.185,"铅笔":0.118,"教室":0.073,"老师":-0.058,"同学":0.055,"作业":0.011,"手机":0.059,"电脑":0.091,"笔记本":0.036,"开心":0.183,"难过":0.058,"生气":0.13,"害怕":0.087,"妈妈":0.26,"爸爸":0.293,"米饭":0.111,"面条":0.149,"学校":-0.112,"朋友":0.064,"投影仪":0.069},"狗":{"猫":0.57,"狗":1.0,"小狗":0.608,"老虎":0.331,"鸟":0.307,"鱼":0.234,"汽车":-0.188,"卡车":0.047,"公交车":0.086,"自行车":0.08,"火车":0.087,"书包":0.177,"铅笔":0.065,"教室":0.105,"老师":0.058,"同学":0.153,"作业":0.103,"手机":0.053,"电脑":0.102,"笔记本":-0.012,"开心":0.214,"难过":0.215,"生气":0.237,"害怕":0.199,"妈妈":0.246,"爸爸":0.324,"米饭":0.022,"面条":0.091,"学校":0.022,"朋友":0.116,"投影仪":0.004},"小狗":{"猫":0.644,"狗":0.608,"小狗":1.0,"老虎":0.468,"鸟":0.243,"鱼":0.273,"汽车":-0.019,"卡车":0.191,"公交车":0.243,"自行车":0.216,"火车":0.188,"书包":0.255,"铅笔":0.129,"教室":0.149,"老师":-0.029,"同学":0.164,"作业":0.039,"手机":0.075,"电脑":0.103,"笔记本":0.018,"开心":0.208,"难过":0.227,"生气":0.226,"害怕":0.233,"妈妈":0.406,"爸爸":0.422,"米饭":0.124,"面条":0.18,"学校":0.004,"朋友":0.15,"投影仪":0.043},"老虎":{"猫":0.437,"狗":0.331,"小狗":0.468,"老虎":1.0,"鸟":0.285,"鱼":0.237,"汽车":0.003,"卡车":0.135,"公交车":0.017,"自行车":0.036,"火车":0.045,"书包":0.029,"铅笔":0.109,"教室":-0.045,"老师":-0.111,"同学":-0.063,"作业":-0.11,"手机":-0.013,"电脑":-0.033,"笔记本":-0.072,"开心":0.019,"难过":0.047,"生气":0.046,"害怕":0.088,"妈妈":0.155,"爸爸":0.154,"米饭":0.008,"面条":0.07,"学校":-0.118,"朋友":-0.062,"投影仪":-0.053},"鸟":{"猫":0.391,"狗":0.307,"小狗":0.243,"老虎":0.285,"鸟":1.0,"鱼":0.407,"汽车":-0.161,"卡车":0.021,"公交车":-0.014,"自行车":0.04,"火车":0.041,"书包":0.113,"铅笔":0.208,"教室":0.013,"老师":-0.07,"同学":-0.077,"作业":-0.009,"手机":0.029,"电脑":-0.017,"笔记本":-0.008,"开心":0.137,"难过":0.038,"生气":0.08,"害怕":0.035,"妈妈":0.064,"爸爸":0.069,"米饭":0.055,"面条":0.112,"学校":-0.11,"朋友":-0.119,"投影仪":0.012},"鱼":{"猫":0.39,"狗":0.234,"小狗":0.273,"老虎":0.237,"鸟":0.407,"鱼":1.0,"汽车":-0.135,"卡车":-0.04,"公交车":0.052,"自行车":0.03,"火车":0.029,"书包":0.131,"铅笔":0.078,"教室":-0.076,"老师":-0.118,"同学":-0.1,"作业":-0.045,"手机":-0.059,"电脑":-0.056,"笔记本":-0.004,"开心":0.044,"难过":-0.038,"生气":0.02,"害怕":-0.116,"妈妈":0.126,"爸爸":0.101,"米饭":0.328,"面条":0.377,"学校":-0.073,"朋友":-0.02,"投影仪":-0.018},"汽车":{"猫":-0.13,"狗":-0.188,"小狗":-0.019,"老虎":0.003,"鸟":-0.161,"鱼":-0.135,"汽车":1.0,"卡车":0.499,"公交车":0.331,"自行车":0.485,"火车":0.256,"书包":-0.008,"铅笔":-0.025,"教室":0.02,"老师":-0.188,"同学":-0.185,"作业":-0.011,"手机":0.185,"电脑":0.184,"笔记本":0.221,"开心":-0.237,"难过":-0.249,"生气":-0.25,"害怕":-0.25,"妈妈":-0.229,"爸爸":-0.224,"米饭":-0.138,"面条":-0.119,"学校":-0.026,"朋友":-0.12,"投影仪":0.203},"卡车":{"猫":0.048,"狗":0.047,"小狗":0.191,"老虎":0.135,"鸟":0.021,"鱼":-0.04,"汽车":0.499,"卡车":1.0,"公交车":0.443,"自行车":0.437,"火车":0.474,"书包":0.169,"铅笔":0.019,"教室":0.085,"老师":-0.2,"同学":-0.073,"作业":0.077,"手机":0.056,"电脑":0.075,"笔记本":0.072,"开心":-0.086,"难过":-0.058,"生气":-0.075,"害怕":-0.066,"妈妈":-0.061,"爸爸":-0.02,"米饭":-0.01,"面条":0.042,"学校":-0.009,"朋友":-0.09,"投影仪":0.05},"公交车":{"猫":0.026,"狗":0.086,"小狗":0.243,"老虎":0.017,"鸟":-0.014,"鱼":0.052,"汽车":0.331,"卡车":0.443,"公交车":1.0,"自行车":0.47,"火车":0.64,"书包":0.218,"铅笔":-0.028,"教室":0.27,"老师":-0.029,"同学":0.084,"作业":0.053,"手机":0.151,"电脑":0.133,"笔记本":0.056,"开心":-0.027,"难过":0.005,"生气":0.045,"害怕":0.014,"妈妈":0.076,"爸爸":0.047,"米饭":-0.003,"面条":0.021,"学校":0.199,"朋友":0.081,"投影仪":0.019},"自行车":{"猫":0.012,"狗":0.08,"小狗":0.216,"老虎":0.036,"鸟":0.04,"鱼":0.03,"汽车":0.485,"卡车":0.437,"公交车":0.47,"自行车":1.0,"火车":0.351,"书包":0.277,"铅笔":0.067,"教室":0.185,"老师":-0.087,"同学":0.02,"作业":0.026,"手机":0.181,"电脑":0.173,"笔记本":0.157,"开心":-0.041,"难过":-0.101,"生气":-0.099,"害怕":-0.094,"妈妈":0.049,"爸爸":0.06,"米饭":-0.055,"面条":0.032,"学校":0.148,"朋友":0.008,"投影仪":0.14},"火车":{"猫":0.039,"狗":0.087,"小狗":0.188,"老虎":0.045,"鸟":0.041,"鱼":0.029,"汽车":0.256,"卡车":0.474,"公交车":0.64,"自行车":0.351,"火车":1.0,"书包":0.156,"铅笔":0.02,"教室":0.207,"老师":-0.139,"同学":0.045,"作业":0.077,"手机":0.106,"电脑":0.157,"笔记本":0.026,"开心":0.092,"难过":0.051,"生气":0.051,"害怕":0.071,"妈妈":0.101,"爸爸":0.117,"米饭":0.082,"面条":0.103,"学校":0.089,"朋友":0.132,"投影仪":0.039},"书包":{"猫":0.185,"狗":0.177,"小狗":0.255,"老虎":0.029,"鸟":0.113,"鱼":0.131,"汽车":-0.008,"卡车":0.169,"公交车":0.218,"自行车":0.277,"火车":0.156,"书包":1.0,"铅笔":0.314,"教室":0.458,"老师":0.159,"同学":0.268,"作业":0.29,"手机":0.268,"电脑":0.272,"笔记本":0.393,"开心":0.106,"难过":0.063,"生气":0.091,"害怕":0.009,"妈妈":0.309,"爸爸":0.29,"米饭":0.074,"面条":0.154,"学校":0.273,"朋友":-0.002,"投影仪":0.205},"铅笔":{"猫":0.118,"狗":0.065,"小狗":0.129,"老虎":0.109,"鸟":0.208,"鱼":0.078,"汽车":-0.025,"卡车":0.019,"公交车":-0.028,"自行车":0.067,"火车":0.02,"书包":0.314,"铅笔":1.0,"教室":0.203,"老师":0.109,"同学":0.106,"作业":0.221,"手机":0.116,"电脑":0.188,"笔记本":0.309,"开心":0.033,"难过":0.03,"生气":0.002,"害怕":0.032,"妈妈":0.135,"爸爸":0.085,"米饭":0.025,"面条":0.138,"学校":0.015,"朋友":-0.001,"投影仪":0.209},"教室":{"猫":0.073,"狗":0.105,"小狗":0.149,"老虎":-0.045,"鸟":0.013,"鱼":-0.076,"汽车":0.02,"卡车":0.085,"公交车":0.27,"自行车":0.185,"火车":0.207,"书包":0.458,"铅笔":0.203,"教室":1.0,"老师":0.378,"同学":0.406,"作业":0.395,"手机":0.236,"电脑":0.346,"笔记本":0.327,"开心":0.076,"难过":0.072,"生气":0.088,"害怕":0.073,"妈妈":0.182,"爸爸":0.178,"米饭":0.015,"面条":0.005,"学校":0.525,"朋友":0.008,"投影仪":0.318},"老师":{"猫":-0.058,"狗":0.058,"小狗":-0.029,"老虎":-0.111,"鸟":-0.07,"鱼":-0.118,"汽车":-0.188,"卡车":-0.2,"公交车":-0.029,"自行车":-0.087,"火车":-0.139,"书包":0.159,"铅笔":0.109,"教室":0.378,"老师":1.0,"同学":0.597,"作业":0.405,"手机":-0.012,"电脑":0.03,"笔记本":0.063,"开心":0.076,"难过":0.006,"生气":0.073,"害怕":-0.034,"妈妈":0.223,"爸爸":0.236,"米饭":-0.155,"面条":-0.133,"学校":0.365,"朋友":0.165,"投影仪":0.081},"同学":{"猫":0.055,"狗":0.153,"小狗":0.164,"老虎":-0.063,"鸟":-0.077,"鱼":-0.1,"汽车":-0.185,"卡车":-0.073,"公交车":0.084,"自行车":0.02,"火车":0.045,"书包":0.268,"铅笔":0.106,"教室":0.406,"老师":0.597,"同学":1.0,"作业":0.282,"手机":0.071,"电脑":0.122,"笔记本":0.102,"开心":0.146,"难过":0.07,"生气":0.081,"害怕":0.068,"妈妈":0.334,"爸爸":0.33,"米饭":-0.062,"面条":-0.023,"学校":0.417,"朋友":0.511,"投影仪":0.111},"作业":{"猫":0.011,"狗":0.103,"小狗":0.039,"老虎":-0.11,"鸟":-0.009,"鱼":-0.045,"汽车":-0.011,"卡车":0.077,"公交车":0.053,"自行车":0.026,"火车":0.077,"书包":0.29,"铅笔":0.221,"教室":0.395,"老师":0.405,"同学":0.282,"作业":1.0,"手机":0.176,"电脑":0.284,"笔记本":0.282,"开心":0.077,"难过":0.065,"生气":0.105,"害怕":-0.0,"妈妈":0.14,"爸爸":0.085,"米饭":-0.036,"面条":0.049,"学校":0.292,"朋友":-0.021,"投影仪":0.154},"手机":{"猫":0.059,"狗":0.053,"小狗":0.075,"老虎":-0.013,"鸟":0.029,"鱼":-0.059,"汽车":0.185,"卡车":0.056,"公交车":0.151,"自行车":0.181,"火车":0.106,"书包":0.268,"铅笔":0.116,"教室":0.236,"老师":-0.012,"同学":0.071,"作业":0.176,"手机":1.0,"电脑":0.59,"笔记本":0.529,"开心":0.073,"难过":0.068,"生气":0.139,"害怕":0.083,"妈妈":0.133,"爸爸":0.145,"米饭":0.001,"面条":0.011,"学校":0.013,"朋友":0.15,"投影仪":0.45},"电脑":{"猫":0.091,"狗":0.102,"小狗":0.103,"老虎":-0.033,"鸟":-0.017,"鱼":-0.056,"汽车":0.184,"卡车":0.075,"公交车":0.133,"自行车":0.173,"火车":0.157,"书包":0.272,"铅笔":0.188,"教室":0.346,"老师":0.03,"同学":0.122,"作业":0.284,"手机":0.59,"电脑":1.0,"笔记本":0.696,"开心":0.015,"难过":0.044,"生气":0.043,"害怕":0.004,"妈妈":0.058,"爸爸":0.104,"米饭":0.024,"面条":0.04,"学校":0.145,"朋友":0.089,"投影仪":0.54},"笔记本":{"猫":0.036,"狗":-0.012,"小狗":0.018,"老虎":-0.072,"鸟":-0.008,"鱼":-0.004,"汽车":0.221,"卡车":0.072,"公交车":0.056,"自行车":0.157,"火车":0.026,"书包":0.393,"铅笔":0.309,"教室":0.327,"老师":0.063,"同学":0.102,"作业":0.282,"手机":0.529,"电脑":0.696,"笔记本":1.0,"开心":-0.064,"难过":-0.029,"生气":-0.068,"害怕":-0.086,"妈妈":0.033,"爸爸":0.026,"米饭":0.026,"面条":0.026,"学校":0.06,"朋友":0.004,"投影仪":0.583},"开心":{"猫":0.183,"狗":0.214,"小狗":0.208,"老虎":0.019,"鸟":0.137,"鱼":0.044,"汽车":-0.237,"卡车":-0.086,"公交车":-0.027,"自行车":-0.041,"火车":0.092,"书包":0.106,"铅笔":0.033,"教室":0.076,"老师":0.076,"同学":0.146,"作业":0.077,"手机":0.073,"电脑":0.015,"笔记本":-0.064,"开心":1.0,"难过":0.588,"生气":0.5,"害怕":0.347,"妈妈":0.364,"爸爸":0.351,"米饭":0.083,"面条":0.085,"学校":0.0,"朋友":0.279,"投影仪":-0.053},"难过":{"猫":0.058,"狗":0.215,"小狗":0.227,"老虎":0.047,"鸟":0.038,"鱼":-0.038,"汽车":-0.249,"卡车":-0.058,"公交车":0.005,"自行车":-0.101,"火车":0.051,"书包":0.063,"铅笔":0.03,"教室":0.072,"老师":0.006,"同学":0.07,"作业":0.065,"手机":0.068,"电脑":0.044,"笔记本":-0.029,"开心":0.588,"难过":1.0,"生气":0.615,"害怕":0.647,"妈妈":0.357,"爸爸":0.26,"米饭":0.065,"面条":0.032,"学校":-0.004,"朋友":0.222,"投影仪":-0.062},"生气":{"猫":0.13,"狗":0.237,"小狗":0.226,"老虎":0.046,"鸟":0.08,"鱼":0.02,"汽车":-0.25,"卡车":-0.075,"公交车":0.045,"自行车":-0.099,"火车":0.051,"书包":0.091,"铅笔":0.002,"教室":0.088,"老师":0.073,"同学":0.081,"作业":0.105,"手机":0.139,"电脑":0.043,"笔记本":-0.068,"开心":0.5,"难过":0.615,"生气":1.0,"害怕":0.48,"妈妈":0.349,"爸爸":0.315,"米饭":0.094,"面条":0.014,"学校":0.034,"朋友":0.183,"投影仪":-0.094},"害怕":{"猫":0.087,"狗":0.199,"小狗":0.233,"老虎":0.088,"鸟":0.035,"鱼":-0.116,"汽车":-0.25,"卡车":-0.066,"公交车":0.014,"自行车":-0.094,"火车":0.071,"书包":0.009,"铅笔":0.032,"教室":0.073,"老师":-0.034,"同学":0.068,"作业":-0.0,"手机":0.083,"电脑":0.004,"笔记本":-0.086,"开心":0.347,"难过":0.647,"生气":0.48,"害怕":1.0,"妈妈":0.317,"爸爸":0.221,"米饭":0.059,"面条":-0.008,"学校":-0.049,"朋友":0.196,"投影仪":-0.047},"妈妈":{"猫":0.26,"狗":0.246,"小狗":0.406,"老虎":0.155,"鸟":0.064,"鱼":0.126,"汽车":-0.229,"卡车":-0.061,"公交车":0.076,"自行车":0.049,"火车":0.101,"书包":0.309,"铅笔":0.135,"教室":0.182,"老师":0.223,"同学":0.334,"作业":0.14,"手机":0.133,"电脑":0.058,"笔记本":0.033,"开心":0.364,"难过":0.357,"生气":0.349,"害怕":0.317,"妈妈":1.0,"爸爸":0.772,"米饭":0.189,"面条":0.262,"学校":0.099,"朋友":0.341,"投影仪":0.025},"爸爸":{"猫":0.293,"狗":0.324,"小狗":0.422,"老虎":0.154,"鸟":0.069,"鱼":0.101,"汽车":-0.224,"卡车":-0.02,"公交车":0.047,"自行车":0.06,"火车":0.117,"书包":0.29,"铅笔":0.085,"教室":0.178,"老师":0.236,"同学":0.33,"作业":0.085,"手机":0.145,"电脑":0.104,"笔记本":0.026,"开心":0.351,"难过":0.26,"生气":0.315,"害怕":0.221,"妈妈":0.772,"爸爸":1.0,"米饭":0.155,"面条":0.223,"学校":0.119,"朋友":0.282,"投影仪":0.038},"米饭":{"猫":0.111,"狗":0.022,"小狗":0.124,"老虎":0.008,"鸟":0.055,"鱼":0.328,"汽车":-0.138,"卡车":-0.01,"公交车":-0.003,"自行车":-0.055,"火车":0.082,"书包":0.074,"铅笔":0.025,"教室":0.015,"老师":-0.155,"同学":-0.062,"作业":-0.036,"手机":0.001,"电脑":0.024,"笔记本":0.026,"开心":0.083,"难过":0.065,"生气":0.094,"害怕":0.059,"妈妈":0.189,"爸爸":0.155,"米饭":1.0,"面条":0.714,"学校":0.008,"朋友":0.041,"投影仪":-0.006},"面条":{"猫":0.149,"狗":0.091,"小狗":0.18,"老虎":0.07,"鸟":0.112,"鱼":0.377,"汽车":-0.119,"卡车":0.042,"公交车":0.021,"自行车":0.032,"火车":0.103,"书包":0.154,"铅笔":0.138,"教室":0.005,"老师":-0.133,"同学":-0.023,"作业":0.049,"手机":0.011,"电脑":0.04,"笔记本":0.026,"开心":0.085,"难过":0.032,"生气":0.014,"害怕":-0.008,"妈妈":0.262,"爸爸":0.223,"米饭":0.714,"面条":1.0,"学校":0.004,"朋友":-0.014,"投影仪":0.042},"学校":{"猫":-0.112,"狗":0.022,"小狗":0.004,"老虎":-0.118,"鸟":-0.11,"鱼":-0.073,"汽车":-0.026,"卡车":-0.009,"公交车":0.199,"自行车":0.148,"火车":0.089,"书包":0.273,"铅笔":0.015,"教室":0.525,"老师":0.365,"同学":0.417,"作业":0.292,"手机":0.013,"电脑":0.145,"笔记本":0.06,"开心":0.0,"难过":-0.004,"生气":0.034,"害怕":-0.049,"妈妈":0.099,"爸爸":0.119,"米饭":0.008,"面条":0.004,"学校":1.0,"朋友":0.048,"投影仪":0.068},"朋友":{"猫":0.064,"狗":0.116,"小狗":0.15,"老虎":-0.062,"鸟":-0.119,"鱼":-0.02,"汽车":-0.12,"卡车":-0.09,"公交车":0.081,"自行车":0.008,"火车":0.132,"书包":-0.002,"铅笔":-0.001,"教室":0.008,"老师":0.165,"同学":0.511,"作业":-0.021,"手机":0.15,"电脑":0.089,"笔记本":0.004,"开心":0.279,"难过":0.222,"生气":0.183,"害怕":0.196,"妈妈":0.341,"爸爸":0.282,"米饭":0.041,"面条":-0.014,"学校":0.048,"朋友":1.0,"投影仪":0.042},"投影仪":{"猫":0.069,"狗":0.004,"小狗":0.043,"老虎":-0.053,"鸟":0.012,"鱼":-0.018,"汽车":0.203,"卡车":0.05,"公交车":0.019,"自行车":0.14,"火车":0.039,"书包":0.205,"铅笔":0.209,"教室":0.318,"老师":0.081,"同学":0.111,"作业":0.154,"手机":0.45,"电脑":0.54,"笔记本":0.583,"开心":-0.053,"难过":-0.062,"生气":-0.094,"害怕":-0.047,"妈妈":0.025,"爸爸":0.038,"米饭":-0.006,"面条":0.042,"学校":0.068,"朋友":0.042,"投影仪":1.0}}}</script>
 <script>
-const hints=[
-  "方向键或两侧圆按钮翻页",
-  "点你觉得算智能的东西，可以多选。先别公布答案",
-  "先问学生：喷淋器和金毛犬，谁更聪明？为什么",
-  "本领 1/5：让学生再举一个身边会「察觉」的例子",
-  "本领 2/5：追问一句，它知道「为什么」吗",
-  "本领 3/5：有好几条路时，它会不会挑",
-  "本领 4/5：只会说、不会做，算不算智能",
-  "本领 5/5：这是最关键的一项，停下来多讲一会儿",
-  "对照五格亮灯，揭晓刚才的投票",
-  "先让学生说：哪些事你愿意交给 AI",
-  "三条铁律，请全班齐读一遍",
-  "先让大家举手投票，再点按钮揭晓",
-  "今天讲到会搭 Agent。后面几天再做成别人能用的",
-  "从上往下点。光点走在步骤之间的路径上，下方可点开机房实景与马斯克超算",
-  "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
-  "这页由老师操作，只看它怎么像超级成语接龙一样预测下一个词",
-  "点选探究实验或词汇，观察两个词在高维向量空间中的相似度读数",
-  "点击任意认知卡片，回顾前面学过的所有核心概念与记忆口诀",
-  "点开 Agent 周围的零件",
-  "切到老师自己的屏幕，把早报这一个讲透",
-  "先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的",
-  "每人写一张任务书，明天带来"
-];
 const objs=[
   "草坪上的金毛犬",
   "校园自动配送车",
@@ -2158,7 +2275,7 @@ document.getElementById("expBtns").addEventListener("click",e=>{
     expReveal.innerHTML=`<span style="color:var(--cyan);font-weight:700">[敏锐直觉]</span> 大模型没有物理眼睛，它根本不可能知道校门口有几棵树。时刻保持怀疑与警惕！`;
   }else if(v==="要查"){
     if(termStatus){ termStatus.className="term-status success"; termStatus.textContent="STATUS: [最佳答案]"; }
-    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">[满分答案]</span> 「亲自查验证据」是防范 AI 幻觉的唯一铁律。<b>人负责求真批判，AI 负责打下手！</b>`;
+    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">[满分答案]</span> 「亲自查验」是对付 AI 幻觉最好的办法。<b>人负责求真批判，AI 负责打下手！</b>`;
   }
 });
 
@@ -2416,66 +2533,101 @@ document.getElementById("clearMap").onclick=clearMap;
     if(a&&b){pick("猫",a); pick("狗",b);}
   },50);
 
-// Slide 10: Concept Visual Landscape Controller
-const conceptData = {
-  intelligence: {
-    title: "真正智能 vs 自动化 · True Intelligence",
-    desc: "金毛犬有生物感官与世界模型，能随机应变并终身学习；闸机和喷淋只是固定死规则。记住口诀：随机应变算智能，死板执行是机器。"
-  },
-  hallucination: {
-    title: "模型幻觉 · Hallucination",
-    desc: "大模型没有物理眼睛，它根本没看过校门，回答只是概率接龙。记住口诀：越是自信报细节，越要动手去查证。"
-  },
-  mastery: {
-    title: "掌握思考的主动权 · Human Agency",
-    desc: "作文让它写完你来抄，锻炼的是模型不是你。人类负责提问、判断、调优与终审。记住口诀：它是超级副驾驶，握方向盘的是你。"
-  },
-  pipeline: {
-    title: "Prompt 指令链路 · Prompt to Pipeline",
-    desc: "你给豆包发的一句话，穿过基站光缆跨越千里直达机房。不是云里有仙气，全是真真切切的厂房、供电与水冷。"
-  },
-  token_vector: {
-    title: "Token 与 语义向量 · Token & Vector Space",
-    desc: "字词被切成零件碎片，在宇宙几何地图中拥有专属经纬度坐标。意思相近的靠得极近，连反义词也是空间邻居。"
-  },
-  next_token: {
-    title: "下一个词概率预测 · Next-Token Prediction",
-    desc: "机房显卡以恐怖的矩阵算力计算注意力权重，一次又一次掷骰子押注最合理的下一个字，本质是终极文字接龙。"
-  },
-  agent_def: {
-    title: "Agent 智能体 · Autonomous Agent",
-    desc: "会聊天的豆包只是大脑。真正的智能体不仅能思考，还能带着明确目标跨轮记住信息、调用真实世界工具主动完成任务。"
-  },
-  agent_loop: {
-    title: "五大闭环零件 · 5 Core Components",
-    desc: "目标 (你要它做成什么) + 记忆 (关掉对话还能记住) + 技能 (比对/发通知) + 大脑 (语言模型) + 说明书 (严禁瞎编的红线)。"
-  },
-  ladder: {
-    title: "能力五台阶 · AI Capability Ladder",
-    desc: "从被动的消费者 App User (L1)，到能搭专属助手的 Agent Architect (L2，今天的目标)，再到构建完整应用的 Solution Builder (L3)。"
-  }
+const nextWords=[["水",.52],["奶茶",.2],["果汁",.12],["可乐",.09],["热汤",.06],["书",.01]];
+function drawProbs(el,T,hidden){
+  const w=nextWords.map(([,p])=>Math.pow(p,1/T)), sum=w.reduce((a,b)=>a+b,0);
+  el.innerHTML=nextWords.map(([word],k)=>{
+    const pct=w[k]/sum*100;
+    return `<div class="prob-row${k===0?" top":""}"><span class="prob-word">${word}</span><span class="prob-bar"><i style="width:${hidden?0:pct}%"></i></span><span class="prob-pct">${hidden?"?":pct.toFixed(pct<1?1:0)+"%"}</span></div>`;
+  }).join("");
+}
+const probOverview=document.getElementById("probOverview");
+drawProbs(probOverview,1,true);
+document.getElementById("guessReveal").onclick=()=>{
+  drawProbs(probOverview,1,false);
+  document.getElementById("guessBlank").textContent="水";
+  document.getElementById("guessBlank").classList.add("on");
 };
 
-const conceptDetailTitle = document.getElementById("conceptDetailTitle");
-const conceptDetailDesc = document.getElementById("conceptDetailDesc");
-document.querySelectorAll(".concept-card").forEach(card => {
-  card.addEventListener("click", () => {
-    document.querySelectorAll(".concept-card").forEach(c => c.classList.remove("active"));
-    card.classList.add("active");
-    const key = card.dataset.concept;
-    if (conceptData[key]) {
-      conceptDetailTitle.textContent = conceptData[key].title;
-      conceptDetailDesc.textContent = conceptData[key].desc;
-    }
+const probTemp=document.getElementById("probTemp"), tempSlider=document.getElementById("tempSlider");
+function updateTemp(){
+  const T=+tempSlider.value;
+  drawProbs(probTemp,T,false);
+  document.getElementById("tempVal").textContent="温度 "+T.toFixed(1);
+  document.getElementById("tempNote").textContent=
+    T<0.6?"温度低：几乎总是选「水」，很稳，但每次都一样":
+    T>1.4?"温度高：冷门的词也有机会，更有创意，也更容易乱说":
+    "温度正常：大多数时候选「水」，偶尔选别的";
+}
+tempSlider.oninput=updateTemp; updateTemp();
+
+const attTokens=["我","口渴","了","，","想","喝","一杯"];
+const attWeights={
+  "我":{"想":.6,"口渴":.5},
+  "口渴":{"喝":.9,"我":.5},
+  "了":{"口渴":.8},
+  "，":{"了":.5,"想":.4},
+  "想":{"喝":.8,"我":.6},
+  "喝":{"口渴":.9,"一杯":.7,"想":.4},
+  "一杯":{"喝":.9,"口渴":.5}
+};
+const attRow=document.getElementById("attRow");
+attRow.innerHTML=attTokens.map(t=>`<button class="tk-chip" type="button" data-t="${t}">${t}</button>`).join("");
+function pickAtt(t){
+  const w=attWeights[t];
+  attRow.querySelectorAll(".tk-chip").forEach(c=>{
+    const v=w[c.dataset.t]||0;
+    c.classList.toggle("self",c.dataset.t===t);
+    c.style.setProperty("--a",v);
+    c.classList.toggle("lit",v>0);
   });
+  const top=Object.entries(w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>"「"+k+"」").join("和");
+  document.getElementById("attNote").textContent=`「${t}」最在意的是 ${top}`;
+}
+attRow.addEventListener("click",e=>{const c=e.target.closest(".tk-chip"); if(c) pickAtt(c.dataset.t);});
+pickAtt("喝");
+
+document.getElementById("flipGrid").addEventListener("click",e=>{
+  const c=e.target.closest(".flip-card"); if(c) c.classList.toggle("flipped");
+});
+
+let loopTimer=null;
+document.getElementById("loopPlay").onclick=()=>{
+  const steps=[...document.querySelectorAll("#loopRow .loop-step")];
+  clearInterval(loopTimer);
+  let k=0;
+  const tick=()=>{
+    steps.forEach((s,j)=>s.classList.toggle("on",j===k));
+    k++;
+    if(k>steps.length){clearInterval(loopTimer); steps.forEach(s=>s.classList.remove("on")); document.querySelector(".loop-back").classList.add("on"); setTimeout(()=>document.querySelector(".loop-back").classList.remove("on"),1200);}
+  };
+  tick(); loopTimer=setInterval(tick,1100);
+};
+
+const pbLines=[
+  ["目标","我想在班里办一个读书角，让每个同学一个月内至少读完一本书。"],
+  ["情况","我们班 40 个人，教室后面有一个空书架，没有经费。之前贴过通知，没什么人理。你可以先问我几个问题。"],
+  ["多种办法","请给我 3 种完全不同的办法，每种说说好处和难处。"],
+  ["你来决定","先不要写详细方案，等我选好一种再继续。"],
+  ["检查","不确定的地方直接说不知道，不要编。最后帮我对照目标检查一遍。"]
+];
+const pbBox=document.getElementById("pbBox");
+document.getElementById("pbBtns").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b||b.classList.contains("on")) return;
+  b.classList.add("on");
+  const empty=pbBox.querySelector(".pb-empty"); if(empty) empty.remove();
+  const [tag,text]=pbLines[+b.dataset.i];
+  const line=document.createElement("p");
+  line.innerHTML=`<b>${tag}</b>${text}`;
+  pbBox.appendChild(line);
 });
 
 const partText={
-  goal:"目标 · Goal：你要它做成的事。寻物的目标是帮失主和拾主对上。告诉它目标，别把每一步都写死。",
-  memory:"记忆 · Memory：记下谁丢了什么、谁捡到什么。关掉这一句对话，它还记得。普通聊天做不到这一点。",
-  skill:"技能 · Skills：它被允许做的动作。寻物里是比对，还有通知双方。没有技能，它只会说「好的」。",
-  brain:"大脑 · LLM Brain：大语言模型。负责听懂「蓝色水壶」是一件东西。它自己不会去图书馆三楼。",
-  spec:"说明书 · System Spec：它是谁，以及绝不能做什么。寻物必须写上：对不上就说不知道，不许编一个捡到的人。"
+  goal:"目标：要办成的事。比如「帮丢东西的同学和捡到东西的同学对上号」。目标说清楚了，它才知道往哪儿使劲。",
+  memory:"记忆：它的小本子。记下谁丢了什么、谁捡到了什么。明天再来问，它还记得。普通聊天做不到这一点。",
+  brain:"大脑：就是前面讲的大语言模型。它负责听懂「蓝色水壶」是什么，再想出下一步该做什么。",
+  skill:"工具：它的手和脚。比如查登记表、给同学发消息。没有工具，它只能说「好的」，什么也做不了。",
+  spec:"规矩：什么绝对不能做。对不上就说不知道，不许编一个捡到的人；不许把同学的电话告诉别人。"
 };
 document.getElementById("agentBoard").addEventListener("click",e=>{
   const b=e.target.closest(".part"); if(!b) return;
@@ -2537,7 +2689,7 @@ function show(i){
   slides.forEach((s,k)=>s.classList.toggle("active",k===cur));
   document.getElementById("bar").style.width=((cur+1)/slides.length*100)+"%";
   document.getElementById("pager").textContent=(cur+1)+" / "+slides.length;
-  document.getElementById("hint").textContent=hints[cur]||"";
+  document.getElementById("hint").textContent=slides[cur].dataset.hint||"";
   if(slides[cur].contains(jSteps)){
     const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
     requestAnimationFrame(()=>requestAnimationFrame(()=>placeRail(on>=0?on:0)));
