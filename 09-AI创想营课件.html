@@ -628,6 +628,18 @@
   #lightbox.show { display: flex; }
   #lightbox img { max-width: 94vw; max-height: 80vh; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); }
   #lightbox p { max-width: 900px; text-align: center; font-size: 14px; color: var(--ink); }
+
+  /* Cover slide enhancements */
+  .cover-grad {
+    background: linear-gradient(92deg, var(--cyan) 0%, #60a5fa 55%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.32));
+  }
+  .cover-card { position: relative; overflow: hidden; transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
+  .cover-card:hover { transform: translateY(-3px); border-color: var(--line-strong); background: var(--bg-card-hover); }
+  .cover-card .cover-ico { font-size: 22px; line-height: 1; margin-bottom: 6px; }
 </style>
 </head>
 <body>
@@ -637,13 +649,15 @@
   <!-- SLIDE 1: Cover -->
   <section class="slide active">
     <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
+    <div class="bg-glow" style="width:340px;height:340px;background:var(--cyan);bottom:-150px;left:-110px;opacity:.14"></div>
+    <div class="bg-glow" style="width:260px;height:260px;background:var(--orange);top:34%;right:14%;opacity:.12"></div>
     <div class="kicker">BILDEN EDU · 青少年 AI 创想营 <span class="en">· Youth AI Innovation Camp</span></div>
-    <h1>AI 创想营<br><span class="accent">把好奇变成能力</span></h1>
-    <p class="mut" style="font-size:16px">面向 10–15 岁。今天三件事：弄清什么是智能，看清一句话怎么被算出来，再认识真正的智能体。</p>
+    <h1>AI 创想营<br><span class="cover-grad">把好奇变成能力</span></h1>
+    <p class="mut" style="font-size:16px">面向 10–15 岁。今天做三件事：辨出真智能，看懂一句话怎么被算出来，再亲手造一个自己的 Agent。</p>
     <div class="grid3">
-      <div class="card"><b class="org" style="font-family:var(--font-en);font-size:16px">01 · 辨智能</b><p style="margin-top:4px">什么算智能？从图里认出来</p><span class="small">Definition & Recognition</span></div>
-      <div class="card"><b class="accent" style="font-family:var(--font-en);font-size:16px">02 · 探黑盒</b><p style="margin-top:4px">发给豆包的一句话，中间发生了什么</p><span class="small">Physical Computing Journey</span></div>
-      <div class="card"><b style="color:var(--blue);font-family:var(--font-en);font-size:16px">03 · 造 Agent</b><p style="margin-top:4px">真正的智能体是什么，并解决校园问题</p><span class="small">Living Agent Architecture</span></div>
+      <div class="card cover-card"><div class="cover-ico">🔍</div><b class="org" style="font-family:var(--font-en);font-size:16px">01 · 辨智能</b><p style="margin-top:4px">图里 7 样东西，哪些算智能？</p><span class="small">Definition & Recognition</span></div>
+      <div class="card cover-card"><div class="cover-ico">⚡</div><b class="accent" style="font-family:var(--font-en);font-size:16px">02 · 探黑盒</b><p style="margin-top:4px">你发的一句话，中间经历了什么</p><span class="small">Physical Computing Journey</span></div>
+      <div class="card cover-card"><div class="cover-ico">🤖</div><b style="color:var(--blue);font-family:var(--font-en);font-size:16px">03 · 造 Agent</b><p style="margin-top:4px">拆开真正的智能体，用它解决校园问题</p><span class="small">Living Agent Architecture</span></div>
     </div>
   </section>
 
