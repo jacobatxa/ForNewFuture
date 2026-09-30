@@ -662,6 +662,7 @@
       <button class="hs" style="left:92%;top:34%" data-n="7" type="button">7</button>
     </div>
     <div class="legend" id="voteLegend"></div>
+    <p class="small" style="margin-top:8px">学生：<b>飞书群发起投票</b>，一人一票、可多选。老师：点图上的圆点，现场揭示答案。</p>
   </section>
 
   <!-- SLIDE 3: Definition of Intelligence -->
@@ -787,7 +788,7 @@
       </div>
       <div>
         <ul class="clean">
-          <li><span class="tier-badge">L5</span> <b>Tool Maker</b>　能改工具、写插件，再往后才碰到训练模型</li>
+          <li><span class="tier-badge">L5</span> <b>Tool Maker</b>　能改工具、写插件、参与开源，微调甚至训练自己的模型</li>
           <li><span class="tier-badge">L4</span> <b>Systems & Safety</b>　知道什么该存、谁能看、怎么放到网上</li>
           <li><span class="tier-badge">L3</span> <b>Solution Builder</b>　做成同学真的能用的小系统（后面几天走到这里）</li>
           <li><span class="tier-badge org">L2</span> <b class="org">Agent Architect · 今天</b>　给它目标、记忆和技能，搭一个自己的 Agent</li>
@@ -978,6 +979,7 @@
       <div class="card"><h3>审批代表 <span class="sub-en">Approval Assistant</span></h3><p class="mini">它按我的规则把待办整理好，点不点头仍然是我。你们可以做：请假条先写成草稿，自己交。</p></div>
       <div class="card"><h3>差旅预定 <span class="sub-en">Travel Assistant</span></h3><p class="mini">它排行程、对时间。你们可以做：周末出门清单，几点出门、带什么。决定仍然是你。</p></div>
     </div>
+    <p class="small" style="margin-top:14px">演示平台：老师在 <b>豆包工作</b> 里搭这些 Agent，放进 <b>飞书群聊</b> 里跑起来。今天你们也这么干。</p>
   </section>
 
   <!-- SLIDE 14: Live Campus Practice -->
@@ -1115,7 +1117,7 @@ const journey=[
   {t:"04 走进机柜",s:"进门是一排排机器。这是美国能源部的 Sierra，通道两边都是算力。",img:"assets/camp/sierra.jpg",cap:"实拍 · Sierra 超算通道 · 美国能源部，公有领域"},
   {t:"05 显卡同时开算",s:"一块板子上有许多核心，同时算。你这句话被拆开，一起算。",img:"assets/camp/pulse-gpu.jpg",cap:"示意图 · 显卡同时开算"},
   {t:"06 算法挑下一个词",s:"算完不是直接给你整句话。它一次挑一个最可能的下一个词，再连起来。",img:"assets/camp/pulse-algo.jpg",cap:"示意图 · 算法挑下一个词"},
-  {t:"07 模型躺在存储里",s:"那些「会说话」的数字，平时存在硬盘和内存里。有人提问，才被搬上显卡。",img:"assets/camp/pulse-storage.jpg",cap:"示意图 · 模型躺在存储里"}
+  {t:"07 答案回到你屏幕",s:"算好的词连成句子，沿原路送回你手机。你问一次，它就跑一整圈——它没有身体，只有这条路。",img:"assets/camp/pulse-back.jpg",cap:"示意图 · 答案回到你屏幕"}
 ];
 const jSteps=document.getElementById("journeySteps");
 const jView=document.getElementById("journeyView");
