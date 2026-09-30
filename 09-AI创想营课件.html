@@ -55,13 +55,17 @@
   .slide {
     position: absolute;
     inset: 0;
-    padding: 36px 64px 44px;
+    padding: 24px 64px 44px;
     display: none;
     flex-direction: column;
     justify-content: flex-start;
     gap: 12px;
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  .slide.cover-slide {
+    justify-content: center;
+    padding: 24px 64px 44px;
   }
   .slide.active { display: flex; }
 
@@ -184,37 +188,192 @@
   .tag.some { background: rgba(34,211,238,.14); color: var(--cyan); }
   .tag.best { background: #10b981; color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.45); }
 
-  /* Slide 2: Hotspots Stage */
-  .stage { position: relative; margin: 0 auto; width: min(100%, calc((100vh - 200px) * 16 / 9)); aspect-ratio: 16/9; }
-  .stage img { width: 100%; height: 100%; object-fit: contain; border-radius: 14px; display: block; border: 1px solid var(--line); }
+  /* Slide 2: Hotspots Stage (Sci-Fi Hud & Hologram) */
+  .stage {
+    position: relative;
+    margin: 0 auto;
+    width: min(100%, calc((100vh - 200px) * 16 / 9));
+    aspect-ratio: 16/9;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    box-shadow: 0 0 45px rgba(34, 211, 238, 0.18), inset 0 0 35px rgba(0, 0, 0, 0.7);
+  }
+  .stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0.95) contrast(1.05);
+  }
+  /* Sci-Fi HUD Scanline & Grid Overlay */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.9), #fff, rgba(34, 211, 238, 0.9), transparent);
+    box-shadow: 0 0 18px var(--cyan);
+    animation: hud-scan 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.75;
+  }
+  @keyframes hud-scan {
+    0% { top: 0%; opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { top: 100%; opacity: 0; }
+  }
+  /* Corner HUD Accents */
+  .hud-bracket {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--cyan);
+    pointer-events: none;
+    z-index: 4;
+    filter: drop-shadow(0 0 6px var(--cyan));
+  }
+  .hud-tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .hud-tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+  .hud-bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+  .hud-br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .hud-banner {
+    position: absolute;
+    top: 12px;
+    left: 42px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--cyan);
+    background: rgba(4, 9, 20, 0.85);
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    z-index: 4;
+    text-transform: uppercase;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+  }
+  .hud-compass {
+    position: absolute;
+    top: 12px;
+    right: 42px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: rgba(4, 9, 20, 0.85);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 4;
+  }
+
   .hs {
     position: absolute;
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     border: 2px solid var(--cyan);
-    background: rgba(7, 13, 26, 0.85);
+    background: rgba(7, 13, 26, 0.88);
     color: #fff;
     font-weight: 900;
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 15px;
     transform: translate(-50%, -50%);
-    transition: all .2s ease;
-    box-shadow: 0 0 12px var(--cyan-glow);
+    transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 16px var(--cyan-glow);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .hs:hover { transform: translate(-50%, -50%) scale(1.15); border-color: #fff; }
-  .hs.on { background: var(--orange); border-color: #fff; box-shadow: 0 0 18px var(--orange-glow); }
-  .legend { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  /* Sci-Fi Pulse Rings */
+  .hs::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(34, 211, 238, 0.6);
+    animation: target-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    pointer-events: none;
+  }
+  .hs::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(34, 211, 238, 0.35);
+    animation: target-rotate 8s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes target-ping {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    75%, 100% { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes target-rotate {
+    to { transform: rotate(360deg); }
+  }
+  .hs:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    border-color: #fff;
+    box-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
+    background: rgba(34, 211, 238, 0.3);
+  }
+  .hs.on {
+    background: var(--orange);
+    border-color: #fff;
+    box-shadow: 0 0 26px var(--orange-glow);
+  }
+  .hs.on::before {
+    border-color: rgba(249, 115, 22, 0.8);
+  }
+  .hs.on::after {
+    border-color: rgba(249, 115, 22, 0.5);
+  }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; }
   .lg {
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 8px;
-    background: var(--bg-card);
+    background: rgba(255, 255, 255, 0.035);
     border: 1px solid var(--line);
     font-size: 12.5px;
     font-family: var(--font-en);
     transition: all .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .lg.on { background: rgba(249,115,22,.22); border-color: var(--orange); color: #fff; }
+  .lg-num {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--cyan);
+    font-size: 12px;
+  }
+  .lg.on {
+    background: rgba(249, 115, 22, 0.18);
+    border-color: var(--orange);
+    color: #fff;
+    box-shadow: 0 0 12px var(--orange-glow);
+  }
+  .lg.on .lg-num { color: #fdba74; }
 
   /* Slide 3: Intelligence Benchmark Board (Redesigned) */
   .intel-board {
@@ -362,15 +521,21 @@
   }
   .v-rank {
     font-family: var(--font-mono);
-    font-size: 11.5px;
-    font-weight: 700;
-    color: var(--muted);
-    width: 18px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cyan);
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
     flex-shrink: 0;
   }
-  .v-card.best .v-rank { color: #34d399; font-weight: 800; }
-  .v-card.some .v-rank { color: var(--cyan); }
-  .v-icon { font-size: 15px; flex-shrink: 0; }
+  .v-card.best .v-rank {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    font-weight: 800;
+  }
   .v-content { flex: 1; min-width: 0; }
   .v-name { font-size: 12.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .v-desc { font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -663,17 +828,59 @@
   .photo img { width: 100%; height: min(44vh, 380px); object-fit: cover; display: block; }
   .photo .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px; background: linear-gradient(transparent, rgba(7,13,26,.92)); font-size: 13px; }
 
-  /* Slide 7: Aerial Infrastructure */
-  .air { display: grid; grid-template-columns: 1.4fr .85fr; gap: 14px; align-items: stretch; }
-  .air .hero { border: 0; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: inherit; }
-  .air .hero img { width: 100%; height: min(52vh, 440px); object-fit: cover; border-radius: 14px; display: block; border: 1px solid var(--line); }
-  .air-side { display: flex; flex-direction: column; gap: 12px; justify-content: space-between; }
-  .shot { border: 0; padding: 0; background: transparent; text-align: left; color: inherit; cursor: zoom-in; }
-  .shot img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); display: block; }
-  .shot b { display: block; margin-top: 6px; font-size: 13.5px; }
-  .shot span { display: block; color: var(--muted); font-size: 12px; line-height: 1.4; }
-  a.link { color: var(--cyan); font-weight: 700; text-decoration: none; font-size: 16px; display: inline-flex; align-items: center; gap: 4px; }
-  a.link:hover { text-decoration: underline; color: #fff; }
+  /* Slide 6: Physical Prompt Rail Steps & Facilities */
+  .journey-board {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+  .facility-dock {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .facility-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: zoom-in;
+    transition: all .2s ease;
+    text-align: left;
+    color: inherit;
+  }
+  .facility-chip:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--cyan);
+    transform: translateY(-2px);
+  }
+  .facility-chip img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .facility-chip b {
+    display: block;
+    font-size: 12px;
+    color: #fff;
+    margin-bottom: 2px;
+  }
+  .facility-chip span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
 
   /* Slide 8: Transformer Flow */
   .tx-shot { border: 0; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: inherit; display: block; width: 100%; }
@@ -850,24 +1057,147 @@
   .cat-pill:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
   .cat-pill.placed { opacity: 0.35; text-decoration: line-through; }
 
-  /* Slide 10: Terminology Matcher */
-  .gmatch { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; }
-  .gmatch button {
-    display: block;
-    width: 100%;
-    text-align: left;
-    margin: 5px 0;
-    padding: 9px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.04);
-    font-size: 14px;
-    font-family: var(--font-en);
-    transition: all .2s ease;
+  /* Slide 10: Concept Visual Landscape (Replaces old matcher) */
+  .concept-map-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-height: 0;
   }
-  .gmatch button.pick { border-color: var(--cyan); background: rgba(34,211,238,.12); box-shadow: 0 0 12px var(--cyan-glow); }
-  .gmatch button.ok { border-color: var(--emerald); background: rgba(52,211,153,.15); color: #fff; }
-  .gmatch button.bad { border-color: var(--rose); background: rgba(251,113,133,.15); }
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+  }
+  .concept-col {
+    background: rgba(13, 23, 44, 0.65);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept-col::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--col-accent, var(--cyan));
+  }
+  .col-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .col-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .col-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+  }
+  .concept-cards-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    overflow-y: auto;
+  }
+  .concept-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 9px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    text-align: left;
+    color: inherit;
+  }
+  .concept-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--col-accent, var(--cyan));
+    transform: translateY(-2px);
+  }
+  .concept-card.active {
+    background: rgba(34, 211, 238, 0.12);
+    border-color: var(--cyan);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
+  }
+  .concept-term {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .concept-term-en {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .concept-brief {
+    font-size: 11.5px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .concept-memory-hook {
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .concept-detail-box {
+    background: rgba(4, 9, 20, 0.8);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    min-height: 52px;
+  }
+  .detail-headline {
+    font-size: 13px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .detail-headline b {
+    color: var(--orange);
+    font-family: var(--font-mono);
+  }
+  .detail-desc {
+    font-size: 12.5px;
+    color: var(--ink);
+  }
 
   /* Slide 11: Agent Board Architecture */
   .agent-board {
@@ -956,7 +1286,7 @@
 <div id="deck">
 
   <!-- SLIDE 1: Cover -->
-  <section class="slide active">
+  <section class="slide cover-slide active">
     <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
     <div class="bg-glow" style="width:340px;height:340px;background:var(--cyan);bottom:-150px;left:-110px;opacity:.14"></div>
     <div class="bg-glow" style="width:260px;height:260px;background:var(--orange);top:34%;right:14%;opacity:.12"></div>
@@ -974,14 +1304,20 @@
     <div class="kicker">01 辨智能 <span class="en">· Interactive Poll</span></div>
     <h2>这张图里，哪些东西算智能？ <span class="sub-en">Which of These Objects Possess Real Intelligence?</span></h2>
     <div class="stage" id="voteStage">
+      <div class="hud-bracket hud-tl"></div>
+      <div class="hud-bracket hud-tr"></div>
+      <div class="hud-bracket hud-bl"></div>
+      <div class="hud-bracket hud-br"></div>
+      <div class="hud-banner">CAMPUS RECON SENSORS · 7 TARGETS DETECTED</div>
+      <div class="hud-compass">SYS STATUS: NOMINAL // 60 FPS SCAN</div>
       <img src="assets/camp/vote.jpg" alt="阳光明媚的校园草坪上，有金毛犬、自动配送小车、拿着AI助手的同学、门禁闸机、大楼玻璃门、自动喷淋器与户外温度计">
-      <button class="hs" style="left:23%;top:56%" data-n="1" type="button">1</button>
-      <button class="hs" style="left:78.5%;top:68%" data-n="2" type="button">2</button>
-      <button class="hs" style="left:57%;top:35%" data-n="3" type="button">3</button>
-      <button class="hs" style="left:48.5%;top:53.5%" data-n="4" type="button">4</button>
-      <button class="hs" style="left:72.5%;top:44.5%" data-n="5" type="button">5</button>
-      <button class="hs" style="left:34%;top:57%" data-n="6" type="button">6</button>
-      <button class="hs" style="left:92%;top:34%" data-n="7" type="button">7</button>
+      <button class="hs" style="left:23%;top:56%" data-n="1" type="button">01</button>
+      <button class="hs" style="left:78.5%;top:68%" data-n="2" type="button">02</button>
+      <button class="hs" style="left:57%;top:35%" data-n="3" type="button">03</button>
+      <button class="hs" style="left:48.5%;top:53.5%" data-n="4" type="button">04</button>
+      <button class="hs" style="left:72.5%;top:44.5%" data-n="5" type="button">05</button>
+      <button class="hs" style="left:34%;top:57%" data-n="6" type="button">06</button>
+      <button class="hs" style="left:92%;top:34%" data-n="7" type="button">07</button>
     </div>
     <div class="legend" id="voteLegend"></div>
     <p class="small" style="margin-top:8px">学生：<b>飞书群发起投票</b>，一人一票、可多选。老师：点图上的圆点，现场揭示答案。</p>
@@ -1102,8 +1438,8 @@
           <div class="rule-item">
             <span class="rule-badge">01</span>
             <div>
-              <b>脑子自己练</b>
-              <p>作文全包办，长脑子的是模型不是你</p>
+              <b>掌握思考的主动权</b>
+              <p>作文让它写完你来抄，锻炼的是模型不是你</p>
             </div>
           </div>
           <div class="rule-item">
@@ -1141,21 +1477,21 @@
 
           <div class="term-body">
             <div class="term-claim">
-              <span class="claim-label">🤖 豆包信誓旦旦声称：</span>
+              <span class="claim-label">豆包助手给出了一条回答：</span>
               <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
             </div>
 
             <div class="term-actions" id="expBtns">
-              <button type="button" data-v="信" class="term-btn">👍 相信它</button>
-              <button type="button" data-v="不信" class="term-btn">🙅 绝不信</button>
-              <button type="button" data-v="要查" class="term-btn best-btn">🔍 亲自去查验</button>
+              <button type="button" data-v="信" class="term-btn">直接相信</button>
+              <button type="button" data-v="不信" class="term-btn">毫不相信</button>
+              <button type="button" data-v="要查" class="term-btn best-btn">亲自查验</button>
             </div>
             <!-- Sleek Terminal Readout Window -->
             <div class="term-screen" id="expConsole">
               <div class="screen-header">
                 <span class="screen-prompt">&gt; DIAGNOSTIC REPORT:</span>
               </div>
-              <p id="expReveal" class="screen-text">👈 点击上方选项，向 AI 发起实时事实核验...</p>
+              <p id="expReveal" class="screen-text">点击上方选项，向 AI 发起实时事实核验...</p>
             </div>
 
             <div class="term-footnote">
@@ -1192,50 +1528,50 @@
     </div>
   </section>
 
-  <!-- SLIDE 6: Journey of a Prompt -->
+  <!-- SLIDE 6: Journey of a Prompt & Physical Facilities -->
   <section class="slide">
     <div class="kicker">02 物理旅程 <span class="en">· Physical Journey of a Prompt</span></div>
     <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Output: The 7-Step Physical Pipeline</span></h2>
-    <div class="grid2" style="align-items:stretch;flex:1;min-height:0">
-      <div class="steps" id="journeySteps"></div>
+    <div class="journey-board">
+      <div style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="steps" id="journeySteps"></div>
+        <div class="facility-dock">
+          <button class="facility-chip" type="button" id="airMain">
+            <img src="assets/camp/aerial-bluffs.jpg" alt="谷歌爱荷华机房航拍">
+            <div>
+              <b>爱荷华机房航拍</b>
+              <span>占地千亩的巨型厂房</span>
+            </div>
+          </button>
+          <button class="facility-chip" type="button" id="airInside">
+            <img src="assets/camp/sierra.jpg" alt="Sierra 算力机房内部排布">
+            <div>
+              <b>钻进机房看机器</b>
+              <span>Sierra 密集算力机柜</span>
+            </div>
+          </button>
+          <a class="facility-chip" href="https://www.theguardian.com/technology/2025/apr/24/elon-musk-xai-memphis" target="_blank" style="text-decoration:none">
+            <div style="width:48px;height:48px;border-radius:6px;border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;color:var(--orange);font-family:var(--font-mono);font-weight:900;font-size:16px;flex-shrink:0">xAI</div>
+            <div>
+              <b style="color:var(--cyan)">马斯克孟菲斯 ↗</b>
+              <span>Colossus 现场燃气供电</span>
+            </div>
+          </a>
+        </div>
+      </div>
       <div class="photo" id="journeyView"></div>
     </div>
-    <p class="small">豆包走国内网络，进字节跳动的机房。左边路径上的光点，就是这一句话在往下走。标了「实拍」的是真机房；标了「示意图」的是为了看清下钻，不是监控画面。点图可以放大。</p>
+    <p class="small">豆包走国内骨干网，直连字节跳动大型超算机房。左边光点即单句指令的下钻旅程；下方附属港湾可点看真实机房全貌与内部实拍。点图可放大。</p>
   </section>
 
-  <!-- SLIDE 7: Data Center Scale -->
-  <section class="slide">
-    <div class="kicker">02 实地航拍 <span class="en">· Physical Computing Infrastructure</span></div>
-    <h2>一座机房，大得像一小块城 <span class="sub-en">Massive Scale of Modern AI Data Centers</span></h2>
-    <div class="air">
-      <button class="hero" type="button" id="airMain">
-        <img src="assets/camp/aerial-bluffs.jpg" alt="无人机航拍的大型机房，夕阳下的厂房和一排冷却设备">
-      </button>
-      <div class="air-side">
-        <div class="card">
-          <h3 class="org">马斯克在孟菲斯修的那座 <span class="sub-en">xAI Colossus</span></h3>
-          <p style="margin-top:4px">Grok 的机房叫 Colossus。他把一座旧工厂改成算力中心，旁边停着一排燃气轮机，专门给显卡供电。从天上拍，比左边还大一圈。</p>
-          <p style="margin-top:8px"><a class="link" href="https://www.theguardian.com/technology/2025/apr/24/elon-musk-xai-memphis" target="_blank">打开孟菲斯航拍 ↗</a></p>
-          <p class="small" style="margin-top:4px">那组航拍是新闻照片，有版权，所以放不进课件。课堂上点开给大家看。</p>
-        </div>
-        <button class="shot" type="button" id="airInside">
-          <img src="assets/camp/sierra.jpg" alt="机房内部一排排机器">
-          <b>钻进去，是一排排机器 <span class="sub-en">Inside Sierra</span></b>
-          <span>美国能源部拍摄的 Sierra。左边那座厂房，里面就是这种。</span>
-        </button>
-      </div>
-    </div>
-    <p class="small">左边是谷歌在美国爱荷华的机房，无人机实拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。</p>
-  </section>
-
-  <!-- SLIDE 8: Terafab Scale -->
+  <!-- SLIDE 7: Terafab Scale -->
   <section class="slide" style="padding:18px 48px;align-items:center;justify-content:center">
     <div style="position:relative;width:min(100%,calc((100vh - 84px) * 16 / 9));aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 40px rgba(0,0,0,0.6);cursor:zoom-in" id="teraShot">
       <img src="assets/camp/terafab.png" alt="TERAFAB 100M+ Sq Ft 算力中心规模对比" style="width:100%;height:100%;object-fit:contain;display:block;background:#050912">
     </div>
   </section>
 
-  <!-- SLIDE 9: Transformer Explainer -->
+  <!-- SLIDE 8: Transformer Explainer -->
   <section class="slide">
     <div class="kicker">02 透视黑盒 <span class="en">· Inside the Transformer</span></div>
     <h2>进了机房，它怎么算出下一个词 <span class="sub-en">Next-Token Prediction & Self-Attention</span></h2>
@@ -1243,12 +1579,12 @@
       <img src="assets/camp/transformer-teaser.jpg" alt="Transformer Explainer 界面截图：从输入句子到预测下一个词的可视化">
     </button>
     <div class="flow">
-      <div class="card"><div class="n">01</div><b>Token 分词</b><p class="small" style="margin-top:2px">字被切成小块，叫做 token</p></div>
-      <div class="card"><div class="n">02</div><b>向量坐标映射</b><p class="small" style="margin-top:2px">每块变成一个多维坐标</p></div>
-      <div class="card"><div class="n">03</div><b>注意力关联计算</b><p class="small" style="margin-top:2px">看哪些词彼此高度相关</p></div>
-      <div class="card"><div class="n">04</div><b>概率挑下一个词</b><p class="small" style="margin-top:2px">挑下一个最可能的词</p></div>
+      <div class="card"><div class="n">01</div><b>拆积木切块 (Token)</b><p class="small" style="margin-top:2px">把一整句话咔嚓剪成一个个小碎片，就像把拼图打散成零件</p></div>
+      <div class="card"><div class="n">02</div><b>空间经纬度 (Vector)</b><p class="small" style="margin-top:2px">每个碎片在宇宙地图里都有专属坐标，意思像的离得特别近</p></div>
+      <div class="card"><div class="n">03</div><b>找熟搭档 (Attention)</b><p class="small" style="margin-top:2px">快速扫描：看到「水」，模型注意力雷达立刻锁定「喝」或「杯子」</p></div>
+      <div class="card"><div class="n">04</div><b>接龙猜下一个词</b><p class="small" style="margin-top:2px">掷骰子选出概率最高的那块积木拼上去，一次只算一个字！</p></div>
     </div>
-    <p class="small">上图来自开源项目 <b>Transformer Explainer</b>（Georgia Tech Polo Club，MIT License）。课堂上打开原站，由老师操作：<a class="link" style="font-size:13px" href="https://poloclub.github.io/transformer-explainer/" target="_blank">poloclub.github.io/transformer-explainer ↗</a>。全班只盯一件事：它在挑下一个词，不是在查你们学校。</p>
+    <p class="small">上图来自开源项目 <b>Transformer Explainer</b>（Georgia Tech Polo Club，MIT License）。课堂上打开原站，由老师操作：<a class="link" style="font-size:13px" href="https://poloclub.github.io/transformer-explainer/" target="_blank">poloclub.github.io/transformer-explainer ↗</a>。<b>核心认知：</b>AI 从没去过你们学校，它所做的一切，不过是一场极其算力狂暴的「超级成语接龙」。</p>
   </section>
 
   <!-- SLIDE 10: Word Vector Space Game -->
@@ -1267,12 +1603,12 @@
           <circle cx="50" cy="50" r="32" class="radar-circle" />
           <circle cx="50" cy="50" r="46" class="radar-circle" />
           <!-- Quadrant Watermarks -->
-          <text x="8" y="10" class="radar-quadrant">🐾 动物聚类区</text>
-          <text x="68" y="10" class="radar-quadrant">🚗 交通工具区</text>
-          <text x="8" y="93" class="radar-quadrant">🎭 情绪心理区</text>
-          <text x="68" y="93" class="radar-quadrant">🏫 校园日常区</text>
+          <text x="8" y="10" class="radar-quadrant">[动物聚类区]</text>
+          <text x="68" y="10" class="radar-quadrant">[交通工具区]</text>
+          <text x="8" y="93" class="radar-quadrant">[情绪感受区]</text>
+          <text x="68" y="93" class="radar-quadrant">[校园日常区]</text>
           <!-- Coordinates & Semantics -->
-          <text x="51" y="4" class="radar-label">+Y 抽象实体</text>
+          <text x="51" y="4" class="radar-label">+Y 抽象概念</text>
           <text x="78" y="48.5" class="radar-label">+X 工具设备</text>
           <text x="2" y="48.5" class="radar-label">-X 情绪体验</text>
           <text x="51" y="98" class="radar-label">-Y 社会环境</text>
@@ -1287,24 +1623,24 @@
       <div class="insight-panel">
         <!-- Preset Experiments -->
         <div class="insight-box">
-          <h3>🔬 课堂探究实验 <span class="sub-en">· Guided Tests</span></h3>
+          <h3>课堂探究实验 <span class="sub-en">· Guided Tests</span></h3>
           <div class="preset-btns">
-            <button class="preset-btn" type="button" id="dropTrio">🐾 猫 vs 狗 vs 卡车 <span>同类聚类 vs 跨界遥远</span></button>
-            <button class="preset-btn" type="button" id="dropFeel">🎭 开心 vs 难过 <span>反义却邻近（句式结构几乎一样）</span></button>
-            <button class="preset-btn" type="button" id="dropSchool">🏫 老师·同学·作业 <span>在学校话题里经常一起出现</span></button>
-            <button class="preset-btn" type="button" id="dropAll">🌐 31 个词全景 <span>全局语义降维投影</span></button>
+            <button class="preset-btn" type="button" id="dropTrio">猫 vs 狗 vs 卡车 <span>同类聚类 vs 跨界遥远</span></button>
+            <button class="preset-btn" type="button" id="dropFeel">开心 vs 难过 <span>反义却邻近（句式结构几乎一样）</span></button>
+            <button class="preset-btn" type="button" id="dropSchool">老师·同学·作业 <span>在学校话题里经常一起出现</span></button>
+            <button class="preset-btn" type="button" id="dropAll">31 个词全景 <span>全局语义降维投影</span></button>
           </div>
         </div>
 
         <!-- Realtime Distance Readout -->
         <div class="insight-box" style="border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.04)">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-            <h3 style="color:#fff;margin:0">📐 实时空间测距透视 <span class="sub-en">· Distance Insight</span></h3>
+            <h3 style="color:#fff;margin:0">实时空间测距透视 <span class="sub-en">· Distance Insight</span></h3>
             <span id="readoutTag" class="readout-tag">等待测距</span>
           </div>
           <div class="readout" id="readoutBox">
             <div class="readout-header">
-              <div class="readout-score" id="readoutScore">👈 点击地图两点或上方实验</div>
+              <div class="readout-score" id="readoutScore">点击地图两点或上方实验</div>
               <div class="sim-bar-wrap" id="meterWrap" style="display:none">
                 <div class="sim-bar"><div class="sim-bar-fill" id="meterFill" style="width:0%"></div></div>
                 <span class="sim-bar-val" id="meterVal">0.00</span>
@@ -1327,18 +1663,128 @@
     <p class="small">坐标来自简体中文语义向量降维投影。<b>核心认知：</b>两个词意思相反（如开心/难过），在空间中依然很近，因为句式结构高度一致；模型没有情感体验，只计算向量夹角。</p>
   </section>
 
-  <!-- SLIDE 11: Terminology Matcher -->
+  <!-- SLIDE 10: Concept Visual Landscape -->
   <section class="slide">
-    <div class="kicker">知识巩固 <span class="en">· Key Concept Matcher</span></div>
-    <h2>这些核心概念，我们都见过了 <span class="sub-en">Connecting Concepts to Practical Meanings</span></h2>
-    <div class="gmatch">
-      <div id="termCol"></div>
-      <div id="defCol"></div>
+    <div class="kicker">全景回顾 <span class="en">· Visual Concept Architecture</span></div>
+    <h2>前面学到的核心认知，一张图串起来 <span class="sub-en">The Complete Architecture: From Reality, Math to Autonomous Action</span></h2>
+    <div class="concept-map-container">
+      <div class="concept-grid">
+        <!-- Column 1: Reality & Intelligence -->
+        <div class="concept-col" style="--col-accent:#38bdf8">
+          <div class="col-head">
+            <span class="col-title"><span style="color:#38bdf8">01</span> 现实与边界判定</span>
+            <span class="col-tag">认知基准</span>
+          </div>
+          <div class="concept-cards-wrap">
+            <div class="concept-card active" data-concept="intelligence">
+              <div class="concept-term">
+                <span>真正智能 vs 自动化</span>
+                <span class="concept-term-en">True Intelligence</span>
+              </div>
+              <div class="concept-brief">金毛犬有生物感官与世界模型；闸机和喷淋只是固定死规则。</div>
+              <div class="concept-memory-hook">[记忆口诀] 随机应变算智能，死板执行是机器</div>
+            </div>
+            <div class="concept-card" data-concept="hallucination">
+              <div class="concept-term">
+                <span>模型幻觉</span>
+                <span class="concept-term-en">Hallucination</span>
+              </div>
+              <div class="concept-brief">一本正经胡说八道。模型没有物理眼睛，它根本没看过校门。</div>
+              <div class="concept-memory-hook">[记忆口诀] 越是自信报细节，越要动手去查证</div>
+            </div>
+            <div class="concept-card" data-concept="mastery">
+              <div class="concept-term">
+                <span>掌握思考的主动权</span>
+                <span class="concept-term-en">Human Agency</span>
+              </div>
+              <div class="concept-brief">作文让模型写完你来抄，锻炼的是模型。人类负责提问、判断与终审。</div>
+              <div class="concept-memory-hook">[记忆口诀] 它是超级副驾驶，握方向盘的是你</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2: Math & Computing -->
+        <div class="concept-col" style="--col-accent:#22d3ee">
+          <div class="col-head">
+            <span class="col-title"><span style="color:#22d3ee">02</span> 物理机房与数学本质</span>
+            <span class="col-tag">底层机理</span>
+          </div>
+          <div class="concept-cards-wrap">
+            <div class="concept-card" data-concept="pipeline">
+              <div class="concept-term">
+                <span>Prompt 指令链路</span>
+                <span class="concept-term-en">Prompt to Pipeline</span>
+              </div>
+              <div class="concept-brief">你敲下的一句话，穿过基站骨干网，直达占地千亩的物理机房。</div>
+              <div class="concept-memory-hook">[记忆口诀] 不是云里有仙气，全是厂房与电费</div>
+            </div>
+            <div class="concept-card" data-concept="token_vector">
+              <div class="concept-term">
+                <span>Token 与 语义向量</span>
+                <span class="concept-term-en">Token & Vector Space</span>
+              </div>
+              <div class="concept-brief">把句子剪成积木碎片，扔进高维地图算经纬度坐标与夹角。</div>
+              <div class="concept-memory-hook">[记忆口诀] 词不看字面意思，算的是空间几何距离</div>
+            </div>
+            <div class="concept-card" data-concept="next_token">
+              <div class="concept-term">
+                <span>下一个词概率预测</span>
+                <span class="concept-term-en">Next-Token Prediction</span>
+              </div>
+              <div class="concept-brief">大模型本质上不“懂”世界，它是靠狂暴算力驱动的“超级成语接龙”。</div>
+              <div class="concept-memory-hook">[记忆口诀] 掷骰子挑下一个字，堆出惊艳的长回答</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Agent Evolution -->
+        <div class="concept-col" style="--col-accent:#f97316">
+          <div class="col-head">
+            <span class="col-title"><span style="color:#f97316">03</span> 从聊天跃迁到智能体</span>
+            <span class="col-tag">行动架构</span>
+          </div>
+          <div class="concept-cards-wrap">
+            <div class="concept-card" data-concept="agent_def">
+              <div class="concept-term">
+                <span>Agent 智能体</span>
+                <span class="concept-term-en">Autonomous Agent</span>
+              </div>
+              <div class="concept-brief">普通 AI 聊完就忘只会说；真正的 Agent 能主动记住、动手干活。</div>
+              <div class="concept-memory-hook">[记忆口诀] 会聊天只是大脑，能行动才是助手</div>
+            </div>
+            <div class="concept-card" data-concept="agent_loop">
+              <div class="concept-term">
+                <span>五大闭环零件</span>
+                <span class="concept-term-en">5 Core Components</span>
+              </div>
+              <div class="concept-brief">目标 (Goal) + 记忆 (Memory) + 技能 (Skills) + 大脑 (LLM) + 说明书 (Spec)。</div>
+              <div class="concept-memory-hook">[记忆口诀] 目标定方向，记忆存档案，规则防瞎编</div>
+            </div>
+            <div class="concept-card" data-concept="ladder">
+              <div class="concept-term">
+                <span>能力五台阶</span>
+                <span class="concept-term-en">Capability Ladder</span>
+              </div>
+              <div class="concept-brief">L1会用、L2会搭(今天)、L3会做、L4会管、L5造模型。</div>
+              <div class="concept-memory-hook">[记忆口诀] 别当被动消费者，动手搭出自己的工具</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Realtime Detail Readout Bar -->
+      <div class="concept-detail-box" id="conceptDetailBox">
+        <div class="detail-headline">
+          <span style="font-size:11px;color:var(--muted);text-transform:uppercase">[聚焦术语]</span>
+          <b id="conceptDetailTitle">真正智能 vs 自动化 · True Intelligence</b>
+        </div>
+        <div class="detail-desc" id="conceptDetailDesc">金毛犬有生物感官与世界模型；闸机和喷淋只是固定死规则。记住口诀：随机应变算智能，死板执行是机器。</div>
+      </div>
     </div>
-    <p class="small" id="matchScore">点左边一个词，再点右边一句解释。</p>
+    <p class="small">点击任意知识卡片即可调出深度透视。这就是贯穿整堂课的认知主线：<b>分清真假智能 → 看透物理与数学本质 → 亲手搭出可用的智能体。</b></p>
   </section>
 
-  <!-- SLIDE 12: Agent Architecture -->
+  <!-- SLIDE 11: Agent Architecture -->
   <section class="slide">
     <div class="kicker">03 核心架构 <span class="en">· Anatomy of an AI Agent</span></div>
     <h2>真正的智能体在中间，周围才是它的零件 <span class="sub-en">The 5 Core Components of an Agent Loop</span></h2>
@@ -1353,7 +1799,7 @@
     <div class="card" id="partDetail">点一个零件。会聊天的只是大脑。真正的智能体还要记得住、做得到、知道自己的目标，并且知道什么绝不能做。</div>
   </section>
 
-  <!-- SLIDE 13: Teacher's Demonstrations -->
+  <!-- SLIDE 12: Teacher's Demonstrations -->
   <section class="slide">
     <div class="kicker">03 老师示范 <span class="en">· Teacher's Real-World Agents</span></div>
     <h2>我自己用的 Agent，拆开就是这五个零件 <span class="sub-en">Deconstructing 3 Practical Personal Agents</span></h2>
@@ -1375,7 +1821,7 @@
     <p class="small" style="margin-top:14px">演示平台：老师在 <b>豆包工作</b> 里搭这些 Agent，放进 <b>飞书群聊</b> 里跑起来。今天你们也这么干。</p>
   </section>
 
-  <!-- SLIDE 14: Live Campus Practice -->
+  <!-- SLIDE 13: Live Campus Practice -->
   <section class="slide">
     <div class="kicker">03 课堂实操 <span class="en">· Live Agent Practice</span></div>
     <h2>校园寻物：这才算真正的智能体 <span class="sub-en">Building a Campus Lost & Found Agent</span></h2>
@@ -1412,7 +1858,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 15: Mission Card -->
+  <!-- SLIDE 14: Mission Card -->
   <section class="slide">
     <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission Card</span></div>
     <h2>明天，带一个真问题来 <span class="sub-en">Define a Real Problem for Your First Agent</span></h2>
@@ -1440,7 +1886,7 @@
 
 <button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
 <button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
-<div id="pager">1 / 15</div>
+<div id="pager">1 / 14</div>
 <div id="hint"></div>
 <div id="lightbox"><img alt=""><p></p></div>
 
@@ -1452,13 +1898,11 @@ const hints=[
   "先看左边 01 尺子，再看右边 02 怎么量刚才点过的",
   "分清能帮什么与别交什么 → 三条使用铁律 → 现场验证防幻觉",
   "今天讲到会搭 Agent。后面几天再做成别人能用的",
-  "从上往下点。光点走在步骤之间的路径上，一直看到答案回到你屏幕",
-
-  "左边是航拍。马斯克那座点链接，课堂上打开",
+  "从上往下点。光点走在步骤之间的路径上，下方可点开机房实景与马斯克超算",
   "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
-  "这页由老师操作，只看它怎么预测下一个词",
-  "点选探究实验或词汇，观察两个词之间的相似度读数",
-  "点左边的词，再点右边的解释",
+  "这页由老师操作，只看它怎么像超级成语接龙一样预测下一个词",
+  "点选探究实验或词汇，观察两个词在高维向量空间中的相似度读数",
+  "点击任意认知卡片，回顾前面学过的所有核心概念与记忆口诀",
   "点开 Agent 周围的零件",
   "切到老师自己的屏幕，把早报这一个讲透",
   "先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的",
@@ -1482,19 +1926,19 @@ const verdicts=[
   ["自动化","narrow","按定时或土壤湿度开关水阀。这是人类写死的固定规则，它自己不会思考"],
   ["只是刻度","no","利用热胀冷缩显示数字。它根本不知道什么是冷和热"]
 ];
-const icons=["🐕","🤖","📱","🚧","🚪","💦","🌡️"];
 const vbox=document.getElementById("verdicts");
 verdicts.forEach((v,i)=>{
   const row=document.createElement("div");
   row.className=`v-card ${v[1]}`;
-  row.innerHTML=`<span class="v-rank">${String(i+1).padStart(2,"0")}</span><span class="v-icon">${icons[i]||'•'}</span><div class="v-content"><div class="v-name">${objs[i]}</div><div class="v-desc">${v[2]}</div></div><span class="v-badge ${v[1]}">${v[0]}</span>`;
+  row.innerHTML=`<span class="v-rank">#${String(i+1).padStart(2,"0")}</span><div class="v-content"><div class="v-name">${objs[i]}</div><div class="v-desc">${v[2]}</div></div><span class="v-badge ${v[1]}">${v[0]}</span>`;
   vbox.appendChild(row);
 });
 const legend=document.getElementById("voteLegend");
 document.querySelectorAll(".hs").forEach(hs=>{
   const n=+hs.dataset.n;
   const lg=document.createElement("span");
-  lg.className="lg"; lg.textContent=n+" "+objs[n-1];
+  lg.className="lg";
+  lg.innerHTML=`<span class="lg-num">${String(n).padStart(2,"0")}</span> <span>${objs[n-1]}</span>`;
   legend.appendChild(lg);
   hs.addEventListener("click",e=>{e.stopPropagation(); hs.classList.toggle("on"); lg.classList.toggle("on");});
 });
@@ -1506,14 +1950,14 @@ document.getElementById("expBtns").addEventListener("click",e=>{
   document.querySelectorAll("#expBtns button").forEach(x=>x.classList.toggle("on",x===b));
   const v=b.dataset.v;
   if(v==="信"){
-    if(termStatus){ termStatus.className="term-status alert"; termStatus.textContent="STATUS: ⚠️ 误信幻觉"; }
-    expReveal.innerHTML=`<span style="color:#fb7185;font-weight:700">❌ 踩坑啦！</span> 它连你们学校大门朝哪开都不知道。这句话完全是模型根据概率顺口编造的。<b>记住：越自信的假话越危险！</b>`;
+    if(termStatus){ termStatus.className="term-status alert"; termStatus.textContent="STATUS: [误信幻觉]"; }
+    expReveal.innerHTML=`<span style="color:#fb7185;font-weight:700">[踩坑啦]</span> 它连你们学校大门朝哪开都不知道。这句话完全是模型根据概率顺口编造的。<b>记住：越自信的假话越危险！</b>`;
   }else if(v==="不信"){
-    if(termStatus){ termStatus.className="term-status"; termStatus.textContent="STATUS: 🎯 直觉敏锐"; }
-    expReveal.innerHTML=`<span style="color:var(--cyan);font-weight:700">🎯 敏锐直觉！</span> 大模型没有物理眼睛，它根本不可能知道校门口有几棵树。时刻保持怀疑与警惕！`;
+    if(termStatus){ termStatus.className="term-status"; termStatus.textContent="STATUS: [直觉敏锐]"; }
+    expReveal.innerHTML=`<span style="color:var(--cyan);font-weight:700">[敏锐直觉]</span> 大模型没有物理眼睛，它根本不可能知道校门口有几棵树。时刻保持怀疑与警惕！`;
   }else if(v==="要查"){
-    if(termStatus){ termStatus.className="term-status success"; termStatus.textContent="STATUS: 🏆 最佳答案"; }
-    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">🏆 极客满分答案！</span> 「亲自查验证据」是防范 AI 幻觉的唯一铁律。<b>人负责求真批判，AI 负责打下手！</b>`;
+    if(termStatus){ termStatus.className="term-status success"; termStatus.textContent="STATUS: [最佳答案]"; }
+    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">[满分答案]</span> 「亲自查验证据」是防范 AI 幻觉的唯一铁律。<b>人负责求真批判，AI 负责打下手！</b>`;
   }
 });
 
@@ -1630,7 +2074,7 @@ function clearMap(){
   meterWrap.style.display="none";
   readoutTag.className="readout-tag";
   readoutTag.textContent="等待测距";
-  readoutScore.innerHTML="👈 点击地图两点或上方实验";
+  readoutScore.innerHTML="点击地图两点或上方实验";
   readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
 }
 
@@ -1679,7 +2123,7 @@ function pick(name,el){
     meterWrap.style.display="none";
     readoutTag.className="readout-tag";
     readoutTag.textContent="等待测距";
-    readoutScore.innerHTML="👈 点击地图两点或上方实验";
+    readoutScore.innerHTML="点击地图两点或上方实验";
     readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
     return;
   }
@@ -1763,47 +2207,67 @@ document.getElementById("dropAll").onclick=()=>{
 
 document.getElementById("clearMap").onclick=clearMap;
 
-// Initial setup on page load
-["猫","狗","卡车"].forEach(place);
-setTimeout(()=>{
-  const a=pointsContainer.querySelector('[data-name="猫"]');
-  const b=pointsContainer.querySelector('[data-name="狗"]');
-  if(a&&b){pick("猫",a); pick("狗",b);}
-},50);
+  // Initial setup on page load
+  ["猫","狗","卡车"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="猫"]');
+    const b=pointsContainer.querySelector('[data-name="狗"]');
+    if(a&&b){pick("猫",a); pick("狗",b);}
+  },50);
+})();
 
-const glossary=[
-  ["大模型","住在机房里、会猜下一个词的系统"],
-  ["Prompt","你发给它的那句指令"],
-  ["词向量","一个词在那张地图上的坐标"],
-  ["幻觉","把没发生的事说得像真的一样"],
-  ["Agent","有目标、能记住、能动手的助手"],
-  ["记忆","它记下的人和事"],
-  ["技能","它被允许做的动作，比如查找、通知"],
-  ["目标","你要它做成的那件事"]
-];
-const termCol=document.getElementById("termCol");
-const defCol=document.getElementById("defCol");
-let pickedTerm=null, matched=0;
-glossary.forEach((g,i)=>{
-  const b=document.createElement("button"); b.type="button"; b.textContent=g[0]; b.dataset.i=i;
-  b.onclick=()=>{ if(b.classList.contains("ok")) return; termCol.querySelectorAll("button").forEach(x=>x.classList.remove("pick")); b.classList.add("pick"); pickedTerm=i; };
-  termCol.appendChild(b);
-});
-[3,7,1,5,0,6,2,4].forEach(i=>{
-  const b=document.createElement("button"); b.type="button"; b.textContent=glossary[i][1]; b.dataset.i=i;
-  b.onclick=()=>{
-    if(!pickedTerm && pickedTerm!==0) return;
-    if(b.classList.contains("ok")) return;
-    const termBtn=termCol.querySelector(`button[data-i="${pickedTerm}"]`);
-    if(+b.dataset.i===pickedTerm){
-      b.classList.add("ok"); termBtn.classList.add("ok"); termBtn.classList.remove("pick");
-      matched++; document.getElementById("matchScore").textContent=`对上了 ${matched} / ${glossary.length}`;
-      pickedTerm=null;
-    }else{
-      b.classList.add("bad"); setTimeout(()=>b.classList.remove("bad"),400);
+// Slide 10: Concept Visual Landscape Controller
+const conceptData = {
+  intelligence: {
+    title: "真正智能 vs 自动化 · True Intelligence",
+    desc: "金毛犬有生物感官与世界模型，能随机应变并终身学习；闸机和喷淋只是固定死规则。记住口诀：随机应变算智能，死板执行是机器。"
+  },
+  hallucination: {
+    title: "模型幻觉 · Hallucination",
+    desc: "大模型没有物理眼睛，它根本没看过校门，回答只是概率接龙。记住口诀：越是自信报细节，越要动手去查证。"
+  },
+  mastery: {
+    title: "掌握思考的主动权 · Human Agency",
+    desc: "作文让它写完你来抄，锻炼的是模型不是你。人类负责提问、判断、调优与终审。记住口诀：它是超级副驾驶，握方向盘的是你。"
+  },
+  pipeline: {
+    title: "Prompt 指令链路 · Prompt to Pipeline",
+    desc: "你给豆包发的一句话，穿过基站光缆跨越千里直达机房。不是云里有仙气，全是真真切切的厂房、供电与水冷。"
+  },
+  token_vector: {
+    title: "Token 与 语义向量 · Token & Vector Space",
+    desc: "字词被切成零件碎片，在宇宙几何地图中拥有专属经纬度坐标。意思相近的靠得极近，连反义词也是空间邻居。"
+  },
+  next_token: {
+    title: "下一个词概率预测 · Next-Token Prediction",
+    desc: "机房显卡以恐怖的矩阵算力计算注意力权重，一次又一次掷骰子押注最合理的下一个字，本质是终极文字接龙。"
+  },
+  agent_def: {
+    title: "Agent 智能体 · Autonomous Agent",
+    desc: "会聊天的豆包只是大脑。真正的智能体不仅能思考，还能带着明确目标跨轮记住信息、调用真实世界工具主动完成任务。"
+  },
+  agent_loop: {
+    title: "五大闭环零件 · 5 Core Components",
+    desc: "目标 (你要它做成什么) + 记忆 (关掉对话还能记住) + 技能 (比对/发通知) + 大脑 (语言模型) + 说明书 (严禁瞎编的红线)。"
+  },
+  ladder: {
+    title: "能力五台阶 · AI Capability Ladder",
+    desc: "从被动的消费者 App User (L1)，到能搭专属助手的 Agent Architect (L2，今天的目标)，再到构建完整应用的 Solution Builder (L3)。"
+  }
+};
+
+const conceptDetailTitle = document.getElementById("conceptDetailTitle");
+const conceptDetailDesc = document.getElementById("conceptDetailDesc");
+document.querySelectorAll(".concept-card").forEach(card => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".concept-card").forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    const key = card.dataset.concept;
+    if (conceptData[key]) {
+      conceptDetailTitle.textContent = conceptData[key].title;
+      conceptDetailDesc.textContent = conceptData[key].desc;
     }
-  };
-  defCol.appendChild(b);
+  });
 });
 
 const partText={
