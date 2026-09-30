@@ -778,7 +778,7 @@
               <p id="expReveal" class="accent">👈 点击上方选项进行现场验证</p>
             </div>
             <div class="exp-note">
-              <b>为什么会这样？</b> 大模型是「概率预测下一个词」，没有物理世界的感官，当不知道确切答案时会一本正经地组织流畅的假话（幻觉）。
+              <b>为什么会这样？</b> 大模型做的事是概率预测下一个词，没有物理世界的感官，当不知道确切答案时会一本正经地编出听起来很流畅的假话（幻觉）。
             </div>
           </div>
         </div>
@@ -909,8 +909,8 @@
           <h3>🔬 课堂探究实验 <span class="sub-en">· Guided Tests</span></h3>
           <div class="preset-btns">
             <button class="preset-btn" type="button" id="dropTrio">🐾 猫 vs 狗 vs 卡车 <span>同类聚类 vs 跨界遥远</span></button>
-            <button class="preset-btn" type="button" id="dropFeel">🎭 开心 vs 难过 <span>反义却邻近 (语法同构)</span></button>
-            <button class="preset-btn" type="button" id="dropSchool">🏫 老师·同学·作业 <span>高频校园共现</span></button>
+            <button class="preset-btn" type="button" id="dropFeel">🎭 开心 vs 难过 <span>反义却邻近（句式结构几乎一样）</span></button>
+            <button class="preset-btn" type="button" id="dropSchool">🏫 老师·同学·作业 <span>在学校话题里经常一起出现</span></button>
             <button class="preset-btn" type="button" id="dropAll">🌐 31 个词全景 <span>全局语义降维投影</span></button>
           </div>
         </div>
@@ -929,7 +929,7 @@
                 <span class="sim-bar-val" id="meterVal">0.00</span>
               </div>
             </div>
-            <div class="readout-desc" id="readoutDesc">大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。</div>
+            <div class="readout-desc" id="readoutDesc">大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。</div>
           </div>
         </div>
 
@@ -1076,7 +1076,7 @@ const hints=[
   "左边是航拍。马斯克那座点链接，课堂上打开",
   "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
   "这页由老师操作，只看它怎么预测下一个词",
-  "点选探究实验或词汇，观察大模型雷达测距光束与余弦相似度计算",
+  "点选探究实验或词汇，观察两个词之间的相似度读数",
   "点左边的词，再点右边的解释",
   "点开 Agent 周围的零件",
   "切到老师自己的屏幕，把早报这一个讲透",
@@ -1237,7 +1237,7 @@ function clearMap(){
   readoutTag.className="readout-tag";
   readoutTag.textContent="等待测距";
   readoutScore.innerHTML="👈 点击地图两点或上方实验";
-  readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。";
+  readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
 }
 
 function updateBeam(){
@@ -1266,9 +1266,9 @@ function updateBeam(){
 function comment(a,b,s){
   const key=[a,b].sort().join("-");
   const special={
-    "狗-猫":"【同类聚类】猫和狗在海量网页语料中共享『宠物/喂养/陪伴』等上下文，几何夹角极小。",
-    "卡车-猫":"【跨界遥远】一个是动物一个是载重工具，在语义网络中几乎没有重合关联，相隔遥远。",
-    "卡车-汽车":"【同属交通】同在交通工具聚类中心，方向与功能高度重合。",
+    "狗-猫":"【同类聚类】网上的海量文章里，猫和狗总跟『宠物、喂养、陪伴』一起出现，所以挨得很近。",
+    "卡车-猫":"【跨界遥远】一个是动物，一个是拉货的车，在词与词的关系网里几乎不沾边，离得老远。",
+    "卡车-汽车":"【同属交通】都在交通工具这一堆里，意思和用途高度重合。",
     "开心-难过":"【反义却邻近】它们虽然情感对立，但在句式里（如『我感到…』『他看起来很…』）语法槽位完全一致！模型靠上下文统计，因此放得极近。"
   };
   if(special[key]) return special[key];
@@ -1286,7 +1286,7 @@ function pick(name,el){
     readoutTag.className="readout-tag";
     readoutTag.textContent="等待测距";
     readoutScore.innerHTML="👈 点击地图两点或上方实验";
-    readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。";
+    readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
     return;
   }
   if(sel.length>=2){
