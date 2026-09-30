@@ -55,10 +55,10 @@
   .slide {
     position: absolute;
     inset: 0;
-    padding: 24px 64px 44px;
+    padding: 36px 64px 44px;
     display: none;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -220,17 +220,14 @@
   .intel-board {
     display: grid;
     grid-template-columns: 1fr 1.15fr;
-    gap: 20px;
-    flex: 1;
-    min-height: 0;
-    align-items: stretch;
+    gap: 24px;
+    align-items: start;
     margin-top: 10px;
   }
   .intel-col {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    min-height: 0;
+    gap: 12px;
   }
   .panel-tag {
     display: flex;
@@ -272,18 +269,16 @@
     background: var(--bg-card);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 9px 12px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    flex: 1;
-    justify-content: space-between;
+    gap: 10px;
   }
   .pipe-step {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 5px 9px;
+    gap: 12px;
+    padding: 10px 14px;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -339,15 +334,13 @@
   .verdicts-list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    flex: 1;
-    justify-content: space-between;
+    gap: 8px;
   }
   .v-card {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 6px 11px;
+    gap: 12px;
+    padding: 10px 14px;
     border-radius: 9px;
     background: var(--bg-card);
     border: 1px solid var(--line);
@@ -399,17 +392,14 @@
   .bound-board {
     display: grid;
     grid-template-columns: 1.15fr 0.95fr;
-    gap: 18px;
-    flex: 1;
-    min-height: 0;
-    align-items: stretch;
+    gap: 24px;
+    align-items: start;
     margin-top: 10px;
   }
   .bound-panel {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    min-height: 0;
+    gap: 12px;
   }
 
   /* Dual-Track Scope Card */
@@ -417,20 +407,19 @@
     background: var(--bg-card);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 12px 14px;
+    padding: 16px 18px;
     display: flex;
-    gap: 12px;
-    flex: 1;
+    gap: 16px;
     align-items: stretch;
   }
-  .scope-col { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .scope-col { flex: 1; display: flex; flex-direction: column; gap: 9px; }
   .scope-head {
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 800;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
     border-bottom: 1px solid var(--line);
   }
   .scope-col.assist .scope-head { color: var(--cyan); }
@@ -438,12 +427,12 @@
   .scope-dot { width: 6px; height: 6px; border-radius: 50%; }
   .scope-col.assist .scope-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
   .scope-col.human .scope-dot { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
-  .scope-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .scope-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
   .scope-list li {
-    font-size: 11.5px;
+    font-size: 12px;
     color: var(--ink);
-    line-height: 1.4;
-    padding-left: 11px;
+    line-height: 1.45;
+    padding-left: 12px;
     position: relative;
   }
   .scope-col.assist .scope-list li::before {
@@ -466,28 +455,28 @@
   .rules-strip {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 7px;
+    gap: 10px;
   }
   .rule-item {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--line);
     border-radius: 9px;
-    padding: 7px 9px;
+    padding: 10px 12px;
     display: flex;
     align-items: flex-start;
-    gap: 7px;
+    gap: 9px;
     transition: all .15s ease;
   }
   .rule-item:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
   .rule-badge {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 800;
     color: var(--cyan);
     padding-top: 1px;
   }
-  .rule-item b { font-size: 12px; color: #fff; display: block; margin-bottom: 2px; }
-  .rule-item p { font-size: 10.5px; color: var(--muted); line-height: 1.35; margin: 0; }
+  .rule-item b { font-size: 12.5px; color: #fff; display: block; margin-bottom: 3px; }
+  .rule-item p { font-size: 11px; color: var(--muted); line-height: 1.4; margin: 0; }
 
   /* Live Hallucination Lab Terminal */
   .terminal-card {
@@ -496,14 +485,13 @@
     box-shadow: 0 0 25px rgba(249, 115, 22, 0.06);
     border-radius: 12px;
     overflow: hidden;
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
   .terminal-topbar {
     background: rgba(255, 255, 255, 0.04);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 7px 12px;
+    padding: 9px 14px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -518,7 +506,7 @@
     font-family: var(--font-mono);
     font-size: 10.5px;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 2px 7px;
     border-radius: 4px;
     background: rgba(249, 115, 22, 0.15);
     color: #fdba74;
@@ -528,30 +516,28 @@
   .term-status.alert { background: rgba(251, 113, 133, 0.15); color: #fda4af; border-color: rgba(251, 113, 133, 0.3); }
 
   .term-body {
-    padding: 10px 12px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    flex: 1;
-    justify-content: space-between;
+    gap: 12px;
   }
   .term-claim {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--line);
     border-radius: 9px;
-    padding: 8px 10px;
+    padding: 10px 12px;
   }
-  .claim-label { font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 2px; }
-  .claim-text { font-size: 13.5px; color: #fff; line-height: 1.4; }
+  .claim-label { font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 3px; }
+  .claim-text { font-size: 14px; color: #fff; line-height: 1.45; }
   .claim-text b { color: var(--orange); }
 
-  .term-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .term-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .term-btn {
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
-    padding: 7px 5px;
-    font-size: 12px;
+    padding: 8px 6px;
+    font-size: 12.5px;
     font-weight: 700;
     color: var(--ink);
     cursor: pointer;
@@ -566,7 +552,7 @@
     background: rgba(0, 0, 0, 0.45);
     border: 1px solid rgba(34, 211, 238, 0.25);
     border-radius: 8px;
-    padding: 8px 10px;
+    padding: 10px 12px;
     min-height: 64px;
     display: flex;
     flex-direction: column;
@@ -574,15 +560,15 @@
     box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   }
   .screen-header { display: flex; align-items: center; margin-bottom: 3px; }
-  .screen-prompt { font-family: var(--font-mono); font-size: 10px; color: var(--cyan); font-weight: 700; }
-  .screen-text { font-size: 12px; color: #fff; line-height: 1.45; }
+  .screen-prompt { font-family: var(--font-mono); font-size: 10.5px; color: var(--cyan); font-weight: 700; }
+  .screen-text { font-size: 12.5px; color: #fff; line-height: 1.45; }
 
   .term-footnote {
-    font-size: 10.5px;
+    font-size: 11px;
     color: var(--muted);
-    line-height: 1.4;
+    line-height: 1.45;
     border-top: 1px solid var(--line);
-    padding-top: 6px;
+    padding-top: 8px;
   }
   .term-footnote b { color: #fff; }
 
