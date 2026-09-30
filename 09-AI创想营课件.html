@@ -216,51 +216,375 @@
   }
   .lg.on { background: rgba(249,115,22,.22); border-color: var(--orange); color: #fff; }
 
-  /* Slide 3: Editorial definition board */
-  .edboard { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; flex: 1; min-height: 0; margin-top: 2px; }
-  .edcol { padding: 4px 24px 0 0; min-height: 0; display: flex; flex-direction: column; }
-  .edcol + .edcol { padding: 4px 0 0 24px; border-left: 1px solid var(--line); }
-  .stepno { font-family: var(--font-en); font-size: 44px; font-weight: 900; line-height: 1; color: rgba(34, 211, 238, 0.35); letter-spacing: -0.04em; }
-  .stepno.org { color: rgba(249, 115, 22, 0.35); }
-  .edheader { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-  .edlabel { font-size: 14px; font-weight: 800; color: var(--cyan); letter-spacing: 0.04em; }
-  .edlabel.org { color: var(--orange); }
-  .edlabel .en { font-family: var(--font-en); font-size: 12px; font-weight: 500; color: var(--muted); margin-left: 4px; }
-  .edrule { height: 1px; border: 0; margin: 6px 0 10px; background: linear-gradient(90deg, var(--orange), rgba(34,211,238,.3), transparent); }
-  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
-  .pill { padding: 5px 9px; border-radius: 6px; background: rgba(34,211,238,.08); border: 1px solid rgba(34,211,238,.3); font-size: 13px; font-family: var(--font-en); }
-  .mark {
+  /* Slide 3: Intelligence Benchmark Board (Redesigned) */
+  .intel-board {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
     margin-top: 10px;
-    padding: 8px 12px;
-    background: rgba(249,115,22,.08);
-    border-left: 4px solid var(--orange);
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1.4;
   }
-  .mark b { color: var(--orange); margin-right: 6px; font-family: var(--font-en); }
+  .intel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+  .panel-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .p-num {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    padding: 2px 7px;
+    border-radius: 6px;
+  }
+  .p-num.org {
+    color: var(--orange);
+    background: rgba(249, 115, 22, 0.12);
+    border-color: rgba(249, 115, 22, 0.3);
+  }
+  .p-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .p-title .en {
+    font-family: var(--font-en);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-left: 6px;
+  }
 
-  .verdict { display: grid; grid-template-columns: 26px 1fr auto; gap: 8px; align-items: start; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
-  .verdict .idx { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--cyan); padding-top: 2px; }
-  .verdict b { font-size: 13.5px; }
-  .verdict p { margin-top: 1px; color: var(--muted); font-size: 12.5px; }
+  /* 5-Step Pipeline Card */
+  .pipeline-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 9px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .pipe-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 9px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all .15s ease;
+  }
+  .pipe-step:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  .pipe-step.highlight {
+    background: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.35);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.12);
+  }
+  .pipe-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cyan);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(34, 211, 238, 0.1);
+    flex-shrink: 0;
+  }
+  .pipe-step.highlight .pipe-num {
+    color: #fff;
+    background: var(--orange);
+    box-shadow: 0 0 8px var(--orange-glow);
+  }
+  .pipe-body { flex: 1; }
+  .pipe-head { font-size: 13px; font-weight: 700; color: #fff; display: flex; align-items: baseline; gap: 6px; }
+  .pipe-head .en { font-family: var(--font-en); font-size: 10.5px; font-weight: 500; color: var(--muted); }
+  .pipe-step.highlight .pipe-head .en { color: #fdba74; font-weight: 700; }
+  .pipe-body p { font-size: 11.5px; color: var(--muted); margin-top: 1px; line-height: 1.35; }
 
-  /* Slide 4: Clean Balanced Boundary Board */
-  .bound-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 20px; flex: 1; min-height: 0; align-items: stretch; }
-  .bound-col { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
-  .bound-sec { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
-  .bound-sec.check-sec { height: 100%; border-color: rgba(249, 115, 22, 0.3); background: rgba(249, 115, 22, 0.03); }
-  .bound-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .bound-compare .card-sub { padding: 10px 12px; border-radius: 10px; font-size: 13.5px; }
-  .bound-rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .rule-chip { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: 10px; padding: 10px 10px; display: flex; flex-direction: column; gap: 4px; }
-  .rule-chip .r-idx { font-family: var(--font-mono); font-size: 16px; font-weight: 900; color: var(--cyan); }
-  .rule-chip b { font-size: 13.5px; color: var(--ink-bright); }
-  .rule-chip span { font-size: 12px; color: var(--muted); line-height: 1.35; }
-  .exp-card { display: flex; flex-direction: column; gap: 10px; height: 100%; justify-content: space-between; }
-  .exp-q { font-size: 15px; line-height: 1.5; }
-  .exp-box { background: rgba(0, 0, 0, 0.3); border: 1px dashed rgba(34, 211, 238, 0.3); border-radius: 10px; padding: 12px; min-height: 72px; }
-  .exp-note { font-size: 12.5px; color: var(--muted); line-height: 1.45; border-top: 1px solid var(--line); padding-top: 8px; }
+  /* Quote Card */
+  .intel-quote {
+    background: rgba(34, 211, 238, 0.04);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-left: 3px solid var(--cyan);
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+  .intel-quote p { font-size: 12px; color: var(--ink); line-height: 1.45; }
+  .intel-quote b { color: #fff; }
+  .quote-author { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+
+  /* 7 Objects Verdicts List */
+  .verdicts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .v-card {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 11px;
+    border-radius: 9px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    transition: all .2s ease;
+  }
+  .v-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateX(3px);
+  }
+  .v-card.best {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+  }
+  .v-card.some {
+    background: rgba(34, 211, 238, 0.04);
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+  .v-rank {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--muted);
+    width: 18px;
+    flex-shrink: 0;
+  }
+  .v-card.best .v-rank { color: #34d399; font-weight: 800; }
+  .v-card.some .v-rank { color: var(--cyan); }
+  .v-icon { font-size: 15px; flex-shrink: 0; }
+  .v-content { flex: 1; min-width: 0; }
+  .v-name { font-size: 12.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v-desc { font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v-badge {
+    padding: 2px 7.5px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-en);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .v-badge.best { background: #10b981; color: #fff; box-shadow: 0 0 8px rgba(16, 185, 129, 0.45); }
+  .v-badge.some { background: rgba(34, 211, 238, 0.15); color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.3); }
+  .v-badge.narrow { background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.3); }
+  .v-badge.no { background: rgba(255, 255, 255, 0.06); color: var(--muted); border: 1px solid rgba(255, 255, 255, 0.08); }
+
+  /* Slide 4: Clean Balanced Boundary Board (Redesigned) */
+  .bound-board {
+    display: grid;
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: 18px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+    margin-top: 10px;
+  }
+  .bound-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+
+  /* Dual-Track Scope Card */
+  .scope-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    gap: 12px;
+    flex: 1;
+    align-items: stretch;
+  }
+  .scope-col { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .scope-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 800;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--line);
+  }
+  .scope-col.assist .scope-head { color: var(--cyan); }
+  .scope-col.human .scope-head { color: var(--orange); }
+  .scope-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .scope-col.assist .scope-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .scope-col.human .scope-dot { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+  .scope-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .scope-list li {
+    font-size: 11.5px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-left: 11px;
+    position: relative;
+  }
+  .scope-col.assist .scope-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-weight: bold;
+  }
+  .scope-col.human .scope-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: bold;
+  }
+  .scope-divider { width: 1px; background: var(--line); margin: 2px 0; }
+
+  /* 3 Golden Rules Strip */
+  .rules-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 7px;
+  }
+  .rule-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 7px 9px;
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+    transition: all .15s ease;
+  }
+  .rule-item:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
+  .rule-badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cyan);
+    padding-top: 1px;
+  }
+  .rule-item b { font-size: 12px; color: #fff; display: block; margin-bottom: 2px; }
+  .rule-item p { font-size: 10.5px; color: var(--muted); line-height: 1.35; margin: 0; }
+
+  /* Live Hallucination Lab Terminal */
+  .terminal-card {
+    background: #060b18;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    box-shadow: 0 0 25px rgba(249, 115, 22, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .terminal-topbar {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .term-dots { display: flex; gap: 4px; }
+  .term-dots span { width: 8px; height: 8px; border-radius: 50%; }
+  .term-dots span:nth-child(1) { background: #fb7185; }
+  .term-dots span:nth-child(2) { background: #fbbf24; }
+  .term-dots span:nth-child(3) { background: #34d399; }
+  .term-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #94a3b8; flex: 1; }
+  .term-status {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(249, 115, 22, 0.15);
+    color: #fdba74;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+  }
+  .term-status.success { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+  .term-status.alert { background: rgba(251, 113, 133, 0.15); color: #fda4af; border-color: rgba(251, 113, 133, 0.3); }
+
+  .term-body {
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .term-claim {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 8px 10px;
+  }
+  .claim-label { font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 2px; }
+  .claim-text { font-size: 13.5px; color: #fff; line-height: 1.4; }
+  .claim-text b { color: var(--orange); }
+
+  .term-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .term-btn {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 7px 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .2s ease;
+    text-align: center;
+  }
+  .term-btn:hover { border-color: var(--cyan); background: rgba(34, 211, 238, 0.1); color: #fff; }
+  .term-btn.on { border-color: var(--orange); background: rgba(249, 115, 22, 0.2); color: #fff; box-shadow: 0 0 10px var(--orange-glow); }
+  .term-btn.best-btn.on { border-color: #10b981; background: rgba(16, 185, 129, 0.2); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+
+  .term-screen {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    border-radius: 8px;
+    padding: 8px 10px;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  }
+  .screen-header { display: flex; align-items: center; margin-bottom: 3px; }
+  .screen-prompt { font-family: var(--font-mono); font-size: 10px; color: var(--cyan); font-weight: 700; }
+  .screen-text { font-size: 12px; color: #fff; line-height: 1.45; }
+
+  .term-footnote {
+    font-size: 10.5px;
+    color: var(--muted);
+    line-height: 1.4;
+    border-top: 1px solid var(--line);
+    padding-top: 6px;
+  }
+  .term-footnote b { color: #fff; }
 
   /* Choices & Chips */
   .choice { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -679,106 +1003,177 @@
 
   <!-- SLIDE 3: Definition of Intelligence -->
   <section class="slide">
-    <div class="kicker">01 智能定义 <span class="en">· Definition of Intelligence</span></div>
-    <h2>环境再变，照样办得成 <span class="sub-en">Goal Achievement Across Diverse Environments</span></h2>
-    <p class="small" style="margin-top:-6px"><i>Intelligence measures an agent's ability to achieve goals in a wide range of environments.</i> · Shane Legg & Marcus Hutter, 2007</p>
-    <hr class="edrule">
-    <div class="edboard">
-      <div class="edcol">
-        <div class="edheader">
-          <div class="stepno">01</div>
-          <div class="edlabel">先立尺子 <span class="en">· The 5-Part Evaluation Rule</span></div>
+    <div class="kicker">01 智能定义 <span class="en">· The True Measure of Intelligence</span></div>
+    <h2>环境再变，照样办得成 <span class="sub-en">Intelligence = Achieving Goals in Diverse Environments</span></h2>
+    
+    <div class="intel-board">
+      <!-- Left Column: The 5-Step Evaluation Ladder -->
+      <div class="intel-col">
+        <div class="panel-tag">
+          <span class="p-num">01</span>
+          <span class="p-title">衡量智能的五级进化阶梯 <span class="en">· The 5-Step Pipeline</span></span>
         </div>
-        <p>会输入、会输出，只是开始。恒温器也会测温度、会开关。真正拉开差距的是：环境变了，它还能不能把事情办成。</p>
-        <div class="pills">
-          <span class="pill">能感知 · perceive</span>
-          <span class="pill">世界模型 · world model</span>
-          <span class="pill">判断 · plan</span>
-          <span class="pill">行动 · act</span>
-          <span class="pill">学习 · learn</span>
+
+        <div class="pipeline-card">
+          <div class="pipe-step">
+            <span class="pipe-num">1</span>
+            <div class="pipe-body">
+              <div class="pipe-head"><b>感知</b> <span class="en">Perceive</span></div>
+              <p>看清、听懂真实世界的声光与多模态输入</p>
+            </div>
+          </div>
+          <div class="pipe-step">
+            <span class="pipe-num">2</span>
+            <div class="pipe-body">
+              <div class="pipe-head"><b>世界模型</b> <span class="en">World Model</span></div>
+              <p>在脑中绘制空间地图、因果关系与物理规律</p>
+            </div>
+          </div>
+          <div class="pipe-step">
+            <span class="pipe-num">3</span>
+            <div class="pipe-body">
+              <div class="pipe-head"><b>决策判断</b> <span class="en">Plan</span></div>
+              <p>面对复杂新局面，权衡推演最优策略</p>
+            </div>
+          </div>
+          <div class="pipe-step">
+            <span class="pipe-num">4</span>
+            <div class="pipe-body">
+              <div class="pipe-head"><b>行动执行</b> <span class="en">Act</span></div>
+              <p>调动身体、轮子或数字工具，改变外部环境</p>
+            </div>
+          </div>
+          <div class="pipe-step highlight">
+            <span class="pipe-num">5</span>
+            <div class="pipe-body">
+              <div class="pipe-head"><b>学习进化</b> <span class="en">Learn · 关键分水岭</span></div>
+              <p>碰壁后能记住教训，在未知环境里越战越勇！</p>
+            </div>
+          </div>
         </div>
-        <div class="mark"><b>划重点</b>懂得学习，并给出更优化的解决方案。<span style="display:block;margin-top:3px;font-size:13px;font-weight:600;color:#fdba74">learn, and produce better solutions</span></div>
-        <p class="small" style="margin-top:auto;padding-top:10px">出处 · Russell & Norvig（perceive → model → plan → act），再加上 Shane Legg 强调的 learn。</p>
+
+        <div class="intel-quote">
+          <p>“智能不是看它会说多少流畅的话，而是看它<b>在千变万化的新环境里，能不能自主把目标办成</b>。”</p>
+          <span class="quote-author">—— Shane Legg (DeepMind 联合创始人) & Marcus Hutter, 2007</span>
+        </div>
       </div>
-      <div class="edcol">
-        <div class="edheader">
-          <div class="stepno org">02</div>
-          <div class="edlabel org">再量第 2 页 <span class="en">· Measuring the 7 Objects</span></div>
+
+      <!-- Right Column: The 7 Objects Benchmark Leaderboard -->
+      <div class="intel-col">
+        <div class="panel-tag">
+          <span class="p-num org">02</span>
+          <span class="p-title org">阳光校园 7 个对象实测榜 <span class="en">· Benchmark Results</span></span>
         </div>
-        <div id="verdicts"></div>
+        <div class="verdicts-list" id="verdicts"></div>
       </div>
     </div>
   </section>
 
   <!-- SLIDE 4: Boundaries & Critical Thinking (Clean Balanced Layout) -->
   <section class="slide">
-    <div class="kicker">01 能力边界 <span class="en">· Boundaries & Critical Thinking</span></div>
-    <h2>它能帮忙，决定还是你来做 <span class="sub-en">AI Assists, You Decide</span></h2>
-    <hr class="edrule">
-    <div class="bound-grid">
-      <!-- Left Column: Scope & Rules -->
-      <div class="bound-col">
-        <div class="bound-sec">
-          <div class="edheader">
-            <span class="stepno">01</span>
-            <span class="edlabel">分清能帮什么与别交什么 <span class="en">· Assistance Scope</span></span>
+    <div class="kicker">01 能力边界 <span class="en">· Human-AI Collaboration Framework</span></div>
+    <h2>它能帮忙，决定还是你来做 <span class="sub-en">AI Is Your Copilot, You Remain the Captain</span></h2>
+    
+    <div class="bound-board">
+      <!-- Left Panel: Scope & 3 Golden Rules -->
+      <div class="bound-panel">
+        <div class="panel-tag">
+          <span class="p-num">01</span>
+          <span class="p-title">人机分工与使用铁律 <span class="en">· Scope & Golden Rules</span></span>
+        </div>
+
+        <!-- Unified Dual-Track Scope Card -->
+        <div class="scope-card">
+          <div class="scope-col assist">
+            <div class="scope-head">
+              <span class="scope-dot"></span>
+              <b>放手交给 AI · 当超级副手</b>
+            </div>
+            <ul class="scope-list">
+              <li>列提纲构思，打破开头没思路的空白</li>
+              <li>把一道难题再变出两道举一反三的变式题</li>
+              <li>长笔记缩写提炼、代码排错、翻译润色</li>
+              <li>随时随地陪你背单词、模拟情景练口语</li>
+            </ul>
           </div>
-          <div class="bound-compare">
-            <div class="card card-sub">
-              <h3 class="accent">这些它拿手 · <span class="small" style="font-family:var(--font-en);color:var(--cyan)">AI Excels</span></h3>
-              <p style="margin-top:4px">列提纲，把一道题再出两道，翻译，陪你背单词，把笔记收短。</p>
+          <div class="scope-divider"></div>
+          <div class="scope-col human">
+            <div class="scope-head">
+              <span class="scope-dot"></span>
+              <b>绝不交给 AI · 守住人类底牌</b>
             </div>
-            <div class="card card-sub">
-              <h3 class="org">这些别交给它 · <span class="small" style="font-family:var(--font-en);color:var(--orange)">Keep Human</span></h3>
-              <p style="margin-top:4px">它没进过你们学校，也不认识你。你难过的时候，它不懂，只会顺着接话。</p>
-            </div>
+            <ul class="scope-list">
+              <li>作文直接让它写完你来抄（练它不是练你）</li>
+              <li>它没进过你们学校，根本不认识真实的你</li>
+              <li>它不懂情感，你难过时它只会顺着概率套话</li>
+              <li>重要事实不经查验，直接全盘当真采信</li>
+            </ul>
           </div>
         </div>
 
-        <div class="bound-sec">
-          <div class="edheader">
-            <span class="stepno">02</span>
-            <span class="edlabel">三条使用铁律 <span class="en">· Three Golden Rules</span></span>
+        <!-- 3 Golden Rules Strip -->
+        <div class="rules-strip">
+          <div class="rule-item">
+            <span class="rule-badge">01</span>
+            <div>
+              <b>脑子自己练</b>
+              <p>作文全包办，长脑子的是模型不是你</p>
+            </div>
           </div>
-          <div class="bound-rules">
-            <div class="rule-chip">
-              <span class="r-idx">1</span>
-              <b>脑子自己用</b>
-              <span>作文让它写完你来抄，练的是它不是你</span>
+          <div class="rule-item">
+            <span class="rule-badge">02</span>
+            <div>
+              <b>心事找真人</b>
+              <p>吵架难受找活人，它不懂爱与痛苦</p>
             </div>
-            <div class="rule-chip">
-              <span class="r-idx">2</span>
-              <b>心事找人说</b>
-              <span>吵架、被孤立、跟爸妈闹，找真人</span>
-            </div>
-            <div class="rule-chip">
-              <span class="r-idx">3</span>
-              <b>它会编事实</b>
-              <span>答案自己核对，密码和学号不贴进去</span>
+          </div>
+          <div class="rule-item">
+            <span class="rule-badge">03</span>
+            <div>
+              <b>事实亲自验</b>
+              <p>模型天生会胡编，密码学号不上交</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Column: Live Experiment -->
-      <div class="bound-col">
-        <div class="bound-sec check-sec">
-          <div class="edheader">
-            <span class="stepno org">03</span>
-            <span class="edlabel org">当场验一下 · 防幻觉实验 <span class="en">· Live Hallucination Test</span></span>
+      <!-- Right Panel: Live Hallucination Lab Terminal -->
+      <div class="bound-panel">
+        <div class="panel-tag">
+          <span class="p-num org">02</span>
+          <span class="p-title org">防幻觉现场实验台 <span class="en">· Live Hallucination Lab</span></span>
+        </div>
+
+        <div class="terminal-card">
+          <div class="terminal-topbar">
+            <div class="term-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="term-title">FACT-CHECK TERMINAL · 现场测谎实验</span>
+            <span class="term-status" id="termStatus">STATUS: 等待指令</span>
           </div>
-          <div class="exp-card">
-            <p class="exp-q">如果豆包说：<b>「你们学校门口有 17 棵树。」</b>你信吗？</p>
-            <div class="choice" id="expBtns">
-              <button type="button" data-v="信">信</button>
-              <button type="button" data-v="不信">不信</button>
-              <button type="button" data-v="要查">要查</button>
+
+          <div class="term-body">
+            <div class="term-claim">
+              <span class="claim-label">🤖 豆包信誓旦旦声称：</span>
+              <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
             </div>
-            <div class="exp-box">
-              <p id="expReveal" class="accent">👈 点击上方选项进行现场验证</p>
+
+            <div class="term-actions" id="expBtns">
+              <button type="button" data-v="信" class="term-btn">👍 相信它</button>
+              <button type="button" data-v="不信" class="term-btn">🙅 绝不信</button>
+              <button type="button" data-v="要查" class="term-btn best-btn">🔍 亲自去查验</button>
             </div>
-            <div class="exp-note">
-              <b>为什么会这样？</b> 大模型做的事是概率预测下一个词，没有物理世界的感官，当不知道确切答案时会一本正经地编出听起来很流畅的假话（幻觉）。
+            <!-- Sleek Terminal Readout Window -->
+            <div class="term-screen" id="expConsole">
+              <div class="screen-header">
+                <span class="screen-prompt">&gt; DIAGNOSTIC REPORT:</span>
+              </div>
+              <p id="expReveal" class="screen-text">👈 点击上方选项，向 AI 发起实时事实核验...</p>
+            </div>
+
+            <div class="term-footnote">
+              <b>为什么会这样？</b> 大模型底层原理是「概率预测下一个词（Next-Token Prediction）」，没有肉身感官，更没去过你们学校。当它不知道答案时，会极其流畅地编造假话（<b>幻觉 Hallucination</b>）。
             </div>
           </div>
         </div>
@@ -1101,11 +1496,12 @@ const verdicts=[
   ["自动化","narrow","按定时或土壤湿度开关水阀。这是人类写死的固定规则，它自己不会思考"],
   ["只是刻度","no","利用热胀冷缩显示数字。它根本不知道什么是冷和热"]
 ];
+const icons=["🐕","🤖","📱","🚧","🚪","💦","🌡️"];
 const vbox=document.getElementById("verdicts");
 verdicts.forEach((v,i)=>{
   const row=document.createElement("div");
-  row.className="verdict";
-  row.innerHTML=`<span class="idx">${String(i+1).padStart(2,"0")}</span><div><b>${objs[i]}</b><p>${v[2]}</p></div><span class="tag ${v[1]}">${v[0]}</span>`;
+  row.className=`v-card ${v[1]}`;
+  row.innerHTML=`<span class="v-rank">${String(i+1).padStart(2,"0")}</span><span class="v-icon">${icons[i]||'•'}</span><div class="v-content"><div class="v-name">${objs[i]}</div><div class="v-desc">${v[2]}</div></div><span class="v-badge ${v[1]}">${v[0]}</span>`;
   vbox.appendChild(row);
 });
 const legend=document.getElementById("voteLegend");
@@ -1117,10 +1513,22 @@ document.querySelectorAll(".hs").forEach(hs=>{
   hs.addEventListener("click",e=>{e.stopPropagation(); hs.classList.toggle("on"); lg.classList.toggle("on");});
 });
 
+const termStatus=document.getElementById("termStatus");
+const expReveal=document.getElementById("expReveal");
 document.getElementById("expBtns").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
   document.querySelectorAll("#expBtns button").forEach(x=>x.classList.toggle("on",x===b));
-  document.getElementById("expReveal").textContent="你自己核实过吗？它可能对也可能错——关键不是猜，是别直接信。";
+  const v=b.dataset.v;
+  if(v==="信"){
+    if(termStatus){ termStatus.className="term-status alert"; termStatus.textContent="STATUS: ⚠️ 误信幻觉"; }
+    expReveal.innerHTML=`<span style="color:#fb7185;font-weight:700">❌ 踩坑啦！</span> 它连你们学校大门朝哪开都不知道。这句话完全是模型根据概率顺口编造的。<b>记住：越自信的假话越危险！</b>`;
+  }else if(v==="不信"){
+    if(termStatus){ termStatus.className="term-status"; termStatus.textContent="STATUS: 🎯 直觉敏锐"; }
+    expReveal.innerHTML=`<span style="color:var(--cyan);font-weight:700">🎯 敏锐直觉！</span> 大模型没有物理眼睛，它根本不可能知道校门口有几棵树。时刻保持怀疑与警惕！`;
+  }else if(v==="要查"){
+    if(termStatus){ termStatus.className="term-status success"; termStatus.textContent="STATUS: 🏆 最佳答案"; }
+    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">🏆 极客满分答案！</span> 「亲自查验证据」是防范 AI 幻觉的唯一铁律。<b>人负责求真批判，AI 负责打下手！</b>`;
+  }
 });
 
 const journey=[
