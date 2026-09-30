@@ -983,50 +983,6 @@
     max-width: 1560px;
     align-items: center;
   }
-  .facility-dock {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .facility-chip {
-    background: var(--bg-card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: zoom-in;
-    transition: all .2s ease;
-    text-align: left;
-    color: inherit;
-  }
-  .facility-chip:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--cyan);
-    transform: translateY(-2px);
-  }
-  .facility-chip img {
-    width: 48px;
-    height: 48px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid var(--line);
-    flex-shrink: 0;
-  }
-  .facility-chip b {
-    display: block;
-    font-size: 12px;
-    color: #fff;
-    margin-bottom: 2px;
-  }
-  .facility-chip span {
-    display: block;
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.3;
-  }
 
   /* Transformer screenshot */
   .tx-shot { border: 0; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: inherit; display: block; width: 100%; }
@@ -1217,9 +1173,9 @@
   .journey-board .steps { gap: 9px; }
   .journey-board .step { padding: 11px 18px; }
   .journey-board .step b { font-size: 20px; }
-  .journey-board .facility-chip b { font-size: 16px; }
-  .journey-board .facility-chip span { font-size: 13px; }
-  .journey-board .facility-chip img { width: 56px; height: 56px; }
+  .journey-board .step-say { display: none; font-size: 19px; line-height: 1.5; color: #fff; margin-top: 6px; }
+  .journey-board .step.on .step-say { display: block; }
+  .journey-left #journeyNext { align-self: flex-start; margin-left: 32px; }
   .journey-board .photo img { height: min(60vh, 600px); }
   .journey-board .photo .cap { font-size: 17px; padding: 16px 20px; }
 
@@ -1793,39 +1749,17 @@
   </section>
 
   <!-- SLIDE 6: Journey of a Prompt & Physical Facilities -->
-  <section class="slide" data-hint="从上往下点，跟着光点走一遍；下面三张卡能看真实机房">
+  <section class="slide" data-hint="点「下一步」，跟着光点把一句话的旅程走完；点图可以放大">
     <div class="kicker">02 物理旅程 <span class="en">· Physical Journey of a Prompt</span></div>
     <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Answer</span></h2>
     <div class="journey-board">
       <div class="journey-left">
         <div class="steps" id="journeySteps"></div>
-        <div class="facility-dock">
-          <button class="facility-chip" type="button" id="airMain">
-            <img src="assets/camp/aerial-bluffs.jpg" alt="谷歌爱荷华机房航拍">
-            <div>
-              <b>爱荷华机房航拍</b>
-              <span>占地千亩的巨型厂房</span>
-            </div>
-          </button>
-          <button class="facility-chip" type="button" id="airInside">
-            <img src="assets/camp/sierra.jpg" alt="Sierra 算力机房内部排布">
-            <div>
-              <b>钻进机房看机器</b>
-              <span>Sierra 密集算力机柜</span>
-            </div>
-          </button>
-          <a class="facility-chip" href="https://www.theguardian.com/technology/2025/apr/24/elon-musk-xai-memphis" target="_blank" style="text-decoration:none">
-            <div style="width:48px;height:48px;border-radius:6px;border:1px solid rgba(249,115,22,0.4);background:rgba(249,115,22,0.1);display:flex;align-items:center;justify-content:center;color:var(--orange);font-family:var(--font-mono);font-weight:900;font-size:16px;flex-shrink:0">xAI</div>
-            <div>
-              <b style="color:var(--cyan)">马斯克孟菲斯 ↗</b>
-              <span>Colossus 现场燃气供电</span>
-            </div>
-          </a>
-        </div>
+        <button class="go big" type="button" id="journeyNext">下一步</button>
       </div>
       <div class="photo" id="journeyView"></div>
     </div>
-    <p class="small">点左边的步骤，跟着你的一句话走一遍。点图可以放大。</p>
+    
   </section>
 
   <!-- SLIDE 7: Terafab Scale -->
@@ -2311,25 +2245,27 @@ function showJourney(i){
   });
   const s=journey[i];
   jView.style.cursor="zoom-in";
-  jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="cap">${s.cap}<br>${s.s}</div>`;
+  jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="cap">${s.cap}</div>`;
   jView.onclick=()=>openPhoto(s.img,s.cap+"。"+s.s);
   requestAnimationFrame(()=>requestAnimationFrame(()=>placeRail(i)));
 }
 journey.forEach((s,i)=>{
   const b=document.createElement("button");
   b.type="button"; b.className="step";
-  b.innerHTML=`<b>${s.t}</b>`;
+  b.innerHTML=`<b>${s.t}</b><span class="step-say">${s.s}</span>`;
   b.onclick=()=>showJourney(i);
   jSteps.appendChild(b);
 });
 showJourney(0);
+document.getElementById("journeyNext").onclick=()=>{
+  const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
+  showJourney((on+1)%journey.length);
+};
 window.addEventListener("resize",()=>{
   const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
   if(on>=0) placeRail(on);
 });
 
-document.getElementById("airMain").onclick=()=>openPhoto("assets/camp/aerial-bluffs.jpg","实拍。谷歌在美国爱荷华的机房，无人机航拍。Chad Davis / CC BY 2.0。豆包的机房在国内，从天上望下去也是这种大厂房。");
-document.getElementById("airInside").onclick=()=>openPhoto("assets/camp/sierra.jpg","实拍。美国能源部拍摄的 Sierra。航拍里的厂房，钻进去就是这种一排排机器。");
 document.getElementById("teraShot").onclick=()=>openPhoto("assets/camp/terafab.png","TERAFAB 100M+ Sq Ft 算力中心规模对比（对比 Giga Texas、五角大楼、Apple Park 与美国商城）。");
 document.getElementById("txShot").onclick=()=>openPhoto("assets/camp/transformer-teaser.jpg","Transformer Explainer 界面截图。Georgia Tech Polo Club / MIT License。课堂上打开原站操作。");
 const box=document.getElementById("lightbox");
