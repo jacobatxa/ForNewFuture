@@ -83,6 +83,11 @@
     overflow: hidden !important;
   }
   .slide.active { display: flex; }
+  .slide:not(.cover-slide) { align-items: center; }
+  :where(.slide:not(.cover-slide)) > * { width: 100%; max-width: 1600px; }
+  .slide:not(.cover-slide) > .kicker,
+  .slide:not(.cover-slide) > h2 { justify-content: center; text-align: center; }
+  .slide:not(.cover-slide) > p { text-align: center; }
 
   @media (max-height: 820px) {
     .slide {
@@ -760,6 +765,125 @@
   }
   .term-footnote b { color: #fff; }
 
+  /* Intelligence cards: one idea per slide */
+  .ic-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; max-width: 1340px; }
+  .ic-progress { display: flex; gap: 10px; }
+  .ic-progress span { width: 56px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.12); }
+  .ic-progress span.done { background: rgba(34,211,238,.45); }
+  .ic-progress span.on { background: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow); }
+  .ic-progress span.on.key { background: var(--orange); box-shadow: 0 0 12px var(--orange-glow); }
+  .ic-hero { display: flex; align-items: center; gap: 24px; }
+  .ic-num {
+    font-family: var(--font-mono); font-size: 92px; font-weight: 800; line-height: 1;
+    color: var(--cyan); text-shadow: 0 0 28px var(--cyan-glow);
+  }
+  .ic-hero.key .ic-num { color: var(--orange); text-shadow: 0 0 28px var(--orange-glow); }
+  .ic-title { font-size: 78px; font-weight: 900; color: #fff; line-height: 1.05; }
+  .ic-title .en { display: block; font-family: var(--font-en); font-size: 22px; font-weight: 500; color: var(--muted); margin-top: 8px; }
+  .ic-lead { font-size: 34px; color: var(--ink); text-align: center; line-height: 1.4; }
+  .ic-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; width: 100%; }
+  .ic-case {
+    display: flex; align-items: center; gap: 20px;
+    padding: 24px 28px; border-radius: 20px; border: 1px solid var(--line); background: var(--bg-card);
+  }
+  .ic-case.yes { border-color: rgba(52,211,153,.45); background: rgba(16,185,129,.07); }
+  .ic-case.no { border-color: rgba(249,115,22,.4); background: rgba(249,115,22,.06); }
+  .ic-label { font-size: 17px; font-weight: 800; letter-spacing: .04em; }
+  .ic-case.yes .ic-label { color: var(--emerald); }
+  .ic-case.no .ic-label { color: #fdba74; }
+  .ic-case p { font-size: 27px; line-height: 1.5; color: #fff; margin-top: 6px; }
+  .ic-thumb {
+    flex-shrink: 0; width: 168px; height: 126px; border-radius: 14px;
+    border: 1px solid var(--line-strong);
+    background: url("assets/camp/vote-2050.jpg") no-repeat;
+    background-size: 840px auto;
+    background-position:
+      max(-672px, min(0px, calc(84px - var(--x) * 8.4px)))
+      max(-346px, min(0px, calc(63px - var(--y) * 4.725px)));
+  }
+  .ic-remember {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 28px; font-weight: 700; color: #fff;
+    padding: 14px 32px; border-radius: 99px;
+    border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.08);
+  }
+  .ic-remember b {
+    font-size: 14px; padding: 3px 10px; border-radius: 99px;
+    background: var(--cyan); color: #04121a;
+  }
+  .ic-remember.key { border-color: rgba(249,115,22,.5); background: rgba(249,115,22,.1); }
+  .ic-remember.key b { background: var(--orange); color: #fff; }
+  .ic-quote { text-align: center; }
+  .ic-quote-main { font-size: 64px; font-weight: 900; color: #fff; line-height: 1.25; }
+  .ic-quote-src { display: block; margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .ic-next { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .ic-next-title { font-size: 18px; font-weight: 700; color: var(--muted); margin-right: 6px; }
+  .ic-chip {
+    font-size: 17px; font-weight: 700; padding: 6px 16px; border-radius: 99px;
+    border: 1px solid rgba(34,211,238,.35); color: var(--cyan); background: rgba(34,211,238,.07);
+  }
+  .ic-chip.key { border-color: rgba(249,115,22,.5); color: #fdba74; background: rgba(249,115,22,.08); }
+  .ic-foot { font-size: 20px; color: var(--ink); }
+
+  /* Verdict cards */
+  .rv-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 1180px; }
+  .rv-card {
+    width: 262px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--bg-card);
+  }
+  .rv-card.best { border-color: rgba(52,211,153,.6); box-shadow: 0 0 24px rgba(16,185,129,.2); }
+  .rv-thumb {
+    height: 118px;
+    background: url("assets/camp/vote-2050.jpg") no-repeat;
+    background-size: 1310px auto;
+    background-position:
+      max(-1048px, min(0px, calc(131px - var(--x) * 13.1px)))
+      max(-619px, min(0px, calc(59px - var(--y) * 7.369px)));
+  }
+  .rv-body { padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .rv-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .rv-name { font-size: 21px; font-weight: 800; color: #fff; }
+  .rv-dots { display: flex; gap: 6px; }
+  .rv-dots i {
+    font-style: normal; font-size: 15px; font-weight: 800;
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.28); border: 1px solid var(--line); background: rgba(255,255,255,.03);
+  }
+  .rv-dots i.on { color: #04121a; background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow); }
+  .rv-card.best .rv-dots i.on { background: var(--emerald); border-color: var(--emerald); }
+  .rv-why { font-size: 16px; color: var(--muted); line-height: 1.45; }
+
+  /* Boundary + rules cards */
+  .bd-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+  .bd-card { border-radius: 20px; padding: 28px 32px; border: 1px solid var(--line); background: var(--bg-card); }
+  .bd-card.assist { border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.05); }
+  .bd-card.human { border-color: rgba(249,115,22,.4); background: rgba(249,115,22,.05); }
+  .bd-head { display: block; font-size: 30px; font-weight: 900; margin-bottom: 14px; }
+  .bd-card.assist .bd-head { color: var(--cyan); }
+  .bd-card.human .bd-head { color: var(--orange); }
+  .bd-card ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .bd-card li { font-size: 23px; color: #fff; padding-left: 22px; position: relative; line-height: 1.4; }
+  .bd-card li::before { content: ""; position: absolute; left: 0; top: .55em; width: 9px; height: 9px; border-radius: 2px; }
+  .bd-card.assist li::before { background: var(--cyan); }
+  .bd-card.human li::before { background: var(--orange); }
+  .rl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1180px; }
+  .rl-card {
+    border-radius: 20px; padding: 34px 28px; text-align: center;
+    border: 1px solid rgba(34,211,238,.3); background: linear-gradient(180deg, rgba(34,211,238,.08), rgba(255,255,255,.02));
+  }
+  .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
+  .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
+  .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.55; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .terminal-card.lab { max-width: 960px; }
+  .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
+  .terminal-card.lab .claim-text { font-size: 28px; }
+  .terminal-card.lab .claim-label { font-size: 15px; }
+  .terminal-card.lab .term-btn { font-size: 20px; padding: 14px 8px; }
+  .terminal-card.lab .screen-text { font-size: 19px; }
+  .terminal-card.lab .term-footnote { font-size: 16px; }
+
   /* Choices & Chips */
   .choice { display: flex; gap: 8px; flex-wrap: wrap; }
   .choice button, .chip {
@@ -1333,195 +1457,239 @@
       <div class="hud-bracket hud-br"></div>
       <div class="hud-banner">CAMPUS RECON SENSORS · 7 TARGETS DETECTED</div>
       <div class="hud-compass">SYS STATUS: NOMINAL // 60 FPS SCAN</div>
-      <img src="assets/camp/vote-tech.jpg" alt="未来感校园草坪上，有金毛犬、自动配送车、手持 AI 助手的同学、门禁闸机、玻璃门、自动喷淋器与户外温度计">
-      <button class="hs" style="left:23%;top:61%" data-n="1" type="button">01</button>
-      <button class="hs" style="left:79%;top:69%" data-n="2" type="button">02</button>
-      <button class="hs" style="left:59%;top:37%" data-n="3" type="button">03</button>
-      <button class="hs" style="left:48.5%;top:53.5%" data-n="4" type="button">04</button>
-      <button class="hs" style="left:72.5%;top:44.5%" data-n="5" type="button">05</button>
-      <button class="hs" style="left:39%;top:57%" data-n="6" type="button">06</button>
-      <button class="hs" style="left:92%;top:34%" data-n="7" type="button">07</button>
+      <img src="assets/camp/vote-2050.jpg" alt="2050 年的未来校园夜景：金毛犬、自动配送车、手持 AI 终端的同学、门禁闸机、玻璃大门、自动喷淋器与户外温度计">
+      <button class="hs" style="left:26%;top:70%" data-n="1" type="button">01</button>
+      <button class="hs" style="left:78%;top:72%" data-n="2" type="button">02</button>
+      <button class="hs" style="left:63.5%;top:50%" data-n="3" type="button">03</button>
+      <button class="hs" style="left:46.7%;top:61%" data-n="4" type="button">04</button>
+      <button class="hs" style="left:53.5%;top:55%" data-n="5" type="button">05</button>
+      <button class="hs" style="left:8%;top:76%" data-n="6" type="button">06</button>
+      <button class="hs" style="left:91.5%;top:45%" data-n="7" type="button">07</button>
     </div>
     <div class="legend" id="voteLegend"></div>
     <p class="small" style="margin-top:8px">学生：<b>飞书群发起投票</b>，一人一票、可多选。老师：点图上的圆点，现场揭示答案。</p>
   </section>
 
-  <!-- SLIDE 3: Definition of Intelligence -->
+  <!-- SLIDE 3: What Is Intelligence -->
   <section class="slide">
-    <div class="kicker">01 智能定义 <span class="en">· The True Measure of Intelligence</span></div>
-    <h2>环境再变，照样办得成 <span class="sub-en">Intelligence = Achieving Goals in Diverse Environments</span></h2>
-    
-    <div class="intel-board">
-      <!-- Left Column: The 5-Step Evaluation Ladder -->
-      <div class="intel-col">
-        <div class="panel-tag">
-          <span class="p-num">01</span>
-          <span class="p-title">衡量智能的五级进化阶梯 <span class="en">· The 5-Step Pipeline</span></span>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipe-step">
-            <span class="pipe-num">1</span>
-            <div class="pipe-body">
-              <div class="pipe-head"><b>感知</b> <span class="en">Perceive</span></div>
-              <p>看清、听懂真实世界的声光与多模态输入</p>
-            </div>
-          </div>
-          <div class="pipe-step">
-            <span class="pipe-num">2</span>
-            <div class="pipe-body">
-              <div class="pipe-head"><b>世界模型</b> <span class="en">World Model</span></div>
-              <p>在脑中绘制空间地图、因果关系与物理规律</p>
-            </div>
-          </div>
-          <div class="pipe-step">
-            <span class="pipe-num">3</span>
-            <div class="pipe-body">
-              <div class="pipe-head"><b>决策判断</b> <span class="en">Plan</span></div>
-              <p>面对复杂新局面，权衡推演最优策略</p>
-            </div>
-          </div>
-          <div class="pipe-step">
-            <span class="pipe-num">4</span>
-            <div class="pipe-body">
-              <div class="pipe-head"><b>行动执行</b> <span class="en">Act</span></div>
-              <p>调动身体、轮子或数字工具，改变外部环境</p>
-            </div>
-          </div>
-          <div class="pipe-step highlight">
-            <span class="pipe-num">5</span>
-            <div class="pipe-body">
-              <div class="pipe-head"><b>学习进化</b> <span class="en">Learn · 关键分水岭</span></div>
-              <p>碰壁后能记住教训，在未知环境里越战越勇！</p>
-            </div>
+    <div class="kicker">01 什么是智能 <span class="en">· What Is Intelligence</span></div>
+    <h2>什么才算智能？ <span class="sub-en">A Simple Test</span></h2>
+    <div class="ic-wrap">
+      <div class="ic-quote">
+        <p class="ic-quote-main">环境变了，还能想办法<span class="cover-grad">把事办成</span>。</p>
+        <span class="ic-quote-src">DeepMind 联合创始人 Shane Legg 对智能的定义（简化版）</span>
+      </div>
+      <div class="ic-pair">
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div>
+            <span class="ic-label">只会按规则 · 喷淋器</span>
+            <p>到点就喷水。<br>下雨了？照样喷。</p>
           </div>
         </div>
-
-        <div class="intel-quote">
-          <p>“智能不是看它会说多少流畅的话，而是看它<b>在千变万化的新环境里，能不能自主把目标办成</b>。”</p>
-          <span class="quote-author">—— Shane Legg (DeepMind 联合创始人) & Marcus Hutter, 2007</span>
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div>
+            <span class="ic-label">会随机应变 · 金毛犬</span>
+            <p>这扇门关了，<br>它会绕到另一扇门找到你。</p>
+          </div>
         </div>
       </div>
-
-      <!-- Right Column: The 7 Objects Benchmark Leaderboard -->
-      <div class="intel-col">
-        <div class="panel-tag">
-          <span class="p-num org">02</span>
-          <span class="p-title org">阳光校园 7 个对象实测榜 <span class="en">· Benchmark Results</span></span>
-        </div>
-        <div class="verdicts-list" id="verdicts"></div>
+      <div class="ic-next">
+        <span class="ic-next-title">智能要有 5 项本领</span>
+        <span class="ic-chip">01 感知</span><span class="ic-chip">02 理解</span><span class="ic-chip">03 判断</span><span class="ic-chip">04 行动</span><span class="ic-chip key">05 学习</span>
       </div>
     </div>
   </section>
 
-  <!-- SLIDE 4: Boundaries & Critical Thinking (Clean Balanced Layout) -->
+  <!-- SLIDE 4: Ability 1 Perceive -->
   <section class="slide">
-    <div class="kicker">01 能力边界 <span class="en">· Human-AI Collaboration Framework</span></div>
-    <h2>它能帮忙，决定还是你来做 <span class="sub-en">AI Is Your Copilot, You Remain the Captain</span></h2>
-    
-    <div class="bound-board">
-      <!-- Left Panel: Scope & 3 Golden Rules -->
-      <div class="bound-panel">
-        <div class="panel-tag">
-          <span class="p-num">01</span>
-          <span class="p-title">人机分工与使用铁律 <span class="en">· Scope & Golden Rules</span></span>
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 1 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">01</span><div class="ic-title">感知<span class="en">Perceive · 看得见，听得到</span></div></div>
+      <p class="ic-lead">先要能察觉：周围正在发生什么。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>还没看见你，<br>听脚步声就知道你回来了。</p></div>
         </div>
-
-        <!-- Unified Dual-Track Scope Card -->
-        <div class="scope-card">
-          <div class="scope-col assist">
-            <div class="scope-head">
-              <span class="scope-dot"></span>
-              <b>放手交给 AI · 当超级副手</b>
-            </div>
-            <ul class="scope-list">
-              <li>列提纲构思，打破开头没思路的空白</li>
-              <li>把一道难题再变出两道举一反三的变式题</li>
-              <li>长笔记缩写提炼、代码排错、翻译润色</li>
-              <li>随时随地陪你背单词、模拟情景练口语</li>
-            </ul>
-          </div>
-          <div class="scope-divider"></div>
-          <div class="scope-col human">
-            <div class="scope-head">
-              <span class="scope-dot"></span>
-              <b>绝不交给 AI · 守住人类底牌</b>
-            </div>
-            <ul class="scope-list">
-              <li>作文直接让它写完你来抄（练它不是练你）</li>
-              <li>它没进过你们学校，根本不认识真实的你</li>
-              <li>它不懂情感，你难过时它只会顺着概率套话</li>
-              <li>重要事实不经查验，直接全盘当真采信</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 3 Golden Rules Strip -->
-        <div class="rules-strip">
-          <div class="rule-item">
-            <span class="rule-badge">01</span>
-            <div>
-              <b>掌握思考的主动权</b>
-              <p>作文让它写完你来抄，锻炼的是模型不是你</p>
-            </div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-badge">02</span>
-            <div>
-              <b>心事找真人</b>
-              <p>吵架难受找活人，它不懂爱与痛苦</p>
-            </div>
-          </div>
-          <div class="rule-item">
-            <span class="rule-badge">03</span>
-            <div>
-              <b>事实亲自验</b>
-              <p>模型天生会胡编，密码学号不上交</p>
-            </div>
-          </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div><span class="ic-label">做不到 · 喷淋器</span><p>它不知道正在下雨，<br>还是按时喷水。</p></div>
         </div>
       </div>
+      <div class="ic-remember"><b>记住</b>先能察觉，才谈得上聪明</div>
+    </div>
+  </section>
 
-      <!-- Right Panel: Live Hallucination Lab Terminal -->
-      <div class="bound-panel">
-        <div class="panel-tag">
-          <span class="p-num org">02</span>
-          <span class="p-title org">防幻觉现场实验台 <span class="en">· Live Hallucination Lab</span></span>
+  <!-- SLIDE 5: Ability 2 Understand -->
+  <section class="slide">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 2 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">02</span><div class="ic-title">理解<span class="en">World Model · 心里有张地图</span></div></div>
+      <p class="ic-lead">知道东西在哪里，也明白一件事会引起什么后果。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>飞盘飞过了围墙，<br>它知道要绕到门口去捡。</p></div>
         </div>
-
-        <div class="terminal-card">
-          <div class="terminal-topbar">
-            <div class="term-dots">
-              <span></span><span></span><span></span>
-            </div>
-            <span class="term-title">FACT-CHECK TERMINAL · 现场测谎实验</span>
-            <span class="term-status" id="termStatus">STATUS: 等待指令</span>
-          </div>
-
-          <div class="term-body">
-            <div class="term-claim">
-              <span class="claim-label">豆包助手给出了一条回答：</span>
-              <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
-            </div>
-
-            <div class="term-actions" id="expBtns">
-              <button type="button" data-v="信" class="term-btn">直接相信</button>
-              <button type="button" data-v="不信" class="term-btn">毫不相信</button>
-              <button type="button" data-v="要查" class="term-btn best-btn">亲自查验</button>
-            </div>
-            <!-- Sleek Terminal Readout Window -->
-            <div class="term-screen" id="expConsole">
-              <div class="screen-header">
-                <span class="screen-prompt">&gt; DIAGNOSTIC REPORT:</span>
-              </div>
-              <p id="expReveal" class="screen-text">点击上方选项，向 AI 发起实时事实核验...</p>
-            </div>
-
-            <div class="term-footnote">
-              <b>为什么会这样？</b> 大模型底层原理是「概率预测下一个词（Next-Token Prediction）」，没有肉身感官，更没去过你们学校。当它不知道答案时，会极其流畅地编造假话（<b>幻觉 Hallucination</b>）。
-            </div>
-          </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:91.5;--y:45"></div>
+          <div><span class="ic-label">做不到 · 温度计</span><p>显示 35 度，<br>但它不知道「热」是什么。</p></div>
         </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>明白为什么，才不是死记硬背</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: Ability 3 Plan -->
+  <section class="slide">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 3 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">03</span><div class="ic-title">判断<span class="en">Plan · 想好怎么办</span></div></div>
+      <p class="ic-lead">有好几条路可以走时，能挑出最合适的那一条。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:78;--y:74"></div>
+          <div><span class="ic-label">做得到 · 配送车</span><p>前面有人挡路，<br>它会想：停下等，还是绕过去？</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:53.5;--y:55"></div>
+          <div><span class="ic-label">做不到 · 玻璃门</span><p>有人快撞上来，<br>它也不会做任何选择。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>会挑路，不是只会走一条路</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: Ability 4 Act -->
+  <section class="slide">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 4 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">04</span><div class="ic-title">行动<span class="en">Act · 动手去做</span></div></div>
+      <p class="ic-lead">想好之后，真的动手，让事情发生变化。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:78;--y:74"></div>
+          <div><span class="ic-label">做得到 · 配送车</span><p>把快递从校门口，<br>一路送到宿舍楼下。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:63.5;--y:50"></div>
+          <div><span class="ic-label">做不到 · AI 助手</span><p>能告诉你该怎么做，<br>但它没有手脚，没法替你去做。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>只会说、不会做，事情办不成</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: Ability 5 Learn -->
+  <section class="slide">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 5 of 5 · 最关键的一项</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="on key"></span></div>
+      <div class="ic-hero key"><span class="ic-num">05</span><div class="ic-title">学习<span class="en">Learn · 吃一堑，长一智</span></div></div>
+      <p class="ic-lead">做错一次，下次就改。这是区分真假智能的分水岭。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>被刺猬扎过一次，<br>下次再也不去碰。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div><span class="ic-label">做不到 · 喷淋器</span><p>把花浇坏了也不会改，<br>明天同一时间继续浇。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember key"><b>记住</b>会从错误里学习，才是真正的智能</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: Reveal -->
+  <section class="slide">
+    <div class="kicker">01 揭晓答案 <span class="en">· The Verdict</span></div>
+    <h2>用 5 项本领，给 7 个东西打分 <span class="sub-en">Perceive · Understand · Plan · Act · Learn</span></h2>
+    <div class="rv-grid" id="verdicts"></div>
+    <p class="ic-foot">五格全亮的只有金毛犬。今天的 AI 已经很强，但离真正的智能还有一段路。</p>
+  </section>
+
+  <!-- SLIDE 10: What AI Can and Cannot Do -->
+  <section class="slide">
+    <div class="kicker">01 能力边界 <span class="en">· AI Is Your Copilot</span></div>
+    <h2>它能帮忙，决定还是你来做 <span class="sub-en">You Remain the Captain</span></h2>
+    <div class="ic-wrap">
+      <div class="bd-pair">
+        <div class="bd-card assist">
+          <span class="bd-head">它很擅长</span>
+          <ul>
+            <li>帮你列提纲、打开思路</li>
+            <li>把一道题变出更多练习</li>
+            <li>陪你练口语、背单词</li>
+          </ul>
+        </div>
+        <div class="bd-card human">
+          <span class="bd-head">它做不到</span>
+          <ul>
+            <li>它没来过你们学校，不认识你</li>
+            <li>它没有心情，不懂你的难过</li>
+            <li>它会一本正经地编答案</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>它是副驾驶，握方向盘的是你</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: Three Golden Rules -->
+  <section class="slide">
+    <div class="kicker">01 使用铁律 <span class="en">· 3 Golden Rules</span></div>
+    <h2>所以，用 AI 有三条铁律 <span class="sub-en">Three Rules to Keep</span></h2>
+    <div class="rl-grid">
+      <div class="rl-card">
+        <span class="rl-num">01</span>
+        <b>掌握思考的主动权</b>
+        <p>作文让它写完你来抄，<br>锻炼的是模型，不是你。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">02</span>
+        <b>心事找真人</b>
+        <p>难过、吵架了，<br>去找爸妈、朋友和老师。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">03</span>
+        <b>事实亲自验</b>
+        <p>它会编答案。<br>密码、学号也别告诉它。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: Hallucination Lab -->
+  <section class="slide">
+    <div class="kicker">01 现场实验 <span class="en">· Live Hallucination Lab</span></div>
+    <h2>它说的话，你信不信？ <span class="sub-en">Fact-Check Terminal</span></h2>
+    <div class="terminal-card lab">
+      <div class="terminal-topbar">
+        <div class="term-dots"><span></span><span></span><span></span></div>
+        <span class="term-title">FACT-CHECK TERMINAL · 现场测谎实验</span>
+        <span class="term-status" id="termStatus">STATUS: 等待指令</span>
+      </div>
+      <div class="term-body">
+        <div class="term-claim">
+          <span class="claim-label">AI 助手给出了一条回答：</span>
+          <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
+        </div>
+        <div class="term-actions" id="expBtns">
+          <button type="button" data-v="信" class="term-btn">直接相信</button>
+          <button type="button" data-v="不信" class="term-btn">毫不相信</button>
+          <button type="button" data-v="要查" class="term-btn best-btn">亲自查验</button>
+        </div>
+        <div class="term-screen" id="expConsole">
+          <div class="screen-header"><span class="screen-prompt">&gt; DIAGNOSTIC REPORT:</span></div>
+          <p id="expReveal" class="screen-text">先让大家举手投票，再点上面的按钮揭晓。</p>
+        </div>
+        <div class="term-footnote"><b>为什么会这样？</b> 它只是在猜下一个最像的词。不知道答案时，也会说得很流畅，这叫<b>幻觉</b>。</div>
       </div>
     </div>
   </section>
@@ -1909,7 +2077,7 @@
 
 <button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
 <button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
-<div id="pager">1 / 14</div>
+<div id="pager">1 / 22</div>
 <div id="hint"></div>
 <div id="lightbox"><img alt=""><p></p></div>
 
@@ -1918,8 +2086,16 @@
 const hints=[
   "方向键或两侧圆按钮翻页",
   "点你觉得算智能的东西，可以多选。先别公布答案",
-  "先看左边 01 尺子，再看右边 02 怎么量刚才点过的",
-  "分清能帮什么与别交什么 → 三条使用铁律 → 现场验证防幻觉",
+  "先问学生：喷淋器和金毛犬，谁更聪明？为什么",
+  "本领 1/5：让学生再举一个身边会「察觉」的例子",
+  "本领 2/5：追问一句，它知道「为什么」吗",
+  "本领 3/5：有好几条路时，它会不会挑",
+  "本领 4/5：只会说、不会做，算不算智能",
+  "本领 5/5：这是最关键的一项，停下来多讲一会儿",
+  "对照五格亮灯，揭晓刚才的投票",
+  "先让学生说：哪些事你愿意交给 AI",
+  "三条铁律，请全班齐读一遍",
+  "先让大家举手投票，再点按钮揭晓",
   "今天讲到会搭 Agent。后面几天再做成别人能用的",
   "从上往下点。光点走在步骤之间的路径上，下方可点开机房实景与马斯克超算",
   "TERAFAB 极限算力中心规模对比（100M+ 平方英尺）",
@@ -1934,27 +2110,29 @@ const hints=[
 const objs=[
   "草坪上的金毛犬",
   "校园自动配送车",
-  "手机里的 AI 助手",
+  "同学手里的 AI 助手",
   "智能门禁闸机",
   "创新大楼的玻璃门",
   "草坪自动喷淋器",
   "柱子上的户外温度计"
 ];
 const verdicts=[
-  ["真正智能","best","有完整感官与世界模型，能随机应变并终身学习。大自然演化的标杆"],
-  ["具身接近","some","能看路避障送快递。但只要地图一变或掉进坑里就懵了，世界极小"],
-  ["语言大脑","some","懂很多科学知识。但它没有肉身，看不到眼前的草坪和风，更不认识你"],
-  ["很窄算法","narrow","能认人脸并放行。但只专精这一件事，让它看旁边的小狗它完全不懂"],
-  ["只是物件","no","自己不会看、不会想、不会动。智能在推门走进去的人身上"],
-  ["自动化","narrow","按定时或土壤湿度开关水阀。这是人类写死的固定规则，它自己不会思考"],
-  ["只是刻度","no","利用热胀冷缩显示数字。它根本不知道什么是冷和热"]
+  {name:"金毛犬",cls:"best",x:26,y:72,s:[1,1,1,1,1],why:"五项全有，还会一直学习"},
+  {name:"配送车",x:78,y:74,s:[1,0,1,1,0],why:"会看路、会送货，地图一变就懵"},
+  {name:"AI 助手",x:63.5,y:50,s:[0,1,1,0,0],why:"懂很多知识，但没有身体，也不认识你"},
+  {name:"门禁闸机",x:46.7,y:61,s:[1,0,1,1,0],why:"只会认脸放行这一件事"},
+  {name:"玻璃门",x:53.5,y:55,s:[0,0,0,0,0],why:"不会看、不会想、不会动"},
+  {name:"喷淋器",x:8,y:76,s:[0,0,0,1,0],why:"到点就喷水，是人写好的规则"},
+  {name:"温度计",x:91.5,y:45,s:[0,0,0,0,0],why:"只显示数字，不懂冷和热"}
 ];
+const abilityChars=["感","懂","判","做","学"];
 const vbox=document.getElementById("verdicts");
-verdicts.forEach((v,i)=>{
-  const row=document.createElement("div");
-  row.className=`v-card ${v[1]}`;
-  row.innerHTML=`<span class="v-rank">#${String(i+1).padStart(2,"0")}</span><div class="v-content"><div class="v-name">${objs[i]}</div><div class="v-desc">${v[2]}</div></div><span class="v-badge ${v[1]}">${v[0]}</span>`;
-  vbox.appendChild(row);
+verdicts.forEach(v=>{
+  const card=document.createElement("div");
+  card.className=`rv-card ${v.cls||""}`;
+  const dots=v.s.map((on,k)=>`<i class="${on?"on":""}">${abilityChars[k]}</i>`).join("");
+  card.innerHTML=`<div class="rv-thumb" style="--x:${v.x};--y:${v.y}"></div><div class="rv-body"><div class="rv-top"><span class="rv-name">${v.name}</span></div><div class="rv-dots">${dots}</div><p class="rv-why">${v.why}</p></div>`;
+  vbox.appendChild(card);
 });
 const legend=document.getElementById("voteLegend");
 document.querySelectorAll(".hs").forEach(hs=>{
@@ -2360,7 +2538,7 @@ function show(i){
   document.getElementById("bar").style.width=((cur+1)/slides.length*100)+"%";
   document.getElementById("pager").textContent=(cur+1)+" / "+slides.length;
   document.getElementById("hint").textContent=hints[cur]||"";
-  if(cur===5){
+  if(slides[cur].contains(jSteps)){
     const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
     requestAnimationFrame(()=>requestAnimationFrame(()=>placeRail(on>=0?on:0)));
   }
