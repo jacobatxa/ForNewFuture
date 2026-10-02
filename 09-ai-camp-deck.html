@@ -875,7 +875,7 @@
   .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
   .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
   .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.6; text-wrap: pretty; }
-  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-grid) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-grid, .ctx-hooks, .ctx-lab) > h2 { font-size: 42px; margin-bottom: 14px; }
   .terminal-card.lab { max-width: 960px; }
   .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
   .terminal-card.lab .claim-text { font-size: 28px; }
@@ -1454,6 +1454,45 @@
   #lightbox img { max-width: 94vw; max-height: 80vh; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); }
   #lightbox p { max-width: 900px; text-align: center; font-size: 14px; color: var(--ink); }
 
+
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cover-chapters .cover-card p { font-size: 15px; }
+  .cover-chapters .cover-card .small { font-size: 12px; }
+  @media (max-width: 1100px) {
+    .cover-chapters { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Context chapter */
+  .ctx-hooks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; max-width: 1400px; }
+  .ctx-hook { padding: 24px 22px; border-radius: 18px; border: 1px solid rgba(34,211,238,.35); background: rgba(34,211,238,.06); text-align: left; }
+  .ctx-hook .rl-num { font-size: 34px; }
+  .ctx-hook b { display: block; font-size: 26px; color: #fff; margin: 8px 0 10px; }
+  .ctx-hook p { font-size: 20px; color: var(--ink); line-height: 1.5; margin: 0; }
+  .ctx-lab { display: grid; grid-template-columns: 1fr 1.15fr; gap: 22px; max-width: 1440px; width: 100%; align-items: stretch; }
+  .ctx-lab-left, .ctx-lab-right { display: flex; flex-direction: column; gap: 14px; }
+  .ctx-q { font-size: 26px; color: #fff; margin: 0; line-height: 1.4; }
+  .ctx-switches { display: flex; flex-wrap: wrap; gap: 12px; }
+  .ctx-sw {
+    font-size: 20px; font-weight: 700; padding: 12px 18px; border-radius: 99px; cursor: pointer;
+    border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.06); color: var(--cyan);
+  }
+  .ctx-sw.on { background: var(--cyan); color: #04121a; box-shadow: 0 0 16px var(--cyan-glow); }
+  .ctx-panel { border-radius: 16px; padding: 18px 22px; border: 1px solid var(--line); background: var(--bg-card); min-height: 110px; }
+  .ctx-panel.answer { border-color: rgba(249,115,22,.45); background: rgba(249,115,22,.08); flex: 1; }
+  .ctx-panel .bd-head { display: block; margin-bottom: 8px; }
+  .ctx-known, .ctx-panel.answer p { font-size: 22px; color: #fff; line-height: 1.5; margin: 0; }
+  .ctx-meter { display: flex; align-items: center; gap: 14px; font-size: 18px; color: var(--muted); }
+  .ctx-meter i { flex: 1; height: 12px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; display: block; }
+  .ctx-meter i b { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--orange)); border-radius: 99px; transition: width .35s ease; }
+  .ctx-meter em { font-style: normal; font-family: var(--font-en); color: #fff; font-weight: 700; min-width: 48px; text-align: right; }
+  @media (max-height: 820px) {
+    .ctx-hook b { font-size: 22px; }
+    .ctx-hook p { font-size: 17px; }
+    .ctx-q { font-size: 22px; }
+    .ctx-sw { font-size: 17px; padding: 9px 14px; }
+    .ctx-known, .ctx-panel.answer p { font-size: 18px; }
+  }
+
   /* Cover slide enhancements */
   .cover-grad {
     background: linear-gradient(92deg, var(--cyan) 0%, #60a5fa 55%, var(--blue) 100%);
@@ -1470,22 +1509,21 @@
 <div id="bar"></div>
 <div id="deck">
 
-  <!-- SLIDE 1: Cover -->
   <section class="slide cover-slide active" data-hint="方向键或两侧圆按钮翻页">
     <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
     <div class="bg-glow" style="width:340px;height:340px;background:var(--cyan);bottom:-150px;left:-110px;opacity:.14"></div>
     <div class="bg-glow" style="width:260px;height:260px;background:var(--orange);top:34%;right:14%;opacity:.12"></div>
     <div class="kicker">BILDEN EDU · 青少年 AI 创想营 <span class="en">· Youth AI Innovation Camp</span></div>
     <h1>AI 创想营<br><span class="cover-grad">把好奇变成能力</span></h1>
-    <div class="grid3">
-      <div class="card cover-card"><b class="org" style="font-family:var(--font-en);font-size:16px">01 · 辨智能</b><p style="margin-top:4px">从现实生活中认知智能</p><span class="small">Definition & Recognition</span></div>
-      <div class="card cover-card"><b class="accent" style="font-family:var(--font-en);font-size:16px">02 · 探黑盒</b><p style="margin-top:4px">你发给 AI 的话都去了哪里</p><span class="small">Physical Computing Journey</span></div>
-      <div class="card cover-card"><b style="color:var(--blue);font-family:var(--font-en);font-size:16px">03 · 造 Agent</b><p style="margin-top:4px">一起构建我们自己的智能体</p><span class="small">Living Agent Architecture</span></div>
+    <div class="grid4 cover-chapters">
+      <div class="card cover-card"><b class="org" style="font-family:var(--font-en);font-size:15px">01 · 辨智能</b><p style="margin-top:4px">从现实生活中认知智能</p><span class="small">Definition & Recognition</span></div>
+      <div class="card cover-card"><b class="accent" style="font-family:var(--font-en);font-size:15px">02 · 探黑盒</b><p style="margin-top:4px">你发给 AI 的话都去了哪里</p><span class="small">Physical Computing Journey</span></div>
+      <div class="card cover-card"><b style="color:var(--cyan);font-family:var(--font-en);font-size:15px">03 · 会提问</b><p style="margin-top:4px">把任务说清楚，把情况讲明白</p><span class="small">Prompt & Context</span></div>
+      <div class="card cover-card"><b style="color:var(--blue);font-family:var(--font-en);font-size:15px">04 · 造 Agent</b><p style="margin-top:4px">一起构建我们自己的智能体</p><span class="small">Living Agent Architecture</span></div>
     </div>
   </section>
 
-  <!-- SLIDE 2: Interactive Poll -->
-  <section class="slide" data-hint="点你觉得算智能的东西，可以多选。先别公布答案">
+<section class="slide" data-hint="点你觉得算智能的东西，可以多选。先别公布答案">
     <div class="kicker">01 辨智能 <span class="en">· Interactive Poll</span></div>
     <h2>这张图里，哪些东西算智能？ <span class="sub-en">Which of These Objects Possess Real Intelligence?</span></h2>
     <div class="stage" id="voteStage">
@@ -1508,8 +1546,7 @@
     <p class="small" style="margin-top:8px">学生：<b>飞书群发起投票</b>，一人一票、可多选。老师：点图上的圆点，现场揭示答案。</p>
   </section>
 
-  <!-- SLIDE 3: What Is Intelligence -->
-  <section class="slide" data-hint="先问学生：喷淋器和金毛犬，谁更聪明？为什么">
+<section class="slide" data-hint="先问学生：喷淋器和金毛犬，谁更聪明？为什么">
     <div class="kicker">01 什么是智能 <span class="en">· What Is Intelligence</span></div>
     <h2>什么才算智能？ <span class="sub-en">A Simple Test</span></h2>
     <div class="ic-wrap">
@@ -1540,8 +1577,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 4: Ability 1 Perceive -->
-  <section class="slide" data-hint="本领 1/5：让学生再举一个身边会「察觉」的例子">
+<section class="slide" data-hint="本领 1/5：让学生再举一个身边会「察觉」的例子">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 1 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span><span></span></div>
@@ -1561,8 +1597,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 5: Ability 2 Understand -->
-  <section class="slide" data-hint="本领 2/5：追问一句，它知道「为什么」吗">
+<section class="slide" data-hint="本领 2/5：追问一句，它知道「为什么」吗">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 2 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span><span></span></div>
@@ -1582,8 +1617,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 6: Ability 3 Plan -->
-  <section class="slide" data-hint="本领 3/5：有好几条路时，它会不会挑">
+<section class="slide" data-hint="本领 3/5：有好几条路时，它会不会挑">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 3 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span><span></span></div>
@@ -1603,8 +1637,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 7: Ability 4 Act -->
-  <section class="slide" data-hint="本领 4/5：只会说、不会做，算不算智能">
+<section class="slide" data-hint="本领 4/5：只会说、不会做，算不算智能">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 4 of 5</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
@@ -1624,8 +1657,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 8: Ability 5 Learn -->
-  <section class="slide" data-hint="本领 5/5：这是最关键的一项，停下来多讲一会儿">
+<section class="slide" data-hint="本领 5/5：这是最关键的一项，停下来多讲一会儿">
     <div class="kicker">智能的 5 项本领 <span class="en">· Ability 5 of 5 · 最关键的一项</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="on key"></span></div>
@@ -1645,66 +1677,14 @@
     </div>
   </section>
 
-  <!-- SLIDE 9: Reveal -->
-  <section class="slide" data-hint="对照五格亮灯，揭晓刚才的投票">
+<section class="slide" data-hint="对照五格亮灯，揭晓刚才的投票">
     <div class="kicker">01 揭晓答案 <span class="en">· The Verdict</span></div>
     <h2>用 5 项本领，给 7 个东西打分 <span class="sub-en">Perceive · Understand · Plan · Act · Learn</span></h2>
     <div class="rv-grid" id="verdicts"></div>
     <p class="ic-foot">五格全亮的只有金毛犬。今天的 AI 已经很强，但离真正的智能还有一段路。</p>
   </section>
 
-  <!-- SLIDE 10: What AI Can and Cannot Do -->
-  <section class="slide" data-hint="先让学生说：哪些事你愿意交给 AI">
-    <div class="kicker">01 能力边界 <span class="en">· AI Is Your Copilot</span></div>
-    <h2>它能帮忙，决定还是你来做 <span class="sub-en">You Remain the Captain</span></h2>
-    <div class="ic-wrap">
-      <div class="bd-pair">
-        <div class="bd-card assist">
-          <span class="bd-head">它很擅长</span>
-          <ul>
-            <li>帮你列提纲、打开思路</li>
-            <li>把一道题变出更多练习</li>
-            <li>陪你练口语、背单词</li>
-          </ul>
-        </div>
-        <div class="bd-card human">
-          <span class="bd-head">它做不到</span>
-          <ul>
-            <li>它没来过你们学校，不认识你</li>
-            <li>它没有心情，不懂你的难过</li>
-            <li>它会一本正经地编答案</li>
-          </ul>
-        </div>
-      </div>
-      <div class="ic-remember"><b>记住</b>它是副驾驶，握方向盘的是你</div>
-    </div>
-  </section>
-
-  <!-- SLIDE 11: Three Tips -->
-  <section class="slide" data-hint="三条建议，请全班齐读一遍">
-    <div class="kicker">01 使用建议 <span class="en">· 3 Tips</span></div>
-    <h2>所以，用 AI 的三条建议 <span class="sub-en">Three Tips to Keep</span></h2>
-    <div class="rl-grid">
-      <div class="rl-card">
-        <span class="rl-num">01</span>
-        <b>掌握思考的主动权</b>
-        <p>珍惜脑海里蹦出的小点子、小创意。先自己想，再请 AI 帮你评估、完善和丰富。自己拿主意，脑子会越用越灵。</p>
-      </div>
-      <div class="rl-card">
-        <span class="rl-num">02</span>
-        <b>心事找真人</b>
-        <p>开心、难过、和朋友闹别扭的时候，去找爸妈、朋友和老师聊一聊。真人的陪伴和拥抱，最温暖。</p>
-      </div>
-      <div class="rl-card">
-        <span class="rl-num">03</span>
-        <b>事实亲自验</b>
-        <p>做一个会查证的小侦探：AI 说的事实，去书上、网上或问老师核对一下。密码、学号这些小秘密，自己好好保管。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SLIDE 12: Hallucination Lab -->
-  <section class="slide" data-hint="先让大家举手投票，再点按钮揭晓">
+<section class="slide" data-hint="先让大家举手投票，再点按钮揭晓">
     <div class="kicker">01 现场实验 <span class="en">· Live Hallucination Lab</span></div>
     <h2>它说的话，你信不信？ <span class="sub-en">Fact-Check Terminal</span></h2>
     <div class="terminal-card lab">
@@ -1732,24 +1712,29 @@
     </div>
   </section>
 
-  <!-- SLIDE 13: Capability Ladder -->
-  <section class="slide" data-hint="今天从第一级走到第二级：自己搭一个 Agent">
-    <div class="kicker">这门课的台阶 <span class="en">· AI Capability Ladder</span></div>
-    <h2>使用 AI 的五个台阶 <span class="sub-en">5 Levels of AI Usage</span></h2>
-    <div class="ic-wrap">
-    <div class="ladder">
-      <div class="ld-row" style="--w:56%;--c:#0d2a5e"><span class="ld-lv">L5</span><b>造模型</b><span class="ld-desc">自己训练一个 AI，研究员做的事</span></div>
-      <div class="ld-row" style="--w:66%;--c:#1e40af"><span class="ld-lv">L4</span><b>会管</b><span class="ld-desc">管好一整个公司都在用的 AI 应用</span></div>
-      <div class="ld-row" style="--w:76%;--c:#2563eb"><span class="ld-lv">L3</span><b>会做</b><span class="ld-desc">做出同学真能用的网站或小程序</span></div>
-      <div class="ld-row today" style="--w:88%;--c:#f97316"><span class="ld-lv">L2</span><b>会搭 · 今天</b><span class="ld-desc">给 AI 目标、记忆和工具，搭一个 Agent</span></div>
-      <div class="ld-row" style="--w:100%;--c:#1e3a5f"><span class="ld-lv">L1</span><b>会用</b><span class="ld-desc">打开豆包，提问、画图、做视频</span></div>
-    </div>
-    <div class="ic-remember"><b>记住</b>今天从「会用」走到「会搭」</div>
+<section class="slide" data-hint="三条建议，请全班齐读一遍">
+    <div class="kicker">01 使用建议 <span class="en">· 3 Tips</span></div>
+    <h2>看完了幻觉，记住这三条 <span class="sub-en">Three Tips After the Lab</span></h2>
+    <div class="rl-grid">
+      <div class="rl-card">
+        <span class="rl-num">01</span>
+        <b>掌握思考的主动权</b>
+        <p>珍惜脑海里蹦出的小点子、小创意。先自己想，再请 AI 帮你评估、完善和丰富。自己拿主意，脑子会越用越灵。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">02</span>
+        <b>心事找真人</b>
+        <p>开心、难过、和朋友闹别扭的时候，去找爸妈、朋友和老师聊一聊。真人的陪伴和拥抱，最温暖。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">03</span>
+        <b>事实亲自验</b>
+        <p>做一个会查证的小侦探：AI 说的事实，去书上、网上或问老师核对一下。密码、学号这些小秘密，自己好好保管。</p>
+      </div>
     </div>
   </section>
 
-  <!-- SLIDE 6: Journey of a Prompt & Physical Facilities -->
-  <section class="slide" data-hint="点「下一步」，跟着光点把一句话的旅程走完；点图可以放大">
+<section class="slide" data-hint="点「下一步」，跟着光点把一句话的旅程走完；点图可以放大">
     <div class="kicker">02 物理旅程 <span class="en">· Physical Journey of a Prompt</span></div>
     <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Answer</span></h2>
     <div class="journey-board">
@@ -1762,15 +1747,13 @@
     
   </section>
 
-  <!-- SLIDE 7: Terafab Scale -->
-  <section class="slide" data-hint="机房到底有多大？和身边的建筑比一比" style="padding:18px 48px;align-items:center;justify-content:center">
+<section class="slide" data-hint="机房到底有多大？和身边的建筑比一比" style="padding:18px 48px;align-items:center;justify-content:center">
     <div style="position:relative;width:min(100%,calc((100vh - 84px) * 16 / 9));aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 40px rgba(0,0,0,0.6);cursor:zoom-in" id="teraShot">
       <img src="assets/camp/terafab.png" alt="TERAFAB 100M+ Sq Ft 算力中心规模对比" style="width:100%;height:100%;object-fit:contain;display:block;background:#050912">
     </div>
   </section>
 
-  <!-- SLIDE 16: Next-word guessing -->
-  <section class="slide" data-hint="先让学生猜空格里填什么，再点按钮看 AI 的答案">
+<section class="slide" data-hint="先让学生猜空格里填什么，再点按钮看 AI 的答案">
     <div class="kicker">02 AI 怎么想 <span class="en">· How AI Writes</span></div>
     <h2>AI 说的每句话，都是一个词一个词猜出来的 <span class="sub-en">Next-Word Prediction</span></h2>
     <div class="ic-wrap">
@@ -1783,8 +1766,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 17: Step 1 Token -->
-  <section class="slide" data-hint="第 1 步：一起数一数，这句话被切成了几块">
+<section class="slide" data-hint="第 1 步：一起数一数，这句话被切成了几块">
     <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 1 of 4</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span></div>
@@ -1797,8 +1779,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 18: Step 2 Embedding -->
-  <section class="slide" data-hint="第 2 步：比一比猫、狗、卡车的数字，哪两个更像">
+<section class="slide" data-hint="第 2 步：比一比猫、狗、卡车的数字，哪两个更像">
     <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 2 of 4</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span></div>
@@ -1814,8 +1795,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 10: Word Vector Space Game -->
-  <section class="slide" data-hint="先点三组实验，再让学生从抽屉里挑词放上去">
+<section class="slide" data-hint="先点三组实验，再让学生从抽屉里挑词放上去">
     <div class="kicker">02 亲手试 <span class="en">· Word Map</span></div>
     <h2>在 AI 的地图上，意思像的词住得近 <span class="sub-en">Similar Words Live Close</span></h2>
     <div class="vector-console">
@@ -1887,8 +1867,7 @@
     <p class="small">开心和难过常出现在一样的句子里，所以住得近。AI 算的是距离，它自己并没有感情。</p>
   </section>
 
-  <!-- SLIDE 20: Step 3 Attention -->
-  <section class="slide" data-hint="第 3 步：点不同的词，看看它最在意谁">
+<section class="slide" data-hint="第 3 步：点不同的词，看看它最在意谁">
     <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 3 of 4</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
@@ -1900,8 +1879,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 21: Step 4 Probabilities -->
-  <section class="slide" data-hint="第 4 步：拖动温度滑块，让学生说说变化">
+<section class="slide" data-hint="第 4 步：拖动温度滑块，让学生说说变化">
     <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 4 of 4</span></div>
     <div class="ic-wrap">
       <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span></div>
@@ -1921,8 +1899,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 22: Try the Explainer -->
-  <section class="slide" data-hint="切到 Transformer Explainer，按三个任务带学生操作">
+<section class="slide" data-hint="切到 Transformer Explainer，按三个任务带学生操作">
     <div class="kicker">02 动手试 <span class="en">· Try It Yourself</span></div>
     <h2>现在，换你们来操作 <span class="sub-en">Transformer Explainer</span></h2>
     <div class="try-wrap">
@@ -1939,10 +1916,9 @@
     <p class="small">Transformer Explainer · Georgia Tech Polo Club · MIT License</p>
   </section>
 
-  <!-- SLIDE 23: Review flip cards -->
-  <section class="slide" data-hint="先让学生说答案，再点卡片翻面核对">
+<section class="slide" data-hint="先让学生说答案，再点卡片翻面核对">
     <div class="kicker">复习一下 <span class="en">· Quick Review</span></div>
-    <h2>前两章，你记住了什么？ <span class="sub-en">Tap a Card to Check</span></h2>
+    <h2>辨智能和探黑盒，记住了什么？ <span class="sub-en">Tap a Card to Check</span></h2>
     <div class="flip-grid" id="flipGrid">
       <button class="flip-card c1" type="button"><span class="flip-front"><b>智能</b><i>点一下看答案</i></span><span class="flip-back"><b>环境变了，还能想办法把事办成</b><i>会随机应变，才算聪明</i></span></button>
       <button class="flip-card c1" type="button"><span class="flip-front"><b>五项本领</b><i>点一下看答案</i></span><span class="flip-back"><b>感知、理解、判断、行动、学习</b><i>学习是最关键的一项</i></span></button>
@@ -1953,86 +1929,23 @@
     </div>
   </section>
 
-  <!-- SLIDE 24: Chat vs Agent -->
-  <section class="slide" data-hint="先问学生：你用豆包的时候，它会记得你昨天说过什么吗">
-    <div class="kicker">03 什么是 Agent <span class="en">· From Chat to Agent</span></div>
-    <h2>会聊天的 AI，和会办事的 Agent <span class="sub-en">Chatbot vs Agent</span></h2>
+<section class="slide" data-hint="今天先学把任务说清楚，再学搭 Agent">
+    <div class="kicker">03 会提问 · 台阶 <span class="en">· AI Capability Ladder</span></div>
+    <h2>使用 AI 的五个台阶 <span class="sub-en">5 Levels of AI Usage</span></h2>
     <div class="ic-wrap">
-      <div class="bd-pair">
-        <div class="bd-card human">
-          <span class="bd-head">普通聊天</span>
-          <p class="bd-sub">像一本会说话的百科全书</p>
-          <ul>
-            <li>你问一句，它答一句</li>
-            <li>关掉窗口，就忘了你</li>
-            <li>只会说，不会去做</li>
-          </ul>
-        </div>
-        <div class="bd-card assist">
-          <span class="bd-head">Agent</span>
-          <p class="bd-sub">像你请来的一个小助手</p>
-          <ul>
-            <li>交代一件事，它一直做到办完</li>
-            <li>记得你之前说过什么</li>
-            <li>会用工具：查资料、发消息</li>
-          </ul>
-        </div>
-      </div>
-      <div class="ic-remember"><b>记住</b>聊天是回答问题，Agent 是帮你把事办成</div>
+    <div class="ladder">
+      <div class="ld-row" style="--w:56%;--c:#0d2a5e"><span class="ld-lv">L5</span><b>造模型</b><span class="ld-desc">自己训练一个 AI，研究员做的事</span></div>
+      <div class="ld-row" style="--w:66%;--c:#1e40af"><span class="ld-lv">L4</span><b>会管</b><span class="ld-desc">管好一整个公司都在用的 AI 应用</span></div>
+      <div class="ld-row" style="--w:76%;--c:#2563eb"><span class="ld-lv">L3</span><b>会做</b><span class="ld-desc">做出同学真能用的网站或小程序</span></div>
+      <div class="ld-row" style="--w:88%;--c:#f97316"><span class="ld-lv">L2</span><b>会搭 · 稍后</b><span class="ld-desc">给 AI 目标、记忆和工具，搭一个 Agent</span></div>
+      <div class="ld-row today" style="--w:100%;--c:#22d3ee"><span class="ld-lv">L1</span><b>会提问 · 现在</b><span class="ld-desc">把任务说清楚，把情况讲明白</span></div>
+    </div>
+    <div class="ic-remember"><b>记住</b>先学会提问，再学搭 Agent</div>
     </div>
   </section>
 
-  <!-- SLIDE 25: Agent Parts -->
-  <section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
-    <div class="kicker">03 Agent 的零件 <span class="en">· Anatomy of an Agent</span></div>
-    <h2>一个 Agent，由五个零件组成 <span class="sub-en">5 Core Parts</span></h2>
-    <div class="agent-board" id="agentBoard">
-      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1"><b>目标</b><span>要办成的事</span></button>
-      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2"><b>记忆</b><span>它的小本子</span></button>
-      <div class="agent-core">Agent<span>小助手</span></div>
-      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2"><b>工具</b><span>它的手和脚</span></button>
-      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3"><b>大脑</b><span>会想办法的 AI</span></button>
-      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3"><b>规矩</b><span>什么绝对不能做</span></button>
-    </div>
-    <div class="card part-detail" id="partDetail">点一个零件，看看它是做什么的。我们用「帮同学找回丢失的水壶」来举例。</div>
-  </section>
-
-  <!-- SLIDE 26: Agent Loop -->
-  <section class="slide" data-hint="点「转一圈」，跟着亮起的步骤讲">
-    <div class="kicker">03 Agent 怎么干活 <span class="en">· The Agent Loop</span></div>
-    <h2>Agent 做事，是一圈一圈转的 <span class="sub-en">Look · Think · Act · Check</span></h2>
-    <div class="ic-wrap">
-      <div class="loop-row" id="loopRow">
-        <div class="loop-step"><span class="rl-num">01</span><b>看一看</b><p>收到消息：<br>小明丢了蓝色水壶</p></div>
-        <div class="loop-step"><span class="rl-num">02</span><b>想一想</b><p>翻小本子：<br>有没有人捡到过？</p></div>
-        <div class="loop-step"><span class="rl-num">03</span><b>做一做</b><p>找到了，<br>就给两个人各发一条消息</p></div>
-        <div class="loop-step"><span class="rl-num">04</span><b>查一查</b><p>对上了吗？<br>没对上就说「还没找到」</p></div>
-      </div>
-      <div class="loop-back">没办完？回到第 1 步，再转一圈</div>
-      <button class="go big" type="button" id="loopPlay">转一圈</button>
-    </div>
-  </section>
-
-  <!-- SLIDE 27: Teacher's Agent -->
-  <section class="slide" data-hint="切到老师自己的屏幕，把早报小助手讲透">
-    <div class="kicker">03 老师示范 <span class="en">· Teacher's Agent</span></div>
-    <h2>我每天都在用的「早报小助手」 <span class="sub-en">Daily News Briefing Agent</span></h2>
-    <div class="ic-wrap">
-      <div class="ps-grid">
-        <div class="ps-card"><b>目标</b><p>每个上学日早上，给我 3 条跟我有关的消息</p></div>
-        <div class="ps-card"><b>记忆</b><p>记得我关心课程和学校通知，不看八卦</p></div>
-        <div class="ps-card"><b>工具</b><p>去真实的网页上查，每条带上出处</p></div>
-        <div class="ps-card"><b>大脑</b><p>把查到的写成一眼能看懂的话</p></div>
-        <div class="ps-card"><b>规矩</b><p>查不到出处就空着，不许编</p></div>
-      </div>
-      <div class="ic-remember"><b>你也能做</b>社团通知小助手：明天训练改到几点？</div>
-      <p class="ic-foot">老师还在用请假条草稿助手、周末出行清单助手，拆开都是这五个零件。它们都搭在豆包里，放进飞书群运行。</p>
-    </div>
-  </section>
-
-  <!-- SLIDE 28: What Is a Prompt -->
-  <section class="slide" data-hint="让学生先说：如果是你，会怎么交代同学帮你带午饭">
-    <div class="kicker">03 动手第一步 <span class="en">· What Is a Prompt</span></div>
+<section class="slide" data-hint="让学生先说：如果是你，会怎么交代同学帮你带午饭">
+    <div class="kicker">03 会提问 <span class="en">· What Is a Prompt</span></div>
     <h2>Prompt，就是你交给 AI 的任务单 <span class="sub-en">A Prompt Is a Task Sheet</span></h2>
     <div class="ic-wrap">
       <p class="ic-lead">AI 很能干，但它猜不到你心里想什么。<br>你说得越清楚，它办得越好。</p>
@@ -2048,13 +1961,67 @@
     </div>
   </section>
 
-  <!-- SLIDE 29: Five Habits -->
-  <section class="slide" data-hint="重点讲 03 和 04：让 AI 多想几种办法，由你来做决定">
+  <section class="slide" data-hint="先问：AI 怎么会知道你们学校门口有几棵树？">
+    <div class="kicker">03 上下文 <span class="en">· What Is Context</span></div>
+    <h2>AI 只知道你告诉它的 <span class="sub-en">Context Is Everything It Sees</span></h2>
+    <div class="ic-wrap">
+      <p class="ic-lead">它没眼睛，看不见你们教室；它没来过你们学校，也不认识你。<br>当前对话里出现的话，就是它的整个世界。这一堆话，叫<b class="accent">上下文</b>。</p>
+      <div class="ctx-hooks">
+        <div class="ctx-hook">
+          <span class="rl-num">01</span>
+          <b>它没来过你们学校</b>
+          <p>所以会一本正经说「门口有 17 棵香樟树」。它不是记得，是在猜。</p>
+        </div>
+        <div class="ctx-hook">
+          <span class="rl-num">02</span>
+          <b>前面的词，决定后面的词</b>
+          <p>「我口渴了，想喝一杯__」和「我在咖啡店，困了，想喝一杯__」，答案会不一样。</p>
+        </div>
+        <div class="ctx-hook">
+          <span class="rl-num">03</span>
+          <b>关掉窗口，世界就没了</b>
+          <p>普通聊天一关就忘。Agent 的「记忆」，就是把重要上下文写进小本子。</p>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>你多告诉它一点，它就聪明一点</div>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="让学生轮流点开关，看同一句问题的回答怎么变好">
+    <div class="kicker">03 亲手试 <span class="en">· Context Switch Lab</span></div>
+    <h2>同一句问题，多给一点情况会怎样？ <span class="sub-en">Flip the Context Switches</span></h2>
+    <div class="ctx-lab">
+      <div class="ctx-lab-left">
+        <p class="ctx-q">固定问题：「帮我写一份班级读书角方案。」</p>
+        <p class="small" style="margin:0 0 10px">点开下面的开关，把情况一点点告诉 AI：</p>
+        <div class="ctx-switches" id="ctxSwitches">
+          <button type="button" class="ctx-sw" data-k="size">我们班有 40 个人</button>
+          <button type="button" class="ctx-sw" data-k="shelf">教室后面有一个空书架</button>
+          <button type="button" class="ctx-sw" data-k="money">没有经费</button>
+          <button type="button" class="ctx-sw" data-k="tried">之前贴过通知，没什么人理</button>
+          <button type="button" class="ctx-sw" data-k="goal">想让每人一个月至少读完一本书</button>
+        </div>
+      </div>
+      <div class="ctx-lab-right">
+        <div class="ctx-panel">
+          <span class="bd-head" id="ctxPanelHead">它现在知道的</span>
+          <p id="ctxKnown" class="ctx-known">（几乎什么都不知道）</p>
+        </div>
+        <div class="ctx-panel answer">
+          <span class="bd-head">它大概会怎么答</span>
+          <p id="ctxAnswer">给你一份看起来很完整、但放哪一班都行的通用方案。不认识你们班，你也没得选。</p>
+        </div>
+        <div class="ctx-meter"><span>有用程度</span><i id="ctxMeter"><b style="width:18%"></b></i><em id="ctxMeterLabel">18%</em></div>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="重点讲 03 和 04：让 AI 多想几种办法，由你来做决定">
     <div class="kicker">03 写好 Prompt <span class="en">· 5 Good Habits</span></div>
     <h2>写任务单的五个好习惯 <span class="sub-en">Goal · Context · Options · Decide · Check</span></h2>
     <div class="hb-grid">
       <div class="hb-card"><span class="rl-num">01</span><b>说清目标</b><p>说你想要什么结果，不用一步步教它怎么做</p></div>
-      <div class="hb-card"><span class="rl-num">02</span><b>讲清情况</b><p>你是谁、在哪里、已经试过什么</p></div>
+      <div class="hb-card key"><span class="rl-num">02</span><b>讲清情况</b><p>上下文：你是谁、在哪里、已经试过什么</p></div>
       <div class="hb-card key"><span class="rl-num">03</span><b>让它多想几种办法</b><p>请它给出 2 到 3 种不同的方法，说说好处和难处</p></div>
       <div class="hb-card key"><span class="rl-num">04</span><b>你来做决定</b><p>你选一种，说清楚为什么，再让它接着做</p></div>
       <div class="hb-card"><span class="rl-num">05</span><b>对照目标检查</b><p>办成了吗？不确定的地方，让它说「不知道」</p></div>
@@ -2062,8 +2029,7 @@
     <p class="ic-foot">网上很多技巧教你背模板、写「你是一个专家」。我们更看重三件事：目标清楚、办法多样、决定在你。</p>
   </section>
 
-  <!-- SLIDE 30: Build a Prompt -->
-  <section class="slide" data-hint="按 01 到 05 依次点，每加一句问学生：它现在会怎么回答">
+<section class="slide" data-hint="按 01 到 05 依次点，每加一句问学生：它现在会怎么回答">
     <div class="kicker">03 现场拼一个 <span class="en">· Build a Prompt</span></div>
     <h2>一起拼出一张好任务单 <span class="sub-en">From a Template to a Real Task</span></h2>
     <div class="pb-wrap">
@@ -2086,9 +2052,81 @@
     </div>
   </section>
 
-  <!-- SLIDE 13: Live Campus Practice -->
-  <section class="slide" data-hint="先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的">
-    <div class="kicker">03 课堂实操 <span class="en">· Live Agent Practice</span></div>
+<section class="slide" data-hint="先问学生：你用豆包的时候，它会记得你昨天说过什么吗">
+    <div class="kicker">04 什么是 Agent <span class="en">· From Chat to Agent</span></div>
+    <h2>会聊天的 AI，和会办事的 Agent <span class="sub-en">Chatbot vs Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="bd-pair">
+        <div class="bd-card human">
+          <span class="bd-head">普通聊天</span>
+          <p class="bd-sub">像一本会说话的百科全书</p>
+          <ul>
+            <li>你问一句，它答一句</li>
+            <li>关掉窗口，就忘了你</li>
+            <li>只会说，不会去做</li>
+          </ul>
+        </div>
+        <div class="bd-card assist">
+          <span class="bd-head">Agent</span>
+          <p class="bd-sub">像你请来的一个小助手</p>
+          <ul>
+            <li>交代一件事，它一直做到办完</li>
+            <li>记得你之前说过什么</li>
+            <li>会用工具：查资料、发消息</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>聊天一关就忘；Agent 把上下文记在小本子上，把事办完</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
+    <div class="kicker">04 Agent 的零件 <span class="en">· Anatomy of an Agent</span></div>
+    <h2>一个 Agent，由五个零件组成 <span class="sub-en">5 Core Parts</span></h2>
+    <div class="agent-board" id="agentBoard">
+      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1"><b>目标</b><span>要办成的事</span></button>
+      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2"><b>记忆</b><span>它的小本子</span></button>
+      <div class="agent-core">Agent<span>小助手</span></div>
+      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2"><b>工具</b><span>它的手和脚</span></button>
+      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3"><b>大脑</b><span>会想办法的 AI</span></button>
+      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3"><b>规矩</b><span>什么绝对不能做</span></button>
+    </div>
+    <div class="card part-detail" id="partDetail">点一个零件，看看它是做什么的。我们用「帮同学找回丢失的水壶」来举例。</div>
+  </section>
+
+<section class="slide" data-hint="点「转一圈」，跟着亮起的步骤讲">
+    <div class="kicker">04 Agent 怎么干活 <span class="en">· The Agent Loop</span></div>
+    <h2>Agent 做事，是一圈一圈转的 <span class="sub-en">Look · Think · Act · Check</span></h2>
+    <div class="ic-wrap">
+      <div class="loop-row" id="loopRow">
+        <div class="loop-step"><span class="rl-num">01</span><b>看一看</b><p>收到消息：<br>小明丢了蓝色水壶</p></div>
+        <div class="loop-step"><span class="rl-num">02</span><b>想一想</b><p>翻小本子：<br>有没有人捡到过？</p></div>
+        <div class="loop-step"><span class="rl-num">03</span><b>做一做</b><p>找到了，<br>就给两个人各发一条消息</p></div>
+        <div class="loop-step"><span class="rl-num">04</span><b>查一查</b><p>对上了吗？<br>没对上就说「还没找到」</p></div>
+      </div>
+      <div class="loop-back">没办完？回到第 1 步，再转一圈</div>
+      <button class="go big" type="button" id="loopPlay">转一圈</button>
+    </div>
+  </section>
+
+<section class="slide" data-hint="切到老师自己的屏幕，把早报小助手讲透">
+    <div class="kicker">04 老师示范 <span class="en">· Teacher's Agent</span></div>
+    <h2>我每天都在用的「早报小助手」 <span class="sub-en">Daily News Briefing Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="ps-grid">
+        <div class="ps-card"><b>目标</b><p>每个上学日早上，给我 3 条跟我有关的消息</p></div>
+        <div class="ps-card"><b>记忆</b><p>记得我关心课程和学校通知，不看八卦</p></div>
+        <div class="ps-card"><b>工具</b><p>去真实的网页上查，每条带上出处</p></div>
+        <div class="ps-card"><b>大脑</b><p>把查到的写成一眼能看懂的话</p></div>
+        <div class="ps-card"><b>规矩</b><p>查不到出处就空着，不许编</p></div>
+      </div>
+      <div class="ic-remember"><b>你也能做</b>社团通知小助手：明天训练改到几点？</div>
+      <p class="ic-foot">老师还在用请假条草稿助手、周末出行清单助手，拆开都是这五个零件。它们都搭在豆包里，放进飞书群运行。</p>
+    </div>
+  </section>
+
+<section class="slide" data-hint="先登记蓝色水壶丢失，再登记捡到，然后试一件对不上的">
+    <div class="kicker">04 课堂实操 <span class="en">· Live Agent Practice</span></div>
     <h2>校园寻物：一个真正的 Agent <span class="sub-en">Lost & Found Agent</span></h2>
     <p class="small">它的目标是帮两边对上号，小本子记下失物和拾物，工具是比对和通知。对不上，它必须说不知道。</p>
     <div class="lost-grid">
@@ -2123,8 +2161,7 @@
     </div>
   </section>
 
-  <!-- SLIDE 32: Mission Card -->
-  <section class="slide" data-hint="每人写一张任务单，明天带来">
+<section class="slide" data-hint="每人写一张任务单，明天带来">
     <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission</span></div>
     <h2>明天，带一个真问题来 <span class="sub-en">Bring a Real Problem</span></h2>
     <div class="task">
@@ -2144,15 +2181,16 @@
           <li><b>4 你来做决定</b>　选一种，说为什么</li>
           <li><b>5 对照目标检查</b>　不确定就说不知道</li>
         </ul>
-        <p class="small" style="margin-top:10px">你负责做决定，Agent 负责记住、去办，再把结果交给你检查。</p>
+        <p class="small" style="margin-top:10px">你负责做决定，Agent 负责记住、去办，再把结果交给你检查。也可以去看看别人提过的真问题：solverealproblem.com</p>
       </div>
     </div>
   </section>
+
 </div>
 
 <button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
 <button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
-<div id="pager">1 / 32</div>
+<div id="pager">1 / 33</div>
 <div id="hint"></div>
 <div id="lightbox"><img alt=""><p></p></div>
 
@@ -2559,11 +2597,11 @@ document.getElementById("pbBtns").addEventListener("click",e=>{
 });
 
 const partText={
-  goal:"目标：要办成的事。比如「帮丢东西的同学和捡到东西的同学对上号」。目标说清楚了，它才知道往哪儿使劲。",
-  memory:"记忆：它的小本子。记下谁丢了什么、谁捡到了什么。明天再来问，它还记得。普通聊天做不到这一点。",
+  goal:"目标：要办成的事。其实就是任务单上的「说清目标」。比如「帮丢东西的同学和捡到东西的同学对上号」。",
+  memory:"记忆：它的小本子。把重要的上下文写下来——谁丢了什么、谁捡到了什么。明天再来问，它还记得。",
   brain:"大脑：就是前面讲的大语言模型。它负责听懂「蓝色水壶」是什么，再想出下一步该做什么。",
   skill:"工具：它的手和脚。比如查登记表、给同学发消息。没有工具，它只能说「好的」，什么也做不了。",
-  spec:"规矩：什么绝对不能做。对不上就说不知道，不许编一个捡到的人；不许把同学的电话告诉别人。"
+  spec:"规矩：任务单上的「检查」和底线。对不上就说不知道，不许编；不许把同学的电话告诉别人。"
 };
 document.getElementById("agentBoard").addEventListener("click",e=>{
   const b=e.target.closest(".part"); if(!b) return;
@@ -2640,6 +2678,43 @@ addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault(); show(cur+1);}
   if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault(); show(cur-1);}
 });
+
+const ctxBits={
+  size:"我们班有 40 个人",
+  shelf:"教室后面有一个空书架",
+  money:"没有经费",
+  tried:"之前贴过通知，没什么人理",
+  goal:"想让每人一个月至少读完一本书"
+};
+const ctxAnswers=[
+  {n:0, pct:18, t:"给你一份看起来很完整、但放哪一班都行的通用方案。不认识你们班，你也没得选。"},
+  {n:1, pct:38, t:"开始往你们班靠一点，但仍像一份模板。缺的情况越多，它越爱用套话填满。"},
+  {n:2, pct:55, t:"能提到书架或人数了，但还可能忽略「没经费」「通知没人理」这些硬约束。"},
+  {n:3, pct:72, t:"方案更贴教室实际，也会避开要花钱的点子。不过目标仍可能飘，你还是得自己定方向。"},
+  {n:4, pct:88, t:"回答会围着「每人每月读完一本」转，并承认以前通知失败过。你可以开始挑一种办法。"},
+  {n:5, pct:96, t:"情况够了。它能给出几种不同办法，并标出好处和难处。接下来该你做决定。"}
+];
+function paintCtx(){
+  const on=[...document.querySelectorAll("#ctxSwitches .ctx-sw.on")].map(b=>b.dataset.k);
+  const known=on.map(k=>ctxBits[k]);
+  document.getElementById("ctxKnown").textContent=known.length?known.join("；"):"（几乎什么都不知道）";
+  const tier=ctxAnswers[Math.min(known.length,5)];
+  document.getElementById("ctxAnswer").textContent=tier.t;
+  document.getElementById("ctxMeter").querySelector("b").style.width=tier.pct+"%";
+  document.getElementById("ctxMeterLabel").textContent=tier.pct+"%";
+  document.getElementById("ctxPanelHead").textContent=known.length?"它现在知道的 · "+known.length+" 条":"它现在知道的";
+}
+const ctxSw=document.getElementById("ctxSwitches");
+if(ctxSw){
+  ctxSw.addEventListener("click",e=>{
+    const b=e.target.closest(".ctx-sw"); if(!b) return;
+    b.classList.toggle("on");
+    paintCtx();
+  });
+  paintCtx();
+}
+
+
 show(0);
 </script>
 </body>
