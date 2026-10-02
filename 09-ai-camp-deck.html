@@ -1593,8 +1593,6 @@
 
 
   .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  .cover-chapters .cover-card p { font-size: 15px; }
-  .cover-chapters .cover-card .small { font-size: 12px; }
   @media (max-width: 1100px) {
     .cover-chapters { grid-template-columns: 1fr 1fr; }
   }
@@ -1610,7 +1608,25 @@
     .ctx-hook p { font-size: 17px; }
   }
 
-  /* Cover slide enhancements */
+  /* Cover slide — large type for classroom projection */
+  .slide.cover-slide {
+    gap: 28px;
+    padding: 36px 72px 56px;
+  }
+  .slide.cover-slide .kicker {
+    font-size: 18px;
+    letter-spacing: 0.14em;
+    gap: 10px;
+  }
+  .slide.cover-slide .kicker .en {
+    font-size: 16px;
+  }
+  .slide.cover-slide h1 {
+    font-size: 84px;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 4px 0 8px;
+  }
   .cover-grad {
     background: linear-gradient(92deg, var(--cyan) 0%, #60a5fa 55%, var(--blue) 100%);
     -webkit-background-clip: text;
@@ -1618,8 +1634,46 @@
     color: transparent;
     filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.32));
   }
-  .cover-card { position: relative; overflow: hidden; transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
+  .cover-chapters {
+    gap: 18px;
+    margin-top: 8px;
+  }
+  .cover-card {
+    position: relative;
+    overflow: hidden;
+    padding: 22px 22px 20px;
+    transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
+  }
   .cover-card:hover { transform: translateY(-3px); border-color: var(--line-strong); background: var(--bg-card-hover); }
+  .cover-card .ch-no {
+    font-family: var(--font-en);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    display: block;
+  }
+  .cover-card p {
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-bright);
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .cover-card .small {
+    font-size: 14px;
+    margin-top: 8px;
+    display: block;
+  }
+  @media (max-height: 820px) {
+    .slide.cover-slide { gap: 18px; padding: 24px 56px 44px; }
+    .slide.cover-slide h1 { font-size: 64px; }
+    .slide.cover-slide .kicker { font-size: 15px; }
+    .slide.cover-slide .kicker .en { font-size: 13px; }
+    .cover-card { padding: 16px 18px; }
+    .cover-card .ch-no { font-size: 18px; }
+    .cover-card p { font-size: 18px; margin-top: 8px; }
+    .cover-card .small { font-size: 12.5px; }
+  }
 </style>
 </head>
 <body>
@@ -1633,10 +1687,10 @@
     <div class="kicker">BILDEN EDU · 青少年 AI 创想营 <span class="en">· Youth AI Innovation Camp</span></div>
     <h1>AI 创想营<br><span class="cover-grad">把好奇变成能力</span></h1>
     <div class="grid4 cover-chapters">
-      <div class="card cover-card"><b class="org" style="font-family:var(--font-en);font-size:15px">01 · 辨智能</b><p style="margin-top:4px">从现实生活中认知智能</p><span class="small">Definition & Recognition</span></div>
-      <div class="card cover-card"><b class="accent" style="font-family:var(--font-en);font-size:15px">02 · 探黑盒</b><p style="margin-top:4px">你发给 AI 的话都去了哪里</p><span class="small">Physical Computing Journey</span></div>
-      <div class="card cover-card"><b style="color:var(--cyan);font-family:var(--font-en);font-size:15px">03 · 会提问</b><p style="margin-top:4px">把任务说清楚，把情况讲明白</p><span class="small">Prompt & Context</span></div>
-      <div class="card cover-card"><b style="color:var(--blue);font-family:var(--font-en);font-size:15px">04 · 造 Agent</b><p style="margin-top:4px">一起构建我们自己的智能体</p><span class="small">Living Agent Architecture</span></div>
+      <div class="card cover-card"><b class="ch-no org">01 · 辨智能</b><p>从现实生活中认知智能</p><span class="small">Definition & Recognition</span></div>
+      <div class="card cover-card"><b class="ch-no accent">02 · 探黑盒</b><p>你发给 AI 的话都去了哪里</p><span class="small">Physical Computing Journey</span></div>
+      <div class="card cover-card"><b class="ch-no" style="color:var(--cyan)">03 · 会提问</b><p>把任务说清楚，把情况讲明白</p><span class="small">Prompt & Context</span></div>
+      <div class="card cover-card"><b class="ch-no" style="color:var(--blue)">04 · 造 Agent</b><p>一起构建我们自己的智能体</p><span class="small">Living Agent Architecture</span></div>
     </div>
   </section>
 
