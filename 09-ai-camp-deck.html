@@ -875,7 +875,7 @@
   .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
   .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
   .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.6; text-wrap: pretty; }
-  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-console, .ctx-hooks, .ag-work, .mission-grid, .agent-split) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .webapp-teach, .ctx-hooks, .ag-work, .dt-wrap, .agent-hud) > h2 { font-size: 42px; margin-bottom: 14px; }
   .terminal-card.lab { max-width: 960px; }
   .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
   .terminal-card.lab .claim-text { font-size: 28px; }
@@ -1252,48 +1252,86 @@
 
   /* Agent chapter */
   .bd-sub { font-size: 20px; color: var(--muted); margin: -6px 0 16px; }
-  .agent-split {
-    display: grid; grid-template-columns: 1.05fr .95fr; gap: 22px;
-    width: min(1460px, 100%); align-items: stretch;
+
+  /* Cool HUD — grid layout so parts never collide */
+  .agent-hud {
+    position: relative;
+    width: min(1100px, 100%);
+    height: min(460px, 56vh);
+    margin: 0 auto 14px;
+    display: grid;
+    grid-template-columns: 1fr 220px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      ". goal ."
+      "memory core skill"
+      "brain . spec";
+    align-items: center;
+    justify-items: center;
+    gap: 14px 28px;
   }
-  .agent-parts {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  .agent-orbit {
+    position: absolute; inset: 8% 12%; width: auto; height: auto;
+    pointer-events: none; z-index: 0;
   }
-  .agent-parts .part {
-    text-align: left; border: 1px solid rgba(34,211,238,.35);
-    background: rgba(34,211,238,.05); border-radius: 16px;
-    padding: 18px 20px; cursor: pointer; font-family: inherit;
-    transition: border-color .2s ease, background .2s ease, transform .2s ease;
+  .orb-ring { fill: none; stroke: rgba(34,211,238,.28); stroke-width: 1.5; }
+  .orb-ring.r1 { stroke-dasharray: 6 10; animation: orbSpin 22s linear infinite; transform-origin: 320px 210px; }
+  .orb-ring.r2 { stroke: rgba(249,115,22,.32); animation: orbSpin 16s linear infinite reverse; transform-origin: 320px 210px; }
+  .orb-ring.r3 { stroke: rgba(34,211,238,.45); stroke-width: 2; }
+  .orb-beam { stroke: rgba(34,211,238,.3); stroke-width: 1.2; stroke-dasharray: 4 7; animation: beamPulse 2.6s ease-in-out infinite; }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes beamPulse { 0%,100% { opacity: .3; } 50% { opacity: .85; } }
+  .agent-core-wrap { grid-area: core; position: relative; z-index: 2; }
+  .agent-core {
+    width: 168px; height: 168px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 900; font-size: 28px; font-family: var(--font-en); color: #fff;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 28%),
+      radial-gradient(circle at 50% 50%, #22d3ee 0%, #1d4ed8 42%, #070d1a 78%);
+    border: 2px solid rgba(255,255,255,.55);
+    box-shadow:
+      0 0 0 10px rgba(34,211,238,.08),
+      0 0 40px rgba(34,211,238,.55),
+      0 0 80px rgba(249,115,22,.25);
+    animation: corePulse 3.2s ease-in-out infinite;
   }
-  .agent-parts .part:nth-child(5) { grid-column: 1 / -1; }
-  .agent-parts .part i {
+  .agent-core span { display: block; font-size: 16px; font-weight: 700; opacity: .9; margin-top: 4px; letter-spacing: .08em; }
+  @keyframes corePulse {
+    0%,100% { box-shadow: 0 0 0 10px rgba(34,211,238,.08), 0 0 40px rgba(34,211,238,.5), 0 0 70px rgba(249,115,22,.2); }
+    50% { box-shadow: 0 0 0 16px rgba(34,211,238,.14), 0 0 56px rgba(34,211,238,.7), 0 0 96px rgba(249,115,22,.35); }
+  }
+  .agent-hud .part {
+    position: relative; z-index: 3; width: min(220px, 100%); padding: 14px 18px 16px;
+    text-align: left; border: 1px solid rgba(34,211,238,.45);
+    background: linear-gradient(160deg, rgba(14,28,48,.94), rgba(8,14,28,.9));
+    border-radius: 16px; cursor: pointer; font-family: inherit;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .agent-hud .part i {
     display: block; font-style: normal; font-family: var(--font-en);
-    font-size: 14px; color: var(--cyan); letter-spacing: .1em; margin-bottom: 6px;
+    font-size: 13px; color: var(--cyan); letter-spacing: .12em; margin-bottom: 4px;
   }
-  .agent-parts .part b { display: block; font-size: 28px; color: #fff; }
-  .agent-parts .part span { display: block; font-size: 18px; color: var(--muted); margin-top: 6px; line-height: 1.35; }
-  .agent-parts .part:hover { border-color: var(--cyan); transform: translateY(-2px); }
-  .agent-parts .part.on {
-    border-color: var(--orange); background: rgba(249,115,22,.12);
-    box-shadow: 0 0 20px rgba(249,115,22,.18);
+  .agent-hud .part b { display: block; font-size: 26px; color: #fff; }
+  .agent-hud .part span { display: block; font-size: 16px; color: var(--muted); margin-top: 4px; }
+  .agent-hud .part:hover { transform: translateY(-3px); border-color: var(--cyan); }
+  .agent-hud .part.on {
+    border-color: var(--orange);
+    background: linear-gradient(160deg, rgba(249,115,22,.28), rgba(8,14,28,.92));
+    box-shadow: 0 0 28px var(--orange-glow), inset 0 1px 0 rgba(255,255,255,.1);
   }
-  .agent-parts .part.on i { color: var(--orange); }
-  .agent-side {
-    border: 1px solid rgba(34,211,238,.35); border-radius: 18px;
-    background: linear-gradient(165deg, rgba(14,28,48,.9), rgba(8,14,28,.95));
-    padding: 28px 30px; display: flex; flex-direction: column; gap: 14px;
+  .agent-hud .part.on i { color: var(--orange); }
+  .p-goal { grid-area: goal; }
+  .p-memory { grid-area: memory; justify-self: end; }
+  .p-skill { grid-area: skill; justify-self: start; }
+  .p-brain { grid-area: brain; justify-self: end; }
+  .p-spec { grid-area: spec; justify-self: start; }
+  .part-detail {
+    max-width: 980px; margin: 0 auto; font-size: 22px !important; line-height: 1.5;
+    text-align: center; padding: 14px 24px; min-height: 56px;
   }
-  .agent-side .side-tag {
-    font-family: var(--font-en); font-size: 13px; letter-spacing: .14em;
-    color: var(--cyan); text-transform: uppercase;
-  }
-  .agent-side #partTitle { font-size: 36px; color: #fff; margin: 0; line-height: 1.2; }
-  .agent-side #partDetail { font-size: 22px; color: var(--ink); line-height: 1.55; margin: 0; flex: 1; }
-  .agent-side .side-ex {
-    border-top: 1px solid rgba(255,255,255,.08); padding-top: 14px;
-    font-size: 18px; color: var(--muted); line-height: 1.45;
-  }
-  .agent-side .side-ex b { color: var(--orange); }
 
   .ag-work { display: grid; grid-template-columns: 1.25fr .75fr; gap: 22px; width: min(1480px,100%); align-items: stretch; }
   .ag-pipeline { display: flex; flex-direction: column; gap: 10px; }
@@ -1328,87 +1366,109 @@
   .ps-card b { display: block; font-size: 28px; color: var(--cyan); margin-bottom: 10px; }
   .ps-card p { font-size: 21px; color: #fff; line-height: 1.45; }
 
-  /* Lost & Found console */
-  .lost-console {
-    width: min(1500px, 100%); border-radius: 18px; overflow: hidden;
-    border: 1px solid rgba(34,211,238,.28); background: #070d16;
-    display: grid; grid-template-rows: auto 1fr; min-height: min(560px, 68vh);
+  /* Agent builds web apps */
+  .webapp-teach {
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 22px;
+    width: min(1480px, 100%); align-items: stretch;
   }
-  .lf-topbar {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,.08);
+  .webapp-steps { display: flex; flex-direction: column; gap: 12px; }
+  .webapp-step {
+    display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start;
+    padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(34,211,238,.3);
+    background: rgba(34,211,238,.05);
+  }
+  .webapp-step .rl-num { font-size: 26px; }
+  .webapp-step b { display: block; font-size: 22px; color: #fff; margin-bottom: 4px; }
+  .webapp-step p { font-size: 17px; color: var(--ink); line-height: 1.4; margin: 0; }
+  .webapp-step code {
+    display: inline-block; margin-top: 8px; padding: 6px 10px; border-radius: 8px;
+    background: rgba(0,0,0,.35); color: var(--cyan); font-size: 14px; font-family: ui-monospace, Menlo, monospace;
+  }
+  .browser-frame {
+    border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.12);
+    background: #0b1220; display: flex; flex-direction: column; min-height: 420px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .browser-chrome {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .browser-dots { display: flex; gap: 6px; }
+  .browser-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .browser-dots i:nth-child(1) { background: #ff5f57; }
+  .browser-dots i:nth-child(2) { background: #febc2e; }
+  .browser-dots i:nth-child(3) { background: #28c840; }
+  .browser-url {
+    flex: 1; font-size: 13px; color: var(--muted); font-family: var(--font-en);
+    background: rgba(0,0,0,.35); border-radius: 8px; padding: 6px 12px;
+  }
+  .browser-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .browser-body h3 { font-size: 20px; color: #fff; margin: 0; }
+  .browser-body .sub { font-size: 14px; color: var(--muted); margin: 0; }
+  .lf-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .lf-mini .card {
+    padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08);
     background: rgba(255,255,255,.03);
   }
-  .lf-brand { display: flex; align-items: center; gap: 12px; }
-  .lf-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px rgba(34,197,94,.7); }
-  .lf-brand b { font-size: 18px; color: #fff; font-family: var(--font-en); letter-spacing: .04em; }
-  .lf-brand span { font-size: 14px; color: var(--muted); }
-  .lf-meta { display: flex; gap: 18px; font-size: 14px; color: var(--muted); font-family: var(--font-en); }
-  .lf-meta em { font-style: normal; color: var(--cyan); }
-  .lf-body { display: grid; grid-template-columns: 1fr 1.15fr 1fr; min-height: 0; }
-  .lf-col { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
-  .lf-col + .lf-col { border-left: 1px solid rgba(255,255,255,.08); }
-  .lf-col h3 { font-size: 16px; color: var(--muted); margin: 0 0 4px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-family: var(--font-en); }
-  .lf-col label { font-size: 13px; color: var(--muted); margin: 4px 0 4px; }
-  .lf-col input[type=text] {
-    width: 100%; padding: 10px 12px; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,.12); background: rgba(0,0,0,.35); color: #fff; font-size: 16px;
+  .lf-mini label { font-size: 12px; margin: 4px 0; }
+  .lf-mini input[type=text] { font-size: 14px; padding: 8px 10px; }
+  .lf-mini .go { font-size: 14px; padding: 8px 12px; margin-top: 8px; }
+  #lfPreview { font-size: 15px; color: var(--cyan); min-height: 40px; margin: 0; line-height: 1.4; }
+  .webapp-note {
+    font-size: 16px; color: var(--muted); text-align: center; margin-top: 12px;
+    width: min(1480px,100%);
   }
-  .lf-col input[type=text]:focus { outline: none; border-color: var(--cyan); }
-  .lf-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  .lf-actions .go { margin-top: 0; font-size: 15px; padding: 9px 14px; border-radius: 8px; }
-  .lf-actions .chip {
-    font-size: 13px; padding: 7px 10px; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--ink);
-  }
-  .lf-log {
-    flex: 1; overflow: auto; background: rgba(0,0,0,.35); border-radius: 10px;
-    border: 1px solid rgba(255,255,255,.08); padding: 12px 14px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; line-height: 1.55;
-  }
-  .lf-log .log-line { color: var(--ink); margin-bottom: 8px; }
-  .lf-log .log-line .ts { color: var(--muted); margin-right: 8px; }
-  .lf-log .log-line.match { color: #86efac; }
-  .lf-log .log-line.wait { color: #fdba74; }
-  .lf-status {
-    display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
-  }
-  .lf-status span {
-    text-align: center; padding: 6px 4px; border-radius: 8px;
-    border: 1px solid rgba(255,255,255,.1); font-size: 12px; color: var(--muted); font-family: var(--font-en);
-  }
-  .lf-status span.on { border-color: rgba(34,211,238,.5); color: var(--cyan); background: rgba(34,211,238,.1); }
-  .lf-mem { display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow: auto; }
-  .lf-mem .mem {
-    font-size: 14px; padding: 8px 10px; border-radius: 8px;
-    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.06); color: #fff;
-  }
-  #resultLine { font-size: 16px; font-weight: 600; color: #fff; line-height: 1.45; min-height: 48px; margin: 0; }
 
-  /* Next lesson mission */
-  .mission-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-    width: min(1480px, 100%);
+  /* Design Thinking */
+  .dt-wrap {
+    width: min(1480px, 100%); display: flex; flex-direction: column; align-items: center; gap: 18px;
   }
-  .mission-col {
-    border-radius: 18px; border: 1px solid rgba(34,211,238,.3);
-    background: rgba(34,211,238,.05); padding: 22px 24px;
+  .dt-loop {
+    position: relative; width: 100%; max-width: 1320px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; align-items: stretch;
   }
-  .mission-col.solve { border-color: rgba(249,115,22,.45); background: rgba(249,115,22,.08); }
-  .mission-col h3 { font-size: 26px; color: #fff; margin: 0 0 6px; }
-  .mission-col .sub { font-size: 16px; color: var(--muted); margin: 0 0 16px; }
-  .mission-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
-  .mission-steps li {
-    display: grid; grid-template-columns: 48px 1fr; gap: 12px; align-items: start;
+  .dt-stage {
+    position: relative; text-align: center; padding: 22px 14px 20px;
+    border-radius: 20px; border: 1px solid rgba(34,211,238,.35);
+    background: linear-gradient(180deg, rgba(34,211,238,.1), rgba(8,14,28,.6));
+    min-height: 220px; display: flex; flex-direction: column; align-items: center; gap: 8px;
   }
-  .mission-steps .rl-num { font-size: 22px; }
-  .mission-steps b { display: block; font-size: 20px; color: #fff; margin-bottom: 2px; }
-  .mission-steps p { font-size: 17px; color: var(--ink); line-height: 1.4; margin: 0; }
-  .mission-foot {
-    grid-column: 1 / -1; text-align: center; font-size: 20px; color: #fff;
-    padding: 14px 20px; border-radius: 14px; border: 1px dashed rgba(34,211,238,.45);
+  .dt-stage:not(:last-child)::after {
+    content: ""; position: absolute; right: -14px; top: 48%;
+    width: 16px; height: 16px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan);
+    transform: rotate(45deg); z-index: 2;
   }
-  .mission-foot a { color: var(--cyan); }
+  .dt-stage .dt-ico {
+    width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 22px; font-weight: 900; font-family: var(--font-en); color: #04121a;
+    background: linear-gradient(135deg, var(--cyan), #60a5fa);
+    box-shadow: 0 0 20px rgba(34,211,238,.4);
+  }
+  .dt-stage.define .dt-ico { background: linear-gradient(135deg, var(--orange), #fb923c); box-shadow: 0 0 20px rgba(249,115,22,.4); }
+  .dt-stage.define { border-color: rgba(249,115,22,.5); background: linear-gradient(180deg, rgba(249,115,22,.14), rgba(8,14,28,.6)); }
+  .dt-stage .en-label { font-size: 12px; letter-spacing: .14em; color: var(--muted); font-family: var(--font-en); text-transform: uppercase; }
+  .dt-stage b { font-size: 26px; color: #fff; }
+  .dt-stage p { font-size: 16px; color: var(--ink); line-height: 1.4; margin: 0; }
+  .dt-ask {
+    font-size: 15px; color: var(--cyan); margin-top: auto; padding-top: 8px;
+    border-top: 1px dashed rgba(255,255,255,.12); width: 100%;
+  }
+  .dt-foot {
+    display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+    width: 100%; max-width: 1100px;
+  }
+  .dt-loop-badge {
+    font-size: 18px; color: #fff; padding: 10px 22px; border-radius: 99px;
+    border: 1px solid rgba(249,115,22,.5); background: rgba(249,115,22,.12);
+  }
+  .dt-hw { font-size: 18px; color: var(--muted); }
+  .dt-hw a { color: var(--cyan); }
+
+  @media (max-width: 1100px) {
+    .agent-hud { grid-template-columns: 1fr 1fr; grid-template-areas: "goal goal" "memory skill" "core core" "brain spec"; height: auto; }
+    .webapp-teach, .ag-work, .dt-loop { grid-template-columns: 1fr; }
+    .dt-stage:not(:last-child)::after { display: none; }
+  }
 
   /* Prompt chapter */
   .ic-case .ic-result { font-size: 20px; color: var(--muted); margin-top: 12px; }
@@ -1451,16 +1511,16 @@
   .task .clean li { font-size: 22px; padding: 10px 0; }
   .task .small { font-size: 18px; }
   @media (max-height: 820px) {
-    .agent-parts .part b { font-size: 24px; }
-    .agent-side #partTitle { font-size: 28px; }
-    .agent-side #partDetail { font-size: 18px; }
+    .agent-hud .part b { font-size: 22px; }
+    .agent-core { width: 140px; height: 140px; font-size: 22px; }
     .ag-row b { font-size: 20px; }
     .ag-row p { font-size: 16px; }
-    .mission-steps b { font-size: 18px; }
-    .mission-steps p { font-size: 15px; }
+    .dt-stage b { font-size: 22px; }
+    .dt-stage p { font-size: 14px; }
+    .webapp-step b { font-size: 18px; }
   }
   @media (max-width: 1100px) {
-    .agent-split, .ag-work, .mission-grid, .lf-body { grid-template-columns: 1fr; }
+    .ag-work, .webapp-teach { grid-template-columns: 1fr; }
   }
   @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
@@ -2111,21 +2171,25 @@
 <section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
     <div class="kicker">04 Agent 智能体 <span class="en">· Anatomy of an Agent</span></div>
     <h2>一个 Agent，由五个零件组成 <span class="sub-en">Five Core Parts</span></h2>
-    <div class="agent-split">
-      <div class="agent-parts" id="agentBoard">
-        <button class="part on" type="button" data-part="goal"><i>01</i><b>目标</b><span>要办成什么事</span></button>
-        <button class="part" type="button" data-part="memory"><i>02</i><b>记忆</b><span>记住重要的 Context</span></button>
-        <button class="part" type="button" data-part="brain"><i>03</i><b>大脑</b><span>会想下一步的 AI</span></button>
-        <button class="part" type="button" data-part="skill"><i>04</i><b>工具</b><span>查、写、发、比对</span></button>
-        <button class="part" type="button" data-part="spec"><i>05</i><b>规矩</b><span>什么绝对不能做</span></button>
-      </div>
-      <div class="agent-side">
-        <span class="side-tag">Part Detail</span>
-        <h3 id="partTitle">目标</h3>
-        <p id="partDetail">要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。</p>
-        <p class="side-ex"><b>水壶例子</b>：目标不是「聊天陪你」，而是「两边对上号，找到失主」。</p>
-      </div>
+    <div class="agent-hud" id="agentBoard">
+      <svg class="agent-orbit" viewBox="0 0 640 420" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <ellipse class="orb-ring r1" cx="320" cy="210" rx="210" ry="150"/>
+        <ellipse class="orb-ring r2" cx="320" cy="210" rx="155" ry="108"/>
+        <ellipse class="orb-ring r3" cx="320" cy="210" rx="95" ry="66"/>
+        <line class="orb-beam" x1="320" y1="70" x2="320" y2="140"/>
+        <line class="orb-beam" x1="120" y1="210" x2="210" y2="210"/>
+        <line class="orb-beam" x1="430" y1="210" x2="520" y2="210"/>
+        <line class="orb-beam" x1="185" y1="340" x2="255" y2="280"/>
+        <line class="orb-beam" x1="455" y1="340" x2="385" y2="280"/>
+      </svg>
+      <button class="part p-goal on" type="button" data-part="goal"><i>01</i><b>目标</b><span>要办成的事</span></button>
+      <button class="part p-memory" type="button" data-part="memory"><i>02</i><b>记忆</b><span>它的小本子</span></button>
+      <div class="agent-core-wrap"><div class="agent-core">AGENT<span>智能体</span></div></div>
+      <button class="part p-skill" type="button" data-part="skill"><i>03</i><b>工具</b><span>它的手和脚</span></button>
+      <button class="part p-brain" type="button" data-part="brain"><i>04</i><b>大脑</b><span>会想办法的 AI</span></button>
+      <button class="part p-spec" type="button" data-part="spec"><i>05</i><b>规矩</b><span>什么绝对不能做</span></button>
     </div>
+    <div class="card part-detail" id="partDetail">目标：要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。</div>
   </section>
 
 <section class="slide" data-hint="顺着五步讲：接到任务 → 翻记忆 → 想办法 → 用工具 → 交结果；右边是它常干的活">
@@ -2207,87 +2271,115 @@
     </div>
   </section>
 
-<section class="slide" data-hint="先登记失物，再登记拾物；看中间日志怎么决策。试一件对不上的，它必须说还没匹配">
-    <div class="kicker">04 课堂实操 <span class="en">· Live Agent Console</span></div>
-    <h2>校园寻物控制台 <span class="sub-en">Lost & Found Ops</span></h2>
-    <div class="lost-console">
-      <div class="lf-topbar">
-        <div class="lf-brand">
-          <span class="lf-dot"></span>
-          <b>CAMPUS LOST & FOUND</b>
-          <span>Agent online · matching mode</span>
+<section class="slide" data-hint="重点：Agent 能帮你写出可在浏览器打开的网页。左边讲怎么做，右边是成品预览">
+    <div class="kicker">04 Agent 做网页 <span class="en">· Build a Web App with Agents</span></div>
+    <h2>校园寻物：Agent 做出的网页应用 <span class="sub-en">From Prompt to Browser</span></h2>
+    <div class="webapp-teach">
+      <div class="webapp-steps">
+        <div class="webapp-step">
+          <span class="rl-num">01</span>
+          <div>
+            <b>说清你要什么网页</b>
+            <p>用 Prompt 讲清楚：谁用、干什么、长什么样、不能乱编。</p>
+            <code>「做一个校园寻物网页：左边登记丢失，右边登记捡到，能对上号。」</code>
+          </div>
         </div>
-        <div class="lf-meta">
-          <span>GOAL <em>match owner ↔ finder</em></span>
-          <span>RULE <em>no invent</em></span>
+        <div class="webapp-step">
+          <span class="rl-num">02</span>
+          <div>
+            <b>让 Agent 写代码</b>
+            <p>它会生成 HTML / CSS / JS。你不用先会编程，但要看得懂页面在干什么。</p>
+          </div>
+        </div>
+        <div class="webapp-step">
+          <span class="rl-num">03</span>
+          <div>
+            <b>在浏览器里打开试</b>
+            <p>拖进 Chrome / Safari，点一点。哪里不对？截图或描述给 Agent。</p>
+          </div>
+        </div>
+        <div class="webapp-step">
+          <span class="rl-num">04</span>
+          <div>
+            <b>再说一遍，让它改</b>
+            <p>「按钮再大一点」「对不上要说不知道」。Agent 改完，你再试——这就是做产品。</p>
+          </div>
         </div>
       </div>
-      <div class="lf-body">
-        <div class="lf-col">
-          <h3>Report Lost</h3>
-          <label>物品</label><input id="lostWhat" type="text" placeholder="蓝色保温水壶">
-          <label>最后出现位置</label><input id="lostWhere" type="text" placeholder="图书馆三楼阅览区">
-          <div class="lf-actions">
-            <button class="go" type="button" id="addLost">提交失物</button>
-            <button class="chip" type="button" data-fill="lost" data-what="蓝色保温水壶" data-where="图书馆三楼">样例 A</button>
-            <button class="chip" type="button" data-fill="lost" data-what="黑色双肩包" data-where="操场看台">样例 B</button>
-          </div>
+      <div class="browser-frame">
+        <div class="browser-chrome">
+          <div class="browser-dots"><i></i><i></i><i></i></div>
+          <div class="browser-url">campus-lost-found.local / index.html</div>
         </div>
-        <div class="lf-col">
-          <h3>Agent Runtime</h3>
-          <div class="lf-status" id="lights">
-            <span data-l="goal">GOAL</span>
-            <span data-l="memory">MEMORY</span>
-            <span data-l="brain">BRAIN</span>
-            <span data-l="skill">TOOLS</span>
-            <span data-l="spec">RULES</span>
+        <div class="browser-body">
+          <h3>校园寻物</h3>
+          <p class="sub">成品预览 · 用 Agent 写出来的小网页</p>
+          <div class="lf-mini">
+            <div class="card">
+              <b style="color:#fff;font-size:15px">我丢了</b>
+              <label>物品</label><input id="lostWhat" type="text" placeholder="蓝色水壶" value="蓝色水壶">
+              <label>地点</label><input id="lostWhere" type="text" placeholder="图书馆" value="图书馆三楼">
+              <button class="go" type="button" id="addLost">登记丢失</button>
+            </div>
+            <div class="card">
+              <b style="color:#fff;font-size:15px">我捡到了</b>
+              <label>物品</label><input id="foundWhat" type="text" placeholder="蓝色水壶" value="蓝色水壶">
+              <label>地点</label><input id="foundWhere" type="text" placeholder="门口" value="图书馆门口">
+              <button class="go" type="button" id="addFound">登记捡到</button>
+            </div>
           </div>
-          <p id="resultLine">等待输入。先提交一件失物，再提交一件拾物，观察匹配逻辑。</p>
-          <div class="lf-log" id="lfLog">
-            <div class="log-line"><span class="ts">00:00</span>system ready · memory empty</div>
-          </div>
-          <div class="lf-mem" id="memList"></div>
-          <button class="chip" type="button" id="resetLost">清空记忆 / Reset</button>
-        </div>
-        <div class="lf-col">
-          <h3>Report Found</h3>
-          <label>物品</label><input id="foundWhat" type="text" placeholder="蓝色保温水壶">
-          <label>捡到位置</label><input id="foundWhere" type="text" placeholder="图书馆门口失物架">
-          <div class="lf-actions">
-            <button class="go" type="button" id="addFound">提交拾物</button>
-            <button class="chip" type="button" data-fill="found" data-what="蓝色保温水壶" data-where="图书馆门口">样例 A</button>
-            <button class="chip" type="button" data-fill="found" data-what="红色笔袋" data-where="食堂二楼">样例 C</button>
-          </div>
+          <p id="lfPreview">点两边按钮，试一下这个网页能不能对上号。</p>
         </div>
       </div>
     </div>
+    <p class="webapp-note">下一节你们也会这样：找到真问题 → 跟 Agent 一起做出能在浏览器里用的东西。</p>
   </section>
 
-<section class="slide" data-hint="讲清下一节课：先找到身边的真问题，再用 AI/Agent 方法去拆解和验证">
-    <div class="kicker">衔接下一节 <span class="en">· Next Session</span></div>
-    <h2>下一节：找到真问题，用 AI 去解决 <span class="sub-en">Find → Frame → Build</span></h2>
-    <div class="mission-grid">
-      <div class="mission-col">
-        <h3>怎么找到真问题</h3>
-        <p class="sub">真问题 = 身边有人反复遇到、现在解决得不好</p>
-        <ul class="mission-steps">
-          <li><span class="rl-num">01</span><div><b>盯住重复麻烦</b><p>这一周，谁在同一件事上抱怨了两次以上？</p></div></li>
-          <li><span class="rl-num">02</span><div><b>采访当事人</b><p>问：什么时候最烦？现在怎么处理？卡在哪？</p></div></li>
-          <li><span class="rl-num">03</span><div><b>用 AI 帮你挖深</b><p>把采访笔记丢给 AI，让它列出可能的根因和影响谁。</p></div></li>
-          <li><span class="rl-num">04</span><div><b>写成一句话目标</b><p>「让谁，在什么场景，不用再怎样。」写不清就还不是真问题。</p></div></li>
-        </ul>
+<section class="slide" data-hint="顺着五个圆讲 Design Thinking：观察→定义→构想→做出→验证，强调定义问题最关键">
+    <div class="kicker">衔接下一节 <span class="en">· Design Thinking</span></div>
+    <h2>找到真问题，再动手解决 <span class="sub-en">A Kid-Friendly Design Loop</span></h2>
+    <div class="dt-wrap">
+      <div class="dt-loop">
+        <div class="dt-stage">
+          <div class="dt-ico">1</div>
+          <span class="en-label">Empathize</span>
+          <b>观察</b>
+          <p>身边谁在反复抱怨？什么时候最烦？</p>
+          <div class="dt-ask">先看，先听</div>
+        </div>
+        <div class="dt-stage define">
+          <div class="dt-ico">2</div>
+          <span class="en-label">Define</span>
+          <b>定义</b>
+          <p>写成一句：「让谁，在什么场景，不用再怎样。」</p>
+          <div class="dt-ask">写不清 = 还不是真问题</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">3</div>
+          <span class="en-label">Ideate</span>
+          <b>构想</b>
+          <p>让 AI 给 2–3 种办法，你来挑一种。</p>
+          <div class="dt-ask">多想几种，再决定</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">4</div>
+          <span class="en-label">Prototype</span>
+          <b>做出</b>
+          <p>跟 Agent 一起做最小可用版：网页、表格、小助手。</p>
+          <div class="dt-ask">先跑通一件真事</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">5</div>
+          <span class="en-label">Test</span>
+          <b>验证</b>
+          <p>真的有人用了吗？哪里卡？改完再试。</p>
+          <div class="dt-ask">不确定就说不知道</div>
+        </div>
       </div>
-      <div class="mission-col solve">
-        <h3>怎么用 AI 去解决</h3>
-        <p class="sub">下一节课我们会按这套方法动手搭</p>
-        <ul class="mission-steps">
-          <li><span class="rl-num">01</span><div><b>写清 Prompt + Context</b><p>目标、谁、场景、试过什么、不能做什么。</p></div></li>
-          <li><span class="rl-num">02</span><div><b>让 AI 给 2–3 种方案</b><p>比较成本、速度、谁来维护；你来做决定。</p></div></li>
-          <li><span class="rl-num">03</span><div><b>拆成 Agent 五零件</b><p>目标 / 记忆 / 大脑 / 工具 / 规矩，缺一就补。</p></div></li>
-          <li><span class="rl-num">04</span><div><b>做最小可用版并验收</b><p>先跑通一件真事；不确定就说不知道，再迭代。</p></div></li>
-        </ul>
+      <div class="dt-foot">
+        <span class="dt-loop-badge">做完第 5 步 → 回到第 1 步，继续改</span>
+        <span class="dt-hw">作业：带一个真问题来（谁 · 场景 · 现状 · 想要的结果）· <a href="https://solverealproblem.com" target="_blank" rel="noopener">solverealproblem.com</a></span>
       </div>
-      <p class="mission-foot">作业：带一个真问题来（谁 · 场景 · 现状 · 想要的结果）。也可先逛 <a href="https://solverealproblem.com" target="_blank" rel="noopener">solverealproblem.com</a> 看别人怎么提。</p>
     </div>
   </section>
 
@@ -2689,114 +2781,43 @@ document.getElementById("pbBtns").addEventListener("click",e=>{
 });
 
 const partText={
-  goal:{
-    title:"目标",
-    detail:"要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。",
-    ex:"水壶例子：目标不是「聊天陪你」，而是「两边对上号，找到失主」。"
-  },
-  memory:{
-    title:"记忆",
-    detail:"把重要 Context 写进小本子——谁丢了什么、谁捡到了什么。关掉窗口也还在。",
-    ex:"水壶例子：记下「小明丢了蓝色水壶 · 图书馆三楼」。"
-  },
-  brain:{
-    title:"大脑",
-    detail:"就是大语言模型。听懂任务，决定下一步：该查、该问，还是该通知。",
-    ex:"水壶例子：看到「蓝色水壶」，去记忆里找有没有同款拾物。"
-  },
-  skill:{
-    title:"工具",
-    detail:"手和脚：查登记、发消息、写记录。没有工具，它只能说「好的」，办不成事。",
-    ex:"水壶例子：匹配成功后，给失主和捡到的人各发一条通知。"
-  },
-  spec:{
-    title:"规矩",
-    detail:"底线。对不上就说还没匹配，不许编一个捡到的人；不泄露同学隐私。",
-    ex:"水壶例子：只有红色笔袋对不上蓝色水壶时，必须老实承认「暂无匹配」。"
-  }
+  goal:"目标：要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。",
+  memory:"记忆：它的小本子。把重要 Context 写下来——谁丢了什么、谁捡到了什么。关掉窗口也还在。",
+  brain:"大脑：就是大语言模型。听懂任务，决定下一步该查、该问，还是该通知。",
+  skill:"工具：它的手和脚。比如查网页、写代码、发消息。没有工具，它只能说「好的」，办不成事。",
+  spec:"规矩：底线。对不上就说不知道，不许编；不许泄露同学的隐私。"
 };
-function paintPart(key){
-  const t=partText[key]; if(!t) return;
-  document.getElementById("partTitle").textContent=t.title;
-  document.getElementById("partDetail").textContent=t.detail;
-  document.querySelector(".agent-side .side-ex").innerHTML=`<b>水壶例子</b>：${t.ex.replace(/^水壶例子：/,"")}`;
-  document.querySelectorAll("#agentBoard .part").forEach(x=>x.classList.toggle("on",x.dataset.part===key));
-}
 document.getElementById("agentBoard").addEventListener("click",e=>{
   const b=e.target.closest(".part"); if(!b) return;
-  paintPart(b.dataset.part);
+  document.querySelectorAll("#agentBoard .part").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("partDetail").textContent=partText[b.dataset.part];
 });
 
 const losts=[], founds=[];
-let lfTick=0;
 function sameItem(a,b){
-  a=a.replace(/\s/g,""); b=b.replace(/\s/g,"");
+  a=(a||"").replace(/\s/g,""); b=(b||"").replace(/\s/g,"");
   if(!a||!b) return false;
   if(a===b) return true;
   const short=a.length<=b.length?a:b, long=a.length<=b.length?b:a;
   return short.length>=2 && long.includes(short);
 }
-function lfTime(){
-  lfTick+=1;
-  const m=String(Math.floor(lfTick/60)).padStart(2,"0");
-  const s=String(lfTick%60).padStart(2,"0");
-  return `${m}:${s}`;
-}
-function pushLog(text, cls=""){
-  const box=document.getElementById("lfLog");
-  const line=document.createElement("div");
-  line.className="log-line"+(cls?" "+cls:"");
-  line.innerHTML=`<span class="ts">${lfTime()}</span>${text}`;
-  box.appendChild(line);
-  box.scrollTop=box.scrollHeight;
-}
-function renderMem(){
-  const box=document.getElementById("memList");
-  const rows=[
-    ...losts.map(x=>`LOST  · ${x.what} · ${x.where}`),
-    ...founds.map(x=>`FOUND · ${x.what} · ${x.where}`)
-  ];
-  box.innerHTML=rows.map(r=>`<div class="mem">${r}</div>`).join("") || "";
-}
-function light(keys){
-  document.querySelectorAll("#lights span").forEach(s=>s.classList.toggle("on",keys.includes(s.dataset.l)));
-}
 function addItem(side){
   const what=document.getElementById(side==="lost"?"lostWhat":"foundWhat").value.trim();
   const where=document.getElementById(side==="lost"?"lostWhere":"foundWhere").value.trim();
-  if(!what){
-    document.getElementById("resultLine").textContent="缺少物品名称，无法建档。";
-    pushLog("reject · empty item name","wait");
-    return;
-  }
-  const item={what,where:where||"位置未填"};
+  const preview=document.getElementById("lfPreview");
+  if(!what){ preview.textContent="先写下是什么东西。"; return; }
+  const item={what,where:where||"地点没写"};
   (side==="lost"?losts:founds).push(item);
-  pushLog(`${side==="lost"?"ingest LOST":"ingest FOUND"} · ${item.what} @ ${item.where}`);
-  light(["goal","memory","brain","skill","spec"]);
   const other=side==="lost"?founds:losts;
   const hit=other.find(x=>sameItem(x.what,what));
   if(hit){
-    document.getElementById("resultLine").textContent=`匹配成功：${what}。通知已拟好——请双方自行确认是否同一件。线索：${item.where} / ${hit.where}`;
-    pushLog(`match · "${what}" · notify both sides · await human confirm`,"match");
+    preview.textContent=`对上了：${what}。两边可以去确认。这就是一个能在浏览器里用的小网页。`;
   }else{
-    document.getElementById("resultLine").textContent=`已写入记忆。暂无与「${what}」对得上的记录。不会虚构拾主/失主。`;
-    pushLog(`no match · keep in memory · refuse to invent`,"wait");
+    preview.textContent=`记下了「${what}」。还没有对得上的。网页会老实地等下一条登记。`;
   }
-  renderMem();
 }
 document.getElementById("addLost").onclick=()=>addItem("lost");
 document.getElementById("addFound").onclick=()=>addItem("found");
-document.querySelectorAll("[data-fill]").forEach(b=>b.onclick=()=>{
-  const side=b.dataset.fill;
-  document.getElementById(side==="lost"?"lostWhat":"foundWhat").value=b.dataset.what;
-  document.getElementById(side==="lost"?"lostWhere":"foundWhere").value=b.dataset.where;
-  addItem(side);
-});
-document.getElementById("resetLost").onclick=()=>{
-  losts.length=0; founds.length=0; lfTick=0; renderMem(); light([]);
-  document.getElementById("resultLine").textContent="记忆已清空。等待新的失物/拾物输入。";
-  document.getElementById("lfLog").innerHTML=`<div class="log-line"><span class="ts">00:00</span>system ready · memory empty</div>`;
-};
 
 const slides=[...document.querySelectorAll(".slide")];
 let cur=0;
