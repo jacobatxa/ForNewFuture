@@ -875,7 +875,7 @@
   .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
   .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
   .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.6; text-wrap: pretty; }
-  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-grid, .ctx-hooks, .ctx-lab) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .lost-grid, .ctx-hooks, .ag-flow-wrap) > h2 { font-size: 42px; margin-bottom: 14px; }
   .terminal-card.lab { max-width: 960px; }
   .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
   .terminal-card.lab .claim-text { font-size: 28px; }
@@ -1252,28 +1252,105 @@
 
   /* Agent chapter */
   .bd-sub { font-size: 20px; color: var(--muted); margin: -6px 0 16px; }
-  .agent-core span { display: block; font-size: 20px; font-weight: 600; opacity: .85; margin-top: 4px; }
-  #agentBoard { max-width: 1160px; grid-template-columns: minmax(200px,1fr) 240px minmax(200px,1fr); gap: 18px 28px; }
-  #agentBoard .part { width: min(320px, 100%); padding: 18px 24px; }
-  #agentBoard .agent-core { width: 210px; height: 210px; font-size: 30px; }
-  .part b { display: block; font-size: 32px; color: #fff; }
-  .part span { display: block; font-size: 20px; color: var(--muted); margin-top: 4px; }
-  .part-detail { max-width: 960px; font-size: 22px !important; line-height: 1.5; text-align: center; padding: 18px 26px; }
-  .loop-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; width: 100%; }
-  .loop-step {
-    position: relative; text-align: center; padding: 26px 18px; border-radius: 18px;
-    border: 1px solid var(--line); background: var(--bg-card); transition: all .3s ease;
+  .agent-hud {
+    position: relative;
+    width: min(1180px, 100%);
+    height: min(420px, 48vh);
+    margin: 0 auto 12px;
   }
-  .loop-step:not(:last-child)::after {
-    content: "→"; position: absolute; right: -29px; top: 50%; transform: translateY(-50%);
-    font-size: 28px; color: var(--cyan);
+  .agent-orbit { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .orb-ring { fill: none; stroke: rgba(34,211,238,.28); stroke-width: 1.5; }
+  .orb-ring.r1 { animation: orbSpin 18s linear infinite; transform-origin: 320px 210px; stroke-dasharray: 8 10; }
+  .orb-ring.r2 { animation: orbSpin 12s linear infinite reverse; transform-origin: 320px 210px; stroke: rgba(249,115,22,.35); }
+  .orb-ring.r3 { stroke: rgba(34,211,238,.5); stroke-width: 2; }
+  .orb-beam { stroke: rgba(34,211,238,.35); stroke-width: 1.5; stroke-dasharray: 4 6; animation: beamPulse 2.4s ease-in-out infinite; }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes beamPulse { 0%,100% { opacity: .35; } 50% { opacity: .9; } }
+  .agent-core-wrap {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    z-index: 2;
   }
-  .loop-step .rl-num { font-size: 34px; }
-  .loop-step b { display: block; font-size: 34px; color: #fff; margin: 6px 0 10px; }
-  .loop-step p { font-size: 21px; color: var(--ink); line-height: 1.45; }
-  .loop-step.on { border-color: var(--orange); background: rgba(249,115,22,.14); box-shadow: 0 0 22px var(--orange-glow); transform: translateY(-6px); }
-  .loop-back { font-size: 22px; color: var(--muted); padding: 8px 24px; border-radius: 99px; border: 1px dashed rgba(34,211,238,.4); transition: all .3s ease; }
-  .loop-back.on { color: #fff; border-color: var(--cyan); box-shadow: 0 0 16px var(--cyan-glow); }
+  .agent-core {
+    width: 168px; height: 168px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 900; font-size: 28px; font-family: var(--font-en); color: #fff;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 28%),
+      radial-gradient(circle at 50% 50%, #22d3ee 0%, #1d4ed8 42%, #070d1a 78%);
+    border: 2px solid rgba(255,255,255,.55);
+    box-shadow:
+      0 0 0 10px rgba(34,211,238,.08),
+      0 0 40px rgba(34,211,238,.55),
+      0 0 80px rgba(249,115,22,.25);
+    animation: corePulse 3.2s ease-in-out infinite;
+  }
+  .agent-core span { display: block; font-size: 18px; font-weight: 700; opacity: .9; margin-top: 4px; font-family: inherit; letter-spacing: .08em; }
+  @keyframes corePulse {
+    0%,100% { box-shadow: 0 0 0 10px rgba(34,211,238,.08), 0 0 40px rgba(34,211,238,.5), 0 0 70px rgba(249,115,22,.2); }
+    50% { box-shadow: 0 0 0 16px rgba(34,211,238,.14), 0 0 56px rgba(34,211,238,.7), 0 0 96px rgba(249,115,22,.35); }
+  }
+  .agent-hud .part {
+    position: absolute; z-index: 3; width: 200px; padding: 14px 18px 16px;
+    text-align: left; border: 1px solid rgba(34,211,238,.45);
+    background: linear-gradient(160deg, rgba(14,28,48,.92), rgba(8,14,28,.88));
+    border-radius: 16px; cursor: pointer; font-family: inherit;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .agent-hud .part i {
+    display: block; font-style: normal; font-family: var(--font-en);
+    font-size: 13px; color: var(--cyan); letter-spacing: .12em; margin-bottom: 4px;
+  }
+  .agent-hud .part b { display: block; font-size: 28px; color: #fff; }
+  .agent-hud .part span { display: block; font-size: 17px; color: var(--muted); margin-top: 4px; }
+  .agent-hud .part:hover { transform: translateY(-4px); border-color: var(--cyan); }
+  .agent-hud .part.on {
+    border-color: var(--orange);
+    background: linear-gradient(160deg, rgba(249,115,22,.28), rgba(8,14,28,.92));
+    box-shadow: 0 0 28px var(--orange-glow), inset 0 1px 0 rgba(255,255,255,.1);
+  }
+  .agent-hud .part.on i { color: var(--orange); }
+  .p-goal { left: 50%; top: 0; transform: translateX(-50%); }
+  .p-goal:hover, .p-goal.on { transform: translateX(-50%) translateY(-4px); }
+  .p-memory { left: 0; top: 38%; }
+  .p-skill { right: 0; top: 38%; }
+  .p-brain { left: 8%; bottom: 0; }
+  .p-spec { right: 8%; bottom: 0; }
+  .part-detail {
+    max-width: 980px; margin: 0 auto; font-size: 22px !important; line-height: 1.5;
+    text-align: center; padding: 16px 24px; min-height: 58px;
+  }
+  .ag-flow-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; width: min(1480px,100%); }
+  .ag-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; width: 100%; }
+  .ag-step {
+    position: relative; text-align: left; padding: 16px 14px 18px; border-radius: 16px;
+    border: 1px solid var(--line); background: var(--bg-card); transition: all .3s ease; min-height: 148px;
+  }
+  .ag-step:not(:last-child)::after {
+    content: "→"; position: absolute; right: -16px; top: 42%; transform: translateY(-50%);
+    font-size: 22px; color: var(--cyan); z-index: 1;
+  }
+  .ag-step .rl-num { font-size: 22px; }
+  .ag-step b { display: block; font-size: 24px; color: #fff; margin: 4px 0 8px; }
+  .ag-step p { font-size: 17px; color: var(--ink); line-height: 1.4; margin: 0; }
+  .ag-step.on {
+    border-color: var(--orange); background: rgba(249,115,22,.14);
+    box-shadow: 0 0 22px var(--orange-glow); transform: translateY(-4px);
+  }
+  .ag-example { font-size: 18px; color: var(--muted); text-align: center; max-width: 1100px; margin: 0; line-height: 1.45; }
+  .ag-can { width: 100%; border-radius: 18px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); padding: 16px 20px 18px; }
+  .ag-can .bd-head { display: block; margin-bottom: 12px; }
+  .ag-can-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .ag-can-item {
+    display: flex; align-items: baseline; gap: 10px; padding: 12px 14px; border-radius: 12px;
+    background: rgba(0,0,0,.28); border: 1px solid rgba(255,255,255,.06);
+  }
+  .ag-can-item b {
+    flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+    background: rgba(34,211,238,.18); color: var(--cyan); font-size: 18px;
+  }
+  .ag-can-item span { font-size: 18px; color: #fff; line-height: 1.35; }
   .ps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; width: 100%; }
   .ps-card { padding: 22px 18px; border-radius: 16px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); text-align: center; }
   .ps-card b { display: block; font-size: 28px; color: var(--cyan); margin-bottom: 10px; }
@@ -1384,52 +1461,7 @@
     .vector-console .cat-pill { font-size: 14px; padding: 3px 8px; }
   }
 
-  /* Slide 11: Agent Board Architecture */
-  .agent-board {
-    display: grid;
-    grid-template-columns: minmax(160px,1fr) 180px minmax(160px,1fr);
-    grid-template-rows: auto auto auto;
-    gap: 10px 14px;
-    align-items: center;
-    justify-items: center;
-    max-width: 880px;
-    margin: 0 auto;
-    width: 100%;
-  }
-  .agent-board .part { width: min(260px, 100%); }
-  .agent-board .part[data-part="memory"], .agent-board .part[data-part="brain"] { justify-self: end; }
-  .agent-board .part[data-part="skill"], .agent-board .part[data-part="spec"] { justify-self: start; }
-  .agent-core {
-    grid-column: 2;
-    grid-row: 2;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    font-weight: 900;
-    font-size: 20px;
-    font-family: var(--font-en);
-    background: radial-gradient(circle at 40% 35%, #38bdf8, #1d4ed8 55%, #070d1a);
-    border: 2px solid rgba(255,255,255,.4);
-    box-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
-  }
-  .part {
-    text-align: left;
-    border: 1px solid var(--line);
-    background: rgba(255,255,255,.04);
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-family: var(--font-en);
-    transition: all .2s ease;
-  }
-  .part:hover { border-color: rgba(34,211,238,.4); }
-  .part.on { border-color: var(--orange); background: rgba(249,115,22,.14); box-shadow: 0 0 16px var(--orange-glow); }
-  #partDetail { min-height: 60px; font-size: 15px; }
+  #partDetail { min-height: 56px; }
 
   /* Slide 13: Lost & Found practice */
   .lost-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; align-items: start; }
@@ -1468,29 +1500,18 @@
   .ctx-hook .rl-num { font-size: 34px; }
   .ctx-hook b { display: block; font-size: 26px; color: #fff; margin: 8px 0 10px; }
   .ctx-hook p { font-size: 20px; color: var(--ink); line-height: 1.5; margin: 0; }
-  .ctx-lab { display: grid; grid-template-columns: 1fr 1.15fr; gap: 22px; max-width: 1440px; width: 100%; align-items: stretch; }
-  .ctx-lab-left, .ctx-lab-right { display: flex; flex-direction: column; gap: 14px; }
-  .ctx-q { font-size: 26px; color: #fff; margin: 0; line-height: 1.4; }
-  .ctx-switches { display: flex; flex-wrap: wrap; gap: 12px; }
-  .ctx-sw {
-    font-size: 20px; font-weight: 700; padding: 12px 18px; border-radius: 99px; cursor: pointer;
-    border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.06); color: var(--cyan);
-  }
-  .ctx-sw.on { background: var(--cyan); color: #04121a; box-shadow: 0 0 16px var(--cyan-glow); }
-  .ctx-panel { border-radius: 16px; padding: 18px 22px; border: 1px solid var(--line); background: var(--bg-card); min-height: 110px; }
-  .ctx-panel.answer { border-color: rgba(249,115,22,.45); background: rgba(249,115,22,.08); flex: 1; }
-  .ctx-panel .bd-head { display: block; margin-bottom: 8px; }
-  .ctx-known, .ctx-panel.answer p { font-size: 22px; color: #fff; line-height: 1.5; margin: 0; }
-  .ctx-meter { display: flex; align-items: center; gap: 14px; font-size: 18px; color: var(--muted); }
-  .ctx-meter i { flex: 1; height: 12px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; display: block; }
-  .ctx-meter i b { display: block; height: 100%; background: linear-gradient(90deg, var(--cyan), var(--orange)); border-radius: 99px; transition: width .35s ease; }
-  .ctx-meter em { font-style: normal; font-family: var(--font-en); color: #fff; font-weight: 700; min-width: 48px; text-align: right; }
   @media (max-height: 820px) {
     .ctx-hook b { font-size: 22px; }
     .ctx-hook p { font-size: 17px; }
-    .ctx-q { font-size: 22px; }
-    .ctx-sw { font-size: 17px; padding: 9px 14px; }
-    .ctx-known, .ctx-panel.answer p { font-size: 18px; }
+    .ag-step b { font-size: 20px; }
+    .ag-step p { font-size: 15px; }
+    .ag-can-item span { font-size: 16px; }
+    .agent-hud { height: min(380px, 46vh); }
+  }
+  @media (max-width: 1100px) {
+    .ag-flow { grid-template-columns: 1fr 1fr; }
+    .ag-step:not(:last-child)::after { display: none; }
+    .ag-can-grid { grid-template-columns: 1fr 1fr; }
   }
 
   /* Cover slide enhancements */
@@ -1946,18 +1967,18 @@
 
 <section class="slide" data-hint="让学生先说：如果是你，会怎么交代同学帮你带午饭">
     <div class="kicker">03 会提问 <span class="en">· What Is a Prompt</span></div>
-    <h2>Prompt，就是你交给 AI 的任务单 <span class="sub-en">A Prompt Is a Task Sheet</span></h2>
+    <h2>Prompt，就是你对 AI 说的话 <span class="sub-en">A Prompt Is What You Tell It</span></h2>
     <div class="ic-wrap">
-      <p class="ic-lead">AI 很能干，但它猜不到你心里想什么。<br>你说得越清楚，它办得越好。</p>
+      <p class="ic-lead">AI 很能干，但它猜不到你心里想什么。<br>你说得越清楚，它办得越好。这几句话，就叫 <b class="accent">Prompt</b>。</p>
       <div class="ic-pair">
         <div class="ic-case no">
-          <div><span class="ic-label">说得含糊</span><p>「帮我带个吃的。」</p><p class="ic-result">结果：带回来一包辣条，可你不吃辣。</p></div>
+          <div><span class="ic-label">Prompt 含糊</span><p>「帮我带个吃的。」</p><p class="ic-result">结果：带回来一包辣条，可你不吃辣。</p></div>
         </div>
         <div class="ic-case yes">
-          <div><span class="ic-label">说得清楚</span><p>「帮我从食堂二楼带一份不辣的面，12:10 前送到教室。没有面就先发消息问我。」</p><p class="ic-result">结果：正好是你想要的。</p></div>
+          <div><span class="ic-label">Prompt 清楚</span><p>「帮我从食堂二楼带一份不辣的面，12:10 前送到教室。没有面就先发消息问我。」</p><p class="ic-result">结果：正好是你想要的。</p></div>
         </div>
       </div>
-      <div class="ic-remember"><b>记住</b>任务单写得清楚，事情才办得对</div>
+      <div class="ic-remember"><b>记住</b>Prompt 写清楚，事情才办得对</div>
     </div>
   </section>
 
@@ -1987,51 +2008,22 @@
     </div>
   </section>
 
-  <section class="slide" data-hint="让学生轮流点开关，看同一句问题的回答怎么变好">
-    <div class="kicker">03 亲手试 <span class="en">· Context Switch Lab</span></div>
-    <h2>同一句问题，多给一点情况会怎样？ <span class="sub-en">Flip the Context Switches</span></h2>
-    <div class="ctx-lab">
-      <div class="ctx-lab-left">
-        <p class="ctx-q">固定问题：「帮我写一份班级读书角方案。」</p>
-        <p class="small" style="margin:0 0 10px">点开下面的开关，把情况一点点告诉 AI：</p>
-        <div class="ctx-switches" id="ctxSwitches">
-          <button type="button" class="ctx-sw" data-k="size">我们班有 40 个人</button>
-          <button type="button" class="ctx-sw" data-k="shelf">教室后面有一个空书架</button>
-          <button type="button" class="ctx-sw" data-k="money">没有经费</button>
-          <button type="button" class="ctx-sw" data-k="tried">之前贴过通知，没什么人理</button>
-          <button type="button" class="ctx-sw" data-k="goal">想让每人一个月至少读完一本书</button>
-        </div>
-      </div>
-      <div class="ctx-lab-right">
-        <div class="ctx-panel">
-          <span class="bd-head" id="ctxPanelHead">它现在知道的</span>
-          <p id="ctxKnown" class="ctx-known">（几乎什么都不知道）</p>
-        </div>
-        <div class="ctx-panel answer">
-          <span class="bd-head">它大概会怎么答</span>
-          <p id="ctxAnswer">给你一份看起来很完整、但放哪一班都行的通用方案。不认识你们班，你也没得选。</p>
-        </div>
-        <div class="ctx-meter"><span>有用程度</span><i id="ctxMeter"><b style="width:18%"></b></i><em id="ctxMeterLabel">18%</em></div>
-      </div>
-    </div>
-  </section>
-
-<section class="slide" data-hint="重点讲 03 和 04：让 AI 多想几种办法，由你来做决定">
+<section class="slide" data-hint="重点讲 02 和 03：给足 Context，再让 AI 多想几种办法，由你来做决定">
     <div class="kicker">03 写好 Prompt <span class="en">· 5 Good Habits</span></div>
-    <h2>写任务单的五个好习惯 <span class="sub-en">Goal · Context · Options · Decide · Check</span></h2>
+    <h2>写好 Prompt 的五个习惯 <span class="sub-en">Goal · Context · Options · Decide · Check</span></h2>
     <div class="hb-grid">
       <div class="hb-card"><span class="rl-num">01</span><b>说清目标</b><p>说你想要什么结果，不用一步步教它怎么做</p></div>
-      <div class="hb-card key"><span class="rl-num">02</span><b>讲清情况</b><p>上下文：你是谁、在哪里、已经试过什么</p></div>
+      <div class="hb-card key"><span class="rl-num">02</span><b>给足 Context</b><p>你是谁、在哪里、已经试过什么——它只知道你告诉它的</p></div>
       <div class="hb-card key"><span class="rl-num">03</span><b>让它多想几种办法</b><p>请它给出 2 到 3 种不同的方法，说说好处和难处</p></div>
       <div class="hb-card key"><span class="rl-num">04</span><b>你来做决定</b><p>你选一种，说清楚为什么，再让它接着做</p></div>
       <div class="hb-card"><span class="rl-num">05</span><b>对照目标检查</b><p>办成了吗？不确定的地方，让它说「不知道」</p></div>
     </div>
-    <p class="ic-foot">网上很多技巧教你背模板、写「你是一个专家」。我们更看重三件事：目标清楚、办法多样、决定在你。</p>
+    <p class="ic-foot">网上很多技巧教你背模板、写「你是一个专家」。我们更看重：目标清楚、Context 够、决定在你。</p>
   </section>
 
 <section class="slide" data-hint="按 01 到 05 依次点，每加一句问学生：它现在会怎么回答">
-    <div class="kicker">03 现场拼一个 <span class="en">· Build a Prompt</span></div>
-    <h2>一起拼出一张好任务单 <span class="sub-en">From a Template to a Real Task</span></h2>
+    <div class="kicker">03 现场写一个 <span class="en">· Build a Prompt</span></div>
+    <h2>一起写出一个好 Prompt <span class="sub-en">Prompt + Context, Piece by Piece</span></h2>
     <div class="pb-wrap">
       <div class="pb-card old">
         <span class="bd-head">常见写法</span>
@@ -2042,12 +2034,12 @@
         <span class="bd-head">我们的写法</span>
         <div class="pb-btns" id="pbBtns">
           <button type="button" data-i="0">01 目标</button>
-          <button type="button" data-i="1">02 情况</button>
+          <button type="button" data-i="1">02 Context</button>
           <button type="button" data-i="2">03 多种办法</button>
           <button type="button" data-i="3">04 你来决定</button>
           <button type="button" data-i="4">05 检查</button>
         </div>
-        <div class="pb-box" id="pbBox"><span class="pb-empty">依次点上面的按钮，任务单会一句一句长出来</span></div>
+        <div class="pb-box" id="pbBox"><span class="pb-empty">依次点上面的按钮，Prompt 会一句一句长出来</span></div>
       </div>
     </div>
   </section>
@@ -2081,31 +2073,57 @@
   </section>
 
 <section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
-    <div class="kicker">04 Agent 的零件 <span class="en">· Anatomy of an Agent</span></div>
-    <h2>一个 Agent，由五个零件组成 <span class="sub-en">5 Core Parts</span></h2>
-    <div class="agent-board" id="agentBoard">
-      <button class="part" type="button" data-part="goal" style="grid-column:2;grid-row:1"><b>目标</b><span>要办成的事</span></button>
-      <button class="part" type="button" data-part="memory" style="grid-column:1;grid-row:2"><b>记忆</b><span>它的小本子</span></button>
-      <div class="agent-core">Agent<span>小助手</span></div>
-      <button class="part" type="button" data-part="skill" style="grid-column:3;grid-row:2"><b>工具</b><span>它的手和脚</span></button>
-      <button class="part" type="button" data-part="brain" style="grid-column:1;grid-row:3"><b>大脑</b><span>会想办法的 AI</span></button>
-      <button class="part" type="button" data-part="spec" style="grid-column:3;grid-row:3"><b>规矩</b><span>什么绝对不能做</span></button>
+    <div class="kicker">04 Agent 智能体 <span class="en">· Anatomy of an Agent</span></div>
+    <h2>拆开一个 Agent，里面有什么？ <span class="sub-en">Five Living Parts</span></h2>
+    <div class="agent-hud" id="agentBoard">
+      <svg class="agent-orbit" viewBox="0 0 640 420" aria-hidden="true">
+        <ellipse class="orb-ring r1" cx="320" cy="210" rx="210" ry="150"/>
+        <ellipse class="orb-ring r2" cx="320" cy="210" rx="155" ry="108"/>
+        <ellipse class="orb-ring r3" cx="320" cy="210" rx="95" ry="66"/>
+        <line class="orb-beam" x1="320" y1="70" x2="320" y2="140"/>
+        <line class="orb-beam" x1="120" y1="210" x2="210" y2="210"/>
+        <line class="orb-beam" x1="430" y1="210" x2="520" y2="210"/>
+        <line class="orb-beam" x1="185" y1="340" x2="255" y2="280"/>
+        <line class="orb-beam" x1="455" y1="340" x2="385" y2="280"/>
+      </svg>
+      <div class="agent-core-wrap">
+        <div class="agent-core">AGENT<span>智能体</span></div>
+      </div>
+      <button class="part p-goal" type="button" data-part="goal"><i>01</i><b>目标</b><span>要办成的事</span></button>
+      <button class="part p-memory" type="button" data-part="memory"><i>02</i><b>记忆</b><span>它的小本子</span></button>
+      <button class="part p-skill" type="button" data-part="skill"><i>03</i><b>工具</b><span>它的手和脚</span></button>
+      <button class="part p-brain" type="button" data-part="brain"><i>04</i><b>大脑</b><span>会想办法的 AI</span></button>
+      <button class="part p-spec" type="button" data-part="spec"><i>05</i><b>规矩</b><span>什么绝对不能做</span></button>
     </div>
-    <div class="card part-detail" id="partDetail">点一个零件，看看它是做什么的。我们用「帮同学找回丢失的水壶」来举例。</div>
+    <div class="card part-detail" id="partDetail">点一个零件。我们用「帮同学找回丢失的水壶」来举例。</div>
   </section>
 
-<section class="slide" data-hint="点「转一圈」，跟着亮起的步骤讲">
-    <div class="kicker">04 Agent 怎么干活 <span class="en">· The Agent Loop</span></div>
-    <h2>Agent 做事，是一圈一圈转的 <span class="sub-en">Look · Think · Act · Check</span></h2>
-    <div class="ic-wrap">
-      <div class="loop-row" id="loopRow">
-        <div class="loop-step"><span class="rl-num">01</span><b>看一看</b><p>收到消息：<br>小明丢了蓝色水壶</p></div>
-        <div class="loop-step"><span class="rl-num">02</span><b>想一想</b><p>翻小本子：<br>有没有人捡到过？</p></div>
-        <div class="loop-step"><span class="rl-num">03</span><b>做一做</b><p>找到了，<br>就给两个人各发一条消息</p></div>
-        <div class="loop-step"><span class="rl-num">04</span><b>查一查</b><p>对上了吗？<br>没对上就说「还没找到」</p></div>
+<section class="slide" data-hint="点「走一遍」，跟着亮起的步骤讲；再扫一眼下面 Agent 能做的事">
+    <div class="kicker">04 Agent 怎么干活 <span class="en">· How an Agent Works</span></div>
+    <h2>接到任务之后，它会怎么做？ <span class="sub-en">From Task In to Result Out</span></h2>
+    <div class="ag-flow-wrap">
+      <div class="ag-flow" id="agFlow">
+        <div class="ag-step" data-i="0"><span class="rl-num">01</span><b>接到任务</b><p>读懂你的 Prompt：要办成什么</p></div>
+        <div class="ag-step" data-i="1"><span class="rl-num">02</span><b>翻翻记忆</b><p>看看 Context：以前记过什么有用的</p></div>
+        <div class="ag-step" data-i="2"><span class="rl-num">03</span><b>想出办法</b><p>大脑规划：下一步该干什么</p></div>
+        <div class="ag-step" data-i="3"><span class="rl-num">04</span><b>动手去做</b><p>调用工具：查、写、发、比对……</p></div>
+        <div class="ag-step" data-i="4"><span class="rl-num">05</span><b>交回结果</b><p>给你检查；没办完就继续下一步</p></div>
       </div>
-      <div class="loop-back">没办完？回到第 1 步，再转一圈</div>
-      <button class="go big" type="button" id="loopPlay">转一圈</button>
+      <button class="go big" type="button" id="agFlowPlay">走一遍</button>
+      <p class="ag-example">例子：小明说「我丢了蓝色水壶」→ 翻小本子有没有人捡到 → 对上了就发消息通知两边 → 你确认是不是同一件。</p>
+      <div class="ag-can">
+        <span class="bd-head">Agent 能帮你做的事</span>
+        <div class="ag-can-grid">
+          <div class="ag-can-item"><b>查</b><span>上网找资料、读网页、查课表</span></div>
+          <div class="ag-can-item"><b>记</b><span>把重要 Context 写进小本子</span></div>
+          <div class="ag-can-item"><b>写</b><span>起草通知、总结、请假条草稿</span></div>
+          <div class="ag-can-item"><b>发</b><span>在群里发消息、提醒同学</span></div>
+          <div class="ag-can-item"><b>比</b><span>失物和拾物对号、表格对账</span></div>
+          <div class="ag-can-item"><b>跟</b><span>一件事没办完就继续盯着</span></div>
+          <div class="ag-can-item"><b>整</b><span>把散乱信息排成清单</span></div>
+          <div class="ag-can-item"><b>问</b><span>缺 Context 时先问你，不瞎猜</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2161,22 +2179,22 @@
     </div>
   </section>
 
-<section class="slide" data-hint="每人写一张任务单，明天带来">
+<section class="slide" data-hint="每人写一个清楚的 Prompt，明天带来">
     <div class="kicker">课后任务 <span class="en">· Tomorrow's Mission</span></div>
     <h2>明天，带一个真问题来 <span class="sub-en">Bring a Real Problem</span></h2>
     <div class="task">
       <div class="card">
-        <h3 class="accent">我的任务单</h3>
+        <h3 class="accent">我的 Prompt</h3>
         <label>谁遇到了这个麻烦</label><input id="qWho" type="text" placeholder="例如：七年级的同学">
         <label>什么时候最麻烦</label><input id="qWhen" type="text" placeholder="例如：放学找水壶的时候">
         <label>他们现在怎么解决</label><input id="qNow" type="text" placeholder="例如：在班级群里喊一嗓子">
         <label>你希望 Agent 帮忙办成什么</label><input id="qGoal" type="text" placeholder="写结果，先不要写死每一步">
       </div>
       <div class="card">
-        <h3 class="org">写任务单的五个好习惯</h3>
+        <h3 class="org">写好 Prompt 别忘了</h3>
         <ul class="clean">
           <li><b>1 说清目标</b>　想要什么结果</li>
-          <li><b>2 讲清情况</b>　谁、在哪、试过什么</li>
+          <li><b>2 给足 Context</b>　谁、在哪、试过什么</li>
           <li><b>3 让它多想几种办法</b>　要 2 到 3 种</li>
           <li><b>4 你来做决定</b>　选一种，说为什么</li>
           <li><b>5 对照目标检查</b>　不确定就说不知道</li>
@@ -2565,22 +2583,25 @@ document.getElementById("flipGrid").addEventListener("click",e=>{
   const c=e.target.closest(".flip-card"); if(c) c.classList.toggle("flipped");
 });
 
-let loopTimer=null;
-document.getElementById("loopPlay").onclick=()=>{
-  const steps=[...document.querySelectorAll("#loopRow .loop-step")];
-  clearInterval(loopTimer);
+let flowTimer=null;
+document.getElementById("agFlowPlay").onclick=()=>{
+  const steps=[...document.querySelectorAll("#agFlow .ag-step")];
+  clearInterval(flowTimer);
   let k=0;
   const tick=()=>{
     steps.forEach((s,j)=>s.classList.toggle("on",j===k));
     k++;
-    if(k>steps.length){clearInterval(loopTimer); steps.forEach(s=>s.classList.remove("on")); document.querySelector(".loop-back").classList.add("on"); setTimeout(()=>document.querySelector(".loop-back").classList.remove("on"),1200);}
+    if(k>steps.length){
+      clearInterval(flowTimer);
+      steps.forEach(s=>s.classList.remove("on"));
+    }
   };
-  tick(); loopTimer=setInterval(tick,1100);
+  tick(); flowTimer=setInterval(tick,900);
 };
 
 const pbLines=[
   ["目标","我想在班里办一个读书角，让每个同学一个月内至少读完一本书。"],
-  ["情况","我们班 40 个人，教室后面有一个空书架，没有经费。之前贴过通知，没什么人理。你可以先问我几个问题。"],
+  ["Context","我们班 40 个人，教室后面有一个空书架，没有经费。之前贴过通知，没什么人理。你可以先问我几个问题。"],
   ["多种办法","请给我 3 种完全不同的办法，每种说说好处和难处。"],
   ["你来决定","先不要写详细方案，等我选好一种再继续。"],
   ["检查","不确定的地方直接说不知道，不要编。最后帮我对照目标检查一遍。"]
@@ -2597,15 +2618,15 @@ document.getElementById("pbBtns").addEventListener("click",e=>{
 });
 
 const partText={
-  goal:"目标：要办成的事。其实就是任务单上的「说清目标」。比如「帮丢东西的同学和捡到东西的同学对上号」。",
-  memory:"记忆：它的小本子。把重要的上下文写下来——谁丢了什么、谁捡到了什么。明天再来问，它还记得。",
+  goal:"目标：要办成的事。来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。",
+  memory:"记忆：它的小本子。把重要的 Context 写下来——谁丢了什么、谁捡到了什么。明天再来问，它还记得。",
   brain:"大脑：就是前面讲的大语言模型。它负责听懂「蓝色水壶」是什么，再想出下一步该做什么。",
   skill:"工具：它的手和脚。比如查登记表、给同学发消息。没有工具，它只能说「好的」，什么也做不了。",
-  spec:"规矩：任务单上的「检查」和底线。对不上就说不知道，不许编；不许把同学的电话告诉别人。"
+  spec:"规矩：底线。对不上就说不知道，不许编；不许把同学的电话告诉别人。"
 };
 document.getElementById("agentBoard").addEventListener("click",e=>{
   const b=e.target.closest(".part"); if(!b) return;
-  document.querySelectorAll(".part").forEach(x=>x.classList.toggle("on",x===b));
+  document.querySelectorAll("#agentBoard .part").forEach(x=>x.classList.toggle("on",x===b));
   document.getElementById("partDetail").textContent=partText[b.dataset.part];
 });
 
@@ -2678,42 +2699,6 @@ addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault(); show(cur+1);}
   if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault(); show(cur-1);}
 });
-
-const ctxBits={
-  size:"我们班有 40 个人",
-  shelf:"教室后面有一个空书架",
-  money:"没有经费",
-  tried:"之前贴过通知，没什么人理",
-  goal:"想让每人一个月至少读完一本书"
-};
-const ctxAnswers=[
-  {n:0, pct:18, t:"给你一份看起来很完整、但放哪一班都行的通用方案。不认识你们班，你也没得选。"},
-  {n:1, pct:38, t:"开始往你们班靠一点，但仍像一份模板。缺的情况越多，它越爱用套话填满。"},
-  {n:2, pct:55, t:"能提到书架或人数了，但还可能忽略「没经费」「通知没人理」这些硬约束。"},
-  {n:3, pct:72, t:"方案更贴教室实际，也会避开要花钱的点子。不过目标仍可能飘，你还是得自己定方向。"},
-  {n:4, pct:88, t:"回答会围着「每人每月读完一本」转，并承认以前通知失败过。你可以开始挑一种办法。"},
-  {n:5, pct:96, t:"情况够了。它能给出几种不同办法，并标出好处和难处。接下来该你做决定。"}
-];
-function paintCtx(){
-  const on=[...document.querySelectorAll("#ctxSwitches .ctx-sw.on")].map(b=>b.dataset.k);
-  const known=on.map(k=>ctxBits[k]);
-  document.getElementById("ctxKnown").textContent=known.length?known.join("；"):"（几乎什么都不知道）";
-  const tier=ctxAnswers[Math.min(known.length,5)];
-  document.getElementById("ctxAnswer").textContent=tier.t;
-  document.getElementById("ctxMeter").querySelector("b").style.width=tier.pct+"%";
-  document.getElementById("ctxMeterLabel").textContent=tier.pct+"%";
-  document.getElementById("ctxPanelHead").textContent=known.length?"它现在知道的 · "+known.length+" 条":"它现在知道的";
-}
-const ctxSw=document.getElementById("ctxSwitches");
-if(ctxSw){
-  ctxSw.addEventListener("click",e=>{
-    const b=e.target.closest(".ctx-sw"); if(!b) return;
-    b.classList.toggle("on");
-    paintCtx();
-  });
-  paintCtx();
-}
-
 
 show(0);
 </script>
