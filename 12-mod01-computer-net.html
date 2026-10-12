@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>第 01 课教材示例 · 同一台机器 / 一次请求</title>
-<meta name="description" content="AI 产品创造课第 01 课两张可视化教材：笔记本与手机是同一类计算机；一次网络请求在哪台机器的哪个进程里跑。">
+<title>第 01 课教材示例 · 手机也是电脑 · 上网在问谁</title>
+<meta name="description" content="AI 产品创造课第 01 课两张可视化教材：手机和笔记本是同一种机器；上网时，是你这边的程序在问远处另一台机器上的程序。">
 <style>
   :root {
     --bg: #f3eee5;
@@ -79,25 +79,25 @@
   <header>
     <div class="wrap">
       <p class="kicker">第 01 课 · 教材示例 · 不是完整课件</p>
-      <h1>先钉死两件事：<br>同一台机器，一次请求</h1>
-      <p class="lead">学校信息科技已经讲过数据、算法、网络、人工智能入门。这一课不重复「电脑有输入和输出」。要补的是课标图里通常没钉死的缝：手机也是计算机；程序跑在某台机器的某个进程里；后面的模型、Agent、网页、App，都是这张图上的一个盒子。</p>
+      <h1>这一课只搞清楚两件事：<br>手机也是电脑；上网是在问谁</h1>
+      <p class="lead">学校信息科技已经讲过数据、算法、网络和人工智能入门。这里不重复「电脑有输入和输出」。真正要补上的是：手机和笔记本其实是同一种机器；你一点图标，操作系统就启动一个正在运行的程序；上网时，是你这边的程序在问远处另一台机器上的程序。后面的模型、Agent、网页、App，都落在这张图上。</p>
     </div>
   </header>
 
   <main class="wrap">
     <h2>这一课在 18 小时里接什么</h2>
-    <p class="why">每张图右边的箭头，必须能指到后面某一课的一个动作，而不是一句「以后会用到」。</p>
+    <p class="why">每张图都要能直接接到后面某一课，不能只说「以后会用到」。</p>
     <div class="spine">
-      <div class="on"><b>01 本课</b>机器、系统、进程、请求</div>
-      <div><b>02</b>模型 = 远端进程。它没有身体，只有输入输出。</div>
-      <div><b>03</b>Agent 调工具 = 本机或远端的另一个进程。</div>
-      <div><b>04</b>真问题要写清：数据在哪台机器上。</div>
-      <div><b>05</b>选网页 / 桌面 / App = 选进程跑在哪。</div>
-      <div><b>06</b>部署 = 给进程一台一直开着的机器和一个地址。连不上按图排查。</div>
+      <div class="on"><b>01 本课</b>手机也是电脑；上网是在问谁</div>
+      <div><b>02</b>大模型 = 远处一台电脑上正在跑的程序。没有身体，只有问和答。</div>
+      <div><b>03</b>Agent 调工具 = 再去叫另一个程序帮忙（可能在你这边，也可能在远处）。</div>
+      <div><b>04</b>真问题要写清：数据存在哪台机器上。</div>
+      <div><b>05</b>选网页 / 桌面软件 / App = 选程序主要跑在哪。</div>
+      <div><b>06</b>部署 = 给程序一台一直开着的电脑和一个网址。连不上，按图排查。</div>
     </div>
 
     <h2>示例 1 · 切开对照</h2>
-    <p class="why">左边笔记本、右边手机。四件套同构：处理器、内存、存储、输入输出。中间一层是操作系统。学生要能在自己的「设置 / 关于本机」里指出对应项。</p>
+    <p class="why">左边笔记本、右边手机。都有处理器、内存、存储、输入输出；中间一层是操作系统。学生要能在自己的「设置 / 关于本机」里指出对应项。</p>
     <div class="board">
       <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="笔记本与手机硬件对照，中间是操作系统">
         <rect width="1000" height="420" fill="#fffaf2"/>
@@ -133,7 +133,7 @@
           <text x="500" y="152" text-anchor="middle">分配处理器时间</text>
           <text x="500" y="178" text-anchor="middle">分配内存</text>
           <text x="500" y="204" text-anchor="middle">读写存储</text>
-          <text x="500" y="230" text-anchor="middle">把程序变成进程</text>
+          <text x="500" y="230" text-anchor="middle">启动正在运行的程序</text>
           <text x="500" y="256" text-anchor="middle">决定谁能上网</text>
           <text x="500" y="300" text-anchor="middle" font-size="12" fill="#5a544c">桌面不是系统。系统是上面这些工作。</text>
         </g>
@@ -164,21 +164,21 @@
 
         <text x="500" y="400" text-anchor="middle" font-size="14" font-family="sans-serif">差异是外壳和传感器，不是「一边是电脑、一边是智能」。</text>
       </svg>
-      <p class="cap">课堂上：左右同时打开「关于本机」和手机「设置 → 关于手机」，把处理器、内存、存储三项对上号。再打开任务管理器 / 手机正在运行的服务，指：这就是操作系统把程序变成进程。</p>
+      <p class="cap">课堂上：左右同时打开「关于本机」和手机「设置 → 关于手机」，把处理器、内存、存储三项对上号。再打开任务管理器，指给学生看：你点的图标，操作系统会启动一个正在运行的程序。</p>
     </div>
 
-    <h2>示例 2 · 一次请求跑在哪</h2>
-    <p class="why">打开一个网页、发一条微信、问一次大模型，结构相同：本机进程发出请求，对面某台机器上的进程回答。第 06 课部署，就是把「对面那个进程」放到一台有地址、一直开着的机器上。</p>
+    <h2>示例 2 · 你一点「发送」，到底去问谁</h2>
+    <p class="why">打开网页、发微信、问大模型，结构都一样：你这边的程序发出询问，远处某台机器上的程序回答。第 06 课说的「部署」，就是把那个回答你的程序，放到一台有网址、一直开着的电脑上。</p>
     <div class="board">
       <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一次网络请求从本机进程到远端进程">
         <rect width="1000" height="380" fill="#fffaf2"/>
-        <text x="40" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">本机</text>
+        <text x="40" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">你手里的机器</text>
         <text x="430" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">网络</text>
-        <text x="760" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">对面那台机器</text>
+        <text x="760" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">远处那台机器</text>
 
         <rect x="30" y="50" width="200" height="210" fill="#e8eef6" stroke="#1d4e89"/>
         <text x="130" y="78" text-anchor="middle" font-size="13" font-family="sans-serif">浏览器 / App</text>
-        <text x="130" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">一个进程</text>
+        <text x="130" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">正在运行的程序</text>
         <rect x="50" y="120" width="160" height="44" fill="#fff" stroke="#1d4e89"/>
         <text x="130" y="147" text-anchor="middle" font-size="13" font-family="sans-serif">发出请求</text>
         <rect x="50" y="178" width="160" height="56" fill="#fff" stroke="#8a4a12"/>
@@ -203,8 +203,8 @@
         <text x="700" y="113" font-size="11" fill="#2a6b45" font-family="sans-serif">③ 对面</text>
 
         <rect x="760" y="50" width="210" height="210" fill="#e8eef6" stroke="#1d4e89"/>
-        <text x="865" y="78" text-anchor="middle" font-size="13" font-family="sans-serif">服务器程序</text>
-        <text x="865" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">另一个进程</text>
+        <text x="865" y="78" text-anchor="middle" font-size="13" font-family="sans-serif">回答你的程序</text>
+        <text x="865" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">也在运行中</text>
         <rect x="780" y="120" width="170" height="44" fill="#fff" stroke="#1d4e89"/>
         <text x="865" y="147" text-anchor="middle" font-size="13" font-family="sans-serif">计算并返回</text>
         <rect x="780" y="178" width="170" height="56" fill="#fff" stroke="#8a4a12"/>
@@ -224,27 +224,27 @@
           <text x="366" y="336" fill="#161410" font-size="12">网址写错 / DNS 失败 → 到不了那台机器</text>
           <rect x="670" y="286" width="300" height="70" fill="#fdecea" stroke="#b42318"/>
           <text x="686" y="314" fill="#b42318">故障 C · 对面没在跑</text>
-          <text x="686" y="336" fill="#161410" font-size="12">进程崩溃、没部署、机器关机 → 第 06 课</text>
+          <text x="686" y="336" fill="#161410" font-size="12">程序挂了、还没上线、机器关机 → 第 06 课</text>
         </g>
       </svg>
-      <p class="cap">同一张图覆盖三种形态：桌面应用（进程多半在本机，可离线）、网页（浏览器是窗户，计算常在对面）、手机 App（本机进程 + 经常要请求对面）。选形态时只问一句：核心计算和数据，放在哪一侧。</p>
+      <p class="cap">同一张图也能讲三种形态：桌面软件多半在你这边跑，可以离线；网页里浏览器只是窗户，计算常在远处；手机 App 在你口袋里跑，又经常要问远处。选形态时只问一句：核心计算和数据，放在哪一边。</p>
     </div>
 
     <div class="use">
       <div>
         <h3>线上 1 小时怎么用</h3>
         <ol>
-          <li>10 分钟：对照示例 1，打开真实设置，不讲比喻。</li>
-          <li>15 分钟：操作系统只讲「把程序变成进程、管资源」。看任务管理器。</li>
+          <li>10 分钟：对照示例 1，打开真实设置，不讲空比喻。</li>
+          <li>15 分钟：操作系统只讲「启动程序、管资源」。看任务管理器。</li>
           <li>20 分钟：沿示例 2 走一遍「打开百度 / 发一条消息」。先不提 AI。</li>
           <li>15 分钟：三处故障演示（能演示就演示，不能就投影日志）。</li>
         </ol>
       </div>
       <div>
         <h3>下课必须能指着图说</h3>
-        <p class="say">1. 手机和笔记本是同一类计算机，差在传感器和无线电。<br>
-        2. 我点的图标，是操作系统启动的一个进程。<br>
-        3. 网页、App、大模型回答，只要联网，就是本机进程在问对面某个进程；连不上就在路、名字、对面三处里找。</p>
+        <p class="say">1. 手机和笔记本是同一种机器，差在传感器和无线电。<br>
+        2. 我点的图标，是操作系统启动的一个正在运行的程序。<br>
+        3. 网页、App、大模型回答，只要联网，就是你这边的程序在问远处的程序；连不上，就查路、网址、对面有没有在跑。</p>
       </div>
     </div>
   </main>
