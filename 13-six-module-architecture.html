@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 通识进阶 · 六模块课程架构对照表</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4 L28 28 L4 28 Z' fill='none' stroke='%23B9762A' stroke-width='2.4' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='20' r='2.4' fill='%231F2A2E'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#F6F7F5; --ink:#1F2A2E; --ink-2:#556167; --ink-3:#8A9498;
+    --line:#E3E7E5; --line-strong:#CFD6D3; --accent:#B9762A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7;}
+  .sheet{max-width:960px;margin:0 auto;padding:36px 20px 56px;}
+  .masthead{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:16px;border-bottom:1px solid var(--line-strong);gap:12px;flex-wrap:wrap;}
+  .brand{font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--ink-2);}
+  .meta{font-size:12.5px;color:var(--ink-3);}
+  .meta a{color:var(--accent);text-decoration:none;}
+  header{padding:28px 0 6px;}
+  .kicker{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;margin-bottom:10px;}
+  h1{font-size:32px;line-height:1.25;font-weight:900;}
+  .thread{margin-top:14px;font-size:15.5px;color:var(--ink-2);max-width:46em;}
+  .thread b{color:var(--ink);}
+  .chain{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .chain span{font-size:13px;font-weight:700;color:var(--ink-2);padding:5px 12px;border:1px solid var(--line-strong);border-radius:3px;}
+  .chain span em{font-style:normal;color:var(--accent);}
+  .table-wrap{overflow-x:auto;margin-top:26px;border-top:1px solid var(--line-strong);}
+  table{width:100%;min-width:820px;border-collapse:collapse;table-layout:fixed;}
+  th,td{padding:14px 14px;vertical-align:top;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.72;}
+  thead th{font-size:12.5px;font-weight:800;color:var(--ink-3);letter-spacing:1px;border-bottom:1px solid var(--line-strong);}
+  .m-name{font-size:16px;font-weight:900;}
+  .m-thread{font-size:12.5px;color:var(--accent);font-weight:800;margin:3px 0 6px;}
+  .m-pos{font-size:12.5px;color:var(--ink-2);}
+  ul{list-style:none;}
+  ul li{padding-left:14px;position:relative;margin-bottom:5px;color:var(--ink-2);}
+  ul li::before{content:"·";position:absolute;left:2px;color:var(--ink-3);font-weight:900;}
+  ul li b{color:var(--ink);font-weight:700;}
+  td.take{font-size:13px;color:var(--accent);font-weight:700;}
+  td.take::before{content:"带走 · ";color:var(--ink-3);font-weight:600;}
+  .scroll-hint{display:none;font-size:12px;color:var(--ink-3);margin-top:8px;}
+  footer{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3);}
+  footer a{color:var(--accent);}
+  @media(min-width:768px){.sheet{padding:48px 28px 64px;}h1{font-size:42px;}}
+  @media(max-width:520px){h1{font-size:26px;}.scroll-hint{display:block;}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="brand">AI 通识进阶 · 六模块课程架构</div>
+    <div class="meta">每模块 3h ＝ 线上1h ＋ 线下2h · 面向10–15岁 · <a href="11-ai-weekend-syllabus.html">详细大纲</a></div>
+  </div>
+
+  <header>
+    <div class="kicker">从看懂 AI，到会用 AI，再到用 AI 做成东西、讲给人听</div>
+    <h1>六个模块，一条能力递进线</h1>
+    <p class="thread">不教编程、不考试、不制造程序员焦虑。每个模块先在线上学一个<b>思维动作</b>，再在线下把它用进一个<b>动手项目</b>；思维是开锁的钥匙，不是课后贴的总结。</p>
+    <div class="chain">
+      <span><em>M1</em> 抽象 · 认识智能</span>
+      <span><em>M2</em> 逻辑 · 有逻辑地用AI</span>
+      <span><em>M3</em> 问题 · 产品思维</span>
+      <span><em>M4</em> 系统 · 做成应用</span>
+      <span><em>M5</em> 表达 · 多模态包装</span>
+      <span><em>M6</em> 综合 · 公司挑战赛决赛</span>
+    </div>
+  </header>
+
+  <div class="table-wrap">
+    <table>
+      <colgroup>
+        <col style="width:17%"><col style="width:29%"><col style="width:30%"><col style="width:24%">
+      </colgroup>
+      <thead>
+        <tr><th>模块 · 主线</th><th>线上 1h · 知识点</th><th>线下 2h · 动手项目</th><th>带走</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="m-name">M1 认识智能</div>
+            <div class="m-thread">抽象思维</div>
+            <div class="m-pos">看懂 AI 是什么、技术靠什么分层</div>
+          </td>
+          <td><ul>
+            <li><b>抽象方法</b>：分类（自己定标准，标准本身就是判断）、找共性建模。</li>
+            <li><b>AI 概念地图</b>：LLM 是「预测下一个词」；提示词、Agent、Skills 是什么、为什么这样设计（只认识，不操作）。</li>
+            <li>同题两问对比，看清 AI 是思维的放大器。</li>
+          </ul></td>
+          <td><ul>
+            <li>把 PC（硬件→系统→应用）、Web、互联网当成「一层套一层的抽象」拆开。</li>
+            <li>小组做一张抽象层级图；用「现象→机制→抽象」三问法拆一个身边设备。</li>
+          </ul></td>
+          <td class="take">AI 概念地图 ＋ 抽象层级图；会分类、会抽共性。</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="m-name">M2 有逻辑地用 AI</div>
+            <div class="m-thread">逻辑 · 表达</div>
+            <div class="m-pos">把话说清楚，让 AI 听得懂</div>
+          </td>
+          <td><ul>
+            <li><b>提示词逻辑</b>：角色 / 任务 / 约束 / 标准；模糊指令为什么得到平庸答案。</li>
+            <li>一个简单应用的 UX，本质也是把需求表达清楚。</li>
+            <li>先建立怀疑：AI 会一本正经地错（幻觉意识），不神化。</li>
+          </ul></td>
+          <td><ul>
+            <li>在 Hermes、豆包工作里用代码搭一个立了规矩的私人小 agent。</li>
+            <li>对比「立规矩」和「没立规矩」的差别，练逻辑表达。</li>
+          </ul></td>
+          <td class="take">一个会干活的 agent ＋ 一张逻辑表达单。</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="m-name">M3 产品思维</div>
+            <div class="m-thread">问题定义</div>
+            <div class="m-pos">发现并定义真问题</div>
+          </td>
+          <td><ul>
+            <li>问题 ≠ 应用；真问题 vs 伪需求。</li>
+            <li>从校园、家庭、社区发现问题；POC 用最小成本验证想法成立。</li>
+          </ul></td>
+          <td><ul>
+            <li><b>青年公司组队</b>（4人：CEO / 产品 / AI工程 / 设计运营），定公司与角色。</li>
+            <li>脑暴投票选出本组真问题，写问题陈述，做一次 POC 小验证。</li>
+          </ul></td>
+          <td class="take">公司立项一页纸 ＋ 一份真问题陈述。</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="m-name">M4 系统思维</div>
+            <div class="m-thread">系统造物</div>
+            <div class="m-pos">把方案做成一个应用</div>
+          </td>
+          <td><ul>
+            <li>MVP 最小可行产品取舍；分层解耦。</li>
+            <li>应用生存在哪里：Github、服务器、云托管（认知扫盲，不真部署）。</li>
+            <li>人做什么、AI 做什么的分工。</li>
+          </ul></td>
+          <td><ul>
+            <li>把 POC 推进成 MVP，分工搭建。</li>
+            <li>画一张系统分层图，写清人做什么、AI 做什么。</li>
+          </ul></td>
+          <td class="take">MVP 作品 ＋ 一张系统分层图。</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="m-name">M5 多模态表达</div>
+            <div class="m-thread">包装传播</div>
+            <div class="m-pos">用 AI 把作品讲给人听</div>
+          </td>
+          <td><ul>
+            <li>视频基本套路：叙事结构、节奏。</li>
+            <li>平面基本套路：版式、对比、信息层级。</li>
+            <li>AI 生图、生视频的能力边界。</li>
+          </ul></td>
+          <td><ul>
+            <li>给本组公司做品牌物料：一张平面海报 ＋ 一条简短介绍视频。</li>
+          </ul></td>
+          <td class="take">一套公司品牌物料。</td>
+        </tr>
+        <tr>
+          <td>
+            <div class="m-name">M6 青年公司挑战赛</div>
+            <div class="m-thread">综合 · 批判收束</div>
+            <div class="m-pos">决赛路演，对自己的作品负责</div>
+          </td>
+          <td><ul>
+            <li>AI 安全、隐私、内容责任、人机边界。</li>
+            <li>批判四步收束：主张 / 证据 / 反方 / 裁决。</li>
+            <li>路演结构与公开表达。</li>
+          </ul></td>
+          <td><ul>
+            <li>打磨产品与物料，公开路演答辩。</li>
+            <li>评委三问：人做了什么、AI 做了什么、质疑过 AI 什么；分维度鼓励性荣誉，个人反思卡。</li>
+          </ul></td>
+          <td class="take">公司路演 ＋ 个人思维带走清单。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="scroll-hint">表格较宽，手机上可左右滑动查看完整内容。</div>
+
+  <footer>
+    BILDEN EDU · 18 小时周末课 ·
+    <a href="11-ai-weekend-syllabus.html">按模块展开的详细大纲</a> ·
+    <a href="12-mod01-computer-net.html">M1 教材示例</a>
+  </footer>
+</div>
+</body>
+</html>
