@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1 认识智能 · 思维的武器 | 通识进阶</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c1220;
+    --bg-2: #121a2e;
+    --ink: #e8edf7;
+    --muted: #94a3b8;
+    --dim: #64748b;
+    --cyan: #38bdf8;
+    --teal: #5eead4;
+    --orange: #f97316;
+    --orange-soft: #fdba74;
+    --line: rgba(148, 163, 184, .22);
+    --font: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+    --display: "Fraunces", "Source Han Serif SC", "Songti SC", serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%; width: 100%;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(900px 420px at 12% -8%, rgba(56, 189, 248, .09), transparent 55%),
+      radial-gradient(700px 380px at 92% 8%, rgba(249, 115, 22, .07), transparent 50%),
+      linear-gradient(165deg, var(--bg) 0%, var(--bg-2) 55%, #0e1626 100%);
+  }
+  #deck { position: relative; width: 100vw; height: 100vh; z-index: 1; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    flex-direction: column;
+    padding: clamp(28px, 4.2vw, 48px) clamp(36px, 5.5vw, 72px) 56px;
+    gap: 10px;
+  }
+  .slide.on { display: flex; }
+  .kicker {
+    font-size: 12px; font-weight: 700; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--orange);
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(34px, 4.6vw, 56px);
+    font-weight: 700; letter-spacing: -.02em; line-height: 1.12;
+    max-width: 16ch;
+  }
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 42px);
+    font-weight: 700; letter-spacing: -.02em; line-height: 1.15;
+    max-width: 18ch;
+  }
+  .lead {
+    font-size: clamp(15px, 1.35vw, 18px);
+    color: var(--muted); line-height: 1.55; max-width: 42em;
+  }
+  .foot {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--dim); gap: 16px;
+  }
+  .foot .brand { letter-spacing: .06em; }
+  .nav-hint { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+
+  /* Cover path */
+  .cover-map {
+    flex: 1; min-height: 0; position: relative;
+    margin: 8px 0 4px;
+  }
+  .cover-map svg { width: 100%; height: 100%; display: block; }
+  .pulse {
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .45; }
+  }
+  .dash-flow {
+    stroke-dasharray: 8 12;
+    animation: dash 1.6s linear infinite;
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -40; }
+  }
+
+  /* Two routes */
+  .routes {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    margin-top: 8px;
+  }
+  .route {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px 18px 14px;
+    display: flex; flex-direction: column; gap: 12px;
+    background: rgba(12, 18, 32, .45);
+  }
+  .route.fog { border-color: rgba(249, 115, 22, .35); }
+  .route.clear { border-color: rgba(56, 189, 248, .4); }
+  .route h3 {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .route.fog h3 { color: var(--orange-soft); }
+  .route.clear h3 { color: var(--cyan); }
+  .route .q {
+    font-size: clamp(15px, 1.4vw, 18px);
+    font-weight: 600; line-height: 1.4;
+  }
+  .route ul { list-style: none; margin-top: auto; display: flex; flex-direction: column; gap: 7px; }
+  .route li {
+    font-size: 13px; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.35;
+  }
+  .route li::before {
+    content: ""; position: absolute; left: 0; top: 6px;
+    width: 6px; height: 6px; border-radius: 50%;
+  }
+  .route.fog li::before { background: var(--orange); }
+  .route.clear li::before { background: var(--cyan); }
+  .route-svg { height: 56px; width: 100%; }
+
+  /* Concept stations */
+  .stations {
+    flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center;
+    gap: 18px; margin-top: 6px;
+  }
+  .station-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    position: relative;
+  }
+  .station-row::before {
+    content: "";
+    position: absolute; left: 6%; right: 6%; top: 28px;
+    height: 2px; background: #334155; z-index: 0;
+  }
+  .station {
+    position: relative; z-index: 1;
+    text-align: center; padding-top: 8px;
+  }
+  .station .node {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    border-radius: 50%;
+    border: 2.5px solid var(--cyan);
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--cyan);
+  }
+  .station.goal .node { border-color: var(--teal); color: var(--teal); }
+  .station b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .station p { font-size: 12px; color: var(--muted); line-height: 1.35; padding: 0 4px; }
+
+  /* Takeaway */
+  .take {
+    flex: 1; min-height: 0;
+    display: flex; flex-direction: column; justify-content: center; gap: 20px;
+  }
+  .take .phrase {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.8vw, 32px);
+    line-height: 1.35; max-width: 22ch;
+    border-left: 3px solid var(--orange);
+    padding-left: 18px;
+  }
+  .take .grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+  }
+  .take .cell {
+    border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  }
+  .take .cell .lab {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+    color: var(--orange-soft); margin-bottom: 6px;
+  }
+  .take .cell p { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+  .progress {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 5;
+    background: rgba(255,255,255,.06);
+  }
+  .progress > i {
+    display: block; height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--cyan), var(--orange));
+    transition: width .25s ease;
+  }
+  @media (max-width: 720px) {
+    .routes, .take .grid, .station-row { grid-template-columns: 1fr; }
+    .station-row::before { display: none; }
+    h1, h2 { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- P01 Cover -->
+  <section class="slide on" data-i="0">
+    <div class="kicker">M1 · 线上 · 认识智能</div>
+    <h1>思维的武器：AI 是什么</h1>
+    <p class="lead">先画一张地图：AI 不是魔法，是一条可指认的路径。本课建立概念站点，再用「同题两问」看提问如何改变结果。</p>
+    <div class="cover-map" aria-hidden="true">
+      <svg viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet">
+        <path d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
+              fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+        <path class="dash-flow" d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
+              fill="none" stroke="#38bdf8" stroke-width="2" opacity=".9"/>
+        <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle">
+          <g transform="translate(70,190)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle class="pulse" r="5" fill="#38bdf8"/>
+            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">观察</text>
+            <text y="58" font-size="11" fill="#64748b">看见现象</text>
+          </g>
+          <g transform="translate(300,70)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle r="5" fill="#38bdf8"/>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">分类</text>
+            <text y="-12" font-size="11" fill="#64748b">自定标准</text>
+          </g>
+          <g transform="translate(550,190)">
+            <circle r="18" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
+            <circle r="6" fill="#f97316"/>
+            <circle r="26" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
+            <text y="44" font-size="13" fill="#fdba74" font-weight="700">你在这里 · M1</text>
+            <text y="60" font-size="11" fill="#64748b">抽象 / 分层</text>
+          </g>
+          <g transform="translate(800,70)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle r="5" fill="#38bdf8"/>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">机制</text>
+            <text y="-12" font-size="11" fill="#64748b">东西为何运转</text>
+          </g>
+          <g transform="translate(1030,190)">
+            <circle r="16" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
+            <circle r="5" fill="#5eead4"/>
+            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">驾驭</text>
+            <text y="58" font-size="11" fill="#64748b">用 AI 学得更深</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="foot">
+      <span class="brand">通识进阶 · 风格 C · 地图与路径</span>
+      <span class="nav-hint">→ 下一页</span>
+    </div>
+  </section>
+
+  <!-- P02 本课旅程 -->
+  <section class="slide" data-i="1">
+    <div class="kicker">M1 · 线上 1h · 路线图</div>
+    <h2>这一小时走四个站点</h2>
+    <p class="lead">每站只办一件事。终点不是「背定义」，而是能指着地图说出：AI 在哪一层、你的问题卡在哪。</p>
+    <div class="stations">
+      <div class="station-row">
+        <div class="station">
+          <div class="node">01</div>
+          <b>破神话</b>
+          <p>大模型在「接话」，不是在「查百科」</p>
+        </div>
+        <div class="station">
+          <div class="node">02</div>
+          <b>概念地图</b>
+          <p>LLM · Prompt · Agent · Skills</p>
+        </div>
+        <div class="station">
+          <div class="node">03</div>
+          <b>同题两问</b>
+          <p>问法一变，路径就变</p>
+        </div>
+        <div class="station goal">
+          <div class="node">04</div>
+          <b>分类练习</b>
+          <p>自定标准，说出抽到的共性</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brand">线下衔接：把电脑 / 网页 / 互联网拆成一层套一层</span>
+      <span class="nav-hint">2 / <span class="total">4</span></span>
+    </div>
+  </section>
+
+  <!-- P03 同题两问 -->
+  <section class="slide" data-i="2">
+    <div class="kicker">M1 · 同题两问</div>
+    <h2>同一件事，两条路</h2>
+    <p class="lead">左边像雾里走路；右边把起点、终点、中间态标出来。AI 更吃标清楚的路。</p>
+    <div class="routes">
+      <div class="route fog">
+        <h3>● 模糊问 · 容易迷路</h3>
+        <svg class="route-svg" viewBox="0 0 320 56" aria-hidden="true">
+          <path d="M20 28 C60 8 90 48 130 28 S190 8 230 40 S280 20 300 28" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="4 6" opacity=".7"/>
+          <circle cx="20" cy="28" r="5" fill="#f97316"/><circle cx="300" cy="28" r="5" fill="#64748b"/>
+        </svg>
+        <div class="q">「人工智能是怎么回事？」</div>
+        <ul>
+          <li>对象太大，答什么都像对</li>
+          <li>没有可观察的步骤</li>
+          <li>模型容易讲故事充数</li>
+        </ul>
+      </div>
+      <div class="route clear">
+        <h3>● 清楚问 · 站点齐全</h3>
+        <svg class="route-svg" viewBox="0 0 320 56" aria-hidden="true">
+          <path class="dash-flow" d="M20 36 H80 H140 H200 H260 H300" fill="none" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="20" cy="36" r="5" fill="#38bdf8"/>
+          <circle cx="80" cy="36" r="4" fill="#38bdf8"/>
+          <circle cx="140" cy="36" r="4" fill="#38bdf8"/>
+          <circle cx="200" cy="36" r="4" fill="#38bdf8"/>
+          <circle cx="260" cy="36" r="4" fill="#38bdf8"/>
+          <circle cx="300" cy="36" r="5" fill="#5eead4"/>
+        </svg>
+        <div class="q">「大模型收到我的句子后，如何一次只预测下一个词，拼成整段回答？」</div>
+        <ul>
+          <li>有起点、过程、产物</li>
+          <li>能画路径、能追问核对</li>
+          <li>人能判断哪一段在胡说</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brand">课堂口令：先标站点，再发问</span>
+      <span class="nav-hint">3 / 4</span>
+    </div>
+  </section>
+
+  <!-- P04 带走 -->
+  <section class="slide" data-i="3">
+    <div class="kicker">M1 · 第一站带走</div>
+    <h2>今天先装进脑子的三件事</h2>
+    <div class="take">
+      <p class="phrase">「表面上是回答，底下其实是在接下一词。」</p>
+      <div class="grid">
+        <div class="cell">
+          <div class="lab">思维</div>
+          <p>抽象：自定标准分类，从现象抽到机制</p>
+        </div>
+        <div class="cell">
+          <div class="lab">AI</div>
+          <p>LLM / Prompt / Agent / Skills 是地图上的四个站，不是神话名词</p>
+        </div>
+        <div class="cell">
+          <div class="lab">下一站 · 线下</div>
+          <p>拆电脑与互联网：一层套一层；数据包怎么走</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span class="brand">通识进阶 · M1</span>
+      <span class="nav-hint">← → 翻页 · F 全屏</span>
+    </div>
+  </section>
+
+</div>
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+<script>
+  const slides = [...document.querySelectorAll(".slide")];
+  const bar = document.getElementById("bar");
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle("on", k === i));
+    bar.style.width = ((i + 1) / slides.length * 100) + "%";
+    document.querySelectorAll(".nav-hint").forEach((el, idx) => {
+      if (idx === i && i > 0 && i < slides.length - 1) {
+        /* keep static hints on middle slides */
+      }
+    });
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); show(i + 1); }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); show(i - 1); }
+    if (e.key === "Home") show(0);
+    if (e.key === "End") show(slides.length - 1);
+    if (e.key === "f" || e.key === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+  let touchX = null;
+  document.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].screenX; }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    if (touchX == null) return;
+    const dx = e.changedTouches[0].screenX - touchX;
+    if (dx < -40) show(i + 1);
+    if (dx > 40) show(i - 1);
+    touchX = null;
+  }, { passive: true });
+  show(0);
+</script>
+</body>
+</html>

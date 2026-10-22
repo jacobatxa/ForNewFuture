@@ -204,25 +204,25 @@
 <body>
   <div class="top">
     <h1>通识进阶课件 · 四种 UX 风格</h1>
-    <p>同一页内容：「你点发送之后发生了什么」。点上方标签切换大图，或点下方缩略图。选定后告诉我字母即可。</p>
+    <p>已选定 <strong style="color:#f4f0e8;font-weight:600">C · 地图与路径</strong> 作为通识课件主视觉。下方仍可对照；M1 课件见 <a href="16-m1-deck.html" style="color:#38bdf8;font-weight:600">16-m1-deck.html</a>。</p>
     <div class="tabs">
-      <button type="button" class="on" data-v="a">A · 机制图鉴</button>
+      <button type="button" data-v="a">A · 机制图鉴</button>
       <button type="button" data-v="b">B · 实验室对照</button>
-      <button type="button" data-v="c">C · 地图与路径</button>
+      <button type="button" class="on" data-v="c">C · 地图与路径 ✓</button>
       <button type="button" data-v="d">D · 卡片工作坊</button>
     </div>
   </div>
 
   <div class="meta">
-    <span class="tag" id="meta-tag">A · 机制图鉴</span>
-    <span class="desc" id="meta-desc">米白纸张、线描剖面、一层套一层。适合讲「东西为什么这样运转」。</span>
+    <span class="tag" id="meta-tag">C · 地图与路径 ✓ 已选</span>
+    <span class="desc" id="meta-desc">路径、站点、故障红标。适合发送旅程、工程住哪。已定为通识主视觉。</span>
   </div>
 
   <div class="stage-wrap">
     <div class="stage">
 
       <!-- A -->
-      <section class="variant on" id="a">
+      <section class="variant" id="a">
         <div class="paper">
           <div class="ak">M1 · 抽象 / 分层 · 机理切片</div>
           <h2>你点发送之后，字去了哪里？</h2>
@@ -309,7 +309,7 @@
       </section>
 
       <!-- C -->
-      <section class="variant" id="c">
+      <section class="variant on" id="c">
         <div class="inner">
           <div class="ck">M1 · 路径图 · 故障三处</div>
           <h2>一条消息的旅程</h2>
@@ -425,7 +425,7 @@
   <p class="hint">下面四格是缩略总览，点一下可跳到对应大图。全课建议：<strong style="color:#e7e5e4;font-weight:600">一种主风格 + 局部借用</strong>（例如主 A，对照页用 B，路径页用 C）。</p>
 
   <div class="grid4" id="thumbs">
-    <div class="thumb active" data-v="a">
+    <div class="thumb" data-v="a">
       <div class="mini" style="background:linear-gradient(165deg,#f7f2e8,#e8dcc8);padding:10px 12px;font-family:Literata,serif;color:#1c1915">
         <div style="font:700 9px IBM Plex Sans;letter-spacing:.15em;color:#8a6a45;text-transform:uppercase">机制图鉴</div>
         <div style="font-size:15px;font-weight:700;margin:4px 0 8px;line-height:1.2">你点发送之后，字去了哪里？</div>
@@ -451,7 +451,7 @@
       </div>
       <div class="cap"><b>B · 实验室对照</b>模糊问 / 清楚问</div>
     </div>
-    <div class="thumb" data-v="c">
+    <div class="thumb active" data-v="c">
       <div class="mini" style="background:#0c1220;padding:10px 12px;color:#e8edf7;font-family:Fraunces,serif">
         <div style="font:700 9px IBM Plex Sans;letter-spacing:.15em;color:#fb923c;text-transform:uppercase">地图与路径</div>
         <div style="font-size:15px;font-weight:700;margin:4px 0 8px">一条消息的旅程</div>
@@ -488,11 +488,13 @@
     document.querySelectorAll(".variant").forEach(el => el.classList.toggle("on", el.id === id));
     document.querySelectorAll(".tabs button").forEach(btn => btn.classList.toggle("on", btn.dataset.v === id));
     document.querySelectorAll(".thumb").forEach(t => t.classList.toggle("active", t.dataset.v === id));
-    document.getElementById("meta-tag").textContent = meta[id].tag;
+    const selected = id === "c" ? " ✓ 已选" : "";
+    document.getElementById("meta-tag").textContent = meta[id].tag + selected;
     document.getElementById("meta-desc").textContent = meta[id].desc;
   }
   document.querySelectorAll(".tabs button").forEach(btn => btn.addEventListener("click", () => show(btn.dataset.v)));
   document.querySelectorAll(".thumb").forEach(t => t.addEventListener("click", () => show(t.dataset.v)));
+  show("c");
 </script>
 </body>
 </html>
