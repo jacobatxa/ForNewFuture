@@ -6,39 +6,45 @@
 <title>M1 认识智能 · 思维的武器 | 通识进阶</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Literata:opsz,wght@7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c1220;
-    --bg-2: #121a2e;
-    --ink: #e8edf7;
-    --muted: #94a3b8;
-    --dim: #64748b;
     --cyan: #38bdf8;
     --teal: #5eead4;
     --orange: #f97316;
     --orange-soft: #fdba74;
-    --line: rgba(148, 163, 184, .22);
     --font: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
     --display: "Fraunces", "Source Han Serif SC", "Songti SC", serif;
+    --atlas: Literata, "Source Serif 4", "Songti SC", serif;
     --mono: "IBM Plex Mono", ui-monospace, monospace;
+    --lab: "DM Sans", "IBM Plex Sans", system-ui, sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     height: 100%; width: 100%;
-    background: var(--bg); color: var(--ink);
     font-family: var(--font);
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
+    background: #0c1220;
+    color: #e8edf7;
+    transition: background .35s ease, color .25s ease;
   }
-  body::before {
-    content: "";
-    position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background:
-      radial-gradient(900px 420px at 12% -8%, rgba(56, 189, 248, .09), transparent 55%),
-      radial-gradient(700px 380px at 92% 8%, rgba(249, 115, 22, .07), transparent 50%),
-      linear-gradient(165deg, var(--bg) 0%, var(--bg-2) 55%, #0e1626 100%);
+  body.skin-path {
+    background: #0c1220; color: #e8edf7;
   }
+  body.skin-agenda {
+    background: #0e1422; color: #e8edf7;
+  }
+  body.skin-atlas {
+    background: #efe6d6; color: #1c1915;
+  }
+  body.skin-lab {
+    background: #14181e; color: #e8edf4;
+  }
+  body.skin-edit {
+    background: #0c1220; color: #e8edf7;
+  }
+
   #deck { position: relative; width: 100vw; height: 100vh; z-index: 1; }
   .slide {
     position: absolute; inset: 0;
@@ -48,170 +54,238 @@
     gap: 10px;
   }
   .slide.on { display: flex; }
+
   .kicker {
-    font-size: 12px; font-weight: 700; letter-spacing: .22em;
-    text-transform: uppercase; color: var(--orange);
+    font-size: 12px; font-weight: 700; letter-spacing: .2em;
+    text-transform: uppercase;
+  }
+  .skin-path .kicker, .skin-agenda .kicker, .skin-edit .kicker { color: var(--orange); }
+  .skin-atlas .kicker { color: #8a6a45; letter-spacing: .18em; }
+  .skin-lab .kicker {
+    font-family: var(--mono); color: var(--teal); letter-spacing: .14em;
+  }
+
+  h1, h2 {
+    font-weight: 700; letter-spacing: -.02em; line-height: 1.12;
   }
   h1 {
     font-family: var(--display);
-    font-size: clamp(34px, 4.6vw, 56px);
-    font-weight: 700; letter-spacing: -.02em; line-height: 1.12;
-    max-width: 16ch;
+    font-size: clamp(34px, 4.6vw, 54px);
+    max-width: 14ch;
   }
   h2 {
     font-family: var(--display);
-    font-size: clamp(28px, 3.6vw, 42px);
-    font-weight: 700; letter-spacing: -.02em; line-height: 1.15;
+    font-size: clamp(26px, 3.4vw, 40px);
     max-width: 18ch;
   }
+  .skin-atlas h1, .skin-atlas h2 { font-family: var(--atlas); color: #1c1915; }
+  .skin-lab h1, .skin-lab h2 { font-family: var(--lab); letter-spacing: -.03em; }
+
   .lead {
-    font-size: clamp(15px, 1.35vw, 18px);
-    color: var(--muted); line-height: 1.55; max-width: 42em;
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.55; max-width: 42em;
   }
+  .skin-path .lead, .skin-agenda .lead, .skin-edit .lead, .skin-lab .lead { color: #94a3b8; }
+  .skin-atlas .lead { color: #5c5348; }
+
   .foot {
     margin-top: auto;
     display: flex; justify-content: space-between; align-items: center;
-    font-size: 12px; color: var(--dim); gap: 16px;
+    font-size: 12px; gap: 16px;
   }
-  .foot .brand { letter-spacing: .06em; }
-  .nav-hint { font-family: var(--mono); font-size: 11px; color: var(--dim); }
+  .skin-path .foot, .skin-agenda .foot, .skin-edit .foot { color: #64748b; }
+  .skin-atlas .foot { color: #8a7f70; border-top: 1px solid #d6c9b4; padding-top: 10px; }
+  .skin-lab .foot { color: #64748b; font-family: var(--mono); font-size: 11px; }
+  .nav-hint { font-family: var(--mono); font-size: 11px; opacity: .85; }
+  .skin-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    opacity: .7; margin-left: 8px;
+  }
 
-  /* Cover path */
-  .cover-map {
-    flex: 1; min-height: 0; position: relative;
-    margin: 8px 0 4px;
-  }
+  /* ── P01 路径：定位 ── */
+  .cover-map { flex: 1; min-height: 0; margin: 6px 0 0; }
   .cover-map svg { width: 100%; height: 100%; display: block; }
-  .pulse {
-    animation: pulse 2.4s ease-in-out infinite;
+  .dash-flow { stroke-dasharray: 8 12; animation: dash 1.6s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset: -40; } }
+  .pulse { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+  /* ── P02 议程：清单，不走路 ── */
+  .agenda {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px;
+    align-content: center; margin-top: 12px;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .45; }
+  .agenda-item {
+    display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: start;
+    padding: 16px 0;
+    border-top: 1px solid rgba(148,163,184,.2);
   }
-  .dash-flow {
-    stroke-dasharray: 8 12;
-    animation: dash 1.6s linear infinite;
+  .agenda-item:nth-child(1), .agenda-item:nth-child(2) { border-top: 0; padding-top: 0; }
+  .agenda-item .n {
+    font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--cyan);
+    line-height: 1.1;
   }
-  @keyframes dash {
-    to { stroke-dashoffset: -40; }
+  .agenda-item b { display: block; font-size: 18px; margin-bottom: 4px; }
+  .agenda-item p { font-size: 13px; color: #94a3b8; line-height: 1.4; }
+  .agenda-note {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    font-size: 13px; color: #64748b;
+    padding: 12px 14px;
+    border-left: 3px solid var(--orange);
+    background: rgba(249,115,22,.06);
   }
 
-  /* Two routes */
-  .routes {
+  /* ── P03 图鉴：接下一词 ── */
+  .atlas-body {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    display: grid; grid-template-columns: 1.15fr .95fr; gap: 22px;
     margin-top: 8px;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 27px, rgba(28,25,21,.04) 27px, rgba(28,25,21,.04) 28px
+    );
   }
-  .route {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 18px 18px 14px;
+  .cutaway {
+    border: 1.5px solid #c4b49a; background: #fffaf2;
+    border-radius: 3px; padding: 12px 14px;
+    display: flex; flex-direction: column;
+  }
+  .cutaway svg { width: 100%; flex: 1; min-height: 0; }
+  .atlas-side { display: flex; flex-direction: column; gap: 10px; }
+  .layer {
+    border: 1px solid #c4b49a; background: rgba(255,250,242,.9);
+    padding: 12px 14px; border-radius: 3px;
+  }
+  .layer b { display: block; font-size: 14px; margin-bottom: 3px; color: #1c1915; }
+  .layer span { font-size: 13px; color: #6b6358; line-height: 1.4; }
+  .layer.hot { border-color: #b45309; background: #fff7ed; }
+  .layer.hot b { color: #9a3412; }
+
+  /* ── P04 概念：竖向定义栈，非路径 ── */
+  .concepts {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    align-content: center; margin-top: 10px;
+  }
+  .concept {
+    border: 1px solid rgba(148,163,184,.25);
+    border-radius: 4px;
+    padding: 18px 16px 16px;
+    background: rgba(18, 26, 46, .55);
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 200px;
+  }
+  .concept .abbr {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    color: var(--cyan); text-transform: uppercase;
+  }
+  .concept h3 { font-size: 20px; font-family: var(--display); }
+  .concept p { font-size: 13px; color: #94a3b8; line-height: 1.45; flex: 1; }
+  .concept .why {
+    font-size: 12px; color: var(--orange-soft);
+    border-top: 1px solid rgba(148,163,184,.2); padding-top: 10px; line-height: 1.35;
+  }
+
+  /* ── P05 实验室对照 ── */
+  .lab-grid-bg {
+    position: absolute; inset: 0; pointer-events: none; opacity: .35;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .slide-lab { position: relative; }
+  .slide-lab > *:not(.lab-grid-bg) { position: relative; z-index: 1; }
+  .lab-split {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 10px;
+  }
+  .lab-col {
+    border-radius: 8px; padding: 16px 16px 14px;
     display: flex; flex-direction: column; gap: 12px;
-    background: rgba(12, 18, 32, .45);
   }
-  .route.fog { border-color: rgba(249, 115, 22, .35); }
-  .route.clear { border-color: rgba(56, 189, 248, .4); }
-  .route h3 {
-    font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+  .lab-col.bad { background: #1a1514; border: 1px solid #7f1d1d; }
+  .lab-col.good { background: #0f1a1a; border: 1px solid #115e59; }
+  .lab-col h3 {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .08em;
     display: flex; align-items: center; gap: 8px;
   }
-  .route.fog h3 { color: var(--orange-soft); }
-  .route.clear h3 { color: var(--cyan); }
-  .route .q {
-    font-size: clamp(15px, 1.4vw, 18px);
-    font-weight: 600; line-height: 1.4;
+  .lab-col.bad h3 { color: #fca5a5; }
+  .lab-col.good h3 { color: var(--teal); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .lab-col.bad .dot { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+  .lab-col.good .dot { background: #14b8a6; box-shadow: 0 0 10px #14b8a6; }
+  .lab-q {
+    font-size: clamp(15px, 1.35vw, 17px); font-weight: 600; line-height: 1.4;
+    padding: 12px; border-radius: 6px;
   }
-  .route ul { list-style: none; margin-top: auto; display: flex; flex-direction: column; gap: 7px; }
-  .route li {
-    font-size: 13px; color: var(--muted); padding-left: 14px; position: relative; line-height: 1.35;
+  .lab-col.bad .lab-q { background: rgba(127,29,29,.35); color: #fecaca; }
+  .lab-col.good .lab-q { background: rgba(17,94,89,.35); color: #ccfbf1; }
+  .lab-col ul { list-style: none; margin-top: auto; display: flex; flex-direction: column; gap: 7px; }
+  .lab-col li {
+    font-size: 13px; color: #94a3b8; padding-left: 14px; position: relative; line-height: 1.35;
   }
-  .route li::before {
+  .lab-col li::before {
     content: ""; position: absolute; left: 0; top: 6px;
-    width: 6px; height: 6px; border-radius: 50%;
+    width: 6px; height: 6px; border-radius: 1px;
   }
-  .route.fog li::before { background: var(--orange); }
-  .route.clear li::before { background: var(--cyan); }
-  .route-svg { height: 56px; width: 100%; }
+  .lab-col.bad li::before { background: #f87171; }
+  .lab-col.good li::before { background: #2dd4bf; }
 
-  /* Concept stations */
-  .stations {
-    flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center;
-    gap: 18px; margin-top: 6px;
-  }
-  .station-row {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-    position: relative;
-  }
-  .station-row::before {
-    content: "";
-    position: absolute; left: 6%; right: 6%; top: 28px;
-    height: 2px; background: #334155; z-index: 0;
-  }
-  .station {
-    position: relative; z-index: 1;
-    text-align: center; padding-top: 8px;
-  }
-  .station .node {
-    width: 56px; height: 56px; margin: 0 auto 12px;
-    border-radius: 50%;
-    border: 2.5px solid var(--cyan);
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--cyan);
-  }
-  .station.goal .node { border-color: var(--teal); color: var(--teal); }
-  .station b { display: block; font-size: 16px; margin-bottom: 4px; }
-  .station p { font-size: 12px; color: var(--muted); line-height: 1.35; padding: 0 4px; }
-
-  /* Takeaway */
+  /* ── P06 带走：编辑感金句 ── */
   .take {
     flex: 1; min-height: 0;
-    display: flex; flex-direction: column; justify-content: center; gap: 20px;
+    display: flex; flex-direction: column; justify-content: center; gap: 28px;
   }
   .take .phrase {
     font-family: var(--display);
-    font-size: clamp(22px, 2.8vw, 32px);
-    line-height: 1.35; max-width: 22ch;
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1.35; max-width: 18ch;
     border-left: 3px solid var(--orange);
-    padding-left: 18px;
+    padding-left: 20px;
   }
   .take .grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
   }
   .take .cell {
-    border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(148,163,184,.28);
   }
   .take .cell .lab {
-    font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
-    color: var(--orange-soft); margin-bottom: 6px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--orange-soft); margin-bottom: 8px; text-transform: uppercase;
   }
-  .take .cell p { font-size: 14px; color: var(--muted); line-height: 1.4; }
+  .take .cell p { font-size: 14px; color: #94a3b8; line-height: 1.45; }
 
   .progress {
     position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 5;
     background: rgba(255,255,255,.06);
   }
+  body.skin-atlas .progress { background: rgba(28,25,21,.12); }
   .progress > i {
     display: block; height: 100%; width: 0;
     background: linear-gradient(90deg, var(--cyan), var(--orange));
     transition: width .25s ease;
   }
-  @media (max-width: 720px) {
-    .routes, .take .grid, .station-row { grid-template-columns: 1fr; }
-    .station-row::before { display: none; }
+
+  @media (max-width: 800px) {
+    .agenda, .atlas-body, .concepts, .lab-split, .take .grid { grid-template-columns: 1fr; }
+    .agenda-item:nth-child(2) { border-top: 1px solid rgba(148,163,184,.2); padding-top: 16px; }
     h1, h2 { max-width: none; }
+    .concept { min-height: 0; }
   }
 </style>
 </head>
-<body>
+<body class="skin-path">
 <div id="deck">
 
-  <!-- P01 Cover -->
-  <section class="slide on" data-i="0">
-    <div class="kicker">M1 · 线上 · 认识智能</div>
+  <!-- P01 路径：只在「定位」时用地图 -->
+  <section class="slide on" data-i="0" data-skin="path">
+    <div class="kicker">M1 · 线上 · 认识智能 <span class="skin-tag">布局 · 路径</span></div>
     <h1>思维的武器：AI 是什么</h1>
-    <p class="lead">先画一张地图：AI 不是魔法，是一条可指认的路径。本课建立概念站点，再用「同题两问」看提问如何改变结果。</p>
+    <p class="lead">整门课是一条可指认的路。今天停在 M1：先破神话，再建概念，再用提问质量拉开差距。</p>
     <div class="cover-map" aria-hidden="true">
       <svg viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet">
         <path d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
@@ -254,94 +328,182 @@
       </svg>
     </div>
     <div class="foot">
-      <span class="brand">通识进阶 · 风格 C · 地图与路径</span>
+      <span>通识进阶 · 主视觉 C，按内容换布局</span>
       <span class="nav-hint">→ 下一页</span>
     </div>
   </section>
 
-  <!-- P02 本课旅程 -->
-  <section class="slide" data-i="1">
-    <div class="kicker">M1 · 线上 1h · 路线图</div>
-    <h2>这一小时走四个站点</h2>
-    <p class="lead">每站只办一件事。终点不是「背定义」，而是能指着地图说出：AI 在哪一层、你的问题卡在哪。</p>
-    <div class="stations">
-      <div class="station-row">
-        <div class="station">
-          <div class="node">01</div>
+  <!-- P02 议程：清单 -->
+  <section class="slide" data-i="1" data-skin="agenda">
+    <div class="kicker">M1 · 线上 1h <span class="skin-tag">布局 · 议程清单</span></div>
+    <h2>这一小时办四件事</h2>
+    <p class="lead">每块只服务一个目的。终点不是背名词，而是能准确说出：模型在干什么、你的问题卡在哪。</p>
+    <div class="agenda">
+      <div class="agenda-item">
+        <div class="n">01</div>
+        <div>
           <b>破神话</b>
-          <p>大模型在「接话」，不是在「查百科」</p>
-        </div>
-        <div class="station">
-          <div class="node">02</div>
-          <b>概念地图</b>
-          <p>LLM · Prompt · Agent · Skills</p>
-        </div>
-        <div class="station">
-          <div class="node">03</div>
-          <b>同题两问</b>
-          <p>问法一变，路径就变</p>
-        </div>
-        <div class="station goal">
-          <div class="node">04</div>
-          <b>分类练习</b>
-          <p>自定标准，说出抽到的共性</p>
+          <p>大模型在「接下一词」，不是在翻百科全书</p>
         </div>
       </div>
+      <div class="agenda-item">
+        <div class="n">02</div>
+        <div>
+          <b>概念四件</b>
+          <p>LLM · Prompt · Agent · Skills —— 各管什么</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="n">03</div>
+        <div>
+          <b>同题两问</b>
+          <p>同一意图，模糊问与清楚问对照</p>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="n">04</div>
+        <div>
+          <b>分类练习</b>
+          <p>自定标准，说出你抽到的共性</p>
+        </div>
+      </div>
+      <div class="agenda-note">线下衔接：把电脑 / 网页 / 互联网拆成「一层套一层」，画抽象层级图。</div>
     </div>
     <div class="foot">
-      <span class="brand">线下衔接：把电脑 / 网页 / 互联网拆成一层套一层</span>
-      <span class="nav-hint">2 / <span class="total">4</span></span>
+      <span>不走路、不画站 —— 议程只负责排序</span>
+      <span class="nav-hint">2 / 6</span>
     </div>
   </section>
 
-  <!-- P03 同题两问 -->
-  <section class="slide" data-i="2">
-    <div class="kicker">M1 · 同题两问</div>
-    <h2>同一件事，两条路</h2>
-    <p class="lead">左边像雾里走路；右边把起点、终点、中间态标出来。AI 更吃标清楚的路。</p>
-    <div class="routes">
-      <div class="route fog">
-        <h3>● 模糊问 · 容易迷路</h3>
-        <svg class="route-svg" viewBox="0 0 320 56" aria-hidden="true">
-          <path d="M20 28 C60 8 90 48 130 28 S190 8 230 40 S280 20 300 28" fill="none" stroke="#f97316" stroke-width="2" stroke-dasharray="4 6" opacity=".7"/>
-          <circle cx="20" cy="28" r="5" fill="#f97316"/><circle cx="300" cy="28" r="5" fill="#64748b"/>
+  <!-- P03 图鉴：机理 -->
+  <section class="slide" data-i="2" data-skin="atlas">
+    <div class="kicker">M1 · 破神话 <span class="skin-tag">布局 · 机制图鉴</span></div>
+    <h2>它不是在「想」，是在接下一词</h2>
+    <p class="lead">切开看：输入进去的是前文，吐出来的是概率最高的下一个词，再拼成整段。听起来像回答，底下是预测。</p>
+    <div class="atlas-body">
+      <div class="cutaway">
+        <svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="16" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">剖面 · 一次生成</text>
+          <!-- input -->
+          <rect x="16" y="48" width="120" height="72" rx="4" fill="#fffaf2" stroke="#1c1915" stroke-width="1.4"/>
+          <text x="76" y="78" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#5c5348">你的句子</text>
+          <text x="76" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9a3412">「为什么…」</text>
+          <path d="M144 84 H188" stroke="#b45309" stroke-width="1.8"/>
+          <polygon points="188,80 198,84 188,88" fill="#b45309"/>
+          <!-- model stack -->
+          <g transform="translate(210,40)">
+            <rect x="0" y="0" width="140" height="36" fill="#fffaf2" stroke="#1c1915" stroke-width="1.3"/>
+            <text x="12" y="23" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">读入前文</text>
+            <rect x="0" y="36" width="140" height="44" fill="#fff7ed" stroke="#b45309" stroke-width="1.6"/>
+            <text x="12" y="55" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">预测下一词</text>
+            <text x="12" y="72" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a6a45">按概率选一个</text>
+            <rect x="0" y="80" width="140" height="36" fill="#ebe0d0" stroke="#1c1915" stroke-width="1.3"/>
+            <text x="12" y="103" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">拼进回答</text>
+          </g>
+          <path d="M358 98 H392" stroke="#b45309" stroke-width="1.8"/>
+          <polygon points="392,94 402,98 392,102" fill="#b45309"/>
+          <rect x="410" y="70" width="20" height="56" rx="3" fill="#fff7ed" stroke="#b45309" stroke-width="1.3"/>
+          <text x="20" y="160" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#6b6358">循环：词₁ → 词₂ → 词₃ → … 直到停</text>
+          <!-- word chips -->
+          <g font-family="IBM Plex Mono,monospace" font-size="12">
+            <rect x="20" y="180" width="52" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="46" y="198" text-anchor="middle" fill="#1c1915">因为</text>
+            <rect x="82" y="180" width="52" height="28" rx="3" fill="#fff7ed" stroke="#b45309"/>
+            <text x="108" y="198" text-anchor="middle" fill="#9a3412">它</text>
+            <rect x="144" y="180" width="64" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="176" y="198" text-anchor="middle" fill="#1c1915">根据</text>
+            <rect x="218" y="180" width="52" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="244" y="198" text-anchor="middle" fill="#8a7f70">…</text>
+          </g>
+          <text x="20" y="240" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#8a6a45">不是先「想明白」再写；是边写边猜下一个最像的。</text>
         </svg>
-        <div class="q">「人工智能是怎么回事？」</div>
+      </div>
+      <div class="atlas-side">
+        <div class="layer"><b>你看见的</b><span>一段通顺、像人在答的文字</span></div>
+        <div class="layer hot"><b>机器在做的</b><span>给定已有文字，选下一个最可能的词</span></div>
+        <div class="layer"><b>所以会怎样</b><span>听起来对，也可能一本正经地错（幻觉）</span></div>
+        <div class="layer"><b>带走的句式</b><span>「表面上是……，底下其实是……」</span></div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>机理页用图鉴剖开，不用路径装点</span>
+      <span class="nav-hint">3 / 6</span>
+    </div>
+  </section>
+
+  <!-- P04 概念栈 -->
+  <section class="slide" data-i="3" data-skin="agenda">
+    <div class="kicker">M1 · 概念四件 <span class="skin-tag">布局 · 定义栈</span></div>
+    <h2>四个名字，各管一层</h2>
+    <p class="lead">先分清职责，再谈怎么用。它们不是四个「更酷的同义词」。</p>
+    <div class="concepts">
+      <div class="concept">
+        <div class="abbr">LLM</div>
+        <h3>大模型</h3>
+        <p>被训练好的「接话引擎」：读前文，吐下一词。</p>
+        <div class="why">为什么这样设计：规模换能力，用统计规律模仿语言。</div>
+      </div>
+      <div class="concept">
+        <div class="abbr">Prompt</div>
+        <h3>提示词</h3>
+        <p>你写给模型的前文与规矩——它顺着你的文字往下接。</p>
+        <div class="why">为什么重要：问法决定它走哪条「像」的路。</div>
+      </div>
+      <div class="concept">
+        <div class="abbr">Agent</div>
+        <h3>智能体</h3>
+        <p>带着目标、工具、步骤去办事的编排，不只是聊一句。</p>
+        <div class="why">为什么这样设计：多步任务需要记忆、调用与循环。</div>
+      </div>
+      <div class="concept">
+        <div class="abbr">Skills</div>
+        <h3>技能 / 能力包</h3>
+        <p>可复用的专项本领（查、算、画、改文件…）挂到助手上。</p>
+        <div class="why">为什么拆开：通用接话 + 专用工具，比一个黑洞好管。</div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>概念页用并列定义，不伪装成旅程</span>
+      <span class="nav-hint">4 / 6</span>
+    </div>
+  </section>
+
+  <!-- P05 实验室对照 -->
+  <section class="slide slide-lab" data-i="4" data-skin="lab">
+    <div class="lab-grid-bg" aria-hidden="true"></div>
+    <div class="kicker">M1 · 同题两问 <span class="skin-tag">布局 · 实验室对照</span></div>
+    <h2>同一意图，两种问法</h2>
+    <p class="lead">左边对象太大；右边把过程钉死。对照看：AI 更吃哪一边。</p>
+    <div class="lab-split">
+      <div class="lab-col bad">
+        <h3><span class="dot"></span>模糊问</h3>
+        <div class="lab-q">「人工智能是怎么回事？」</div>
         <ul>
           <li>对象太大，答什么都像对</li>
           <li>没有可观察的步骤</li>
           <li>模型容易讲故事充数</li>
         </ul>
       </div>
-      <div class="route clear">
-        <h3>● 清楚问 · 站点齐全</h3>
-        <svg class="route-svg" viewBox="0 0 320 56" aria-hidden="true">
-          <path class="dash-flow" d="M20 36 H80 H140 H200 H260 H300" fill="none" stroke="#38bdf8" stroke-width="2"/>
-          <circle cx="20" cy="36" r="5" fill="#38bdf8"/>
-          <circle cx="80" cy="36" r="4" fill="#38bdf8"/>
-          <circle cx="140" cy="36" r="4" fill="#38bdf8"/>
-          <circle cx="200" cy="36" r="4" fill="#38bdf8"/>
-          <circle cx="260" cy="36" r="4" fill="#38bdf8"/>
-          <circle cx="300" cy="36" r="5" fill="#5eead4"/>
-        </svg>
-        <div class="q">「大模型收到我的句子后，如何一次只预测下一个词，拼成整段回答？」</div>
+      <div class="lab-col good">
+        <h3><span class="dot"></span>清楚问</h3>
+        <div class="lab-q">「大模型收到我的句子后，如何一次只预测下一个词，再拼成整段回答？」</div>
         <ul>
           <li>有起点、过程、产物</li>
-          <li>能画路径、能追问核对</li>
+          <li>能追问、能核对</li>
           <li>人能判断哪一段在胡说</li>
         </ul>
       </div>
     </div>
     <div class="foot">
-      <span class="brand">课堂口令：先标站点，再发问</span>
-      <span class="nav-hint">3 / 4</span>
+      <span>课堂口令：先把过程说清楚，再发问</span>
+      <span class="nav-hint">5 / 6</span>
     </div>
   </section>
 
-  <!-- P04 带走 -->
-  <section class="slide" data-i="3">
-    <div class="kicker">M1 · 第一站带走</div>
-    <h2>今天先装进脑子的三件事</h2>
+  <!-- P06 带走 -->
+  <section class="slide" data-i="5" data-skin="edit">
+    <div class="kicker">M1 · 带走 <span class="skin-tag">布局 · 编辑金句</span></div>
+    <h2>先装进脑子的三件事</h2>
     <div class="take">
       <p class="phrase">「表面上是回答，底下其实是在接下一词。」</p>
       <div class="grid">
@@ -351,16 +513,16 @@
         </div>
         <div class="cell">
           <div class="lab">AI</div>
-          <p>LLM / Prompt / Agent / Skills 是地图上的四个站，不是神话名词</p>
+          <p>LLM / Prompt / Agent / Skills 各管一层，不是四个花名</p>
         </div>
         <div class="cell">
-          <div class="lab">下一站 · 线下</div>
+          <div class="lab">线下</div>
           <p>拆电脑与互联网：一层套一层；数据包怎么走</p>
         </div>
       </div>
     </div>
     <div class="foot">
-      <span class="brand">通识进阶 · M1</span>
+      <span>通识进阶 · M1</span>
       <span class="nav-hint">← → 翻页 · F 全屏</span>
     </div>
   </section>
@@ -370,16 +532,14 @@
 <script>
   const slides = [...document.querySelectorAll(".slide")];
   const bar = document.getElementById("bar");
+  const body = document.body;
   let i = 0;
   function show(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
     slides.forEach((s, k) => s.classList.toggle("on", k === i));
+    const skin = slides[i].dataset.skin || "path";
+    body.className = "skin-" + skin;
     bar.style.width = ((i + 1) / slides.length * 100) + "%";
-    document.querySelectorAll(".nav-hint").forEach((el, idx) => {
-      if (idx === i && i > 0 && i < slides.length - 1) {
-        /* keep static hints on middle slides */
-      }
-    });
   }
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") { e.preventDefault(); show(i + 1); }
