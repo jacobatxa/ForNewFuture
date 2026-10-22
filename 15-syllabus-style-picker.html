@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>通识进阶课件 · 四种 UX 风格挑选</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Sans:wght@500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#12110f;color:#f4f0e8;
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    padding:28px 20px 96px;
+  }
+  .top{max-width:1280px;margin:0 auto 20px}
+  .top h1{font-size:clamp(24px,3vw,32px);font-weight:700;letter-spacing:-.02em}
+  .top p{margin-top:8px;color:#a8a29a;line-height:1.55;max-width:720px;font-size:15px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+  .tabs button{
+    border:1px solid #3f3a34;background:#1c1a17;color:#e7e2d9;
+    border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer;
+    transition:background .15s,border-color .15s,color .15s;
+  }
+  .tabs button:hover{border-color:#78716c}
+  .tabs button.on{background:#f4f0e8;color:#12110f;border-color:#f4f0e8}
+  .meta{max-width:1280px;margin:0 auto 14px;display:flex;gap:16px;flex-wrap:wrap;align-items:baseline}
+  .meta .tag{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:#a8a29a;font-weight:600;
+  }
+  .meta .desc{color:#d6d3d1;font-size:14px;line-height:1.45;max-width:52em}
+  .stage-wrap{max-width:1280px;margin:0 auto}
+  .stage{
+    width:min(100%,1200px);aspect-ratio:16/9;margin:0 auto;
+    border:1px solid #3f3a34;border-radius:14px;overflow:hidden;
+    position:relative;box-shadow:0 28px 70px rgba(0,0,0,.5);
+    background:#000;
+  }
+  .variant{position:absolute;inset:0;display:none}
+  .variant.on{display:block}
+  .hint{
+    max-width:1200px;margin:18px auto 0;color:#a8a29a;font-size:13px;line-height:1.55;
+  }
+  .grid4{
+    max-width:1280px;margin:36px auto 0;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  }
+  .thumb{
+    border:1px solid #3f3a34;border-radius:12px;overflow:hidden;cursor:pointer;
+    background:#1c1a17;transition:border-color .15s,transform .15s;
+  }
+  .thumb:hover{border-color:#a8a29a;transform:translateY(-2px)}
+  .thumb.active{border-color:#f4f0e8}
+  .thumb .mini{aspect-ratio:16/9;pointer-events:none;transform-origin:top left}
+  .thumb .cap{padding:10px 12px;font-size:13px;color:#d6d3d1}
+  .thumb .cap b{color:#f4f0e8;display:block;margin-bottom:2px}
+  @media(max-width:900px){.grid4{grid-template-columns:1fr}}
+
+  /* ── A · 机制图鉴 ── */
+  #a{
+    background:
+      radial-gradient(ellipse 80% 50% at 70% 0%,rgba(196,122,58,.08),transparent 55%),
+      linear-gradient(165deg,#f7f2e8 0%,#efe6d6 48%,#e8dcc8 100%);
+    color:#1c1915;
+    font-family:Literata,"Source Serif 4","Songti SC",serif;
+    padding:28px 36px 22px;
+  }
+  #a .paper{
+    height:100%;display:flex;flex-direction:column;
+    background:
+      repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(28,25,21,.035) 27px,rgba(28,25,21,.035) 28px);
+  }
+  #a .ak{font-family:"IBM Plex Sans",sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8a6a45;font-weight:700}
+  #a h2{font-size:clamp(26px,3.2vw,36px);font-weight:700;letter-spacing:-.02em;margin:6px 0 4px;line-height:1.2;max-width:16ch}
+  #a .al{font-family:"IBM Plex Sans",sans-serif;font-size:14px;color:#5c5348;margin-bottom:14px}
+  #a .diagram{
+    flex:1;min-height:0;display:grid;grid-template-columns:1.15fr .95fr;gap:22px;align-items:stretch;
+  }
+  #a .cutaway{
+    border:1.5px solid #c4b49a;border-radius:4px;background:#fffaf2;
+    padding:14px 16px;position:relative;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);
+  }
+  #a .cutaway svg{width:100%;height:100%;display:block}
+  #a .side{display:flex;flex-direction:column;gap:10px}
+  #a .layer{
+    border:1px solid #c4b49a;background:rgba(255,250,242,.85);
+    padding:10px 12px;border-radius:3px;
+    font-family:"IBM Plex Sans",sans-serif;
+  }
+  #a .layer b{display:block;font-size:13px;color:#1c1915;margin-bottom:2px}
+  #a .layer span{font-size:12px;color:#6b6358;line-height:1.35}
+  #a .layer.hot{border-color:#b45309;background:#fff7ed}
+  #a .layer.hot b{color:#9a3412}
+  #a .af{font-family:"IBM Plex Sans",sans-serif;font-size:11px;color:#8a7f70;margin-top:10px;border-top:1px solid #d6c9b4;padding-top:8px}
+
+  /* ── B · 实验室对照 ── */
+  #b{
+    background:#14181e;
+    color:#e8edf4;
+    font-family:"DM Sans","IBM Plex Sans",system-ui,sans-serif;
+    padding:26px 32px 20px;
+    position:relative;
+  }
+  #b::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:28px 28px;
+  }
+  #b .inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+  #b .bk{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5eead4;font-weight:600}
+  #b h2{font-size:clamp(24px,3vw,34px);font-weight:700;margin:6px 0 4px;letter-spacing:-.03em}
+  #b .bl{font-size:13px;color:#94a3b8;margin-bottom:14px}
+  #b .split{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  #b .col{
+    border-radius:8px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;
+    border:1px solid transparent;
+  }
+  #b .col.bad{background:#1a1514;border-color:#7f1d1d}
+  #b .col.good{background:#0f1a1a;border-color:#115e59}
+  #b .col h3{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;
+    display:flex;align-items:center;gap:8px;
+  }
+  #b .col.bad h3{color:#fca5a5}
+  #b .col.good h3{color:#5eead4}
+  #b .dot{width:8px;height:8px;border-radius:50%}
+  #b .col.bad .dot{background:#ef4444;box-shadow:0 0 10px #ef4444}
+  #b .col.good .dot{background:#14b8a6;box-shadow:0 0 10px #14b8a6}
+  #b .q{
+    font-size:15px;font-weight:600;line-height:1.4;padding:10px 12px;border-radius:6px;
+  }
+  #b .col.bad .q{background:rgba(127,29,29,.35);color:#fecaca}
+  #b .col.good .q{background:rgba(17,94,89,.35);color:#ccfbf1}
+  #b .note-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-top:auto}
+  #b .note-list li{
+    font-size:12px;color:#94a3b8;padding-left:14px;position:relative;line-height:1.35;
+  }
+  #b .note-list li::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:1px}
+  #b .col.bad .note-list li::before{background:#f87171}
+  #b .col.good .note-list li::before{background:#2dd4bf}
+  #b .bf{font-family:"JetBrains Mono",monospace;font-size:10px;color:#64748b;margin-top:12px}
+
+  /* ── C · 地图与路径 ── */
+  #c{
+    background:linear-gradient(160deg,#0c1220 0%,#121a2e 55%,#0e1626 100%);
+    color:#e8edf7;
+    font-family:"Fraunces","Source Serif 4",serif;
+    padding:26px 32px 20px;
+  }
+  #c .ck{font-family:"IBM Plex Sans",sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#fb923c;font-weight:700}
+  #c h2{font-size:clamp(24px,3vw,34px);font-weight:700;margin:6px 0 4px;letter-spacing:-.02em;max-width:14ch}
+  #c .cl{font-family:"IBM Plex Sans",sans-serif;font-size:13px;color:#94a3b8;margin-bottom:8px}
+  #c .map-wrap{flex:1;min-height:0;position:relative;margin-top:4px}
+  #c .inner{height:100%;display:flex;flex-direction:column}
+  #c .path-svg{width:100%;height:100%;display:block}
+  #c .legend{
+    position:absolute;right:0;bottom:0;font-family:"IBM Plex Sans",sans-serif;
+    display:flex;gap:14px;font-size:11px;color:#94a3b8;
+  }
+  #c .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  #c .cf{font-family:"IBM Plex Sans",sans-serif;font-size:11px;color:#64748b;margin-top:8px}
+
+  /* ── D · 卡片工作坊 ── */
+  #d{
+    background:#f0ebe3;
+    color:#1a1714;
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    padding:24px 28px 18px;
+  }
+  #d .dk{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#78716c;font-weight:700}
+  #d h2{font-family:Fraunces,serif;font-size:clamp(24px,3vw,32px);font-weight:700;margin:6px 0 4px;letter-spacing:-.02em}
+  #d .dl{font-size:13px;color:#78716c;margin-bottom:14px}
+  #d .board{
+    flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  }
+  #d .inner{height:100%;display:flex;flex-direction:column}
+  #d .card{
+    background:#fff;border:1.5px solid #d6d3d1;border-radius:14px;
+    padding:14px 12px;display:flex;flex-direction:column;gap:8px;
+    box-shadow:0 8px 20px rgba(28,25,23,.06);
+    position:relative;
+  }
+  #d .card .num{
+    width:26px;height:26px;border-radius:8px;background:#1c1917;color:#fff;
+    font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  }
+  #d .card h3{font-size:15px;font-weight:700;line-height:1.25}
+  #d .card p{font-size:12px;color:#78716c;line-height:1.4;flex:1}
+  #d .blank{
+    border:1.5px dashed #a8a29a;border-radius:8px;min-height:36px;
+    background:repeating-linear-gradient(180deg,transparent,transparent 22px,#e7e5e4 22px,#e7e5e4 23px);
+    margin-top:auto;
+  }
+  #d .card.accent{border-color:#c2410c;background:#fff7ed}
+  #d .card.accent .num{background:#c2410c}
+  #d .df{font-size:11px;color:#a8a29a;margin-top:12px}
+</style>
+</head>
+<body>
+  <div class="top">
+    <h1>通识进阶课件 · 四种 UX 风格</h1>
+    <p>同一页内容：「你点发送之后发生了什么」。点上方标签切换大图，或点下方缩略图。选定后告诉我字母即可。</p>
+    <div class="tabs">
+      <button type="button" class="on" data-v="a">A · 机制图鉴</button>
+      <button type="button" data-v="b">B · 实验室对照</button>
+      <button type="button" data-v="c">C · 地图与路径</button>
+      <button type="button" data-v="d">D · 卡片工作坊</button>
+    </div>
+  </div>
+
+  <div class="meta">
+    <span class="tag" id="meta-tag">A · 机制图鉴</span>
+    <span class="desc" id="meta-desc">米白纸张、线描剖面、一层套一层。适合讲「东西为什么这样运转」。</span>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage">
+
+      <!-- A -->
+      <section class="variant on" id="a">
+        <div class="paper">
+          <div class="ak">M1 · 抽象 / 分层 · 机理切片</div>
+          <h2>你点发送之后，字去了哪里？</h2>
+          <p class="al">先画剖面，再给每一层一个名字。看不见的，也能指着说。</p>
+          <div class="diagram">
+            <div class="cutaway">
+              <svg viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+                    <line x1="0" y1="0" x2="0" y2="6" stroke="#c4b49a" stroke-width="1" opacity=".5"/>
+                  </pattern>
+                </defs>
+                <!-- phone outline -->
+                <rect x="28" y="36" width="72" height="128" rx="10" fill="#fffaf2" stroke="#1c1915" stroke-width="1.6"/>
+                <rect x="38" y="48" width="52" height="88" rx="3" fill="#efe6d6" stroke="#8a7f70" stroke-width="1"/>
+                <text x="64" y="96" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#5c5348">你好</text>
+                <circle cx="64" cy="150" r="5" fill="none" stroke="#1c1915" stroke-width="1.2"/>
+                <!-- arrow packets -->
+                <path d="M110 96 H168" stroke="#b45309" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+                <g font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#9a3412">
+                  <rect x="118" y="72" width="36" height="16" rx="2" fill="#fff7ed" stroke="#b45309"/>
+                  <text x="136" y="83" text-anchor="middle">包①</text>
+                  <rect x="118" y="102" width="36" height="16" rx="2" fill="#fff7ed" stroke="#b45309"/>
+                  <text x="136" y="113" text-anchor="middle">包②</text>
+                </g>
+                <!-- stack layers cross-section -->
+                <g transform="translate(190,28)">
+                  <rect x="0" y="0" width="200" height="42" fill="#fffaf2" stroke="#1c1915" stroke-width="1.4"/>
+                  <text x="12" y="26" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="600" fill="#1c1915">应用层 · 聊天窗口</text>
+                  <rect x="0" y="42" width="200" height="42" fill="#f3ebe0" stroke="#1c1915" stroke-width="1.4"/>
+                  <text x="12" y="68" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="600" fill="#1c1915">系统层 · 网络栈</text>
+                  <rect x="0" y="84" width="200" height="42" fill="#ebe0d0" stroke="#1c1915" stroke-width="1.4"/>
+                  <text x="12" y="110" font-family="IBM Plex Sans,sans-serif" font-size="13" font-weight="600" fill="#1c1915">硬件层 · 无线芯片</text>
+                  <rect x="0" y="126" width="200" height="48" fill="url(#hatch)" stroke="#b45309" stroke-width="1.8"/>
+                  <text x="12" y="148" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">空中 · 电磁波（不是「字」在飞）</text>
+                  <text x="12" y="164" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a6a45">切开看：一层包着一层</text>
+                </g>
+                <!-- distant phone -->
+                <rect x="340" y="88" width="56" height="100" rx="8" fill="#fffaf2" stroke="#1c1915" stroke-width="1.4"/>
+                <text x="368" y="142" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#5c5348">对方</text>
+                <path d="M390 86 Q400 40 368 28" stroke="#8a7f70" stroke-width="1.2" fill="none" stroke-dasharray="3 3"/>
+                <text x="300" y="24" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a7f70">基站 / 路由器</text>
+              </svg>
+            </div>
+            <div class="side">
+              <div class="layer"><b>① 你看见的</b><span>屏幕上的「你好」——应用替你打包</span></div>
+              <div class="layer"><b>② 机器做的</b><span>拆成小包，标上地址，排队出发</span></div>
+              <div class="layer hot"><b>③ 真正在路上的</b><span>不是字，是按规则编码的信号</span></div>
+              <div class="layer"><b>带走的句式</b><span>「表面上是……，底下其实是……」</span></div>
+            </div>
+          </div>
+          <p class="af">风格 A · 机制图鉴 — 图鉴感、可指认、偏真实机理</p>
+        </div>
+      </section>
+
+      <!-- B -->
+      <section class="variant" id="b">
+        <div class="inner">
+          <div class="bk">M1 · 同题两问 · Lab 对照</div>
+          <h2>同一件事，两种问法</h2>
+          <p class="bl">左边像没想清楚；右边把对象、过程、边界说死。训练场：AI 更吃右边。</p>
+          <div class="split">
+            <div class="col bad">
+              <h3><span class="dot"></span>模糊问</h3>
+              <div class="q">「微信发送是怎么回事？」</div>
+              <ul class="note-list">
+                <li>对象太大，答什么都行</li>
+                <li>没有可观察的步骤</li>
+                <li>AI 容易讲故事充数</li>
+              </ul>
+            </div>
+            <div class="col good">
+              <h3><span class="dot"></span>清楚问</h3>
+              <div class="q">「我点发送后，文字如何变成能在空中传播的信号，再在对方手机上变成字？」</div>
+              <ul class="note-list">
+                <li>有起点、终点、中间态</li>
+                <li>能画路径、能标故障点</li>
+                <li>AI 被规矩住，人也能核对</li>
+              </ul>
+            </div>
+          </div>
+          <p class="bf">风格 B · 实验室对照 — 工作台网格 · 红/青对照 · 适合「立规矩」页</p>
+        </div>
+      </section>
+
+      <!-- C -->
+      <section class="variant" id="c">
+        <div class="inner">
+          <div class="ck">M1 · 路径图 · 故障三处</div>
+          <h2>一条消息的旅程</h2>
+          <p class="cl">站点连成线。红点是最常「坏」的地方——先会找，再会修说法。</p>
+          <div class="map-wrap">
+            <svg class="path-svg" viewBox="0 0 1100 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- path line -->
+              <path d="M80 200 C180 200 200 80 320 80 S480 200 560 200 S720 80 820 80 S980 200 1020 200"
+                    fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+              <path d="M80 200 C180 200 200 80 320 80 S480 200 560 200 S720 80 820 80 S980 200 1020 200"
+                    fill="none" stroke="#38bdf8" stroke-width="2" stroke-dasharray="8 10" opacity=".85">
+                <animate attributeName="stroke-dashoffset" from="0" to="-36" dur="1.4s" repeatCount="indefinite"/>
+              </path>
+              <!-- stations -->
+              <g font-family="IBM Plex Sans,sans-serif">
+                <g transform="translate(80,200)">
+                  <circle r="18" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+                  <circle r="6" fill="#38bdf8"/>
+                  <text y="44" text-anchor="middle" font-size="13" fill="#e2e8f0" font-weight="600">你的手机</text>
+                  <text y="60" text-anchor="middle" font-size="11" fill="#64748b">应用打包</text>
+                </g>
+                <g transform="translate(320,80)">
+                  <circle r="18" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+                  <circle r="6" fill="#38bdf8"/>
+                  <text y="-28" text-anchor="middle" font-size="13" fill="#e2e8f0" font-weight="600">路由器 / 基站</text>
+                  <text y="-12" text-anchor="middle" font-size="11" fill="#64748b">转发地址</text>
+                  <!-- fault -->
+                  <circle r="26" fill="none" stroke="#f97316" stroke-width="2" opacity=".9"/>
+                  <circle cx="22" cy="-22" r="10" fill="#f97316"/>
+                  <text x="22" y="-18" text-anchor="middle" font-size="11" font-weight="700" fill="#0c1220">1</text>
+                </g>
+                <g transform="translate(560,200)">
+                  <circle r="18" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+                  <circle r="6" fill="#38bdf8"/>
+                  <text y="44" text-anchor="middle" font-size="13" fill="#e2e8f0" font-weight="600">骨干网</text>
+                  <text y="60" text-anchor="middle" font-size="11" fill="#64748b">一跳一跳走</text>
+                  <circle r="26" fill="none" stroke="#f97316" stroke-width="2"/>
+                  <circle cx="22" cy="-22" r="10" fill="#f97316"/>
+                  <text x="22" y="-18" text-anchor="middle" font-size="11" font-weight="700" fill="#0c1220">2</text>
+                </g>
+                <g transform="translate(820,80)">
+                  <circle r="18" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+                  <circle r="6" fill="#38bdf8"/>
+                  <text y="-28" text-anchor="middle" font-size="13" fill="#e2e8f0" font-weight="600">对方运营商</text>
+                  <text y="-12" text-anchor="middle" font-size="11" fill="#64748b">再进本地网</text>
+                  <circle r="26" fill="none" stroke="#f97316" stroke-width="2"/>
+                  <circle cx="22" cy="-22" r="10" fill="#f97316"/>
+                  <text x="22" y="-18" text-anchor="middle" font-size="11" font-weight="700" fill="#0c1220">3</text>
+                </g>
+                <g transform="translate(1020,200)">
+                  <circle r="18" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
+                  <circle r="6" fill="#5eead4"/>
+                  <text y="44" text-anchor="middle" font-size="13" fill="#e2e8f0" font-weight="600">对方手机</text>
+                  <text y="60" text-anchor="middle" font-size="11" fill="#64748b">组装成字</text>
+                </g>
+              </g>
+              <!-- callouts -->
+              <g font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#fdba74">
+                <text x="360" y="300">① Wi‑Fi 密码 / 信号</text>
+                <text x="520" y="300">② 拥塞 · 丢包</text>
+                <text x="700" y="300">③ 对方关机 / 无网</text>
+              </g>
+            </svg>
+            <div class="legend">
+              <span><i style="background:#38bdf8"></i>正常站点</span>
+              <span><i style="background:#f97316"></i>常见故障</span>
+              <span><i style="background:#5eead4"></i>到达</span>
+            </div>
+          </div>
+          <p class="cf">风格 C · 地图与路径 — 旅程感、站点、故障标号 · 适合工程/发送页</p>
+        </div>
+      </section>
+
+      <!-- D -->
+      <section class="variant" id="d">
+        <div class="inner">
+          <div class="dk">M1 · 课堂动手 · 分类卡</div>
+          <h2>把「发送」拆成四张卡</h2>
+          <p class="dl">每人一组。空白格自己写：看见什么 / 机器做什么。写完贴墙对齐。</p>
+          <div class="board">
+            <div class="card">
+              <div class="num">1</div>
+              <h3>屏幕上</h3>
+              <p>你点下去的那一刻，界面发生了什么变化？</p>
+              <div class="blank" aria-hidden="true"></div>
+            </div>
+            <div class="card accent">
+              <div class="num">2</div>
+              <h3>手机里面</h3>
+              <p>哪个程序在跑？字有没有先被拆开？</p>
+              <div class="blank" aria-hidden="true"></div>
+            </div>
+            <div class="card">
+              <div class="num">3</div>
+              <h3>半路上</h3>
+              <p>经过哪些「站」？哪一站最容易坏？</p>
+              <div class="blank" aria-hidden="true"></div>
+            </div>
+            <div class="card">
+              <div class="num">4</div>
+              <h3>对面那头</h3>
+              <p>对方屏幕亮起前，机器还要做什么？</p>
+              <div class="blank" aria-hidden="true"></div>
+            </div>
+          </div>
+          <p class="df">风格 D · 卡片工作坊 — 大卡片、填写格、贴墙对齐 · 适合 10–12 岁动手段</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <p class="hint">下面四格是缩略总览，点一下可跳到对应大图。全课建议：<strong style="color:#e7e5e4;font-weight:600">一种主风格 + 局部借用</strong>（例如主 A，对照页用 B，路径页用 C）。</p>
+
+  <div class="grid4" id="thumbs">
+    <div class="thumb active" data-v="a">
+      <div class="mini" style="background:linear-gradient(165deg,#f7f2e8,#e8dcc8);padding:10px 12px;font-family:Literata,serif;color:#1c1915">
+        <div style="font:700 9px IBM Plex Sans;letter-spacing:.15em;color:#8a6a45;text-transform:uppercase">机制图鉴</div>
+        <div style="font-size:15px;font-weight:700;margin:4px 0 8px;line-height:1.2">你点发送之后，字去了哪里？</div>
+        <div style="display:grid;grid-template-columns:1.2fr .8fr;gap:8px;height:58%">
+          <div style="border:1px solid #c4b49a;background:#fffaf2;border-radius:2px"></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="flex:1;border:1px solid #c4b49a;background:#fffaf2"></div>
+            <div style="flex:1;border:1px solid #b45309;background:#fff7ed"></div>
+            <div style="flex:1;border:1px solid #c4b49a;background:#fffaf2"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cap"><b>A · 机制图鉴</b>剖面、层叠、可指认</div>
+    </div>
+    <div class="thumb" data-v="b">
+      <div class="mini" style="background:#14181e;padding:10px 12px;color:#e8edf4;font-family:DM Sans,sans-serif">
+        <div style="font:600 9px JetBrains Mono;letter-spacing:.12em;color:#5eead4;text-transform:uppercase">实验室对照</div>
+        <div style="font-size:15px;font-weight:700;margin:4px 0 8px">同一件事，两种问法</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:55%">
+          <div style="border:1px solid #7f1d1d;background:#1a1514;border-radius:4px"></div>
+          <div style="border:1px solid #115e59;background:#0f1a1a;border-radius:4px"></div>
+        </div>
+      </div>
+      <div class="cap"><b>B · 实验室对照</b>模糊问 / 清楚问</div>
+    </div>
+    <div class="thumb" data-v="c">
+      <div class="mini" style="background:#0c1220;padding:10px 12px;color:#e8edf7;font-family:Fraunces,serif">
+        <div style="font:700 9px IBM Plex Sans;letter-spacing:.15em;color:#fb923c;text-transform:uppercase">地图与路径</div>
+        <div style="font-size:15px;font-weight:700;margin:4px 0 8px">一条消息的旅程</div>
+        <svg viewBox="0 0 200 50" style="width:100%;height:48%;margin-top:4px" aria-hidden="true">
+          <path d="M10 35 C40 35 50 10 80 10 S120 35 140 35 S170 10 190 20" fill="none" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="10" cy="35" r="4" fill="#38bdf8"/><circle cx="80" cy="10" r="4" fill="#f97316"/><circle cx="140" cy="35" r="4" fill="#f97316"/><circle cx="190" cy="20" r="4" fill="#5eead4"/>
+        </svg>
+      </div>
+      <div class="cap"><b>C · 地图与路径</b>站点、红标故障</div>
+    </div>
+    <div class="thumb" data-v="d">
+      <div class="mini" style="background:#f0ebe3;padding:10px 12px;color:#1a1714;font-family:IBM Plex Sans,sans-serif">
+        <div style="font:700 9px/1 IBM Plex Sans;letter-spacing:.12em;color:#78716c;text-transform:uppercase">卡片工作坊</div>
+        <div style="font:700 15px Fraunces,serif;margin:4px 0 8px">把「发送」拆成四张卡</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:50%">
+          <div style="background:#fff;border:1px solid #d6d3d1;border-radius:6px"></div>
+          <div style="background:#fff7ed;border:1.5px solid #c2410c;border-radius:6px"></div>
+          <div style="background:#fff;border:1px solid #d6d3d1;border-radius:6px"></div>
+          <div style="background:#fff;border:1px solid #d6d3d1;border-radius:6px"></div>
+        </div>
+      </div>
+      <div class="cap"><b>D · 卡片工作坊</b>填写格、贴墙</div>
+    </div>
+  </div>
+
+<script>
+  const meta = {
+    a: { tag: "A · 机制图鉴", desc: "米白纸张、线描剖面、一层套一层。适合讲「东西为什么这样运转」。" },
+    b: { tag: "B · 实验室对照", desc: "深色工作台、左右对照、终端感克制。适合「同题两问 / 立规矩」。" },
+    c: { tag: "C · 地图与路径", desc: "路径、站点、故障红标。适合发送旅程、工程住哪。" },
+    d: { tag: "D · 卡片工作坊", desc: "大卡片 + 空白填写。适合低龄动手；13–15 岁页量要少用。" }
+  };
+  function show(id) {
+    document.querySelectorAll(".variant").forEach(el => el.classList.toggle("on", el.id === id));
+    document.querySelectorAll(".tabs button").forEach(btn => btn.classList.toggle("on", btn.dataset.v === id));
+    document.querySelectorAll(".thumb").forEach(t => t.classList.toggle("active", t.dataset.v === id));
+    document.getElementById("meta-tag").textContent = meta[id].tag;
+    document.getElementById("meta-desc").textContent = meta[id].desc;
+  }
+  document.querySelectorAll(".tabs button").forEach(btn => btn.addEventListener("click", () => show(btn.dataset.v)));
+  document.querySelectorAll(".thumb").forEach(t => t.addEventListener("click", () => show(t.dataset.v)));
+</script>
+</body>
+</html>
