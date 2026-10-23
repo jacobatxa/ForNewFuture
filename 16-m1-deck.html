@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M1 认识智能 · 思维的武器 | 通识进阶</title>
+<title>M1 · What AI Actually Is | AI Literacy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Literata:opsz,wght@7..72,600;7..72,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=DM+Sans:wght@500;600;700&display=swap" rel="stylesheet">
@@ -13,9 +13,9 @@
     --teal: #5eead4;
     --orange: #f97316;
     --orange-soft: #fdba74;
-    --font: "IBM Plex Sans", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
-    --display: "Fraunces", "Source Han Serif SC", "Songti SC", serif;
-    --atlas: Literata, "Source Serif 4", "Songti SC", serif;
+    --font: "IBM Plex Sans", system-ui, sans-serif;
+    --display: "Fraunces", Georgia, serif;
+    --atlas: Literata, Georgia, serif;
     --mono: "IBM Plex Mono", ui-monospace, monospace;
     --lab: "DM Sans", "IBM Plex Sans", system-ui, sans-serif;
   }
@@ -29,21 +29,11 @@
     color: #e8edf7;
     transition: background .35s ease, color .25s ease;
   }
-  body.skin-path {
-    background: #0c1220; color: #e8edf7;
-  }
-  body.skin-agenda {
-    background: #0e1422; color: #e8edf7;
-  }
-  body.skin-atlas {
-    background: #efe6d6; color: #1c1915;
-  }
-  body.skin-lab {
-    background: #14181e; color: #e8edf4;
-  }
-  body.skin-edit {
-    background: #0c1220; color: #e8edf7;
-  }
+  body.skin-path { background: #0c1220; color: #e8edf7; }
+  body.skin-agenda { background: #0e1422; color: #e8edf7; }
+  body.skin-atlas { background: #efe6d6; color: #1c1915; }
+  body.skin-lab { background: #14181e; color: #e8edf4; }
+  body.skin-edit { background: #0c1220; color: #e8edf7; }
 
   #deck { position: relative; width: 100vw; height: 100vh; z-index: 1; }
   .slide {
@@ -65,25 +55,23 @@
     font-family: var(--mono); color: var(--teal); letter-spacing: .14em;
   }
 
-  h1, h2 {
-    font-weight: 700; letter-spacing: -.02em; line-height: 1.12;
-  }
+  h1, h2 { font-weight: 700; letter-spacing: -.02em; line-height: 1.12; }
   h1 {
     font-family: var(--display);
     font-size: clamp(34px, 4.6vw, 54px);
-    max-width: 14ch;
+    max-width: 16ch;
   }
   h2 {
     font-family: var(--display);
     font-size: clamp(26px, 3.4vw, 40px);
-    max-width: 18ch;
+    max-width: 20ch;
   }
   .skin-atlas h1, .skin-atlas h2 { font-family: var(--atlas); color: #1c1915; }
   .skin-lab h1, .skin-lab h2 { font-family: var(--lab); letter-spacing: -.03em; }
 
   .lead {
     font-size: clamp(15px, 1.3vw, 17px);
-    line-height: 1.55; max-width: 42em;
+    line-height: 1.55; max-width: 44em;
   }
   .skin-path .lead, .skin-agenda .lead, .skin-edit .lead, .skin-lab .lead { color: #94a3b8; }
   .skin-atlas .lead { color: #5c5348; }
@@ -97,9 +85,7 @@
   .skin-atlas .foot { color: #8a7f70; border-top: 1px solid #d6c9b4; padding-top: 10px; }
   .skin-lab .foot { color: #64748b; font-family: var(--mono); font-size: 11px; }
   .nav-hint { font-family: var(--mono); font-size: 11px; opacity: .85; }
-  .skin-tag { display: none; }
 
-  /* ── P01 路径：定位 ── */
   .cover-map { flex: 1; min-height: 0; margin: 6px 0 0; }
   .cover-map svg { width: 100%; height: 100%; display: block; }
   .dash-flow { stroke-dasharray: 8 12; animation: dash 1.6s linear infinite; }
@@ -107,7 +93,6 @@
   .pulse { animation: pulse 2.4s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-  /* ── P02 议程：清单，不走路 ── */
   .agenda {
     flex: 1; min-height: 0;
     display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px;
@@ -134,7 +119,6 @@
     background: rgba(249,115,22,.06);
   }
 
-  /* ── P03 图鉴：接下一词 ── */
   .atlas-body {
     flex: 1; min-height: 0;
     display: grid; grid-template-columns: 1.15fr .95fr; gap: 22px;
@@ -159,7 +143,6 @@
   .layer.hot { border-color: #b45309; background: #fff7ed; }
   .layer.hot b { color: #9a3412; }
 
-  /* ── P04 概念：竖向定义栈，非路径 ── */
   .concepts {
     flex: 1; min-height: 0;
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
@@ -184,7 +167,6 @@
     border-top: 1px solid rgba(148,163,184,.2); padding-top: 10px; line-height: 1.35;
   }
 
-  /* ── P05 实验室对照 ── */
   .lab-grid-bg {
     position: absolute; inset: 0; pointer-events: none; opacity: .35;
     background-image:
@@ -231,7 +213,6 @@
   .lab-col.bad li::before { background: #f87171; }
   .lab-col.good li::before { background: #2dd4bf; }
 
-  /* ── P06 带走：编辑感金句 ── */
   .take {
     flex: 1; min-height: 0;
     display: flex; flex-direction: column; justify-content: center; gap: 28px;
@@ -239,7 +220,7 @@
   .take .phrase {
     font-family: var(--display);
     font-size: clamp(24px, 3vw, 36px);
-    line-height: 1.35; max-width: 18ch;
+    line-height: 1.35; max-width: 22ch;
     border-left: 3px solid var(--orange);
     padding-left: 20px;
   }
@@ -278,11 +259,10 @@
 <body class="skin-path">
 <div id="deck">
 
-  <!-- P01 路径：只在「定位」时用地图 -->
   <section class="slide on" data-i="0" data-skin="path">
-    <div class="kicker">M1 · 线上 · 认识智能</div>
-    <h1>思维的武器：AI 是什么</h1>
-    <p class="lead">先弄清 AI 到底在干什么。今天破除神话、建立概念，再用「同题两问」看清提问质量差在哪里。</p>
+    <div class="kicker">M1 · Online · Knowing intelligence</div>
+    <h1>Thinking tools: what AI actually is</h1>
+    <p class="lead">Clear the myths first. Then name the pieces. Then see how question quality changes the answer.</p>
     <div class="cover-map" aria-hidden="true">
       <svg viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet">
         <path d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
@@ -293,234 +273,226 @@
           <g transform="translate(70,190)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle class="pulse" r="5" fill="#38bdf8"/>
-            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">观察</text>
-            <text y="58" font-size="11" fill="#64748b">看见现象</text>
+            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">Observe</text>
+            <text y="58" font-size="11" fill="#64748b">see the surface</text>
           </g>
           <g transform="translate(300,70)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle r="5" fill="#38bdf8"/>
-            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">分类</text>
-            <text y="-12" font-size="11" fill="#64748b">自定标准</text>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Classify</text>
+            <text y="-12" font-size="11" fill="#64748b">name your rule</text>
           </g>
           <g transform="translate(550,190)">
             <circle r="18" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
             <circle r="6" fill="#f97316"/>
             <circle r="26" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
-            <text y="44" font-size="13" fill="#fdba74" font-weight="700">本模块 · M1</text>
-            <text y="60" font-size="11" fill="#64748b">抽象 / 分层</text>
+            <text y="44" font-size="13" fill="#fdba74" font-weight="700">This module · M1</text>
+            <text y="60" font-size="11" fill="#64748b">abstract / layer</text>
           </g>
           <g transform="translate(800,70)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle r="5" fill="#38bdf8"/>
-            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">机制</text>
-            <text y="-12" font-size="11" fill="#64748b">东西为何运转</text>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Mechanism</text>
+            <text y="-12" font-size="11" fill="#64748b">how it works</text>
           </g>
           <g transform="translate(1030,190)">
             <circle r="16" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
             <circle r="5" fill="#5eead4"/>
-            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">驾驭</text>
-            <text y="58" font-size="11" fill="#64748b">用 AI 学得更深</text>
+            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">Steer</text>
+            <text y="58" font-size="11" fill="#64748b">learn with AI</text>
           </g>
         </g>
       </svg>
     </div>
     <div class="foot">
-      <span>通识进阶 · M1</span>
-      <span class="nav-hint">→ 下一页</span>
+      <span>AI Literacy · M1</span>
+      <span class="nav-hint">→ next</span>
     </div>
   </section>
 
-  <!-- P02 议程：清单 -->
   <section class="slide" data-i="1" data-skin="agenda">
-    <div class="kicker">M1 · 线上 1h</div>
-    <h2>今天的安排</h2>
-    <p class="lead">四块内容，各有一件事要办成。下课前你应该能说清：模型在干什么，以及你的问题卡在哪一步。</p>
+    <div class="kicker">M1 · Online · 1 hour</div>
+    <h2>Agenda</h2>
+    <p class="lead">Four blocks. By the end you should say, in plain words: what the model is doing, and where a bad question breaks down.</p>
     <div class="agenda">
       <div class="agenda-item">
         <div class="n">01</div>
         <div>
-          <b>破神话</b>
-          <p>大模型在「接下一词」，不是在翻百科全书</p>
+          <b>Kill the myth</b>
+          <p>The model predicts the next token. It does not look up an encyclopedia.</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">02</div>
         <div>
-          <b>四个概念</b>
-          <p>LLM · Prompt · Agent · Skills —— 各管什么</p>
+          <b>Four terms</b>
+          <p>LLM · Prompt · Agent · Skills — what each one owns</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">03</div>
         <div>
-          <b>同题两问</b>
-          <p>同一意图，模糊问与清楚问对照</p>
+          <b>Same ask, two versions</b>
+          <p>Vague vs precise — same intent, different checkability</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">04</div>
         <div>
-          <b>分类练习</b>
-          <p>自定标准，说出你抽到的共性</p>
+          <b>Classify</b>
+          <p>Pick your own rule; say what common feature you pulled out</p>
         </div>
       </div>
-      <div class="agenda-note">线下衔接：把电脑 / 网页 / 互联网拆成「一层套一层」，画抽象层级图。</div>
+      <div class="agenda-note">Offline next: peel PC / web / internet into layers — hardware → system → app — and draw the stack.</div>
     </div>
     <div class="foot">
-      <span>通识进阶 · M1</span>
+      <span>AI Literacy · M1</span>
       <span class="nav-hint">2 / 6</span>
     </div>
   </section>
 
-  <!-- P03 图鉴：机理 -->
   <section class="slide" data-i="2" data-skin="atlas">
-    <div class="kicker">M1 · 破神话</div>
-    <h2>它不是在「想」，是在接下一词</h2>
-    <p class="lead">切开看：输入进去的是前文，吐出来的是概率最高的下一个词，再拼成整段。听起来像回答，底下是预测。</p>
+    <div class="kicker">M1 · Myth</div>
+    <h2>It is not “thinking.” It is next-token prediction.</h2>
+    <p class="lead">Cut it open: context in, most-likely next token out, then the next, until it stops. Sounds like an answer. Underneath: prediction.</p>
     <div class="atlas-body">
       <div class="cutaway">
         <svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <text x="16" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">剖面 · 一次生成</text>
-          <!-- input -->
+          <text x="16" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">Cross-section · one generation</text>
           <rect x="16" y="48" width="120" height="72" rx="4" fill="#fffaf2" stroke="#1c1915" stroke-width="1.4"/>
-          <text x="76" y="78" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#5c5348">你的句子</text>
-          <text x="76" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9a3412">「为什么…」</text>
+          <text x="76" y="78" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#5c5348">Your text</text>
+          <text x="76" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9a3412">“Why does…”</text>
           <path d="M144 84 H188" stroke="#b45309" stroke-width="1.8"/>
           <polygon points="188,80 198,84 188,88" fill="#b45309"/>
-          <!-- model stack -->
           <g transform="translate(210,40)">
             <rect x="0" y="0" width="140" height="36" fill="#fffaf2" stroke="#1c1915" stroke-width="1.3"/>
-            <text x="12" y="23" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">读入前文</text>
+            <text x="12" y="23" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">Read context</text>
             <rect x="0" y="36" width="140" height="44" fill="#fff7ed" stroke="#b45309" stroke-width="1.6"/>
-            <text x="12" y="55" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">预测下一词</text>
-            <text x="12" y="72" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a6a45">按概率选一个</text>
+            <text x="12" y="55" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">Predict next token</text>
+            <text x="12" y="72" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a6a45">sample by probability</text>
             <rect x="0" y="80" width="140" height="36" fill="#ebe0d0" stroke="#1c1915" stroke-width="1.3"/>
-            <text x="12" y="103" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">拼进回答</text>
+            <text x="12" y="103" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">Append &amp; repeat</text>
           </g>
           <path d="M358 98 H392" stroke="#b45309" stroke-width="1.8"/>
           <polygon points="392,94 402,98 392,102" fill="#b45309"/>
           <rect x="410" y="70" width="20" height="56" rx="3" fill="#fff7ed" stroke="#b45309" stroke-width="1.3"/>
-          <text x="20" y="160" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#6b6358">循环：词₁ → 词₂ → 词₃ → … 直到停</text>
-          <!-- word chips -->
+          <text x="20" y="160" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#6b6358">Loop: token₁ → token₂ → token₃ → … until stop</text>
           <g font-family="IBM Plex Mono,monospace" font-size="12">
-            <rect x="20" y="180" width="52" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="46" y="198" text-anchor="middle" fill="#1c1915">因为</text>
-            <rect x="82" y="180" width="52" height="28" rx="3" fill="#fff7ed" stroke="#b45309"/>
-            <text x="108" y="198" text-anchor="middle" fill="#9a3412">它</text>
-            <rect x="144" y="180" width="64" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="176" y="198" text-anchor="middle" fill="#1c1915">根据</text>
-            <rect x="218" y="180" width="52" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="244" y="198" text-anchor="middle" fill="#8a7f70">…</text>
+            <rect x="20" y="180" width="56" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="48" y="198" text-anchor="middle" fill="#1c1915">Because</text>
+            <rect x="86" y="180" width="40" height="28" rx="3" fill="#fff7ed" stroke="#b45309"/>
+            <text x="106" y="198" text-anchor="middle" fill="#9a3412">it</text>
+            <rect x="136" y="180" width="56" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="164" y="198" text-anchor="middle" fill="#1c1915">follows</text>
+            <rect x="202" y="180" width="40" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
+            <text x="222" y="198" text-anchor="middle" fill="#8a7f70">…</text>
           </g>
-          <text x="20" y="240" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#8a6a45">不是先「想明白」再写；是边写边猜下一个最像的。</text>
+          <text x="20" y="240" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#8a6a45">Not “figure it out, then write.” Guess the next likeliest word as it goes.</text>
         </svg>
       </div>
       <div class="atlas-side">
-        <div class="layer"><b>你看见的</b><span>一段通顺、像人在答的文字</span></div>
-        <div class="layer hot"><b>机器在做的</b><span>给定已有文字，选下一个最可能的词</span></div>
-        <div class="layer"><b>所以会怎样</b><span>听起来对，也可能一本正经地错（幻觉）</span></div>
-        <div class="layer"><b>带走的句式</b><span>「表面上是……，底下其实是……」</span></div>
+        <div class="layer"><b>What you see</b><span>Fluent text that sounds like a reply</span></div>
+        <div class="layer hot"><b>What the machine does</b><span>Given prior tokens, pick a likely next one</span></div>
+        <div class="layer"><b>So what</b><span>It can sound right and still be wrong (hallucination)</span></div>
+        <div class="layer"><b>Useful line</b><span>“On the surface… underneath it is…”</span></div>
       </div>
     </div>
     <div class="foot">
-      <span>通识进阶 · M1</span>
+      <span>AI Literacy · M1</span>
       <span class="nav-hint">3 / 6</span>
     </div>
   </section>
 
-  <!-- P04 概念栈 -->
   <section class="slide" data-i="3" data-skin="agenda">
-    <div class="kicker">M1 · 概念</div>
-    <h2>四个词，各管一件事</h2>
-    <p class="lead">先分清职责，再谈怎么用。它们不是四个差不多的花名。</p>
+    <div class="kicker">M1 · Terms</div>
+    <h2>Four names. Four jobs.</h2>
+    <p class="lead">Separate the roles before you use them. They are not four cooler synonyms.</p>
     <div class="concepts">
       <div class="concept">
         <div class="abbr">LLM</div>
-        <h3>大模型</h3>
-        <p>被训练好的「接话引擎」：读前文，吐下一词。</p>
-        <div class="why">为什么这样设计：规模换能力，用统计规律模仿语言。</div>
+        <h3>Large language model</h3>
+        <p>A trained engine that continues text: read context, emit the next token.</p>
+        <div class="why">Why it looks like this: scale + statistics to imitate language.</div>
       </div>
       <div class="concept">
         <div class="abbr">Prompt</div>
-        <h3>提示词</h3>
-        <p>你写给模型的前文与规矩——它顺着你的文字往下接。</p>
-        <div class="why">为什么重要：你怎么问，它就往哪个方向接。</div>
+        <h3>Prompt</h3>
+        <p>The context and rules you give it — it continues from your words.</p>
+        <div class="why">Why it matters: how you ask steers which “likely” path it follows.</div>
       </div>
       <div class="concept">
         <div class="abbr">Agent</div>
-        <h3>智能体</h3>
-        <p>带着目标、工具、步骤去办事的编排，不只是聊一句。</p>
-        <div class="why">为什么这样设计：多步任务需要记忆、调用与循环。</div>
+        <h3>Agent</h3>
+        <p>A setup with a goal, tools, and steps — not just one chat turn.</p>
+        <div class="why">Why design it: multi-step work needs memory, calls, and loops.</div>
       </div>
       <div class="concept">
         <div class="abbr">Skills</div>
-        <h3>技能 / 能力包</h3>
-        <p>可复用的专项本领（查、算、画、改文件…）挂到助手上。</p>
-        <div class="why">为什么拆开：通用接话 + 专用工具，比一个黑洞好管。</div>
+        <h3>Skills</h3>
+        <p>Reusable abilities (search, calc, draw, edit files…) attached to an assistant.</p>
+        <div class="why">Why split them: general text + special tools beat one black box.</div>
       </div>
     </div>
     <div class="foot">
-      <span>通识进阶 · M1</span>
+      <span>AI Literacy · M1</span>
       <span class="nav-hint">4 / 6</span>
     </div>
   </section>
 
-  <!-- P05 实验室对照 -->
   <section class="slide slide-lab" data-i="4" data-skin="lab">
     <div class="lab-grid-bg" aria-hidden="true"></div>
-    <div class="kicker">M1 · 同题两问</div>
-    <h2>同一件事，两种问法</h2>
-    <p class="lead">左边问得太宽；右边把步骤说清楚。对照一下，哪种更容易核对。</p>
+    <div class="kicker">M1 · Same ask, two versions</div>
+    <h2>Same intent. Two questions.</h2>
+    <p class="lead">Left is too broad. Right names the process. Compare which one you can actually check.</p>
     <div class="lab-split">
       <div class="lab-col bad">
-        <h3><span class="dot"></span>模糊问</h3>
-        <div class="lab-q">「人工智能是怎么回事？」</div>
+        <h3><span class="dot"></span>Vague</h3>
+        <div class="lab-q">“How does AI work?”</div>
         <ul>
-          <li>对象太大，答什么都像对</li>
-          <li>没有可观察的步骤</li>
-          <li>模型容易讲故事充数</li>
+          <li>Target too wide — almost any answer “fits”</li>
+          <li>No observable steps</li>
+          <li>Easy for the model to fill with stories</li>
         </ul>
       </div>
       <div class="lab-col good">
-        <h3><span class="dot"></span>清楚问</h3>
-        <div class="lab-q">「大模型收到我的句子后，如何一次只预测下一个词，再拼成整段回答？」</div>
+        <h3><span class="dot"></span>Precise</h3>
+        <div class="lab-q">“After I send a sentence, how does an LLM predict one token at a time and stitch them into a reply?”</div>
         <ul>
-          <li>有起点、过程、产物</li>
-          <li>能追问、能核对</li>
-          <li>人能判断哪一段在胡说</li>
+          <li>Has a start, a process, an output</li>
+          <li>You can follow up and verify</li>
+          <li>You can spot which stretch is nonsense</li>
         </ul>
       </div>
     </div>
     <div class="foot">
-      <span>习惯：先把过程说清楚，再问 AI</span>
+      <span>Habit: name the process, then ask</span>
       <span class="nav-hint">5 / 6</span>
     </div>
   </section>
 
-  <!-- P06 带走 -->
   <section class="slide" data-i="5" data-skin="edit">
-    <div class="kicker">M1 · 小结</div>
-    <h2>今天带走这三句</h2>
+    <div class="kicker">M1 · Close</div>
+    <h2>Three lines to keep</h2>
     <div class="take">
-      <p class="phrase">「表面上是回答，底下其实是在接下一词。」</p>
+      <p class="phrase">“It looks like an answer. Underneath, it is next-token prediction.”</p>
       <div class="grid">
         <div class="cell">
-          <div class="lab">思维</div>
-          <p>抽象：自定标准分类，从现象抽到机制</p>
+          <div class="lab">Thinking</div>
+          <p>Abstract: set your own sorting rule; move from surface to mechanism</p>
         </div>
         <div class="cell">
           <div class="lab">AI</div>
-          <p>LLM / Prompt / Agent / Skills 各管一层，不是四个花名</p>
+          <p>LLM / Prompt / Agent / Skills each own a layer — not four nicknames</p>
         </div>
         <div class="cell">
-          <div class="lab">线下</div>
-          <p>拆电脑与互联网：一层套一层；数据包怎么走</p>
+          <div class="lab">Offline</div>
+          <p>Peel PC and the internet into layers; follow how a packet moves</p>
         </div>
       </div>
     </div>
     <div class="foot">
-      <span>通识进阶 · M1</span>
-      <span class="nav-hint">← → 翻页 · F 全屏</span>
+      <span>AI Literacy · M1</span>
+      <span class="nav-hint">← → · F fullscreen</span>
     </div>
   </section>
 
@@ -534,8 +506,7 @@
   function show(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
     slides.forEach((s, k) => s.classList.toggle("on", k === i));
-    const skin = slides[i].dataset.skin || "path";
-    body.className = "skin-" + skin;
+    body.className = "skin-" + (slides[i].dataset.skin || "path");
     bar.style.width = ((i + 1) / slides.length * 100) + "%";
   }
   document.addEventListener("keydown", (e) => {
