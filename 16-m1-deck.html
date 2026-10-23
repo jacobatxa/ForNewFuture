@@ -97,10 +97,7 @@
   .skin-atlas .foot { color: #8a7f70; border-top: 1px solid #d6c9b4; padding-top: 10px; }
   .skin-lab .foot { color: #64748b; font-family: var(--mono); font-size: 11px; }
   .nav-hint { font-family: var(--mono); font-size: 11px; opacity: .85; }
-  .skin-tag {
-    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
-    opacity: .7; margin-left: 8px;
-  }
+  .skin-tag { display: none; }
 
   /* ── P01 路径：定位 ── */
   .cover-map { flex: 1; min-height: 0; margin: 6px 0 0; }
@@ -283,9 +280,9 @@
 
   <!-- P01 路径：只在「定位」时用地图 -->
   <section class="slide on" data-i="0" data-skin="path">
-    <div class="kicker">M1 · 线上 · 认识智能 <span class="skin-tag">布局 · 路径</span></div>
+    <div class="kicker">M1 · 线上 · 认识智能</div>
     <h1>思维的武器：AI 是什么</h1>
-    <p class="lead">整门课是一条可指认的路。今天停在 M1：先破神话，再建概念，再用提问质量拉开差距。</p>
+    <p class="lead">先弄清 AI 到底在干什么。今天破除神话、建立概念，再用「同题两问」看清提问质量差在哪里。</p>
     <div class="cover-map" aria-hidden="true">
       <svg viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet">
         <path d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
@@ -309,7 +306,7 @@
             <circle r="18" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
             <circle r="6" fill="#f97316"/>
             <circle r="26" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
-            <text y="44" font-size="13" fill="#fdba74" font-weight="700">你在这里 · M1</text>
+            <text y="44" font-size="13" fill="#fdba74" font-weight="700">本模块 · M1</text>
             <text y="60" font-size="11" fill="#64748b">抽象 / 分层</text>
           </g>
           <g transform="translate(800,70)">
@@ -328,16 +325,16 @@
       </svg>
     </div>
     <div class="foot">
-      <span>通识进阶 · 主视觉 C，按内容换布局</span>
+      <span>通识进阶 · M1</span>
       <span class="nav-hint">→ 下一页</span>
     </div>
   </section>
 
   <!-- P02 议程：清单 -->
   <section class="slide" data-i="1" data-skin="agenda">
-    <div class="kicker">M1 · 线上 1h <span class="skin-tag">布局 · 议程清单</span></div>
-    <h2>这一小时办四件事</h2>
-    <p class="lead">每块只服务一个目的。终点不是背名词，而是能准确说出：模型在干什么、你的问题卡在哪。</p>
+    <div class="kicker">M1 · 线上 1h</div>
+    <h2>今天的安排</h2>
+    <p class="lead">四块内容，各有一件事要办成。下课前你应该能说清：模型在干什么，以及你的问题卡在哪一步。</p>
     <div class="agenda">
       <div class="agenda-item">
         <div class="n">01</div>
@@ -349,7 +346,7 @@
       <div class="agenda-item">
         <div class="n">02</div>
         <div>
-          <b>概念四件</b>
+          <b>四个概念</b>
           <p>LLM · Prompt · Agent · Skills —— 各管什么</p>
         </div>
       </div>
@@ -370,14 +367,14 @@
       <div class="agenda-note">线下衔接：把电脑 / 网页 / 互联网拆成「一层套一层」，画抽象层级图。</div>
     </div>
     <div class="foot">
-      <span>不走路、不画站 —— 议程只负责排序</span>
+      <span>通识进阶 · M1</span>
       <span class="nav-hint">2 / 6</span>
     </div>
   </section>
 
   <!-- P03 图鉴：机理 -->
   <section class="slide" data-i="2" data-skin="atlas">
-    <div class="kicker">M1 · 破神话 <span class="skin-tag">布局 · 机制图鉴</span></div>
+    <div class="kicker">M1 · 破神话</div>
     <h2>它不是在「想」，是在接下一词</h2>
     <p class="lead">切开看：输入进去的是前文，吐出来的是概率最高的下一个词，再拼成整段。听起来像回答，底下是预测。</p>
     <div class="atlas-body">
@@ -426,16 +423,16 @@
       </div>
     </div>
     <div class="foot">
-      <span>机理页用图鉴剖开，不用路径装点</span>
+      <span>通识进阶 · M1</span>
       <span class="nav-hint">3 / 6</span>
     </div>
   </section>
 
   <!-- P04 概念栈 -->
   <section class="slide" data-i="3" data-skin="agenda">
-    <div class="kicker">M1 · 概念四件 <span class="skin-tag">布局 · 定义栈</span></div>
-    <h2>四个名字，各管一层</h2>
-    <p class="lead">先分清职责，再谈怎么用。它们不是四个「更酷的同义词」。</p>
+    <div class="kicker">M1 · 概念</div>
+    <h2>四个词，各管一件事</h2>
+    <p class="lead">先分清职责，再谈怎么用。它们不是四个差不多的花名。</p>
     <div class="concepts">
       <div class="concept">
         <div class="abbr">LLM</div>
@@ -447,7 +444,7 @@
         <div class="abbr">Prompt</div>
         <h3>提示词</h3>
         <p>你写给模型的前文与规矩——它顺着你的文字往下接。</p>
-        <div class="why">为什么重要：问法决定它走哪条「像」的路。</div>
+        <div class="why">为什么重要：你怎么问，它就往哪个方向接。</div>
       </div>
       <div class="concept">
         <div class="abbr">Agent</div>
@@ -463,7 +460,7 @@
       </div>
     </div>
     <div class="foot">
-      <span>概念页用并列定义，不伪装成旅程</span>
+      <span>通识进阶 · M1</span>
       <span class="nav-hint">4 / 6</span>
     </div>
   </section>
@@ -471,9 +468,9 @@
   <!-- P05 实验室对照 -->
   <section class="slide slide-lab" data-i="4" data-skin="lab">
     <div class="lab-grid-bg" aria-hidden="true"></div>
-    <div class="kicker">M1 · 同题两问 <span class="skin-tag">布局 · 实验室对照</span></div>
-    <h2>同一意图，两种问法</h2>
-    <p class="lead">左边对象太大；右边把过程钉死。对照看：AI 更吃哪一边。</p>
+    <div class="kicker">M1 · 同题两问</div>
+    <h2>同一件事，两种问法</h2>
+    <p class="lead">左边问得太宽；右边把步骤说清楚。对照一下，哪种更容易核对。</p>
     <div class="lab-split">
       <div class="lab-col bad">
         <h3><span class="dot"></span>模糊问</h3>
@@ -495,15 +492,15 @@
       </div>
     </div>
     <div class="foot">
-      <span>课堂口令：先把过程说清楚，再发问</span>
+      <span>习惯：先把过程说清楚，再问 AI</span>
       <span class="nav-hint">5 / 6</span>
     </div>
   </section>
 
   <!-- P06 带走 -->
   <section class="slide" data-i="5" data-skin="edit">
-    <div class="kicker">M1 · 带走 <span class="skin-tag">布局 · 编辑金句</span></div>
-    <h2>先装进脑子的三件事</h2>
+    <div class="kicker">M1 · 小结</div>
+    <h2>今天带走这三句</h2>
     <div class="take">
       <p class="phrase">「表面上是回答，底下其实是在接下一词。」</p>
       <div class="grid">
