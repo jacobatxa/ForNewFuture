@@ -90,6 +90,45 @@
   .skin-lab .foot { color: #64748b; font-family: var(--mono); font-size: 11px; }
   .nav-hint { font-family: var(--mono); font-size: 11px; opacity: .85; }
 
+  /* Persistent logic chain */
+  .chain {
+    display: grid;
+    grid-template-columns: 1fr auto 1.2fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+    margin: 4px 0 2px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .chain span { color: #64748b; }
+  .chain .now {
+    color: #e8edf7;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: 1px solid rgba(249,115,22,.45);
+    border-radius: 6px;
+    background: rgba(249,115,22,.08);
+  }
+  .chain .arrow { color: var(--orange); font-family: var(--mono); }
+  .skin-atlas .chain span { color: #8a7f70; }
+  .skin-atlas .chain .now {
+    color: #1c1915;
+    border-color: #b45309;
+    background: #fff7ed;
+  }
+  .skin-lab .chain .now {
+    border-color: rgba(94,234,212,.4);
+    background: rgba(17,94,89,.25);
+  }
+  .because {
+    font-size: 13px;
+    color: var(--orange-soft);
+    margin-top: 2px;
+    max-width: 52em;
+    line-height: 1.4;
+  }
+  .skin-atlas .because { color: #9a3412; }
+
   .cover-map { flex: 1; min-height: 0; margin: 4px 0 0; }
   .cover-map svg { width: 100%; height: 100%; display: block; }
   .dash-flow { stroke-dasharray: 8 12; animation: dash 1.6s linear infinite; }
@@ -350,241 +389,208 @@
 <body class="skin-path">
 <div id="deck">
 
-  <!-- 1 Cover -->
+  <!-- 1 · Pose the question -->
   <section class="slide on" data-i="0" data-skin="path">
-    <div class="kicker">M1 · Online · Knowing intelligence</div>
-    <h1>Thinking tools: what AI actually is</h1>
-    <p class="lead">Built from the National Day camp’s best blocks — intelligence test, five abilities, next-token, prompt path — then extended into abstraction for the semester course.</p>
+    <div class="kicker">M1 · Online · One question</div>
+    <h1>Is the chatbot intelligent?</h1>
+    <p class="lead">We will not vote on vibes. We will define, score, open the mechanism, then name the parts — one step forces the next.</p>
     <div class="cover-map" aria-hidden="true">
-      <svg viewBox="0 0 1100 260" preserveAspectRatio="xMidYMid meet">
-        <path d="M70 180 C160 180 190 70 300 70 S470 180 550 180 S700 70 800 70 S960 180 1030 180"
-              fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
-        <path class="dash-flow" d="M70 180 C160 180 190 70 300 70 S470 180 550 180 S700 70 800 70 S960 180 1030 180"
-              fill="none" stroke="#38bdf8" stroke-width="2" opacity=".9"/>
-        <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle">
-          <g transform="translate(70,180)">
-            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
-            <circle class="pulse" r="5" fill="#38bdf8"/>
-            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Camp Day 1</text>
-            <text y="56" font-size="11" fill="#64748b">spot intelligence</text>
-          </g>
-          <g transform="translate(300,70)">
-            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
-            <circle r="5" fill="#38bdf8"/>
-            <text y="-26" font-size="13" fill="#e2e8f0" font-weight="600">Camp Day 2</text>
-            <text y="-10" font-size="11" fill="#64748b">open the black box</text>
-          </g>
-          <g transform="translate(550,180)">
-            <circle r="17" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
-            <circle r="6" fill="#f97316"/>
-            <circle r="25" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
-            <text y="42" font-size="13" fill="#fdba74" font-weight="700">Literacy · M1</text>
-            <text y="58" font-size="11" fill="#64748b">abstract + layer</text>
-          </g>
-          <g transform="translate(800,70)">
-            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
-            <circle r="5" fill="#38bdf8"/>
-            <text y="-26" font-size="13" fill="#e2e8f0" font-weight="600">M2 →</text>
-            <text y="-10" font-size="11" fill="#64748b">prompt · agent</text>
-          </g>
-          <g transform="translate(1030,180)">
-            <circle r="15" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
-            <circle r="5" fill="#5eead4"/>
-            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">M3–M6</text>
-            <text y="56" font-size="11" fill="#64748b">open inquiry</text>
-          </g>
+      <svg viewBox="0 0 1100 250" preserveAspectRatio="xMidYMid meet">
+        <path d="M60 170 H220 H380 H540 H700 H860 H1040" fill="none" stroke="#334155" stroke-width="3"/>
+        <path class="dash-flow" d="M60 170 H1040" fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle" font-size="12">
+          <g transform="translate(60,170)"><circle r="10" fill="#f97316"/><text y="36" fill="#fdba74" font-weight="700">Q</text><text y="52" fill="#64748b">ask</text></g>
+          <g transform="translate(220,170)"><circle r="8" fill="#38bdf8"/><text y="36" fill="#e2e8f0">define</text></g>
+          <g transform="translate(380,170)"><circle r="8" fill="#38bdf8"/><text y="36" fill="#e2e8f0">score</text></g>
+          <g transform="translate(540,170)"><circle r="8" fill="#38bdf8"/><text y="36" fill="#e2e8f0">mechanism</text></g>
+          <g transform="translate(700,170)"><circle r="8" fill="#38bdf8"/><text y="36" fill="#e2e8f0">where</text></g>
+          <g transform="translate(860,170)"><circle r="8" fill="#38bdf8"/><text y="36" fill="#e2e8f0">name</text></g>
+          <g transform="translate(1040,170)"><circle r="10" fill="#5eead4"/><text y="36" fill="#e2e8f0" font-weight="600">ask better</text></g>
         </g>
       </svg>
     </div>
     <div class="foot">
-      <span>AI Literacy · M1 · inherits camp Days 1–2</span>
-      <span class="nav-hint">→ next</span>
+      <span>Thread: Q → define → score → open → locate → name → control</span>
+      <span class="nav-hint">1 / 9 · →</span>
     </div>
   </section>
 
-  <!-- 2 Agenda -->
-  <section class="slide" data-i="1" data-skin="agenda">
-    <div class="kicker">M1 · Online · 1 hour</div>
-    <h2>Agenda</h2>
-    <p class="lead">Camp material, tightened for a one-hour online class. Offline (2h) peels PC / web / internet into layers.</p>
-    <div class="agenda">
-      <div class="agenda-item">
-        <div class="n">01</div>
-        <div>
-          <b>What counts as intelligence</b>
-          <p>Camp: Legg’s test · sprinkler vs dog</p>
-        </div>
-      </div>
-      <div class="agenda-item">
-        <div class="n">02</div>
-        <div>
-          <b>Five abilities</b>
-          <p>Camp: Perceive · Understand · Plan · Act · Learn</p>
-        </div>
-      </div>
-      <div class="agenda-item">
-        <div class="n">03</div>
-        <div>
-          <b>Next-token + prompt path</b>
-          <p>Camp Day 2 black-box core</p>
-        </div>
-      </div>
-      <div class="agenda-item">
-        <div class="n">04</div>
-        <div>
-          <b>Four terms · two questions</b>
-          <p>LLM / Prompt / Agent / Skills · vague vs precise</p>
-        </div>
-      </div>
-      <div class="agenda-note">Parked for M2 (from camp Days 3–4): prompt habits, context, Agent anatomy, hallucination lab drill.</div>
-    </div>
-    <div class="foot">
-      <span>AI Literacy · M1</span>
-      <span class="nav-hint">2 / 10</span>
-    </div>
-  </section>
-
-  <!-- 3 Intelligence (camp) -->
-  <section class="slide" data-i="2" data-skin="lab">
+  <!-- 2 · Need a definition -->
+  <section class="slide" data-i="1" data-skin="lab">
     <div class="lab-grid-bg" aria-hidden="true"></div>
-    <div class="kicker">From camp · What is intelligence</div>
-    <h2>A simple test</h2>
-    <p class="lead">Can it still get things done when the environment changes?</p>
-    <p class="cite">After Shane Legg (DeepMind) — simplified for class</p>
-    <div class="intel" style="margin-top:12px">
+    <div class="kicker">Step 1 · Define</div>
+    <div class="chain">
+      <span>Q: is it intelligent?</span>
+      <span class="arrow">→</span>
+      <span class="now">Need a definition first</span>
+      <span class="arrow">→</span>
+      <span>Then a checklist to score</span>
+    </div>
+    <h2>Still get things done when the world shifts</h2>
+    <p class="because">Because “smart-looking text” is not a test — we need a standard we can disagree about in public.</p>
+    <p class="cite">After Shane Legg — simplified</p>
+    <div class="intel">
       <div class="intel-quote">
-        <p>Intelligence: still find a way <span style="color:var(--orange)">when the world shifts</span>.</p>
-        <span>Not “looks smart.” Not “follows one rule forever.”</span>
+        <p>Intelligence: find a way <span style="color:var(--orange)">when the environment changes</span>.</p>
+        <span>Not charm. Not a fixed script.</span>
       </div>
       <div class="intel-pair">
         <div class="case no">
-          <span class="lab">Rule only · sprinkler</span>
+          <span class="lab">Fails the test · sprinkler</span>
           <b>Same schedule, rain or shine</b>
-          <p>Fires on the clock. Weather changed — behavior didn’t.</p>
+          <p>World changed. Behavior did not.</p>
         </div>
         <div class="case yes">
-          <span class="lab">Adapts · golden retriever</span>
-          <b>This door closed? Try another.</b>
-          <p>Goal stays; path changes. That gap is the start of “intelligent.”</p>
+          <span class="lab">Passes · dog</span>
+          <b>Door closed → try another</b>
+          <p>Goal holds. Path adapts.</p>
         </div>
       </div>
     </div>
     <div class="foot">
-      <span>Ask the room: who is “smarter,” and why?</span>
-      <span class="nav-hint">3 / 10</span>
+      <span>Next: turn this definition into five scoreable abilities</span>
+      <span class="nav-hint">2 / 9</span>
     </div>
   </section>
 
-  <!-- 4 Five abilities (camp condensed) -->
-  <section class="slide" data-i="3" data-skin="agenda">
-    <div class="kicker">From camp · Five abilities</div>
-    <h2>Score anything with the same five</h2>
-    <p class="lead">A classification tool — you set the criteria. That is abstraction practice.</p>
+  <!-- 3 · Checklist from definition -->
+  <section class="slide" data-i="2" data-skin="agenda">
+    <div class="kicker">Step 2 · Checklist</div>
+    <div class="chain">
+      <span>Definition: adapt</span>
+      <span class="arrow">→</span>
+      <span class="now">Break “adapt” into five abilities</span>
+      <span class="arrow">→</span>
+      <span>Score the chatbot</span>
+    </div>
+    <h2>Same five questions for anything</h2>
+    <p class="because">Because a one-line definition is still fuzzy — we need criteria you can mark yes / no / partial.</p>
     <div class="abil">
       <article>
         <div class="n">01</div>
         <h3>Perceive</h3>
-        <p>Notice what is happening around you.</p>
-        <div class="ex">Dog hears footsteps. Sprinkler does not “notice” rain.</div>
+        <p>Notice what is happening.</p>
+        <div class="ex">Dog: footsteps. Sprinkler: blind to rain.</div>
       </article>
       <article>
         <div class="n">02</div>
         <h3>Understand</h3>
-        <p>Hold a small world model: cause → effect.</p>
-        <div class="ex">Dog knows the frisbee went over the fence.</div>
+        <p>Cause → effect in a small world model.</p>
+        <div class="ex">Frisbee over the fence → go around.</div>
       </article>
       <article>
         <div class="n">03</div>
         <h3>Plan</h3>
-        <p>When several paths exist, pick one that fits.</p>
-        <div class="ex">Delivery robot: wait, or go around?</div>
+        <p>Several paths → pick one that fits.</p>
+        <div class="ex">Wait, or go around?</div>
       </article>
       <article>
         <div class="n">04</div>
         <h3>Act</h3>
-        <p>Change the world — not only talk about it.</p>
-        <div class="ex">Chat AI can advise; it has no hands.</div>
+        <p>Change the world, not only talk.</p>
+        <div class="ex">Advice ≠ hands.</div>
       </article>
       <article class="key">
-        <div class="n">05 · Key</div>
+        <div class="n">05</div>
         <h3>Learn</h3>
-        <p>Fail once, change next time.</p>
-        <div class="ex">Dog vs porcupine. Sprinkler never updates.</div>
+        <p>Fail once → change next time.</p>
+        <div class="ex">The wedge between script and mind.</div>
       </article>
     </div>
     <div class="foot">
-      <span>Live drill: score phone / thermostat / classmate / LLM with the five</span>
-      <span class="nav-hint">4 / 10</span>
+      <span>Next: apply these five to today’s LLM</span>
+      <span class="nav-hint">3 / 9</span>
     </div>
   </section>
 
-  <!-- 5 Where AI sits -->
-  <section class="slide" data-i="4" data-skin="agenda">
-    <div class="kicker">Bridge · Camp verdict → literacy</div>
-    <h2>Where today’s LLM sits</h2>
-    <p class="lead">Strong at language pattern. Weak at body and lasting learning in the world. Do not worship it; do not dismiss it.</p>
+  <!-- 4 · Score LLM -->
+  <section class="slide" data-i="3" data-skin="agenda">
+    <div class="kicker">Step 3 · Score</div>
+    <div class="chain">
+      <span>Five abilities ready</span>
+      <span class="arrow">→</span>
+      <span class="now">Score the chatbot</span>
+      <span class="arrow">→</span>
+      <span>If not full mind — what is it?</span>
+    </div>
+    <h2>Partial mind. Strong mouth.</h2>
+    <p class="because">Because we have criteria now — so we can stop saying “it’s smart” or “it’s dumb” and mark each bar.</p>
     <div class="score-row">
       <div class="score-list">
         <div class="score-item"><b>Perceive</b><div class="bar mid"><i style="width:55%"></i></div><span>text / image in</span></div>
-        <div class="score-item"><b>Understand</b><div class="bar mid"><i style="width:60%"></i></div><span>pattern, not truth</span></div>
+        <div class="score-item"><b>Understand</b><div class="bar mid"><i style="width:60%"></i></div><span>pattern ≠ truth</span></div>
         <div class="score-item"><b>Plan</b><div class="bar mid"><i style="width:50%"></i></div><span>in words only</span></div>
-        <div class="score-item"><b>Act</b><div class="bar weak"><i style="width:28%"></i></div><span>needs tools / you</span></div>
-        <div class="score-item"><b>Learn</b><div class="bar weak"><i style="width:25%"></i></div><span>not from one mistake like a dog</span></div>
+        <div class="score-item"><b>Act</b><div class="bar weak"><i style="width:28%"></i></div><span>needs you / tools</span></div>
+        <div class="score-item"><b>Learn</b><div class="bar weak"><i style="width:25%"></i></div><span>not like a dog</span></div>
       </div>
       <div class="score-note">
-        <strong>Classroom line</strong>
-        Fluency ≠ intelligence. An LLM can fill all five boxes with words and still fail Learn and Act in the real world. That is why we keep human judgment in the loop (M2–M6).
+        <strong>Verdict so far</strong>
+        Fluency can fake Understand and Plan on the page. Act and Learn in the real world stay thin. So the opening answer is: <em style="color:#e8edf7;font-style:normal">not full intelligence — something else that talks well</em>.
       </div>
     </div>
     <div class="foot">
-      <span>Camp used a 7-object scoreboard — same idea, one chart here</span>
-      <span class="nav-hint">5 / 10</span>
+      <span>Next: open that “something else” — what is it doing when it talks?</span>
+      <span class="nav-hint">4 / 9</span>
     </div>
   </section>
 
-  <!-- 6 Next token (camp + atlas) -->
-  <section class="slide" data-i="5" data-skin="atlas">
-    <div class="kicker">From camp · How AI writes</div>
+  <!-- 5 · Mechanism -->
+  <section class="slide" data-i="4" data-skin="atlas">
+    <div class="kicker">Step 4 · Mechanism</div>
+    <div class="chain">
+      <span>Not full intelligence</span>
+      <span class="arrow">→</span>
+      <span class="now">Then what is the mouth doing?</span>
+      <span class="arrow">→</span>
+      <span>Where does that run?</span>
+    </div>
     <h2>One token at a time</h2>
-    <p class="lead">Every sentence is a stack of guesses. Sounds like thought. Mechanism: next-token prediction.</p>
+    <p class="because">Because if it is not a full mind, we owe students a concrete substitute: next-token prediction.</p>
     <div class="atlas-body">
       <div class="cutaway">
         <svg viewBox="0 0 440 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <text x="16" y="24" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">Camp demo line → mechanism</text>
+          <text x="16" y="24" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">From the score → look inside</text>
           <text x="16" y="52" font-family="IBM Plex Sans,sans-serif" font-size="14" fill="#1c1915">I’m thirsty. I want a cup of</text>
           <rect x="16" y="66" width="70" height="32" rx="4" fill="#fff7ed" stroke="#b45309"/>
           <text x="51" y="87" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" fill="#9a3412">water?</text>
-          <text x="100" y="87" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">tea? juice? … ranked by probability</text>
+          <text x="100" y="87" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">tea? juice? … by probability</text>
           <g transform="translate(16,120)">
             <rect x="0" y="0" width="130" height="34" fill="#fffaf2" stroke="#1c1915"/>
             <text x="10" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600">1 · Read context</text>
             <rect x="140" y="0" width="150" height="34" fill="#fff7ed" stroke="#b45309"/>
-            <text x="150" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">2 · Predict next token</text>
+            <text x="150" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">2 · Predict next</text>
             <rect x="300" y="0" width="110" height="34" fill="#ebe0d0" stroke="#1c1915"/>
             <text x="310" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600">3 · Append</text>
           </g>
-          <text x="16" y="190" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">Repeat until stop. Not “decide the whole answer first.”</text>
-          <text x="16" y="220" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45">Camp also had: tokenize · embed · attend · sample — keep for a deep-dive if time.</text>
+          <text x="16" y="190" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">Loop until stop. Explains high “Understand” scores that still invent facts.</text>
+          <text x="16" y="220" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45">Prediction ≠ knowing. That is the Act/Learn gap from the scorecard.</text>
         </svg>
       </div>
       <div class="atlas-side">
         <div class="layer"><b>What you see</b><span>A fluent reply</span></div>
-        <div class="layer hot"><b>What it does</b><span>Pick a likely next token, again and again</span></div>
-        <div class="layer"><b>So what</b><span>Can sound sure and still invent facts</span></div>
-        <div class="layer"><b>Line to keep</b><span>“Looks like an answer. Underneath: prediction.”</span></div>
+        <div class="layer hot"><b>What it does</b><span>Likely next token, again and again</span></div>
+        <div class="layer"><b>Ties back</b><span>Why Plan/Understand look strong on screen</span></div>
+        <div class="layer"><b>Line</b><span>“Looks like an answer. Underneath: prediction.”</span></div>
       </div>
     </div>
     <div class="foot">
-      <span>Optional lab: Transformer Explainer (camp Day 2 link)</span>
-      <span class="nav-hint">6 / 10</span>
+      <span>Next: that loop is not inside the glass — follow the path</span>
+      <span class="nav-hint">5 / 9</span>
     </div>
   </section>
 
-  <!-- 7 Prompt path (camp journey → style C) -->
-  <section class="slide" data-i="6" data-skin="path">
-    <div class="kicker">From camp · Physical journey of a prompt</div>
+  <!-- 6 · Where -->
+  <section class="slide" data-i="5" data-skin="path">
+    <div class="kicker">Step 5 · Locate</div>
+    <div class="chain">
+      <span>Mechanism: next token</span>
+      <span class="arrow">→</span>
+      <span class="now">Where does the loop run?</span>
+      <span class="arrow">→</span>
+      <span>Name the parts</span>
+    </div>
     <h2>From tap to answer</h2>
-    <p class="lead">Same story as camp Day 2 — drawn as a path. Offline we peel these stops into hardware / system / network layers.</p>
+    <p class="because">Because prediction sounds abstract until you see it leave the phone, hit a GPU farm, and stream back.</p>
     <div class="path-board" aria-hidden="true">
       <svg viewBox="0 0 1100 300" preserveAspectRatio="xMidYMid meet">
         <path d="M80 200 C180 200 200 90 320 90 S480 200 560 200 S720 90 820 90 S980 200 1020 200"
@@ -594,139 +600,153 @@
         <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle">
           <g transform="translate(80,200)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
-            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Your phone</text>
-            <text y="56" font-size="11" fill="#64748b">app packs the ask</text>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Phone</text>
+            <text y="56" font-size="11" fill="#64748b">your words leave</text>
           </g>
           <g transform="translate(320,90)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
-            <circle r="24" fill="none" stroke="#f97316" stroke-width="1.5"/>
-            <circle cx="20" cy="-20" r="9" fill="#f97316"/>
-            <text x="20" y="-16" font-size="10" font-weight="700" fill="#0c1220">1</text>
-            <text y="-32" font-size="13" fill="#e2e8f0" font-weight="600">Router / cell</text>
-            <text y="-16" font-size="11" fill="#64748b" opacity="0">.</text>
-            <text y="40" font-size="11" fill="#64748b">Wi‑Fi fail here often</text>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Network</text>
+            <text y="-12" font-size="11" fill="#64748b">packets</text>
           </g>
           <g transform="translate(560,200)">
-            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
-            <circle r="24" fill="none" stroke="#f97316" stroke-width="1.5"/>
-            <circle cx="20" cy="-20" r="9" fill="#f97316"/>
-            <text x="20" y="-16" font-size="10" font-weight="700" fill="#0c1220">2</text>
-            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Cloud / GPU farm</text>
-            <text y="56" font-size="11" fill="#64748b">model runs here</text>
+            <circle r="18" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/><circle r="6" fill="#f97316"/>
+            <text y="42" font-size="13" fill="#fdba74" font-weight="700">GPU farm</text>
+            <text y="58" font-size="11" fill="#64748b">token loop lives here</text>
           </g>
           <g transform="translate(820,90)">
             <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
-            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Tokens stream back</text>
-            <text y="-12" font-size="11" fill="#64748b">same path, reverse</text>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Stream back</text>
+            <text y="-12" font-size="11" fill="#64748b">tokens → text</text>
           </g>
           <g transform="translate(1020,200)">
             <circle r="16" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/><circle r="5" fill="#5eead4"/>
             <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Screen</text>
-            <text y="56" font-size="11" fill="#64748b">words appear</text>
+            <text y="56" font-size="11" fill="#64748b">looks local</text>
           </g>
         </g>
-        <text x="80" y="285" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#fdba74">Offline: peel each stop — app · OS · radio · packet · remote compute</text>
+        <text x="80" y="285" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#fdba74">Offline peels these stops into hardware · OS · radio · packet</text>
       </svg>
     </div>
     <div class="foot">
-      <span>Camp photo board / TERAFAB scale → keep as teacher props</span>
-      <span class="nav-hint">7 / 10</span>
+      <span>Next: put names on the path — LLM, Prompt, Agent, Skills</span>
+      <span class="nav-hint">6 / 9</span>
     </div>
   </section>
 
-  <!-- 8 Four terms -->
-  <section class="slide" data-i="7" data-skin="agenda">
-    <div class="kicker">M1 · Concept map</div>
-    <h2>Four names. Four jobs.</h2>
-    <p class="lead">Camp Day 3–4 go deep on Prompt and Agent. Here: just place them on the map.</p>
+  <!-- 7 · Name the path -->
+  <section class="slide" data-i="6" data-skin="agenda">
+    <div class="kicker">Step 6 · Name</div>
+    <div class="chain">
+      <span>Path + token loop</span>
+      <span class="arrow">→</span>
+      <span class="now">Label each layer</span>
+      <span class="arrow">→</span>
+      <span>What you can control</span>
+    </div>
+    <h2>Four names that sit on that path</h2>
+    <p class="because">Because now each term has a place — not four floating buzzwords.</p>
     <div class="concepts">
       <div class="concept">
         <div class="abbr">LLM</div>
         <h3>Large language model</h3>
-        <p>Trained next-token engine. The “brain” that continues text.</p>
-        <div class="why">Camp Day 2 = this mechanism.</div>
+        <p>The engine at the GPU farm that runs the token loop.</p>
+        <div class="why">← Step 4 mechanism</div>
       </div>
       <div class="concept">
         <div class="abbr">Prompt</div>
         <h3>Prompt</h3>
-        <p>What you put in context — goals, facts, rules.</p>
-        <div class="why">Deep dive in M2 (camp Day 3 habits).</div>
+        <p>What leaves your phone — the context the loop continues from.</p>
+        <div class="why">← Step 5, first stop</div>
       </div>
       <div class="concept">
         <div class="abbr">Agent</div>
         <h3>Agent</h3>
-        <p>Goal + tools + loop — not one chat turn.</p>
-        <div class="why">Build one in M2 offline (camp Day 4).</div>
+        <p>Wraps the LLM with goals, tools, loops — toward Act on the scorecard.</p>
+        <div class="why">M2 builds one</div>
       </div>
       <div class="concept">
         <div class="abbr">Skills</div>
         <h3>Skills</h3>
-        <p>Reusable abilities hung on an assistant.</p>
-        <div class="why">General chat + special tools.</div>
+        <p>Reusable tools hung on that wrap (search, calc, files…).</p>
+        <div class="why">Specialized Act</div>
       </div>
     </div>
     <div class="foot">
-      <span>AI Literacy · M1</span>
-      <span class="nav-hint">8 / 10</span>
+      <span>Next: the only lever in your hands today is the Prompt</span>
+      <span class="nav-hint">7 / 9</span>
     </div>
   </section>
 
-  <!-- 9 Same ask -->
-  <section class="slide slide-lab" data-i="8" data-skin="lab">
+  <!-- 8 · Control via prompt -->
+  <section class="slide slide-lab" data-i="7" data-skin="lab">
     <div class="lab-grid-bg" aria-hidden="true"></div>
-    <div class="kicker">M1 · Same ask, two versions</div>
-    <h2>Same intent. Two questions.</h2>
-    <p class="lead">Warm-up for camp’s prompt habits — without teaching the full ladder yet.</p>
+    <div class="kicker">Step 7 · Control</div>
+    <div class="chain">
+      <span>Prompt = your lever</span>
+      <span class="arrow">→</span>
+      <span class="now">Same intent, two prompts</span>
+      <span class="arrow">→</span>
+      <span>Close the opening Q</span>
+    </div>
+    <h2>You steer the loop by how you ask</h2>
+    <p class="because">Because the model only continues the context you send — vague context → vague continuation.</p>
     <div class="lab-split">
       <div class="lab-col bad">
         <h3><span class="dot"></span>Vague</h3>
         <div class="lab-q">“How does AI work?”</div>
         <ul>
-          <li>Target too wide</li>
-          <li>No steps to check</li>
-          <li>Easy to fill with stories</li>
+          <li>No process to continue from</li>
+          <li>Any story “fits”</li>
+          <li>Hard to check against Steps 4–5</li>
         </ul>
       </div>
       <div class="lab-col good">
         <h3><span class="dot"></span>Precise</h3>
-        <div class="lab-q">“After I send a sentence, how does an LLM predict one token at a time and stitch a reply?”</div>
+        <div class="lab-q">“After I send a sentence, how does an LLM predict one token at a time on a remote GPU and stitch a reply?”</div>
         <ul>
-          <li>Start · process · output</li>
-          <li>You can follow up</li>
-          <li>You can spot nonsense</li>
+          <li>Uses the path we just drew</li>
+          <li>Uses the mechanism we named</li>
+          <li>You can catch a wrong stop</li>
         </ul>
       </div>
     </div>
     <div class="foot">
-      <span>Habit: name the process, then ask</span>
-      <span class="nav-hint">9 / 10</span>
+      <span>Next: answer the opening question in one page</span>
+      <span class="nav-hint">8 / 9</span>
     </div>
   </section>
 
-  <!-- 10 Close -->
-  <section class="slide" data-i="9" data-skin="edit">
-    <div class="kicker">M1 · Close</div>
-    <h2>Three lines · then offline</h2>
+  <!-- 9 · Close the Q -->
+  <section class="slide" data-i="8" data-skin="edit">
+    <div class="kicker">Close the loop</div>
+    <div class="chain">
+      <span>Defined · scored · opened · located · named</span>
+      <span class="arrow">→</span>
+      <span class="now">Answer Q</span>
+      <span class="arrow">→</span>
+      <span>Offline: peel the path</span>
+    </div>
+    <h2>So — is it intelligent?</h2>
     <div class="take">
-      <p class="phrase">“Looks like an answer. Underneath: next-token prediction.”</p>
+      <p class="phrase">Not a full mind. A remote next-token engine you steer with prompts.</p>
       <div class="grid">
         <div class="cell">
-          <div class="lab">From camp</div>
-          <p>Intelligence = adapt when the world shifts. Score with five abilities.</p>
+          <div class="lab">We proved</div>
+          <p>Adapt test → five bars → LLM is partial; fluency is prediction.</p>
         </div>
         <div class="cell">
-          <div class="lab">Mechanism</div>
-          <p>Prompt leaves your phone, runs on remote GPUs, tokens stream back.</p>
+          <div class="lab">We located</div>
+          <p>Phone → network → GPU → screen. Words are not magic in the glass.</p>
         </div>
         <div class="cell">
-          <div class="lab">Offline · 2h</div>
-          <p>Peel PC / web / internet into layers. Draw the stack. Same path, deeper cut.</p>
+          <div class="lab">Offline next</div>
+          <p>Same path, deeper cut: hardware · OS · app · packet. Abstraction as layers.</p>
         </div>
       </div>
     </div>
     <div class="foot">
-      <span>Next module M2 pulls camp Days 3–4: prompt · context · Agent</span>
-      <span class="nav-hint">← → · F fullscreen</span>
+      <span>M2: tighten the Prompt lever · Agent for Act</span>
+      <span class="nav-hint">9 / 9 · ← → · F</span>
     </div>
   </section>
 
