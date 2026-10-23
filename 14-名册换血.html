@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>名册换血 · 岗位与专业</title>
+<style>
+  :root {
+    --bg: #10120f;
+    --bg-2: #181b16;
+    --paper: #f3ecdf;
+    --paper-dim: rgba(243, 236, 223, 0.62);
+    --muted: rgba(243, 236, 223, 0.48);
+    --line: rgba(243, 236, 223, 0.16);
+    --line-strong: rgba(243, 236, 223, 0.38);
+    --job: #e39b4a;
+    --job-deep: #a85a1e;
+    --major: #7ec8c4;
+    --major-deep: #2c6e74;
+    --pool: #1a1612;
+    --cast: #cbbd9a;
+    --danger: #c45b3e;
+    --serif: "Newsreader", "Songti SC", "Noto Serif SC", "STSong", serif;
+    --sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--paper);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-image:
+      radial-gradient(1200px 500px at 15% -10%, rgba(227, 155, 74, 0.08), transparent 55%),
+      radial-gradient(900px 480px at 100% 100%, rgba(126, 200, 196, 0.06), transparent 50%);
+  }
+  button, input { font-family: inherit; color: inherit; }
+  button { cursor: pointer; }
+
+  header {
+    display: grid;
+    grid-template-columns: 220px 1fr auto;
+    gap: 28px;
+    align-items: end;
+    padding: 18px 28px 12px;
+  }
+  .kicker {
+    margin: 0 0 4px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 550;
+    font-size: 40px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .sentence {
+    margin: 0 0 6px;
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 760px;
+  }
+  .toggles { display: flex; gap: 8px; margin-bottom: 6px; }
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 999px;
+    padding: 7px 12px 7px 8px;
+    font-size: 14px;
+    color: var(--paper-dim);
+  }
+  .toggle.on { color: var(--paper); border-color: var(--line-strong); background: rgba(243, 236, 223, 0.04); }
+  .swatch {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+  }
+  .swatch.job {
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffd7a8, var(--job) 50%, var(--job-deep));
+  }
+  .swatch.major {
+    border-radius: 3px;
+    background: radial-gradient(circle at 35% 35%, #e7fffd, var(--major) 50%, var(--major-deep));
+  }
+
+  main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 16px;
+    padding: 0 20px;
+  }
+
+  .stage {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, rgba(255,255,255,0.025), transparent 80px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .plot {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    margin: 14px 14px 0 8px;
+  }
+  .yaxis, .xaxis {
+    position: absolute;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+  }
+  .yaxis {
+    left: 0;
+    top: 46%;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+  }
+  .xaxis {
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  .field {
+    position: absolute;
+    left: 36px;
+    right: 8px;
+    top: 8px;
+    bottom: 28px;
+    overflow: hidden;
+  }
+  .field-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--line) 1px, transparent 1px),
+      linear-gradient(to top, var(--line) 1px, transparent 1px);
+    background-size: 25% 25%;
+    border-left: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .corner {
+    position: absolute;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .corner.tr { top: 8px; right: 8px; }
+  .corner.bl { left: 8px; bottom: 8px; }
+  .year-ghost {
+    position: absolute;
+    right: 2%;
+    bottom: 2%;
+    font-family: var(--serif);
+    font-size: clamp(120px, 18vw, 240px);
+    line-height: 0.8;
+    color: rgba(243, 236, 223, 0.055);
+    pointer-events: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .dots { position: absolute; inset: 0; }
+  .dot {
+    position: absolute;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    transform: translate(-50%, -50%);
+  }
+  .dot .mark {
+    display: block;
+    border-radius: 50%;
+  }
+  .dot.major .mark { border-radius: 4px; }
+  .dot.job .mark {
+    background: radial-gradient(circle at 35% 30%, #ffe0b8, var(--job) 42%, var(--job-deep));
+    box-shadow: 0 0 18px rgba(227, 155, 74, 0.38);
+  }
+  .dot.major .mark {
+    background: radial-gradient(circle at 35% 30%, #f3fffe, var(--major) 46%, var(--major-deep));
+    box-shadow: 0 0 18px rgba(126, 200, 196, 0.32);
+  }
+  .dot.forecast .mark {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 1.5px dashed var(--cast);
+    border-radius: 50%;
+  }
+  .dot .label {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 4px);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 12px;
+    line-height: 1.2;
+    padding: 2px 6px;
+    border-radius: 999px;
+    background: rgba(16, 18, 15, 0.78);
+    border: 1px solid rgba(243, 236, 223, 0.14);
+    pointer-events: none;
+  }
+  .dot.forecast .label { border-style: dashed; color: var(--cast); }
+  .dot.on .mark { outline: 2px solid var(--paper); outline-offset: 3px; }
+  .detail {
+    min-height: 72px;
+    margin: 8px 14px 12px 44px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    align-content: center;
+  }
+  .detail b { font-size: 15px; font-weight: 600; }
+  .detail p { margin: 4px 0 0; color: var(--paper-dim); font-size: 14px; line-height: 1.45; }
+  .detail .src { color: var(--muted); font-size: 12px; }
+
+  .pool {
+    min-height: 0;
+    background: var(--pool);
+    border: 1px solid rgba(196, 91, 62, 0.35);
+    border-radius: 18px;
+    padding: 14px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.35);
+  }
+  .pool h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 550;
+  }
+  .pool .hint { margin: 4px 0 10px; color: var(--muted); font-size: 13px; }
+  .cols {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .col { min-height: 0; display: flex; flex-direction: column; }
+  .col h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+  }
+  .col h3.job { color: var(--job); }
+  .col h3.major { color: var(--major); }
+  .list {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 2px;
+    min-height: 0;
+    flex: 1;
+  }
+  .list::-webkit-scrollbar { width: 6px; }
+  .list::-webkit-scrollbar-thumb { background: rgba(243,236,223,0.2); border-radius: 99px; }
+  .empty { color: var(--muted); font-size: 13px; line-height: 1.45; padding: 4px 2px; }
+  .chip {
+    text-align: left;
+    border: 1px solid rgba(243, 236, 223, 0.12);
+    background: rgba(243, 236, 223, 0.04);
+    border-radius: 10px;
+    padding: 7px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .chip b { font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+  .chip small { font-size: 12px; color: var(--muted); }
+  .chip.job { border-left: 3px solid var(--job); }
+  .chip.major { border-left: 3px solid var(--major); }
+  .chip.forecast { border-left-color: var(--cast); border-style: dashed; color: var(--cast); }
+  .chip.fresh { background: rgba(196, 91, 62, 0.16); }
+  .chip.on { outline: 1px solid var(--paper); }
+  .cast-box {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(203, 189, 154, 0.4);
+  }
+  .cast-box h3 { margin: 0 0 6px; color: var(--cast); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; }
+  .cast-list { display: flex; flex-direction: column; gap: 6px; max-height: 132px; overflow: auto; }
+  .fine {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .scrub-wrap { padding: 8px 28px 6px; }
+  .scrub {
+    position: relative;
+    height: 36px;
+  }
+  .track {
+    position: absolute;
+    left: 0; right: 0; top: 16px;
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(243, 236, 223, 0.14);
+  }
+  .track .fact {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 50%;
+    border-radius: 99px 0 0 99px;
+    background: rgba(227, 155, 74, 0.55);
+  }
+  .track .cast {
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    border-radius: 0 99px 99px 0;
+    background: repeating-linear-gradient(-45deg, rgba(203,189,154,0.15), rgba(203,189,154,0.15) 4px, rgba(203,189,154,0.4) 4px, rgba(203,189,154,0.4) 5px);
+  }
+  .track .fill {
+    position: absolute;
+    left: 0; top: -1px;
+    height: 6px;
+    border-radius: 99px;
+    background: var(--paper);
+    pointer-events: none;
+  }
+  input[type=range] {
+    position: absolute;
+    left: 0; right: 0; top: 4px;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 3px solid #10120f;
+    box-shadow: 0 0 0 1px var(--paper);
+    cursor: grab;
+  }
+  input[type=range]:active::-webkit-slider-thumb { cursor: grabbing; transform: scale(1.08); }
+  .ticks {
+    position: relative;
+    height: 18px;
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .ticks span {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .ticks span:first-child { transform: none; }
+  .ticks span:last-child { transform: translateX(-100%); }
+  .ticks span.now { color: var(--paper); }
+  .ticks span.cast { color: var(--cast); }
+  footer {
+    padding: 0 28px 12px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .ghost {
+    position: fixed;
+    z-index: 20;
+    pointer-events: none;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 13px;
+    background: rgba(16, 18, 15, 0.9);
+    border: 1px solid var(--line-strong);
+  }
+  .ghost.job { color: var(--job); }
+  .ghost.major { color: var(--major); }
+  .ghost.forecast { color: var(--cast); }
+  .sr {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  @media (max-width: 980px) {
+    body { overflow: auto; }
+    header { grid-template-columns: 1fr; gap: 8px; }
+    main { grid-template-columns: 1fr; }
+    .stage { min-height: 68vh; }
+    .pool { min-height: 420px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ghost { display: none; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div>
+    <p class="kicker">给家长的一场直播</p>
+    <h1>名册换血</h1>
+  </div>
+  <p class="sentence" id="sentence"></p>
+  <div class="toggles">
+    <button class="toggle on" id="toggle-job" type="button" aria-pressed="true"><i class="swatch job"></i>岗位</button>
+    <button class="toggle on" id="toggle-major" type="button" aria-pressed="true"><i class="swatch major"></i>专业</button>
+  </div>
+</header>
+<main>
+  <section class="stage" aria-label="坐标">
+    <div class="plot">
+      <div class="yaxis">标价</div>
+      <div class="field" id="field">
+        <div class="field-bg"></div>
+        <div class="corner tr">分量重 · 标价高</div>
+        <div class="corner bl">分量轻 · 标价低</div>
+        <div class="year-ghost" id="yearGhost">2016</div>
+        <div class="dots" id="dots"></div>
+      </div>
+      <div class="xaxis">分量 · 人还多不多，学校还办不办</div>
+    </div>
+    <div class="detail" id="detail">
+      <b>点一个名字</b>
+      <p>看它为什么还在图上，或者为什么掉进右边。</p>
+    </div>
+  </section>
+  <aside class="pool" aria-label="被抛下的名字">
+    <h2>被抛下的名字</h2>
+    <p class="hint">拖过那一年，就从左边扔进来。往回拖，回到图上。</p>
+    <div class="cols">
+      <div class="col">
+        <h3 class="job">岗位 <span id="jobCount">0</span></h3>
+        <div class="list" id="jobList"></div>
+      </div>
+      <div class="col">
+        <h3 class="major">专业 <span id="majorCount">0</span></h3>
+        <div class="list" id="majorList"></div>
+      </div>
+    </div>
+    <div class="cast-box">
+      <h3>推演 · 拖过 2026</h3>
+      <div class="cast-list" id="castList"></div>
+    </div>
+    <p class="fine">专业掉进池子，是一批学校停办了这个点。国家目录里，这些名字多数还在。岗位里，有的是大典除名，有的是这个岗本身没了。</p>
+  </aside>
+</main>
+<div class="scrub-wrap">
+  <div class="scrub">
+    <div class="track" id="track">
+      <div class="fact" id="factSeg"></div>
+      <div class="cast" id="castSeg"></div>
+      <div class="fill" id="fill"></div>
+    </div>
+    <input id="year" type="range" min="2016" max="2036" step="0.01" value="2016" aria-label="年份">
+  </div>
+  <div class="ticks">
+    <span style="left:0">2016</span>
+    <span style="left:20%">2020</span>
+    <span style="left:30%">2022</span>
+    <span class="now" style="left:50%">2026 今天</span>
+    <span class="cast" style="left:70%">2030</span>
+    <span class="cast" style="left:100%">2036 推演</span>
+  </div>
+</div>
+<footer id="foot"></footer>
+<div class="sr" id="live" aria-live="polite"></div>
+<script>
+const MIN = 2016, MAX = 2036, TODAY = 2026;
+
+const ITEMS = [
+  { id: "pager", kind: "job", name: "寻呼员", short: "寻呼员", born: 1995, gone: 2007, fate: "市场消失", stat: "早于 2016",
+    note: "寻呼业务在 2007 年前后停掉，这个名字退出日常。打开这页时，它已经在池底。",
+    source: "公开产业史。没有放进 2016 年之后的坐标。", track: [{ t: 2000, x: 10, y: 20 }] },
+  { id: "film", kind: "job", name: "胶片冲印员", short: "冲印", born: 1990, gone: 2014, fate: "市场消失", stat: "早于 2016",
+    note: "手机拍照之后冲印店成批关掉。没有全国统一的除名日，大约落在 2014 前后。",
+    source: "市场消失，不是大典那一年点名取消。", track: [{ t: 2010, x: 12, y: 24 }] },
+  { id: "type", kind: "job", name: "铅字排字工", short: "排字", born: 1970, gone: 2000, fate: "市场消失", stat: "更早",
+    note: "电脑排版之后，铅字车间没有了。它在池底，用来对照这一轮。",
+    source: "更早一轮的技术替换。", track: [{ t: 1990, x: 14, y: 28 }] },
+
+  { id: "teacher", kind: "job", name: "教师", short: "教师", born: 2016, gone: null, fate: "名字还在",
+    note: "名字还在，分量稳。生成工具能写教案，课堂、学生和责任还在人这边。",
+    source: "相对位置，用来和掉进池子的名字对照。",
+    track: [{ t: 2016, x: 58, y: 52 }, { t: 2026, x: 60, y: 54 }, { t: 2036, x: 62, y: 56 }] },
+  { id: "nurse", kind: "job", name: "护士", short: "护士", born: 2016, gone: null, fate: "名字还在",
+    note: "老龄化把这个名字的分量往右推。标价中等。照护要面对具体的人，这一层还在。",
+    source: "相对位置。人数趋势与老龄化方向一致，刻度不是统计原值。",
+    track: [{ t: 2016, x: 34, y: 48 }, { t: 2022, x: 42, y: 50 }, { t: 2026, x: 48, y: 52 }, { t: 2036, x: 56, y: 54 }] },
+  { id: "account", kind: "job", name: "会计", short: "会计", born: 2016, gone: null, fate: "名字还在",
+    note: "名字还在，没有进池子。初级记账那一段变薄，点往左收。要负责、要核账的那一段还在。",
+    source: "相对位置，表达任务变薄，不是会计人数的官方序列。",
+    track: [{ t: 2016, x: 70, y: 58 }, { t: 2023, x: 58, y: 54 }, { t: 2026, x: 50, y: 52 }, { t: 2036, x: 42, y: 50 }] },
+  { id: "dev", kind: "job", name: "软件开发", short: "软件开发", born: 2016, gone: null, fate: "名字还在",
+    note: "分量这些年上来了。2023 年之后，入门、重复的那一段开始承压，标价略往下。",
+    source: "相对位置。",
+    track: [{ t: 2016, x: 26, y: 80 }, { t: 2022, x: 46, y: 82 }, { t: 2025, x: 52, y: 74 }, { t: 2036, x: 48, y: 68 }] },
+  { id: "teller", kind: "job", name: "银行柜员", short: "银行柜员", born: 2016, gone: null, fate: "名字还在",
+    note: "名字还在图上，故意不扔进池子。网点里干这个的人少了，点往左缩。机器接走的是重复收付，不是整个银行。",
+    source: "相对位置。各银行年报写过网点智能化，这里不引用未经逐条核对的减员百分比。",
+    track: [{ t: 2016, x: 48, y: 42 }, { t: 2020, x: 36, y: 38 }, { t: 2026, x: 22, y: 34 }, { t: 2036, x: 16, y: 32 }] },
+  { id: "toll", kind: "job", name: "公路收费员", short: "公路收费员", born: 2016, gone: 2020.05, fate: "岗位没了", stat: "2020",
+    note: "2020 年 1 月 1 日撤销全国省界收费站。坐在省界收费亭里的这个岗没了，不少人转到稽核、监控和维护。",
+    source: "交通运输部，2020 年 1 月 1 日撤销全国省界收费站。",
+    track: [{ t: 2016, x: 30, y: 30 }, { t: 2019, x: 26, y: 28 }] },
+  { id: "telegram", kind: "job", name: "电报业务员", short: "电报业务员", born: 2016, gone: 2022.08, fate: "大典除名", stat: "2022",
+    note: "2022 年版《职业分类大典》点名取消。同一次修订一共取消 10 个职业，公开稿点名的是这一个。",
+    source: "人社部，《职业分类大典（2022 年版）》。新华社 2022-09-28：新增 168 个，取消 10 个。",
+    track: [{ t: 2016, x: 12, y: 22 }, { t: 2022, x: 10, y: 20 }] },
+  { id: "inspect", kind: "job", name: "报检员", short: "报检员", born: 2016, gone: 2022.42, fate: "并入报关", stat: "2022",
+    note: "2022 年版大典把报关专业人员和报检专业人员合并成「报关人员」。报检这个名字从名册上拿掉。",
+    source: "人社部，《职业分类大典（2022 年版）》公示稿。",
+    track: [{ t: 2016, x: 18, y: 36 }, { t: 2022, x: 16, y: 34 }] },
+  { id: "drone", kind: "job", name: "无人机驾驶员", short: "无人机驾驶员", born: 2019.3, gone: null, fate: "新职业",
+    note: "2019 年写入国家新职业。先有招聘和工种，再收进后来的大典。",
+    source: "人社部 2019 年公布的新职业。",
+    track: [{ t: 2019.3, x: 14, y: 58 }, { t: 2023, x: 24, y: 62 }, { t: 2026, x: 28, y: 64 }, { t: 2036, x: 32, y: 66 }] },
+  { id: "robotop", kind: "job", name: "工业机器人系统操作员", short: "机器人操作员", born: 2019.3, gone: null, fate: "新职业",
+    note: "2019 年写入新职业。工厂里的新工种，分量还不大，标价中上。",
+    source: "人社部 2019 年公布的新职业。",
+    track: [{ t: 2019.3, x: 12, y: 64 }, { t: 2024, x: 22, y: 66 }, { t: 2036, x: 30, y: 68 }] },
+  { id: "trainer", kind: "job", name: "人工智能训练师", short: "AI 训练师", born: 2020.15, gone: null, fate: "新职业",
+    note: "2020 年写入新职业，2022 年收进大典。人还不多，所以点小。它本身也是这轮技术长出来的名字。",
+    source: "人社部 2020 年新职业；《职业分类大典（2022 年版）》数字职业。",
+    track: [{ t: 2020.15, x: 10, y: 70 }, { t: 2025, x: 16, y: 72 }, { t: 2036, x: 18, y: 70 }] },
+  { id: "rider", kind: "job", name: "网约配送员", short: "网约配送员", born: 2020.15, gone: null, fate: "新职业",
+    note: "2020 年写入新职业。分量涨得快，标价不高。平台上的单很多，成名册是后来的事。",
+    source: "人社部 2020 年新职业。",
+    track: [{ t: 2020.15, x: 22, y: 26 }, { t: 2024, x: 46, y: 28 }, { t: 2036, x: 50, y: 30 }] },
+  { id: "live", kind: "job", name: "互联网营销师", short: "互联网营销师", born: 2020.55, gone: null, fate: "新职业",
+    note: "2020 年写入新职业。直播销售是里面的工种。名字先出现在人社部的新职业名单里，再进入大典。",
+    source: "人社部 2020 年颁布的新职业。",
+    track: [{ t: 2020.55, x: 18, y: 50 }, { t: 2024, x: 36, y: 56 }, { t: 2036, x: 34, y: 52 }] },
+
+  { id: "mis", kind: "major", name: "信息管理与信息系统", short: "信管", born: 2016, gone: 2021.15, fate: "多校撤销", stat: "100 所",
+    note: "2018–2022 年约 100 所高校撤销该专业点，是这五年撤销最多的一个。落点放在 2021，这一年单年撤销最多。国家目录里这个名字还在。不少学校改办大数据管理与应用。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 74, y: 40 }, { t: 2020, x: 52, y: 36 }, { t: 2021.15, x: 40, y: 34 }] },
+  { id: "pam", kind: "major", name: "公共事业管理", short: "公共事业管理", born: 2016, gone: 2021.38, fate: "多校撤销", stat: "97 所",
+    note: "2018–2022 年约 97 所高校撤销。学得很杂、对口岗位窄，是学校停办时的常见理由。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 54, y: 32 }, { t: 2021.38, x: 36, y: 30 }] },
+  { id: "fashion", kind: "major", name: "服装与服饰设计", short: "服装设计", born: 2016, gone: 2021.62, fate: "多校撤销", stat: "70 所",
+    note: "2018–2022 年约 70 所高校撤销。产业走品牌和效率之后，并不需要这么多同质的本科点。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 40, y: 26 }, { t: 2021.62, x: 28, y: 24 }] },
+  { id: "product", kind: "major", name: "产品设计", short: "产品设计", born: 2016, gone: 2021.82, fate: "多校撤销", stat: "66 所",
+    note: "2018–2022 年约 66 所高校撤销，2022 年单年仍在增加。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 46, y: 64 }, { t: 2021.82, x: 34, y: 58 }] },
+  { id: "infomath", kind: "major", name: "信息与计算科学", short: "信息与计算", born: 2016, gone: 2022.05, fate: "多校撤销", stat: "65 所",
+    note: "2018–2022 年约 65 所高校撤销。名字听起来像计算机，课程和就业常常对不上新的计算岗位。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 42, y: 74 }, { t: 2022.05, x: 30, y: 68 }] },
+  { id: "market", kind: "major", name: "市场营销", short: "市场营销", born: 2016, gone: 2022.28, fate: "多校撤销", stat: "51 所",
+    note: "2018–2022 年约 51 所高校撤销，2022 年单年 22 所。目录名还在，布点在收。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 80, y: 48 }, { t: 2022.28, x: 58, y: 44 }] },
+  { id: "edtech", kind: "major", name: "教育技术学", short: "教育技术学", born: 2016, gone: 2022.5, fate: "多校撤销", stat: "51 所",
+    note: "2018–2022 年约 51 所高校撤销。学校把「教育技术」收窄或改名时，这个点先被拿掉。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 16, y: 56 }, { t: 2022.5, x: 14, y: 50 }] },
+  { id: "ad", kind: "major", name: "广告学", short: "广告学", born: 2016, gone: 2022.7, fate: "多校撤销", stat: "46 所",
+    note: "2018–2022 年约 46 所高校撤销，后几年加速。投放和制作的工具变了，同质的本科点在减。目录名还在。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 68, y: 66 }, { t: 2022.7, x: 50, y: 60 }] },
+  { id: "idesign", kind: "major", name: "工业设计", short: "工业设计", born: 2016, gone: 2022.9, fate: "多校撤销", stat: "45 所",
+    note: "2018–2022 年约 45 所高校撤销。目录名还在。旁边智能制造、产品相关的新点在长。",
+    source: "教育部 2018–2022 年本科专业备案结果汇总。",
+    track: [{ t: 2016, x: 60, y: 72 }, { t: 2022.9, x: 44, y: 66 }] },
+
+  { id: "ds", kind: "major", name: "数据科学与大数据技术", short: "数据科学", born: 2016, gone: null, fate: "目录在、布点暴增",
+    note: "2015 年列入本科目录。2018 年度备案结果里，这一专业新增近两百所学校，点从那一年明显变大。",
+    source: "本科专业目录增设年度 2015；教育部 2018 年度备案结果。",
+    track: [{ t: 2016, x: 18, y: 84 }, { t: 2018.5, x: 40, y: 82 }, { t: 2024, x: 62, y: 76 }, { t: 2036, x: 58, y: 70 }] },
+  { id: "robote", kind: "major", name: "机器人工程", short: "机器人工程", born: 2016, gone: null, fate: "目录在、布点变多",
+    note: "2015 年列入目录。随后几年布点变多，2018 年度有上百所学校备案。",
+    source: "本科专业目录增设年度 2015；教育部 2018 年度备案结果。",
+    track: [{ t: 2016, x: 14, y: 68 }, { t: 2019, x: 28, y: 70 }, { t: 2026, x: 36, y: 72 }, { t: 2036, x: 40, y: 70 }] },
+  { id: "bdm", kind: "major", name: "大数据管理与应用", short: "大数据管理", born: 2017.6, gone: null, fate: "新列入目录",
+    note: "2017 年列入目录。一批学校用它换掉原来的信息管理与信息系统。",
+    source: "本科专业目录增设年度 2017。",
+    track: [{ t: 2017.6, x: 16, y: 60 }, { t: 2022, x: 30, y: 62 }, { t: 2036, x: 34, y: 60 }] },
+  { id: "sme", kind: "major", name: "智能制造工程", short: "智能制造", born: 2017.6, gone: null, fate: "新列入目录",
+    note: "2017 年列入目录，服务制造现场的改造，不是只改一个专业的招牌。",
+    source: "本科专业目录增设年度 2017。",
+    track: [{ t: 2017.6, x: 20, y: 48 }, { t: 2023, x: 34, y: 54 }, { t: 2036, x: 40, y: 56 }] },
+  { id: "ai", kind: "major", name: "人工智能", short: "人工智能", born: 2018.4, gone: null, fate: "新列入目录",
+    note: "2018 年列入目录，首批审批约 35 所。之后布点迅速变多，点又大、标价感觉又高。名字新，不保证每一所学校的课都新。",
+    source: "本科专业目录增设年度 2018；教育部 2018 年度审批结果。",
+    track: [{ t: 2018.4, x: 22, y: 86 }, { t: 2021, x: 44, y: 84 }, { t: 2025, x: 66, y: 80 }, { t: 2036, x: 70, y: 74 }] },
+  { id: "decon", kind: "major", name: "数字经济", short: "数字经济", born: 2018.4, gone: null, fate: "新列入目录",
+    note: "2018 年列入目录。经济学下面长出的新名字，布点在增加。",
+    source: "本科专业目录增设年度 2018。",
+    track: [{ t: 2018.4, x: 24, y: 44 }, { t: 2024, x: 36, y: 50 }, { t: 2036, x: 38, y: 48 }] },
+  { id: "ic", kind: "major", name: "集成电路设计与集成系统", short: "集成电路", born: 2016, gone: null, fate: "旧名字、新重量",
+    note: "这个专业早于 2016 年就在目录里。2020 年之后国家把它当战略，布点变重，所以点往右长，而不是新冒出来。",
+    source: "本科专业目录；2020 年后集成电路人才政策。",
+    track: [{ t: 2016, x: 22, y: 76 }, { t: 2020, x: 28, y: 78 }, { t: 2025, x: 42, y: 80 }, { t: 2036, x: 48, y: 78 }] },
+  { id: "aied", kind: "major", name: "人工智能教育", short: "人工智能教育", born: 2025.3, gone: null, fate: "2025 年公布",
+    note: "2024 年度备案，2025 年 4 月随新目录公布。点还小。专业名是新的，第一届本科生还没毕业。",
+    source: "教育部 2025-04-22《本科专业目录（2025 年）》增列专业。",
+    track: [{ t: 2025.3, x: 20, y: 46 }, { t: 2036, x: 28, y: 50 }] },
+  { id: "lowalt", kind: "major", name: "低空技术与工程", short: "低空技术", born: 2025.3, gone: null, fate: "2025 年公布",
+    note: "2024 年度作为新专业审批。对应低空经济，不是把旧专业改了个姓。点还小。",
+    source: "教育部 2024 年度本科专业备案和审批结果，2025 年 4 月公布。",
+    track: [{ t: 2025.3, x: 26, y: 74 }, { t: 2036, x: 34, y: 76 }] },
+  { id: "carbon", kind: "major", name: "碳中和科学与工程", short: "碳中和", born: 2025.35, gone: null, fate: "2025 年公布",
+    note: "2024 年度新专业。名字跟着双碳政策走，布点刚开始。",
+    source: "教育部 2024 年度本科专业备案和审批结果。",
+    track: [{ t: 2025.35, x: 30, y: 66 }, { t: 2036, x: 36, y: 68 }] },
+  { id: "av", kind: "major", name: "智能视听工程", short: "智能视听", born: 2025.4, gone: null, fate: "2025 年公布",
+    note: "2025 年版目录增列，冲着人工智能改视听制作。点还小，毕业生还没有。",
+    source: "教育部 2025-04-22，目录增列 29 种新专业之一。",
+    track: [{ t: 2025.4, x: 32, y: 58 }, { t: 2036, x: 38, y: 60 }] },
+
+  { id: "copy", kind: "job", name: "初级文字编辑", short: "初级编辑", born: 2026, gone: 2029, forecast: true, fate: "推演", stat: "推演",
+    note: "推演，不是已公布的除名。成段写稿、改格式这一层，生成工具已经接得住。选题、核实和署名还在人这边。",
+    source: "按任务是否还能被世界驳回来外推。拖过 2026 才出现。",
+    track: [{ t: 2026, x: 44, y: 46 }, { t: 2029, x: 24, y: 38 }] },
+  { id: "cs", kind: "job", name: "基础客服", short: "基础客服", born: 2026, gone: 2031, forecast: true, fate: "推演", stat: "推演",
+    note: "推演。重复问答会被接走。投诉、例外、要有人负责的那一层还在，所以不是整个客服行业消失。",
+    source: "推演。",
+    track: [{ t: 2026, x: 38, y: 32 }, { t: 2031, x: 18, y: 26 }] },
+  { id: "entry", kind: "job", name: "重复录入", short: "重复录入", born: 2026, gone: 2028, forecast: true, fate: "推演", stat: "推演",
+    note: "推演。纯录入没有新的外部阻力，按这套机制会先掉。需要核对原始凭证的那一段还在别的岗位里。",
+    source: "推演。",
+    track: [{ t: 2026, x: 28, y: 22 }, { t: 2028, x: 14, y: 18 }] }
+];
+
+const byId = Object.fromEntries(ITEMS.map(d => [d.id, d]));
+const yearInput = document.getElementById("year");
+const dotsEl = document.getElementById("dots");
+const fieldEl = document.getElementById("field");
+const sentenceEl = document.getElementById("sentence");
+const yearGhost = document.getElementById("yearGhost");
+const detailEl = document.getElementById("detail");
+const liveEl = document.getElementById("live");
+const footEl = document.getElementById("foot");
+const fillEl = document.getElementById("fill");
+const factSeg = document.getElementById("factSeg");
+const castSeg = document.getElementById("castSeg");
+
+let showJob = true, showMajor = true, selected = null;
+let renderedYear = 2016;
+let primed = false;
+const phaseNow = new Map();
+const dotEls = new Map();
+const chipEls = new Map();
+const ghosts = new Map();
+
+function allowed(item) {
+  if (item.kind === "job" && !showJob) return false;
+  if (item.kind === "major" && !showMajor) return false;
+  return true;
+}
+function phaseOf(item, year) {
+  if (!allowed(item)) return "hidden";
+  if (item.gone != null && year >= item.gone) return item.forecast ? "cast" : "pool";
+  if (year < item.born) return "hidden";
+  if (item.forecast && year < TODAY) return "hidden";
+  return "chart";
+}
+function at(track, year) {
+  if (!track.length) return { x: 10, y: 10 };
+  if (year <= track[0].t) return track[0];
+  const last = track[track.length - 1];
+  if (year >= last.t) return last;
+  for (let i = 0; i < track.length - 1; i++) {
+    const a = track[i], b = track[i + 1];
+    if (year >= a.t && year <= b.t) {
+      const u = (year - a.t) / (b.t - a.t);
+      return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+    }
+  }
+  return last;
+}
+function sentence(year) {
+  if (year < 2017) return "池底是更早被换掉的名字。图上这些，2016 年还站着。";
+  if (year < 2019) return "新专业先写进目录，点开始变大。这批学生还要过几年才毕业。";
+  if (year < 2020) return "无人机驾驶员、工业机器人操作员，写进了新职业。";
+  if (year < 2021) return "2020 年，省界收费站撤销，公路收费员掉进右边。新职业同时在长。";
+  if (year < 2022) return "学校成批撤销专业点。信管、公共事业管理、服装设计往池子里掉。";
+  if (year < 2023) return "大典取消电报业务员，报检并进报关。专业点继续往池子里掉。";
+  if (year < 2025) return "还在图上的名字没有消失。柜员、会计往左收，护理和人工智能往右长。";
+  if (year < 2026) return "目录又写入新名字：人工智能教育、低空技术、碳中和、智能视听。点还小。";
+  if (year < 2027) return "2026 年，今天能核对到这里。再往右拖是推演，掉进下面单独一格。";
+  return "虚线才是推演。机制还是那一套：名字会再换，专业名册慢一拍。";
+}
+function showDetail(item) {
+  if (!item) {
+    detailEl.innerHTML = "<b>点一个名字</b><p>看它为什么还在图上，或者为什么掉进右边。</p>";
+    return;
+  }
+  const when = item.gone == null
+    ? "还在图上"
+    : (item.forecast ? "推演中会掉进下面那一格" : "已在右边的池子里");
+  detailEl.innerHTML =
+    "<b>" + item.name + " · " + (item.kind === "job" ? "岗位" : "专业") + " · " + item.fate + "</b>" +
+    "<p>" + item.note + "</p>" +
+    "<p class='src'>" + when + " · " + item.source + "</p>";
+}
+function announce(text) {
+  if (liveEl.textContent !== text) liveEl.textContent = text;
+}
+function clearGhost(id) {
+  const g = ghosts.get(id);
+  if (!g) return;
+  g.anim.cancel();
+  g.el.remove();
+  ghosts.delete(id);
+}
+function toss(item, from, chipEl) {
+  if (!from || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    chipEl.style.opacity = "1";
+    return;
+  }
+  const to = chipEl.getBoundingClientRect();
+  const g = document.createElement("div");
+  g.className = "ghost " + item.kind + (item.forecast ? " forecast" : "");
+  g.textContent = item.short;
+  g.style.left = from.left + "px";
+  g.style.top = from.top + "px";
+  document.body.appendChild(g);
+  const dx = to.left - from.left;
+  const dy = to.top - from.top;
+  chipEl.style.opacity = "0";
+  const anim = g.animate([
+    { transform: "translate(0,0) scale(1)", opacity: 1 },
+    { transform: "translate(" + (dx * 0.55) + "px," + (dy * 0.35 - 28) + "px) scale(0.9)", opacity: 1, offset: 0.45 },
+    { transform: "translate(" + dx + "px," + dy + "px) scale(0.5)", opacity: 0.15 }
+  ], { duration: 680, easing: "cubic-bezier(.15,.7,.2,1)" });
+  ghosts.set(item.id, { el: g, anim });
+  anim.onfinish = () => {
+    g.remove();
+    ghosts.delete(item.id);
+    chipEl.style.opacity = "1";
+  };
+}
+function makeDot(item) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "dot " + item.kind + (item.forecast ? " forecast" : "");
+  btn.dataset.id = item.id;
+  const mark = document.createElement("span");
+  mark.className = "mark";
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = item.forecast ? item.short + " · 推演" : item.short;
+  btn.append(mark, label);
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    select(item.id);
+  });
+  dotsEl.appendChild(btn);
+  dotEls.set(item.id, btn);
+  return btn;
+}
+function makeChip(item) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "chip " + item.kind + (item.forecast ? " forecast" : "");
+  btn.dataset.id = item.id;
+  const b = document.createElement("b");
+  b.textContent = item.name;
+  const small = document.createElement("small");
+  small.textContent = (item.stat || "") + " · " + item.fate;
+  btn.append(b, small);
+  btn.addEventListener("click", () => select(item.id));
+  chipEls.set(item.id, btn);
+  return btn;
+}
+function select(id) {
+  selected = selected === id ? null : id;
+  showDetail(selected ? byId[selected] : null);
+  paintSelection();
+}
+function paintSelection() {
+  dotEls.forEach((el, id) => el.classList.toggle("on", id === selected));
+  chipEls.forEach((el, id) => el.classList.toggle("on", id === selected));
+  const chip = selected && chipEls.get(selected);
+  if (chip) chip.scrollIntoView({ block: "nearest" });
+}
+function listFor(item) {
+  if (item.forecast) return document.getElementById("castList");
+  return document.getElementById(item.kind === "job" ? "jobList" : "majorList");
+}
+function render(year, animate) {
+  const tenths = Math.floor(year * 10 + 1e-4) / 10;
+  yearGhost.textContent = String(tenths).replace(/\.0$/, "");
+  const line = sentence(year);
+  if (sentenceEl.textContent !== line) {
+    sentenceEl.textContent = line;
+    announce(line);
+  }
+  const t = (year - MIN) / (MAX - MIN);
+  fillEl.style.width = (t * 100) + "%";
+
+  const enteringPool = [];
+  ITEMS.forEach(item => {
+    const ph = phaseOf(item, year);
+    const prev = phaseNow.get(item.id);
+    phaseNow.set(item.id, ph);
+    const onChart = ph === "chart";
+    let dot = dotEls.get(item.id);
+    let flyFrom = null;
+    if (onChart) {
+      if (!dot) dot = makeDot(item);
+      const p = at(item.track, year);
+      const size = 10 + (p.x / 100) * 18;
+      dot.style.display = "";
+      dot.style.left = p.x + "%";
+      dot.style.top = (100 - p.y) + "%";
+      dot.style.zIndex = String(100 - Math.round(p.x));
+      const mark = dot.querySelector(".mark");
+      mark.style.width = size + "px";
+      mark.style.height = size + "px";
+      if (primed && prev && prev !== "chart" && animate) {
+        mark.animate(
+          [{ transform: "scale(0.2)", opacity: 0 }, { transform: "scale(1)", opacity: 1 }],
+          { duration: 280, easing: "ease-out" }
+        );
+      }
+    } else if (dot) {
+      if (primed && prev === "chart" && animate) flyFrom = dot.getBoundingClientRect();
+      dot.style.display = "none";
+    }
+    const inPile = ph === "pool" || ph === "cast";
+    let chip = chipEls.get(item.id);
+    if (inPile) {
+      if (!chip) chip = makeChip(item);
+      const host = listFor(item);
+      if (chip.parentElement !== host) host.appendChild(chip);
+      const fresh = item.gone != null && year - item.gone < 0.4 && year >= item.gone;
+      chip.classList.toggle("fresh", fresh);
+      if (ghosts.has(item.id)) {
+        /* flight still running */
+      } else if (flyFrom) {
+        chip.style.opacity = "0";
+        enteringPool.push({ item, flyFrom });
+      } else {
+        chip.style.opacity = "1";
+      }
+    } else if (chip) {
+      clearGhost(item.id);
+      chip.remove();
+    }
+  });
+  ["jobList", "majorList", "castList"].forEach(id => {
+    const el = document.getElementById(id);
+    [...el.querySelectorAll(".chip")].sort((a, b) => (byId[b.dataset.id].gone || 0) - (byId[a.dataset.id].gone || 0))
+      .forEach(c => el.appendChild(c));
+  });
+  enteringPool.forEach((entry, i) => {
+    const chip = chipEls.get(entry.item.id);
+    announce(entry.item.name + " 掉进池子");
+    setTimeout(() => toss(entry.item, entry.flyFrom, chip), i * 70);
+  });
+
+  const jobs = ITEMS.filter(d => phaseNow.get(d.id) === "pool" && d.kind === "job");
+  const majors = ITEMS.filter(d => phaseNow.get(d.id) === "pool" && d.kind === "major");
+  const casts = ITEMS.filter(d => phaseNow.get(d.id) === "cast");
+  document.getElementById("jobCount").textContent = String(jobs.length);
+  document.getElementById("majorCount").textContent = String(majors.length);
+  const jobList = document.getElementById("jobList");
+  const majorList = document.getElementById("majorList");
+  const castList = document.getElementById("castList");
+  jobList.querySelectorAll(".empty").forEach(n => n.remove());
+  majorList.querySelectorAll(".empty").forEach(n => n.remove());
+  castList.querySelectorAll(".empty").forEach(n => n.remove());
+  if (!jobs.length) {
+    const p = document.createElement("div");
+    p.className = "empty";
+    p.textContent = showJob ? "这一年还没有新的岗位掉进来。" : "岗位已隐藏。";
+    jobList.appendChild(p);
+  }
+  if (!majors.length) {
+    const p = document.createElement("div");
+    p.className = "empty";
+    p.textContent = showMajor ? "专业这边还是空的。拖到 2021，学校撤销的专业点会往里掉。" : "专业已隐藏。";
+    majorList.appendChild(p);
+  }
+  if (!casts.length) {
+    const p = document.createElement("div");
+    p.className = "empty";
+    p.textContent = year < TODAY ? "过了 2026，推演的名字掉在这里，和已经发生的分开。" : "再往右，会有虚线的名字掉进来。";
+    castList.appendChild(p);
+  }
+  paintSelection();
+  relaxLabels();
+  primed = true;
+  renderedYear = year;
+}
+function relaxLabels() {
+  const field = fieldEl.getBoundingClientRect();
+  if (field.width < 40) return;
+  const nodes = [...dotsEl.querySelectorAll(".dot")].filter(d => d.style.display !== "none").map(d => {
+    const label = d.querySelector(".label");
+    const dot = d.getBoundingClientRect();
+    label.style.bottom = "auto";
+    label.style.transform = "none";
+    const w = Math.max(label.offsetWidth, 24);
+    const h = Math.max(label.offsetHeight, 16);
+    const cx = dot.left + dot.width / 2 - field.left;
+    const cy = dot.top + dot.height / 2 - field.top;
+    return { label, cx, cy, w, h, lx: cx - w / 2, ly: cy - h - 12, dotW: dot.width, dotH: dot.height };
+  });
+  for (let k = 0; k < 16; k++) {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const ox = Math.min(a.lx + a.w, b.lx + b.w) - Math.max(a.lx, b.lx);
+        const oy = Math.min(a.ly + a.h, b.ly + b.h) - Math.max(a.ly, b.ly);
+        if (ox > 0 && oy > 0) {
+          const push = oy / 2 + 0.8;
+          if (a.cy <= b.cy) { a.ly -= push; b.ly += push; }
+          else { a.ly += push; b.ly -= push; }
+        }
+      }
+    }
+    nodes.forEach(n => {
+      n.ly = Math.max(2, Math.min(field.height - n.h - 2, n.ly));
+      n.lx = Math.max(2, Math.min(field.width - n.w - 2, n.lx));
+      const anchor = n.cy - n.h - 12;
+      n.ly = Math.max(anchor - 36, Math.min(anchor + 28, n.ly));
+    });
+  }
+  nodes.forEach(n => {
+    const dotLeft = n.cx - n.dotW / 2;
+    const dotTop = n.cy - n.dotH / 2;
+    n.label.style.left = (n.lx - dotLeft) + "px";
+    n.label.style.top = (n.ly - dotTop) + "px";
+  });
+}
+
+document.getElementById("field").addEventListener("click", () => select(null));
+yearInput.addEventListener("input", () => {
+  const next = Number(yearInput.value);
+  const jump = Math.abs(next - renderedYear);
+  render(next, jump < 0.5);
+});
+document.getElementById("toggle-job").addEventListener("click", (e) => {
+  showJob = !showJob;
+  e.currentTarget.classList.toggle("on", showJob);
+  e.currentTarget.setAttribute("aria-pressed", String(showJob));
+  render(Number(yearInput.value), false);
+});
+document.getElementById("toggle-major").addEventListener("click", (e) => {
+  showMajor = !showMajor;
+  e.currentTarget.classList.toggle("on", showMajor);
+  e.currentTarget.setAttribute("aria-pressed", String(showMajor));
+  render(Number(yearInput.value), false);
+});
+window.addEventListener("resize", () => render(Number(yearInput.value), false));
+window.addEventListener("keydown", (e) => {
+  if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+  e.preventDefault();
+  const dir = e.key === "ArrowRight" ? 1 : -1;
+  const step = e.shiftKey ? 1 : 0.05;
+  const next = Math.min(MAX, Math.max(MIN, Number(yearInput.value) + dir * step));
+  yearInput.value = String(next);
+  render(next, step < 0.5);
+});
+
+const todayPct = (TODAY - MIN) / (MAX - MIN) * 100;
+factSeg.style.width = todayPct + "%";
+castSeg.style.width = (100 - todayPct) + "%";
+footEl.textContent = "向右拖年份，或用左右方向键。坐标是相对位置：谁在变重、谁在变轻、谁掉下去，不是统计年鉴的原始刻度。进出名册的年份来自教育部本科专业目录与备案结果、人社部职业分类大典及新职业公布、2020 年撤销省界收费站。2023 年以后的单专业撤销名单没有逐条画入。2027 年起是推演。";
+
+const params = new URLSearchParams(location.search);
+const start = params.has("y") ? Number(params.get("y")) : 2016;
+yearInput.value = String(Math.min(MAX, Math.max(MIN, start || 2016)));
+render(Number(yearInput.value), false);
+</script>
+</body>
+</html>
