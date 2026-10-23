@@ -40,13 +40,13 @@
     position: absolute; inset: 0;
     display: none;
     flex-direction: column;
-    padding: clamp(28px, 4.2vw, 48px) clamp(36px, 5.5vw, 72px) 56px;
-    gap: 10px;
+    padding: clamp(26px, 3.8vw, 44px) clamp(32px, 5vw, 68px) 52px;
+    gap: 8px;
   }
   .slide.on { display: flex; }
 
   .kicker {
-    font-size: 12px; font-weight: 700; letter-spacing: .2em;
+    font-size: 11px; font-weight: 700; letter-spacing: .2em;
     text-transform: uppercase;
   }
   .skin-path .kicker, .skin-agenda .kicker, .skin-edit .kicker { color: var(--orange); }
@@ -58,23 +58,27 @@
   h1, h2 { font-weight: 700; letter-spacing: -.02em; line-height: 1.12; }
   h1 {
     font-family: var(--display);
-    font-size: clamp(34px, 4.6vw, 54px);
-    max-width: 16ch;
+    font-size: clamp(32px, 4.4vw, 52px);
+    max-width: 18ch;
   }
   h2 {
     font-family: var(--display);
-    font-size: clamp(26px, 3.4vw, 40px);
-    max-width: 20ch;
+    font-size: clamp(24px, 3.2vw, 38px);
+    max-width: 22ch;
   }
   .skin-atlas h1, .skin-atlas h2 { font-family: var(--atlas); color: #1c1915; }
   .skin-lab h1, .skin-lab h2 { font-family: var(--lab); letter-spacing: -.03em; }
 
   .lead {
-    font-size: clamp(15px, 1.3vw, 17px);
-    line-height: 1.55; max-width: 44em;
+    font-size: clamp(14px, 1.25vw, 17px);
+    line-height: 1.5; max-width: 48em;
   }
   .skin-path .lead, .skin-agenda .lead, .skin-edit .lead, .skin-lab .lead { color: #94a3b8; }
   .skin-atlas .lead { color: #5c5348; }
+  .cite {
+    font-size: 12px; color: #64748b; margin-top: 2px;
+  }
+  .skin-atlas .cite { color: #8a7f70; }
 
   .foot {
     margin-top: auto;
@@ -86,7 +90,7 @@
   .skin-lab .foot { color: #64748b; font-family: var(--mono); font-size: 11px; }
   .nav-hint { font-family: var(--mono); font-size: 11px; opacity: .85; }
 
-  .cover-map { flex: 1; min-height: 0; margin: 6px 0 0; }
+  .cover-map { flex: 1; min-height: 0; margin: 4px 0 0; }
   .cover-map svg { width: 100%; height: 100%; display: block; }
   .dash-flow { stroke-dasharray: 8 12; animation: dash 1.6s linear infinite; }
   @keyframes dash { to { stroke-dashoffset: -40; } }
@@ -95,76 +99,160 @@
 
   .agenda {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px;
-    align-content: center; margin-top: 12px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px;
+    align-content: center; margin-top: 8px;
   }
   .agenda-item {
-    display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: start;
-    padding: 16px 0;
+    display: grid; grid-template-columns: 44px 1fr; gap: 12px; align-items: start;
+    padding: 12px 0;
     border-top: 1px solid rgba(148,163,184,.2);
   }
   .agenda-item:nth-child(1), .agenda-item:nth-child(2) { border-top: 0; padding-top: 0; }
   .agenda-item .n {
-    font-family: var(--mono); font-size: 22px; font-weight: 600; color: var(--cyan);
-    line-height: 1.1;
+    font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--cyan);
   }
-  .agenda-item b { display: block; font-size: 18px; margin-bottom: 4px; }
+  .agenda-item b { display: block; font-size: 16px; margin-bottom: 3px; }
   .agenda-item p { font-size: 13px; color: #94a3b8; line-height: 1.4; }
   .agenda-note {
     grid-column: 1 / -1;
-    margin-top: 8px;
     font-size: 13px; color: #64748b;
-    padding: 12px 14px;
+    padding: 10px 14px;
     border-left: 3px solid var(--orange);
     background: rgba(249,115,22,.06);
   }
 
+  /* Intelligence pair */
+  .intel {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px;
+    margin-top: 8px; align-items: stretch;
+  }
+  .intel-quote {
+    border-left: 3px solid var(--orange);
+    padding: 8px 0 8px 18px;
+    display: flex; flex-direction: column; justify-content: center; gap: 10px;
+  }
+  .intel-quote p {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.3;
+  }
+  .intel-quote span { font-size: 12px; color: #64748b; }
+  .intel-pair { display: flex; flex-direction: column; gap: 12px; }
+  .case {
+    border-radius: 8px; padding: 14px 16px;
+    border: 1px solid rgba(148,163,184,.25);
+    background: rgba(18,26,46,.5);
+  }
+  .case.no { border-color: rgba(127,29,29,.55); background: #1a1514; }
+  .case.yes { border-color: rgba(17,94,89,.6); background: #0f1a1a; }
+  .case .lab {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+    margin-bottom: 6px; display: block;
+  }
+  .case.no .lab { color: #fca5a5; }
+  .case.yes .lab { color: var(--teal); }
+  .case b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .case p { font-size: 13px; color: #94a3b8; line-height: 1.4; }
+
+  /* Five abilities */
+  .abil {
+    flex: 1; min-height: 0;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    align-content: center; margin-top: 10px;
+  }
+  .abil article {
+    border: 1px solid rgba(148,163,184,.22);
+    border-radius: 4px;
+    padding: 14px 12px;
+    background: rgba(18,26,46,.55);
+    min-height: 180px;
+  }
+  .abil article.key {
+    border-color: rgba(249,115,22,.55);
+    background: rgba(249,115,22,.08);
+  }
+  .abil .n {
+    font-family: var(--mono); font-size: 11px; color: var(--cyan); letter-spacing: .1em;
+  }
+  .abil article.key .n { color: var(--orange-soft); }
+  .abil h3 { font-size: 16px; margin: 8px 0 6px; font-family: var(--display); }
+  .abil p { font-size: 12px; color: #94a3b8; line-height: 1.4; }
+  .abil .ex { margin-top: 10px; font-size: 11px; color: #64748b; line-height: 1.35; }
+
+  .score-row {
+    margin-top: 8px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; align-items: center;
+    flex: 1; min-height: 0;
+  }
+  .score-list { display: flex; flex-direction: column; gap: 8px; }
+  .score-item {
+    display: grid; grid-template-columns: 100px 1fr auto; gap: 10px; align-items: center;
+    font-size: 13px;
+  }
+  .score-item b { font-weight: 600; }
+  .bar {
+    height: 8px; border-radius: 99px; background: rgba(148,163,184,.15); overflow: hidden;
+  }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: var(--cyan); }
+  .bar.weak i { background: #64748b; width: 28% !important; }
+  .bar.mid i { background: var(--orange); }
+  .score-note {
+    border: 1px solid rgba(148,163,184,.22);
+    border-radius: 8px; padding: 16px;
+    font-size: 14px; color: #94a3b8; line-height: 1.45;
+  }
+  .score-note strong { color: #e8edf7; display: block; margin-bottom: 8px; font-size: 16px; }
+
   .atlas-body {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: 1.15fr .95fr; gap: 22px;
-    margin-top: 8px;
+    display: grid; grid-template-columns: 1.15fr .95fr; gap: 18px;
+    margin-top: 6px;
     background: repeating-linear-gradient(
       0deg, transparent, transparent 27px, rgba(28,25,21,.04) 27px, rgba(28,25,21,.04) 28px
     );
   }
   .cutaway {
     border: 1.5px solid #c4b49a; background: #fffaf2;
-    border-radius: 3px; padding: 12px 14px;
+    border-radius: 3px; padding: 10px 12px;
     display: flex; flex-direction: column;
   }
   .cutaway svg { width: 100%; flex: 1; min-height: 0; }
-  .atlas-side { display: flex; flex-direction: column; gap: 10px; }
+  .atlas-side { display: flex; flex-direction: column; gap: 8px; }
   .layer {
     border: 1px solid #c4b49a; background: rgba(255,250,242,.9);
-    padding: 12px 14px; border-radius: 3px;
+    padding: 10px 12px; border-radius: 3px;
   }
-  .layer b { display: block; font-size: 14px; margin-bottom: 3px; color: #1c1915; }
-  .layer span { font-size: 13px; color: #6b6358; line-height: 1.4; }
+  .layer b { display: block; font-size: 13px; margin-bottom: 2px; color: #1c1915; }
+  .layer span { font-size: 12px; color: #6b6358; line-height: 1.35; }
   .layer.hot { border-color: #b45309; background: #fff7ed; }
   .layer.hot b { color: #9a3412; }
 
+  .path-board { flex: 1; min-height: 0; position: relative; margin-top: 4px; }
+  .path-board svg { width: 100%; height: 100%; display: block; }
+
   .concepts {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-    align-content: center; margin-top: 10px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    align-content: center; margin-top: 8px;
   }
   .concept {
     border: 1px solid rgba(148,163,184,.25);
     border-radius: 4px;
-    padding: 18px 16px 16px;
+    padding: 14px 12px;
     background: rgba(18, 26, 46, .55);
-    display: flex; flex-direction: column; gap: 8px;
-    min-height: 200px;
+    display: flex; flex-direction: column; gap: 6px;
+    min-height: 190px;
   }
   .concept .abbr {
     font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
     color: var(--cyan); text-transform: uppercase;
   }
-  .concept h3 { font-size: 20px; font-family: var(--display); }
-  .concept p { font-size: 13px; color: #94a3b8; line-height: 1.45; flex: 1; }
+  .concept h3 { font-size: 18px; font-family: var(--display); }
+  .concept p { font-size: 12px; color: #94a3b8; line-height: 1.4; flex: 1; }
   .concept .why {
-    font-size: 12px; color: var(--orange-soft);
-    border-top: 1px solid rgba(148,163,184,.2); padding-top: 10px; line-height: 1.35;
+    font-size: 11px; color: var(--orange-soft);
+    border-top: 1px solid rgba(148,163,184,.2); padding-top: 8px; line-height: 1.35;
   }
 
   .lab-grid-bg {
@@ -178,12 +266,12 @@
   .slide-lab > *:not(.lab-grid-bg) { position: relative; z-index: 1; }
   .lab-split {
     flex: 1; min-height: 0;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-    margin-top: 10px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-top: 8px;
   }
   .lab-col {
-    border-radius: 8px; padding: 16px 16px 14px;
-    display: flex; flex-direction: column; gap: 12px;
+    border-radius: 8px; padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
   }
   .lab-col.bad { background: #1a1514; border: 1px solid #7f1d1d; }
   .lab-col.good { background: #0f1a1a; border: 1px solid #115e59; }
@@ -197,17 +285,17 @@
   .lab-col.bad .dot { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
   .lab-col.good .dot { background: #14b8a6; box-shadow: 0 0 10px #14b8a6; }
   .lab-q {
-    font-size: clamp(15px, 1.35vw, 17px); font-weight: 600; line-height: 1.4;
-    padding: 12px; border-radius: 6px;
+    font-size: clamp(14px, 1.25vw, 16px); font-weight: 600; line-height: 1.4;
+    padding: 10px; border-radius: 6px;
   }
   .lab-col.bad .lab-q { background: rgba(127,29,29,.35); color: #fecaca; }
   .lab-col.good .lab-q { background: rgba(17,94,89,.35); color: #ccfbf1; }
-  .lab-col ul { list-style: none; margin-top: auto; display: flex; flex-direction: column; gap: 7px; }
+  .lab-col ul { list-style: none; margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
   .lab-col li {
-    font-size: 13px; color: #94a3b8; padding-left: 14px; position: relative; line-height: 1.35;
+    font-size: 12px; color: #94a3b8; padding-left: 14px; position: relative; line-height: 1.35;
   }
   .lab-col li::before {
-    content: ""; position: absolute; left: 0; top: 6px;
+    content: ""; position: absolute; left: 0; top: 5px;
     width: 6px; height: 6px; border-radius: 1px;
   }
   .lab-col.bad li::before { background: #f87171; }
@@ -215,27 +303,27 @@
 
   .take {
     flex: 1; min-height: 0;
-    display: flex; flex-direction: column; justify-content: center; gap: 28px;
+    display: flex; flex-direction: column; justify-content: center; gap: 22px;
   }
   .take .phrase {
     font-family: var(--display);
-    font-size: clamp(24px, 3vw, 36px);
-    line-height: 1.35; max-width: 22ch;
+    font-size: clamp(22px, 2.8vw, 34px);
+    line-height: 1.35; max-width: 24ch;
     border-left: 3px solid var(--orange);
-    padding-left: 20px;
+    padding-left: 18px;
   }
   .take .grid {
-    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
   }
   .take .cell {
-    padding-top: 12px;
+    padding-top: 10px;
     border-top: 1px solid rgba(148,163,184,.28);
   }
   .take .cell .lab {
     font-family: var(--mono); font-size: 11px; letter-spacing: .1em;
-    color: var(--orange-soft); margin-bottom: 8px; text-transform: uppercase;
+    color: var(--orange-soft); margin-bottom: 6px; text-transform: uppercase;
   }
-  .take .cell p { font-size: 14px; color: #94a3b8; line-height: 1.45; }
+  .take .cell p { font-size: 13px; color: #94a3b8; line-height: 1.45; }
 
   .progress {
     position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 5;
@@ -248,250 +336,396 @@
     transition: width .25s ease;
   }
 
-  @media (max-width: 800px) {
-    .agenda, .atlas-body, .concepts, .lab-split, .take .grid { grid-template-columns: 1fr; }
-    .agenda-item:nth-child(2) { border-top: 1px solid rgba(148,163,184,.2); padding-top: 16px; }
+  @media (max-width: 900px) {
+    .agenda, .intel, .abil, .atlas-body, .concepts, .lab-split, .take .grid, .score-row {
+      grid-template-columns: 1fr;
+    }
+    .abil { grid-template-columns: 1fr 1fr; }
+    .agenda-item:nth-child(2) { border-top: 1px solid rgba(148,163,184,.2); padding-top: 12px; }
     h1, h2 { max-width: none; }
-    .concept { min-height: 0; }
+    .concept, .abil article { min-height: 0; }
   }
 </style>
 </head>
 <body class="skin-path">
 <div id="deck">
 
+  <!-- 1 Cover -->
   <section class="slide on" data-i="0" data-skin="path">
     <div class="kicker">M1 · Online · Knowing intelligence</div>
     <h1>Thinking tools: what AI actually is</h1>
-    <p class="lead">Clear the myths first. Then name the pieces. Then see how question quality changes the answer.</p>
+    <p class="lead">Built from the National Day camp’s best blocks — intelligence test, five abilities, next-token, prompt path — then extended into abstraction for the semester course.</p>
     <div class="cover-map" aria-hidden="true">
-      <svg viewBox="0 0 1100 280" preserveAspectRatio="xMidYMid meet">
-        <path d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
+      <svg viewBox="0 0 1100 260" preserveAspectRatio="xMidYMid meet">
+        <path d="M70 180 C160 180 190 70 300 70 S470 180 550 180 S700 70 800 70 S960 180 1030 180"
               fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
-        <path class="dash-flow" d="M70 190 C160 190 190 70 300 70 S470 190 550 190 S700 70 800 70 S960 190 1030 190"
+        <path class="dash-flow" d="M70 180 C160 180 190 70 300 70 S470 180 550 180 S700 70 800 70 S960 180 1030 180"
               fill="none" stroke="#38bdf8" stroke-width="2" opacity=".9"/>
         <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle">
-          <g transform="translate(70,190)">
-            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+          <g transform="translate(70,180)">
+            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle class="pulse" r="5" fill="#38bdf8"/>
-            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">Observe</text>
-            <text y="58" font-size="11" fill="#64748b">see the surface</text>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Camp Day 1</text>
+            <text y="56" font-size="11" fill="#64748b">spot intelligence</text>
           </g>
           <g transform="translate(300,70)">
-            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle r="5" fill="#38bdf8"/>
-            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Classify</text>
-            <text y="-12" font-size="11" fill="#64748b">name your rule</text>
+            <text y="-26" font-size="13" fill="#e2e8f0" font-weight="600">Camp Day 2</text>
+            <text y="-10" font-size="11" fill="#64748b">open the black box</text>
           </g>
-          <g transform="translate(550,190)">
-            <circle r="18" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
+          <g transform="translate(550,180)">
+            <circle r="17" fill="#0c1220" stroke="#f97316" stroke-width="2.5"/>
             <circle r="6" fill="#f97316"/>
-            <circle r="26" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
-            <text y="44" font-size="13" fill="#fdba74" font-weight="700">This module · M1</text>
-            <text y="60" font-size="11" fill="#64748b">abstract / layer</text>
+            <circle r="25" fill="none" stroke="#f97316" stroke-width="1.5" opacity=".7" class="pulse"/>
+            <text y="42" font-size="13" fill="#fdba74" font-weight="700">Literacy · M1</text>
+            <text y="58" font-size="11" fill="#64748b">abstract + layer</text>
           </g>
           <g transform="translate(800,70)">
-            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
+            <circle r="15" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/>
             <circle r="5" fill="#38bdf8"/>
-            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Mechanism</text>
-            <text y="-12" font-size="11" fill="#64748b">how it works</text>
+            <text y="-26" font-size="13" fill="#e2e8f0" font-weight="600">M2 →</text>
+            <text y="-10" font-size="11" fill="#64748b">prompt · agent</text>
           </g>
-          <g transform="translate(1030,190)">
-            <circle r="16" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
+          <g transform="translate(1030,180)">
+            <circle r="15" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/>
             <circle r="5" fill="#5eead4"/>
-            <text y="42" font-size="13" fill="#e2e8f0" font-weight="600">Steer</text>
-            <text y="58" font-size="11" fill="#64748b">learn with AI</text>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">M3–M6</text>
+            <text y="56" font-size="11" fill="#64748b">open inquiry</text>
           </g>
         </g>
       </svg>
     </div>
     <div class="foot">
-      <span>AI Literacy · M1</span>
+      <span>AI Literacy · M1 · inherits camp Days 1–2</span>
       <span class="nav-hint">→ next</span>
     </div>
   </section>
 
+  <!-- 2 Agenda -->
   <section class="slide" data-i="1" data-skin="agenda">
     <div class="kicker">M1 · Online · 1 hour</div>
     <h2>Agenda</h2>
-    <p class="lead">Four blocks. By the end you should say, in plain words: what the model is doing, and where a bad question breaks down.</p>
+    <p class="lead">Camp material, tightened for a one-hour online class. Offline (2h) peels PC / web / internet into layers.</p>
     <div class="agenda">
       <div class="agenda-item">
         <div class="n">01</div>
         <div>
-          <b>Kill the myth</b>
-          <p>The model predicts the next token. It does not look up an encyclopedia.</p>
+          <b>What counts as intelligence</b>
+          <p>Camp: Legg’s test · sprinkler vs dog</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">02</div>
         <div>
-          <b>Four terms</b>
-          <p>LLM · Prompt · Agent · Skills — what each one owns</p>
+          <b>Five abilities</b>
+          <p>Camp: Perceive · Understand · Plan · Act · Learn</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">03</div>
         <div>
-          <b>Same ask, two versions</b>
-          <p>Vague vs precise — same intent, different checkability</p>
+          <b>Next-token + prompt path</b>
+          <p>Camp Day 2 black-box core</p>
         </div>
       </div>
       <div class="agenda-item">
         <div class="n">04</div>
         <div>
-          <b>Classify</b>
-          <p>Pick your own rule; say what common feature you pulled out</p>
+          <b>Four terms · two questions</b>
+          <p>LLM / Prompt / Agent / Skills · vague vs precise</p>
         </div>
       </div>
-      <div class="agenda-note">Offline next: peel PC / web / internet into layers — hardware → system → app — and draw the stack.</div>
+      <div class="agenda-note">Parked for M2 (from camp Days 3–4): prompt habits, context, Agent anatomy, hallucination lab drill.</div>
     </div>
     <div class="foot">
       <span>AI Literacy · M1</span>
-      <span class="nav-hint">2 / 6</span>
+      <span class="nav-hint">2 / 10</span>
     </div>
   </section>
 
-  <section class="slide" data-i="2" data-skin="atlas">
-    <div class="kicker">M1 · Myth</div>
-    <h2>It is not “thinking.” It is next-token prediction.</h2>
-    <p class="lead">Cut it open: context in, most-likely next token out, then the next, until it stops. Sounds like an answer. Underneath: prediction.</p>
+  <!-- 3 Intelligence (camp) -->
+  <section class="slide" data-i="2" data-skin="lab">
+    <div class="lab-grid-bg" aria-hidden="true"></div>
+    <div class="kicker">From camp · What is intelligence</div>
+    <h2>A simple test</h2>
+    <p class="lead">Can it still get things done when the environment changes?</p>
+    <p class="cite">After Shane Legg (DeepMind) — simplified for class</p>
+    <div class="intel" style="margin-top:12px">
+      <div class="intel-quote">
+        <p>Intelligence: still find a way <span style="color:var(--orange)">when the world shifts</span>.</p>
+        <span>Not “looks smart.” Not “follows one rule forever.”</span>
+      </div>
+      <div class="intel-pair">
+        <div class="case no">
+          <span class="lab">Rule only · sprinkler</span>
+          <b>Same schedule, rain or shine</b>
+          <p>Fires on the clock. Weather changed — behavior didn’t.</p>
+        </div>
+        <div class="case yes">
+          <span class="lab">Adapts · golden retriever</span>
+          <b>This door closed? Try another.</b>
+          <p>Goal stays; path changes. That gap is the start of “intelligent.”</p>
+        </div>
+      </div>
+    </div>
+    <div class="foot">
+      <span>Ask the room: who is “smarter,” and why?</span>
+      <span class="nav-hint">3 / 10</span>
+    </div>
+  </section>
+
+  <!-- 4 Five abilities (camp condensed) -->
+  <section class="slide" data-i="3" data-skin="agenda">
+    <div class="kicker">From camp · Five abilities</div>
+    <h2>Score anything with the same five</h2>
+    <p class="lead">A classification tool — you set the criteria. That is abstraction practice.</p>
+    <div class="abil">
+      <article>
+        <div class="n">01</div>
+        <h3>Perceive</h3>
+        <p>Notice what is happening around you.</p>
+        <div class="ex">Dog hears footsteps. Sprinkler does not “notice” rain.</div>
+      </article>
+      <article>
+        <div class="n">02</div>
+        <h3>Understand</h3>
+        <p>Hold a small world model: cause → effect.</p>
+        <div class="ex">Dog knows the frisbee went over the fence.</div>
+      </article>
+      <article>
+        <div class="n">03</div>
+        <h3>Plan</h3>
+        <p>When several paths exist, pick one that fits.</p>
+        <div class="ex">Delivery robot: wait, or go around?</div>
+      </article>
+      <article>
+        <div class="n">04</div>
+        <h3>Act</h3>
+        <p>Change the world — not only talk about it.</p>
+        <div class="ex">Chat AI can advise; it has no hands.</div>
+      </article>
+      <article class="key">
+        <div class="n">05 · Key</div>
+        <h3>Learn</h3>
+        <p>Fail once, change next time.</p>
+        <div class="ex">Dog vs porcupine. Sprinkler never updates.</div>
+      </article>
+    </div>
+    <div class="foot">
+      <span>Live drill: score phone / thermostat / classmate / LLM with the five</span>
+      <span class="nav-hint">4 / 10</span>
+    </div>
+  </section>
+
+  <!-- 5 Where AI sits -->
+  <section class="slide" data-i="4" data-skin="agenda">
+    <div class="kicker">Bridge · Camp verdict → literacy</div>
+    <h2>Where today’s LLM sits</h2>
+    <p class="lead">Strong at language pattern. Weak at body and lasting learning in the world. Do not worship it; do not dismiss it.</p>
+    <div class="score-row">
+      <div class="score-list">
+        <div class="score-item"><b>Perceive</b><div class="bar mid"><i style="width:55%"></i></div><span>text / image in</span></div>
+        <div class="score-item"><b>Understand</b><div class="bar mid"><i style="width:60%"></i></div><span>pattern, not truth</span></div>
+        <div class="score-item"><b>Plan</b><div class="bar mid"><i style="width:50%"></i></div><span>in words only</span></div>
+        <div class="score-item"><b>Act</b><div class="bar weak"><i style="width:28%"></i></div><span>needs tools / you</span></div>
+        <div class="score-item"><b>Learn</b><div class="bar weak"><i style="width:25%"></i></div><span>not from one mistake like a dog</span></div>
+      </div>
+      <div class="score-note">
+        <strong>Classroom line</strong>
+        Fluency ≠ intelligence. An LLM can fill all five boxes with words and still fail Learn and Act in the real world. That is why we keep human judgment in the loop (M2–M6).
+      </div>
+    </div>
+    <div class="foot">
+      <span>Camp used a 7-object scoreboard — same idea, one chart here</span>
+      <span class="nav-hint">5 / 10</span>
+    </div>
+  </section>
+
+  <!-- 6 Next token (camp + atlas) -->
+  <section class="slide" data-i="5" data-skin="atlas">
+    <div class="kicker">From camp · How AI writes</div>
+    <h2>One token at a time</h2>
+    <p class="lead">Every sentence is a stack of guesses. Sounds like thought. Mechanism: next-token prediction.</p>
     <div class="atlas-body">
       <div class="cutaway">
-        <svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <text x="16" y="28" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">Cross-section · one generation</text>
-          <rect x="16" y="48" width="120" height="72" rx="4" fill="#fffaf2" stroke="#1c1915" stroke-width="1.4"/>
-          <text x="76" y="78" text-anchor="middle" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#5c5348">Your text</text>
-          <text x="76" y="98" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" fill="#9a3412">“Why does…”</text>
-          <path d="M144 84 H188" stroke="#b45309" stroke-width="1.8"/>
-          <polygon points="188,80 198,84 188,88" fill="#b45309"/>
-          <g transform="translate(210,40)">
-            <rect x="0" y="0" width="140" height="36" fill="#fffaf2" stroke="#1c1915" stroke-width="1.3"/>
-            <text x="12" y="23" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">Read context</text>
-            <rect x="0" y="36" width="140" height="44" fill="#fff7ed" stroke="#b45309" stroke-width="1.6"/>
-            <text x="12" y="55" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">Predict next token</text>
-            <text x="12" y="72" font-family="IBM Plex Sans,sans-serif" font-size="10" fill="#8a6a45">sample by probability</text>
-            <rect x="0" y="80" width="140" height="36" fill="#ebe0d0" stroke="#1c1915" stroke-width="1.3"/>
-            <text x="12" y="103" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600" fill="#1c1915">Append &amp; repeat</text>
+        <svg viewBox="0 0 440 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <text x="16" y="24" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45" font-weight="600">Camp demo line → mechanism</text>
+          <text x="16" y="52" font-family="IBM Plex Sans,sans-serif" font-size="14" fill="#1c1915">I’m thirsty. I want a cup of</text>
+          <rect x="16" y="66" width="70" height="32" rx="4" fill="#fff7ed" stroke="#b45309"/>
+          <text x="51" y="87" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" fill="#9a3412">water?</text>
+          <text x="100" y="87" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">tea? juice? … ranked by probability</text>
+          <g transform="translate(16,120)">
+            <rect x="0" y="0" width="130" height="34" fill="#fffaf2" stroke="#1c1915"/>
+            <text x="10" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600">1 · Read context</text>
+            <rect x="140" y="0" width="150" height="34" fill="#fff7ed" stroke="#b45309"/>
+            <text x="150" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="700" fill="#9a3412">2 · Predict next token</text>
+            <rect x="300" y="0" width="110" height="34" fill="#ebe0d0" stroke="#1c1915"/>
+            <text x="310" y="22" font-family="IBM Plex Sans,sans-serif" font-size="12" font-weight="600">3 · Append</text>
           </g>
-          <path d="M358 98 H392" stroke="#b45309" stroke-width="1.8"/>
-          <polygon points="392,94 402,98 392,102" fill="#b45309"/>
-          <rect x="410" y="70" width="20" height="56" rx="3" fill="#fff7ed" stroke="#b45309" stroke-width="1.3"/>
-          <text x="20" y="160" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#6b6358">Loop: token₁ → token₂ → token₃ → … until stop</text>
-          <g font-family="IBM Plex Mono,monospace" font-size="12">
-            <rect x="20" y="180" width="56" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="48" y="198" text-anchor="middle" fill="#1c1915">Because</text>
-            <rect x="86" y="180" width="40" height="28" rx="3" fill="#fff7ed" stroke="#b45309"/>
-            <text x="106" y="198" text-anchor="middle" fill="#9a3412">it</text>
-            <rect x="136" y="180" width="56" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="164" y="198" text-anchor="middle" fill="#1c1915">follows</text>
-            <rect x="202" y="180" width="40" height="28" rx="3" fill="#fffaf2" stroke="#c4b49a"/>
-            <text x="222" y="198" text-anchor="middle" fill="#8a7f70">…</text>
-          </g>
-          <text x="20" y="240" font-family="IBM Plex Sans,sans-serif" font-size="11" fill="#8a6a45">Not “figure it out, then write.” Guess the next likeliest word as it goes.</text>
+          <text x="16" y="190" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#6b6358">Repeat until stop. Not “decide the whole answer first.”</text>
+          <text x="16" y="220" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#8a6a45">Camp also had: tokenize · embed · attend · sample — keep for a deep-dive if time.</text>
         </svg>
       </div>
       <div class="atlas-side">
-        <div class="layer"><b>What you see</b><span>Fluent text that sounds like a reply</span></div>
-        <div class="layer hot"><b>What the machine does</b><span>Given prior tokens, pick a likely next one</span></div>
-        <div class="layer"><b>So what</b><span>It can sound right and still be wrong (hallucination)</span></div>
-        <div class="layer"><b>Useful line</b><span>“On the surface… underneath it is…”</span></div>
+        <div class="layer"><b>What you see</b><span>A fluent reply</span></div>
+        <div class="layer hot"><b>What it does</b><span>Pick a likely next token, again and again</span></div>
+        <div class="layer"><b>So what</b><span>Can sound sure and still invent facts</span></div>
+        <div class="layer"><b>Line to keep</b><span>“Looks like an answer. Underneath: prediction.”</span></div>
       </div>
     </div>
     <div class="foot">
-      <span>AI Literacy · M1</span>
-      <span class="nav-hint">3 / 6</span>
+      <span>Optional lab: Transformer Explainer (camp Day 2 link)</span>
+      <span class="nav-hint">6 / 10</span>
     </div>
   </section>
 
-  <section class="slide" data-i="3" data-skin="agenda">
-    <div class="kicker">M1 · Terms</div>
+  <!-- 7 Prompt path (camp journey → style C) -->
+  <section class="slide" data-i="6" data-skin="path">
+    <div class="kicker">From camp · Physical journey of a prompt</div>
+    <h2>From tap to answer</h2>
+    <p class="lead">Same story as camp Day 2 — drawn as a path. Offline we peel these stops into hardware / system / network layers.</p>
+    <div class="path-board" aria-hidden="true">
+      <svg viewBox="0 0 1100 300" preserveAspectRatio="xMidYMid meet">
+        <path d="M80 200 C180 200 200 90 320 90 S480 200 560 200 S720 90 820 90 S980 200 1020 200"
+              fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/>
+        <path class="dash-flow" d="M80 200 C180 200 200 90 320 90 S480 200 560 200 S720 90 820 90 S980 200 1020 200"
+              fill="none" stroke="#38bdf8" stroke-width="2"/>
+        <g font-family="IBM Plex Sans,sans-serif" text-anchor="middle">
+          <g transform="translate(80,200)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Your phone</text>
+            <text y="56" font-size="11" fill="#64748b">app packs the ask</text>
+          </g>
+          <g transform="translate(320,90)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
+            <circle r="24" fill="none" stroke="#f97316" stroke-width="1.5"/>
+            <circle cx="20" cy="-20" r="9" fill="#f97316"/>
+            <text x="20" y="-16" font-size="10" font-weight="700" fill="#0c1220">1</text>
+            <text y="-32" font-size="13" fill="#e2e8f0" font-weight="600">Router / cell</text>
+            <text y="-16" font-size="11" fill="#64748b" opacity="0">.</text>
+            <text y="40" font-size="11" fill="#64748b">Wi‑Fi fail here often</text>
+          </g>
+          <g transform="translate(560,200)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
+            <circle r="24" fill="none" stroke="#f97316" stroke-width="1.5"/>
+            <circle cx="20" cy="-20" r="9" fill="#f97316"/>
+            <text x="20" y="-16" font-size="10" font-weight="700" fill="#0c1220">2</text>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Cloud / GPU farm</text>
+            <text y="56" font-size="11" fill="#64748b">model runs here</text>
+          </g>
+          <g transform="translate(820,90)">
+            <circle r="16" fill="#0c1220" stroke="#38bdf8" stroke-width="2.5"/><circle r="5" fill="#38bdf8"/>
+            <text y="-28" font-size="13" fill="#e2e8f0" font-weight="600">Tokens stream back</text>
+            <text y="-12" font-size="11" fill="#64748b">same path, reverse</text>
+          </g>
+          <g transform="translate(1020,200)">
+            <circle r="16" fill="#0c1220" stroke="#5eead4" stroke-width="2.5"/><circle r="5" fill="#5eead4"/>
+            <text y="40" font-size="13" fill="#e2e8f0" font-weight="600">Screen</text>
+            <text y="56" font-size="11" fill="#64748b">words appear</text>
+          </g>
+        </g>
+        <text x="80" y="285" font-family="IBM Plex Sans,sans-serif" font-size="12" fill="#fdba74">Offline: peel each stop — app · OS · radio · packet · remote compute</text>
+      </svg>
+    </div>
+    <div class="foot">
+      <span>Camp photo board / TERAFAB scale → keep as teacher props</span>
+      <span class="nav-hint">7 / 10</span>
+    </div>
+  </section>
+
+  <!-- 8 Four terms -->
+  <section class="slide" data-i="7" data-skin="agenda">
+    <div class="kicker">M1 · Concept map</div>
     <h2>Four names. Four jobs.</h2>
-    <p class="lead">Separate the roles before you use them. They are not four cooler synonyms.</p>
+    <p class="lead">Camp Day 3–4 go deep on Prompt and Agent. Here: just place them on the map.</p>
     <div class="concepts">
       <div class="concept">
         <div class="abbr">LLM</div>
         <h3>Large language model</h3>
-        <p>A trained engine that continues text: read context, emit the next token.</p>
-        <div class="why">Why it looks like this: scale + statistics to imitate language.</div>
+        <p>Trained next-token engine. The “brain” that continues text.</p>
+        <div class="why">Camp Day 2 = this mechanism.</div>
       </div>
       <div class="concept">
         <div class="abbr">Prompt</div>
         <h3>Prompt</h3>
-        <p>The context and rules you give it — it continues from your words.</p>
-        <div class="why">Why it matters: how you ask steers which “likely” path it follows.</div>
+        <p>What you put in context — goals, facts, rules.</p>
+        <div class="why">Deep dive in M2 (camp Day 3 habits).</div>
       </div>
       <div class="concept">
         <div class="abbr">Agent</div>
         <h3>Agent</h3>
-        <p>A setup with a goal, tools, and steps — not just one chat turn.</p>
-        <div class="why">Why design it: multi-step work needs memory, calls, and loops.</div>
+        <p>Goal + tools + loop — not one chat turn.</p>
+        <div class="why">Build one in M2 offline (camp Day 4).</div>
       </div>
       <div class="concept">
         <div class="abbr">Skills</div>
         <h3>Skills</h3>
-        <p>Reusable abilities (search, calc, draw, edit files…) attached to an assistant.</p>
-        <div class="why">Why split them: general text + special tools beat one black box.</div>
+        <p>Reusable abilities hung on an assistant.</p>
+        <div class="why">General chat + special tools.</div>
       </div>
     </div>
     <div class="foot">
       <span>AI Literacy · M1</span>
-      <span class="nav-hint">4 / 6</span>
+      <span class="nav-hint">8 / 10</span>
     </div>
   </section>
 
-  <section class="slide slide-lab" data-i="4" data-skin="lab">
+  <!-- 9 Same ask -->
+  <section class="slide slide-lab" data-i="8" data-skin="lab">
     <div class="lab-grid-bg" aria-hidden="true"></div>
     <div class="kicker">M1 · Same ask, two versions</div>
     <h2>Same intent. Two questions.</h2>
-    <p class="lead">Left is too broad. Right names the process. Compare which one you can actually check.</p>
+    <p class="lead">Warm-up for camp’s prompt habits — without teaching the full ladder yet.</p>
     <div class="lab-split">
       <div class="lab-col bad">
         <h3><span class="dot"></span>Vague</h3>
         <div class="lab-q">“How does AI work?”</div>
         <ul>
-          <li>Target too wide — almost any answer “fits”</li>
-          <li>No observable steps</li>
-          <li>Easy for the model to fill with stories</li>
+          <li>Target too wide</li>
+          <li>No steps to check</li>
+          <li>Easy to fill with stories</li>
         </ul>
       </div>
       <div class="lab-col good">
         <h3><span class="dot"></span>Precise</h3>
-        <div class="lab-q">“After I send a sentence, how does an LLM predict one token at a time and stitch them into a reply?”</div>
+        <div class="lab-q">“After I send a sentence, how does an LLM predict one token at a time and stitch a reply?”</div>
         <ul>
-          <li>Has a start, a process, an output</li>
-          <li>You can follow up and verify</li>
-          <li>You can spot which stretch is nonsense</li>
+          <li>Start · process · output</li>
+          <li>You can follow up</li>
+          <li>You can spot nonsense</li>
         </ul>
       </div>
     </div>
     <div class="foot">
       <span>Habit: name the process, then ask</span>
-      <span class="nav-hint">5 / 6</span>
+      <span class="nav-hint">9 / 10</span>
     </div>
   </section>
 
-  <section class="slide" data-i="5" data-skin="edit">
+  <!-- 10 Close -->
+  <section class="slide" data-i="9" data-skin="edit">
     <div class="kicker">M1 · Close</div>
-    <h2>Three lines to keep</h2>
+    <h2>Three lines · then offline</h2>
     <div class="take">
-      <p class="phrase">“It looks like an answer. Underneath, it is next-token prediction.”</p>
+      <p class="phrase">“Looks like an answer. Underneath: next-token prediction.”</p>
       <div class="grid">
         <div class="cell">
-          <div class="lab">Thinking</div>
-          <p>Abstract: set your own sorting rule; move from surface to mechanism</p>
+          <div class="lab">From camp</div>
+          <p>Intelligence = adapt when the world shifts. Score with five abilities.</p>
         </div>
         <div class="cell">
-          <div class="lab">AI</div>
-          <p>LLM / Prompt / Agent / Skills each own a layer — not four nicknames</p>
+          <div class="lab">Mechanism</div>
+          <p>Prompt leaves your phone, runs on remote GPUs, tokens stream back.</p>
         </div>
         <div class="cell">
-          <div class="lab">Offline</div>
-          <p>Peel PC and the internet into layers; follow how a packet moves</p>
+          <div class="lab">Offline · 2h</div>
+          <p>Peel PC / web / internet into layers. Draw the stack. Same path, deeper cut.</p>
         </div>
       </div>
     </div>
     <div class="foot">
-      <span>AI Literacy · M1</span>
+      <span>Next module M2 pulls camp Days 3–4: prompt · context · Agent</span>
       <span class="nav-hint">← → · F fullscreen</span>
     </div>
   </section>
