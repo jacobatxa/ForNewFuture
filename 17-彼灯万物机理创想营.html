@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>彼灯万物机理创想营 · 11.20–11.22 · 璧山百草湖乡</title>
+<meta name="description" content="彼灯万物机理创想营。11月20–22日，重庆璧山百草湖乡·所岸仰山。山野探索、国庆AI创想营课程、省级算力中心与前沿AI大厂。">
+<style>
+  :root{
+    --paper:#F3EEE3;
+    --paper-2:#EBE4D4;
+    --ink:#1B1914;
+    --ink-2:#5C564C;
+    --ink-3:#8A8274;
+    --gold:#C4A15A;
+    --gold-2:#A8843A;
+    --lake:#2F5D58;
+    --lake-soft:#D7E4DF;
+    --line:rgba(27,25,20,.10);
+    --line-2:rgba(196,161,90,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:#d8d0c0;
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .poster{
+    width:min(100%,420px);
+    margin:0 auto;
+    background:var(--paper);
+    overflow:hidden;
+  }
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  .kicker{
+    font-size:10px;
+    letter-spacing:.22em;
+    color:var(--gold-2);
+    text-transform:uppercase;
+    font-weight:600;
+  }
+  .sec{padding:28px 22px}
+  .sec h2{
+    font-family:"Songti SC","STSong","Noto Serif SC",serif;
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:.04em;
+    margin:8px 0 16px;
+  }
+  .sec h2 em{font-style:normal;color:var(--lake)}
+  .muted{color:var(--ink-2);font-size:13.5px;line-height:1.75}
+  .gold-line{width:28px;height:2px;background:var(--gold);margin:10px 0 14px}
+
+  /* hero */
+  .hero-photo{height:310px;overflow:hidden}
+  .hero-photo img{filter:saturate(1.06) contrast(1.04)}
+  .hero-copy{padding:22px 22px 8px}
+  .hero-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .hero-brand img{width:112px;height:auto;object-fit:contain}
+  .hero-brand span{font-size:10px;letter-spacing:.16em;color:var(--ink-3)}
+  .hero-copy .kicker{color:var(--gold-2)}
+  .hero-copy h1{
+    font-family:"Songti SC","STSong","Noto Serif SC",serif;
+    font-size:38px;
+    font-weight:700;
+    line-height:1.18;
+    letter-spacing:.06em;
+    margin:10px 0 8px;
+    color:var(--ink);
+  }
+  .hero-copy .lead{
+    font-size:14px;
+    color:var(--ink-2);
+    letter-spacing:.06em;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:14px 0 6px}
+  .chip{
+    font-size:11.5px;
+    color:var(--ink);
+    background:#fff;
+    border:1px solid var(--line);
+    padding:5px 9px;
+  }
+  .chip b{color:var(--gold-2);font-weight:700}
+
+  /* quote */
+  .quote{
+    background:var(--paper-2);
+    padding:18px 16px;
+    border-left:3px solid var(--gold);
+    font-size:15px;
+    line-height:1.8;
+    color:var(--ink-2);
+  }
+  .quote strong{color:var(--ink);font-weight:650}
+
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .gallery .big{grid-column:1/-1;aspect-ratio:16/10}
+  .gallery .tile{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .gallery .cap{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:18px 10px 8px;
+    background:linear-gradient(0deg,rgba(27,25,20,.72),transparent);
+    color:#fff;font-size:12px;font-weight:600;
+  }
+  .gallery .cap small{display:block;font-weight:400;opacity:.8;font-size:10px;margin-top:1px}
+
+  /* pillars */
+  .pillars{display:grid;gap:8px}
+  .pillar{
+    display:grid;grid-template-columns:56px 1fr;gap:12px;
+    padding:14px 12px;background:#fff;border:1px solid var(--line);
+  }
+  .pillar .n{
+    font-family:"Songti SC","STSong",serif;
+    font-size:28px;color:var(--gold);line-height:1;padding-top:2px;
+  }
+  .pillar h3{font-size:16px;margin-bottom:4px}
+  .pillar p{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+
+  /* modules */
+  .mods{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .mod{background:#fff;border:1px solid var(--line);padding:14px 12px}
+  .mod .no{font-size:10px;letter-spacing:.16em;color:var(--gold-2);font-weight:700}
+  .mod h3{font-size:16px;margin:4px 0 6px}
+  .mod p{font-size:12px;color:var(--ink-2);line-height:1.65}
+
+  /* days */
+  .days{display:grid;gap:0}
+  .day{
+    display:grid;grid-template-columns:64px 1fr;
+    gap:12px;padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .day:last-child{border-bottom:0}
+  .day .d{
+    font-family:"Songti SC","STSong",serif;
+    font-size:22px;color:var(--gold-2);line-height:1.15;
+  }
+  .day .d small{display:block;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;font-size:10px;color:var(--ink-3);letter-spacing:.08em;margin-top:3px}
+  .day h3{font-size:15.5px;margin-bottom:4px}
+  .day p{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+  .take{
+    margin-top:14px;padding:14px 14px;
+    background:var(--lake-soft);border:1px solid rgba(47,93,88,.16);
+    font-size:13px;line-height:1.8;color:var(--lake);
+  }
+
+  /* enterprise */
+  .ent-photo{aspect-ratio:16/9;overflow:hidden;margin:0 0 12px}
+  .ent-list{display:grid;gap:8px}
+  .ent{
+    background:#fff;border:1px solid var(--line);padding:13px 12px;
+  }
+  .ent b{display:block;font-size:14.5px;margin-bottom:4px}
+  .ent p{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+
+  /* price */
+  .price-box{
+    text-align:center;
+    background:#fff;
+    border:1px solid var(--line-2);
+    padding:22px 16px 18px;
+  }
+  .price-box .tag{font-size:11px;letter-spacing:.16em;color:var(--gold-2)}
+  .price-box .num{
+    font-family:"Songti SC","STSong",serif;
+    font-size:64px;line-height:.95;color:var(--gold-2);margin:8px 0 4px;
+  }
+  .price-box .num small{font-size:18px;margin-left:2px}
+  .price-box .note{font-size:12.5px;color:var(--ink-2)}
+  .inc{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+  .inc span{
+    font-size:12px;color:var(--ink-2);
+    background:var(--paper-2);padding:8px 10px;
+    border-left:2px solid var(--gold);
+  }
+
+  /* why */
+  .why{display:grid;gap:10px}
+  .why-item{display:grid;grid-template-columns:36px 1fr;gap:10px}
+  .why-item .n{font-family:"Songti SC","STSong",serif;font-size:26px;color:var(--gold);line-height:1}
+  .why-item h3{font-size:15px;margin-bottom:3px}
+  .why-item p{font-size:12.5px;color:var(--ink-2);line-height:1.7}
+
+  /* cta */
+  .cta{position:relative;min-height:280px;padding:48px 22px 36px;text-align:center;color:#fff}
+  .cta-bg{position:absolute;inset:0}
+  .cta-bg img{filter:brightness(.55) saturate(1.05)}
+  .cta-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,25,20,.15),rgba(27,25,20,.55))}
+  .cta > *:not(.cta-bg):not(.cta-veil){position:relative;z-index:2}
+  .cta h2{font-family:"Songti SC","STSong",serif;font-size:34px;line-height:1.2;letter-spacing:.08em;margin:8px 0 10px}
+  .cta p{font-size:13px;color:rgba(255,255,255,.86)}
+  .cta .btn{
+    display:inline-block;margin-top:16px;
+    background:var(--gold);color:#1b1914;
+    font-size:14px;font-weight:700;letter-spacing:.16em;
+    padding:11px 28px;text-decoration:none;
+  }
+
+  footer{
+    padding:22px 22px 28px;text-align:center;
+    color:var(--ink-3);font-size:11px;line-height:1.8;
+    border-top:1px solid var(--line);
+  }
+  footer img{width:92px;height:auto;margin:0 auto 8px;object-fit:contain}
+</style>
+</head>
+<body>
+<article class="poster">
+
+  <header class="hero">
+    <div class="hero-photo"><img src="assets/baicao/banana-wide.jpg" alt="百草湖乡 BANANA 湖畔木屋"></div>
+    <div class="hero-copy">
+      <div class="hero-brand">
+        <img src="assets/bilden-logo.png" alt="Bilden Edu 彼灯教育">
+        <span>BISHAN · BAICAO</span>
+      </div>
+      <div class="kicker">Bilden Edu · Nature × Intelligence</div>
+      <h1>彼灯<br>万物机理<br>创想营</h1>
+      <p class="lead">从湖山看见智慧，到机房看见智能</p>
+      <div class="chips">
+        <div class="chip"><b>11.20</b>–<b>11.22</b></div>
+        <div class="chip"><b>3</b> 天 2 晚</div>
+        <div class="chip"><b>10–15</b> 岁</div>
+        <div class="chip">璧山 · 百草湖乡</div>
+        <div class="chip">所岸仰山</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="sec">
+    <div class="kicker">核心理念</div>
+    <h2>用 AI 向<em>自然</em>提问</h2>
+    <div class="gold-line"></div>
+    <div class="quote">
+      三天里，孩子先在竹马初年的湖山里找一样<strong>「聪明」的东西</strong>，再用国庆创想营的四步把智能拆开——辨智能、探黑盒、会提问、造 Agent。最后走进<strong>省级算力中心</strong>和<strong>前沿 AI 大厂</strong>，看见一句话是怎么变成算力的。
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:4px">
+    <div class="kicker">营地现场</div>
+    <h2>百草湖乡的<em>山野教室</em></h2>
+    <div class="gallery">
+      <div class="tile big">
+        <img src="assets/baicao/hotel.jpg" alt="所岸仰山酒店">
+        <div class="cap">所岸仰山<small>住在湖边，教室就在门外</small></div>
+      </div>
+      <div class="tile">
+        <img src="assets/baicao/water.jpg" alt="百草湖桨板">
+        <div class="cap">百草湖<small>桨板与环湖</small></div>
+      </div>
+      <div class="tile">
+        <img src="assets/baicao/gate.jpg" alt="小百草研学">
+        <div class="cap">小百草<small>竹马初年研学区</small></div>
+      </div>
+      <div class="tile">
+        <img src="assets/baicao/scene-02.jpg" alt="BANANA 草木饮品">
+        <div class="cap">BANANA<small>湖畔木屋</small></div>
+      </div>
+      <div class="tile">
+        <img src="assets/baicao/restaurant.jpg" alt="鲜汽餐厅">
+        <div class="cap">鲜汽 · 餐厅<small>吃在园区里</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">三条并行线</div>
+    <h2>山野 · 创想 · <em>企业</em></h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="n">01</div>
+        <div>
+          <h3>山野探索</h3>
+          <p>环湖、桨板、草坪、小百草。带着一个任务进场：找一样「聪明」的东西，回来讲给大家听。教室从湖边开始。</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="n">02</div>
+        <div>
+          <h3>AI 创想</h3>
+          <p>沿用国庆营原班课：辨智能、探黑盒、会提问、造 Agent。不教编程，不制造焦虑。孩子带走的是判断，不是话术。</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="n">03</div>
+        <div>
+          <h3>企业学习</h3>
+          <p>走进省级算力中心，再进前沿 AI 大厂。课上拆开的「一句话去了哪里」，在机房和产线里变成能看见的东西。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">国庆创想营原班课</div>
+    <h2>四步，把好奇<em>做成能力</em></h2>
+    <div class="mods">
+      <div class="mod">
+        <div class="no">01 · SEE</div>
+        <h3>辨智能</h3>
+        <p>从湖山和日常里认出什么算智能。先判断，再碰工具。</p>
+      </div>
+      <div class="mod">
+        <div class="no">02 · OPEN</div>
+        <h3>探黑盒</h3>
+        <p>你发给 AI 的话都去了哪里。下一词、算力、机房，连成一条路。</p>
+      </div>
+      <div class="mod">
+        <div class="no">03 · ASK</div>
+        <h3>会提问</h3>
+        <p>把任务说清楚，把情况讲明白。Prompt 不是咒语，是把事说清楚。</p>
+      </div>
+      <div class="mod">
+        <div class="no">04 · BUILD</div>
+        <h3>造 Agent</h3>
+        <p>自己搭一个立了规矩的智能体。目标自己定，对错自己核。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">三日行程</div>
+    <h2>11.20 — 11.22</h2>
+    <div class="days">
+      <div class="day">
+        <div class="d">20<small>周五 · 到营</small></div>
+        <div>
+          <h3>山野探索 · 辨智能</h3>
+          <p>入住所岸仰山。下午进湖、进竹、进小百草，找一样「聪明」的东西。晚上辨智能：同一双眼睛，从自然看到机器。</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="d">21<small>周六 · 主课</small></div>
+        <div>
+          <h3>探黑盒 · 会提问 · 造 Agent</h3>
+          <p>把一句话拆到算力。学会提问，再当场搭一个能干活的小 Agent。这一天把国庆营的后三章走完。</p>
+        </div>
+      </div>
+      <div class="day">
+        <div class="d">22<small>周日 · 出营</small></div>
+        <div>
+          <h3>省级算力中心 · 前沿 AI 大厂</h3>
+          <p>走出营地，看见智能真正跑在哪。机房、产线、团队。回来把作品讲清楚，结营回家。</p>
+        </div>
+      </div>
+    </div>
+    <div class="take">三天后带走：看见智慧的眼睛 · 会提问的方法 · 自己搭的 Agent · 一次算力与大厂的现场</div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">企业学习</div>
+    <h2>去看 AI <em>真正跑的地方</em></h2>
+    <div class="ent-photo"><img src="assets/baicao/compute-02.png" alt="重庆人工智能创新中心"></div>
+    <div class="ent-list">
+      <div class="ent">
+        <b>省级算力中心</b>
+        <p>东数西算成渝枢纽上的公共算力平台。孩子会看见：聊天框背后，是机柜、调度、电和冷却。探黑盒那一课，在这里落地。</p>
+      </div>
+      <div class="ent">
+        <b>前沿 AI 大厂</b>
+        <p>不是橱窗讲解。看真实团队怎么用模型做事：谁提需求、谁核结果、机器停在哪。判断力比参数量更重要。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">费用</div>
+    <h2>透明<em>定价</em></h2>
+    <div class="price-box">
+      <div class="tag">3 天 2 晚 · 全包</div>
+      <div class="num">2980<small>元</small></div>
+      <div class="note">每人 · 含课程、住宿、餐饮、保险</div>
+      <div class="inc">
+        <span>全程课程与导师</span>
+        <span>2 晚所岸仰山</span>
+        <span>营期餐饮</span>
+        <span>营期意外保险</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">为什么是这一期</div>
+    <h2>三件<em>别处没有</em>的事</h2>
+    <div class="why">
+      <div class="why-item">
+        <div class="n">01</div>
+        <div>
+          <h3>国庆创想营原班课</h3>
+          <p>辨智能、探黑盒、会提问、造 Agent，不是体验摊位。同一套教材，换到湖山里再走一遍。</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="n">02</div>
+        <div>
+          <h3>住所岸仰山，学在竹马初年</h3>
+          <p>湖、竹、木屋、研学区都在园区里。白天探索，晚上回湖景酒店。不是把教室搬到农家乐。</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="n">03</div>
+        <div>
+          <h3>算力中心 + 大厂，同一条链</h3>
+          <p>先在营地里拆开黑盒，再去机房和大厂核一遍。孩子带走的不是参数表，是「智能从哪来、技术为什么有价值」。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="cta-bg"><img src="assets/baicao/terrace.jpg" alt="百草湖日落"></div>
+    <div class="cta-veil"></div>
+    <div class="kicker" style="color:#f3e2b4">11.20 — 11.22 · 仅此一期</div>
+    <h2>11 月，<br>百草湖见</h2>
+    <p>璧山青杠 · 百草湖乡 · 所岸仰山<br>10–15 岁 · 3 天 2 晚</p>
+    <a class="btn" href="#">咨询报名</a>
+  </section>
+
+  <footer>
+    <img src="assets/bilden-logo.png" alt="Bilden Edu">
+    彼灯教育 · Bilden Edu<br>
+    彼灯万物机理创想营 · 2026.11.20–11.22<br>
+    重庆璧山 · 百草湖乡 · 所岸仰山 · 竹马初年<br>
+    咨询请联系招生老师，或关注「彼灯成长」
+  </footer>
+</article>
+</body>
+</html>
