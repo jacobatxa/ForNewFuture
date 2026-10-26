@@ -1,6 +1,8 @@
 # 彼灯教育 · 课程归档
 
-三门课按子项目分开放。本地 `git pull` 之后打开对应文件夹即可。GitHub Pages：https://jacobatxa.github.io/ForNewFuture/
+老师入口：https://jacobatxa.github.io/ForNewFuture/
+
+三门课按子项目分开放。本地 `git pull` 之后打开对应文件夹即可。
 
 | 文件夹 | 是什么 |
 |---|---|
