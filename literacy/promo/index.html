@@ -2,42 +2,322 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>AI 通识进阶 · 宣传</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI 通识进阶 · 彼灯教育</title>
+<meta name="description" content="彼灯 AI 通识进阶。不是工具班，不是编程课。10–15 岁，18 小时，学会用 AI、看懂机理、带着思维工具回家。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#0A0A0A;--surface:#111;--ink:#FAFAFA;--muted:#8A8A8A;--faint:#525252;--line:rgba(255,255,255,.08)}
+  :root{
+    --bg:#0A0A0A;
+    --paper:#111111;
+    --ink:#FAFAFA;
+    --muted:#9A9A9A;
+    --faint:#5C5C5C;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.16);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:"Geist","PingFang SC","Noto Sans SC",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;padding:40px 24px 80px}
-  a{color:var(--muted);text-decoration:none} a:hover{color:var(--ink)}
-  .wrap{max-width:640px;margin:0 auto}
-  .back{font-size:13px;margin-bottom:28px;display:inline-block}
-  .mono{font-family:"Geist Mono",Menlo,monospace;font-size:12px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
-  h1{font-size:32px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
-  .lead{color:var(--muted);font-size:15px;margin-bottom:28px}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:12px}
-  .card h2{font-size:16px;margin-bottom:6px}
-  .card p{font-size:14px;color:var(--muted)}
-  .card a{color:#FAFAFA;font-weight:600;border-bottom:1px solid rgba(255,255,255,.2)}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:#050505;
+    color:var(--ink);
+    font-family:"Geist","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+  }
+  .poster{
+    width:min(100%,420px);
+    margin:0 auto;
+    background:var(--bg);
+    overflow:hidden;
+  }
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  .mono{
+    font-family:"Geist Mono","SF Mono",Menlo,monospace;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  /* hero */
+  .hero{position:relative}
+  .hero-photo{
+    height:280px;overflow:hidden;position:relative;
+  }
+  .hero-photo img{filter:saturate(.85) contrast(1.05) brightness(.72)}
+  .hero-photo::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,10,10,.15) 0%,rgba(10,10,10,.55) 48%,var(--bg) 100%);
+  }
+  .hero-top{
+    position:absolute;left:0;right:0;top:0;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 20px;
+  }
+  .hero-top img{width:72px;height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.92}
+  .hero-top span{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.14em}
+  .hero-copy{
+    position:relative;z-index:2;
+    margin-top:-72px;padding:0 22px 8px;
+  }
+  .kicker{
+    font-size:11px;font-weight:500;color:var(--muted);
+    margin-bottom:12px;
+  }
+  h1{
+    font-size:40px;font-weight:600;letter-spacing:-.04em;
+    line-height:1.08;margin-bottom:14px;
+  }
+  .lead{
+    font-size:15px;color:var(--muted);line-height:1.65;
+    max-width:18em;
+  }
+  .chips{
+    display:flex;flex-wrap:wrap;gap:6px;
+    padding:18px 22px 8px;
+  }
+  .chip{
+    font-size:11px;color:var(--muted);
+    border:1px solid var(--line);padding:5px 9px;border-radius:999px;
+  }
+  .chip b{color:var(--ink);font-weight:600}
+
+  .sec{padding:28px 22px 6px}
+  .sec-label{
+    font-size:11px;font-weight:500;color:var(--faint);
+    margin-bottom:12px;
+  }
+  .sec h2{
+    font-size:24px;font-weight:600;letter-spacing:-.03em;
+    line-height:1.25;margin-bottom:14px;
+  }
+  .sec h2 em{font-style:normal;color:var(--ink)}
+  .sec p{
+    font-size:14px;color:var(--muted);line-height:1.7;
+  }
+  .sec p strong{color:var(--ink);font-weight:600}
+
+  /* contrast: not vs yes */
+  .vs{
+    display:grid;gap:8px;margin-top:6px;
+  }
+  .vs-card{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+    background:var(--paper);
+  }
+  .vs-card .tag{
+    font-size:11px;font-weight:600;margin-bottom:6px;
+  }
+  .vs-card.no .tag{color:#C07070}
+  .vs-card.yes .tag{color:#8FBF9A}
+  .vs-card h3{
+    font-size:15px;font-weight:600;letter-spacing:-.01em;
+    margin-bottom:4px;
+  }
+  .vs-card p{font-size:13px;color:var(--muted);line-height:1.55}
+
+  /* three pillars */
+  .pillars{display:grid;gap:8px;margin-top:4px}
+  .pillar{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    background:var(--paper);
+  }
+  .pillar .n{
+    font-size:11px;color:var(--faint);margin-bottom:8px;
+  }
+  .pillar h3{
+    font-size:17px;font-weight:600;letter-spacing:-.02em;
+    margin-bottom:6px;
+  }
+  .pillar p{font-size:13px;color:var(--muted);line-height:1.6}
+
+  /* modules */
+  .mods{display:grid;gap:0;margin-top:8px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .mod{
+    display:grid;grid-template-columns:52px 1fr;
+    gap:10px;align-items:start;
+    padding:13px 14px;
+    border-top:1px solid var(--line);
+    background:var(--paper);
+  }
+  .mod:first-child{border-top:0}
+  .mod .id{
+    font-size:12px;font-weight:600;color:var(--faint);padding-top:2px;
+  }
+  .mod b{display:block;font-size:14px;font-weight:600;margin-bottom:2px}
+  .mod span{font-size:12px;color:var(--muted);line-height:1.5}
+
+  .end-card{
+    margin:18px 22px 8px;
+    border:1px solid var(--line-2);
+    border-radius:16px;
+    padding:18px 16px;
+    background:linear-gradient(180deg,#161616 0%,#111 100%);
+  }
+  .end-card h3{
+    font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px;
+  }
+  .end-card p{font-size:13px;color:var(--muted);line-height:1.65}
+  .end-card strong{color:var(--ink);font-weight:600}
+
+  .meta-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+    margin:8px 22px 0;
+  }
+  .meta{
+    border:1px solid var(--line);border-radius:12px;
+    padding:12px 14px;background:var(--paper);
+  }
+  .meta b{display:block;font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:2px}
+  .meta span{font-size:12px;color:var(--muted)}
+
+  .cta{
+    margin:28px 22px 10px;
+    text-align:center;
+  }
+  .cta h2{
+    font-size:26px;font-weight:600;letter-spacing:-.03em;
+    line-height:1.2;margin-bottom:10px;
+  }
+  .cta p{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .cta .btn{
+    display:inline-block;
+    background:var(--ink);color:#0A0A0A;
+    font-size:14px;font-weight:600;
+    padding:12px 28px;border-radius:999px;
+  }
+  .cta .sub{
+    margin-top:14px;font-size:11px;color:var(--faint);
+  }
+
+  .foot{
+    padding:18px 22px 28px;
+    border-top:1px solid var(--line);
+    margin-top:18px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+  }
+  .foot img{width:64px;height:auto;filter:brightness(0) invert(1);opacity:.7}
+  .foot p{font-size:10px;color:var(--faint);line-height:1.6;text-align:right}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="back" href="../../">← AI 课程库</a>
-  <p class="mono">Literacy · promo</p>
-  <h1>AI 通识进阶 · 宣传</h1>
-  <p class="lead">对外单页还没定稿。先把给家长看的结构和大纲放在这里，做好长图后替换本页。</p>
-  <div class="card">
-    <h2>一句话</h2>
-    <p>周末 18 小时，六个模块：会用 AI、懂机理、手里有思维工具。终局是一道开放题报告，当面讲清楚。</p>
+<div class="poster">
+
+  <div class="hero">
+    <div class="hero-photo">
+      <img src="assets/hero-layers.jpg" alt="机器分层示意">
+    </div>
+    <div class="hero-top">
+      <img src="assets/bilden-logo.png" alt="彼灯教育">
+      <span class="mono">Bilden Edu</span>
+    </div>
+    <div class="hero-copy">
+      <p class="kicker mono">AI Literacy · Weekend</p>
+      <h1>AI 通识进阶</h1>
+      <p class="lead">不是学又一个软件。是让孩子学会用 AI，也看得懂它底下怎么转。</p>
+    </div>
   </div>
-  <div class="card">
-    <h2>现在可发</h2>
-    <p><a href="../course/11-ai-weekend-syllabus.html">课程大纲</a>　·　<a href="../course/13-six-module-architecture.html">六模块对照表</a></p>
+
+  <div class="chips">
+    <span class="chip"><b>10–15</b> 岁</span>
+    <span class="chip"><b>18</b> 小时</span>
+    <span class="chip"><b>6</b> 个模块</span>
+    <span class="chip">周末课</span>
   </div>
+
+  <section class="sec">
+    <p class="sec-label mono">Why not another AI class</p>
+    <h2>先说清楚：<em>我们不教什么</em></h2>
+    <div class="vs">
+      <div class="vs-card no">
+        <div class="tag">不是工具培训</div>
+        <h3>不堆软件名</h3>
+        <p>市面上很多课在教「这个 App 怎么点」。软件半年一换，孩子只会跟着点，换一个就不会了。</p>
+      </div>
+      <div class="vs-card no">
+        <div class="tag">不是传统编程班</div>
+        <h3>不制造程序员焦虑</h3>
+        <p>不考试、不组队比赛、不逼孩子成为程序员。写代码不是这门课的目标。</p>
+      </div>
+      <div class="vs-card yes">
+        <div class="tag">我们做的是通识</div>
+        <h3>会用 · 懂机理 · 有思维工具</h3>
+        <p>孩子要能把任务说清楚，看得出 AI 哪里不能信；要能讲清手机和网络底下怎么转；手里要有抽象、逻辑这些切问题的方法。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="sec-label mono">Three things</p>
+    <h2>下课要带走的，就这三样</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="n mono">01</div>
+        <h3>AI 工具要会用</h3>
+        <p>能把任务、约束、标准说清楚；知道模型会一本正经地错，会核对、会改、会删。</p>
+      </div>
+      <div class="pillar">
+        <div class="n mono">02</div>
+        <h3>万物机理要懂</h3>
+        <p>表面上看到的，底下靠什么运转。电脑分层、发送路径、下一词预测——讲得出来，才不是黑箱。</p>
+      </div>
+      <div class="pillar">
+        <div class="n mono">03</div>
+        <h3>思维工具在手里</h3>
+        <p>抽象用来定标准；逻辑把「因为所以」说严；后面还有选题、研究、成文、讲述——方法要能带走。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <p class="sec-label mono">How it runs</p>
+    <h2>六个模块，做成一件事</h2>
+    <p>前两周练思维和会用；后面四周，每人选一道没有标准答案的开放题，用 AI 查、自己判断、写成报告，当面讲给同学听。</p>
+    <div class="mods">
+      <div class="mod"><div class="id mono">M1</div><div><b>抽象</b><span>分类、概念地图、拆开手机和网络</span></div></div>
+      <div class="mod"><div class="id mono">M2</div><div><b>逻辑</b><span>把话说清楚，给 AI 立规矩</span></div></div>
+      <div class="mod"><div class="id mono">M3</div><div><b>选题</b><span>历史 / 数学 / 科学 / 艺术 / 逻辑里选一道题</span></div></div>
+      <div class="mod"><div class="id mono">M4</div><div><b>研究</b><span>模型起草，人来判断；至少否掉一处 AI 说法</span></div></div>
+      <div class="mod"><div class="id mono">M5</div><div><b>成文</b><span>短报告 + AI 使用声明</span></div></div>
+      <div class="mod"><div class="id mono">M6</div><div><b>讲述</b><span>当面讲清楚，没有名次</span></div></div>
+    </div>
+  </section>
+
+  <div class="end-card">
+    <h3>终局不是证书，是一份说得清的判断</h3>
+    <p>孩子要能讲：这道题我站哪边，证据从哪来，AI 帮我写了什么、我删了什么。<strong>流畅不是正确。责任在人。</strong></p>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta"><b>18h</b><span>线上 6 + 线下 12</span></div>
+    <div class="meta"><b>6</b><span>模块 · 一条线</span></div>
+    <div class="meta"><b>10–15</b><span>岁 · 难度按班调</span></div>
+    <div class="meta"><b>~4</b><span>个月 · 周末推进</span></div>
+  </div>
+
+  <section class="sec">
+    <p class="sec-label mono">For parents new to Bilden</p>
+    <h2>第一次认识彼灯，可以这样理解</h2>
+    <p>我们相信：AI 越会写流畅的话，孩子越需要自己核对、自己判断。实验做不通、证据对不上、同学听不懂——这些卡住的地方，才练得出本事。通识课练的是判断，不是跟风学软件。</p>
+  </section>
+
+  <div class="cta">
+    <h2>给孩子一套<br>用得久的方法</h2>
+    <p>咨询招生老师，了解开班与名额</p>
+    <a class="btn" href="#">咨询报名</a>
+    <p class="sub">彼灯教育 · AI 通识进阶</p>
+  </div>
+
+  <footer class="foot">
+    <img src="assets/bilden-logo.png" alt="彼灯">
+    <p>Bilden Edu<br>AI Literacy Weekend</p>
+  </footer>
+
 </div>
 </body>
 </html>
