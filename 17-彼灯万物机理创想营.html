@@ -122,6 +122,8 @@
 
   .gallery{display:grid;grid-template-columns:1fr 1fr;gap:5px}
   .gallery .tile{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:8px}
+  .gallery .tile.wide{grid-column:1/-1;aspect-ratio:3/2}
+  .gallery .tile.wide img{object-position:12% 42%}
   .gallery .cap{
     position:absolute;left:0;right:0;bottom:0;
     padding:14px 8px 6px;
@@ -288,6 +290,10 @@
           <img src="assets/baicao/scene-02.jpg" alt="BANANA 草木饮品">
           <div class="cap">田野笔记<small>BANANA 木屋整理证据</small></div>
         </div>
+        <div class="tile wide">
+          <img src="assets/baicao/scene-01.jpg" alt="百草湖草坪与蹦蹦云">
+          <div class="cap">氧气氛野<small>蹦蹦云 · 绿茵课堂</small></div>
+        </div>
       </div>
     </div>
   </section>
@@ -413,11 +419,11 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/compute-02.png')"></div>
+    <div class="sec-blur" style="background-image:url('assets/baicao/server-aisle.jpg')"></div>
     <div class="glass">
       <div class="kicker">企业学习 · 两次 · 最后一天回城路演</div>
       <h2>进会议室，不只<em>进展厅</em></h2>
-      <div class="ent-photo"><img src="assets/baicao/compute-02.png" alt="重庆人工智能创新中心"></div>
+      <div class="ent-photo"><img src="assets/baicao/server-aisle.jpg" alt="算力中心机房"></div>
       <div class="ent-list">
         <div class="ent">
           <b>① 周五 · 省级算力中心</b>
@@ -454,27 +460,27 @@
     <div class="sec-blur" style="background-image:url('assets/baicao/scene-02.jpg')"></div>
     <div class="glass">
       <div class="kicker">为什么是这一期</div>
-      <h2>三件<em>别处没有</em>的事</h2>
+      <h2>技能做成<em>价值</em></h2>
       <div class="why">
         <div class="why-item">
           <div class="n">01</div>
           <div>
-            <h3>国庆创想营原班课</h3>
-            <p>每课 2–4 小时，放在下午或晚上。辨智能、探黑盒、会提问、造 Agent，不是体验摊位。</p>
+            <h3>拒绝枯燥、变形的编程课</h3>
+            <p>不堆工具，不把 AI 做成另一门奥数。拆开背后的逻辑，带走的是真技能。</p>
           </div>
         </div>
         <div class="why-item">
           <div class="n">02</div>
           <div>
-            <h3>住所岸仰山，学在竹马初年</h3>
-            <p>湖、竹、木屋、研学区都在园区里。白天探索，晚上回湖景酒店。不是把教室搬到农家乐。</p>
+            <h3>从观察自然，到定义真问题</h3>
+            <p>湖山里看见智慧，再学会把问题说清楚。技能对上真实世界，才变成价值。</p>
           </div>
         </div>
         <div class="why-item">
           <div class="n">03</div>
           <div>
-            <h3>两次企业 · 最后一天回城路演</h3>
-            <p>周五算力中心。周一离营回重庆市区，半天路演：工程师和管理层当评委，不是自己人互相鼓掌。</p>
+            <h3>从动手到路演，让价值被看见</h3>
+            <p>搭出 Agent，回城对着工程师和管理层讲。练逻辑、练表达，让更多人看见。</p>
           </div>
         </div>
       </div>
