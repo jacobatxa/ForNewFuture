@@ -18,142 +18,120 @@
     --faint:#525252;
     --line:rgba(255,255,255,.08);
     --line-strong:rgba(255,255,255,.14);
-    --accent:#FAFAFA;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{color-scheme:dark}
   body{
-    background:var(--bg);
-    color:var(--ink);
+    background:var(--bg);color:var(--ink);
     font-family:"Geist","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
+    line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
   }
   a{color:inherit;text-decoration:none}
   .mono{font-family:"Geist Mono","SF Mono","Menlo",monospace}
 
-  /* top bar — OpenAI / Anthropic sparse chrome */
   .top{
     position:sticky;top:0;z-index:20;
     display:flex;align-items:center;justify-content:space-between;
-    padding:16px 28px;
-    border-bottom:1px solid var(--line);
+    padding:16px 28px;border-bottom:1px solid var(--line);
     background:rgba(10,10,10,.82);
     backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   }
-  .logo{
-    font-size:15px;font-weight:600;letter-spacing:-.02em;
-  }
+  .logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
   .logo span{color:var(--muted);font-weight:500;margin-left:8px}
-  .top-meta{
-    font-size:12px;color:var(--muted);letter-spacing:.02em;
-  }
+  .top-meta{font-size:12px;color:var(--muted)}
 
   .shell{max-width:920px;margin:0 auto;padding:56px 28px 96px}
-
-  /* hero — type as identity */
-  .hero{margin-bottom:56px}
+  .hero{margin-bottom:48px}
   .eyebrow{
     font-size:12px;font-weight:500;color:var(--muted);
-    letter-spacing:.08em;text-transform:uppercase;
-    margin-bottom:18px;
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;
   }
   h1{
     font-size:clamp(36px,6vw,56px);
-    font-weight:600;letter-spacing:-.04em;
-    line-height:1.05;
+    font-weight:600;letter-spacing:-.04em;line-height:1.05;
   }
 
   .label{
     font-size:12px;font-weight:500;color:var(--faint);
-    letter-spacing:.08em;text-transform:uppercase;
-    margin:0 0 12px;
+    letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px;
   }
 
-  /* product list — Linear / Vercel docs feel */
   .list{
-    border:1px solid var(--line);
-    border-radius:16px;
-    overflow:hidden;
-    background:var(--surface);
+    border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;background:var(--surface);
   }
-  .row{
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:20px;
-    align-items:center;
-    padding:22px 24px;
+  .course{
+    padding:26px 24px;
     border-top:1px solid var(--line);
-    transition:background .15s ease;
   }
-  .row:first-child{border-top:0}
-  .row:hover{background:var(--surface-2)}
-  .row-main{min-width:0}
-  .row-title{
-    font-size:18px;font-weight:600;letter-spacing:-.02em;
-    margin-bottom:6px;
+  .course:first-child{border-top:0}
+  .course:hover{background:var(--surface-2)}
+  .course-head{margin-bottom:18px}
+  .course-title{
+    font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px;
   }
-  .row-desc{
-    font-size:14px;color:var(--muted);
-    margin-bottom:10px;max-width:42em;
-  }
-  .tags{
-    display:flex;flex-wrap:wrap;gap:6px;
-  }
+  .course-desc{font-size:14px;color:var(--muted);max-width:44em;margin-bottom:10px}
+  .tags{display:flex;flex-wrap:wrap;gap:6px}
   .tag{
     font-size:11px;font-weight:500;color:var(--muted);
-    border:1px solid var(--line);
-    padding:3px 8px;border-radius:999px;
-    letter-spacing:.01em;
+    border:1px solid var(--line);padding:3px 8px;border-radius:999px;
   }
   .tag.on{
-    color:var(--ink);
-    border-color:var(--line-strong);
+    color:var(--ink);border-color:var(--line-strong);
     background:rgba(255,255,255,.04);
   }
 
-  .row-actions{
-    display:flex;flex-direction:column;align-items:flex-end;gap:8px;
-    flex:none;
+  .actions{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
   }
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;
-    height:36px;padding:0 14px;
-    border-radius:999px;
-    font-size:13px;font-weight:600;letter-spacing:-.01em;
-    white-space:nowrap;
-    transition:background .15s ease, color .15s ease, border-color .15s ease;
-  }
-  .btn.primary{
-    background:var(--ink);color:#0A0A0A;
-  }
-  .btn.primary:hover{background:#E4E4E4}
-  .btn.ghost{
-    color:var(--muted);
+  a.slot{
+    display:flex;flex-direction:column;gap:4px;
+    padding:14px 16px;border-radius:12px;
     border:1px solid var(--line);
+    background:rgba(255,255,255,.02);
+    transition:border-color .15s, background .15s;
+    min-height:78px;
   }
-  .btn.ghost:hover{
-    color:var(--ink);
+  a.slot:hover{
     border-color:var(--line-strong);
-    background:rgba(255,255,255,.03);
+    background:rgba(255,255,255,.05);
   }
-  .links{
-    display:flex;flex-wrap:wrap;gap:4px 14px;
-    justify-content:flex-end;
+  a.slot.primary{
+    background:var(--ink);border-color:var(--ink);color:#0A0A0A;
   }
-  .links a{
-    font-size:12px;color:var(--faint);font-weight:500;
+  a.slot.primary:hover{background:#E8E8E8;border-color:#E8E8E8}
+  a.slot .kind{
+    font-size:11px;font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;opacity:.65;
   }
-  .links a:hover{color:var(--muted)}
+  a.slot.primary .kind{color:rgba(10,10,10,.55)}
+  a.slot .name{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  a.slot .note{font-size:12px;color:var(--faint);margin-top:2px}
+  a.slot.primary .note{color:rgba(10,10,10,.5)}
 
   .section{margin-top:48px}
-  .section .list{margin-top:0}
+  .row{
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+    padding:22px 24px;border-top:1px solid var(--line);
+  }
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--surface-2)}
+  .row-title{font-size:18px;font-weight:600;margin-bottom:4px}
+  .row-desc{font-size:14px;color:var(--muted)}
+  .btn{
+    display:inline-flex;align-items:center;height:36px;padding:0 14px;
+    border-radius:999px;font-size:13px;font-weight:600;
+    border:1px solid var(--line);color:var(--muted);
+  }
+  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .links{display:flex;gap:12px;justify-content:flex-end;margin-top:8px}
+  .links a{font-size:12px;color:var(--faint)}
+  .links a:hover{color:var(--muted)}
 
   .foot{
-    margin-top:48px;
-    padding-top:20px;
-    border-top:1px solid var(--line);
+    margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
     display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
     font-size:12px;color:var(--faint);
   }
@@ -163,12 +141,8 @@
   @media(max-width:720px){
     .top{padding:14px 18px}
     .shell{padding:36px 18px 72px}
-    .row{
-      grid-template-columns:1fr;
-      gap:16px;padding:20px 18px;
-    }
-    .row-actions{align-items:stretch}
-    .btn{width:100%}
+    .actions{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr}
     .links{justify-content:flex-start}
   }
 </style>
@@ -188,81 +162,116 @@
     <p class="label mono">Courses</p>
     <div class="list">
 
-      <article class="row">
-        <div class="row-main">
-          <h2 class="row-title">创想营</h2>
-          <p class="row-desc">辨智能 → 探黑盒 → 会提问 → 造 Agent。换场地只换宣传，不换课件。</p>
+      <section class="course">
+        <div class="course-head">
+          <h2 class="course-title">创想营</h2>
+          <p class="course-desc">辨智能 → 探黑盒 → 会提问 → 造 Agent。换场地只换宣传，不换课件。</p>
           <div class="tags">
             <span class="tag on">课件齐</span>
             <span class="tag">10–15</span>
             <span class="tag">国庆那一套</span>
           </div>
         </div>
-        <div class="row-actions">
-          <a class="btn primary" href="camp/course/09-ai-camp-deck.html">打开课件</a>
-          <div class="links">
-            <a href="camp/promo/2026-11-baicao/">百草湖宣传</a>
-            <a href="camp/">文件夹</a>
-          </div>
+        <div class="actions">
+          <a class="slot primary" href="camp/course/09-ai-camp-deck.html">
+            <span class="kind">课件</span>
+            <span class="name">打开课件</span>
+            <span class="note">空格翻页 · F 全屏</span>
+          </a>
+          <a class="slot" href="camp/promo/2026-11-baicao/">
+            <span class="kind">宣传</span>
+            <span class="name">百草湖长图</span>
+            <span class="note">2026.11</span>
+          </a>
+          <a class="slot" href="camp/students/">
+            <span class="kind">学生档案</span>
+            <span class="name">评价与作业</span>
+            <span class="note">名册 · 产出</span>
+          </a>
         </div>
-      </article>
+      </section>
 
-      <article class="row">
-        <div class="row-main">
-          <h2 class="row-title">AI 通识进阶</h2>
-          <p class="row-desc">周末 18 小时，六个模块。和创想营是两套教材，不要重播营地页。</p>
+      <section class="course">
+        <div class="course-head">
+          <h2 class="course-title">AI 通识进阶</h2>
+          <p class="course-desc">周末 18 小时，六个模块。和创想营是两套教材，不要重播营地页。</p>
           <div class="tags">
             <span class="tag on">M1</span>
             <span class="tag">10–15</span>
             <span class="tag">M2–M6 待做</span>
           </div>
         </div>
-        <div class="row-actions">
-          <a class="btn primary" href="literacy/course/16-m1-deck.html">打开 M1</a>
-          <div class="links">
-            <a href="literacy/course/11-ai-weekend-syllabus.html">大纲</a>
-            <a href="literacy/course/13-six-module-architecture.html">对照表</a>
-            <a href="literacy/">文件夹</a>
-          </div>
+        <div class="actions">
+          <a class="slot primary" href="literacy/course/16-m1-deck.html">
+            <span class="kind">课件</span>
+            <span class="name">打开 M1</span>
+            <span class="note">大纲在旁链</span>
+          </a>
+          <a class="slot" href="literacy/promo/">
+            <span class="kind">宣传</span>
+            <span class="name">宣传页</span>
+            <span class="note">长图待补</span>
+          </a>
+          <a class="slot" href="literacy/students/">
+            <span class="kind">学生档案</span>
+            <span class="name">评价与作业</span>
+            <span class="note">M1–M6</span>
+          </a>
         </div>
-      </article>
+      </section>
 
-      <article class="row">
-        <div class="row-main">
-          <h2 class="row-title">武陵山 · 超级AI营</h2>
-          <p class="row-desc">山里五日。先看自然里的智慧，再看人和机器。断网也能放。</p>
+      <section class="course">
+        <div class="course-head">
+          <h2 class="course-title">武陵山 · 超级AI营</h2>
+          <p class="course-desc">山里五日。先看自然里的智慧，再看人和机器。断网也能放。</p>
           <div class="tags">
             <span class="tag on">Day 1</span>
             <span class="tag">10–12</span>
             <span class="tag">Day 2–5 待做</span>
           </div>
         </div>
-        <div class="row-actions">
-          <a class="btn primary" href="wulingshan/course/day1.html">打开 Day 1</a>
-          <div class="links">
-            <a href="wulingshan/promo/poster-long.html">五日营长图</a>
-            <a href="wulingshan/course/">五日目录</a>
-            <a href="wulingshan/">文件夹</a>
-          </div>
+        <div class="actions">
+          <a class="slot primary" href="wulingshan/course/day1.html">
+            <span class="kind">课件</span>
+            <span class="name">打开 Day 1</span>
+            <span class="note">五日目录另开</span>
+          </a>
+          <a class="slot" href="wulingshan/promo/poster-long.html">
+            <span class="kind">宣传</span>
+            <span class="name">五日营长图</span>
+            <span class="note">武陵山</span>
+          </a>
+          <a class="slot" href="wulingshan/students/">
+            <span class="kind">学生档案</span>
+            <span class="name">评价与作业</span>
+            <span class="note">按天收</span>
+          </a>
         </div>
-      </article>
+      </section>
 
+    </div>
+
+    <p class="label mono" style="margin-top:36px">Also open</p>
+    <div class="list" style="margin-bottom:0">
+      <div class="course" style="padding:18px 24px">
+        <div class="tags" style="gap:14px">
+          <a href="literacy/course/11-ai-weekend-syllabus.html" style="color:var(--muted);font-size:13px;font-weight:600">通识大纲</a>
+          <a href="literacy/course/13-six-module-architecture.html" style="color:var(--muted);font-size:13px;font-weight:600">通识对照表</a>
+          <a href="wulingshan/course/" style="color:var(--muted);font-size:13px;font-weight:600">武陵山五日目录</a>
+        </div>
+      </div>
     </div>
 
     <section class="section">
       <p class="label mono">Org</p>
       <div class="list">
         <article class="row">
-          <div class="row-main">
+          <div>
             <h2 class="row-title">家长场沙龙</h2>
             <p class="row-desc">对外讲，不是某一门课的课件。</p>
-            <div class="tags">
-              <span class="tag">宣讲</span>
-              <span class="tag">海报</span>
-            </div>
           </div>
-          <div class="row-actions">
-            <a class="btn ghost" href="salon/07-沙龙宣讲-家长场.html">打开宣讲</a>
+          <div>
+            <a class="btn" href="salon/07-沙龙宣讲-家长场.html">打开宣讲</a>
             <div class="links">
               <a href="salon/08-沙龙海报-家长场.html">海报</a>
               <a href="salon/05-演讲版-AI教育变革.html">演讲版</a>
@@ -274,7 +283,7 @@
     </section>
 
     <footer class="foot">
-      <span>仓库公开 · 名册不要放进来</span>
+      <span>仓库公开 · 学生档案里不要写身份证和手机号</span>
       <a class="mono" href="https://github.com/jacobatxa/ForNewFuture">github.com/jacobatxa/ForNewFuture</a>
     </footer>
   </main>
