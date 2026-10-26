@@ -1,6 +1,6 @@
 # 彼灯教育 · 课程归档
 
-老师入口：https://jacobatxa.github.io/ForNewFuture/
+AI 课程库：https://jacobatxa.github.io/ForNewFuture/
 
 三门课按子项目分开放。本地 `git pull` 之后打开对应文件夹即可。
 
