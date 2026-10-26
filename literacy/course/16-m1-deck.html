@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M1 认识智能 · 通识进阶 | AI Literacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&family=Geist+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070d1a;--ink:#e2e8f0;--bright:#fff;--muted:#94a3b8;
+  --cyan:#22d3ee;--orange:#f97316;--blue:#3b82f6;--green:#34d399;--rose:#fb7185;
+  --line:rgba(255,255,255,.1);--card:rgba(255,255,255,.04);
+  --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
+  --en:"Space Grotesk",system-ui,sans-serif;--mono:"Geist Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;background:var(--bg);color:var(--ink);font-family:var(--font);overflow:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;z-index:0}
+#bar{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--cyan),var(--orange));z-index:20;transition:width .25s}
+#deck{position:relative;width:100vw;height:100vh;z-index:1}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:22px 56px 52px;gap:8px}
+.slide.active{display:flex}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);font-family:var(--en)}
+.kicker .en{color:var(--muted);letter-spacing:.08em;font-weight:500;text-transform:none}
+h1{font-family:var(--en);font-size:clamp(36px,5vw,58px);font-weight:900;letter-spacing:-.03em;line-height:1.1;max-width:16ch}
+h2{font-size:clamp(26px,3.2vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.2}
+h2 .sub-en{display:block;font-family:var(--en);font-size:.45em;font-weight:600;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+.lead{color:var(--muted);font-size:16px;max-width:48em;line-height:1.5}
+.grad{background:linear-gradient(90deg,var(--cyan),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero{flex:1;min-height:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);position:relative;margin-top:6px}
+.hero img{width:100%;height:100%;object-fit:cover;display:block}
+.hero .cap{position:absolute;left:14px;bottom:12px;font-size:12px;color:#cbd5e1;background:rgba(7,13,26,.65);padding:6px 10px;border-radius:8px;backdrop-filter:blur(6px)}
+.navbtn{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(7,13,26,.7);color:var(--ink);font-size:22px;cursor:pointer;z-index:15;backdrop-filter:blur(8px)}
+#prev{left:12px}#next{right:12px}
+#pager{position:fixed;right:64px;bottom:14px;font-family:var(--mono);font-size:12px;color:var(--muted);z-index:15}
+#hint{position:fixed;left:56px;bottom:14px;font-size:12px;color:var(--muted);z-index:15;max-width:55vw}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--cyan);margin-right:6px}
+.section-pill{align-self:flex-start;font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:6px 12px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);color:var(--cyan);margin-bottom:2px}
+.section-pill.off{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.4);color:var(--orange)}
+
+/* classify */
+.rules{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0}
+.rules button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font:inherit;font-weight:700;cursor:pointer}
+.rules button.on{background:var(--cyan);color:#041016;border-color:var(--cyan)}
+.classify{flex:1;min-height:0;display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:6px}
+.scatter{position:relative;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:#0a1222}
+.scatter img{width:100%;height:100%;object-fit:cover;opacity:.55}
+.scatter .hotspots{position:absolute;inset:0}
+.chip{position:absolute;transform:translate(-50%,-50%);border:0;border-radius:999px;padding:8px 12px;font:inherit;font-weight:700;font-size:13px;cursor:pointer;background:rgba(7,13,26,.82);color:#fff;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px);transition:transform .15s,background .15s}
+.chip:hover{transform:translate(-50%,-50%) scale(1.06)}
+.chip.on{background:var(--orange);border-color:var(--orange);color:#111}
+.bins{display:flex;flex-direction:column;gap:10px}
+.bin{flex:1;border:1px dashed rgba(148,163,184,.35);border-radius:12px;padding:12px;background:var(--card);min-height:0;overflow:auto}
+.bin h3{font-size:13px;color:var(--cyan);margin-bottom:8px;font-family:var(--en)}
+.bin .placed{display:flex;flex-wrap:wrap;gap:6px}
+.bin .placed span{font-size:12px;padding:5px 9px;border-radius:8px;background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.3)}
+.insight{margin-top:6px;padding:10px 14px;border-left:3px solid var(--orange);background:rgba(249,115,22,.08);font-size:14px;color:#fdba74;line-height:1.4}
+
+/* concept cards */
+.cmap{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
+.ccard{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card);cursor:pointer;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s}
+.ccard:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.45)}
+.ccard.on{border-color:var(--cyan);background:rgba(34,211,238,.08)}
+.ccard .abbr{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.14em}
+.ccard h3{font-size:20px;font-family:var(--en)}
+.ccard p{font-size:13px;color:var(--muted);line-height:1.4;flex:1}
+.ccard .more{font-size:12px;color:var(--orange);display:none}
+.ccard.on .more{display:block}
+
+/* next token */
+.guess{flex:1;min-height:0;display:grid;grid-template-columns:1.1fr .9fr;gap:16px;align-items:stretch;margin-top:8px}
+.guess-box{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--card);display:flex;flex-direction:column;gap:16px;justify-content:center}
+.guess-sent{font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1.35}
+.guess-blank{display:inline-block;min-width:2.5em;padding:2px 10px;border-radius:8px;border:1px dashed var(--orange);color:var(--orange)}
+.guess-blank.on{background:rgba(249,115,22,.15);border-style:solid}
+.prob{display:flex;flex-direction:column;gap:8px}
+.prob-row{display:grid;grid-template-columns:64px 1fr 48px;gap:8px;align-items:center;font-size:13px}
+.prob-bar{height:10px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.prob-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px;transition:width .5s}
+.prob-row.top .prob-bar i{background:linear-gradient(90deg,var(--orange),#fb923c)}
+.go{border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:800;cursor:pointer;background:var(--cyan);color:#041016;align-self:flex-start}
+.go.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+
+/* two asks */
+.split2{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.panel{border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);background:var(--card)}
+.panel.bad{border-color:rgba(251,113,133,.45);background:rgba(127,29,29,.18)}
+.panel.good{border-color:rgba(52,211,153,.45);background:rgba(6,78,59,.22)}
+.panel h3{font-family:var(--mono);font-size:12px;letter-spacing:.1em}
+.panel.bad h3{color:#fda4af}.panel.good h3{color:var(--green)}
+.panel .q{font-size:17px;font-weight:700;line-height:1.4;padding:12px;border-radius:10px;background:rgba(0,0,0,.25)}
+.panel ul{list-style:none;margin-top:auto;display:flex;flex-direction:column;gap:6px}
+.panel li{font-size:13px;color:var(--muted);padding-left:14px;position:relative}
+.panel li::before{content:"";position:absolute;left:0;top:6px;width:6px;height:6px;border-radius:1px;background:currentColor}
+
+/* layers peel */
+.peel{flex:1;min-height:0;display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:6px}
+.peel-visual{border-radius:14px;border:1px solid var(--line);overflow:hidden;position:relative}
+.peel-visual img{width:100%;height:100%;object-fit:cover}
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer-btn{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;text-align:left;color:var(--ink);font:inherit;cursor:pointer}
+.layer-btn b{display:block;font-size:15px;margin-bottom:2px}
+.layer-btn span{font-size:12px;color:var(--muted)}
+.layer-btn.on{border-color:var(--cyan);background:rgba(34,211,238,.1)}
+.layer-btn.on b{color:var(--cyan)}
+
+/* path steps */
+.path{flex:1;min-height:0;display:grid;grid-template-columns:.9fr 1.1fr;gap:14px;margin-top:6px}
+.steps{display:flex;flex-direction:column;gap:8px;overflow:auto}
+.step{border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;background:var(--card)}
+.step.on{border-color:var(--orange);background:rgba(249,115,22,.1)}
+.step b{display:block;font-size:14px}
+.step p{font-size:12px;color:var(--muted);margin-top:2px}
+.path-view{border-radius:14px;border:1px solid var(--line);overflow:hidden;position:relative}
+.path-view img{width:100%;height:100%;object-fit:cover}
+.path-view .bubble{position:absolute;left:12px;right:12px;bottom:12px;padding:12px 14px;border-radius:12px;background:rgba(7,13,26,.78);backdrop-filter:blur(8px);font-size:14px;line-height:1.4}
+
+/* three ask */
+.tri{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.tri article{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card);display:flex;flex-direction:column;gap:10px}
+.tri .n{font-family:var(--mono);color:var(--orange);font-size:12px;letter-spacing:.12em}
+.tri h3{font-size:20px}
+.tri p{font-size:13px;color:var(--muted);line-height:1.4;flex:1}
+.tri .blank{border:1px dashed rgba(148,163,184,.4);border-radius:10px;min-height:72px;padding:10px;font-size:13px;color:#cbd5e1;background:rgba(0,0,0,.2)}
+.tri .blank[contenteditable]:focus{outline:1px solid var(--cyan)}
+
+.grid3{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;align-content:center}
+.tile{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--card)}
+.tile b{display:block;font-size:18px;margin-bottom:8px}
+.tile p{font-size:13px;color:var(--muted);line-height:1.45}
+
+@media(max-width:900px){
+  .slide{padding:18px 20px 48px}
+  .classify,.guess,.split2,.peel,.path,.cmap,.tri,.grid3{grid-template-columns:1fr}
+  .navbtn{display:none}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="deck">
+
+  <!-- ========== ONLINE ========== -->
+  <section class="slide active" data-hint="通识 M1 独立课件 · 与国庆营地教材分开">
+    <div class="section-pill">ONLINE · 1h</div>
+    <div class="kicker">M1 · 认识智能 <span class="en">· AI Literacy</span></div>
+    <h1>把世界<span class="grad">拆成一层套一层</span></h1>
+    <p class="lead">练抽象：自己定标准分类；看清 AI 是「猜下一个词」的引擎；线下把手机 / 电脑 / 网络剥开。</p>
+    <div class="hero">
+      <img src="assets/literacy/m1-cover-layers.jpg" alt="层级剖面：芯片到应用">
+      <div class="cap">本课主线：分类 → 概念地图 → 同题两问 → 线下分层</div>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="先选一种分类标准，再点图上的东西放进右侧盒子">
+    <div class="section-pill">ONLINE · 抽象热身</div>
+    <div class="kicker">01 · 分类 <span class="en">· You set the rule</span></div>
+    <h2>同一堆东西，换标准就换队伍 <span class="sub-en">Classification is a judgment</span></h2>
+    <div class="rules" id="ruleBtns">
+      <button type="button" class="on" data-rule="live">标准 A · 会不会自己动</button>
+      <button type="button" data-rule="tech">标准 B · 要不要插电 / 联网</button>
+      <button type="button" data-rule="nature">标准 C · 天然 vs 人造</button>
+    </div>
+    <div class="classify">
+      <div class="scatter">
+        <img src="assets/literacy/m1-classify-scatter.jpg" alt="待分类物件">
+        <div class="hotspots" id="hotspots"></div>
+      </div>
+      <div class="bins">
+        <div class="bin" id="binYes"><h3 id="binYesTitle">组 1</h3><div class="placed"></div></div>
+        <div class="bin" id="binNo"><h3 id="binNoTitle">组 2</h3><div class="placed"></div></div>
+      </div>
+    </div>
+    <div class="insight" id="classInsight">先选标准，再点物件。抽象不是「找正确答案」，是说清你按什么规则切。</div>
+  </section>
+
+  <section class="slide" data-hint="把上一页的动作说成一句可带走的话">
+    <div class="section-pill">ONLINE · 抽象</div>
+    <div class="kicker">01 · 方法 <span class="en">· Abstraction</span></div>
+    <h2>抽象 = 你定标准，抽出共性 <span class="sub-en">Name the rule, pull the pattern</span></h2>
+    <div class="grid3">
+      <div class="tile"><b>1 · 定标准</b><p>「会不会自己动」是你选的刀，不是世界自带的标签。</p></div>
+      <div class="tile"><b>2 · 归类</b><p>同一物件在不同标准下可以换组——换刀就换图。</p></div>
+      <div class="tile"><b>3 · 抽共性</b><p>说出这一组为什么能放一起。后面看 AI、看电脑，都用这一步。</p></div>
+    </div>
+    <div class="insight">课堂上齐读：表面上是……，底下我按……标准，抽到了……</div>
+  </section>
+
+  <section class="slide" data-hint="先让学生猜空格，再点按钮看概率条">
+    <div class="section-pill">ONLINE · AI 是什么</div>
+    <div class="kicker">02 · 大模型 <span class="en">· Next-token</span></div>
+    <h2>它不是在「想」，是在猜下一个词 <span class="sub-en">Prediction, not a mind</span></h2>
+    <div class="guess">
+      <div class="guess-box">
+        <p class="guess-sent">我口渴了，想喝一杯 <span class="guess-blank" id="blank">？</span></p>
+        <button class="go" type="button" id="revealGuess">看看模型怎么排</button>
+        <p class="lead" style="margin:0">听起来像回答。底下：按概率接词，再拼成整段。</p>
+      </div>
+      <div class="prob" id="probList"></div>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="点开四张卡，讲清各管一层；细节操作留给 M2">
+    <div class="section-pill">ONLINE · 概念地图</div>
+    <div class="kicker">02 · 四个名字 <span class="en">· Concept map</span></div>
+    <h2>各管一层，不是四个花名 <span class="sub-en">LLM · Prompt · Agent · Skills</span></h2>
+    <div class="cmap" id="cmap">
+      <button class="ccard" type="button" data-i="0">
+        <div class="abbr">LLM</div><h3>大模型</h3>
+        <p>猜下一个词的引擎。</p>
+        <div class="more">跑在远处的算力上。流畅 ≠ 正确。</div>
+      </button>
+      <button class="ccard" type="button" data-i="1">
+        <div class="abbr">PROMPT</div><h3>提示词</h3>
+        <p>你写给它的前文与规矩。</p>
+        <div class="more">它顺着你的字往下接。问法变，路径变。</div>
+      </button>
+      <button class="ccard" type="button" data-i="2">
+        <div class="abbr">AGENT</div><h3>智能体</h3>
+        <p>目标 + 工具 + 步骤的编排。</p>
+        <div class="more">不只聊一句。M2 线下会搭一个立规矩的助手。</div>
+      </button>
+      <button class="ccard" type="button" data-i="3">
+        <div class="abbr">SKILLS</div><h3>技能</h3>
+        <p>可挂上的专项本领。</p>
+        <div class="more">查、算、画、改文件……通用接话 + 专用工具。</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="左右对照读；右边问法接住了上一页的机制">
+    <div class="section-pill">ONLINE · 同题两问</div>
+    <div class="kicker">03 · 提问质量 <span class="en">· Same intent</span></div>
+    <h2>同一件事，两种问法 <span class="sub-en">Vague vs precise</span></h2>
+    <div class="split2">
+      <div class="panel bad">
+        <h3>● 模糊</h3>
+        <div class="q">「人工智能是怎么回事？」</div>
+        <ul>
+          <li>对象太大，答什么都像对</li>
+          <li>没有可观察的步骤</li>
+          <li>模型容易讲故事充数</li>
+        </ul>
+      </div>
+      <div class="panel good">
+        <h3>● 清楚</h3>
+        <div class="q">「大模型收到我的句子后，如何一次只预测下一个词，再拼成整段回答？」</div>
+        <ul>
+          <li>有起点、过程、产物</li>
+          <li>能追问、能核对</li>
+          <li>接住了刚才的概念地图</li>
+        </ul>
+      </div>
+    </div>
+    <div class="insight">习惯：先把过程说清楚，再问 AI。M2 会把这套写成角色 / 任务 / 约束 / 标准。</div>
+  </section>
+
+  <section class="slide" data-hint="线上收束，切到线下">
+    <div class="section-pill">ONLINE · 收束</div>
+    <div class="kicker">线上小结 <span class="en">· Into offline</span></div>
+    <h2>线上立住三件事 <span class="sub-en">Then peel the machine</span></h2>
+    <div class="grid3">
+      <div class="tile"><b>抽象</b><p>分类时标准要自己定，并说清抽到的共性。</p></div>
+      <div class="tile"><b>AI</b><p>LLM 在猜下一词；Prompt / Agent / Skills 各管一层。</p></div>
+      <div class="tile"><b>提问</b><p>清楚问 = 把过程钉在题干里。</p></div>
+    </div>
+    <div class="insight">线下：同一双眼睛，去剥手机、电脑和「点发送」——一层套一层。</div>
+  </section>
+
+  <!-- ========== OFFLINE ========== -->
+  <section class="slide" data-hint="线下开场：图是对照，桌上要打开真机设置">
+    <div class="section-pill off">OFFLINE · 2h</div>
+    <div class="kicker">M1 · 线下 <span class="en">· Layers</span></div>
+    <h1>手机也是<span class="grad">同一种机器</span></h1>
+    <p class="lead">外壳不同。里面都是：处理器 · 内存 · 存储 · 输入输出。中间夹着操作系统。</p>
+    <div class="hero">
+      <img src="assets/literacy/m1-phone-laptop.jpg" alt="笔记本与手机切开对照">
+      <div class="cap">活动：左右打开「关于本机」和「设置 → 关于手机」，三项对上号</div>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="点右侧图层，讲一层换一层">
+    <div class="section-pill off">OFFLINE · 分层</div>
+    <div class="kicker">04 · 一层套一层 <span class="en">· Hardware → OS → App</span></div>
+    <h2>点开图层 <span class="sub-en">Peel the stack</span></h2>
+    <div class="peel">
+      <div class="peel-visual">
+        <img src="assets/literacy/m1-phone-laptop.jpg" alt="分层示意" id="peelImg">
+      </div>
+      <div class="layers" id="layerBtns">
+        <button class="layer-btn on" type="button" data-t="硬件：芯片在算、内存在跑、存储还在。"><b>① 硬件</b><span>处理器 · 内存 · 存储 · 屏幕 / 键盘</span></button>
+        <button class="layer-btn" type="button" data-t="系统：分配时间与内存，决定谁能启动、谁能上网。桌面壁纸不是系统本身。"><b>② 操作系统</b><span>Windows / macOS / iOS / Android</span></button>
+        <button class="layer-btn" type="button" data-t="应用：你点的图标。系统会启动一个正在运行的程序。"><b>③ 应用</b><span>浏览器 · 微信 · 豆包 …</span></button>
+        <button class="layer-btn" type="button" data-t="抽象句式：表面上是 App，底下是系统在调度硬件。"><b>④ 抽象句式</b><span>表面上是……，底下其实是……</span></button>
+      </div>
+    </div>
+    <div class="insight" id="layerNote">硬件：芯片在算、内存在跑、存储还在。</div>
+  </section>
+
+  <section class="slide" data-hint="逐步点左侧步骤，右侧图+说明跟着走">
+    <div class="section-pill off">OFFLINE · 发送</div>
+    <div class="kicker">05 · 点发送 <span class="en">· Where the ask goes</span></div>
+    <h2>你这边的程序，在问远处的程序 <span class="sub-en">Client asks · remote answers</span></h2>
+    <div class="path">
+      <div class="steps" id="pathSteps"></div>
+      <div class="path-view">
+        <img src="assets/literacy/m1-send-path.jpg" alt="发送路径" id="pathImg">
+        <div class="bubble" id="pathBubble">从手机上的应用出发。</div>
+      </div>
+    </div>
+    <button class="go" type="button" id="pathNext" style="margin-top:8px">下一步</button>
+  </section>
+
+  <section class="slide" data-hint="小组在纸上画；投影只给骨架">
+    <div class="section-pill off">OFFLINE · 产出</div>
+    <div class="kicker">06 · 画层级图 <span class="en">· Your stack</span></div>
+    <h2>小组产出：一张抽象层级图 <span class="sub-en">Hardware → OS → App → Network</span></h2>
+    <div class="tri">
+      <article>
+        <div class="n">CHECK 1</div>
+        <h3>本机三件</h3>
+        <p>处理器 / 内存 / 存储 —— 在设置里指给我看。</p>
+        <div class="blank" contenteditable="true" data-ph="记下型号或截图位置…"></div>
+      </article>
+      <article>
+        <div class="n">CHECK 2</div>
+        <h3>一层套一层</h3>
+        <p>画：硬件 → 系统 → 你正在用的一个 App。</p>
+        <div class="blank" contenteditable="true"></div>
+      </article>
+      <article>
+        <div class="n">CHECK 3</div>
+        <h3>发送多一跳</h3>
+        <p>若 App 要联网：再画「远处那台机器」。</p>
+        <div class="blank" contenteditable="true"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="每人选一个身边设备，填三格；抽 2–3 人讲">
+    <div class="section-pill off">OFFLINE · 三问法</div>
+    <div class="kicker">07 · 现象 → 机制 → 抽象 <span class="en">· Transfer</span></div>
+    <h2>拆一个身边设备 <span class="sub-en">Phone · router · gate · earbuds…</span></h2>
+    <div class="tri">
+      <article>
+        <div class="n">现象</div>
+        <h3>你看见什么</h3>
+        <p>灯、声音、屏幕、门开了……</p>
+        <div class="blank" contenteditable="true"></div>
+      </article>
+      <article>
+        <div class="n">机制</div>
+        <h3>底下谁在干活</h3>
+        <p>传感器？芯片？远处服务器？</p>
+        <div class="blank" contenteditable="true"></div>
+      </article>
+      <article>
+        <div class="n">抽象</div>
+        <h3>用一句分层说</h3>
+        <p>「表面上是……，底下其实是……」</p>
+        <div class="blank" contenteditable="true"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="收束；强调与国庆营地教材是两套">
+    <div class="section-pill off">OFFLINE · 收束</div>
+    <div class="kicker">M1 结束 <span class="en">· Into M2</span></div>
+    <h2>这周末带走什么 <span class="sub-en">Abstraction + AI map + stack drawing</span></h2>
+    <div class="grid3">
+      <div class="tile"><b>思维</b><p>会定标准分类；会说「表面 / 底下」。</p></div>
+      <div class="tile"><b>AI</b><p>下一词；四个名字各管一层；清楚问。</p></div>
+      <div class="tile"><b>图</b><p>一张层级图 + 一个设备的三问卡。</p></div>
+    </div>
+    <div class="insight">M2：把抽象标准写成规矩，让 AI 听得懂；并知道它会一本正经地错。国庆营地课见 <code style="color:var(--cyan)">09-ai-camp-deck.html</code> —— 两套教材，不混用。</div>
+  </section>
+
+</div>
+<button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
+<button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
+<div id="pager">1 / 1</div>
+<div id="hint"></div>
+
+<script>
+/* —— classify —— */
+const ITEMS=[
+  {id:"phone",label:"手机",x:18,y:62,live:"no",tech:"yes",nature:"no"},
+  {id:"leaf",label:"叶子",x:32,y:28,live:"no",tech:"no",nature:"yes"},
+  {id:"dog",label:"小狗",x:48,y:70,live:"yes",tech:"no",nature:"yes"},
+  {id:"router",label:"路由器",x:72,y:55,live:"no",tech:"yes",nature:"no"},
+  {id:"orange",label:"橙子",x:58,y:30,live:"no",tech:"no",nature:"yes"},
+  {id:"watch",label:"手表",x:78,y:28,live:"no",tech:"yes",nature:"no"},
+  {id:"pencil",label:"铅笔",x:40,y:48,live:"no",tech:"no",nature:"no"},
+  {id:"plane",label:"纸飞机",x:22,y:40,live:"no",tech:"no",nature:"no"}
+];
+const RULES={
+  live:{yes:"会自己动 / 有反应",no:"不会自己动",insight:"换「会不会自己动」这把刀，狗进 A 组，路由器进 B 组。"},
+  tech:{yes:"要电 / 能联网",no:"不靠电联网",insight:"换「要不要电」这把刀，手机和路由器一队，叶子另一队。"},
+  nature:{yes:"天然长出来的",no:"人造的",insight:"换「天然/人造」，同一堆东西队伍又变了——标准是你定的。"}
+};
+let rule="live";
+const hotspots=document.getElementById("hotspots");
+const placed=new Map();
+function renderChips(){
+  hotspots.innerHTML="";
+  ITEMS.forEach(it=>{
+    if(placed.has(it.id)) return;
+    const b=document.createElement("button");
+    b.className="chip"; b.type="button"; b.textContent=it.label;
+    b.style.left=it.x+"%"; b.style.top=it.y+"%";
+    b.onclick=()=>assign(it);
+    hotspots.appendChild(b);
+  });
+}
+function assign(it){
+  const side=it[rule]==="yes"?"yes":"no";
+  placed.set(it.id,side);
+  paintBins(); renderChips();
+}
+function paintBins(){
+  const y=document.querySelector("#binYes .placed");
+  const n=document.querySelector("#binNo .placed");
+  y.innerHTML=""; n.innerHTML="";
+  ITEMS.forEach(it=>{
+    if(!placed.has(it.id)) return;
+    const s=document.createElement("span"); s.textContent=it.label;
+    (placed.get(it.id)==="yes"?y:n).appendChild(s);
+  });
+}
+function setRule(r){
+  rule=r; placed.clear();
+  document.getElementById("binYesTitle").textContent=RULES[r].yes;
+  document.getElementById("binNoTitle").textContent=RULES[r].no;
+  document.getElementById("classInsight").textContent=RULES[r].insight;
+  document.querySelectorAll("#ruleBtns button").forEach(b=>b.classList.toggle("on",b.dataset.rule===r));
+  paintBins(); renderChips();
+}
+document.getElementById("ruleBtns").onclick=e=>{
+  const b=e.target.closest("button"); if(b) setRule(b.dataset.rule);
+};
+setRule("live");
+
+/* —— next token —— */
+const PROBS=[["水",52],["奶茶",20],["果汁",12],["可乐",9],["热汤",6],["书",1]];
+const probList=document.getElementById("probList");
+function drawProbs(show){
+  probList.innerHTML=PROBS.map(([w,p],i)=>`<div class="prob-row${i===0?" top":""}"><span>${w}</span><span class="prob-bar"><i style="width:${show?p:0}%"></i></span><span>${show?p+"%":"?"}</span></div>`).join("");
+}
+drawProbs(false);
+document.getElementById("revealGuess").onclick=()=>{
+  drawProbs(true);
+  const blank=document.getElementById("blank");
+  blank.textContent="水"; blank.classList.add("on");
+};
+
+/* —— concept map —— */
+document.getElementById("cmap").onclick=e=>{
+  const c=e.target.closest(".ccard"); if(!c) return;
+  document.querySelectorAll(".ccard").forEach(x=>x.classList.toggle("on",x===c));
+};
+
+/* —— layers —— */
+document.getElementById("layerBtns").onclick=e=>{
+  const b=e.target.closest(".layer-btn"); if(!b) return;
+  document.querySelectorAll(".layer-btn").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("layerNote").textContent=b.dataset.t;
+};
+
+/* —— path —— */
+const PATH=[
+  {t:"01 应用打包",s:"你点发送。字还在手机里的 App 里。"},
+  {t:"02 系统放行",s:"操作系统决定：这个程序可以上网。"},
+  {t:"03 路由器 / 基站",s:"信号离开你这台机器，进入本地网。"},
+  {t:"04 远处的程序",s:"另一台一直开着的机器上，有程序在听。"},
+  {t:"05 算完回来",s:"回答沿路返回，屏幕上出现字——像它在你手机里想，其实在远处算。"}
+];
+let pathI=0;
+const pathSteps=document.getElementById("pathSteps");
+pathSteps.innerHTML=PATH.map((p,i)=>`<div class="step${i===0?" on":""}" data-i="${i}"><b>${p.t}</b><p>${p.s}</p></div>`).join("");
+function showPath(i){
+  pathI=Math.max(0,Math.min(PATH.length-1,i));
+  pathSteps.querySelectorAll(".step").forEach((el,k)=>el.classList.toggle("on",k===pathI));
+  document.getElementById("pathBubble").textContent=PATH[pathI].s;
+}
+pathSteps.onclick=e=>{const s=e.target.closest(".step"); if(s) showPath(+s.dataset.i);};
+document.getElementById("pathNext").onclick=()=>showPath(pathI+1);
+
+/* —— blanks placeholder —— */
+document.querySelectorAll(".blank").forEach(el=>{
+  el.addEventListener("focus",()=>{ if(el.textContent.trim()==="") el.textContent=""; });
+});
+
+/* —— nav —— */
+const slides=[...document.querySelectorAll(".slide")];
+let cur=0;
+function show(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle("active",k===cur));
+  document.getElementById("bar").style.width=((cur+1)/slides.length*100)+"%";
+  document.getElementById("pager").textContent=(cur+1)+" / "+slides.length;
+  document.getElementById("hint").textContent=slides[cur].dataset.hint||"";
+}
+document.getElementById("prev").onclick=()=>show(cur-1);
+document.getElementById("next").onclick=()=>show(cur+1);
+addEventListener("keydown",e=>{
+  if(e.target && (e.target.tagName==="INPUT"||e.target.isContentEditable)) return;
+  if(e.key==="ArrowRight"||e.key===" "||e.key==="PageDown"){e.preventDefault();show(cur+1);}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();show(cur-1);}
+  if(e.key==="f"||e.key==="F"){
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+});
+show(0);
+</script>
+</body>
+</html>

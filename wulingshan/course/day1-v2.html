@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超级AI营 · Day 1 · v2（4组营地版）</title>
+<link rel="stylesheet" href="assets/css/deck-v2.css">
+</head>
+<body>
+<div class="deck">
+  <div class="stage" id="stage" data-act="1">
+
+    <!-- 1 封面 -->
+    <section class="slide cover" data-act="1">
+      <div class="bg kenburns" style="background-image:url('assets/photos/hero-mountain-ridge.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="kicker fx" style="--d:.15s">SUPER AI CAMP · V2</div>
+        <h1 class="display-xl title fx" style="--d:.35s">超级AI营</h1>
+        <div class="divider fx-line" style="--d:.8s"></div>
+        <div class="subtitle sub fx" style="--d:.95s">Day 1 · 自然智慧与人类智力起源探索</div>
+        <div class="place fx" style="--d:1.15s">重庆 · 武陵山 · 4 组营地版</div>
+        <div class="start-hint fx-fade" style="--d:1.9s">
+          <span>按方向键开始</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 2 路线图 + 分组规则 -->
+    <section class="slide s-rules" data-act="1">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">开场 · 今天怎么玩</div>
+        <h1 class="fx" style="--d:.3s">4 个组，一起走三站</h1>
+      </div>
+      <div class="rule-grid">
+        <div class="rule-box glass fx" style="--d:.5s">
+          <h3>今天三站</h3>
+          <ol>
+            <li>大自然的智慧 —— 外面找、回来讲</li>
+            <li>人类怎么变聪明 —— 连星星、玩挑战</li>
+            <li>机器也要上学 —— 先玩再讲名字</li>
+          </ol>
+        </div>
+        <div class="rule-box glass fx" style="--d:.7s">
+          <h3>小组规矩（很短）</h3>
+          <ul>
+            <li>每组约 4 人，听口令一起动</li>
+            <li>户外：不跑远、跟着辅导员</li>
+            <li>发言：一组一句，轮着说</li>
+            <li>大屏游戏：轮到哪组，哪组上</li>
+          </ul>
+          <div class="g-row">
+            <div class="g-pill" data-g="1">第 1 组</div>
+            <div class="g-pill" data-g="2">第 2 组</div>
+            <div class="g-pill" data-g="3">第 3 组</div>
+            <div class="g-pill" data-g="4">第 4 组</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.1s">角标 <b>必讲</b> 尽量都过；标了 <b>可跳过</b> 的页，超时就翻过去。</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 3 幕间一 -->
+    <section class="slide s-divider" data-act="1">
+      <div class="bg kenburns" style="background-image:url('assets/photos/act1-forest.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="act-no fx" style="--d:.2s">第一站</div>
+        <div class="act-name fx" style="--d:.4s">大自然的智慧</div>
+        <div class="act-sub fx" style="--d:.7s">这座山里，很多东西都在用巧办法活下去</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 4 户外任务 -->
+    <section class="slide s-task s-task-v2" id="slide-outdoor" data-act="1">
+      <div class="bg" style="background-image:url('assets/photos/hero-mountain-ridge.png')"></div>
+      <div class="veil veil-heavy"></div>
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">户外任务 · 4 组出发</div>
+        <h1 class="fx" style="--d:.3s">去找一样<em>『聪明』</em>的东西</h1>
+        <div class="lede fx" style="--d:.5s">不用是活的。石头、叶子、虫子、水流，都算。拍照或记住位置都行。</div>
+      </div>
+      <div class="timer-pill glass fx" style="--d:.4s">
+        <span class="t-val" id="outdoorTime">8:00</span>
+        <button type="button" id="outdoorStart">开始</button>
+      </div>
+      <div class="example-row">
+        <div class="ex-card glass fx" style="--d:.7s; background-image:url('assets/photos/ex-dandelion.png')">
+          <div class="ex-text">
+            <div class="ex-name">蒲公英</div>
+            <div class="ex-line">麻烦：种子要飞远<br>巧办法：<b>每颗种子一把伞</b></div>
+          </div>
+        </div>
+        <div class="ex-card glass fx" style="--d:.85s; background-image:url('assets/photos/ex-pinecone.png')">
+          <div class="ex-text">
+            <div class="ex-name">松果</div>
+            <div class="ex-line">麻烦：下雨飞不远<br>巧办法：<b>受潮合拢，天晴张开</b></div>
+          </div>
+        </div>
+        <div class="ex-card glass fx" style="--d:1s; background-image:url('assets/photos/ex-gecko.png')">
+          <div class="ex-text">
+            <div class="ex-name">壁虎</div>
+            <div class="ex-line">麻烦：要在墙上走<br>巧办法：<b>脚掌细毛贴住墙</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="say-template glass fx" style="--d:1.15s">
+        回来每组只说一句：
+        <b>______</b> 很聪明，因为它用 <b>______</b> 解决了 <b>______</b>。
+      </div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 5 分享 4 组 -->
+    <section class="slide s-share-v2" data-act="1">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">分享时刻 · 一组一句</div>
+        <h1 class="fx" style="--d:.3s">你们找到了什么？</h1>
+      </div>
+      <div class="group-strip">
+        <div class="group-card glass fx" style="--d:.5s" data-g="1">
+          <div class="g-label">第 1 组</div>
+          <div class="g-edit" contenteditable="true" data-ph="在这里写下：它是什么？解决了什么？"></div>
+          <div class="g-hint">模板：___ 用 ___ 解决了 ___</div>
+        </div>
+        <div class="group-card glass fx" style="--d:.6s" data-g="2">
+          <div class="g-label">第 2 组</div>
+          <div class="g-edit" contenteditable="true" data-ph="在这里写下：它是什么？解决了什么？"></div>
+          <div class="g-hint">模板：___ 用 ___ 解决了 ___</div>
+        </div>
+        <div class="group-card glass fx" style="--d:.7s" data-g="3">
+          <div class="g-label">第 3 组</div>
+          <div class="g-edit" contenteditable="true" data-ph="在这里写下：它是什么？解决了什么？"></div>
+          <div class="g-hint">模板：___ 用 ___ 解决了 ___</div>
+        </div>
+        <div class="group-card glass fx" style="--d:.8s" data-g="4">
+          <div class="g-label">第 4 组</div>
+          <div class="g-edit" contenteditable="true" data-ph="在这里写下：它是什么？解决了什么？"></div>
+          <div class="g-hint">模板：___ 用 ___ 解决了 ___</div>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.1s">只盯一件事——<b>它解决了什么问题？</b></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 6 蚂蚁 -->
+    <section class="slide s-ants" data-act="1">
+      <div class="bg" style="background-image:url('assets/photos/hero-ant-trail.png')"></div>
+      <div class="veil veil-heavy"></div>
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">集群智慧</div>
+        <h1 class="fx" style="--d:.3s">一只蚂蚁很笨。<em>一群蚂蚁很聪明。</em></h1>
+      </div>
+      <div class="step-row">
+        <div class="step glass fx" style="--d:.55s">
+          <div class="s-no">1</div>
+          <div class="s-text">找到食物，留下气味路</div>
+        </div>
+        <div class="step glass fx" style="--d:.7s">
+          <div class="s-no">2</div>
+          <div class="s-text">同伴跟着气味走</div>
+        </div>
+        <div class="step glass fx" style="--d:.85s">
+          <div class="s-no">3</div>
+          <div class="s-text">路被走多了，越来越“香”</div>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.1s">没有指挥官。<b>聪明不在一只蚂蚁脑子里——在它们之间。</b></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 7 椋鸟全屏 -->
+    <section class="slide s-full" data-act="1">
+      <div class="bg kenburns" style="background-image:url('assets/photos/hero-murmuration.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="punch fx" style="--d:.3s">这不是烟。<br>这是<em>几万只椋鸟</em>。</div>
+        <div class="punch-sub fx" style="--d:.8s">没有领队。下一页，你们亲手试。</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 8 boids -->
+    <section class="slide boids-slide" id="slide-boids" data-act="1">
+      <canvas width="1920" height="1080"></canvas>
+      <div class="headline">
+        <h1 class="fx" style="--d:.2s">聪明，在它们之间</h1>
+        <p class="fx" style="--d:.5s">每一只只守 <b>三条简单规则</b>：别撞上、跟着飞、别掉队。<br>点一下画面，放进老鹰。</p>
+      </div>
+      <figure class="photo-card glass fx" style="--d:.7s">
+        <img src="assets/photos/hero-murmuration.png" alt="椋鸟群">
+        <figcaption>真的椋鸟群 · 没有领队</figcaption>
+      </figure>
+      <div class="panel glass fx" style="--d:.9s">
+        <div class="ctrl-label">每只只看周围 <b id="kValue">6</b> 个邻居</div>
+        <input type="range" id="neighborRange" min="1" max="8" step="1" value="6">
+        <div class="sep"></div>
+        <div class="hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffb454" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 8.5L21 9.5L16.5 14L17.8 21L12 17.5L6.2 21L7.5 14L3 9.5L9.5 8.5Z"/></svg>
+          <span>点画面放老鹰</span>
+        </div>
+        <div class="sep"></div>
+        <button class="reset-btn" id="boidsReset">重新起飞</button>
+      </div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 9 花蝶对决 · 两组对两组 -->
+    <section class="slide s-duel" data-act="1">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">对决游戏 · 1+2 组 vs 3+4 组</div>
+        <h1 class="fx" style="--d:.3s">花和蝴蝶，互相逼聪明</h1>
+      </div>
+      <div class="cols">
+        <div class="col glass fx" style="--d:.55s">
+          <div class="col-photo" style="background-image:url('assets/photos/macro-passiflora.png')">
+            <div class="col-name">花队（1+2 组）</div>
+          </div>
+          <ul>
+            <li>假卵：骗蝴蝶「这里已经有人了」</li>
+            <li>请蚂蚁当保镖</li>
+            <li>叶子长成好几种样子</li>
+          </ul>
+        </div>
+        <div class="col glass fx" style="--d:.75s">
+          <div class="col-photo" style="background-image:url('assets/photos/macro-heliconius.png')">
+            <div class="col-name">蝶队（3+4 组）</div>
+          </div>
+          <ul>
+            <li>练出分清真假卵的眼力</li>
+            <li>记住每一棵藤在哪</li>
+            <li>自己变有毒，鸟不敢吃</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1s">两队各出 <b>2 招</b>（不能抄对面）。谁也没彻底赢，但都被逼得更聪明。</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 10 拼词 -->
+    <section class="slide puzzle" id="slide-puzzle" data-act="1">
+      <div class="bg" style="background-image:url('assets/photos/hero-macro-web.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="kicker fx" style="--d:.15s">拼图时刻 · 全班一起</div>
+        <div class="sentence fx" style="--d:.35s">
+          <span>大自然解决问题的方式是</span>
+          <span class="slot" data-slot="0"></span>
+          <span class="slot" data-slot="1"></span>
+          <span class="slot" data-slot="2"></span>
+        </div>
+        <div class="instruction fx" style="--d:.6s">每组先商量 30 秒，再派代表拖词卡</div>
+        <div class="result"></div>
+        <div class="tray glass fx" style="--d:.8s">
+          <div class="tray-label">词卡</div>
+        </div>
+        <div class="chip fx" style="--d:.95s">试很多次</div>
+        <div class="chip fx" style="--d:1.05s">留下有用的</div>
+        <div class="chip fx" style="--d:1.15s">不着急</div>
+        <div class="chip fx" style="--d:1.25s">不需要指挥</div>
+        <div class="chip fx" style="--d:1.35s">一代一代改</div>
+        <div class="chip fx" style="--d:1.45s">抄别人的</div>
+        <button class="reset-link">重新拼</button>
+      </div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 11 休息 -->
+    <section class="slide s-rest" data-act="1">
+      <div class="bg" style="background-image:url('assets/photos/hero-mountain-ridge.png')"></div>
+      <div class="content">
+        <h1 class="fx" style="--d:.2s">休息 8 分钟</h1>
+        <div class="rest-sub fx" style="--d:.5s">回来聊：人怎么把聪明攒起来</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 12 幕间二 -->
+    <section class="slide s-divider" data-act="2">
+      <div class="bg kenburns" style="background-image:url('assets/photos/act2-cave.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="act-no fx" style="--d:.2s">第二站</div>
+        <div class="act-name fx" style="--d:.4s">人类怎么变聪明</div>
+        <div class="act-sub fx" style="--d:.7s">以前聪明只在脑子里；后来人把它画在墙上、写在纸上</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 13 星星 -->
+    <section class="slide s-sky" data-act="2">
+      <div class="bg" style="background-image:url('assets/photos/hero-milky-way.png')"></div>
+      <div class="veil veil-soft"></div>
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">第二站</div>
+        <h1 class="fx" style="--d:.3s">古人的第一台「计算机」<br><em>是天上的星星</em></h1>
+      </div>
+      <div class="fact-list">
+        <div class="fact glass fx" style="--d:.55s">抬头看一整夜，星星好像在慢慢走</div>
+        <div class="fact glass fx" style="--d:.7s">把亮的点连起来，就成了「图案」</div>
+        <div class="fact glass fx" style="--d:.85s">图案能提醒：何时播种、何时出门</div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.1s">他们盯了很久，才从一团乱里 <b>看出规律</b>。</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 14 星点连线 -->
+    <section class="slide s-stars" id="slide-stars" data-act="2">
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">动手 · 每组 5 分钟</div>
+        <h1 class="fx" style="--d:.3s">现在你们当一次古人</h1>
+      </div>
+      <div class="side">
+        <div class="rule glass fx" style="--d:.5s">给这些亮点<b>连线</b>，起个名字，编一个小故事。</div>
+        <div class="rule glass fx" style="--d:.65s">每组一张纸。<b>不许看真的星座。</b></div>
+        <button class="star-btn glass fx" style="--d:.8s" id="starsRegen">换一组星星</button>
+        <button class="star-btn glass fx" style="--d:.9s" id="starsClear">清空连线</button>
+      </div>
+      <div class="sky-panel glass fx" style="--d:.6s">
+        <svg id="starsSvg" viewBox="0 0 1340 670" preserveAspectRatio="xMidYMid slice"></svg>
+      </div>
+      <div class="bottom-note fx" style="--d:1.1s">比一比——有几组连出了 <b>差不多的图案</b>？</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 15 学习循环（合并「人多了什么」） -->
+    <section class="slide s-loop" id="slide-loop" data-act="2">
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">全天最重要的一页</div>
+        <h1 class="fx" style="--d:.3s">你是怎么学会一件事的？</h1>
+      </div>
+      <div class="loop-stage fx" style="--d:.5s">
+        <svg viewBox="0 0 800 800">
+          <path class="loop-arc" id="arc0" d="M 400 130 A 270 270 0 0 1 670 400" />
+          <path class="loop-arc" id="arc1" d="M 670 400 A 270 270 0 0 1 400 670" />
+          <path class="loop-arc" id="arc2" d="M 400 670 A 270 270 0 0 1 130 400" />
+          <path class="loop-arc" id="arc3" d="M 130 400 A 270 270 0 0 1 400 130" />
+          <g class="loop-node" id="node0">
+            <circle cx="400" cy="130" r="92"/>
+            <text x="400" y="142" text-anchor="middle">试</text>
+          </g>
+          <g class="loop-node" id="node1">
+            <circle cx="670" cy="400" r="92"/>
+            <text x="670" y="412" text-anchor="middle">看</text>
+          </g>
+          <g class="loop-node" id="node2">
+            <circle cx="400" cy="670" r="92"/>
+            <text x="400" y="682" text-anchor="middle">改</text>
+          </g>
+          <g class="loop-node" id="node3">
+            <circle cx="130" cy="400" r="92"/>
+            <text x="130" y="412" text-anchor="middle">再</text>
+          </g>
+        </svg>
+      </div>
+      <div class="bike-rows">
+        <div class="bike-row glass" data-step="0">
+          <div class="br-tag">试</div>
+          <p>先上手，别等完美——摔一次也算开始</p>
+        </div>
+        <div class="bike-row glass" data-step="1">
+          <div class="br-tag">看</div>
+          <p>哪里对了？哪里砸了？</p>
+        </div>
+        <div class="bike-row glass" data-step="2">
+          <div class="br-tag">改</div>
+          <p>只改最碍事的那一步</p>
+        </div>
+        <div class="bike-row glass" data-step="3">
+          <div class="br-tag">再</div>
+          <p>转得越快，学得越快</p>
+        </div>
+      </div>
+      <button class="loop-btn fx" style="--d:.9s" id="loopNext">点亮下一步</button>
+      <div class="bottom-note fx" style="--d:1.1s">大自然也用这个循环，但很慢。人多了一样本事：<b>把学到的写下来，传给下一批人。</b></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 16 挑战 -->
+    <section class="slide s-challenge" id="slide-challenge" data-act="2">
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">动手 · 10 分钟 · 组内挑战</div>
+        <h1 class="fx" style="--d:.3s">用身体跑一遍学习循环</h1>
+      </div>
+      <div class="toys">
+        <div class="toy glass fx" style="--d:.55s">
+          <div class="t-name">叠叠杯<small>想要数字的选这个</small></div>
+          <p>每人至少试 5 次。失败要说一句：<b>我下一轮改什么</b></p>
+        </div>
+        <div class="toy glass fx" style="--d:.7s">
+          <div class="t-name">抛接球<small>想要手感的选这个</small></div>
+          <p>也可以换绳结或其他有点难的玩具。组内互相当观察员。</p>
+        </div>
+      </div>
+      <div class="timer-card glass fx" style="--d:.85s">
+        <div class="timer-display" id="challengeTime">10:00</div>
+        <div class="timer-ctrl">
+          <button class="timer-btn primary" id="challengeStart">开始</button>
+          <button class="timer-btn" id="challengeReset">重置</button>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.05s">不是比谁最厉害。<b>是看你怎么从不会变成会。</b></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 17 休息 -->
+    <section class="slide s-rest" data-act="2">
+      <div class="bg" style="background-image:url('assets/photos/act2-cave.png')"></div>
+      <div class="content">
+        <h1 class="fx" style="--d:.2s">休息 6 分钟</h1>
+        <div class="rest-sub fx" style="--d:.5s">回来：先玩，再给 AI 取名字</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 18 幕间三 -->
+    <section class="slide s-divider" data-act="3">
+      <div class="bg kenburns" style="background-image:url('assets/photos/act3-neural.png')"></div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="act-no fx" style="--d:.2s">第三站</div>
+        <div class="act-name fx" style="--d:.4s">机器也要上学</div>
+        <div class="act-sub fx" style="--d:.7s">先当老师喂它，再告诉你这叫什么</div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 19 猫狗 · 先玩 -->
+    <section class="slide s-catdog s-catdog-v2" id="slide-catdog-v2" data-act="3">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">先玩 · 4 组轮流当老师</div>
+        <h1 class="fx" style="--d:.3s">把它们拖进对的篮子</h1>
+      </div>
+      <div class="turn-bar fx" style="--d:.4s">
+        <div class="turn-now" id="cdTurn">现在轮到 <em>第 1 组</em> 拖一张</div>
+        <div class="score-row">
+          <div class="score-pill on" data-g="1">1组 <b>0</b></div>
+          <div class="score-pill" data-g="2">2组 <b>0</b></div>
+          <div class="score-pill" data-g="3">3组 <b>0</b></div>
+          <div class="score-pill" data-g="4">4组 <b>0</b></div>
+        </div>
+      </div>
+      <div class="bins">
+        <div class="bin fx" style="--d:.55s" data-kind="cat">
+          <div class="bin-name">猫</div>
+          <div class="bin-count">0 / 3</div>
+          <div class="bin-thumbs"></div>
+        </div>
+        <div class="bin fx" style="--d:.7s" data-kind="dog">
+          <div class="bin-name">狗</div>
+          <div class="bin-count">0 / 3</div>
+          <div class="bin-thumbs"></div>
+        </div>
+      </div>
+      <div class="pet-card fx" style="--d:.8s" data-kind="cat"><img src="assets/photos/pet-cat-1.png" alt="猫"></div>
+      <div class="pet-card fx" style="--d:.88s" data-kind="dog"><img src="assets/photos/pet-dog-1.png" alt="狗"></div>
+      <div class="pet-card fx" style="--d:.96s" data-kind="cat"><img src="assets/photos/pet-cat-2.png" alt="猫"></div>
+      <div class="pet-card fx" style="--d:1.04s" data-kind="dog"><img src="assets/photos/pet-dog-2.png" alt="狗"></div>
+      <div class="pet-card fx" style="--d:1.12s" data-kind="cat"><img src="assets/photos/pet-cat-3.png" alt="猫"></div>
+      <div class="pet-card fx" style="--d:1.2s" data-kind="dog"><img src="assets/photos/pet-dog-3.png" alt="狗"></div>
+      <div class="pop" id="cdPop">对！</div>
+      <div class="game-note fx" style="--d:1.3s">拖对加分并换组；拖错篮子会抖，也换下一组。</div>
+      <div class="verdict" id="cdVerdict">你们刚才干的活，在 AI 世界叫 <b>「标注数据」</b>——给机器准备课本。</div>
+      <button class="cd-reset" id="cdReset">重新来</button>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 20 命名：机器学习（先玩后讲） -->
+    <section class="slide s-nameit" data-act="3">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">现在才取名字</div>
+        <h1 class="fx" style="--d:.3s">刚才那件事，叫什么？</h1>
+      </div>
+      <div class="big-line fx" style="--d:.5s">
+        不写「如果有胡须就是猫」这种死规则，<br>
+        而是给它看很多例子，让它<em>自己找规律</em>——<br>
+        这就叫 <em>机器学习</em>。
+      </div>
+      <div class="three-words">
+        <div class="w-card glass fx" style="--d:.75s">
+          <div class="w-en">DATA</div>
+          <div class="w-cn">数据</div>
+          <div class="w-say">课本：你们标好的照片</div>
+        </div>
+        <div class="w-card glass fx" style="--d:.9s">
+          <div class="w-en">TRAIN</div>
+          <div class="w-cn">训练</div>
+          <div class="w-say">上学：看例子、改错误</div>
+        </div>
+        <div class="w-card glass fx" style="--d:1.05s">
+          <div class="w-en">MODEL</div>
+          <div class="w-cn">模型</div>
+          <div class="w-say">学会之后的「本事」</div>
+        </div>
+      </div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 21 越喂越聪明 -->
+    <section class="slide s-scale" id="slide-scale" data-act="3">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">试一试</div>
+        <h1 class="fx" style="--d:.3s">越喂越聪明</h1>
+      </div>
+      <div class="scale-panel glass fx" style="--d:.55s">
+        <div class="amount"><span id="scaleAmount">100</span><small>张照片</small></div>
+        <input type="range" id="scaleRange" min="0" max="4" step="1" value="1">
+        <div class="acc-track"><div class="acc-fill" id="scaleFill"></div></div>
+        <div class="acc-line"><b id="scaleAcc">68%</b><span id="scaleDesc">开始有点感觉了，但经常认错</span></div>
+      </div>
+      <div class="bottom-note fx" style="--d:.9s"><b>AI 的聪明是数据喂出来的。</b>喂得越多，通常认得越准。</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 22 深度学习（可跳过） -->
+    <section class="slide s-deep" id="slide-deep" data-act="3">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">深度学习 · 一层一层看懂</div>
+        <h1 class="fx" style="--d:.3s">它为什么叫「深度」？</h1>
+      </div>
+      <div class="layers">
+        <div class="layer glass" data-layer="0">
+          <div class="l-no">进来</div>
+          <div class="l-svg"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></div>
+          <div class="l-name">一堆点</div>
+          <div class="l-text">只有颜色格子</div>
+        </div>
+        <svg class="d-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="layer glass" data-layer="1">
+          <div class="l-no">第一层</div>
+          <div class="l-svg"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M4 20L20 4M4 10l6-6M14 20l6-6"/></svg></div>
+          <div class="l-name">线条</div>
+          <div class="l-text">边、横竖斜</div>
+        </div>
+        <svg class="d-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="layer glass" data-layer="2">
+          <div class="l-no">第二层</div>
+          <div class="l-svg"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 3l4 5-4 5-4-5z"/><circle cx="7" cy="17" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg></div>
+          <div class="l-name">形状</div>
+          <div class="l-text">耳朵、眼睛</div>
+        </div>
+        <svg class="d-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <div class="layer glass" data-layer="3">
+          <div class="l-no">第三层</div>
+          <div class="l-svg"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M12 5c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z"/><circle cx="9.5" cy="11.5" r="0.8"/><circle cx="14.5" cy="11.5" r="0.8"/><path d="M10 15.5c1 .8 3 .8 4 0"/></svg></div>
+          <div class="l-name">整体</div>
+          <div class="l-text">「这是猫！」</div>
+        </div>
+      </div>
+      <button class="deep-btn fx" style="--d:.7s" id="deepNext">照片进来了</button>
+      <div class="bottom-note fx" style="--d:.9s">层很多、很深，所以叫「深度」学习。超时可跳。</div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <!-- 23 喂 AI · 4 组 -->
+    <section class="slide s-feed s-feed-v2" id="slide-feed" data-act="3">
+      <div class="page-head" style="text-align:center">
+        <div class="kicker fx" style="--d:.15s">游戏 · 3 轮 · 每轮 90 秒</div>
+        <h1 class="fx" style="--d:.3s">你们来当 AI</h1>
+      </div>
+      <div class="team-grid">
+        <div class="team glass fx" style="--d:.5s">
+          <div class="tm-role">喂数据组 · 第 1 + 2 组</div>
+          <p>选一样东西，用嘴描述给对面听。<b>不能说名字</b>，只能说形状、颜色、干什么用。</p>
+        </div>
+        <div class="team glass fx" style="--d:.65s">
+          <div class="tm-role">AI 组 · 第 3 + 4 组</div>
+          <p>只能照着描述画。<b>不许提问。</b>听到什么，画什么。</p>
+        </div>
+      </div>
+      <div class="round-card glass fx" style="--d:.85s">
+        <div class="round-label">当前轮次</div>
+        <div class="round-no" id="feedRound">第 1 / 3 轮</div>
+        <div class="timer-display" id="feedTime">1:30</div>
+        <div class="timer-ctrl">
+          <button class="timer-btn primary" id="feedStart">开始本轮</button>
+          <button class="timer-btn" id="feedReset">重置</button>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1.05s">画完对答案。问一句——<b>画错了，是谁的问题？</b>（第二轮互换角色）</div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 24 喂错 + 回引 -->
+    <section class="slide s-data" id="slide-data" data-act="3">
+      <div class="page-head">
+        <div class="kicker fx" style="--d:.15s">复盘</div>
+        <h1 class="fx" style="--d:.3s">喂错了，会怎样</h1>
+      </div>
+      <div class="step-row" style="top:340px">
+        <div class="step glass fx" style="--d:.5s">
+          <div class="s-no">说太少</div>
+          <div class="s-text">它就<b>自己瞎补</b></div>
+        </div>
+        <div class="step glass fx" style="--d:.65s">
+          <div class="s-no">说偏了</div>
+          <div class="s-text">它就<b>学歪</b></div>
+        </div>
+        <div class="step glass fx" style="--d:.8s">
+          <div class="s-no">说清楚</div>
+          <div class="s-text">它才<b>画得像</b></div>
+        </div>
+      </div>
+      <div class="bottom-note fx" style="--d:1s"><b>AI 不神奇：你喂什么，它学什么。</b>和今天户外找的聪明、和拼词那句话，是同一件事：</div>
+      <div class="echo-quote fx" style="--d:1.3s" id="echoQuote"></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 25 收尾 -->
+    <section class="slide s-close" data-act="3">
+      <div class="content">
+        <div class="kicker fx" style="--d:.15s">今天的最后一件事</div>
+        <h1 class="fx" style="--d:.35s">今天我发现<span class="blank"></span></h1>
+        <div class="how fx" style="--d:.7s">每组写一句，贴到「我发现」墙上。</div>
+      </div>
+      <div class="bottom-note fx" style="--d:1s"><b>五天后，我们回来看这面墙。</b></div>
+      <div class="pace-tag must">必讲</div>
+    </section>
+
+    <!-- 26 预告 -->
+    <section class="slide s-teaser" data-act="3">
+      <div class="bg" style="background-image:url('assets/photos/hero-deep-space.png')"></div>
+      <div class="veil veil-soft"></div>
+      <div class="content">
+        <div class="kicker fx" style="--d:.15s">明日预告</div>
+        <h1 class="fx" style="--d:.35s">明天，打开工具箱</h1>
+        <div class="t-sub fx" style="--d:.65s">亲手玩玩今年最火的工具。<br>今晚想一个：<b>你希望有个东西帮你解决什么麻烦？</b></div>
+      </div>
+      <div class="pace-tag skip">可跳过</div>
+    </section>
+
+    <div class="hud">
+      <div class="progress-track"><div class="progress-fill"></div></div>
+      <div class="day-label">DAY 1 · V2 · 4 组营地版</div>
+      <div class="page-no"></div>
+    </div>
+
+    <div class="nav-zone prev" title="上一页">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+    <div class="nav-zone next" title="下一页">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+</div>
+
+<script src="assets/js/deck.js"></script>
+<script src="assets/js/boids.js"></script>
+<script src="assets/js/drag.js"></script>
+<script src="assets/js/interactions.js"></script>
+<script src="assets/js/interactions-v2.js"></script>
+</body>
+</html>

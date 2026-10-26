@@ -1,0 +1,3971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「机」遇未来 · AI 对教育变革的分析及选择</title>
+<style>
+  :root{
+    --bg:#f5f5f7;
+    --paper:#ffffff;
+    --ink:#1d1d1f;
+    --ink-2:#6e6e73;
+    --ink-3:#86868b;
+    --line:#d2d2d7;
+    --blue:#0071e3;
+    --fill:#f5f5f7;
+    --fill-2:#e8e8ed;
+    --gold:#c48a2a;
+    --coral:#e85d4c;
+    --teal:#1aa39a;
+    --violet:#6c5ce7;
+    --orange:#ff9500;
+    --green:#34c759;
+    --navy:#0b1f3a;
+    --navy-2:#1b3654;
+    --burgundy:#7a1f2b;
+    --paper-warm:#f4f1ea;
+    --fs-kicker: clamp(11px, 1.3vmin, 16px);
+    --fs-h1: clamp(36px, 6vmin, 88px);
+    --fs-cover: clamp(30px, 5vmin, 68px);
+    --fs-h2: clamp(22px, 3.5vmin, 52px);
+    --fs-h2-data: clamp(20px, 3.05vmin, 40px);
+    --fs-h3: clamp(14px, 1.85vmin, 24px);
+    --fs-lede: clamp(14px, 1.65vmin, 22px);
+    --fs-body: clamp(13px, 1.5vmin, 18px);
+    --fs-small: clamp(12px, 1.35vmin, 16px);
+    --fs-micro: clamp(11px, 1.2vmin, 14px);
+    --fs-num: clamp(24px, 3.8vmin, 52px);
+    --fs-src: clamp(10px, 1.15vmin, 13px);
+    --fs-num-sm: clamp(20px, 2.9vmin, 38px);
+  }
+
+  /* Back-row type · pages 1, 8–12 only */
+  .slide.cover-mesh,
+  .slide.cap-slide,
+  .slide.cases-slide,
+  .slide.course-poster,
+  .slide.atlas-slide,
+  .slide.co-slide{
+    --fs-kicker: clamp(12px, 1.5vmin, 18px);
+    --fs-cover: clamp(34px, 5.7vmin, 78px);
+    --fs-h2: clamp(24px, 3.9vmin, 56px);
+    --fs-h2-data: clamp(23px, 3.45vmin, 46px);
+    --fs-h3: clamp(16px, 2.1vmin, 27px);
+    --fs-lede: clamp(16px, 1.9vmin, 25px);
+    --fs-body: clamp(14px, 1.7vmin, 20px);
+    --fs-small: clamp(13px, 1.55vmin, 18px);
+    --fs-micro: clamp(12px, 1.38vmin, 16px);
+    --fs-src: clamp(11px, 1.25vmin, 14px);
+  }
+  .slide.atlas-slide{
+    --fs-small: clamp(13px, 1.48vmin, 17px);
+    --fs-micro: clamp(12px, 1.32vmin, 15px);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",sans-serif;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  #deck{height:100%;position:relative;background:var(--bg)}
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 8vw;
+    opacity:0;visibility:hidden;
+    transform:translateY(12px);
+    transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),visibility .55s;
+    z-index:2;background:var(--bg);
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .slide.paper{background:var(--paper)}
+  .creature{
+    position:absolute;
+    pointer-events:none;
+    z-index:1;
+    user-select:none;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.06))
+      drop-shadow(0 18px 28px rgba(0,0,0,.10))
+      drop-shadow(0 36px 56px rgba(0,0,0,.08));
+  }
+  .slide > *:not(.creature){position:relative;z-index:2}
+  .creature.flock{right:-4vw;top:6vh;width:min(36vw,460px);opacity:.88}
+  .creature.lizard{right:1.2vw;bottom:9vh;width:min(26vw,320px);opacity:.94}
+  .creature.ants{right:-3vw;left:auto;top:6vh;bottom:auto;width:min(38vw,520px);transform:none;opacity:.9}
+  .slide.labor .creature.ants{top:5vh;right:-4vw;bottom:auto}
+  .neuron-side{
+    width:min(100%,280px);height:auto;max-height:62vh;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.05))
+      drop-shadow(0 16px 28px rgba(0,0,0,.10));
+  }
+  .slide.center{align-items:center;text-align:center}
+  .content{position:relative;z-index:3;width:100%;min-width:0}
+  h1,h2,.statement,.note,.quote-hero,.hero-num,.hero-sub,.hero-detail{overflow-wrap:break-word}
+
+  .em{color:var(--blue)}
+  .mark{
+    font-size:var(--fs-kicker);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink);
+    font-weight:600;
+    margin-bottom:3.2vh;
+  }
+  .slide.cover{
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:0;
+    padding:0;
+    background:#fff;
+    overflow:visible;
+  }
+  .pane-bird{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 2.5vw 6vh 6vw;
+    min-width:0;
+    background:#fff;
+  }
+  .cover-bird{
+    display:block;
+    min-width:0;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:78vh;
+    object-fit:contain;
+    filter:
+      drop-shadow(0 4px 8px rgba(0,0,0,.06))
+      drop-shadow(0 18px 28px rgba(0,0,0,.10))
+      drop-shadow(0 42px 70px rgba(0,0,0,.12));
+  }
+  .slide.cover .pane-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7vh 7vw 7vh 4vw;
+    min-width:0;
+  }
+  .cover-agenda{
+    list-style:none;
+    margin-top:4vh;
+    max-width:28em;
+    display:flex;
+    flex-direction:column;
+    gap:1.6vh;
+  }
+  .cover-agenda li{
+    display:grid;
+    grid-template-columns:2.2em 1fr;
+    gap:10px;
+    align-items:start;
+  }
+  .cover-agenda .num{
+    font-size:var(--fs-small);
+    font-weight:600;
+    color:var(--blue);
+    letter-spacing:.02em;
+    padding-top:.15em;
+  }
+  .cover-agenda .txt{
+    font-size:var(--fs-lede);
+    font-weight:500;
+    letter-spacing:-.02em;
+    line-height:1.35;
+    color:var(--ink);
+  }
+  .cover-agenda .desc{
+    display:block;
+    margin-top:.35em;
+    font-size:var(--fs-small);
+    font-weight:400;
+    color:var(--ink-2);
+    line-height:1.45;
+  }
+
+  .kicker{
+    font-size:var(--fs-kicker);
+    color:var(--ink-2);
+    letter-spacing:.04em;
+    margin-bottom:2.2vh;
+    font-weight:600;
+  }
+  h1{
+    font-size:var(--fs-h1);
+    line-height:1.05;
+    font-weight:600;
+    letter-spacing:-.035em;
+  }
+  .cover-title{
+    white-space:nowrap;
+    font-size:var(--fs-cover);
+  }
+  .cover-sub{
+    font-size:var(--fs-lede);
+    color:var(--ink-2);
+    margin-top:1.6vh;
+    font-weight:400;
+    letter-spacing:-.01em;
+  }
+
+  /* —— 封面 · 线框地形 · 左右分栏 —— */
+  .slide.cover-mesh{
+    padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
+    display:grid;
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    gap:0;
+  }
+  .cover-mesh .cm-art{
+    display:flex;align-items:center;justify-content:center;
+    padding:0;
+    min-width:0;background:#070b14;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover-mesh .cm-art img{
+    display:block;position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 55%;
+    animation:cm-glow 7s ease-in-out infinite;
+  }
+  .cover-mesh .cm-art::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(90deg, transparent 55%, rgba(7,11,20,.35) 78%, #070b14 100%),
+      radial-gradient(ellipse 70% 60% at 42% 58%, transparent 40%, rgba(7,11,20,.28) 100%);
+  }
+  .cover-mesh .cm-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:7vh 5.5vw 7vh 2.2vw;
+    min-width:0;position:relative;z-index:2;
+    background:linear-gradient(90deg, rgba(7,11,20,.55) 0%, #070b14 18%);
+  }
+  .cover-mesh .mark{
+    color:#e8c547;margin-bottom:2.2vh;letter-spacing:.22em;
+  }
+  .cover-mesh .cover-title{
+    color:#fff;font-weight:650;white-space:nowrap;
+    font-size:var(--fs-cover);
+    text-shadow:0 2px 18px rgba(0,0,0,.45);
+  }
+  .cover-mesh .cover-title .em{
+    background:linear-gradient(120deg,#e8c547 0%,#f0a36a 45%,#c56bff 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cover-mesh .cover-sub{
+    color:rgba(245,245,247,.78);max-width:22em;margin-top:1.6vh;
+    text-shadow:0 1px 10px rgba(0,0,0,.35);
+  }
+  .cm-agenda{
+    list-style:none;margin-top:3.8vh;max-width:28em;
+    display:flex;flex-direction:column;gap:1.55vh;
+  }
+  .cm-agenda li{
+    display:grid;grid-template-columns:2.3em 1fr;gap:10px;align-items:start;
+  }
+  .cm-agenda .num{
+    font-size:var(--fs-small);font-weight:700;color:#e8c547;
+    letter-spacing:.04em;padding-top:.18em;
+  }
+  .cm-agenda .txt{
+    font-size:var(--fs-lede);font-weight:550;letter-spacing:-.02em;
+    line-height:1.35;color:#fff;
+    text-shadow:0 1px 10px rgba(0,0,0,.35);
+  }
+  .cm-agenda .desc{
+    display:block;margin-top:.35em;
+    font-size:var(--fs-small);font-weight:400;
+    color:rgba(245,245,247,.55);line-height:1.48;
+  }
+  .cm-foot{
+    margin-top:4vh;font-size:var(--fs-kicker);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(232,197,71,.55);
+  }
+  @keyframes cm-glow{
+    0%,100%{filter:brightness(1)}
+    50%{filter:brightness(1.08)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cover-mesh .cm-art img{animation:none}
+  }
+
+  /* —— 封面 B · 神经网络全幅 —— */
+  .slide.cover-neural{
+    padding:0;overflow:hidden;background:#070b14;color:#f5f5f7;
+  }
+  .slide.cover-neural > .cn-bg{
+    position:absolute;inset:-4%;
+    width:108%;height:108%;
+    object-fit:cover;object-position:center 46%;
+    z-index:0;
+    animation:cn-drift 28s ease-in-out infinite alternate;
+    will-change:transform;
+  }
+  @keyframes cn-drift{
+    from{transform:scale(1.02) translate3d(-1.2%,.6%,0)}
+    to{transform:scale(1.08) translate3d(1.4%,-1%,0)}
+  }
+  .slide.cover-neural > .cn-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(105deg, rgba(7,11,20,.78) 0%, rgba(7,11,20,.42) 34%, rgba(7,11,20,.08) 58%, rgba(7,11,20,.35) 100%),
+      linear-gradient(180deg, rgba(7,11,20,.28) 0%, transparent 22%, transparent 62%, rgba(7,11,20,.55) 100%);
+  }
+  .slide.cover-neural > .cn-pulse{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse 58% 52% at 72% 48%, rgba(64,156,255,.32), transparent 70%);
+    animation:cn-pulse 6.5s ease-in-out infinite;
+    mix-blend-mode:screen;
+  }
+  @keyframes cn-pulse{
+    0%,100%{opacity:.45;transform:scale(1)}
+    50%{opacity:.85;transform:scale(1.06)}
+  }
+  .slide.cover-neural > .cn-ui{
+    position:relative;z-index:3;
+    height:100%;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 8vw 8vh 6.5vw;
+    max-width:48vw;
+  }
+  .slide.cover-neural .mark{
+    color:#e8c547;margin-bottom:2.4vh;letter-spacing:.22em;
+    opacity:0;animation:cn-rise .9s ease .15s forwards;
+  }
+  .slide.cover-neural .cover-title{
+    color:#fff;font-weight:650;
+    opacity:0;animation:cn-rise .95s ease .28s forwards;
+  }
+  .slide.cover-neural .cover-title .em{color:#e8c547}
+  .slide.cover-neural .cover-sub{
+    color:rgba(245,245,247,.72);max-width:22em;margin-top:1.8vh;
+    opacity:0;animation:cn-rise .95s ease .4s forwards;
+  }
+  .cn-agenda{
+    list-style:none;margin-top:4.2vh;max-width:32em;
+    display:flex;flex-direction:column;gap:1.7vh;
+  }
+  .cn-agenda li{
+    display:grid;grid-template-columns:2.4em 1fr;gap:12px;align-items:start;
+    opacity:0;animation:cn-rise .85s ease forwards;
+  }
+  .cn-agenda li:nth-child(1){animation-delay:.55s}
+  .cn-agenda li:nth-child(2){animation-delay:.68s}
+  .cn-agenda li:nth-child(3){animation-delay:.81s}
+  .cn-agenda .num{
+    font-size:var(--fs-small);font-weight:700;color:#e8c547;
+    letter-spacing:.04em;padding-top:.2em;
+  }
+  .cn-agenda .txt{
+    font-size:var(--fs-lede);font-weight:550;letter-spacing:-.02em;
+    line-height:1.35;color:#fff;
+  }
+  .cn-agenda .desc{
+    display:block;margin-top:.4em;
+    font-size:var(--fs-small);font-weight:400;
+    color:rgba(245,245,247,.58);line-height:1.5;
+  }
+  .cn-foot{
+    margin-top:4.5vh;font-size:var(--fs-kicker);font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(232,197,71,.55);
+    opacity:0;animation:cn-rise .9s ease .95s forwards;
+  }
+  @keyframes cn-rise{
+    from{opacity:0;transform:translateY(14px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .slide.cover-neural > .cn-bg,
+    .slide.cover-neural > .cn-pulse,
+    .slide.cover-neural .mark,
+    .slide.cover-neural .cover-title,
+    .slide.cover-neural .cover-sub,
+    .cn-agenda li,
+    .cn-foot{animation:none;opacity:1;transform:none}
+  }
+
+  h2{
+    font-size:var(--fs-h2);
+    line-height:1.12;
+    font-weight:600;
+    letter-spacing:-.03em;
+    margin-bottom:4vh;
+  }
+  .lede{
+    font-size:var(--fs-lede);
+    line-height:1.45;
+    color:var(--ink-2);
+    font-weight:400;
+    max-width:22em;
+    margin-top:2.4vh;
+  }
+  .statement{
+    font-size:var(--fs-h3);
+    line-height:1.4;
+    font-weight:500;
+    letter-spacing:-.02em;
+    max-width:28em;
+    color:var(--ink);
+  }
+  .note{
+    margin-top:4vh;
+    font-size:var(--fs-body);
+    color:var(--ink-2);
+    line-height:1.7;
+    max-width:46em;
+  }
+  .note strong{color:var(--ink);font-weight:600}
+
+  .hero-num{
+    font-size:clamp(64px,11vw,160px);
+    font-weight:600;
+    line-height:.95;
+    letter-spacing:-.05em;
+    color:var(--ink);
+  }
+  .hero-sub{
+    font-size:clamp(20px,2.05vw,28px);
+    margin-top:2.4vh;
+    font-weight:500;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    max-width:22em;
+    line-height:1.35;
+  }
+  .hero-detail{
+    margin-top:2.6vh;
+    font-size:clamp(15px,1.25vw,18px);
+    color:var(--ink-2);
+    line-height:1.7;
+    max-width:36em;
+  }
+  .hero-tag{
+    margin-top:3.4vh;
+    font-size:clamp(11px,.9vw,13px);
+    color:var(--ink-3);
+    letter-spacing:.02em;
+  }
+
+  /* Split: text + big photo */
+  .split{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:0;
+    padding:0;
+    align-items:stretch;
+  }
+  .split.reverse{grid-template-columns:.95fr 1.05fr}
+  .split .pane-text{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 6vw 8vh 8vw;
+    min-width:0;
+  }
+  .split.reverse .pane-text{padding:8vh 8vw 8vh 6vw}
+  .pane-photo{
+    background-size:cover;
+    background-position:center;
+    min-height:100%;
+  }
+
+  /* Inset photo under headline, Apple product-page style */
+  .photo-band{
+    width:100%;
+    height:42vh;
+    border-radius:28px;
+    background-size:cover;
+    background-position:center;
+    margin-top:3.2vh;
+  }
+
+  /* Schools overview — summit language, map as hero */
+  .slide.schools{
+    display:flex;
+    flex-direction:column;
+    justify-content:stretch;
+    overflow:hidden;
+    padding:0;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.schools.paper{background:#070b14}
+  .slide.schools .creature{display:none}
+  .schools-stage{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:2fr 3fr;
+  }
+  .schools-hero{
+    position:relative;
+    overflow:hidden;
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    background:#05070c;
+  }
+  .schools-hero .brand{
+    flex:none;
+    padding:2.6vh 1.6vw 1.1vh;
+  }
+  .schools-hero .brand .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:var(--fs-kicker);
+    font-weight:700;
+    margin:0 0 .55vh;
+  }
+  .schools-hero .brand h2{
+    font-size:clamp(20px, 2.7vmin, 34px);
+    font-weight:600;
+    letter-spacing:-.03em;
+    line-height:1.22;
+    margin:0;
+    color:#fff;
+  }
+  .schools-map-stage{
+    position:relative;
+    flex:none;
+    width:100%;
+    aspect-ratio:1280 / 712;
+    overflow:hidden;
+    background:#0e1116;
+  }
+  .schools-map-stage > img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:contain;
+    object-position:center;
+    opacity:.94;
+    filter:contrast(1.12) saturate(1.06) brightness(1.04);
+    pointer-events:none;
+    user-select:none;
+  }
+  .schools-map-stage .veil{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(5,7,12,.08) 0%, transparent 40%);
+    z-index:1;
+    pointer-events:none;
+  }
+  .schools-map-stage .mpin{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:2;
+    pointer-events:none;
+  }
+  .schools-map-stage .mpin .dot{
+    width:clamp(11px, 1.35vmin, 18px);
+    height:clamp(11px, 1.35vmin, 18px);
+    border-radius:50%;
+    border:2.5px solid #fff;
+    box-shadow:0 0 0 4px color-mix(in srgb, var(--pin, #fff) 40%, transparent), 0 4px 14px rgba(0,0,0,.5);
+    display:block;
+  }
+  .map-legend{
+    position:static;
+    flex:none;
+    padding:.7vh 1.6vw .15vh;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:.3vh .55vw;
+  }
+  .map-legend .item{
+    display:flex;align-items:baseline;gap:8px;
+    font-size:clamp(11px, 1.25vmin, 15px);
+    color:#fff;
+    font-weight:600;
+    line-height:1.25;
+    border-top:1px solid rgba(232,197,71,.45);
+    padding-top:.4vh;
+  }
+  .map-legend .swatch{
+    width:clamp(8px, 1.05vmin, 14px);
+    height:clamp(8px, 1.05vmin, 14px);
+    border-radius:50%;flex-shrink:0;
+    box-shadow:0 0 0 2px rgba(255,255,255,.35);
+    transform:translateY(1px);
+  }
+  .map-legend .item span.meta{
+    color:rgba(244,240,230,.7);font-weight:500;
+    font-size:clamp(10px, 1.12vmin, 13px);
+  }
+  .theses{
+    flex:1;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    padding:.5vh 1.6vw 7.2vh;
+  }
+  .theses-kicker{
+    flex:none;
+    color:#e8c547;
+    letter-spacing:.16em;
+    font-size:clamp(11px, 1.25vmin, 14px);
+    font-weight:700;
+    padding:.15vh 0 .45vh;
+  }
+  .thesis{
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:2.2em minmax(0,1fr);
+    column-gap:.7vw;
+    align-items:start;
+    padding:.65vh 0 .5vh;
+    border-top:1px solid rgba(232,197,71,.35);
+  }
+  .thesis .num{
+    color:#e8c547;
+    font-size:clamp(14px, 1.55vmin, 18px);
+    font-weight:700;
+    letter-spacing:.08em;
+    padding-top:.12em;
+  }
+  .thesis p{
+    margin:0;
+    font-size:clamp(15px, 1.7vmin, 20px);
+    line-height:1.42;
+    color:rgba(244,240,230,.92);
+    font-weight:500;
+  }
+  .schools-panel{
+    min-width:0;min-height:0;
+    overflow:hidden;
+    padding:2.4vh 2.2vw 8vh 1.8vw;
+    display:flex;flex-direction:column;
+    background:linear-gradient(180deg, #0d1524 0%, #090e18 100%);
+  }
+  .gloss{
+    flex-shrink:0;
+    margin-top:1.1vh;
+    padding-top:.9vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    column-gap:1.1vw;
+    row-gap:.35vh;
+    background:transparent;
+    border-radius:0;
+    box-shadow:none;
+  }
+  .gloss h4{
+    grid-column:1 / -1;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.14em;
+    color:#e8c547;
+    margin-bottom:.15vh;
+  }
+  .gloss p{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.7);
+    line-height:1.4;
+    margin:0;
+  }
+  .gloss p strong{
+    color:#fff;
+    font-weight:650;
+  }
+  .schools-grid{
+    min-width:0;min-height:0;
+    flex:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:repeat(3,minmax(0,1fr));
+    gap:.55vh .6vw;
+  }
+  .scard{
+    --accent:#e8c547;
+    display:grid;
+    grid-template-rows:auto 1fr;
+    min-height:0;
+    background:rgba(255,255,255,.05);
+    border-radius:0;
+    overflow:hidden;
+    box-shadow:none;
+    border:1px solid rgba(232,197,71,.14);
+    border-left:3px solid var(--accent);
+    position:relative;
+  }
+  .scard::before{display:none}
+  .scard.c-alpha{--accent:#FF3B30}
+  .scard.c-astra{--accent:#e8c547}
+  .scard.c-sabre{--accent:#AF52DE}
+  .scard.c-kami{--accent:#FF2D55}
+  .scard.c-founders{--accent:#FF9500}
+  .scard.c-forge{--accent:#34C759}
+  .scard-media{
+    position:relative;
+    height:clamp(36px, 5vmin, 62px);
+    min-height:36px;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--accent) 28%, #0d1524), #121826);
+  }
+  .scard-media::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 15%, rgba(9,14,24,.62) 100%);
+    pointer-events:none;
+  }
+  .scard-media img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+    opacity:.9;
+    filter:saturate(1.08) contrast(1.06);
+  }
+  .scard-media .fallback{
+    position:absolute;inset:0;
+    z-index:2;
+    display:flex;align-items:flex-end;
+    padding:5px 10px;
+    font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:#e8c547;
+    text-shadow:0 2px 10px rgba(0,0,0,.5);
+  }
+  .scard-body{
+    padding:.5vh .7vw .55vh .85vw;
+    display:flex;flex-direction:column;
+    min-height:0;
+    overflow:hidden;
+  }
+  .scard .where{
+    font-size:clamp(10px, 1.15vmin, 13px);
+    font-weight:700;
+    color:var(--accent);
+    letter-spacing:.06em;
+    margin-bottom:.08vh;
+  }
+  .scard h3{
+    font-size:clamp(14px, 1.7vmin, 22px);
+    font-weight:600;
+    letter-spacing:-.025em;
+    margin-bottom:.25vh;
+    color:#fff;
+  }
+  .smeta{
+    display:grid;
+    grid-template-columns:2.7em minmax(0,1fr);
+    column-gap:.45vw;
+    row-gap:.22vh;
+    flex:1;
+    min-height:0;
+    align-content:start;
+  }
+  .smeta dt{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;
+    letter-spacing:.1em;
+    color:#e8c547;
+    padding-top:.12em;
+    line-height:1.3;
+  }
+  .smeta dd{
+    font-size:clamp(11px, 1.28vmin, 15px);
+    line-height:1.35;
+    color:rgba(244,240,230,.86);
+    min-width:0;
+  }
+  .smeta dd .mute{
+    color:rgba(244,240,230,.55);
+  }
+  .scard .note{
+    margin-top:.12vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);
+    line-height:1.25;
+    flex-shrink:0;
+  }
+  .schips{
+    display:flex;flex-wrap:wrap;gap:4px;
+    margin-top:.45vh;
+    flex-shrink:0;
+  }
+  .schip{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(232,197,71,.12);
+    border-radius:100px;
+    padding:3px 8px 3px 3px;
+    font-size:clamp(10px, 1.15vmin, 14px);
+    font-weight:650;
+    color:#f3e2a4;
+    line-height:1.2;
+    letter-spacing:-.01em;
+  }
+  .schip .dico{width:18px;height:18px;border-radius:7px}
+  .schip .dico svg{width:62%;height:62%}
+  .chip{
+    display:inline-flex;align-items:center;
+    background:var(--fill);
+    border-radius:100px;
+    padding:3px 9px;
+    font-size:clamp(10px, 1.15vmin, 13px);
+    font-weight:600;
+    color:var(--ink-2);
+    line-height:1.3;
+    margin:0 4px 4px 0;
+  }
+
+
+
+
+  /* Astra Nova — Back to School summit language */
+  .slide.astra-slide{
+    padding:0;
+    justify-content:stretch;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.astra-slide .creature{display:none}
+  .astra-stage{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:2fr 3fr;
+  }
+  .astra-hero{
+    position:relative;
+    overflow:hidden;
+    min-width:0;
+    background:#05070c;
+  }
+  .astra-hero .bg{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:62% 42%;
+    filter:saturate(1.12) contrast(1.08);
+  }
+  .astra-hero .veil{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(90deg, rgba(7,11,20,.12) 0%, rgba(7,11,20,.18) 55%, rgba(7,11,20,.92) 100%),
+      linear-gradient(180deg, rgba(7,11,20,.28) 0%, transparent 28%, rgba(7,11,20,.72) 100%);
+  }
+  .astra-hero .brand{
+    position:absolute;left:1.6vw;top:3.2vh;
+    z-index:2;
+  }
+  .astra-hero .brand .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:var(--fs-kicker);
+    font-weight:700;
+    margin:0 0 .55vh;
+  }
+  .astra-hero .brand h2{
+    font-size:clamp(22px, 3.1vmin, 42px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1.12;
+    max-width:11.5em;
+    margin:0;
+    color:#fff;
+    word-break:keep-all;
+    text-shadow:0 8px 28px rgba(0,0,0,.45);
+  }
+  .astra-kpis{
+    position:absolute;left:1.6vw;bottom:3.2vh;right:2.2vw;
+    z-index:2;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:.7vh .8vw;
+  }
+  .astra-kpis .ak{
+    border-top:1px solid rgba(232,197,71,.55);
+    padding-top:.55vh;
+  }
+  .astra-kpis .n{
+    font-size:clamp(22px, 3.2vmin, 40px);
+    font-weight:600;
+    letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    line-height:.95;
+    color:#fff;
+  }
+  .astra-kpis .u{
+    margin-top:.2vh;
+    font-size:clamp(11px, 1.2vmin, 14px);
+    color:rgba(244,240,230,.78);
+    letter-spacing:.04em;
+    font-weight:600;
+  }
+  .astra-inset{
+    position:absolute;
+    right:1.4vw;bottom:26vh;
+    width:min(42%, 240px);
+    z-index:2;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+    border:1px solid rgba(255,255,255,.18);
+    overflow:hidden;
+  }
+  .astra-inset img{
+    display:block;width:100%;aspect-ratio:16/10;
+    object-fit:cover;
+  }
+  .astra-inset figcaption{
+    background:rgba(7,11,20,.82);
+    color:#e8c547;
+    font-size:clamp(9px, 1.05vmin, 12px);
+    font-weight:700;
+    letter-spacing:.12em;
+    padding:.45vh .55vw;
+  }
+  .astra-panel{
+    min-width:0;min-height:0;
+    padding:3vh 2.4vw 8vh 2vw;
+    display:flex;flex-direction:column;
+    background:
+      linear-gradient(180deg, #0d1524 0%, #090e18 100%);
+  }
+  .astra-panel .lede{
+    font-size:clamp(13px, 1.45vmin, 18px);
+    color:rgba(244,240,230,.72);
+    line-height:1.45;
+    max-width:38em;
+    margin:0 0 1.4vh;
+  }
+  .track{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    position:relative;
+    padding-left:.35vw;
+  }
+  .track::before{
+    content:'';
+    position:absolute;
+    left:1.15em;top:.8vh;bottom:.8vh;
+    width:1px;
+    background:linear-gradient(180deg, rgba(232,197,71,.15), #e8c547 12%, #e8c547 88%, rgba(232,197,71,.15));
+  }
+  .tstep{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:2.6em minmax(0,1fr);
+    column-gap:.85vw;
+    align-items:center;
+    position:relative;
+    padding:.55vh 0 .55vh .15vw;
+  }
+  .tstep .num{
+    width:2.15em;height:2.15em;
+    border-radius:50%;
+    border:1px solid #e8c547;
+    background:#0d1524;
+    color:#e8c547;
+    font-size:clamp(11px, 1.25vmin, 14px);
+    font-weight:700;
+    letter-spacing:.06em;
+    display:grid;place-items:center;
+    z-index:1;
+  }
+  .tstep .body{
+    min-width:0;
+    padding:.7vh .9vw .75vh;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+  }
+  .tstep .cap{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;
+    letter-spacing:.14em;
+    color:#e8c547;
+    margin-bottom:.15vh;
+  }
+  .tstep h3{
+    font-size:clamp(15px, 1.75vmin, 22px);
+    font-weight:600;
+    letter-spacing:-.025em;
+    color:#fff;
+    margin:0 0 .2vh;
+  }
+  .tstep p{
+    font-size:clamp(11px, 1.25vmin, 15px);
+    color:rgba(244,240,230,.72);
+    line-height:1.4;
+    margin:0 0 .35vh;
+  }
+  .tstep .chips{margin:0}
+  .tstep .chip{
+    font-size:clamp(10px, 1.05vmin, 12px);
+    line-height:1.25;
+    max-width:100%;
+    background:rgba(232,197,71,.12);
+    color:#f3e2a4;
+    border:1px solid rgba(232,197,71,.22);
+    margin:0 5px 4px 0;
+  }
+  .astra-hero .bg.catalog{
+    object-fit:cover;
+    object-position:48% 8%;
+    filter:saturate(1.02) contrast(1.04);
+  }
+  .cnd-list{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    gap:.7vh;
+  }
+  .cnd{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:minmax(88px, 7.4vw) minmax(0,1fr);
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    overflow:hidden;
+  }
+  .cnd img{
+    width:100%;height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .cnd > div{
+    min-width:0;min-height:0;
+    padding:.7vh .9vw .75vh;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .cnd .en{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;
+    letter-spacing:.12em;
+    color:#e8c547;
+    margin-bottom:.2vh;
+  }
+  .cnd h3{
+    font-size:clamp(14px, 1.65vmin, 20px);
+    font-weight:600;
+    letter-spacing:-.025em;
+    color:#fff;
+    margin:0 0 .25vh;
+    line-height:1.28;
+  }
+  .cnd p{
+    margin:0 0 .35vh;
+    font-size:clamp(11px, 1.22vmin, 14px);
+    line-height:1.4;
+    color:rgba(244,240,230,.72);
+  }
+  .cnd .opts{
+    display:flex;flex-wrap:wrap;gap:5px;
+  }
+  .cnd .opts span{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:650;
+    color:#f3e2a4;
+    background:rgba(232,197,71,.1);
+    border:1px solid rgba(232,197,71,.22);
+    padding:3px 8px;
+    line-height:1.25;
+  }
+  .astra-foot{
+    flex-shrink:0;
+    margin-top:1.1vh;
+    padding-top:.9vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    font-size:clamp(13px, 1.4vmin, 17px);
+    line-height:1.4;
+    color:#fff;
+    font-weight:500;
+  }
+  .astra-foot .lbl{
+    color:#e8c547;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.14em;
+    margin-right:.55em;
+  }
+
+  /* Authoritative admissions layout */
+  .slide.auth-slide{
+    padding:0;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.auth-slide .lrow{
+    align-items:stretch;
+    padding:1.15vh 1.05vw 1.1vh .65vw;
+  }
+  .slide.auth-slide .lrow .claim,
+  .slide.auth-slide .lrow .proof{
+    justify-content:flex-start;
+    gap:.7vh;
+    height:100%;
+  }
+  .slide.auth-slide .lrow .claim p{flex:1}
+  .slide.auth-slide .lrow .proof .jobs{flex:1}
+  .slide.auth-slide .lrow h3{
+    font-size:clamp(17px, 2.05vmin, 26px);
+  }
+  .slide.auth-slide .lrow .claim p{
+    font-size:clamp(13px, 1.48vmin, 18px);
+    line-height:1.45;
+  }
+  .slide.auth-slide .lnums{flex:1;align-items:stretch}
+  .slide.auth-slide .lnum{
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding-top:.5vh;
+  }
+  .slide.auth-slide .lnum .n{
+    font-size:clamp(24px, 3.4vmin, 44px);
+  }
+  .slide.auth-slide .jobs{flex:1;align-items:stretch}
+  .slide.auth-slide .jobs .j{display:flex;flex-direction:column;justify-content:flex-start}
+  .slide.auth-slide .creature{display:none}
+  .auth-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:3vh 2.4vw 7.6vh;
+  }
+  .auth-head{flex:none;margin:0 0 1.4vh}
+  .auth-head .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:var(--fs-kicker);
+    font-weight:700;
+    margin:0 0 .55vh;
+  }
+  .auth-head h2{
+    font-size:clamp(22px, 3.05vmin, 40px);
+    font-weight:600;
+    letter-spacing:-.035em;
+    line-height:1.18;
+    color:#fff;
+    max-width:22em;
+    margin:0;
+  }
+  .auth-kpis{
+    flex:none;
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:.45vw;
+    margin:0 0 1.1vh;
+  }
+  .auth-kpis .ak{
+    border-top:1px solid rgba(232,197,71,.5);
+    padding:.7vh .55vw .65vh 0;
+  }
+  .auth-kpis .n{
+    font-size:clamp(20px, 2.7vmin, 34px);
+    font-weight:600;
+    letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    color:#fff;
+    line-height:.95;
+  }
+  .auth-kpis .u{
+    margin-top:.25vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.62);
+    line-height:1.3;
+    font-weight:600;
+  }
+  .auth-spine{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    gap:.7vh;
+    justify-content:flex-start;
+  }
+  .arow{
+    flex:0 0 auto;
+    min-height:0;
+    display:grid;
+    grid-template-columns:2.2em minmax(0,1.05fr) minmax(0,1.15fr);
+    column-gap:.8vw;
+    align-items:center;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    padding:1.15vh .9vw 1.1vh .55vw;
+  }
+  .arow .num{
+    color:#e8c547;font-size:clamp(13px,1.4vmin,16px);font-weight:700;letter-spacing:.08em;
+  }
+  .arow h3{
+    font-size:clamp(15px, 1.7vmin, 21px);
+    font-weight:600;letter-spacing:-.025em;color:#fff;
+    margin:0 0 .25vh;line-height:1.25;
+  }
+  .arow .claim p{
+    margin:0;font-size:clamp(12px, 1.28vmin, 16px);
+    line-height:1.4;color:rgba(244,240,230,.74);
+  }
+  .arow .bits{
+    display:grid;grid-template-columns:1fr 1fr;gap:.45vw;
+  }
+  .arow .bit{
+    border-top:1px solid rgba(232,197,71,.35);
+    padding-top:.35vh;
+  }
+  .arow .bit .n{
+    font-size:clamp(16px, 2.1vmin, 26px);
+    font-weight:600;color:#fff;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;
+  }
+  .arow .bit .d{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.6);line-height:1.3;margin-top:.1vh;
+  }
+  .auth-facts{
+    display:none;
+  }
+  .afact{
+    background:rgba(255,255,255,.05);
+    border-radius:0;
+    padding:1.5vh 1.15vw 1.4vh;
+    box-shadow:none;
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    display:flex;flex-direction:column;min-width:0;min-height:0;
+  }
+  .afact .idx{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;
+    letter-spacing:.16em;
+    color:#e8c547;
+    margin-bottom:.5vh;
+  }
+  .afact h3{
+    font-size:clamp(16px, 1.85vmin, 23px);
+    font-weight:600;
+    letter-spacing:-.03em;
+    color:#fff;
+    margin-bottom:.7vh;
+    line-height:1.25;
+  }
+  .anum{
+    display:flex;align-items:baseline;gap:.45em;
+    margin-bottom:.45vh;
+  }
+  .anum .n{
+    font-size:clamp(32px, 4.6vmin, 58px);
+    font-weight:600;
+    letter-spacing:-.05em;
+    font-variant-numeric:tabular-nums;
+    color:#fff;
+    line-height:.92;
+  }
+  .anum .u{
+    font-size:clamp(12px, 1.28vmin, 16px);
+    color:rgba(244,240,230,.7);
+    font-weight:600;
+  }
+  .anum.neg .n{color:#e8c547}
+  .afact p{
+    font-size:clamp(13px, 1.4vmin, 17px);
+    line-height:1.42;
+    color:rgba(244,240,230,.78);
+    margin:0 0 .45vh;
+  }
+  .afact .so{
+    margin-top:auto;
+    padding-top:.75vh;
+    border-top:1px solid rgba(232,197,71,.28);
+    font-size:clamp(13px, 1.4vmin, 17px);
+    line-height:1.4;
+    color:#fff;
+    font-weight:550;
+  }
+  .cmp{
+    display:grid;grid-template-columns:1fr 1fr;gap:.5vw;
+    margin:.45vh 0 .65vh;
+  }
+  .cmp .c{
+    background:rgba(0,0,0,.22);
+    border-radius:0;
+    padding:.65vh .55vw .6vh;
+    border-top:1px solid rgba(232,197,71,.4);
+  }
+  .cmp .lab{
+    font-size:clamp(10px, 1.1vmin, 13px);
+    font-weight:700;letter-spacing:.08em;color:rgba(244,240,230,.55);
+  }
+  .cmp .n{
+    font-size:clamp(24px, 3.2vmin, 38px);
+    font-weight:600;letter-spacing:-.04em;
+    font-variant-numeric:tabular-nums;
+    color:#fff;line-height:1.05;margin:.12vh 0;
+  }
+  .cmp .d{
+    font-size:clamp(11px, 1.18vmin, 14px);
+    color:rgba(244,240,230,.62);line-height:1.35;
+  }
+  .auth-src{
+    flex-shrink:0;
+    margin-top:1vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);
+    letter-spacing:.02em;
+    line-height:1.4;
+  }
+
+  /* Data charts P3/P4 */
+  .dico{
+    width:clamp(44px, 5.4vmin, 72px);
+    height:clamp(44px, 5.4vmin, 72px);
+    border-radius:18px;
+    display:grid;place-items:center;
+    flex-shrink:0;
+    color:#007AFF;
+    background:rgba(0,122,255,.14);
+  }
+  .dico svg{width:58%;height:58%;display:block;fill:currentColor}
+  .dico svg [fill="#fff"]{fill:#fff}
+  .dico svg [fill="none"]{fill:none}
+  .dico svg ellipse{fill:none;stroke:currentColor}
+  .dico.photo{overflow:hidden;padding:0;background:#fff}
+  .dico.photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
+  .dico.sm{width:clamp(26px, 3vmin, 36px);height:clamp(26px, 3vmin, 36px);border-radius:10px}
+  .dico.red{color:#FF3B30;background:rgba(255,59,48,.14)}
+  .dico.green{color:#248A3D;background:rgba(52,199,89,.16)}
+  .dico.orange{color:#C93400;background:rgba(255,149,0,.18)}
+  .dico.violet{color:#5856D6;background:rgba(88,86,214,.14)}
+  .dico.teal{color:#0F7A74;background:rgba(26,163,154,.16)}
+  .dico.gold{color:#8A6419;background:rgba(196,138,42,.18)}
+  .dico.pink{color:#D30F45;background:rgba(255,45,85,.14)}
+  .dico.ink{color:#1d1d1f;background:rgba(29,29,31,.08)}
+
+  .slide.data-slide{
+    padding:3.4vh 3.6vw 2.4vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 55% 45% at 100% 0%, rgba(0,122,255,.09), transparent 55%),
+      radial-gradient(ellipse 40% 35% at 0% 100%, rgba(255,149,0,.07), transparent 50%),
+      var(--paper);
+  }
+  .slide.data-slide .creature.flock{width:min(22vw,280px);opacity:.42;right:-3vw;top:auto;bottom:7vh}
+  .data-head{margin-bottom:1.2vh;flex-shrink:0}
+  .data-head h2{font-size:var(--fs-h2-data);letter-spacing:-.03em;line-height:1.15;max-width:22em;margin-bottom:0}
+  .path-kpis{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-rows:1fr 1fr;
+    gap:.75vw .8vw;
+    flex:0 1 auto;
+    min-height:0;
+    margin-bottom:1vh;
+  }
+  .path-kpi{
+    min-width:0;
+    padding:1.35vh 1vw 1.3vh;
+    background:#fff;
+    border-radius:18px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;justify-content:center;gap:.5vh;
+  }
+  .path-kpi .pk-top{display:flex;align-items:center;gap:10px;min-width:0}
+  .path-kpi .k{font-size:var(--fs-micro);font-weight:700;color:var(--ink-3);letter-spacing:.02em;line-height:1.25}
+  .path-kpi .n{font-size:var(--fs-num);font-weight:650;letter-spacing:-.045em;color:var(--blue);line-height:.95}
+  .path-kpi.down .n{color:var(--coral)}
+  .path-kpi.up .n{color:var(--green)}
+  .path-kpi p{font-size:var(--fs-micro);color:var(--ink-2);line-height:1.35}
+  .data-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1.18fr .82fr;
+    gap:1vw;
+    align-items:stretch;
+  }
+  .dcard{
+    background:#fff;
+    border-radius:18px;
+    padding:1.6vh 1.25vw 1.3vh;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;min-height:0;
+  }
+  .slide:not(.paper) .dcard{background:var(--paper)}
+  .dcard h3{font-size:var(--fs-small);font-weight:650;letter-spacing:-.02em;margin-bottom:.8vh;display:flex;align-items:center;gap:10px}
+  .dcard .chart{flex:1;min-height:0;display:flex;align-items:center;padding-top:.2vh}
+  .dcard .src{margin-top:auto;padding-top:.8vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.35}
+  .bar-list{display:flex;flex-direction:column;gap:.7vh;width:100%}
+  .bar-row{display:grid;grid-template-columns:auto 6.4em 1fr 3.4em;gap:8px;align-items:center;font-size:var(--fs-micro)}
+  .bar-row .lab{color:var(--ink-2);font-weight:600}
+  .bar-row .track{height:12px;background:var(--fill-2);border-radius:8px;overflow:hidden}
+  .bar-row .fill{height:100%;border-radius:8px;background:var(--blue)}
+  .bar-row .val{font-weight:650;text-align:right;font-variant-numeric:tabular-nums;font-size:var(--fs-small)}
+  .ox-chips{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:.55vw;margin-top:.9vh;
+  }
+  .ox-chip{
+    display:flex;align-items:center;gap:8px;
+    background:var(--fill);border-radius:12px;padding:.7vh .6vw;
+    min-width:0;
+  }
+  .ox-chip .n{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:var(--blue);line-height:1}
+  .ox-chip p{font-size:var(--fs-src);color:var(--ink-2);line-height:1.3;margin-top:.15vh}
+  .bar-note{margin-top:.7vh;font-size:var(--fs-src);color:var(--ink-3);line-height:1.4}
+  .kpi-stack{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.7vh .7vw;flex:1;min-height:0}
+  .kpi{
+    padding:1vh .85vw;
+    border:0;
+    background:var(--fill);
+    border-radius:14px;
+    display:flex;align-items:center;gap:10px;
+    min-width:0;
+  }
+  .kpi .kpi-txt{min-width:0}
+  .kpi .n{font-size:var(--fs-num);font-weight:650;letter-spacing:-.04em;color:var(--blue);line-height:.95}
+  .kpi p{font-size:var(--fs-micro);color:var(--ink-2);line-height:1.35;margin-top:.25vh}
+  .takeaway{
+    flex-shrink:0;
+    margin-top:1vh;
+    padding:1.05vh 1.2vw;
+    background:linear-gradient(90deg, rgba(0,113,227,.08), rgba(255,149,0,.10));
+    border-radius:14px;
+    border-left:4px solid var(--blue);
+    font-size:var(--fs-body);
+    color:var(--ink);
+    line-height:1.45;
+    font-weight:500;
+  }
+  .takeaway .lbl{
+    display:inline-block;
+    font-size:var(--fs-micro);
+    font-weight:700;
+    letter-spacing:.1em;
+    color:var(--blue);
+    margin-right:.55em;
+  }
+  .fact-strip{
+    display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:.65vw;margin-top:1vh;flex-shrink:0;
+  }
+  .fact-strip .f{
+    background:rgba(255,255,255,.92);
+    border-radius:14px;padding:.85vh .7vw;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;align-items:center;gap:8px;
+    min-width:0;
+  }
+  .fact-strip .f > div{min-width:0}
+  .fact-strip .n{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:var(--blue);line-height:1.05}
+  .fact-strip p{font-size:var(--fs-src);color:var(--ink-2);margin-top:.15vh;line-height:1.25}
+
+  .slide.labor{
+    padding:0;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.labor .creature{display:none}
+  .labor-stage{
+    flex:1 1 auto;
+    min-height:0;
+    height:100%;
+    display:flex;flex-direction:column;
+    padding:2.8vh 2.4vw 7.4vh;
+  }
+  .labor-stage .data-head{margin:0 0 1.2vh}
+  .labor-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .5vh;
+  }
+  .labor-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .labor-track{flex:1;min-height:0;display:flex;flex-direction:column;gap:.65vh}
+  .lrow{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:2.3em minmax(0,.9fr) minmax(0,1.25fr);
+    column-gap:.7vw;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.16);
+    border-left:3px solid #e8c547;
+    padding:.7vh .8vw .7vh .55vw;
+  }
+  .lrow .num{
+    color:#e8c547;font-size:clamp(13px, 1.45vmin, 16px);font-weight:700;
+    letter-spacing:.08em;padding-top:.35em;
+  }
+  .lrow .claim{min-width:0;display:flex;flex-direction:column;justify-content:center}
+  .lrow .cap{
+    font-size:clamp(10px, 1.1vmin, 12px);font-weight:700;
+    letter-spacing:.14em;color:#e8c547;margin-bottom:.2vh;
+  }
+  .lrow h3{
+    font-size:clamp(15px, 1.75vmin, 22px);font-weight:600;
+    letter-spacing:-.025em;color:#fff;margin:0 0 .25vh;line-height:1.25;
+  }
+  .lrow .claim p{
+    margin:0;font-size:clamp(12px, 1.28vmin, 16px);
+    line-height:1.4;color:rgba(244,240,230,.74);
+  }
+  .lrow .proof{
+    min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.45vh;
+  }
+  .lnums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.45vw}
+  .lnum{border-top:1px solid rgba(232,197,71,.4);padding-top:.35vh}
+  .lnum .n{
+    font-size:clamp(18px, 2.4vmin, 30px);font-weight:600;
+    letter-spacing:-.04em;color:#fff;font-variant-numeric:tabular-nums;line-height:1;
+  }
+  .lnum .u{margin-top:.15vh;font-size:clamp(10px, 1.12vmin, 13px);color:rgba(244,240,230,.62);line-height:1.3}
+  .lrow .jobs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5vw}
+  .jobs .j{border-top:1px solid rgba(232,197,71,.35);padding-top:.3vh}
+  .jobs h4{
+    font-size:clamp(10px, 1.1vmin, 12px);font-weight:700;letter-spacing:.08em;
+    margin:0 0 .25vh;color:#e8c547;
+  }
+  .jobs ul{list-style:none;margin:0;padding:0}
+  .jobs li{font-size:clamp(11px, 1.22vmin, 14px);color:rgba(244,240,230,.84);line-height:1.4}
+  .mck-split{display:flex;height:clamp(22px,2.6vmin,32px);overflow:hidden;font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;color:#fff;margin-top:.2vh}
+  .mck-split span{display:flex;align-items:center;justify-content:center;padding:0 6px;white-space:nowrap}
+  .mck-split .agent{width:44%;background:#c9a227}
+  .mck-split .bot{width:13%;background:#8a6d1a}
+  .mck-split .rest{flex:1;background:rgba(255,255,255,.1);color:rgba(244,240,230,.7)}
+  .ox-split{display:flex;height:clamp(22px,2.6vmin,32px);overflow:hidden;font-size:clamp(10px, 1.1vmin, 13px);font-weight:700;color:#fff;margin-top:.2vh}
+  .ox-split span{display:flex;align-items:center;justify-content:center;padding:0 8px;white-space:nowrap}
+  .ox-split .all{width:61.6%;background:#c9a227}
+  .ox-split .cn{width:38.4%;background:#8a6d1a}
+  .hire-row{display:flex;flex-wrap:wrap;gap:6px}
+  .hire-row span{
+    background:rgba(232,197,71,.12);border:1px solid rgba(232,197,71,.22);
+    color:#f3e2a4;padding:4px 9px;font-size:clamp(10px, 1.15vmin, 13px);font-weight:650;
+  }
+  .labor-stage .src{
+    flex-shrink:0;margin-top:.85vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;
+  }
+
+  /* Capability body — superseded by kg-stage below */
+  .slide.cap-slide{
+    padding:0;
+  }
+  .cap-main{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0,.72fr) minmax(0,.78fr) minmax(0,1.15fr);
+    gap:1.6vw;
+    align-items:center;
+  }
+  .cap-figure{
+    display:flex;align-items:center;justify-content:center;
+    min-height:0;
+  }
+  .cap-figure svg{width:min(100%,420px);height:auto;max-height:68vh}
+  .cap-legend{display:flex;flex-direction:column;gap:1vh;height:100%;justify-content:stretch}
+  .cap-item{
+    display:grid;grid-template-columns:auto 1fr;gap:14px;
+    align-items:center;
+    padding:1.35vh 1.05vw;
+    background:#fff;border-radius:16px;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+    flex:1;min-height:0;
+  }
+  .cap-item h4{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.02em}
+  .cap-item .en{
+    font-size:var(--fs-src);font-weight:650;color:var(--blue);
+    letter-spacing:.01em;margin-top:.15vh;
+  }
+  .cap-item p{font-size:var(--fs-small);color:var(--ink-2);line-height:1.4;margin-top:.25vh}
+
+  /* Cases P6 */
+  .slide.cases-slide{
+    padding:3.5vh 3.5vw 3vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.cases-slide .kicker{
+    color:#e8c547;
+    letter-spacing:.18em;
+    font-size:var(--fs-kicker);
+    font-weight:700;
+    margin:0 0 .8vh;
+  }
+  .slide.cases-slide h2{
+    font-size:var(--fs-h2-data);
+    letter-spacing:-.03em;
+    margin:0 0 1.4vh;
+    color:#fff;
+  }
+  .cases-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:1.2vh 1.2vw;
+    position:relative;
+  }
+  .case-card{
+    position:relative;
+    border-radius:18px;overflow:hidden;
+    background:#111;
+    cursor:pointer;
+    transition:transform .45s cubic-bezier(.22,1,.36,1),opacity .35s ease,box-shadow .35s;
+    transform-origin:center center;
+  }
+  .case-card img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;opacity:.72;
+    transition:opacity .35s,transform .5s;
+  }
+  .case-card .shade{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(0,0,0,.15) 20%,rgba(0,0,0,.78) 100%);
+  }
+  .case-card .body{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:2vh 1.4vw 1.8vh;
+    color:#fff;z-index:2;
+  }
+  .case-card .who{font-size:var(--fs-micro);font-weight:700;letter-spacing:.04em;opacity:.85;margin-bottom:.4vh}
+  .case-card h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.02em;margin-bottom:.5vh}
+  .case-card p{font-size:var(--fs-small);line-height:1.4;opacity:.9;max-width:36em}
+  .case-card .src{font-size:var(--fs-src);opacity:.55;margin-top:.7vh}
+  .cases-grid.focus-on .case-card{opacity:.28;transform:scale(.94)}
+  .cases-grid.focus-on .case-card.is-focus{
+    opacity:1;transform:scale(1.06);
+    z-index:3;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+  }
+  .cases-grid.focus-on .case-card.is-focus img{opacity:.88;transform:scale(1.04)}
+  .cases-hint{font-size:var(--fs-src);color:rgba(244,240,230,.45);margin-top:1vh}
+
+  /* Framework P7 */
+  .slide.frame-slide{
+    padding:5vh 6vw 4vh;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 45% 40% at 100% 100%, rgba(232,93,76,.08), transparent 50%),
+      var(--paper);
+  }
+  .frame-trio{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;
+    margin-top:3vh;
+  }
+  .frame-card .dico{margin-bottom:1.4vh}
+  .slide:not(.paper) .frame-card{background:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+  .frame-card .num{font-size:var(--fs-small);font-weight:700;color:var(--blue);letter-spacing:.08em;margin-bottom:1.4vh}
+  .frame-card h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.02em;margin-bottom:1vh}
+  .frame-card p{font-size:var(--fs-body);color:var(--ink-2);line-height:1.55}
+  .frame-bridge{
+    margin-top:3.2vh;font-size:var(--fs-lede);
+    font-weight:550;letter-spacing:-.02em;color:var(--ink);
+  }
+
+  /* Course poster · overview of two tracks */
+  .slide.course-poster{
+    padding:0;
+    display:flex;
+    overflow:hidden;
+    background:#05060c;
+    color:#f4f0e6;
+    justify-content:flex-start;
+  }
+  .slide.course-poster > .cp-art{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:#05060c;
+    overflow:hidden;
+  }
+  /* Full-bleed 16:9 plate — outpainted sides, center unstretched */
+  .slide.course-poster > .cp-art img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center center;
+    opacity:1;
+  }
+  .slide.course-poster > .cp-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(5,6,12,.72) 0%, rgba(5,6,12,.28) 18%, rgba(5,6,12,.22) 55%, rgba(5,6,12,.78) 100%);
+  }
+  .cp-stage{
+    position:relative;z-index:2;
+    height:100%;width:100%;
+    display:flex;flex-direction:column;
+    padding:2.6vh 2.4vw 6.6vh;
+  }
+  .cp-stage .data-head{margin:0 0 1.2vh}
+  .cp-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
+  }
+  .cp-stage .data-head h2{
+    font-size:clamp(24px, 3.35vmin, 42px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.16;
+    color:#fff;max-width:22em;margin:0;
+    text-shadow:0 2px 14px rgba(0,0,0,.55);
+  }
+  .cp-stage .lede{
+    font-size:var(--fs-small);color:rgba(244,240,230,.7);
+    line-height:1.45;max-width:46em;margin:.6vh 0 0;
+  }
+  .cp-pair{
+    flex:1;min-height:0;
+    display:grid;grid-template-columns:1fr 1fr;gap:.8vw;
+    align-items:start;
+  }
+  .cp-pane{
+    min-width:0;
+    display:flex;flex-direction:column;
+    background:rgba(7,11,18,.58);
+    border:1px solid rgba(232,197,71,.18);
+    padding:1.4vh 1.2vw 1.3vh;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+  }
+  .cp-pane .kicker{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.16em;
+    color:#e8c547;margin:0 0 .4vh;
+  }
+  .cp-pane h3{
+    font-size:clamp(19px, 2.35vmin, 28px);
+    font-weight:600;letter-spacing:-.03em;color:#fff;
+    line-height:1.2;margin:0 0 .55vh;
+  }
+  .cp-pane > p{
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);
+    line-height:1.45;margin:0 0 .7vh;
+  }
+  .cp-meta{
+    display:flex;flex-wrap:wrap;gap:6px;
+    margin:0 0 .8vh;
+  }
+  .cp-meta span{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.04em;
+    color:#e8c547;
+    border:1px solid rgba(232,197,71,.28);
+    background:rgba(232,197,71,.08);
+    padding:3px 8px;
+    line-height:1.3;
+  }
+  .cp-spine{list-style:none;margin:0 0 .8vh;padding:0;display:flex;flex-direction:column;gap:.45vh}
+  .cp-spine li{
+    display:grid;grid-template-columns:5.2em 1fr;gap:.6vw;
+    padding:.45vh 0;border-top:1px solid rgba(232,197,71,.12);
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);line-height:1.4;
+  }
+  .cp-spine b{color:#8ec8ff;font-weight:700;letter-spacing:.04em}
+  .cp-duo{
+    display:grid;grid-template-columns:1fr 1fr;gap:.5vw;
+    margin-top:.9vh;
+  }
+  .cp-duo div{
+    border:1px solid rgba(232,197,71,.18);
+    background:rgba(232,197,71,.06);
+    padding:.55vh .55vw;
+  }
+  .cp-duo h4{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.08em;color:#e8c547;margin:0 0 .25vh;
+  }
+  .cp-duo p{font-size:var(--fs-micro);color:rgba(244,240,230,.7);line-height:1.4;margin:0}
+  .cp-beats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.2vh}
+  .cp-beats li{
+    padding:.5vh 0;
+    border-top:1px solid rgba(232,197,71,.12);
+    font-size:var(--fs-small);color:rgba(244,240,230,.78);line-height:1.4;
+  }
+  .cp-beats b{display:block;color:#fff;font-weight:650;margin-bottom:.08vh}
+  .slide.course-poster .takeaway{
+    margin-top:.8vh;
+    background:rgba(7,11,18,.5);
+    border-left-color:#e8c547;
+    color:#fff;
+  }
+  .slide.course-poster .takeaway .lbl{color:#e8c547}
+
+  /* Iceberg · full-bleed 16:9 plate, ice unstretched */
+  .slide.pyramid-slide{
+    padding:0;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:#070b12;
+    color:#f4f0e6;
+  }
+  .slide.pyramid-slide .creature{display:none}
+  .slide.pyramid-slide > .berg-frame{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:2;
+  }
+  .berg-frame .berg-photo{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:center center;
+    pointer-events:none;
+    z-index:0;
+  }
+  .berg-shift{
+    position:absolute;inset:0;
+    transform:translateX(1cm);
+    z-index:2;
+    pointer-events:none;
+  }
+  .berg-shift .data-head,
+  .berg-shift .takeaway{pointer-events:auto}
+  .berg-frame .data-head{
+    position:absolute;
+    left:3.2%;top:3.6%;
+    width:min(34vw, 420px);
+    margin:0;
+    z-index:3;
+  }
+  .berg-frame .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
+  }
+  .berg-frame .data-head h2{
+    font-size:clamp(20px, 2.6vmin, 34px);
+    font-weight:600;letter-spacing:-.03em;line-height:1.22;
+    color:#fff;max-width:none;margin:0;
+    text-shadow:0 2px 14px rgba(0,0,0,.55);
+  }
+  .berg-tip{
+    position:absolute;left:50%;top:11.5%;
+    transform:translateX(calc(-50% - 1cm));
+    width:auto;
+    display:flex;flex-direction:column;align-items:center;
+    gap:4px;
+    z-index:3;
+  }
+  .tip-row{
+    display:flex;justify-content:center;align-items:flex-end;
+    gap:5px;
+  }
+  .app{
+    width:34px;
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+  }
+  .app img{
+    width:26px;height:26px;
+    border-radius:8px;object-fit:cover;background:#fff;
+    box-shadow:0 3px 10px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .app b{
+    font-size:8px;
+    font-weight:650;color:#fff;letter-spacing:0;
+    text-shadow:0 1px 4px rgba(0,0,0,.8);
+    line-height:1.1;text-align:center;
+    max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .berg-line{
+    position:absolute;left:3.2%;top:38%;
+    z-index:3;pointer-events:none;
+    display:block;
+  }
+  .berg-line i{display:none}
+  .berg-line span{
+    font-size:clamp(10px, 1.12vmin, 13px);
+    font-weight:700;letter-spacing:.14em;color:#e8c547;
+    white-space:nowrap;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
+  }
+  .berg-cloud{
+    position:absolute;left:22%;right:30%;top:41%;bottom:10%;
+    z-index:2;pointer-events:none;
+    clip-path:polygon(16% 0%, 84% 0%, 96% 22%, 84% 55%, 64% 86%, 50% 100%, 36% 86%, 16% 55%, 6% 22%);
+  }
+  .slide.pyramid-wide .berg-photo{object-fit:cover;object-position:center 40%}
+  .slide.pyramid-wide .berg-cloud{
+    left:22%;right:22%;top:40%;bottom:9%;
+    clip-path:polygon(16% 0%, 84% 0%, 96% 22%, 84% 55%, 64% 86%, 50% 100%, 36% 86%, 16% 55%, 4% 22%);
+  }
+  .slide.pyramid-wide .berg-tip{top:10%}
+  .slide.pyramid-wide .berg-line{top:34.5%}
+  .slide.pyramid-compare .berg-frame .data-head .kicker{opacity:.85}
+  .berg-cloud i{
+    position:absolute;transform:translate(-50%,-50%);
+    font-style:normal;white-space:nowrap;
+    text-shadow:0 1px 10px rgba(0,8,20,.8);
+  }
+  .berg-cloud .lg{
+    font-size:clamp(12px, 1.45vmin, 18px);font-weight:700;color:#f4f0e6;
+  }
+  .berg-cloud .md{
+    font-size:clamp(11px, 1.22vmin, 15px);font-weight:650;color:#d6eef6;
+  }
+  .berg-cloud .sm{
+    font-size:clamp(10px, 1.05vmin, 13px);font-weight:550;color:rgba(196,226,236,.78);
+  }
+  .berg-cloud .fm{
+    font-family:"SF Mono","Menlo","PingFang SC",monospace;
+    font-size:clamp(10px, 1.05vmin, 13px);font-weight:600;color:#f3e2a4;
+  }
+  .slide.pyramid-slide .src{
+    position:absolute;left:3.2%;width:min(42%, 560px);bottom:8.4%;
+    margin:0;
+    font-size:clamp(10px, 1.08vmin, 13px);
+    color:rgba(244,240,230,.48);line-height:1.35;max-width:none;
+    text-shadow:0 1px 6px rgba(0,0,0,.5);
+    text-align:left;
+  }
+  .slide.pyramid-slide .takeaway{
+    position:absolute;left:3.2%;width:min(42%, 560px);bottom:2.6%;
+    margin:0;
+    background:rgba(7,11,20,.45);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.pyramid-slide .takeaway .lbl{color:#e8c547}
+  .ear-card{
+    position:absolute;right:1.8vw;top:8.2vh;
+    width:min(26vw, 340px);
+    z-index:4;
+    padding:1vh .85vw .95vh;
+    background:rgba(7,11,18,.48);
+    border:1px solid rgba(232,197,71,.16);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+  }
+  .ear-card .el{
+    font-size:clamp(12px, 1.28vmin, 15px);font-weight:600;color:#fff;
+    line-height:1.35;margin:0 0 .55vh;
+  }
+  .ear-card ul{list-style:none;margin:0;padding:0}
+  .ear-card li{
+    display:grid;grid-template-columns:3.6em 1fr;column-gap:.45vw;
+    align-items:start;
+    padding:.42vh 0;
+    border-top:1px solid rgba(232,197,71,.12);
+    font-size:clamp(10px, 1.08vmin, 13px);
+    color:rgba(244,240,230,.7);line-height:1.32;
+  }
+  .ear-card li b{font-weight:700;letter-spacing:.02em;padding-top:.08vh}
+  .ear-card li i{
+    display:block;font-style:normal;font-weight:600;color:rgba(244,240,230,.92);
+    margin-bottom:.08vh;
+  }
+  .ear-card .hang{color:#e8c547}
+  .ear-card .ding{color:#9ecbff}
+  .ear-card .ren{color:#9ee0b0}
+  .ear-card .npc{color:rgba(244,240,230,.72)}
+  .ear-card .la{color:#ff8a7a}
+
+  /* Capability · how we cultivate */
+  .slide.cap-slide{
+    padding:0;
+    justify-content:flex-start;
+    overflow:hidden;
+    background:#070b12;
+    color:#f4f0e6;
+  }
+  .slide.cap-slide .creature{display:none}
+  .slide.cap-slide > .kg-photo{
+    position:absolute;inset:0;z-index:0;
+    width:100%;height:100%;
+    object-fit:cover;object-position:center 48%;
+    pointer-events:none;
+  }
+  .slide.cap-slide > .kg-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(7,11,18,.70) 0%, rgba(7,11,18,.12) 22%, rgba(7,11,18,.08) 50%, rgba(7,11,18,.20) 72%, rgba(7,11,18,.78) 100%);
+  }
+  .kg-stage{
+    flex:1;min-height:0;height:100%;
+    display:grid;
+    grid-template-rows:auto 1fr auto auto;
+    padding:2.4vh 2vw 6.8vh;
+    position:relative;z-index:2;
+  }
+  .kg-stage .data-head{margin:0;align-self:start}
+  .kg-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:var(--fs-kicker);font-weight:700;margin:0 0 .45vh;
+    text-shadow:0 1px 8px rgba(0,0,0,.55);
+  }
+  .kg-stage .data-head h2{
+    font-size:clamp(24px, 3.35vmin, 42px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+    text-shadow:0 2px 14px rgba(0,0,0,.55);
+  }
+  .kg{
+    align-self:center;
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:.5vw;
+  }
+  .fam{
+    min-width:0;
+    display:flex;flex-direction:column;
+    background:rgba(7,11,18,.58);
+    border:1px solid rgba(232,197,71,.18);
+    border-top:2px solid #e8c547;
+    padding:.75vh .65vw .7vh;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  .fam .fid{
+    font-size:var(--fs-kicker);
+    font-weight:700;letter-spacing:.16em;color:#e8c547;
+  }
+  .fam h3{
+    font-size:clamp(17px, 2.05vmin, 24px);
+    font-weight:600;letter-spacing:-.03em;color:#fff;
+    margin:.15vh 0 .4vh;line-height:1.2;
+  }
+  .fam .blurb{
+    display:block;
+    flex:none;
+    width:100%;
+    font-size:clamp(12px, 1.38vmin, 16px);
+    line-height:1.4;
+    color:rgba(244,240,230,.82);
+    margin:0 0 .5vh;
+    padding-bottom:.45vh;
+    border-bottom:1px solid rgba(232,197,71,.16);
+  }
+  .ideas{flex:none;display:flex;flex-direction:column}
+  .ideas .ilab{
+    font-size:var(--fs-kicker);
+    font-weight:700;letter-spacing:.14em;color:#e8c547;
+    margin:0 0 .28vh;
+  }
+  .ideas p{
+    font-size:clamp(12px, 1.32vmin, 15px);
+    line-height:1.4;
+    color:rgba(244,240,230,.78);
+    margin:0 0 .45vh;
+  }
+  .ideas .kids{
+    display:flex;flex-wrap:wrap;gap:4px;
+  }
+  .ideas .kids span{
+    font-size:clamp(11px, 1.2vmin, 13px);
+    font-weight:600;
+    color:rgba(244,240,230,.82);
+    border:1px solid rgba(232,197,71,.2);
+    background:rgba(232,197,71,.08);
+    padding:2px 6px;
+    line-height:1.3;
+  }
+  .slide.cap-slide .src{
+    flex-shrink:0;margin-top:.55vh;
+    font-size:var(--fs-src);
+    color:rgba(244,240,230,.48);line-height:1.4;max-width:none;
+  }
+  .slide.cap-slide .takeaway{
+    margin-top:.4vh;
+    background:rgba(7,11,18,.5);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.cap-slide .takeaway .lbl{color:#e8c547}
+
+  /* AI index · academic quadrant */
+  .slide.idx-slide{
+    padding:0;
+    justify-content:stretch;
+    overflow:hidden;
+    background:#070b14;
+    color:#f4f0e6;
+  }
+  .slide.idx-slide .creature{display:none}
+  .idx-stage{
+    flex:1;min-height:0;
+    display:flex;flex-direction:column;
+    padding:2.6vh 2.2vw 7.2vh;
+  }
+  .idx-stage .data-head{margin:0 0 .7vh}
+  .idx-stage .data-head .kicker{
+    color:#e8c547;letter-spacing:.18em;
+    font-size:clamp(10px, 1.15vmin, 13px);font-weight:700;margin:0 0 .45vh;
+  }
+  .idx-stage .data-head h2{
+    font-size:clamp(22px, 3vmin, 38px);
+    font-weight:600;letter-spacing:-.035em;line-height:1.18;
+    color:#fff;max-width:22em;margin:0;
+  }
+  .idx-split{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0,1.15fr) minmax(320px,.95fr);
+    gap:1.1vw;
+  }
+  .quad{
+    position:relative;
+    min-height:0;
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(232,197,71,.16);
+    overflow:hidden;
+  }
+  .quad svg{position:absolute;inset:10px;width:calc(100% - 20px);height:calc(100% - 20px);display:block}
+  .memo{
+    min-width:0;min-height:0;
+    display:flex;flex-direction:column;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(232,197,71,.18);
+    border-left:3px solid #e8c547;
+    padding:1.1vh 1vw 1vh;
+  }
+  .memo .mk{
+    font-size:clamp(10px, 1.1vmin, 12px);
+    font-weight:700;letter-spacing:.16em;color:#e8c547;
+  }
+  .memo h3{
+    font-size:clamp(16px, 1.8vmin, 22px);
+    font-weight:600;color:#fff;letter-spacing:-.03em;
+    margin:.25vh 0 .7vh;line-height:1.25;
+    white-space:normal;
+  }
+  .mrow{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:4.6em minmax(0,1fr);
+    column-gap:.55vw;
+    align-items:start;
+    padding:.5vh 0;
+    border-top:1px solid rgba(232,197,71,.14);
+  }
+  .mrow .rk{
+    font-size:clamp(13px, 1.45vmin, 17px);
+    font-weight:700;letter-spacing:-.02em;
+  }
+  .mrow .rk small{
+    display:block;font-size:clamp(9px, 1.02vmin, 11px);
+    letter-spacing:.1em;opacity:.7;font-weight:700;
+  }
+  .mrow.hang .rk{color:#e8c547}
+  .mrow.ding .rk{color:#9ecbff}
+  .mrow.ren .rk{color:#9ee0b0}
+  .mrow.npc .rk{color:rgba(244,240,230,.7)}
+  .mrow.la .rk{color:#ff8a7a}
+  .mrow q{
+    display:block;
+    quotes:"「" "」" "『" "』";
+    font-size:clamp(11px, 1.2vmin, 14px);
+    font-weight:600;color:#fff;line-height:1.35;
+  }
+  .mrow q::before{content:open-quote}
+  .mrow q::after{content:close-quote}
+  .mrow p{
+    margin:.12vh 0 0;
+    font-size:clamp(10px, 1.1vmin, 13px);
+    color:rgba(244,240,230,.62);line-height:1.3;
+  }
+  .slide.idx-slide .src{
+    flex-shrink:0;margin-top:.55vh;
+    font-size:clamp(10px, 1.12vmin, 13px);
+    color:rgba(244,240,230,.45);line-height:1.4;max-width:none;
+  }
+  .slide.idx-slide .takeaway{
+    margin-top:.55vh;
+    background:rgba(232,197,71,.08);
+    border-left-color:#e8c547;
+    color:#fff;
+    border-radius:0;
+  }
+  .slide.idx-slide .takeaway .lbl{color:#e8c547}
+  .slide.cases-slide .takeaway{
+    background:rgba(7,11,18,.5);
+    border-left-color:#e8c547;
+    color:#fff;
+  }
+  .slide.cases-slide .takeaway .lbl{color:#e8c547}
+
+  /* Course deep-dive */
+  .slide.course-deep{
+    padding:3.8vh 3.8vw 3vh;
+    justify-content:flex-start;
+  }
+  .cd-grid{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:1.2vh 1.2vw;
+    margin-top:1.6vh;
+  }
+  .cd-card{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:grid;
+    grid-template-columns:42% 1fr;
+    min-height:0;
+  }
+  .cd-card .pic{
+    position:relative;min-height:0;
+    background:#111;
+  }
+  .cd-card .pic img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;
+  }
+  .cd-card .body{
+    padding:1.6vh 1.2vw;
+    display:flex;flex-direction:column;min-height:0;
+  }
+  .cd-card .mod{
+    font-size:var(--fs-micro);font-weight:700;letter-spacing:.06em;
+    color:var(--blue);margin-bottom:.35vh;
+  }
+  .cd-card h3{
+    font-size:var(--fs-h3);font-weight:650;
+    letter-spacing:-.02em;margin-bottom:.45vh;
+  }
+  .cd-card p{
+    font-size:var(--fs-small);color:var(--ink-2);
+    line-height:1.45;flex:1;
+  }
+  .cd-tools{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:1vh;
+  }
+  .cd-tools span{
+    font-size:var(--fs-micro);font-weight:650;
+    padding:4px 9px;border-radius:100px;
+    background:var(--fill);color:var(--ink);
+  }
+  .cd-out{
+    margin-top:.7vh;font-size:var(--fs-micro);font-weight:600;color:var(--blue);
+  }
+
+  .slide.founder-deep{
+    padding:3.8vh 3.8vw 3vh;
+    justify-content:flex-start;
+  }
+  .fd-rail{
+    flex:1;min-height:0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1vw;
+    margin-top:1.8vh;
+  }
+  .fd-step{
+    border-radius:18px;overflow:hidden;
+    background:#fff;
+    box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
+    display:flex;flex-direction:column;
+    min-height:0;
+  }
+  .fd-step .pic{
+    position:relative;height:22vh;min-height:140px;background:#111;
+  }
+  .fd-step .pic img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .fd-step .pic .num{
+    position:absolute;left:12px;top:12px;
+    width:32px;height:32px;border-radius:10px;
+    background:rgba(0,113,227,.95);color:#fff;
+    display:grid;place-items:center;
+    font-size:13px;font-weight:700;z-index:1;
+  }
+  .fd-step .body{padding:1.5vh 1.1vw 1.6vh;flex:1;display:flex;flex-direction:column}
+  .fd-step h3{font-size:var(--fs-h3);font-weight:650;margin-bottom:.4vh}
+  .fd-step p{font-size:var(--fs-small);color:var(--ink-2);line-height:1.45;flex:1}
+  .fd-step .tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:1vh}
+  .fd-step .tools span{
+    font-size:var(--fs-micro);font-weight:650;padding:3px 8px;border-radius:100px;
+    background:var(--fill);
+  }
+  .fd-note{
+    margin-top:1.4vh;font-size:var(--fs-body);color:var(--ink-2);line-height:1.45;
+  }
+  .slide.atlas-slide > .atlas-bg,
+  .slide.co-slide > .co-bg{position:absolute;z-index:0}
+  .slide.atlas-slide > .atlas-shade,
+  .slide.co-slide > .co-shade{position:absolute;z-index:1}
+  .slide.atlas-slide > .atlas-ui,
+  .slide.co-slide > .co-ui{position:relative;z-index:3;height:100%}
+  .atlas-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:0}
+  .atlas-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(8,12,18,.62) 0%, rgba(8,12,18,.12) 26%, rgba(8,12,18,.08) 58%, rgba(8,12,18,.78) 100%),linear-gradient(90deg, rgba(8,12,18,.28) 0%, transparent 40%)}
+  .atlas-ui{position:relative;z-index:2;height:100%;padding:2.8vh 2.6vw 2.4vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .atlas-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
+  .atlas-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:18em;margin:.35vh 0 .5vh}
+  .atlas-ui .lede{font-size:var(--fs-small);color:rgba(255,255,255,.72);line-height:1.45;max-width:52em;margin:0 0 .7vh}
+  .atlas-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 1vh}
+  .atlas-meta span,.co-meta span{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.04em;
+    color:#e8c547;border:1px solid rgba(232,197,71,.28);
+    background:rgba(232,197,71,.08);padding:3px 8px;line-height:1.3;
+  }
+  .atlas-units{
+    flex:1;min-height:0;
+    display:grid;grid-template-columns:1.05fr .9fr 1.15fr;gap:.7vw;
+  }
+  .atlas-unit{
+    min-width:0;
+    background:rgba(8,12,18,.48);
+    border:1px solid rgba(255,255,255,.16);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    padding:1.1vh .9vw 1vh;
+    display:flex;flex-direction:column;
+  }
+  .atlas-unit .uh{
+    font-size:var(--fs-kicker);font-weight:700;letter-spacing:.14em;color:#e8c547;margin:0 0 .45vh;
+  }
+  .atlas-unit .lessons{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.35vh;flex:1}
+  .atlas-unit .lessons li{
+    display:grid;grid-template-columns:2.8em 1fr;gap:.45vw;
+    padding:.4vh 0;border-top:1px solid rgba(255,255,255,.12);
+    font-size:var(--fs-small);color:rgba(255,255,255,.86);line-height:1.35;
+  }
+  .atlas-unit .lessons b{color:#8ec8ff;font-weight:700;white-space:nowrap}
+  .atlas-unit .lessons .ttl{display:block;font-weight:600}
+  .atlas-unit .lessons .sub{display:block;font-size:var(--fs-micro);color:rgba(255,255,255,.58);margin-top:.12vh;line-height:1.4}
+  .atlas-unit .lessons .out{display:block;font-size:var(--fs-micro);color:rgba(142,200,255,.78);margin-top:.1vh}
+  .atlas-unit .atlas-note{
+    margin-top:auto;padding-top:.6vh;
+    font-size:var(--fs-micro);color:rgba(255,255,255,.62);line-height:1.4;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .atlas-bands{
+    display:grid;grid-template-columns:1fr 1fr;gap:.6vw;margin-top:.8vh;
+  }
+  .atlas-bands article{
+    border:1px solid rgba(232,197,71,.2);
+    background:rgba(232,197,71,.07);
+    padding:.55vh .7vw;
+  }
+  .atlas-bands h4{font-size:var(--fs-kicker);font-weight:700;letter-spacing:.1em;color:#e8c547;margin:0 0 .25vh}
+  .atlas-bands p{font-size:var(--fs-micro);color:rgba(255,255,255,.72);line-height:1.4;margin:0}
+  .atlas-ui .takeaway{margin-top:.8vh;background:rgba(7,11,18,.5);border-left-color:#e8c547;color:#fff}
+  .atlas-ui .takeaway .lbl{color:#e8c547}
+  .slide.co-slide{padding:0;overflow:hidden;background:#1a1410;justify-content:stretch}
+  .co-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;z-index:0}
+  .co-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(18,12,8,.58) 0%, rgba(18,12,8,.08) 30%, rgba(18,12,8,.1) 60%, rgba(18,12,8,.72) 100%)}
+  .co-ui{position:relative;z-index:2;height:100%;padding:2.8vh 2.6vw 2.4vh;display:flex;flex-direction:column;color:#f5f5f7}
+  .co-ui .kicker{color:#e8c547;font-size:var(--fs-kicker);letter-spacing:.18em;font-weight:700}
+  .co-ui h2{color:#fff;font-size:var(--fs-h2-data);max-width:16em;margin:.35vh 0 .5vh}
+  .co-ui .lede{font-size:var(--fs-small);color:rgba(255,255,255,.72);line-height:1.45;max-width:52em;margin:0 0 .7vh}
+  .co-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 1vh}
+  .co-pins{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.55vw;align-items:start}
+  .copin{background:rgba(20,14,10,.48);backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,220,180,.22);padding:1.1vh .8vw 1.05vh;min-width:0;display:flex;flex-direction:column}
+  .copin .ix{font-size:var(--fs-kicker);font-weight:700;letter-spacing:.12em;color:#ffd29a;margin-bottom:.3vh}
+  .copin h3{font-size:var(--fs-h3);font-weight:650;letter-spacing:-.03em;color:#fff}
+  .copin p{font-size:var(--fs-micro);color:rgba(255,255,255,.78);line-height:1.4;margin-top:.35vh}
+  .copin .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:.55vh}
+  .copin .chips span{font-size:11px;font-weight:650;letter-spacing:.02em;padding:3px 7px;border:1px solid rgba(255,220,180,.22);color:#ffd29a}
+  .co-ui .takeaway{margin-top:.8vh;background:rgba(18,12,8,.5);border-left-color:#ffd29a;color:#fff}
+  .co-ui .takeaway .lbl{color:#ffd29a}
+
+
+  .facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4vw;margin-top:.5vh}
+  .fact{
+    background:var(--paper);
+    border-radius:22px;
+    padding:3.4vh 1.8vw;
+  }
+  .slide.paper .fact{background:var(--fill)}
+  .fact .n{font-size:clamp(22px,2.2vw,32px);font-weight:600;letter-spacing:-.03em;color:var(--blue)}
+  .fact h3{font-size:clamp(16px,1.45vw,20px);font-weight:600;margin-top:1.4vh;letter-spacing:-.02em}
+  .fact p{font-size:clamp(13px,1.1vw,15.5px);color:var(--ink-2);line-height:1.6;margin-top:.8vh}
+
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4vw;margin-top:.4vh}
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:1.4vw;margin-top:.4vh}
+  .role{
+    background:var(--paper);
+    border-radius:22px;
+    padding:3.4vh 2vw;
+  }
+  .slide.paper .role{background:var(--fill)}
+  .role .idx{
+    font-size:clamp(12px,.95vw,13px);
+    color:var(--ink-3);
+    font-weight:600;
+    letter-spacing:.06em;
+    margin-bottom:1.2vh;
+  }
+  .role h3{font-size:clamp(18px,1.7vw,24px);font-weight:600;letter-spacing:-.025em}
+  .role p{font-size:clamp(13.5px,1.15vw,16px);color:var(--ink-2);line-height:1.65;margin-top:1.1vh}
+  .role .hrs{font-size:clamp(11px,.9vw,13px);color:var(--ink-3);margin-top:1.8vh}
+
+  .compare-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6vw;margin-top:.6vh}
+  .compare-col{
+    border-radius:22px;
+    padding:4vh 2.4vw;
+    background:var(--paper);
+  }
+  .slide.paper .compare-col{background:var(--fill)}
+  .compare-col.new{background:var(--ink);color:#f5f5f7}
+  .compare-col h3{font-size:clamp(20px,1.9vw,26px);font-weight:600;letter-spacing:-.025em}
+  .compare-col .sub{font-size:clamp(12px,1vw,14px);color:var(--ink-3);margin-top:.5vh;margin-bottom:2.2vh}
+  .compare-col.new .sub{color:rgba(255,255,255,.5)}
+  .compare-col.new h3{color:#fff}
+  .compare-col ul{list-style:none}
+  .compare-col li{
+    padding:1.35vh 0;
+    border-bottom:1px solid var(--line);
+    font-size:clamp(14.5px,1.3vw,18px);
+    display:flex;gap:12px;align-items:flex-start;
+    letter-spacing:-.01em;
+  }
+  .compare-col.new li{border-bottom-color:rgba(255,255,255,.12);color:#f5f5f7;font-weight:500}
+  .compare-col li:last-child{border-bottom:none}
+  .compare-col li svg{width:16px;height:16px;flex-shrink:0;margin-top:5px;stroke:var(--ink-3)}
+  .compare-col.new li svg{stroke:#fff}
+  .compare-col.old li{color:var(--ink-2)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:.7vw;margin-top:3.2vh}
+  .chip{
+    background:var(--paper);
+    border-radius:100px;
+    padding:1.15vh 1.5vw;
+    font-size:clamp(13px,1.1vw,16px);
+    color:var(--ink);
+    font-weight:500;
+  }
+  .slide.paper .chip{background:var(--fill)}
+
+  .duo-col{display:grid;grid-template-columns:1fr 1fr;gap:1.6vw;margin-top:.6vh}
+  .panel{
+    border-radius:22px;
+    padding:4vh 2.5vw;
+    background:var(--paper);
+  }
+  .slide.paper .panel{background:var(--fill)}
+  .panel h3{font-size:clamp(22px,2vw,28px);margin-bottom:2vh;font-weight:600;letter-spacing:-.025em}
+  .panel ul{list-style:none}
+  .panel li{
+    padding:1.05vh 0;
+    font-size:clamp(15px,1.3vw,18px);
+    color:var(--ink-2);
+    line-height:1.55;
+    padding-left:1.2em;
+    position:relative;
+  }
+  .panel li::before{content:'';position:absolute;left:0;top:.85em;width:6px;height:6px;border-radius:50%;background:var(--blue)}
+
+  .quote-hero{
+    font-size:clamp(32px,4.4vw,64px);
+    line-height:1.22;
+    font-weight:600;
+    letter-spacing:-.035em;
+    max-width:16em;
+    color:var(--ink);
+  }
+  .quote-attr{
+    margin-top:3.6vh;
+    font-size:clamp(14px,1.2vw,17px);
+    color:var(--ink-3);
+  }
+  .src{
+    margin-top:7vh;
+    font-size:var(--fs-src);
+    color:var(--ink-3);
+    line-height:1.6;
+    max-width:54em;
+  }
+
+  #progress{position:fixed;top:0;left:0;height:2px;background:var(--ink);width:0;transition:width .4s;z-index:20;opacity:.35}
+  #pager{
+    position:fixed;bottom:3.2vh;right:3vw;z-index:20;
+    font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:14px;
+  }
+  #pager button{
+    background:var(--paper);border:1px solid var(--line);color:var(--ink);
+    width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;
+    transition:all .2s;font-family:inherit;
+  }
+  #pager button:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  body:has(.slide.cover-mesh.active) #pager,
+  body:has(.slide.cover-neural.active) #pager,
+  body:has(.slide.schools.active) #pager,
+  body:has(.slide.astra-slide.active) #pager,
+  body:has(.slide.auth-slide.active) #pager,
+  body:has(.slide.labor.active) #pager,
+  body:has(.slide.pyramid-slide.active) #pager,
+  body:has(.slide.cap-slide.active) #pager,
+  body:has(.slide.cases-slide.active) #pager,
+  body:has(.slide.course-poster.active) #pager,
+  body:has(.slide.atlas-slide.active) #pager,
+  body:has(.slide.co-slide.active) #pager,
+  body:has(.slide.idx-slide.active) #pager{
+    color:rgba(244,240,230,.5);
+  }
+  body:has(.slide.cover-mesh.active) #pager button,
+  body:has(.slide.cover-neural.active) #pager button,
+  body:has(.slide.schools.active) #pager button,
+  body:has(.slide.astra-slide.active) #pager button,
+  body:has(.slide.auth-slide.active) #pager button,
+  body:has(.slide.labor.active) #pager button,
+  body:has(.slide.pyramid-slide.active) #pager button,
+  body:has(.slide.cap-slide.active) #pager button,
+  body:has(.slide.cases-slide.active) #pager button,
+  body:has(.slide.course-poster.active) #pager button,
+  body:has(.slide.atlas-slide.active) #pager button,
+  body:has(.slide.co-slide.active) #pager button,
+  body:has(.slide.idx-slide.active) #pager button{
+    background:rgba(13,21,36,.78);
+    border-color:rgba(232,197,71,.28);
+    color:#f4f0e6;
+  }
+  body:has(.slide.cover-mesh.active) #pager button:hover,
+  body:has(.slide.cover-neural.active) #pager button:hover,
+  body:has(.slide.schools.active) #pager button:hover,
+  body:has(.slide.astra-slide.active) #pager button:hover,
+  body:has(.slide.auth-slide.active) #pager button:hover,
+  body:has(.slide.labor.active) #pager button:hover,
+  body:has(.slide.pyramid-slide.active) #pager button:hover,
+  body:has(.slide.cap-slide.active) #pager button:hover,
+  body:has(.slide.cases-slide.active) #pager button:hover,
+  body:has(.slide.course-poster.active) #pager button:hover,
+  body:has(.slide.atlas-slide.active) #pager button:hover,
+  body:has(.slide.co-slide.active) #pager button:hover,
+  body:has(.slide.idx-slide.active) #pager button:hover{
+    background:#e8c547;
+    color:#070b14;
+    border-color:#e8c547;
+  }
+  body:has(.slide.cover-mesh.active) #progress,
+  body:has(.slide.cover-neural.active) #progress,
+  body:has(.slide.schools.active) #progress,
+  body:has(.slide.astra-slide.active) #progress,
+  body:has(.slide.auth-slide.active) #progress,
+  body:has(.slide.labor.active) #progress,
+  body:has(.slide.pyramid-slide.active) #progress,
+  body:has(.slide.cap-slide.active) #progress,
+  body:has(.slide.cases-slide.active) #progress,
+  body:has(.slide.course-poster.active) #progress,
+  body:has(.slide.atlas-slide.active) #progress,
+  body:has(.slide.co-slide.active) #progress,
+  body:has(.slide.idx-slide.active) #progress{
+    background:#e8c547;
+  }
+  #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  body:has(.slide.cover-mesh.active) #hint,
+  body:has(.slide.cover-neural.active) #hint,
+  body:has(.slide.schools.active) #hint,
+  body:has(.slide.astra-slide.active) #hint,
+  body:has(.slide.auth-slide.active) #hint,
+  body:has(.slide.labor.active) #hint,
+  body:has(.slide.pyramid-slide.active) #hint,
+  body:has(.slide.cap-slide.active) #hint,
+  body:has(.slide.cases-slide.active) #hint,
+  body:has(.slide.course-poster.active) #hint,
+  body:has(.slide.atlas-slide.active) #hint,
+  body:has(.slide.co-slide.active) #hint,
+  body:has(.slide.idx-slide.active) #hint{
+    color:rgba(244,240,230,.45);
+  }
+  #hint.hidden{opacity:0}
+
+  #editor-bar{
+    position:fixed;top:12px;right:12px;z-index:30;
+    display:flex;align-items:center;gap:6px;
+    font-size:11px;font-family:inherit;
+  }
+  #editor-bar button#btn-edit{
+    width:22px;height:22px;padding:0;
+    border-radius:50%;
+    background:#111;
+    border:1px solid rgba(255,255,255,.12);
+    color:#fff;
+    font-size:10px;font-weight:650;letter-spacing:0;
+    line-height:1;
+    box-shadow:none;
+    opacity:.38;
+  }
+  #editor-bar button#btn-edit:hover{opacity:.72;background:#111;color:#fff;border-color:rgba(255,255,255,.2)}
+  body.editing #editor-bar button#btn-edit{
+    opacity:.85;
+    background:#111;
+    color:#e8c547;
+    border-color:rgba(232,197,71,.45);
+    box-shadow:0 0 0 1px rgba(232,197,71,.2);
+  }
+  #editor-bar button#btn-save,
+  #editor-bar button#btn-clear{
+    background:rgba(17,17,17,.82);
+    border:1px solid rgba(255,255,255,.14);
+    color:rgba(255,255,255,.75);
+    padding:5px 9px;
+    border-radius:980px;
+    cursor:pointer;
+    font:inherit;
+    font-size:11px;
+    font-weight:600;
+    box-shadow:none;
+  }
+  #editor-bar button#btn-save:hover,
+  #editor-bar button#btn-clear:hover{background:#111;color:#fff;border-color:rgba(255,255,255,.28)}
+  #editor-bar button.primary{background:#111;color:#e8c547;border-color:rgba(232,197,71,.35)}
+  #editor-bar button.primary:hover{filter:none;background:#111;color:#fff}
+  #editor-bar .status{color:var(--ink-3);padding:0 4px;max-width:12em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.7}
+  body.editing .slide [data-edit]{
+    outline:1.5px dashed rgba(0,113,227,.35);
+    outline-offset:4px;
+    border-radius:4px;
+    cursor:text;
+  }
+  body.editing .slide [data-edit]:focus{
+    outline:2px solid var(--blue);
+    outline-offset:4px;
+    background:rgba(0,113,227,.04);
+  }
+  body.editing #deck{cursor:default}
+  body.editing #hint{display:none}
+  @media print{
+    #editor-bar{display:none!important}
+  }
+
+  @media (max-aspect-ratio: 5/4){
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.auth-slide{padding:2.8vh 2.8vw 2vh;overflow-y:auto}
+    .slide.astra-slide{padding:0;overflow-y:auto}
+    .data-grid{grid-template-columns:1.15fr .85fr;gap:.8vw}
+    .path-kpis{grid-template-columns:repeat(3,1fr)}
+    .slide.labor,.slide.auth-slide,.slide.astra-slide{padding:0;overflow-y:auto}
+    .labor-track{gap:1vh}
+    .lrow{grid-template-columns:2.2em 1fr;grid-template-rows:auto auto}
+    .lrow .proof{grid-column:2}
+    .job-cols{gap:.5vw}
+    .fact-strip{grid-template-columns:repeat(3,1fr)}
+    .takeaway{font-size:var(--fs-small);padding:.9vh 1vw}
+  }
+  @media (max-height: 720px){
+    .data-head{margin-bottom:1vh}
+    .kicker{margin-bottom:1.2vh}
+    h2{margin-bottom:2.2vh}
+    .takeaway{margin-top:.8vh;padding:.75vh 1vw}
+    .ptile .ico{width:30px;height:30px;font-size:10px}
+  }
+  @media (max-width:800px){
+    .slide{padding:7vh 7vw 12vh;overflow-y:auto;justify-content:flex-start}
+    .slide.data-slide,.slide.labor,.slide.cap-slide,.slide.auth-slide{overflow-y:auto}
+    .slide.astra-slide{padding:0;overflow-y:auto}
+    .astra-hero{min-height:38vh}
+    .split,.split.reverse{grid-template-columns:1fr;padding:0}
+    .split .pane-text,.split.reverse .pane-text{padding:7vh 7vw 4vh}
+    .slide.schools{padding:0;overflow-y:auto}
+    .schools-stage{grid-template-columns:1fr}
+    .schools-hero{min-height:auto}
+    .schools-map-stage{max-height:28vh}
+    .theses{padding-bottom:2vh}
+    .gloss{grid-template-columns:1fr}
+    .schools-grid{
+      grid-template-columns:1fr;
+      grid-template-rows:auto;
+    }
+    .scard{min-height:auto}
+    .scard-media{height:12vh;max-height:100px}
+    .scard-body{overflow:visible}
+    .smeta{overflow:visible}
+    .photo-band{height:26vh}
+    .facts,.trio,.compare-cols,.duo-col,.quad{grid-template-columns:1fr}
+    .creature,.neuron-side{display:none}
+    .path-kpis,.fact-strip,.ox-chips,.kpi-stack,.auth-facts,.astra-stage{grid-template-columns:1fr}
+    .data-grid{grid-template-columns:1fr}
+    .job-cols{grid-template-columns:1fr}
+  }
+  @media print{
+    body{overflow:visible}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}
+    #pager,#hint,#progress,#editor-bar{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<svg id="ico-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-globe" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M16 3c3.2 3.4 5 7.9 5 13s-1.8 9.6-5 13c-3.2-3.4-5-7.9-5-13S12.8 6.4 16 3z" fill="#fff" opacity=".35"/><path d="M3 16h26M6 10h20M6 22h20" fill="none" stroke="#fff" stroke-width="1.8" opacity=".55"/></symbol>
+  <symbol id="i-mortar" viewBox="0 0 32 32"><path d="M16 4 2 11l14 7 12-6v9h2V11L16 4z"/><path d="M8 14.2V21c0 2.8 3.6 5 8 5s8-2.2 8-5v-6.8l-8 4-8-4z"/></symbol>
+  <symbol id="i-diploma" viewBox="0 0 32 32"><rect x="3" y="8" width="26" height="18" rx="3"/><path d="M8 14h16M8 18h11" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/><circle cx="23" cy="22" r="5"/><path d="M21.2 22.1 22.6 23.6 25.4 20.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 32 32"><path d="M4 18 28 8l-7 16-5.2-5.2L10 24l-1.5-3.2 5.2-5.4L4 18z"/></symbol>
+  <symbol id="i-stamp" viewBox="0 0 32 32"><rect x="6" y="4" width="20" height="24" rx="3"/><rect x="10" y="9" width="12" height="8" rx="1.5" fill="#fff" opacity=".85"/><path d="M11 21h10M11 24h7" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 32 32"><path d="M4 24V10h4v10h6V8h4v12h6V6h4v18H4z"/></symbol>
+  <symbol id="i-building" viewBox="0 0 32 32"><path d="M6 28V12l10-8 10 8v16H6z"/><rect x="14" y="20" width="4" height="8" fill="#fff" opacity=".85"/><path d="M11 15h3v3h-3zm7 0h3v3h-3zm-7 5h3v3h-3zm7 0h3v3h-3z" fill="#fff" opacity=".75"/></symbol>
+  <symbol id="i-flask" viewBox="0 0 32 32"><path d="M12 4h8v2h-1v7l7 13H6l7-13V6h-1V4z"/><circle cx="13" cy="22" r="1.6" fill="#fff" opacity=".8"/><circle cx="18" cy="24.5" r="2.1" fill="#fff" opacity=".7"/></symbol>
+  <symbol id="i-sigma" viewBox="0 0 32 32"><path d="M7 6h18l-9 10 9 10H7v-3.2L16 16 7 9.2V6z"/></symbol>
+  <symbol id="i-ban" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M8 24 24 8" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 32 32"><path d="M8 3h11l7 7v19H8V3z"/><path d="M19 3v7h7" fill="#fff" opacity=".45"/><path d="M12 16h10M12 20h8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 32 32"><path d="M16 3 18.6 13.4 29 16 18.6 18.6 16 29 13.4 18.6 3 16 13.4 13.4z"/></symbol>
+  <symbol id="i-think" viewBox="0 0 32 32"><circle cx="16" cy="13" r="8"/><path d="M10 21c0 3 2.6 6 6 6s6-3 6-6"/><rect x="14" y="26" width="4" height="4" rx="1"/></symbol>
+  <symbol id="i-people" viewBox="0 0 32 32"><circle cx="11" cy="10" r="4"/><circle cx="21.5" cy="11" r="3.2"/><path d="M3 26c.6-5 4.2-8 8-8s7.4 3 8 8H3zm13.2 0c.4-3.6 2.6-6.2 5.3-6.2 3.2 0 5.8 2.8 6.3 6.2H16.2z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M9.5 16.5 14 21l9-10" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pie" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M16 16V3a13 13 0 0 1 11.3 19.5L16 16z" fill="#fff" opacity=".55"/></symbol>
+  <symbol id="i-uk" viewBox="0 0 32 32"><rect x="3" y="8" width="26" height="16" rx="2"/><path d="M3 16h26M16 8v16" fill="none" stroke="#fff" stroke-width="3"/><path d="M3 8l26 16M29 8 3 24" fill="none" stroke="#fff" stroke-width="1.4" opacity=".7"/></symbol>
+  <symbol id="i-net" viewBox="0 0 32 32"><path d="M16 4v24M6 16h20"/><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 9c2.6 2 5.2 3 8 3s5.4-1 8-3M8 23c2.6-2 5.2-3 8-3s5.4 1 8 3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-up" viewBox="0 0 32 32"><path d="M16 5 28 18h-8v9h-8v-9H4z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 32 32"><path d="M16 27 4 14h8V5h8v9h8z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 32 32"><path d="M26 16a10 10 0 1 1-3.2-7.4L26 12V6l2 10-10-1 4.1-2.3A7.5 7.5 0 1 0 23.5 16z"/></symbol>
+  <symbol id="i-train" viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="14" rx="4"/><circle cx="10" cy="24" r="3"/><circle cx="22" cy="24" r="3"/><path d="M8 12h7v5H8z" fill="#fff" opacity=".7"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M16 8v8l6 3" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-split" viewBox="0 0 32 32"><rect x="3" y="6" width="12" height="20" rx="3"/><rect x="17" y="6" width="12" height="20" rx="3" opacity=".55"/></symbol>
+  <symbol id="i-agent" viewBox="0 0 32 32"><rect x="4" y="10" width="16" height="14" rx="3"/><circle cx="22" cy="12" r="6"/><path d="M20 12h4M22 10v4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-robot" viewBox="0 0 32 32"><rect x="6" y="10" width="20" height="16" rx="4"/><circle cx="12.5" cy="17" r="2.2" fill="#fff"/><circle cx="19.5" cy="17" r="2.2" fill="#fff"/><rect x="14" y="4" width="4" height="6" rx="2"/></symbol>
+  <symbol id="i-farm" viewBox="0 0 32 32"><path d="M16 4 4 14h4v14h6v-8h4v8h6V14h4L16 4z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 32 32"><path d="M3 10h16v12H3z"/><path d="M19 14h7l3 5v3h-10z"/><circle cx="9" cy="24" r="3"/><circle cx="24" cy="24" r="3"/></symbol>
+  <symbol id="i-hardhat" viewBox="0 0 32 32"><path d="M6 18c0-6 4.4-10 10-10s10 4 10 10H6z"/><rect x="3" y="18" width="26" height="5" rx="2"/><rect x="14" y="7" width="4" height="6" rx="1"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 32 32"><path d="M4 6h4l2.2 12H24l3-8H10"/><circle cx="13" cy="24" r="2.4"/><circle cx="22" cy="24" r="2.4"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 32 32"><rect x="3" y="8" width="26" height="16" rx="3"/><circle cx="16" cy="16" r="4" fill="#fff" opacity=".85"/><path d="M7 12h3M22 20h3" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-desk" viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="16" rx="2"/><path d="M4 14h24" fill="none" stroke="#fff" stroke-width="2"/><rect x="8" y="17" width="7" height="4" rx="1" fill="#fff" opacity=".7"/></symbol>
+  <symbol id="i-bank" viewBox="0 0 32 32"><path d="M4 12 16 5l12 7v3H4z"/><path d="M7 16h3v8H7zm7.5 0h3v8h-3zM22 16h3v8h-3zM4 25h24v3H4z"/></symbol>
+  <symbol id="i-keys" viewBox="0 0 32 32"><rect x="3" y="8" width="26" height="16" rx="3"/><path d="M7 13h3v3H7zm5 0h3v3h-3zm5 0h3v3h-3zm5 0h3v3h-3zM7 19h18v2H7z" fill="#fff" opacity=".8"/></symbol>
+  <symbol id="i-db" viewBox="0 0 32 32"><ellipse cx="16" cy="8" rx="11" ry="4"/><path d="M5 8v6c0 2.2 4.9 4 11 4s11-1.8 11-4V8"/><path d="M5 14v6c0 2.2 4.9 4 11 4s11-1.8 11-4v-6"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M16 8v16M12 12c.8-1.4 2.2-2 4-2s3.4.8 4 2c.2 1.6-1.6 2.4-4 2.6-2.6.2-4.4 1.2-4 2.8.6 1.2 2.2 2 4.2 2s3.4-.6 4.2-2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 32 32"><path d="M11 7c-3 0-6 2.4-6 6 0 1.4.5 2.6 1.3 3.5C5.5 17.4 5 18.6 5 20c0 3 2.5 5 5.5 5h11c3.3 0 5.5-2.2 5.5-5.2 0-1-.3-2-.8-2.8.8-.9 1.3-2.1 1.3-3.4 0-3.3-2.7-5.6-6-5.6-1 0-1.9.2-2.7.6C17.7 7.6 16.2 7 14.5 7H11z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 32 32"><path d="M12 6 4 16l8 10 2.4-2L8.8 16 14.4 8 12 6zm8 0-2.4 2L23.2 16 17.6 24 20 26l8-10-8-10z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 32 32"><path d="M16 3 19.5 13H30l-8.4 6.2L24.9 29 16 22.6 7.1 29l3.3-9.8L2 13h10.5z"/></symbol>
+  <symbol id="i-gap" viewBox="0 0 32 32"><path d="M6 24V8h6v16H6zm14 0V8h6v16h-6z"/><path d="M14 16h4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 32 32"><path d="M16 3 6 7v9c0 7 4.4 11.5 10 13 5.6-1.5 10-6 10-13V7L16 3z"/><path d="M11 16.2 14.2 19.5 21.2 12" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-money" viewBox="0 0 32 32"><rect x="2" y="8" width="28" height="16" rx="3"/><circle cx="16" cy="16" r="5" fill="none" stroke="#fff" stroke-width="2"/><path d="M7 12h2M23 20h2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 32 32"><circle cx="16" cy="10" r="5"/><path d="M5 27c1-6 5.2-9 11-9s10 3 11 9H5z"/></symbol>
+  <symbol id="i-clock2" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13"/><path d="M16 7v9h7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-home" viewBox="0 0 32 32"><path d="M4 16 16 5l12 11v13H4V16z"/><rect x="13" y="18" width="6" height="10" fill="#fff" opacity=".8"/></symbol>
+  <symbol id="i-target" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="16" cy="16" r="2.4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 32 32"><path d="M5 6c4 0 6.5 1.4 11 4.2C20.5 7.4 23 6 27 6v20c-4 0-6.5 1.2-11 4-4.5-2.8-7-4-11-4V6z"/><path d="M16 10.4V29" fill="none" stroke="#fff" stroke-width="1.6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 32 32"><path d="M15 4h2v22h-2zM6 26h20v3H6z"/><path d="M16 8 6 14h8l2-6 2 6h8L16 8z"/></symbol>
+  <symbol id="i-speech" viewBox="0 0 32 32"><path d="M5 6h22v16H12l-7 6V6z"/><path d="M10 12h12M10 16h8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 32 32"><path d="M13 5v10l-2-2-2 2 7 8 9-3V8h-3v6h-1V6h-3v7h-1V5h-4z"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" rx="4"/><circle cx="12" cy="16" r="2" fill="#fff"/><circle cx="20" cy="16" r="2" fill="#fff"/><path d="M16 4v4M10 26v2M22 26v2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-atom" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3.2"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(60 16 16)"/><ellipse cx="16" cy="16" rx="13" ry="5.2" fill="none" stroke="currentColor" stroke-width="2.3" transform="rotate(120 16 16)"/></symbol>
+  <symbol id="i-garden" viewBox="0 0 32 32"><path d="M6 26h20v3H6z"/><path d="M16 6c5 0 8 4 8 8-3 0-6-1.2-8-4-2 2.8-5 4-8 4 0-4 3-8 8-8z"/><path d="M15 14h2v12h-2z"/><circle cx="9" cy="20" r="2.4"/><circle cx="23" cy="18.5" r="2.8"/></symbol>
+</svg>
+<div id="deck" data-rev="v56">
+
+<!-- P1 封面 · 线框地形 -->
+<section class="slide cover-mesh active">
+  <div class="cm-art">
+    <img src="assets/salon/cover-wireframe-blend-hi.jpg?v=1" alt="">
+  </div>
+  <div class="cm-text">
+    <div class="mark" data-edit>Natural Computation</div>
+    <h1 class="cover-title" data-edit>「<span class="em">机</span>」遇未来</h1>
+    <p class="cover-sub" data-edit>看清 AI 把教育改到哪里，再决定孩子练什么。</p>
+    <ol class="cm-agenda">
+      <li>
+        <span class="num">01</span>
+        <span class="txt" data-edit>国际教育的变革趋势
+          <span class="desc">六所实验校在改什么；Astra Nova 课表与真题；对中国学生，通道在收窄。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">02</span>
+        <span class="txt" data-edit>就业形势的预估分析
+          <span class="desc">岗位总数未塌；软件会换人；我们只认五件可练的能力。</span>
+        </span>
+      </li>
+      <li>
+        <span class="num">03</span>
+        <span class="txt" data-edit>我们在如何构建新的知识体系
+          <span class="desc">四个少年不是模板；五件能力怎么落地；通识课与少年创始人能看见什么。</span>
+        </span>
+      </li>
+    </ol>
+    <div class="cm-foot" data-edit>Bilden Edu · 家长沙龙</div>
+  </div>
+</section>
+
+<!-- P2 创新学校 · 地图 + 六校 -->
+<section class="slide schools">
+  <div class="schools-stage">
+    <aside class="schools-hero">
+      <div class="brand">
+        <div class="kicker" data-edit>01 · 实验学校 · 六所</div>
+        <h2 data-edit>全球创新学校涌现，<br>「富人」正在寻求多元教育方案。</h2>
+      </div>
+      <div class="schools-map-stage">
+        <img src="assets/world-map.png?v=3" alt="世界地图">
+        <div class="veil"></div>
+        <div class="mpin" style="left:22.40%;top:31.70%;--pin:#FF3B30" title="Alpha"><span class="dot" style="background:#FF3B30"></span></div>
+        <div class="mpin" style="left:16.50%;top:32.30%;--pin:#e8c547" title="Ad Astra → Astra Nova"><span class="dot" style="background:#e8c547"></span></div>
+        <div class="mpin" style="left:52.30%;top:21.40%;--pin:#AF52DE" title="David Game"><span class="dot" style="background:#AF52DE"></span></div>
+        <div class="mpin" style="left:82.90%;top:31.00%;--pin:#FF2D55" title="神山高专"><span class="dot" style="background:#FF2D55"></span></div>
+        <div class="mpin" style="left:25.90%;top:26.80%;--pin:#FF9500" title="Founders"><span class="dot" style="background:#FF9500"></span></div>
+        <div class="mpin" style="left:25.40%;top:27.50%;--pin:#34C759" title="Forge Prep"><span class="dot" style="background:#34C759"></span></div>
+      </div>
+      <div class="map-legend">
+        <div class="item"><i class="swatch" style="background:#FF3B30"></i>Alpha <span class="meta">奥斯汀</span></div>
+        <div class="item"><i class="swatch" style="background:#e8c547"></i>Astra Nova <span class="meta">SpaceX 渊源</span></div>
+        <div class="item"><i class="swatch" style="background:#AF52DE"></i>Sabrewing <span class="meta">伦敦</span></div>
+        <div class="item"><i class="swatch" style="background:#FF2D55"></i>神山高专 <span class="meta">德岛</span></div>
+        <div class="item"><i class="swatch" style="background:#FF9500"></i>Founders <span class="meta">纽约</span></div>
+        <div class="item"><i class="swatch" style="background:#34C759"></i>Forge Prep <span class="meta">新泽西</span></div>
+      </div>
+      <div class="theses">
+        <div class="theses-kicker" data-edit>核心共同点</div>
+        <div class="thesis">
+          <div class="num">01</div>
+          <p data-edit>学校要把孩子从「解题的人」变成「解决问题的人」。学习由真实问题来驱动，而不是死板训练。</p>
+        </div>
+        <div class="thesis">
+          <div class="num">02</div>
+          <p data-edit>留出更多时间让孩子接触真实世界——看世界怎么运转，参与企业正在发生的事，而不是坐在教室里看电子屏。</p>
+        </div>
+        <div class="thesis">
+          <div class="num">03</div>
+          <p data-edit>知识传授和考试都没有取消。只是更早用现实结果来检验学得怎么样，而不是等到毕业后再从企业初级工做起。</p>
+        </div>
+        <div class="thesis">
+          <div class="num">04</div>
+          <p data-edit>这几所学校都在强调同一件事——基础知识原理（教材里的问题）、社会与商业如何运转、独立思考和当众表达、动手把想法做成（ideas into practice）。</p>
+        </div>
+      </div>
+    </aside>
+
+    <div class="schools-panel">
+      <div class="schools-grid">
+      <article class="scard c-alpha">
+        <div class="scard-media">
+          <span class="fallback">Austin</span>
+          <img src="assets/schools/stories/alpha.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 奥斯汀等地 · 全日制</div>
+          <h3 data-edit>Alpha School</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>主课约 2 小时/日；下午做项目和生活技能。</dd>
+            <dt>学费</dt><dd data-edit>约 1–4 万美元/年；旧金山校约 7.5 万美元。</dd>
+            <dt>模式</dt><dd data-edit>到校上课。约 5 个学生配 1 名引导员，负责动机和带项目，不是整日讲授。</dd>
+            <dt>特点</dt><dd data-edit>校方称测验进步很快；独立调查显示，部分合作校州考几乎没动。广告和第三方核对经常对不上。</dd>
+          </dl>
+          <div class="note">alpha.school · 入学超 1000 人</div>
+        </div>
+      </article>
+
+      <article class="scard c-astra">
+        <div class="scard-media">
+          <span class="fallback">SpaceX → Online</span>
+          <img src="assets/schools/stories/astra.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>SpaceX 园区 Ad Astra → 全球线上</div>
+          <h3 data-edit>Astra Nova</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>每周约 4–16 小时。多数课每周 1–2 小时；数学每周 3–4 小时。</dd>
+            <dt>学费</dt><dd data-edit>线上按学期选课，费用以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>英语直播小班，约 6–16 人；学生来自约 45 个国家。</dd>
+            <dt>特点</dt><dd data-edit>本季约 90 门课，每学期重做。申请要交一段没有标准答案的短视频，听怎么想。下一页拆课表。</dd>
+          </dl>
+          <div class="note">my.astranova.org/preview</div>
+        </div>
+      </article>
+
+      <article class="scard c-sabre">
+        <div class="scard-media">
+          <span class="fallback">London</span>
+          <img src="assets/schools/stories/london.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>英国 · 伦敦 · David Game College</div>
+          <h3 data-edit>Sabrewing 项目</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>到校约 9:10–16:30。下午技能与项目累计 300 小时以上/年（校方称）。</dd>
+            <dt>学费</dt><dd data-edit>走学院学费，以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>伦敦到校。上午用自适应软件推进英国中学考试科目，教练加 AI 导师辅导。</dd>
+            <dt>特点</dt><dd data-edit>一年通常考 5 门 GCSE，或 2–3 门 A Level（校方称）。正规升学轨道，下午做项目和技能。</dd>
+          </dl>
+          <div class="note">davidgamecollege.com</div>
+        </div>
+      </article>
+
+      <article class="scard c-kami">
+        <div class="scard-media">
+          <span class="fallback">Tokushima</span>
+          <img src="assets/schools/stories/kamiyama.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>日本 · 德岛神山 · 五年制高等专门学校</div>
+          <h3 data-edit>神山まるごと高専</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>五年贯通。一日约 9:00 上课，一节 90 分钟。</dd>
+            <dt>学费</dt><dd data-edit>日本高专标准，以官网为准。</dd>
+            <dt>模式</dt><dd data-edit>约 15 岁入学，住校。</dd>
+            <dt>特点</dt><dd data-edit>科技 × 设计 × 创业。每年约 40 人。编程、物联网、AI，也做地方真实课题。</dd>
+          </dl>
+          <div class="note">kamiyama.ac.jp</div>
+        </div>
+      </article>
+
+      <article class="scard c-founders">
+        <div class="scard-media">
+          <span class="fallback">NYC</span>
+          <img src="assets/schools/stories/nyc.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 纽约 · 9–12 年级 · 2026 首届</div>
+          <h3 data-edit>The Founders School</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>学术约 3 小时/日。一年五段——卖 → 做 → 验证 → 增长 → 放大（校方称）。</dd>
+            <dt>学费</dt><dd data-edit>约 15 万美元/年。承诺未达百万利润可退费，以合同为准。</dd>
+            <dt>模式</dt><dd data-edit>纽约全日制创业高中。首届约 20 人。</dd>
+            <dt>特点</dt><dd data-edit>三柱——生活技能、创业、和 AI 一起做产品。</dd>
+          </dl>
+          <div class="note">founders.school</div>
+        </div>
+      </article>
+
+      <article class="scard c-forge">
+        <div class="scard-media">
+          <span class="fallback">New Jersey</span>
+          <img src="assets/schools/stories/forge.jpg" alt="" onerror="this.style.display='none'">
+        </div>
+        <div class="scard-body">
+          <div class="where" data-edit>美国 · 新泽西 · 2026 新开</div>
+          <h3 data-edit>Forge Prep</h3>
+          <dl class="smeta">
+            <dt>课时</dt><dd data-edit>上午深度专注，下午工作室动手。</dd>
+            <dt>学费</dt><dd data-edit>2.4–3.6 万美元/年；校方称约 30% 可获助学。</dd>
+            <dt>模式</dt><dd data-edit>1 人对 1 人引导员，多年跟进学业和生活技能。</dd>
+            <dt>特点</dt><dd data-edit>强调真实业务和能交货的产品。约 30 个创始家庭（校方称）。</dd>
+          </dl>
+          <div class="note">forgeprep.com</div>
+        </div>
+      </article>
+      </div>
+      <div class="gloss">
+        <h4 data-edit>家长词条</h4>
+        <p data-edit><strong>引导员</strong>不是整日讲课的班主任，主要管动机、带项目、盯进度。有的学校英文叫 Guide。</p>
+        <p data-edit><strong>MAP</strong>是美国一项随题目难度变化的成绩测验，用来看进步幅度，不是高考，也不能直接拿来跟中国分数比。</p>
+        <p data-edit><strong>GCSE / A Level</strong>是英国中学公开考试。GCSE 大致是初中升高中水平，A Level 是申请大学用的。</p>
+        <p data-edit><strong>全寮制</strong>即住校。<strong>校方称</strong>指学校自己公布的数字，还没被独立核对。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- P3 Astra Nova 课表拆解 -->
+<section class="slide astra-slide">
+  <div class="astra-stage">
+    <aside class="astra-hero">
+      <img class="bg" src="assets/salon/astra/launch.jpg" alt="SpaceX 发射场">
+      <div class="veil"></div>
+      <div class="brand">
+        <div class="kicker" data-edit>01 · ASTRA NOVA · SPACEX 渊源</div>
+        <h2 data-edit>九十门课，连着真实世界的问题。</h2>
+      </div>
+      <figure class="astra-inset">
+        <img src="assets/salon/astra/conundrum-nasa.jpg" alt="NASA Conundrum">
+        <figcaption data-edit>Astra Nova · NASA Conundrum</figcaption>
+      </figure>
+      <div class="astra-kpis">
+        <div class="ak"><div class="n" data-edit>90</div><div class="u">门课 / 每学期重做</div></div>
+        <div class="ak"><div class="n" data-edit>6–16</div><div class="u">人 · 英语直播小班</div></div>
+        <div class="ak"><div class="n" data-edit>45</div><div class="u">个国家的同学</div></div>
+        <div class="ak"><div class="n" data-edit>4–16</div><div class="u">小时 / 周</div></div>
+      </div>
+    </aside>
+    <div class="astra-panel">
+      <p class="lede" data-edit>课表每学期重做。家长先看三件事——是不是连着真实世界的问题，文明和科技是不是一起学，孩子能不能把想法讲清楚、讲有条理。</p>
+      <div class="track">
+        <article class="tstep">
+          <div class="num">01</div>
+          <div class="body">
+            <div class="cap" data-edit>真实世界</div>
+            <h3 data-edit>链接真实世界的问题</h3>
+            <p data-edit>课名先是潮汐池、登月、经济学游戏，不是「地理第一章」。同学来自约 45 个国家。对中国家庭，不少课会落在凌晨，这是全球直播班的代价。</p>
+            <div class="chips">
+              <span class="chip">Tide Pools · 潮汐池探险</span>
+              <span class="chip">Walking on the Moon · 登月行走</span>
+              <span class="chip">Practical Economics · 实用经济学</span>
+              <span class="chip">Model UN · 模拟联合国</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">02</div>
+          <div class="body">
+            <div class="cap" data-edit>文明与科技</div>
+            <h3 data-edit>文明史和硬科学放在同一张课表</h3>
+            <p data-edit>数学要分班，每周 3–4 小时；其余课每周 1–2 小时。罗马帝国、第二次世界大战，和微积分、牛顿力学、AI 技术史排在一起。不是只学工具，也不只背人文。</p>
+            <div class="chips">
+              <span class="chip">Algebra → Calculus · 代数到微积分</span>
+              <span class="chip">Newtonian Mechanics · 经典牛顿力学</span>
+              <span class="chip">Technical History of AI · AI 技术史</span>
+              <span class="chip">Imperial Rome · 罗马帝国</span>
+              <span class="chip">WWII · 第二次世界大战</span>
+            </div>
+          </div>
+        </article>
+        <article class="tstep">
+          <div class="num">03</div>
+          <div class="body">
+            <div class="cap" data-edit>表达与逻辑</div>
+            <h3 data-edit>注重表达与逻辑</h3>
+            <p data-edit>申请要交 30 秒到 2 分钟、没有标准答案的短视频，听怎么想。课上练决策、悖论、生物伦理、数据会不会骗人。先能讲清楚，再谈做出来。</p>
+            <div class="chips">
+              <span class="chip">Better Decision-Making · 更好的决策</span>
+              <span class="chip">Paradoxes · 悖论与思想实验</span>
+              <span class="chip">BioEthics II · 生物伦理</span>
+              <span class="chip">Data Science · 数据会不会骗人</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="astra-foot"><span class="lbl">一句话</span><span data-edit>我们没有九十门。要学的是同一根脊柱——真问题、文明与科技、能把想法讲清楚。</span></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- P3b 课表原页 + Conundrum -->
+<section class="slide astra-slide astra-lab">
+  <div class="astra-stage">
+    <aside class="astra-hero">
+      <img class="bg catalog" src="assets/salon/astra/preview-catalog.png" alt="Astra Nova Fall 2026 课表网站">
+      <div class="veil"></div>
+      <div class="brand">
+        <div class="kicker" data-edit>01 · ASTRA NOVA · 申请与课余</div>
+        <h2 data-edit>全球面试——学生自己录视频答题。<br>课余安排很满，不只是社团。</h2>
+      </div>
+      <div class="astra-kpis">
+        <div class="ak"><div class="n" data-edit>45 国</div><div class="u">同一套英语直播面试</div></div>
+        <div class="ak"><div class="n" data-edit>30s–2min</div><div class="u">自己录，没有标准答案</div></div>
+        <div class="ak"><div class="n" data-edit>90 门</div><div class="u">课余是选课，不是只逛社团</div></div>
+        <div class="ak"><div class="n" data-edit>Fall 2026</div><div class="u">my.astranova.org/preview</div></div>
+      </div>
+    </aside>
+    <div class="astra-panel">
+      <p class="lede" data-edit>Conundrum 是学校自己出的开放题——没有标准答案，要你站队，并讲清为什么。申请时任选一道，交视频或音频。下面三道最常被提起。</p>
+      <div class="cnd-list">
+        <article class="cnd">
+          <img src="assets/salon/astra/chocolate.jpg" alt="Chocolate Conundrum">
+          <div>
+            <div class="en">Chocolate Conundrum</div>
+            <h3 data-edit>员工找到了公司巧克力的秘密配方。自己开店，能不能用？</h3>
+            <p data-edit>Astra Sweets 靠一种别人不知道的配方成为最好吃的巧克力。配方是员工 Nova 发现的。她要开 Nova Sweets，能不能把这个配方带走？</p>
+            <div class="opts">
+              <span>A 不能 · Team Astra Sweets</span>
+              <span>B 能 · Team Nova Sweets</span>
+            </div>
+          </div>
+        </article>
+        <article class="cnd">
+          <img src="assets/salon/astra/conundrum-nasa.jpg" alt="NASA Conundrum">
+          <div>
+            <div class="en">NASA Conundrum</div>
+            <h3 data-edit>航天局有七个项目，钱只够做三个。你砍掉哪四个？</h3>
+            <p data-edit>选三个，等于公开你的优先级——眼前的地球、人类的安全、还是更远的未知。</p>
+            <div class="opts">
+              <span>A 载人上火星</span>
+              <span>B 机器人探未知世界</span>
+              <span>C 太空旅游</span>
+              <span>D 挡小行星</span>
+              <span>E 最强太空望远镜</span>
+              <span>F 把地球研究清楚</span>
+              <span>G 每个学校都上行星科学</span>
+            </div>
+          </div>
+        </article>
+        <article class="cnd">
+          <img src="assets/salon/astra/moonshot.jpg" alt="Moonshot Conundrum">
+          <div>
+            <div class="en">Moonshot Conundrum</div>
+            <h3 data-edit>一个国家想集中花钱，把生活变好。钱该优先给谁？</h3>
+            <p data-edit>它不想撒胡椒面，想把大部分钱压在少数目标上，好更快看见进展。没有标准配比，要能讲清取舍。</p>
+            <div class="opts">
+              <span>A 探索 · 太空、深海、微观</span>
+              <span>B 教育 · 孩子爱去的学校</span>
+              <span>C 环境 · 动植物与空气水源</span>
+              <span>D 把人连起来 · 城市、路、网络</span>
+              <span>E 新想法 · 科研、技术与艺术</span>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="astra-foot"><span class="lbl">听什么</span><span data-edit>听的是推理过程，不是背到了哪一个「正确」选项。社团是课外活动；这里的课余是九十门可选的真课。</span></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- P5 名校选拔数据 -->
+<section class="slide labor auth-slide">
+  <div class="labor-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>01 · 名校选拔</div>
+      <h2 data-edit>国际名校竞争越来越激烈，优质教育资源变得更稀缺，中国学生通道变窄。</h2>
+    </div>
+    <div class="labor-track">
+      <article class="lrow">
+        <div class="num">01</div>
+        <div class="claim">
+          <div class="cap">通道</div>
+          <h3 data-edit>中国学生占比在掉，不是国际生变少了。</h3>
+          <p data-edit>2024/25 中国在美留学生 265,919 人，连续下降 4.1%。本科 78,583 人，下降 10.2%。印度 363,019 人，上升 9.5%，已经超过中国。同一年美国整体国际生 1,177,766 人，上升 4.5%，创纪录。饼在变大，中国这块在变小。英国——UCAS 2026 中国本科申请上升 12.2%；学生签证签发下降 14.7%。申请还在挤，门没有变宽。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">−10.2%</div><div class="u">美国 · 中国本科 2024/25</div></div>
+            <div class="lnum"><div class="n">+4.5%</div><div class="u">美国国际生创纪录，饼在变大</div></div>
+            <div class="lnum"><div class="n">265,919</div><div class="u">中国在美留学生，连续下降 4.1%</div></div>
+          </div>
+          <div class="jobs">
+            <div class="j">
+              <h4>美国这条</h4>
+              <ul>
+                <li>国际生 1,177,766，创纪录</li>
+                <li>中国本科 78,583，下降 10.2%</li>
+                <li>饼在变大，中国这块在变小</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>英国这条</h4>
+              <ul>
+                <li>UCAS 申请 +12.2%，到 3.8 万</li>
+                <li>学生签证签发 −14.7%</li>
+                <li>人还在挤，签发在下降</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>谁上来了</h4>
+              <ul>
+                <li>印度 363,019，+9.5%</li>
+                <li>已经超过中国</li>
+                <li>对中国学生，通道在收窄</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="lrow">
+        <div class="num">02</div>
+        <div class="claim">
+          <div class="cap">读数</div>
+          <h3 data-edit>牛津整体 16.5%，不等于中国学生也是 16.5%。</h3>
+          <p data-edit>中国大陆是牛津最大的海外申请来源。挤在这条赛道上的人最多，通知没有按人数同比例增加。不是歧视，是中国学生之间的竞争更密。剑桥口径更严——成功率 = 入学人数 ÷ 申请人数。名额有限，申请池最密的那群人，通道最窄。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">16.5%</div><div class="u">牛津整体 3,853 份通知 / 23,291 份申请</div></div>
+            <div class="lnum"><div class="n">10.3%</div><div class="u">牛津中国大陆 218 / 2,111</div></div>
+            <div class="lnum"><div class="n">9.8%</div><div class="u">剑桥中国成功率（284 入学 / 2,900 申请）</div></div>
+          </div>
+          <div class="ox-split" aria-label="牛津整体与中国大陆">
+            <span class="all">整体 16.5%</span>
+            <span class="cn">中国大陆 10.3%</span>
+          </div>
+          <div class="jobs">
+            <div class="j">
+              <h4>牛津怎么读</h4>
+              <ul>
+                <li>整体通知比例 16.5%</li>
+                <li>中国大陆 10.3%，不是同一回事</li>
+                <li>中国是最大海外申请来源</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>剑桥怎么读</h4>
+              <ul>
+                <li>成功率 = 入学 ÷ 申请</li>
+                <li>2025 轮次中国 9.8%</li>
+                <li>海外申请里中国占 34.9%</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>听什么</h4>
+              <ul>
+                <li>不是「牛津歧视」</li>
+                <li>是中国学生之间更密</li>
+                <li>申请池最密，通道最窄</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="lrow">
+        <div class="num">03</div>
+        <div class="claim">
+          <div class="cap">文书</div>
+          <h3 data-edit>招生办开始查 AI 代写。规则乱，风险升。</h3>
+          <p data-edit>Kaplan 2025 调查 220 所美国高校招生办。禁止代写从 2024 年的 25% 升到 30%。68% 还没有正式书面政策，不等于可以碰运气。27% 允许用 AI 帮忙想，不允许代写交差。作文写得顺不够，得能讲清楚是自己想的。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">30%</div><div class="u">明确禁止 AI 代写文书</div></div>
+            <div class="lnum"><div class="n">68%</div><div class="u">还没有正式书面政策</div></div>
+            <div class="lnum"><div class="n">27%</div><div class="u">允许帮忙想，不允许代写交差</div></div>
+          </div>
+          <div class="jobs">
+            <div class="j">
+              <h4>禁止</h4>
+              <ul>
+                <li>明确禁止代写 25% → 30%</li>
+                <li>Kaplan 2025，n=220</li>
+                <li>查的是交差，不是禁思考</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>空白</h4>
+              <ul>
+                <li>68% 没有正式书面政策</li>
+                <li>口径乱，不等于可以赌</li>
+                <li>规则不写清，风险更高</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>能做什么</h4>
+              <ul>
+                <li>27% 允许用 AI 帮忙想</li>
+                <li>不允许代写交差</li>
+                <li>要能讲清楚是自己想的</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="src" data-edit>IIE Open Doors 2025（2024/25）· Oxford Undergraduate Admissions Statistical Report 2026 · University of Cambridge Undergraduate Admissions Statistics 2025 cycle · UCAS · UKVI / British Council · Kaplan 2025（n=220）。以上为官方统计或招生办调查，不是校方宣传。</p>
+  </div>
+</section>
+
+
+<!-- P5 行业用人 -->
+<section class="slide labor">
+  <div class="labor-stage">
+    <div class="data-head">
+      <div class="kicker">02 · 行业用人</div>
+      <h2>岗位看起来变多了。真正变的是技能、对手，以及谁在改规则。</h2>
+    </div>
+    <div class="labor-track">
+      <article class="lrow">
+        <div class="num">01</div>
+        <div class="claim">
+          <div class="cap">再培训</div>
+          <h3>岗位变多，不等于现在这样培养还能直接上岗</h3>
+          <p>雇主预期 2025–2030 全球就业净增约 7800 万——新岗位约 1.7 亿，被替代约 9200 万。技能会换掉将近四成，100 个在职者里约 59 人要再培训。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">+7800万</div><div class="u">净增（创造 1.7 亿 − 替代 9200 万）</div></div>
+            <div class="lnum"><div class="n">39–40%</div><div class="u">到 2030 年核心技能会换掉将近四成</div></div>
+            <div class="lnum"><div class="n">59 / 100</div><div class="u">需要再培训；约 11 人可能培训不到</div></div>
+          </div>
+          <div class="jobs">
+            <div class="j">
+              <h4>增速最快</h4>
+              <ul>
+                <li>大数据专家</li>
+                <li>金融科技工程</li>
+                <li>AI / 机器学习</li>
+                <li>软件与应用开发</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>下降最快（承压）</h4>
+              <ul>
+                <li>收银 / 票务</li>
+                <li>行政秘书</li>
+                <li>银行柜员</li>
+                <li>数据录入</li>
+              </ul>
+            </div>
+            <div class="j">
+              <h4>净增人数最多</h4>
+              <ul>
+                <li>农场工人</li>
+                <li>配送司机</li>
+                <li>建筑工人</li>
+                <li>销售 / 食品加工</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="lrow">
+        <div class="num">02</div>
+        <div class="claim">
+          <div class="cap">对手变了</div>
+          <h3>竞争不只是人和人，而是人和 Agents</h3>
+          <p>麦肯锡把美国的工作拆成工时来算——理论上最多约 57% 的工时能被自动化——约 44 个百分点是软件 Agent，约 13 个百分点是机器人。这不是说明天一半岗位消失，而是说大量任务会被改写。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">57%</div><div class="u">美国工时理论上限（麦肯锡）</div></div>
+            <div class="lnum"><div class="n">30%</div><div class="u">到 2030 年约三成工时可能被自动化</div></div>
+            <div class="lnum"><div class="n">1–5 年</div><div class="u">入门白领可能先承压（Amodei 个人判断）</div></div>
+          </div>
+          <div class="mck-split" aria-label="自动化潜力拆分">
+            <span class="agent">Agent 44%</span>
+            <span class="bot">机器人 13%</span>
+            <span class="rest">其余任务</span>
+          </div>
+        </div>
+      </article>
+      <article class="lrow">
+        <div class="num">03</div>
+        <div class="claim">
+          <div class="cap">谁在改规则</div>
+          <h3>中国顶级 AI 人才在推革新，资本会倒逼行业重组</h3>
+          <p>中国组织把 AI 与机器人当关键技术的比例高于全球。AI/机器学习专家、数据分析岗位的净增预期也更高。钱会跟着能用 AI 的人走，用不了的环节会被改写或关掉。</p>
+        </div>
+        <div class="proof">
+          <div class="lnums">
+            <div class="lnum"><div class="n">&gt;90%</div><div class="u">中国组织视 AI / 机器人为关键技术</div></div>
+            <div class="lnum"><div class="n">&gt;82%</div><div class="u">中国雇主预期 AI/ML 专家净增</div></div>
+            <div class="lnum"><div class="n">46%</div><div class="u">中国数据分析岗净增（全球约 41%）</div></div>
+          </div>
+          <div class="hire-row">
+            <span>雇主要分析思维</span><span>韧性</span><span>领导与社会影响</span><span>AI / 大数据</span><span>网络安全</span><span>技术素养</span><span>创造性</span><span>终身学习</span>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="src">World Economic Forum, Future of Jobs Report 2025 · McKinsey Global Institute · Axios / Dario Amodei, 2025。以上是雇主预期或研究估算，不是已经发生的裁员统计。</p>
+  </div>
+</section>
+
+<!-- P7 工具冰山 · 更宽版 -->
+<section class="slide pyramid-slide pyramid-wide">
+  <div class="berg-frame">
+    <img class="berg-photo" src="assets/salon/iceberg-wider-hi.jpg?v=5" alt="">
+    <div class="berg-shift">
+    <div class="data-head">
+      <div class="kicker" data-edit>02 · 冰山</div>
+      <h2 data-edit>我们看到大模型技术只是 AI 的一角，真正的变革还会更强烈。</h2>
+    </div>
+    <div class="berg-tip">
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/doubao.png" alt=""><b data-edit>豆包</b></div>
+          <div class="app"><img src="assets/salon/icons/claude.png" alt=""><b data-edit>Claude</b></div>
+          <div class="app"><img src="assets/salon/icons/chatgpt.png" alt=""><b data-edit>ChatGPT</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/kimi.png" alt=""><b data-edit>Kimi</b></div>
+          <div class="app"><img src="assets/salon/icons/deepseek.png" alt=""><b data-edit>DeepSeek</b></div>
+          <div class="app"><img src="assets/salon/icons/gemini.png" alt=""><b data-edit>Gemini</b></div>
+          <div class="app"><img src="assets/salon/icons/yiyan.png" alt=""><b data-edit>文心</b></div>
+          <div class="app"><img src="assets/salon/icons/glm.png" alt=""><b data-edit>智谱</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/jimeng.png" alt=""><b data-edit>即梦</b></div>
+          <div class="app"><img src="assets/salon/icons/kling.png" alt=""><b data-edit>可灵</b></div>
+          <div class="app"><img src="assets/salon/icons/hailuo.png" alt=""><b data-edit>海螺</b></div>
+          <div class="app"><img src="assets/salon/icons/midjourney.png" alt=""><b data-edit>Midjourney</b></div>
+          <div class="app"><img src="assets/salon/icons/runway.png" alt=""><b data-edit>Runway</b></div>
+          <div class="app"><img src="assets/salon/icons/heygen.png" alt=""><b data-edit>HeyGen</b></div>
+          <div class="app"><img src="assets/salon/icons/capcut.png" alt=""><b data-edit>剪映</b></div>
+      </div>
+      <div class="tip-row">
+          <div class="app"><img src="assets/salon/icons/gamma.png" alt=""><b data-edit>Gamma</b></div>
+          <div class="app"><img src="assets/salon/icons/hunyuan.png" alt=""><b data-edit>混元</b></div>
+          <div class="app"><img src="assets/salon/icons/yuanbao.png" alt=""><b data-edit>元宝</b></div>
+          <div class="app"><img src="assets/salon/icons/cursor.png" alt=""><b data-edit>Cursor</b></div>
+          <div class="app"><img src="assets/salon/icons/copilot.png" alt=""><b data-edit>Copilot</b></div>
+          <div class="app"><img src="assets/salon/icons/notion.png" alt=""><b data-edit>Notion</b></div>
+          <div class="app"><img src="assets/salon/icons/figma.png" alt=""><b data-edit>Figma</b></div>
+          <div class="app"><img src="assets/salon/icons/perplexity.png" alt=""><b data-edit>Perplexity</b></div>
+          <div class="app"><img src="assets/salon/icons/notebooklm.png" alt=""><b data-edit>NotebookLM</b></div>
+      </div>
+    </div>
+    <div class="berg-line"><i></i><span>海面 · 能直接点开的工具</span></div>
+    <div class="berg-cloud">
+        <i class="lg" style="left:54.9%;top:50.7%">Transformer</i>
+        <i class="lg" style="left:41.7%;top:39.9%">Attention</i>
+        <i class="lg" style="left:34.6%;top:51.9%">反向传播</i>
+        <i class="lg" style="left:56.1%;top:64.0%">梯度下降</i>
+        <i class="lg" style="left:67.9%;top:48.7%">Diffusion</i>
+        <i class="lg" style="left:62.2%;top:55.4%">RLHF</i>
+        <i class="lg" style="left:37.2%;top:66.0%">MoE</i>
+        <i class="lg" style="left:44.8%;top:47.6%">CUDA</i>
+        <i class="lg" style="left:25.3%;top:30.5%">指令集</i>
+        <i class="lg" style="left:63.3%;top:42.7%">操作系统</i>
+        <i class="lg" style="left:55.9%;top:15.0%">KV Cache</i>
+        <i class="lg" style="left:44.9%;top:29.0%">Embedding</i>
+        <i class="md" style="left:63.7%;top:66.3%">Softmax</i>
+        <i class="md" style="left:30.8%;top:31.0%">Adam</i>
+        <i class="md" style="left:73.8%;top:28.0%">LSTM</i>
+        <i class="md" style="left:40.3%;top:58.0%">CNN</i>
+        <i class="md" style="left:72.6%;top:34.9%">PPO</i>
+        <i class="md" style="left:78.9%;top:10.6%">DPO</i>
+        <i class="md" style="left:32.0%;top:44.1%">LoRA</i>
+        <i class="md" style="left:37.4%;top:71.8%">RoPE</i>
+        <i class="md" style="left:47.6%;top:13.7%">GQA</i>
+        <i class="md" style="left:42.6%;top:86.2%">GPU并行</i>
+        <i class="md" style="left:45.7%;top:93.3%">HTTP/TLS</i>
+        <i class="md" style="left:44.7%;top:67.7%">Raft</i>
+        <i class="md" style="left:48.2%;top:8.1%">B+树</i>
+        <i class="md" style="left:35.5%;top:26.8%">ACID</i>
+        <i class="md" style="left:48.4%;top:81.8%">CLIP</i>
+        <i class="md" style="left:56.9%;top:71.0%">ViT</i>
+        <i class="md" style="left:46.1%;top:52.3%">BPE</i>
+        <i class="md" style="left:58.7%;top:89.4%">蒸馏</i>
+        <i class="md" style="left:47.9%;top:74.7%">预训练</i>
+        <i class="md" style="left:55.4%;top:24.6%">微调</i>
+        <i class="md" style="left:41.6%;top:52.6%">流水线</i>
+        <i class="md" style="left:55.2%;top:56.5%">并发</i>
+        <i class="md" style="left:63.1%;top:22.1%">分布式</i>
+        <i class="md" style="left:24.3%;top:20.6%">FlashAttention</i>
+        <i class="fm" style="left:49.7%;top:67.1%">∇θℒ</i>
+        <i class="fm" style="left:56.0%;top:78.1%">H=−Σplogp</i>
+        <i class="fm" style="left:77.4%;top:22.7%">DKL(p∥q)</i>
+        <i class="fm" style="left:41.0%;top:21.2%">P(y|x)</i>
+        <i class="sm" style="left:43.7%;top:24.8%">Bayes</i>
+        <i class="sm" style="left:49.1%;top:22.3%">链式法则</i>
+        <i class="fm" style="left:61.5%;top:32.2%">softmax(QKᵀ/√d)V</i>
+        <i class="fm" style="left:53.2%;top:86.5%">W·x+b</i>
+        <i class="fm" style="left:48.6%;top:60.5%">σ(x)</i>
+        <i class="sm" style="left:58.4%;top:83.5%">ReLU</i>
+        <i class="fm" style="left:52.5%;top:28.3%">CE</i>
+        <i class="sm" style="left:41.5%;top:76.5%">GELU</i>
+        <i class="sm" style="left:62.4%;top:75.2%">ALU</i>
+        <i class="sm" style="left:68.4%;top:53.4%">DNS</i>
+        <i class="sm" style="left:50.8%;top:39.5%">CDN</i>
+        <i class="sm" style="left:37.0%;top:44.6%">NP-hard</i>
+        <i class="sm" style="left:31.1%;top:38.0%">红黑树</i>
+        <i class="sm" style="left:53.8%;top:68.6%">QKV</i>
+        <i class="sm" style="left:43.3%;top:64.0%">Dropout</i>
+        <i class="sm" style="left:54.4%;top:91.1%">交叉熵</i>
+        <i class="sm" style="left:34.7%;top:60.6%">过拟合</i>
+        <i class="sm" style="left:64.5%;top:14.0%">SGD</i>
+        <i class="sm" style="left:72.2%;top:41.8%">学习率</i>
+        <i class="sm" style="left:48.7%;top:89.3%">FP16</i>
+        <i class="sm" style="left:39.1%;top:34.4%">INT8</i>
+        <i class="sm" style="left:40.3%;top:82.3%">卷积</i>
+        <i class="sm" style="left:70.1%;top:23.7%">残差块</i>
+        <i class="sm" style="left:57.8%;top:43.5%">SSM</i>
+        <i class="sm" style="left:50.6%;top:44.6%">马尔可夫</i>
+        <i class="sm" style="left:41.1%;top:9.5%">策略梯度</i>
+        <i class="sm" style="left:50.4%;top:33.8%">涌现</i>
+        <i class="sm" style="left:38.7%;top:17.3%">FLOPs</i>
+        <i class="sm" style="left:79.2%;top:6.9%">幻觉</i>
+        <i class="sm" style="left:74.7%;top:15.6%">上下文窗</i>
+        <i class="sm" style="left:64.6%;top:36.9%">人类反馈</i>
+        <i class="sm" style="left:66.4%;top:27.3%">LayerNorm</i>
+    </div>
+    <p class="src">海面以上是 2026.9 仍能直接点开的产品，含国内常见应用。Manus 已不适合进课堂。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>露出来的是聊天窗口和各种 App。水下才是算法、公式和系统，变革会从那里再涌上来。</p>
+    </div>
+    <aside class="ear-card">
+      <p class="el" data-edit>自媒体和周围人，听他怎么说话。</p>
+      <ul>
+        <li><b class="hang">夯</b><span><i>「这一层 attention 为什么要改。」</i>能改结构，经得起问</span></li>
+        <li><b class="ding">顶级</b><span><i>「这个榜有数据污染。」</i>能讲机制和评测</span></li>
+        <li><b class="ren">人上人</b><span><i>「这个需求我能交货。」</i>会用工具，深问会停</span></li>
+        <li><b class="npc">NPC</b><span><i>「高级提示词工程师。」</i>头衔叠 buff</span></li>
+        <li><b class="la">拉完了</b><span><i>「我正在调我的大模型。」</i>没有卡，没有曲线</span></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<!-- P9 如何培养 -->
+<section class="slide cap-slide">
+  <img class="kg-photo" src="assets/salon/horizon-hi.jpg" alt="">
+  <div class="kg-veil"></div>
+  <div class="kg-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>03 · 如何培养</div>
+      <h2 data-edit>五件原始能力，各自长出一套知识家族。</h2>
+    </div>
+    <div class="kg">
+      <article class="fam">
+        <div class="fid">01</div>
+        <h3>万物机理</h3>
+        <p class="blurb">学本源——历史、逻辑哲学、数学、基础物理。先问世界怎么运转，再谈应用。</p>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>初识智能——自然智能 vs 人工智能。中文房间。智能是一个谱系，不是开关。大模型是下文预测机。</p>
+          <div class="kids"><span>历史</span><span>逻辑</span><span>数学</span><span>物理</span></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">02</div>
+        <h3>思想构建</h3>
+        <p class="blurb">能把分析内化成自己的判断，也能当众讲清楚。想得清和说得出，是一件事。</p>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>查证三问；主张—证据—反例。逻辑谬误找茬。当众讲和路演叙事。判断留在人身上。</p>
+          <div class="kids"><span>查证</span><span>谬误</span><span>当众讲</span><span>路演</span></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">03</div>
+        <h3>世界探索</h3>
+        <p class="blurb">能发现、感知真实问题；把问题定义清楚，再动手解决。世界就是实验室。</p>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>真问题三筛——有人群、有频次、有痛感。问题卡，再画解决闭环。世界就是实验室。</p>
+          <div class="kids"><span>真问题</span><span>问题卡</span><span>闭环</span><span>实验室</span></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">04</div>
+        <h3>商业思维</h3>
+        <p class="blurb">让爱好、产品、创作能持续下去。懂一点社会经济，懂公司和一群人怎么协作。</p>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>谁付钱、为何留下。路演结构是痛点 → 演示 → 证据 → 愿景。可持续，不是一次性表演。</p>
+          <div class="kids"><span>交换</span><span>协作</span><span>路演</span><span>可持续</span></div>
+        </div>
+      </article>
+      <article class="fam">
+        <div class="fid">05</div>
+        <h3>AI Native</h3>
+        <p class="blurb">AI 是默认的思考与工作环境。会选、会查、敢负责；能力可以上移，责任不交出去。</p>
+        <div class="ideas">
+          <div class="ilab">课程与思想</div>
+          <p>第一行 prompt；私人 Agent；MVP 到上线。安全清单——密码和家庭住址绝不告诉 AI。</p>
+          <div class="kids"><span>Prompt</span><span>Agent</span><span>MVP</span><span>安全</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="src">这是 Natural Computation 的能力口径，用来收敛培养目标。各家族下的词是该能力的知识根系，课程细目在后面两门课里展开。实验校可以对照，但不跟着他们的成绩广告走。</p>
+    <p class="takeaway"><span class="lbl">一句话</span>底座是万物机理。上面是思想、真实世界、可持续。AI 是默认环境，不是目的。</p>
+  </div>
+</section>
+
+<!-- P6 案例 -->
+<section class="slide cases-slide">
+  <div class="data-head">
+    <div class="kicker">03 · 突破样本</div>
+    <h2>四个少年，不是一条路</h2>
+  </div>
+  <div class="cases-grid" id="cases-grid">
+    <article class="case-card" data-case="0" tabindex="0">
+      <img src="assets/salon/cases/code.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">深圳 · 17 岁 · Moonshot 实习</div>
+        <h3>陈广宇 · Kimi K3 / AttnRes</h3>
+        <p>Attention Residuals 共一作（arXiv 2603.15031），架构思路进入 Kimi K3。</p>
+        <div class="src">经济参考报 · 21财经 · Moonshot / arXiv</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="1" tabindex="0">
+      <img src="assets/salon/cases/office-sv.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">硅谷 · 高中毕业即入职路径</div>
+        <h3>Palantir Meritocracy Fellowship</h3>
+        <p>面向未上大学的美国高中毕业生——带薪约 4 个月实习；SAT ≥1460 / ACT ≥33。</p>
+        <div class="src">Business Insider, 2025 · Palantir 项目公开条件</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="2" tabindex="0">
+      <img src="assets/salon/cases/startup.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">英国 · 16 岁 · Beem AI</div>
+        <h3>Toby Brown · $1M</h3>
+        <p>South Park Commons 领投约 100 万美元；推迟 GCSE，赴旧金山推进产品。</p>
+        <div class="src">BBC · Evening Standard · Business Insider</div>
+      </div>
+    </article>
+    <article class="case-card" data-case="3" tabindex="0">
+      <img src="assets/salon/cases/teen-work.jpg" alt="">
+      <div class="shade"></div>
+      <div class="body">
+        <div class="who">美国 · 17 岁 · Aviato</div>
+        <h3>Eric Zhu · $2.3M Seed</h3>
+        <p>高中阶段做出私募市场分析产品；8VC、Soma、SoftBank 等参与种子轮。</p>
+        <div class="src">TechCrunch, 22 Jul 2024</div>
+      </div>
+    </article>
+  </div>
+  <p class="cases-hint">点击任一案例放大聚焦 · 再点空白或按 Esc 复位</p>
+  <p class="takeaway"><span class="lbl">一句话</span>这四个孩子不是模板。共同点只有——真问题、真产品、当面讲得清。</p>
+</section>
+
+<!-- P10 两门课概要 -->
+<section class="slide course-poster">
+  <div class="cp-art">
+    <img src="assets/salon/course-bg-wide.jpg" alt="">
+  </div>
+  <div class="cp-veil"></div>
+  <div class="cp-stage">
+    <div class="data-head">
+      <div class="kicker" data-edit>03 · 两门课</div>
+      <h2 data-edit>一条通识主线，一间正在运转的少年公司。</h2>
+      <p class="lede" data-edit>这一页只看结构与档期。下一页展开通识 12 课时，再一页走进少年创始人现场。</p>
+    </div>
+    <div class="cp-pair">
+      <article class="cp-pane">
+        <div class="kicker" data-edit>课程 A · AI 通识素养课</div>
+        <h3>12 课时，懂 AI，会思考，造产品。</h3>
+        <div class="cp-meta"><span>10–12 月</span><span>9–15 岁</span></div>
+        <p>同一条主线，两档难度。年纪小的把抽象落到身体和故事；年纪大的用真工具、真用户。可压成 3–5 天营，也可按周末展开。</p>
+        <ol class="cp-spine">
+          <li><b>懂 AI</b><span>3 课时。智能谱系、大模型边界、第一个私人 Agent。</span></li>
+          <li><b>会思考</b><span>2 课时。真问题三筛，主张—证据—反例，画出产品闭环。</span></li>
+          <li><b>造产品</b><span>7 课时。RPS 从最小可用原型做到上线、运营和安全。</span></li>
+        </ol>
+        <div class="cp-duo">
+          <div>
+            <h4>偏具象</h4>
+            <p>卡片、教师眼皮底下。每课带走可看见的产出。评价看说清楚、做出来、改得动、防得住。</p>
+          </div>
+          <div>
+            <h4>偏机制</h4>
+            <p>Cursor 类真工具，真实部署。没有「学完」，只有「做出来」。评价看逻辑硬度和真实责任。</p>
+          </div>
+        </div>
+      </article>
+      <article class="cp-pane">
+        <div class="kicker" data-edit>课程 B · 少年创始人高阶课</div>
+        <h3>真实问题里的同伴与责任</h3>
+        <div class="cp-meta"><span>10 月–2 月</span><span>12–18 岁</span></div>
+        <p>不是又一门编程课。把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。跨年龄围桌，成人是教练，不是代写。</p>
+        <ul class="cp-beats">
+          <li><b>真问题</b>从生活与社区里选可验证的麻烦。有人群、有频次、有痛感。伪需求当场拆掉。</li>
+          <li><b>同伴 / 导师</b>同伴是同事，不是同班。逻辑树画在墙上。讲不清，就还没想清。</li>
+          <li><b>路演与迭代</b>叙事是痛点 → 演示 → 证据 → 愿景。向真人演示，收集拒绝与修改。</li>
+          <li><b>上线与安全</b>能拿起来的东西——链接、反馈报告。密码、家庭住址、身份证号绝不告诉 AI。</li>
+          <li><b>真实世界模型学习</b>从屏幕走到真实约束。对着真实场景建立模型，而不是只在聊天窗口里完成。</li>
+        </ul>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>通识课练判断。少年创始人高阶课把判断放进会运转的公司。共同底线——问题真实、产出可见、AI 产出必须经人核验。</p>
+  </div>
+</section>
+
+<!-- P9 AI通识 · 能力图谱 -->
+<section class="slide atlas-slide">
+  <img class="atlas-bg" src="assets/salon/course/atlas.png" alt="">
+  <div class="atlas-shade"></div>
+  <div class="atlas-ui">
+    <div>
+      <div class="kicker">03 · 课程 A · AI 通识素养课</div>
+      <h2>12 课时细目——懂 AI，会思考，造产品。</h2>
+      <div class="atlas-meta"><span>10–12 月</span><span>9–15 岁</span><span>12 课时</span></div>
+      <p class="lede">同一骨架，按认知调难度。年纪小的用身体、卡片、故事；年纪大的讲机制、真工具、真用户。每课都有可带走的产出。</p>
+    </div>
+    <div class="atlas-units">
+      <article class="atlas-unit">
+        <div class="uh">单元一 · 懂 AI · 3 课时</div>
+        <ul class="lessons">
+          <li><b>01</b><span><span class="ttl">初识智能——自然智能 vs 人工智能</span><span class="sub">乌鸦喝水对人脸识别；智能是谱系不是开关。中文房间。大模型是下文预测机。</span><span class="out">产出——四格漫画 30 秒讲 / 一页智能地图</span></span></li>
+          <li><b>02</b><span><span class="ttl">大模型边界——第一行 prompt，把模型问倒</span><span class="sub">幻觉是流畅不是真实。查证三问——有来源吗，能查到吗，问大人了吗。</span><span class="out">产出——防骗三问卡 / 10 题边界评测</span></span></li>
+          <li><b>03</b><span><span class="ttl">工具生态与第一个私人 Agent</span><span class="sub">Agent = 模型 + 工作说明书。会做什么、绝不做什么。教师眼皮底下或责任自负。</span><span class="out">产出——可演示 Agent v1 / 系统提示词文档</span></span></li>
+        </ul>
+      </article>
+      <article class="atlas-unit">
+        <div class="uh">单元二 · 会思考 · 2 课时</div>
+        <ul class="lessons">
+          <li><b>04</b><span><span class="ttl">真问题从哪来</span><span class="sub">三筛——有人群、有频次、有痛感。采访真实的人，伪需求当场拆掉。</span><span class="out">产出——问题卡 / 问题定义文档 v1</span></span></li>
+          <li><b>05</b><span><span class="ttl">逻辑学与产品闭环</span><span class="sub">主张—证据—反例—边界。生活化找茬，或十个高频谬误压力测试。再画闭环。</span><span class="out">产出——任务书 + 闭环图 / 问题定义 v2</span></span></li>
+        </ul>
+        <p class="atlas-note">评价看说清楚、做出来、改得动、防得住。难度可在类比 / 机制 / 论文三档里调。</p>
+      </article>
+      <article class="atlas-unit">
+        <div class="uh">单元三 · 造产品 · 7 课时 · RPS</div>
+        <ul class="lessons">
+          <li><b>06–07</b><span><span class="ttl">初级——最小可用原型</span><span class="sub">先做能给人试用的最小版本。纸面或 AI 编程工作流。跨组测试。</span><span class="out">产出——MVP + 用户意见 / README</span></span></li>
+          <li><b>08–09</b><span><span class="ttl">进阶——插件、多模态、用户系统</span><span class="sub">能力要取舍。路演结构——痛点 → 演示 → 证据 → 愿景。</span><span class="out">产出——路演版 + 讲稿 / Pitch 答辩</span></span></li>
+          <li><b>10–12</b><span><span class="ttl">高阶——存储、托管、运营、安全</span><span class="sub">密码、家庭住址、身份证号绝不告诉 AI。家人试用或真实投放，再按反馈改一版。</span><span class="out">产出——发布版 + 反馈 / 上线 + 看板 + 安全自查</span></span></li>
+        </ul>
+      </article>
+    </div>
+    <div class="atlas-bands">
+      <article>
+        <h4>偏具象 · 多用身体</h4>
+        <p>三条铁律——能用卡片讲清的不用幻灯片；AI 在教师眼皮底下；每课带走漫画、问题卡、可点 demo。毕业展摆摊。</p>
+      </article>
+      <article>
+        <h4>偏机制 · 真工具真用户</h4>
+        <p>三条原则——Cursor 类工具、真实部署；幻觉按概率生成理解；没有「学完」只有「做出来」。终期路演看数据和安全报告。</p>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>共同底线——问题必须真实、产出必须可见、AI 产出必须经人核验。允许跳级，不允许跳过。</p>
+  </div>
+</section>
+
+<!-- P10 青年公司 -->
+<section class="slide co-slide">
+  <img class="co-bg" src="assets/salon/course/company.png" alt="">
+  <div class="co-shade"></div>
+  <div class="co-ui">
+    <div>
+      <div class="kicker">03 · 课程 B · 少年创始人高阶课</div>
+      <h2>不是机房。是一间正在运转的公司。</h2>
+      <div class="co-meta"><span>10 月–2 月</span><span>12–18 岁</span></div>
+      <p class="lede">把通识里练到的判断，放进有客户、有截止日期、有当面反馈的协作场。选题、原型、用户、路演都在这间房子里发生。成人是教练，不是代写。</p>
+    </div>
+    <div class="co-pins">
+      <article class="copin">
+        <div class="ix">01</div>
+        <h3>交换思想</h3>
+        <p>围桌争对错。同伴是同事，不是同班。跨年龄协作。先把主张说清楚，再让别人来拆。</p>
+        <div class="chips"><span>围桌</span><span>跨年龄</span><span>当面反对</span></div>
+      </article>
+      <article class="copin">
+        <div class="ix">02</div>
+        <h3>白板表达</h3>
+        <p>逻辑树画在墙上。主张—证据—反例—边界。讲不清，就还没想清。路演前先过白板。</p>
+        <div class="chips"><span>逻辑树</span><span>主张证据</span><span>路演预演</span></div>
+      </article>
+      <article class="copin">
+        <div class="ix">03</div>
+        <h3>企业级工具</h3>
+        <p>代码、设计、协作软件。和真公司同一套手感。Cursor 类工具可以加速草稿，判断仍是自己的。</p>
+        <div class="chips"><span>Cursor</span><span>设计</span><span>协作</span></div>
+      </article>
+      <article class="copin">
+        <div class="ix">04</div>
+        <h3>电脑创作</h3>
+        <p>最小可演示的东西。有链接、能给人试用。AI 加速草稿，核验和署名留在人。有截止日期。</p>
+        <div class="chips"><span>MVP</span><span>可演示</span><span>截止日期</span></div>
+      </article>
+      <article class="copin">
+        <div class="ix">05</div>
+        <h3>真实世界模型学习</h3>
+        <p>从屏幕走到真实约束。对着真实场景、真实用户建立模型，可被拒绝、可被改，而不是只停在聊天窗口。</p>
+        <div class="chips"><span>真场景</span><span>真用户</span><span>可被拒绝</span></div>
+      </article>
+    </div>
+    <p class="takeaway"><span class="lbl">一句话</span>真问题三筛，当面反对，责任留在人。密码和家庭住址绝不告诉 AI。结束时要有能拿起来的东西。</p>
+  </div>
+</section>
+
+
+</div>
+
+<div id="pager">
+  <button id="prev" aria-label="上一页">←</button>
+  <span id="page-num">1 / 13</span>
+  <button id="next" aria-label="下一页">→</button>
+</div>
+<div id="hint">← → 方向键 / 空格 / 点击翻页</div>
+
+<div id="editor-bar">
+  <span class="status" id="edit-status"></span>
+  <button type="button" id="btn-edit" aria-label="编辑文字" title="编辑">E</button>
+  <button type="button" id="btn-save" class="primary" hidden>保存</button>
+  <button type="button" id="btn-clear" hidden>清除</button>
+</div>
+
+
+<script>
+  const DRAFT_KEY='salon-ppt-draft-v56';
+  const slides=[...document.querySelectorAll('.slide')];
+  let cur=0;
+  let editing=false;
+  const progress=document.getElementById('progress');
+  const pageNum=document.getElementById('page-num');
+  const statusEl=document.getElementById('edit-status');
+  const btnEdit=document.getElementById('btn-edit');
+  const btnSave=document.getElementById('btn-save');
+  const btnClear=document.getElementById('btn-clear');
+
+  const EDIT_SEL=[
+    'h1','h2','h3','p','li',
+    '.mark','.kicker','.lede','.cover-sub','.cover-title',
+    '.statement','.note','.hero-num','.hero-sub','.hero-detail','.hero-tag',
+    '.quote-hero','.quote-attr','.src','.idx','.hrs',
+    '.role p','.role h3','.fact .n','.fact h3','.fact p',
+    '.compare-col h3','.compare-col .sub',
+    '.cover-agenda .txt','.cover-agenda .desc','.cover-agenda .num',
+    '.cn-agenda .txt','.cn-agenda .desc','.cn-agenda .num','.cn-foot',
+    '.cm-agenda .txt','.cm-agenda .desc','.cm-agenda .num','.cm-foot',
+    '.school-panel h2','.school-panel .where','.school-panel .lab',
+    '.school-panel p','.school-panel .school-src','.map-title','.map-hint',
+    '.takeaway','.bar-note','.path-kpi .n','.path-kpi p','.path-kpi .k',
+    '.schip','.ox-chip p','.ox-chip .n','.cn-stat p','.cn-stat .n','.lstat .n','.lstat p',
+    '.smeta dd','.gloss p','.chip','.anum .n','.anum .u','.afact .so','.cmp .n','.cmp .d','.cmp .lab','.auth-src','.day-row dd',
+    '.tstep p','.tstep h3','.astra-kpis .n','.astra-kpis .u','.astra-foot','.astra-inset figcaption','.thesis p','.cnd h3','.cnd p','.cnd .opts span','.lrow h3','.lrow .claim p','.lnum .n','.lnum .u','.arow h3','.arow .claim p','.app b','.fam h3','.fam .blurb','.ideas p','.ear-card .el','.ear-card li span','.cp-pane h3','.cp-pane p','.cp-spine span','.cp-beats li','.cp-duo p','.cp-meta span','.atlas-unit .lessons span','.atlas-bands p','.co-meta span'
+  ].join(',');
+
+  function go(n){
+    if(editing && document.activeElement?.closest?.('[data-edit]')) return;
+    if(typeof clearCaseFocus==='function') clearCaseFocus();
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    pageNum.textContent=(cur+1)+' / '+slides.length;
+    history.replaceState(null,'','#'+(cur+1));
+    document.getElementById('hint').classList.toggle('hidden',cur>0 || editing);
+  }
+
+  function markEditable(){
+    document.querySelectorAll('#deck '+EDIT_SEL).forEach(el=>{
+      if(el.closest('svg') || el.tagName==='SVG' || el.querySelector('svg') && el.children.length===1 && el.querySelector('svg')) return;
+      // allow li that contain svg+text: still editable on the li
+      el.setAttribute('data-edit','1');
+    });
+  }
+
+  function setEditing(on){
+    editing=on;
+    document.body.classList.toggle('editing',on);
+    btnEdit.textContent='E';
+    btnEdit.setAttribute('aria-label', on ? '完成编辑' : '编辑文字');
+    btnEdit.title=on?'完成':'编辑';
+    btnSave.hidden=!on;
+    btnClear.hidden=!on;
+    document.querySelectorAll('[data-edit]').forEach(el=>{
+      el.contentEditable=on?'true':'false';
+      if(!on) el.blur();
+    });
+    document.getElementById('hint').classList.toggle('hidden',on || cur>0);
+    statusEl.textContent=on?'点击文字直接改':'';
+  }
+
+  function saveDraft(){
+    try{
+      localStorage.setItem(DRAFT_KEY, document.getElementById('deck').innerHTML);
+      const t=new Date();
+      statusEl.textContent='已暂存 '+t.toLocaleTimeString();
+    }catch(e){
+      statusEl.textContent='暂存失败';
+    }
+  }
+
+  function restoreDraft(){
+    const raw=localStorage.getItem(DRAFT_KEY);
+    if(!raw) return false;
+    // Ignore drafts that don't match current deck structure
+    if(!raw.includes('cover-mesh') || !raw.includes('schools-stage') || !raw.includes('cases-grid') || !raw.includes('pyramid-slide') || !raw.includes('pyramid-wide') || !raw.includes('data-rev="v56"') || !raw.includes('atlas-slide') || !raw.includes('co-slide') || !raw.includes('astra-stage') || !raw.includes('auth-slide') || !raw.includes('smeta') || !raw.includes('theses') || !raw.includes('cnd-list') || !raw.includes('labor-track') || !raw.includes('berg-cloud') || !raw.includes('kg-stage') || !raw.includes('ear-card') || !raw.includes('cp-pair') || !raw.includes('atlas-units') || !raw.includes('ox-split') || !raw.includes('对中国学生，通道在收窄')){
+      localStorage.removeItem(DRAFT_KEY);
+      return false;
+    }
+    try{
+      const deck=document.getElementById('deck');
+      const backup=deck.innerHTML;
+      deck.innerHTML=raw;
+      const found=document.querySelectorAll('.slide');
+      if(!found.length){
+        deck.innerHTML=backup;
+        localStorage.removeItem(DRAFT_KEY);
+        statusEl.textContent='草稿无效，已回退';
+        return false;
+      }
+      slides.length=0;
+      slides.push(...found);
+      markEditable();
+      statusEl.textContent='已恢复草稿';
+      return true;
+    }catch(e){
+      localStorage.removeItem(DRAFT_KEY);
+      statusEl.textContent='草稿损坏，已清除';
+      return false;
+    }
+  }
+
+  function clearDraft(){
+    localStorage.removeItem(DRAFT_KEY);
+    statusEl.textContent='草稿已清除，请刷新页面';
+  }
+
+  function buildExportHtml(){
+    const clone=document.documentElement.cloneNode(true);
+    clone.querySelector('#editor-bar')?.remove();
+    clone.querySelectorAll('[data-edit]').forEach(el=>{
+      el.removeAttribute('contenteditable');
+      el.removeAttribute('data-edit');
+    });
+    clone.querySelector('body')?.classList.remove('editing');
+    // strip this editor script block's runtime state isn't needed; keep scripts
+    // remove draft-restore noise from hint
+    const hint=clone.querySelector('#hint');
+    if(hint) hint.textContent='← → 方向键 / 空格 / 点击翻页 · #页码可直达';
+    // remove editor CSS? keep it so they can edit again after re-open
+    return '<!DOCTYPE html>\n'+clone.outerHTML;
+  }
+
+  async function saveToFile(){
+    saveDraft();
+    const html=buildExportHtml();
+    const blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    const name='07-沙龙宣讲-家长场.html';
+    try{
+      if(window.showSaveFilePicker){
+        const handle=await window.showSaveFilePicker({
+          suggestedName:name,
+          types:[{description:'HTML',accept:{'text/html':['.html']}}]
+        });
+        const writable=await handle.createWritable();
+        await writable.write(blob);
+        await writable.close();
+        statusEl.textContent='已保存到文件';
+        return;
+      }
+    }catch(e){
+      if(e?.name==='AbortError'){ statusEl.textContent='已取消'; return; }
+    }
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    statusEl.textContent='已下载，请覆盖原文件';
+  }
+
+  document.getElementById('next').onclick=e=>{e.stopPropagation();go(cur+1)};
+  document.getElementById('prev').onclick=e=>{e.stopPropagation();go(cur-1)};
+  document.addEventListener('keydown',e=>{
+    const inEdit=editing && (document.activeElement?.isContentEditable || document.activeElement?.closest?.('[data-edit]'));
+    if(inEdit){
+      // allow normal typing; Esc exits field / edit mode
+      if(e.key==='Escape'){ document.activeElement.blur(); return; }
+      return;
+    }
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='s'){
+      e.preventDefault();
+      if(editing) saveToFile();
+    }
+  });
+  document.getElementById('deck').addEventListener('click',e=>{
+    if(editing) return;
+    if(e.target.closest('a,button,[data-edit],.scard-media,.case-card,.cases-grid')) return;
+    go(cur+1);
+  });
+
+
+  // Case focus grid
+  const casesGrid=document.getElementById('cases-grid');
+  function clearCaseFocus(){
+    if(!casesGrid) return;
+    casesGrid.classList.remove('focus-on');
+    casesGrid.querySelectorAll('.case-card').forEach(c=>c.classList.remove('is-focus'));
+  }
+  if(casesGrid){
+    casesGrid.addEventListener('click',e=>{
+      const card=e.target.closest('.case-card');
+      if(!card) return;
+      e.stopPropagation();
+      const on=card.classList.contains('is-focus') && casesGrid.classList.contains('focus-on');
+      clearCaseFocus();
+      if(!on){
+        casesGrid.classList.add('focus-on');
+        card.classList.add('is-focus');
+      }
+    });
+  }
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') clearCaseFocus();
+  });
+  const _go=go;
+  // wrap go to clear focus - patch after go defined via monkey at end
+
+
+  btnEdit.onclick=()=>setEditing(!editing);
+  btnSave.onclick=()=>saveToFile();
+  btnClear.onclick=()=>{
+    if(confirm('清除本地草稿？刷新后会回到磁盘上的原文件内容。')) clearDraft();
+  };
+
+  let saveTimer=null;
+  document.getElementById('deck').addEventListener('input',e=>{
+    if(!e.target.closest('[data-edit]')) return;
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(saveDraft,400);
+  });
+
+  restoreDraft();
+  markEditable();
+  go((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>

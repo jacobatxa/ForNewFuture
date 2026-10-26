@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>万物机理，迈向真实世界的 AI 教育</title>
+<style>
+  :root{
+    --bg:#0a0b10;
+    --card-bg:rgba(25, 26, 32, 0.6);
+    --card-border:rgba(255, 255, 255, 0.12);
+    --ink:#f5f5f7;
+    --ink-2:#a1a1a6;
+    --ink-3:#6e6e73;
+    --blue:#2997ff;
+    --cyan:#64d2ff;
+    --purple:#bf5af2;
+    --pink:#ff375f;
+    --orange:#ff9f0a;
+    --green:#30d158;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro SC","PingFang SC","Helvetica Neue",sans-serif;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  #deck{height:100%;position:relative}
+
+  .ambient-glow{
+    position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(circle at 15% 30%, rgba(41,151,255,0.08), transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(191,90,242,0.08), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(100,210,255,0.05), transparent 50%);
+    pointer-events:none;
+  }
+  .bg-layer{
+    position:absolute;inset:0;z-index:0;
+    background-size:cover;background-position:center;
+    opacity:.25;mix-blend-mode:screen;
+    filter:saturate(1.2) contrast(1.1);
+  }
+  .bg-overlay{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(to bottom, rgba(10,11,16,0.5) 0%, rgba(10,11,16,0.95) 100%);
+  }
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:8vh 9vw;
+    opacity:0;visibility:hidden;
+    transform:translateY(16px) scale(.985);
+    transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1),visibility .6s;
+    z-index:2;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .slide.center{align-items:center;text-align:center}
+  .content{position:relative;z-index:3;width:100%;max-width:100%;min-width:0}
+  .hero-num,.hero-sub,.hero-detail,.hero-tag,h1,h2,.statement,.note,.quote-hero{overflow-wrap:break-word;word-break:break-word}
+
+  .g-blue,.g-cyan,.g-purple,.g-orange,.g-green,.g-multi,.g-white{-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .g-blue{background:linear-gradient(135deg,var(--blue),var(--cyan));-webkit-background-clip:text;color:transparent}
+  .g-cyan{background:linear-gradient(135deg,var(--cyan),var(--blue));-webkit-background-clip:text;color:transparent}
+  .g-purple{background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;color:transparent}
+  .g-orange{background:linear-gradient(135deg,var(--orange),#ffd60a);-webkit-background-clip:text;color:transparent}
+  .g-green{background:linear-gradient(135deg,var(--green),#32ade6);-webkit-background-clip:text;color:transparent}
+  .g-multi{background:linear-gradient(135deg,var(--cyan),var(--purple),var(--orange));-webkit-background-clip:text;color:transparent}
+  .g-white{background:linear-gradient(135deg,#fff,#a1a1a6);-webkit-background-clip:text;color:transparent}
+
+  .kicker{font-size:clamp(13px,1.15vw,16px);color:var(--cyan);letter-spacing:.22em;margin-bottom:3.2vh;font-weight:600;text-transform:uppercase}
+  h1{font-size:clamp(48px,6.8vw,100px);line-height:1.12;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:clamp(32px,4.2vw,62px);line-height:1.2;font-weight:800;letter-spacing:-.015em;margin-bottom:4vh}
+  .statement{font-size:clamp(24px,3.2vw,48px);line-height:1.45;font-weight:700;letter-spacing:-.01em;max-width:28em}
+  .note{margin-top:4.5vh;font-size:clamp(14px,1.38vw,18.5px);color:var(--ink-2);line-height:1.75;max-width:52em}
+  .note strong{color:var(--ink);font-weight:600}
+
+  /* Hero stat (未来5-10年) */
+  .hero-num{font-size:clamp(64px,11vw,180px);font-weight:800;line-height:1;letter-spacing:-.03em}
+  .hero-sub{font-size:clamp(19px,2.1vw,29px);margin-top:2.6vh;font-weight:700;color:var(--ink);max-width:34em;line-height:1.4}
+  .hero-detail{margin-top:3vh;font-size:clamp(14px,1.32vw,18px);color:var(--ink-2);line-height:1.75;max-width:42em}
+  .hero-tag{margin-top:4vh;font-size:clamp(11px,1vw,13px);color:var(--ink-3);letter-spacing:.08em}
+
+  /* Cards */
+  .glass-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:24px;padding:3.2vh 2vw;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);box-shadow:0 20px 40px rgba(0,0,0,.2)}
+  .facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2vw;margin-top:1vh}
+  .fact{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:3.2vh 1.8vw;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);position:relative;overflow:hidden}
+  .fact::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--card-border),transparent);opacity:.5}
+  .fact .n{font-size:clamp(30px,3.6vw,52px);font-weight:800;line-height:1.1;letter-spacing:-.02em}
+  .fact h3{font-size:clamp(15px,1.4vw,19px);font-weight:700;margin-top:1.2vh;color:var(--ink)}
+  .fact p{font-size:clamp(12.5px,1.1vw,15px);color:var(--ink-2);line-height:1.6;margin-top:.8vh}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;margin-top:1vh}
+
+  .icon-box{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5vh}
+  .icon-box svg{width:22px;height:22px}
+  .icon-blue{background:rgba(41,151,255,.15);color:var(--blue)}
+  .icon-purple{background:rgba(191,90,242,.15);color:var(--purple)}
+  .icon-orange{background:rgba(255,159,10,.15);color:var(--orange)}
+  .icon-green{background:rgba(48,209,88,.15);color:var(--green)}
+  .icon-cyan{background:rgba(100,210,255,.15);color:var(--cyan)}
+  .icon-pink{background:rgba(255,55,95,.15);color:var(--pink)}
+
+  /* Compare columns */
+  .compare-cols{display:grid;grid-template-columns:1fr 1fr;gap:3vw;margin-top:2vh}
+  .compare-col{border-radius:24px;padding:4vh 2.6vw;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid var(--card-border)}
+  .compare-col.old{background:rgba(255,255,255,.03)}
+  .compare-col.new{background:var(--card-bg);border:1px solid rgba(100,210,255,.3);box-shadow:0 0 60px rgba(41,151,255,.08)}
+  .compare-col h3{font-size:clamp(19px,1.9vw,26px);font-weight:800}
+  .compare-col .sub{font-size:clamp(12px,1.05vw,14px);color:var(--ink-3);margin-top:.6vh;margin-bottom:2.4vh}
+  .compare-col ul{list-style:none}
+  .compare-col li{padding:1.5vh 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:clamp(14.5px,1.35vw,18.5px);display:flex;gap:12px;align-items:flex-start}
+  .compare-col li:last-child{border-bottom:none}
+  .compare-col li svg{width:18px;height:18px;flex-shrink:0;margin-top:4px}
+  .compare-col.old li{color:var(--ink-3)}
+  .compare-col.old li svg{color:var(--ink-3)}
+  .compare-col.new li{color:var(--ink);font-weight:600}
+  .compare-col.new li svg{color:var(--cyan)}
+
+  /* Chips */
+  .chips{display:flex;flex-wrap:wrap;gap:1vw;margin-top:3.5vh}
+  .chip{background:var(--card-bg);border:1px solid var(--card-border);border-radius:100px;padding:1.3vh 1.7vw;font-size:clamp(13px,1.15vw,16px);color:var(--ink-2);backdrop-filter:blur(20px)}
+
+  /* Duo columns (AI帮助/人负责) */
+  .duo-col{display:grid;grid-template-columns:1fr 1fr;gap:2.4vw;margin-top:1.5vh}
+  .panel{border-radius:24px;padding:4vh 2.6vw;backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid var(--card-border)}
+  .panel.ai{background:rgba(100,210,255,.06);border-color:rgba(100,210,255,.25)}
+  .panel.hu{background:rgba(41,151,255,.08);border-color:rgba(41,151,255,.3)}
+  .panel h3{font-size:clamp(20px,2vw,27px);margin-bottom:2.4vh;font-weight:800}
+  .panel ul{list-style:none}
+  .panel li{padding:1.15vh 0;font-size:clamp(14px,1.28vw,17.5px);color:var(--ink-2);line-height:1.55;padding-left:1.5em;position:relative}
+  .panel li::before{content:'—';position:absolute;left:0;color:var(--ink-3)}
+
+  /* Table */
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;font-size:clamp(11.5px,1vw,13.5px);color:var(--ink-3);font-weight:600;padding:1.6vh 1vw;border-bottom:1px solid var(--card-border);letter-spacing:.05em}
+  td{padding:1.7vh 1vw;font-size:clamp(13px,1.15vw,16px);color:var(--ink-2);border-bottom:1px solid rgba(255,255,255,.06);line-height:1.6;vertical-align:top}
+  td.lead{color:var(--ink);font-weight:700}
+
+  /* Radar */
+  .radar-container{display:flex;gap:4vw;margin-top:3vh;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:24px;padding:4vh 3vw;backdrop-filter:blur(30px)}
+  .radar-svg{flex:0 0 38%}
+  .radar-text{flex:1}
+  .radar-item{margin-bottom:2.2vh;display:flex;gap:1.4vw;align-items:flex-start}
+  .radar-item h3{font-size:clamp(15px,1.5vw,20px);color:var(--ink);margin-bottom:.4vh}
+  .radar-item p{font-size:clamp(12.5px,1.1vw,15px);color:var(--ink-2);line-height:1.5}
+
+  /* Classic */
+  .classic{font-family:"Songti SC","STSongti-SC","SimSun",serif;font-size:clamp(38px,5.6vw,82px);font-weight:700;line-height:1.5;letter-spacing:.06em;color:var(--ink)}
+  .classic-src{margin-top:2.5vh;font-size:clamp(14px,1.4vw,18px);color:var(--ink-3);letter-spacing:.22em}
+
+  .quote-hero{font-size:clamp(30px,4.2vw,64px);line-height:1.45;font-weight:800;letter-spacing:-.01em;max-width:24em;color:var(--ink)}
+  .quote-attr{margin-top:4vh;font-size:clamp(14px,1.4vw,19px);color:var(--ink-3)}
+
+  /* Trio roles */
+  .roles{display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;margin-top:1vh}
+  .role{background:var(--card-bg);border:1px solid var(--card-border);border-radius:22px;padding:3.4vh 1.9vw;backdrop-filter:blur(30px)}
+  .role h3{font-size:clamp(18px,1.7vw,23px);font-weight:800;margin-top:.4vh}
+  .role p{font-size:clamp(13px,1.18vw,16px);color:var(--ink-2);line-height:1.65;margin-top:1.2vh}
+
+  /* Node map */
+  .node-map{position:relative;width:100%;height:56vh;margin-top:2vh}
+  .node-map svg{position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible}
+  .node{position:absolute;z-index:2;transform:translate(-50%,-50%);background:rgba(20,21,26,.82);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid var(--card-border);border-radius:22px;padding:2.4vh 1.7vw;text-align:center;width:23.5vw;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+  .node.n-center{top:50%;left:50%;width:20vw;border-color:rgba(255,255,255,.3);box-shadow:0 0 50px rgba(255,255,255,.1)}
+  .node.n-tl{top:18%;left:23%;border-top:2px solid var(--cyan)}
+  .node.n-tr{top:18%;left:77%;border-top:2px solid var(--orange)}
+  .node.n-bl{top:82%;left:23%;border-top:2px solid var(--purple)}
+  .node.n-br{top:82%;left:77%;border-top:2px solid var(--green)}
+  .node h3{font-size:clamp(17px,1.7vw,23px);margin-bottom:1vh;font-weight:800}
+  .node .q{font-size:clamp(11px,1vw,13px);color:var(--ink-3);line-height:1.6;text-align:left}
+  .node .q span{color:var(--ink-2)}
+
+  /* Flow (story) */
+  .flow-diagram{position:relative;margin-top:4vh}
+  .flow-line{position:absolute;top:22px;left:7%;right:7%;height:2px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--orange));z-index:1;box-shadow:0 0 10px var(--purple)}
+  .flow-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:1.2vw;position:relative;z-index:2}
+  .f-step{display:flex;flex-direction:column;align-items:center}
+  .f-icon{width:44px;height:44px;border-radius:50%;background:var(--bg);border:2px solid #fff;margin-bottom:1.8vh;display:flex;align-items:center;justify-content:center}
+  .f-icon svg{width:20px;height:20px}
+  .f-card{background:rgba(20,21,26,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--card-border);border-radius:18px;padding:2.2vh 1vw;text-align:center;width:100%}
+  .f-card .no{font-size:clamp(14px,1.4vw,19px);font-weight:800;margin-bottom:.8vh}
+  .f-card p{font-size:clamp(11px,1vw,13.5px);color:var(--ink-2);line-height:1.55}
+  .f-card .ex{margin-top:1.2vh;font-size:clamp(10.5px,.95vw,12.5px);color:var(--ink-3);font-style:italic;line-height:1.5}
+  .f-card .who{margin-top:1.4vh;font-size:clamp(10px,.9vw,12px);font-weight:700;border-top:1px solid var(--card-border);padding-top:1vh}
+
+  .src{margin-top:8vh;font-size:clamp(11px,.95vw,13px);color:var(--ink-3);line-height:1.6;opacity:.8;max-width:64em}
+
+  #progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--purple),var(--orange));width:0;transition:width .4s;z-index:20}
+  #pager{position:fixed;bottom:3.4vh;right:3vw;z-index:20;font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:16px}
+  #pager button{background:rgba(255,255,255,.05);border:1px solid var(--card-border);color:var(--ink-2);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;transition:all .25s;font-family:inherit;backdrop-filter:blur(10px)}
+  #pager button:hover{border-color:var(--cyan);color:var(--ink);background:rgba(255,255,255,.1)}
+  #hint{position:fixed;bottom:3.4vh;left:3vw;font-size:12px;color:var(--ink-3);z-index:20;transition:opacity .4s;opacity:.7}
+  #hint.hidden{opacity:0}
+
+  @media (max-width:800px){
+    .slide{padding:6vh 6vw 12vh;overflow-y:auto;justify-content:flex-start}
+    .facts,.trio,.compare-cols,.radar-container,.flow-steps,.roles,.duo-col{grid-template-columns:1fr}
+    .node-map{height:auto}
+    .node{position:static;transform:none;width:100%;margin-bottom:1.6vh}
+    .node-map svg{display:none}
+    .flow-line{display:none}
+    .f-step{margin-bottom:1.6vh}
+  }
+  @media print{
+    body{overflow:visible}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}
+    #pager,#hint,#progress{display:none}
+    .bg-layer,.bg-overlay,.ambient-glow{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="ambient-glow"></div>
+<div id="progress"></div>
+<div id="deck">
+
+<!-- P1 封面 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2564&auto=format&fit=crop');opacity:.5"></div>
+  <div class="bg-overlay"></div>
+  <div class="content">
+    <div class="kicker">公开演讲 · AI 与教育变革</div>
+    <h1>万物机理，<br>迈向<span class="g-multi">真实世界</span>的 AI 教育</h1>
+    <p class="note" style="margin:6vh auto 0;text-align:center">主讲人 ＿＿＿＿　·　2026</p>
+  </div>
+</section>
+
+<!-- P2 震撼开篇 A：产业与经济 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2564&auto=format&fit=crop');opacity:.4"></div>
+  <div class="bg-overlay"></div>
+  <div class="content">
+    <div class="kicker">未来 5-10 年 · 产业与经济</div>
+    <div class="hero-num g-blue">$2.9 万亿</div>
+    <p class="hero-sub">麦肯锡预测：到 2030 年，AI 驱动的自动化仅在美国就将释放的<br>年度经济价值——现有技术理论上已可自动化超过 <span class="g-cyan" style="font-weight:800">50%</span> 的现有工作时长</p>
+    <p class="hero-detail">而 Anthropic 首席执行官 Dario Amodei 公开警告：未来 1-5 年内，AI 可能抹去<strong style="color:var(--ink)">一半</strong>的入门级白领岗位，失业率或飙升至 <strong style="color:var(--ink)">10%-20%</strong>。这不是科幻，是硅谷最了解这项技术的人，正在说给所有人听的话。</p>
+    <p class="hero-tag">McKinsey Global Institute (2025) · Dario Amodei, Anthropic (2025)</p>
+  </div>
+</section>
+
+<!-- P3 震撼开篇 B：教育 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2048&auto=format&fit=crop');opacity:.35"></div>
+  <div class="bg-overlay"></div>
+  <div class="content">
+    <div class="kicker">未来 5-10 年 · 教育</div>
+    <p class="hero-sub" style="font-size:clamp(26px,3.4vw,46px);font-weight:800;max-width:30em">每个孩子，都可能拥有<br>一位 <span class="g-purple">24 小时待命</span>的私人导师</p>
+    <p class="hero-detail">教育学家 Benjamin Bloom 早在 1984 年就证明："一对一辅导"能让学生成绩提升两个标准差——相当于从中等生变成前 2%。但人力成本太高，四十年来从未真正普及，这就是著名的"2 西格玛问题"。AI 第一次让这件事有可能对每一个孩子成立。</p>
+    <p class="hero-detail" style="margin-top:2vh;color:var(--ink)"><strong>但代价同步出现：</strong>MIT 的追踪研究已经显示，长期依赖 AI 写作业的学生，大脑神经连接比完全自己写的学生<strong>弱 55%</strong>。</p>
+    <p class="hero-tag">Benjamin Bloom, The 2 Sigma Problem (1984) · MIT Media Lab (2025)</p>
+  </div>
+</section>
+
+<!-- P4 震撼开篇 C：科研与产业融合 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2564&auto=format&fit=crop');opacity:.35"></div>
+  <div class="bg-overlay"></div>
+  <div class="content">
+    <div class="kicker">未来 5-10 年 · 科研与产业融合</div>
+    <p class="hero-sub" style="font-size:clamp(26px,3.4vw,46px);font-weight:800;max-width:32em"><span class="g-orange">AI 科学家</span> + 机器人，<br>正从实验室走进工厂车间</p>
+    <p class="hero-detail">AlphaFold 式的 AI 科学家正在成为常态化的研发伙伴，自主提出假设、设计实验、分析数据；具身智能（AI + 机器人）正在让认知与体力工作同时被重新定义——脑力活和体力活，都不再是"人类专属"的安全区。</p>
+    <p class="hero-tag">Google DeepMind (2024-2025) · Stanford HAI, AI Index Report (2026)</p>
+  </div>
+</section>
+
+<!-- P5 现在已经在发生：三个信号 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">现实 · 已经开始了</div>
+    <h2>这不是预言，是<span class="g-multi">已经发生</span>的事</h2>
+    <div class="facts">
+      <div class="fact">
+        <div class="icon-box icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <h3>名校招生变了</h3>
+        <p>宾大、乔治城、耶鲁、哈佛、达特茅斯等常春藤名校，2026 年起恢复或扩大面试环节——AI 能写出比学生本人还流畅的申请文章，招生官已无法只凭一篇作文判断"这是不是本人写的"。</p>
+      </div>
+      <div class="fact">
+        <div class="icon-box icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M8 16h4"/><rect x="3" y="4" width="18" height="16" rx="2"/></svg></div>
+        <h3>课堂评估变了</h3>
+        <p>美国大学教师普遍发现：学生的作业"完美地交上来"，但当面一问，学生却说不出自己写的是什么意思。高校正大规模转向当堂考试、口头答辩（AP News, 2026）。</p>
+      </div>
+      <div class="fact">
+        <div class="icon-box icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A5.5 5.5 0 0 0 4 7.5c0 1.5.6 2.4 1.5 3.5C4.6 12.1 4 13 4 14.5A5.5 5.5 0 0 0 9.5 20"/><path d="M14.5 2A5.5 5.5 0 0 1 20 7.5c0 1.5-.6 2.4-1.5 3.5.9 1.1 1.5 2 1.5 3.5A5.5 5.5 0 0 1 14.5 20"/></svg></div>
+        <h3>大脑本身在变</h3>
+        <p>MIT 的追踪研究发现，长期用 AI 写作业的学生，脑神经连接比完全自己写的学生<strong style="color:var(--ink)">弱 55%</strong>，其中 <strong style="color:var(--ink)">83%</strong> 的人事后说不出自己刚写的文章内容——研究者称之为"认知负债"。</p>
+      </div>
+    </div>
+    <p class="note" style="text-align:center;margin-top:5vh">三条信号分别指向升学、评估、认知——同一件事的三个侧面：<strong>流畅的产出，正在跟真实的能力脱钩。</strong></p>
+  </div>
+</section>
+
+<!-- P6 传统教育 vs AI 时代教育 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">颠覆 · 正面对比</div>
+    <h2>传统教育重视的，正在被<br><span class="g-cyan">AI 抹平</span></h2>
+    <div class="compare-cols">
+      <div class="compare-col old">
+        <h3 style="color:var(--ink-3)">传统教育重视</h3>
+        <div class="sub">提示词几乎可以免费生成</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>记忆与背诵标准答案</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>大量刷题追求熟练与速度</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>独立写出一篇流畅的作文</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>按既定步骤执行任务</li>
+        </ul>
+      </div>
+      <div class="compare-col new">
+        <h3 class="g-cyan">AI 时代真正稀缺</h3>
+        <div class="sub">依赖真实世界反馈，无法被生成</div>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>核验信息真伪的判断力</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>向另一个人讲清楚的表达力</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>真实世界里的协作与责任</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>发现 AI 的错误并纠正它</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">这不是"要不要用 AI"的问题，是<strong>教育该重新押注在什么上</strong>的问题。</p>
+  </div>
+</section>
+
+<!-- P7 金句过渡 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?q=80&w=2564&auto=format&fit=crop');opacity:.4"></div>
+  <div class="bg-overlay" style="background:linear-gradient(to bottom, rgba(10,11,16,0.3) 0%, rgba(10,11,16,0.95) 100%)"></div>
+  <div class="content">
+    <p class="quote-hero" style="margin:0 auto">人的危险不再是"不知道"，<br>而是分不清——<br>哪些是<span class="g-cyan">真实世界</span>，<br>哪些只是<span class="g-purple">生成物</span>。</p>
+  </div>
+</section>
+
+<!-- P8 判断标准 -->
+<section class="slide">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1507413245164-6160d8298b31?q=80&w=2564&auto=format&fit=crop');opacity:.18"></div>
+  <div class="bg-overlay"></div>
+  <div class="content">
+    <div class="kicker">我们的答案 · 一个标准</div>
+    <h1 style="font-size:clamp(42px,5.6vw,80px)">会不会被真实世界<br><span class="g-multi">"顶回来"</span>？</h1>
+    <p class="statement" style="margin-top:3vh;font-size:clamp(20px,2.6vw,34px)">判断一件事值不值得学，不看它听起来多高深，而看做这件事的过程中，会不会撞上一个不听你指挥、能把你打回去的东西。</p>
+    <div class="chips">
+      <div class="chip">实验会失败</div><div class="chip">证明会卡死</div><div class="chip">原典改不了</div>
+      <div class="chip">史料会打架</div><div class="chip">材料会顶牛</div><div class="chip">听众会摇头</div>
+    </div>
+    <p class="note">反过来看 AI 对话——它几乎从不"顶"你，你说什么它都顺着往下接，几乎没有阻力。<strong>孩子（和我们自己）如果学习经验主要来自跟 AI 对话，会缺失一种关键体验：被真实世界纠正。</strong>而这正是判断"这是真的"还是"只是听起来很对"的能力来源。</p>
+  </div>
+</section>
+
+<!-- P9 五门学问 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">我们的答案 · 五门学问</div>
+    <h2>按这个标准，基础教育收成五门</h2>
+    <div class="radar-container">
+      <div class="radar-svg">
+        <svg viewBox="0 0 200 200" width="100%" height="100%">
+          <polygon points="100,20 176,75 147,165 53,165 24,75" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <polygon points="100,40 157,81 135,149 65,149 43,81" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <polygon points="100,60 138,88 124,132 76,132 62,88" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <polygon points="100,80 119,94 112,116 88,116 81,94" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="100" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="176" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="147" y2="165" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="53" y2="165" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="100" y1="100" x2="24" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <polygon points="100,30 165,78 140,155 60,155 35,78" fill="rgba(41,151,255,0.2)" stroke="var(--cyan)" stroke-width="2"/>
+          <circle cx="100" cy="30" r="4" fill="var(--cyan)"/>
+          <circle cx="165" cy="78" r="4" fill="var(--cyan)"/>
+          <circle cx="140" cy="155" r="4" fill="var(--cyan)"/>
+          <circle cx="60" cy="155" r="4" fill="var(--cyan)"/>
+          <circle cx="35" cy="78" r="4" fill="var(--cyan)"/>
+          <text x="100" y="12" fill="var(--ink)" font-size="8" text-anchor="middle">数理与自然</text>
+          <text x="185" y="75" fill="var(--ink)" font-size="8" text-anchor="start">语言与古典</text>
+          <text x="155" y="175" fill="var(--ink)" font-size="8" text-anchor="start">历史与人事</text>
+          <text x="45" y="175" fill="var(--ink)" font-size="8" text-anchor="end">艺术与制作</text>
+          <text x="15" y="75" fill="var(--ink)" font-size="8" text-anchor="end">共同生活</text>
+        </svg>
+      </div>
+      <div class="radar-text">
+        <div class="radar-item"><div class="icon-box icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></div><div><h3>数理与自然</h3><p>世界怎么运转，你怎么知道没弄错。阻力：实验失败、误差。</p></div></div>
+        <div class="radar-item"><div class="icon-box icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div><h3>语言与古典</h3><p>改不了的句子，判断新文本的尺度。阻力：原典、真实听众。</p></div></div>
+        <div class="radar-item"><div class="icon-box icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h3>历史与人事</h3><p>真发生过的事，和它的证据。阻力：史料互相打架。</p></div></div>
+        <div class="radar-item"><div class="icon-box icon-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><div><h3>艺术与制作</h3><p>做出来给人看、给人听的手艺。阻力：材料与形式顶回来。</p></div></div>
+        <div class="radar-item" style="margin-bottom:0"><div class="icon-box icon-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><h3>共同生活</h3><p>情绪、伦理、真实协作。阻力：会拒绝你的、真实的人。</p></div></div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:2vh">仍以国家课程为主渠道——<strong>改的是重心，不是另起炉灶。</strong></p>
+  </div>
+</section>
+
+<!-- P10 古典页 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">02 · 语言与古典 · 举一例</div>
+    <p class="classic">学而不思则罔，<br>思而不学则殆。</p>
+    <div class="classic-src">《论语 · 为政》</div>
+    <p class="note">这句话在那里两千五百年了。你可以解释它，<strong>不能伪造它。</strong>在生成文字无限膨胀的时代，读过改不了的句子，才有尺度判断新文本。</p>
+  </div>
+</section>
+
+<!-- P11 AI 三个角色 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">落地 · AI 在课堂里的三个角色</div>
+    <h2>不是让 AI 替孩子学，<br>是让 AI 用<br><span class="g-multi">三种方式</span>陪着学</h2>
+    <div class="roles">
+      <div class="role">
+        <div class="icon-box icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3 class="g-blue">一起学</h3>
+        <p>和 AI 一起面对同一个真实问题：AI 给线索、给反例、给不同视角，最终的判断留给孩子自己做。</p>
+      </div>
+      <div class="role">
+        <div class="icon-box icon-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+        <h3 class="g-purple">自学</h3>
+        <p>AI 帮孩子整理资料、答疑基础问题，腾出时间给真正难的部分：提问、核查、独立思考。</p>
+      </div>
+      <div class="role">
+        <div class="icon-box icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg></div>
+        <h3 class="g-orange">表达与交流</h3>
+        <p>AI 充当陪练、听众、对手：帮孩子练习把话讲清楚、接受追问、修改表达。</p>
+      </div>
+    </div>
+    <p class="note" style="text-align:center;margin-top:4vh">三种角色的共同点：<strong>AI 从不替孩子决定"什么问题值得问"、"什么才是对的"。</strong></p>
+  </div>
+</section>
+
+<!-- P12 人生问题地图 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">个体发展 · 人生问题地图</div>
+    <h2>问题从孩子自己的生活里长出来</h2>
+    <div class="node-map">
+      <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+        <line x1="500" y1="500" x2="230" y2="180" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="10 10"/>
+        <line x1="500" y1="500" x2="770" y2="180" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="10 10"/>
+        <line x1="500" y1="500" x2="230" y2="820" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="10 10"/>
+        <line x1="500" y1="500" x2="770" y2="820" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="10 10"/>
+        <circle cx="230" cy="180" r="10" fill="var(--cyan)" filter="drop-shadow(0 0 10px #64d2ff)"/>
+        <circle cx="770" cy="180" r="10" fill="var(--orange)" filter="drop-shadow(0 0 10px #ff9f0a)"/>
+        <circle cx="230" cy="820" r="10" fill="var(--purple)" filter="drop-shadow(0 0 10px #bf5af2)"/>
+        <circle cx="770" cy="820" r="10" fill="var(--green)" filter="drop-shadow(0 0 10px #30d158)"/>
+        <circle cx="500" cy="500" r="14" fill="#fff" filter="drop-shadow(0 0 15px #fff)"/>
+      </svg>
+      <div class="node n-center"><h3 class="g-white">我想探索什么？</h3></div>
+      <div class="node n-tl">
+        <h3 class="g-cyan">01 与自己</h3>
+        <p class="q">"为什么打游戏不困，写作业却容易困？"<br><span>"AI 可以替我做价值判断吗？"</span></p>
+      </div>
+      <div class="node n-tr">
+        <h3 class="g-orange">02 与身边人</h3>
+        <p class="q">"AI 朋友能替代真人朋友吗？"<br><span>"朋友的秘密涉及危险时怎么办？"</span></p>
+      </div>
+      <div class="node n-bl">
+        <h3 class="g-purple">03 与社会</h3>
+        <p class="q">"AI 可以当班主任或裁判吗？"<br><span>"团队怎样分工才算公平？"</span></p>
+      </div>
+      <div class="node n-br">
+        <h3 class="g-green">04 与世界</h3>
+        <p class="q">"一盏灯可能打扰哪些夜行动物？"<br><span>"AI 犯错时，谁该负责？"</span></p>
+      </div>
+    </div>
+    <p class="note" style="margin-top:1vh">这些问题不是我们编的——是孩子真实会问出来的问题。<strong>AI 从不替他决定哪个问题值得问。</strong></p>
+  </div>
+</section>
+
+<!-- P13 一个孩子的具体故事 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">落地 · 一个具体的例子</div>
+    <h2>"一盏路灯，会打扰哪些夜行动物？"</h2>
+    <div class="flow-diagram">
+      <div class="flow-line"></div>
+      <div class="flow-steps">
+        <div class="f-step">
+          <div class="f-icon" style="border-color:var(--cyan);box-shadow:0 0 15px rgba(100,210,255,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="f-card"><div class="no g-cyan">01 观察</div><p>先描述事实，不急着判断</p><div class="ex">"晚上散步，发现路灯下全是飞虫"</div><div class="who">人</div></div>
+        </div>
+        <div class="f-step">
+          <div class="f-icon" style="border-color:var(--blue);box-shadow:0 0 15px rgba(41,151,255,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+          <div class="f-card"><div class="no g-blue">02 连接</div><p>谁受影响？有何感受？</p><div class="ex">"蛾子、蝙蝠、鸟，还有被灯照进窗的邻居"</div><div class="who">人</div></div>
+        </div>
+        <div class="f-step">
+          <div class="f-icon" style="border-color:var(--purple);box-shadow:0 0 15px rgba(191,90,242,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="f-card"><div class="no g-purple">03 追问</div><p>原因、机制是什么？</p><div class="ex">"光如何改变昆虫行为？色温有关系吗？"</div><div class="who" style="color:var(--cyan)">人问·AI供线索</div></div>
+        </div>
+        <div class="f-step">
+          <div class="f-icon" style="border-color:var(--pink);box-shadow:0 0 15px rgba(255,55,95,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--pink)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="f-card"><div class="no" style="color:var(--pink)">04 核查</div><p>哪些是事实？哪些待验证？</p><div class="ex">"查两本图鉴对照AI说法，连续三晚实地数虫"</div><div class="who">人</div></div>
+        </div>
+        <div class="f-step">
+          <div class="f-icon" style="border-color:var(--orange);box-shadow:0 0 15px rgba(255,159,10,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="f-card"><div class="no g-orange">05 设计</div><p>AI 适合在哪一步帮忙？</p><div class="ex">"从AI给的三种方案里，选对比两盏不同色温路灯"</div><div class="who" style="color:var(--orange)">AI出方案·人取舍</div></div>
+        </div>
+        <div class="f-step">
+          <div class="f-icon" style="border-color:#ffd60a;box-shadow:0 0 15px rgba(255,214,10,.3)"><svg viewBox="0 0 24 24" fill="none" stroke="#ffd60a" stroke-width="2"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M18 8a6 6 0 0 0-9.33-5"/></svg></div>
+          <div class="f-card"><div class="no" style="color:#ffd60a">06 行动</div><p>做出可展示的作品</p><div class="ex">"两周数据做成展板，向社区讲解并回答提问"</div><div class="who">人</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="note" style="margin-top:5vh;text-align:center">这不是一张答案清单，而是一条思考与行动的路线。<strong>问题的主权，始终在孩子手里。</strong></p>
+  </div>
+</section>
+
+<!-- P14 铁律 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">课程铁律 · 分工</div>
+    <h2>AI 可以帮助，<br><span class="g-multi">人必须负责</span></h2>
+    <div class="duo-col">
+      <div class="panel ai">
+        <h3 class="g-cyan">AI 可以帮助</h3>
+        <ul>
+          <li>记录、整理、比较、提醒</li>
+          <li>提供机理线索与多种方案</li>
+          <li>模拟不同视角，练习表达</li>
+          <li>陪练答辩，模拟听众提问</li>
+        </ul>
+      </div>
+      <div class="panel hu">
+        <h3 class="g-blue">人必须负责</h3>
+        <ul>
+          <li>选择目标——什么问题值得回答</li>
+          <li>核查事实——判断真伪、验证机理</li>
+          <li>判断价值——公平、边界、隐私</li>
+          <li>承担后果——向真实的人交付并答辩</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note"><strong>效率可以升，责任不能交给机器。</strong>这条铁律贯穿每一门课、每一个项目。</p>
+  </div>
+</section>
+
+<!-- P15 三阶段 -->
+<section class="slide">
+  <div class="content">
+    <div class="kicker">次序 · 三个阶段</div>
+    <h2>按能力进阶，<span class="g-multi">不按年龄锁死</span></h2>
+    <div class="glass-card" style="padding:1vh 2vw">
+      <table>
+        <tr><th style="width:20%">阶段</th><th style="width:18%">默认年级</th><th style="width:30%">教育任务</th><th>学生侧 AI</th></tr>
+        <tr><td class="lead">一 · 接触真实</td><td>三至五年级</td><td>看、做、读原文、开口</td><td>原则上不给答案</td></tr>
+        <tr><td class="lead">二 · 追究机理</td><td>六年级至初中</td><td>问为什么、要证据、对读材料</td><td>当对手：找茬、对照、逼问</td></tr>
+        <tr><td class="lead">三 · 形成判断</td><td>高中</td><td>取舍、答辩、对他人负责</td><td>当工具：加速，方向是人的</td></tr>
+      </table>
+    </div>
+    <p class="note"><strong>升级看门槛任务，不看生日。</strong>三年级可以做第二阶段的事；门槛没过，AI 权限不随年级上移。</p>
+  </div>
+</section>
+
+<!-- P16 收束 -->
+<section class="slide center">
+  <div class="bg-layer" style="background-image:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2564&auto=format&fit=crop');opacity:.6"></div>
+  <div class="bg-overlay" style="background:linear-gradient(to bottom, rgba(10,11,16,0.2) 0%, rgba(10,11,16,0.9) 100%)"></div>
+  <div class="content">
+    <p class="quote-hero" style="margin:0 auto">AI 越强，廉价的是流畅的陈述。<br>昂贵的是——</p>
+    <p class="quote-hero" style="margin:3vh auto 0"><span class="g-multi">看见过真实世界，<br>并能向另一个人讲清楚。</span></p>
+  </div>
+</section>
+
+<!-- P17 结尾 -->
+<section class="slide">
+  <div class="content">
+    <h1><span class="g-white">Q&amp;A</span></h1>
+    <p class="note" style="font-size:clamp(16px,1.7vw,23px)">欢迎追问——追问本身，就是我们想教给孩子的能力。</p>
+    <div class="src">
+      数据与文献：Stanford HAI AI Index 2026 · Google DeepMind (2024-2025) · McKinsey Global Institute (2025) · Anthropic / Dario Amodei (2025) · AP News (2026) · MIT Media Lab, Your Brain on ChatGPT (2025) · Benjamin Bloom, The 2 Sigma Problem (1984) · Pew Research Center (2026) · Common Sense Media (2025-2026) · 中国教育科学研究院。
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div id="pager">
+  <button id="prev" aria-label="上一页">←</button>
+  <span id="page-num">1 / 17</span>
+  <button id="next" aria-label="下一页">→</button>
+</div>
+<div id="hint">← → 方向键 / 空格 / 点击翻页 · #页码可直达 · Cmd+P 打印</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let cur=0;
+  const progress=document.getElementById('progress');
+  const pageNum=document.getElementById('page-num');
+  function go(n){
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    pageNum.textContent=(cur+1)+' / '+slides.length;
+    history.replaceState(null,'','#'+(cur+1));
+    document.getElementById('hint').classList.toggle('hidden',cur>0);
+  }
+  document.getElementById('next').onclick=e=>{e.stopPropagation();go(cur+1)};
+  document.getElementById('prev').onclick=e=>{e.stopPropagation();go(cur-1)};
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+  });
+  document.getElementById('deck').addEventListener('click',()=>go(cur+1));
+  go((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>

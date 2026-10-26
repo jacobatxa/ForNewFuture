@@ -1,0 +1,2850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 创想营 · 把好奇变成能力 | Youth AI Innovation Camp</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▚</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070d1a;
+    --bg-card: rgba(255, 255, 255, 0.035);
+    --bg-card-hover: rgba(255, 255, 255, 0.065);
+    --ink: #e2e8f0;
+    --ink-bright: #ffffff;
+    --muted: #94a3b8;
+    --blue: #3b82f6;
+    --cyan: #22d3ee;
+    --cyan-glow: rgba(34, 211, 238, 0.28);
+    --orange: #f97316;
+    --orange-glow: rgba(249, 115, 22, 0.32);
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --font-en: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "Geist Mono", "JetBrains Mono", "SF Mono", Menlo, monospace;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    overflow: hidden !important;
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input { font-family: inherit; color: inherit; }
+  button { cursor: pointer; }
+
+  /* Background grid pattern */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #deck { position: relative; width: 100vw; height: 100vh; z-index: 1; overflow: hidden !important; }
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 24px 64px 44px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    overflow: hidden !important;
+  }
+  .slide.cover-slide {
+    justify-content: center;
+    padding: 24px 64px 44px;
+    overflow: hidden !important;
+  }
+  .slide.active { display: flex; }
+  .slide:not(.cover-slide) { align-items: center; }
+  :where(.slide:not(.cover-slide)) > * { width: 100%; max-width: 1600px; }
+  .slide:not(.cover-slide) > .kicker,
+  .slide:not(.cover-slide) > h2 { justify-content: center; text-align: center; }
+  .slide:not(.cover-slide) > p { text-align: center; }
+
+  @media (max-height: 820px) {
+    .slide {
+      padding: 16px 48px 36px;
+      gap: 8px;
+    }
+    h2 { font-size: 26px; }
+  }
+
+  /* Typography */
+  .kicker {
+    font-family: var(--font-en);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kicker .en { color: var(--muted); font-weight: 500; font-size: 11px; }
+
+  h1 { font-size: 52px; line-height: 1.1; font-weight: 900; color: var(--ink-bright); }
+  h2 {
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 900;
+    color: var(--ink-bright);
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .sub-en {
+    font-family: var(--font-en);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  h3 { font-size: 16px; font-weight: 700; color: var(--ink-bright); }
+  p { line-height: 1.55; }
+  .accent { color: var(--cyan); }
+  .org { color: var(--orange); }
+  .mut { color: var(--muted); }
+  .small { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+
+  /* Navigation & UI bar */
+  #bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--blue), var(--orange)); width: 0; z-index: 70; transition: width .25s ease; }
+  #pager {
+    position: fixed;
+    bottom: 14px;
+    right: 28px;
+    color: var(--muted);
+    font-size: 12.5px;
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    z-index: 70;
+  }
+  #hint {
+    position: fixed;
+    bottom: 14px;
+    left: 28px;
+    right: 220px;
+    color: var(--muted);
+    font-size: 12.5px;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  #hint::before {
+    content: "TIP";
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(34, 211, 238, 0.15);
+    color: var(--cyan);
+    font-weight: 700;
+  }
+  .navbtn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 70;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(11, 17, 32, 0.85);
+    backdrop-filter: blur(8px);
+    color: var(--ink);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease;
+  }
+  #prev { left: 12px; }
+  #next { right: 12px; }
+  .navbtn:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 16px var(--cyan-glow); }
+
+  /* Layout grids */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+    backdrop-filter: blur(4px);
+    transition: border-color .2s ease, background-color .2s ease;
+  }
+  .card:hover { border-color: var(--line-strong); background: var(--bg-card-hover); }
+  .bg-glow { position: absolute; border-radius: 50%; filter: blur(140px); opacity: .2; pointer-events: none; }
+
+  ul.clean { list-style: none; }
+  ul.clean li { padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+
+  /* Tags */
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 11.5px; font-weight: 700; font-family: var(--font-en); }
+  .tag.no { background: rgba(255,255,255,.07); color: var(--muted); }
+  .tag.narrow { background: rgba(249,115,22,.16); color: #fdba74; }
+  .tag.some { background: rgba(34,211,238,.14); color: var(--cyan); }
+  .tag.best { background: #10b981; color: #fff; box-shadow: 0 0 10px rgba(16, 185, 129, 0.45); }
+
+  /* Slide 2: Hotspots Stage (Sci-Fi Hud & Hologram) */
+  .stage {
+    position: relative;
+    margin: 0 auto;
+    width: min(100%, calc((100vh - 200px) * 16 / 9));
+    aspect-ratio: 16/9;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    box-shadow: 0 0 45px rgba(34, 211, 238, 0.18), inset 0 0 35px rgba(0, 0, 0, 0.7);
+  }
+  .stage img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0.95) contrast(1.05);
+  }
+  /* Sci-Fi HUD Scanline & Grid Overlay */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .stage::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.9), #fff, rgba(34, 211, 238, 0.9), transparent);
+    box-shadow: 0 0 18px var(--cyan);
+    animation: hud-scan 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.75;
+  }
+  @keyframes hud-scan {
+    0% { top: 0%; opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.9; }
+    100% { top: 100%; opacity: 0; }
+  }
+  /* Corner HUD Accents */
+  .hud-bracket {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--cyan);
+    pointer-events: none;
+    z-index: 4;
+    filter: drop-shadow(0 0 6px var(--cyan));
+  }
+  .hud-tl { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .hud-tr { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+  .hud-bl { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+  .hud-br { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .hud-banner {
+    position: absolute;
+    top: 12px;
+    left: 42px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--cyan);
+    background: rgba(4, 9, 20, 0.85);
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    z-index: 4;
+    text-transform: uppercase;
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+  }
+  .hud-compass {
+    position: absolute;
+    top: 12px;
+    right: 42px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    background: rgba(4, 9, 20, 0.85);
+    border: 1px solid var(--line);
+    padding: 3px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  .hs {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--cyan);
+    background: rgba(7, 13, 26, 0.88);
+    color: #fff;
+    font-weight: 900;
+    font-family: var(--font-mono);
+    font-size: 15px;
+    transform: translate(-50%, -50%);
+    transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 16px var(--cyan-glow);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Sci-Fi Pulse Rings */
+  .hs::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(34, 211, 238, 0.6);
+    animation: target-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    pointer-events: none;
+  }
+  .hs::after {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px dashed rgba(34, 211, 238, 0.35);
+    animation: target-rotate 8s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes target-ping {
+    0% { transform: scale(0.9); opacity: 0.9; }
+    75%, 100% { transform: scale(1.6); opacity: 0; }
+  }
+  @keyframes target-rotate {
+    to { transform: rotate(360deg); }
+  }
+  .hs:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+    border-color: #fff;
+    box-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
+    background: rgba(34, 211, 238, 0.3);
+  }
+  .hs.on {
+    background: var(--orange);
+    border-color: #fff;
+    box-shadow: 0 0 26px var(--orange-glow);
+  }
+  .hs.on::before {
+    border-color: rgba(249, 115, 22, 0.8);
+  }
+  .hs.on::after {
+    border-color: rgba(249, 115, 22, 0.5);
+  }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 4px; }
+  .lg {
+    padding: 5px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--line);
+    font-size: 12.5px;
+    font-family: var(--font-en);
+    transition: all .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .lg-num {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--cyan);
+    font-size: 12px;
+  }
+  .lg.on {
+    background: rgba(249, 115, 22, 0.18);
+    border-color: var(--orange);
+    color: #fff;
+    box-shadow: 0 0 12px var(--orange-glow);
+  }
+  .lg.on .lg-num { color: #fdba74; }
+
+  /* Slide 3: Intelligence Benchmark Board (Redesigned) */
+  .intel-board {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 24px;
+    align-items: start;
+    margin-top: 10px;
+  }
+  .intel-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .panel-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .p-num {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    background: rgba(34, 211, 238, 0.12);
+    border: 1px solid rgba(34, 211, 238, 0.3);
+    padding: 2px 7px;
+    border-radius: 6px;
+  }
+  .p-num.org {
+    color: var(--orange);
+    background: rgba(249, 115, 22, 0.12);
+    border-color: rgba(249, 115, 22, 0.3);
+  }
+  .p-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+  .p-title .en {
+    font-family: var(--font-en);
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-left: 6px;
+  }
+
+  /* 5-Step Pipeline Card */
+  .pipeline-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pipe-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all .15s ease;
+  }
+  .pipe-step:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+  .pipe-step.highlight {
+    background: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.35);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.12);
+  }
+  .pipe-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cyan);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(34, 211, 238, 0.1);
+    flex-shrink: 0;
+  }
+  .pipe-step.highlight .pipe-num {
+    color: #fff;
+    background: var(--orange);
+    box-shadow: 0 0 8px var(--orange-glow);
+  }
+  .pipe-body { flex: 1; }
+  .pipe-head { font-size: 13px; font-weight: 700; color: #fff; display: flex; align-items: baseline; gap: 6px; }
+  .pipe-head .en { font-family: var(--font-en); font-size: 10.5px; font-weight: 500; color: var(--muted); }
+  .pipe-step.highlight .pipe-head .en { color: #fdba74; font-weight: 700; }
+  .pipe-body p { font-size: 11.5px; color: var(--muted); margin-top: 1px; line-height: 1.35; }
+
+  /* Quote Card */
+  .intel-quote {
+    background: rgba(34, 211, 238, 0.04);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-left: 3px solid var(--cyan);
+    border-radius: 10px;
+    padding: 8px 12px;
+  }
+  .intel-quote p { font-size: 12px; color: var(--ink); line-height: 1.45; }
+  .intel-quote b { color: #fff; }
+  .quote-author { display: block; font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+
+  /* 7 Objects Verdicts List */
+  .verdicts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .v-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 9px;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    transition: all .2s ease;
+  }
+  .v-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateX(3px);
+  }
+  .v-card.best {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+  }
+  .v-card.some {
+    background: rgba(34, 211, 238, 0.04);
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+  .v-rank {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--cyan);
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .v-card.best .v-rank {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    font-weight: 800;
+  }
+  .v-content { flex: 1; min-width: 0; }
+  .v-name { font-size: 12.5px; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v-desc { font-size: 11px; color: var(--muted); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v-badge {
+    padding: 2px 7.5px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-en);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .v-badge.best { background: #10b981; color: #fff; box-shadow: 0 0 8px rgba(16, 185, 129, 0.45); }
+  .v-badge.some { background: rgba(34, 211, 238, 0.15); color: var(--cyan); border: 1px solid rgba(34, 211, 238, 0.3); }
+  .v-badge.narrow { background: rgba(249, 115, 22, 0.15); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.3); }
+  .v-badge.no { background: rgba(255, 255, 255, 0.06); color: var(--muted); border: 1px solid rgba(255, 255, 255, 0.08); }
+
+  /* Slide 4: Clean Balanced Boundary Board (Redesigned) */
+  .bound-board {
+    display: grid;
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: 24px;
+    align-items: start;
+    margin-top: 10px;
+  }
+  .bound-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Dual-Track Scope Card */
+  .scope-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .scope-col { flex: 1; display: flex; flex-direction: column; gap: 9px; }
+  .scope-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13.5px;
+    font-weight: 800;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--line);
+  }
+  .scope-col.assist .scope-head { color: var(--cyan); }
+  .scope-col.human .scope-head { color: var(--orange); }
+  .scope-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .scope-col.assist .scope-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .scope-col.human .scope-dot { background: var(--orange); box-shadow: 0 0 6px var(--orange); }
+  .scope-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .scope-list li {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.45;
+    padding-left: 12px;
+    position: relative;
+  }
+  .scope-col.assist .scope-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--cyan);
+    font-weight: bold;
+  }
+  .scope-col.human .scope-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: bold;
+  }
+  .scope-divider { width: 1px; background: var(--line); margin: 2px 0; }
+
+  /* 3 Golden Rules Strip */
+  .rules-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .rule-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    transition: all .15s ease;
+  }
+  .rule-item:hover { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
+  .rule-badge {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    padding-top: 1px;
+  }
+  .rule-item b { font-size: 12.5px; color: #fff; display: block; margin-bottom: 3px; }
+  .rule-item p { font-size: 11px; color: var(--muted); line-height: 1.4; margin: 0; }
+
+  /* Live Hallucination Lab Terminal */
+  .terminal-card {
+    background: #060b18;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    box-shadow: 0 0 25px rgba(249, 115, 22, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .terminal-topbar {
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .term-dots { display: flex; gap: 4px; }
+  .term-dots span { width: 8px; height: 8px; border-radius: 50%; }
+  .term-dots span:nth-child(1) { background: #fb7185; }
+  .term-dots span:nth-child(2) { background: #fbbf24; }
+  .term-dots span:nth-child(3) { background: #34d399; }
+  .term-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: #94a3b8; flex: 1; }
+  .term-status {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(249, 115, 22, 0.15);
+    color: #fdba74;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+  }
+  .term-status.success { background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3); }
+  .term-status.alert { background: rgba(251, 113, 133, 0.15); color: #fda4af; border-color: rgba(251, 113, 133, 0.3); }
+
+  .term-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .term-claim {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 10px 12px;
+  }
+  .claim-label { font-size: 11.5px; color: var(--muted); display: block; margin-bottom: 3px; }
+  .claim-text { font-size: 14px; color: #fff; line-height: 1.45; }
+  .claim-text b { color: var(--orange); }
+
+  .term-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .term-btn {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 8px 6px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .2s ease;
+    text-align: center;
+  }
+  .term-btn:hover { border-color: var(--cyan); background: rgba(34, 211, 238, 0.1); color: #fff; }
+  .term-btn.on { border-color: var(--orange); background: rgba(249, 115, 22, 0.2); color: #fff; box-shadow: 0 0 10px var(--orange-glow); }
+  .term-btn.best-btn.on { border-color: #10b981; background: rgba(16, 185, 129, 0.2); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+
+  .term-screen {
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(34, 211, 238, 0.25);
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+  }
+  .screen-header { display: flex; align-items: center; margin-bottom: 3px; }
+  .screen-prompt { font-family: var(--font-mono); font-size: 10.5px; color: var(--cyan); font-weight: 700; }
+  .screen-text { font-size: 12.5px; color: #fff; line-height: 1.45; }
+
+  .term-footnote {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.45;
+    border-top: 1px solid var(--line);
+    padding-top: 8px;
+  }
+  .term-footnote b { color: #fff; }
+
+  /* Intelligence cards: one idea per slide */
+  .ic-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; max-width: 1340px; }
+  .ic-progress { display: flex; gap: 10px; }
+  .ic-progress span { width: 56px; height: 6px; border-radius: 99px; background: rgba(255,255,255,.12); }
+  .ic-progress span.done { background: rgba(34,211,238,.45); }
+  .ic-progress span.on { background: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow); }
+  .ic-progress span.on.key { background: var(--orange); box-shadow: 0 0 12px var(--orange-glow); }
+  .ic-hero { display: flex; align-items: center; gap: 24px; }
+  .ic-num {
+    font-family: var(--font-mono); font-size: 92px; font-weight: 800; line-height: 1;
+    color: var(--cyan); text-shadow: 0 0 28px var(--cyan-glow);
+  }
+  .ic-hero.key .ic-num { color: var(--orange); text-shadow: 0 0 28px var(--orange-glow); }
+  .ic-title { font-size: 78px; font-weight: 900; color: #fff; line-height: 1.05; }
+  .ic-title .en { display: block; font-family: var(--font-en); font-size: 22px; font-weight: 500; color: var(--muted); margin-top: 8px; }
+  .ic-lead { font-size: 34px; color: var(--ink); text-align: center; line-height: 1.4; }
+  .ic-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; width: 100%; }
+  .ic-case {
+    display: flex; align-items: center; gap: 20px;
+    padding: 24px 28px; border-radius: 20px; border: 1px solid var(--line); background: var(--bg-card);
+  }
+  .ic-case.yes { border-color: rgba(52,211,153,.45); background: rgba(16,185,129,.07); }
+  .ic-case.no { border-color: rgba(249,115,22,.4); background: rgba(249,115,22,.06); }
+  .ic-label { font-size: 17px; font-weight: 800; letter-spacing: .04em; }
+  .ic-case.yes .ic-label { color: var(--emerald); }
+  .ic-case.no .ic-label { color: #fdba74; }
+  .ic-case p { font-size: 27px; line-height: 1.5; color: #fff; margin-top: 6px; }
+  .ic-thumb {
+    flex-shrink: 0; width: 168px; height: 126px; border-radius: 14px;
+    border: 1px solid var(--line-strong);
+    background: url("assets/camp/vote-2050.jpg") no-repeat;
+    background-size: 840px auto;
+    background-position:
+      max(-672px, min(0px, calc(84px - var(--x) * 8.4px)))
+      max(-346px, min(0px, calc(63px - var(--y) * 4.725px)));
+  }
+  .ic-remember {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 28px; font-weight: 700; color: #fff;
+    padding: 14px 32px; border-radius: 99px;
+    border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.08);
+  }
+  .ic-remember b {
+    font-size: 14px; padding: 3px 10px; border-radius: 99px;
+    background: var(--cyan); color: #04121a;
+  }
+  .ic-remember.key { border-color: rgba(249,115,22,.5); background: rgba(249,115,22,.1); }
+  .ic-remember.key b { background: var(--orange); color: #fff; }
+  .ic-quote { text-align: center; }
+  .ic-quote-main { font-size: 64px; font-weight: 900; color: #fff; line-height: 1.25; }
+  .ic-quote-src { display: block; margin-top: 10px; font-size: 15px; color: var(--muted); }
+  .ic-next { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .ic-next-title { font-size: 18px; font-weight: 700; color: var(--muted); margin-right: 6px; }
+  .ic-chip {
+    font-size: 17px; font-weight: 700; padding: 6px 16px; border-radius: 99px;
+    border: 1px solid rgba(34,211,238,.35); color: var(--cyan); background: rgba(34,211,238,.07);
+  }
+  .ic-chip.key { border-color: rgba(249,115,22,.5); color: #fdba74; background: rgba(249,115,22,.08); }
+  .ic-foot { font-size: 20px; color: var(--ink); }
+
+  /* Verdict cards */
+  .rv-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; max-width: 1180px; }
+  .rv-card {
+    width: 262px; border-radius: 16px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--bg-card);
+  }
+  .rv-card.best { border-color: rgba(52,211,153,.6); box-shadow: 0 0 24px rgba(16,185,129,.2); }
+  .rv-thumb {
+    height: 118px;
+    background: url("assets/camp/vote-2050.jpg") no-repeat;
+    background-size: 1310px auto;
+    background-position:
+      max(-1048px, min(0px, calc(131px - var(--x) * 13.1px)))
+      max(-619px, min(0px, calc(59px - var(--y) * 7.369px)));
+  }
+  .rv-body { padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+  .rv-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .rv-name { font-size: 21px; font-weight: 800; color: #fff; }
+  .rv-dots { display: flex; gap: 6px; }
+  .rv-dots i {
+    font-style: normal; font-size: 15px; font-weight: 800;
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.28); border: 1px solid var(--line); background: rgba(255,255,255,.03);
+  }
+  .rv-dots i.on { color: #04121a; background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow); }
+  .rv-card.best .rv-dots i.on { background: var(--emerald); border-color: var(--emerald); }
+  .rv-why { font-size: 16px; color: var(--muted); line-height: 1.45; }
+
+  /* Boundary + rules cards */
+  .bd-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; }
+  .bd-card { border-radius: 20px; padding: 28px 32px; border: 1px solid var(--line); background: var(--bg-card); }
+  .bd-card.assist { border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.05); }
+  .bd-card.human { border-color: rgba(249,115,22,.4); background: rgba(249,115,22,.05); }
+  .bd-head { display: block; font-size: 30px; font-weight: 900; margin-bottom: 14px; }
+  .bd-card.assist .bd-head { color: var(--cyan); }
+  .bd-card.human .bd-head { color: var(--orange); }
+  .bd-card ul { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .bd-card li { font-size: 23px; color: #fff; padding-left: 22px; position: relative; line-height: 1.4; }
+  .bd-card li::before { content: ""; position: absolute; left: 0; top: .55em; width: 9px; height: 9px; border-radius: 2px; }
+  .bd-card.assist li::before { background: var(--cyan); }
+  .bd-card.human li::before { background: var(--orange); }
+  .rl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1400px; }
+  .rl-card {
+    border-radius: 20px; padding: 34px 28px; text-align: center;
+    border: 1px solid rgba(34,211,238,.3); background: linear-gradient(180deg, rgba(34,211,238,.08), rgba(255,255,255,.02));
+  }
+  .rl-num { font-family: var(--font-mono); font-size: 48px; font-weight: 800; color: var(--cyan); text-shadow: 0 0 20px var(--cyan-glow); }
+  .rl-card b { display: block; font-size: 30px; color: #fff; margin: 12px 0 14px; }
+  .rl-card p { font-size: 21px; color: var(--ink); line-height: 1.6; text-wrap: pretty; }
+  .slide:has(.ic-wrap, .rl-grid, .rv-grid, .terminal-card.lab, .flip-grid, #agentBoard, .hb-grid, .pb-wrap, .try-wrap, .task, .webapp-teach, .ctx-hooks, .ag-work, .dt-wrap, .agent-hud) > h2 { font-size: 42px; margin-bottom: 14px; }
+  .terminal-card.lab { max-width: 960px; }
+  .terminal-card.lab .term-body { padding: 22px 26px; gap: 18px; }
+  .terminal-card.lab .claim-text { font-size: 28px; }
+  .terminal-card.lab .claim-label { font-size: 15px; }
+  .terminal-card.lab .term-btn { font-size: 20px; padding: 14px 8px; }
+  .terminal-card.lab .screen-text { font-size: 19px; }
+  .terminal-card.lab .term-footnote { font-size: 16px; }
+
+  /* Choices & Chips */
+  .choice { display: flex; gap: 8px; flex-wrap: wrap; }
+  .choice button, .chip {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.05);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 14px;
+    font-family: var(--font-en);
+    transition: all .2s ease;
+  }
+  .choice button:hover, .chip:hover { border-color: var(--cyan); background: rgba(34,211,238,.1); }
+  .choice button.on { background: rgba(249,115,22,.25); border-color: var(--orange); color: #fff; box-shadow: 0 0 12px var(--orange-glow); }
+
+  /* Slide 5: Capability Ladder */
+  .pyramid { display: flex; flex-direction: column; gap: 6px; align-items: center; width: 100%; }
+  .pyramid div {
+    color: #fff;
+    text-align: center;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: var(--font-en);
+    transition: all .2s ease;
+  }
+  .tier-badge { font-family: var(--font-mono); font-weight: 800; font-size: 13px; display: inline-block; width: 32px; }
+
+  /* Slide 6: Physical Prompt Rail Steps */
+  .steps { position: relative; display: flex; flex-direction: column; gap: 5px; padding-left: 32px; justify-content: center; }
+  .steps .rail-track { position: absolute; left: 11px; top: 16px; bottom: 16px; width: 2px; background: rgba(34,211,238,.15); border-radius: 2px; pointer-events: none; }
+  .steps .rail-fill { position: absolute; left: 11px; width: 2px; background: linear-gradient(180deg, rgba(34,211,238,.2), var(--cyan)); border-radius: 2px; box-shadow: 0 0 10px var(--cyan); pointer-events: none; transition: top .3s ease, height .3s ease; }
+  .steps .rail-pulse {
+    position: absolute;
+    left: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: #fff;
+    box-shadow: 0 0 10px 3px rgba(34,211,238,.95), 0 0 20px 6px rgba(34,211,238,.45);
+    transition: top .3s ease;
+    z-index: 3;
+  }
+  .steps .rail-pulse::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 26px;
+    height: 26px;
+    margin: -13px 0 0 -13px;
+    border-radius: 50%;
+    border: 1px solid rgba(34,211,238,.6);
+    animation: pulse-ring 1.4s ease-out infinite;
+  }
+  @keyframes pulse-ring { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.4); opacity: 0; } }
+
+  .step {
+    position: relative;
+    text-align: left;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    border-radius: 10px;
+    padding: 7px 12px;
+    font-family: var(--font-en);
+    transition: all .2s ease;
+  }
+  .step::before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    border-radius: 50%;
+    border: 2px solid rgba(34,211,238,.55);
+    background: #070d1a;
+    z-index: 2;
+  }
+  .step:hover { border-color: rgba(34,211,238,.4); background: rgba(34,211,238,.05); }
+  .step.on { border-color: var(--orange); background: rgba(249,115,22,.12); }
+  .step.on::before { border-color: var(--cyan); background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+  .step.done::before { border-color: var(--cyan); background: rgba(34,211,238,.35); }
+  .step b { display: block; font-size: 13.5px; }
+
+  .photo { position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #060b16; cursor: zoom-in; }
+  .photo img { width: 100%; height: min(54vh, 500px); object-fit: cover; display: block; }
+  .photo .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 14px; background: linear-gradient(transparent, rgba(7,13,26,.92)); font-size: 13px; }
+
+  /* Slide 6: Physical Prompt Rail Steps & Facilities */
+  .journey-board {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 24px;
+    max-width: 1560px;
+    align-items: center;
+  }
+
+  /* Transformer screenshot */
+  .tx-shot { border: 0; padding: 0; background: transparent; cursor: zoom-in; text-align: left; color: inherit; display: block; width: 100%; }
+  .tx-shot img { width: 100%; border-radius: 14px; border: 1px solid var(--line); display: block; }
+
+  /* Slide 10: Semantic Vector Space Console (Option B - Optimized) */
+  .vector-console {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+  .radar-panel {
+    position: relative;
+    background:
+      radial-gradient(circle at center, rgba(34, 211, 238, 0.09) 0%, transparent 68%),
+      radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.08), transparent 45%),
+      radial-gradient(circle at 75% 25%, rgba(251, 146, 60, 0.08), transparent 45%),
+      radial-gradient(circle at 75% 75%, rgba(34, 211, 238, 0.08), transparent 45%),
+      radial-gradient(circle at 20% 70%, rgba(244, 63, 94, 0.08), transparent 45%),
+      #060c1d;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 14px;
+    overflow: hidden;
+    height: 100%;
+    min-height: 330px;
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.6);
+  }
+  .radar-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .radar-axis { stroke: rgba(255, 255, 255, 0.12); stroke-width: 0.5; stroke-dasharray: 2 2; }
+  .radar-circle { stroke: rgba(34, 211, 238, 0.14); stroke-dasharray: 2 2; fill: none; stroke-width: 0.5; }
+  .radar-label { font-family: var(--font-mono); font-size: 2.2px; fill: rgba(148, 163, 184, 0.5); font-weight: 600; }
+  .radar-quadrant { font-family: var(--font-mono); font-size: 2.3px; fill: rgba(255, 255, 255, 0.18); font-weight: 700; }
+  .beam-line { stroke: #22d3ee; stroke-width: 0.8; stroke-dasharray: 2 1.5; animation: beam-dash 1s linear infinite; filter: drop-shadow(0 0 4px #22d3ee); }
+  @keyframes beam-dash { to { stroke-dashoffset: -7; } }
+  .beam-badge {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(6, 12, 29, 0.95);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    box-shadow: 0 0 12px var(--cyan-glow);
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .vector-points { position: absolute; inset: 0; }
+  .v-dot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: rgba(6, 12, 29, 0.6);
+    font-weight: 700;
+    font-size: 12.5px;
+    color: #f1f5f9;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
+  }
+  .v-dot i { display: block; width: 7px; height: 7px; border-radius: 50%; box-shadow: 0 0 6px currentColor; flex-shrink: 0; }
+  .v-dot:hover { transform: translate(-50%, -50%) scale(1.18); z-index: 10; background: rgba(15, 23, 42, 0.95); border-color: rgba(255,255,255,0.4); }
+  .v-dot.sel {
+    outline: 2px solid #fff;
+    background: rgba(14, 165, 233, 0.25);
+    border-color: #38bdf8;
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    z-index: 15;
+    transform: translate(-50%, -50%) scale(1.15);
+    color: #fff;
+    font-weight: 800;
+  }
+  .insight-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+    min-height: 0;
+  }
+  .insight-box {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 11px;
+    backdrop-filter: blur(4px);
+  }
+  .insight-box h3 {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .preset-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .preset-btn {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 5px 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .preset-btn:hover { border-color: var(--cyan); background: rgba(34, 211, 238, 0.08); color: #fff; transform: translateY(-1px); }
+  .preset-btn span { font-size: 10px; color: var(--muted); font-weight: 400; font-family: var(--font-mono); }
+  
+  .readout-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    font-weight: 700;
+    border: 1px solid var(--line);
+  }
+  .readout-tag.active {
+    background: rgba(34, 211, 238, 0.15);
+    color: var(--cyan);
+    border-color: rgba(34, 211, 238, 0.4);
+  }
+  .readout { min-height: 52px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .readout-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .readout-score { font-family: var(--font-mono); font-size: 13.5px; font-weight: 800; color: #fff; }
+  .readout-score b { color: #fff; }
+  .readout-score span { font-size: 11px; color: var(--cyan); font-weight: 600; margin-left: 4px; }
+  .sim-bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .sim-bar { width: 65px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; }
+  .sim-bar-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #34d399); border-radius: 999px; transition: width .3s ease; }
+  .sim-bar-val { font-family: var(--font-mono); font-size: 11px; color: var(--emerald); font-weight: 800; }
+  .readout-desc { font-size: 11.5px; color: var(--ink); line-height: 1.45; }
+  
+  .cat-pills { display: flex; flex-wrap: wrap; gap: 3.5px; max-height: 80px; overflow-y: auto; padding-right: 2px; }
+  .cat-pill {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    border-radius: 5px;
+    padding: 2px 6px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s ease;
+    font-family: var(--font-en);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .cat-pill i { display: inline-block; width: 5px; height: 5px; border-radius: 50%; }
+  .cat-pill:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.08); }
+  .cat-pill.placed { opacity: 0.35; text-decoration: line-through; }
+
+  /* Capability ladder */
+  .ladder { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 1160px; max-width: 100%; }
+  .ld-row {
+    width: var(--w); display: flex; align-items: center; gap: 18px;
+    padding: 18px 30px; border-radius: 14px; background: var(--c);
+    border: 1px solid rgba(255,255,255,.14); color: #fff;
+  }
+  .ld-lv { font-family: var(--font-mono); font-size: 22px; font-weight: 800; opacity: .7; }
+  .ld-row b { font-size: 28px; font-weight: 900; white-space: nowrap; }
+  .ld-desc { font-size: 22px; color: rgba(255,255,255,.82); margin-left: auto; text-align: right; }
+  .ld-row.today { box-shadow: 0 0 26px var(--orange-glow); border-color: rgba(255,255,255,.5); }
+
+  /* Journey */
+  .journey-left { display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+  .journey-board .steps { gap: 9px; }
+  .journey-board .step { padding: 11px 18px; }
+  .journey-board .step b { font-size: 20px; }
+  .journey-board .step-say { display: none; font-size: 19px; line-height: 1.5; color: #fff; margin-top: 6px; }
+  .journey-board .step.on .step-say { display: block; }
+  .journey-left #journeyNext { align-self: flex-start; margin-left: 32px; }
+  .journey-board .photo img { height: min(60vh, 600px); }
+  .journey-board .photo .cap { font-size: 17px; padding: 16px 20px; }
+
+  /* Transformer steps */
+  .guess-box { display: flex; flex-direction: column; align-items: center; gap: 26px; width: 100%; max-width: 900px; }
+  .guess-sent { font-size: 56px; font-weight: 900; color: #fff; }
+  .guess-blank {
+    display: inline-block; min-width: 120px; text-align: center; padding: 0 16px;
+    border-bottom: 4px dashed var(--orange); color: var(--orange);
+  }
+  .guess-blank.on { border-bottom-style: solid; color: var(--cyan); border-color: var(--cyan); }
+  .prob-list { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 760px; }
+  .prob-row { display: grid; grid-template-columns: 90px 1fr 80px; align-items: center; gap: 16px; }
+  .prob-word { font-size: 26px; font-weight: 800; color: #fff; text-align: right; }
+  .prob-bar { height: 22px; border-radius: 99px; background: rgba(255,255,255,.07); overflow: hidden; }
+  .prob-bar i { display: block; height: 100%; border-radius: 99px; background: rgba(34,211,238,.6); transition: width .5s ease; }
+  .prob-row.top .prob-bar i { background: var(--orange); box-shadow: 0 0 12px var(--orange-glow); }
+  .prob-pct { font-family: var(--font-mono); font-size: 20px; color: var(--ink); }
+  .go.big { font-size: 22px; padding: 14px 34px; border-radius: 99px; margin-top: 0; text-decoration: none; display: inline-block; }
+  .tk-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .tk-chip {
+    font-size: 40px; font-weight: 900; color: #fff; padding: 14px 26px; border-radius: 14px;
+    border: 2px dashed rgba(34,211,238,.55); background: rgba(34,211,238,.07); font-family: inherit;
+  }
+  .tk-row.att .tk-chip { cursor: pointer; border-style: solid; border-color: var(--line); background: rgba(255,255,255,.04); transition: all .25s ease; }
+  .tk-row.att .tk-chip.lit { border-color: rgba(34,211,238,calc(.3 + var(--a) * .7)); background: rgba(34,211,238,calc(var(--a) * .35)); box-shadow: 0 0 calc(var(--a) * 26px) var(--cyan-glow); }
+  .tk-row.att .tk-chip.self { border-color: var(--orange); background: rgba(249,115,22,.22); }
+  .att-note { font-size: 26px; font-weight: 700; color: var(--ink); text-align: center; }
+  .emb-rows { display: flex; flex-direction: column; gap: 12px; }
+  .emb-row { display: flex; align-items: center; gap: 22px; padding: 12px 26px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-card); }
+  .emb-row.near { border-color: rgba(34,211,238,.45); }
+  .emb-row.far { border-color: rgba(249,115,22,.45); }
+  .emb-word { font-size: 32px; font-weight: 900; color: #fff; width: 90px; text-align: center; }
+  .emb-nums { font-family: var(--font-mono); font-size: 26px; color: var(--ink); }
+  .site-hint { display: flex; align-items: center; gap: 14px; font-size: 22px; color: var(--ink); padding: 10px 24px; border-radius: 12px; border: 1px dashed rgba(255,255,255,.25); }
+  .site-hint b { font-size: 14px; padding: 3px 10px; border-radius: 99px; background: rgba(255,255,255,.14); color: #fff; }
+  .temp-box { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; max-width: 860px; }
+  .temp-ctl { display: flex; align-items: center; gap: 16px; font-size: 20px; color: var(--muted); }
+  .temp-ctl input { width: 360px; accent-color: var(--orange); }
+  .temp-ctl b { font-family: var(--font-mono); color: var(--orange); font-size: 20px; min-width: 110px; }
+
+  /* Try the explainer */
+  .try-wrap { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: center; max-width: 1400px; }
+  .try-wrap .tx-shot img { height: min(56vh, 520px); object-fit: contain; background: #fff; }
+  .try-tasks { display: flex; flex-direction: column; gap: 14px; align-items: stretch; }
+  .try-tasks .go.big { text-align: center; }
+  .try-card { display: flex; align-items: center; gap: 20px; padding: 16px 22px; border-radius: 16px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); }
+  .try-card .rl-num { font-size: 40px; }
+  .try-card p { font-size: 24px; color: #fff; line-height: 1.4; }
+
+  /* Review flip cards */
+  .flip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1400px; }
+  .flip-card {
+    position: relative; height: min(260px, 30vh); border-radius: 18px; border: 1px solid var(--line);
+    background: var(--bg-card); color: #fff; font-family: inherit; cursor: pointer; padding: 0;
+    perspective: 900px;
+  }
+  .flip-card > span {
+    position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; padding: 18px 22px; border-radius: 18px; text-align: center;
+    backface-visibility: hidden; transition: transform .5s ease;
+  }
+  .flip-front b { font-size: 48px; font-weight: 900; }
+  .flip-front i, .flip-back i { font-style: normal; font-size: 19px; color: var(--muted); }
+  .flip-back { transform: rotateY(180deg); background: rgba(34,211,238,.1); }
+  .flip-back b { font-size: 28px; line-height: 1.4; }
+  .flip-back i { color: var(--cyan); font-weight: 700; font-size: 22px; }
+  .flip-card.flipped .flip-front { transform: rotateY(-180deg); }
+  .flip-card.flipped .flip-back { transform: rotateY(0); }
+  .flip-card.c1 { border-color: rgba(34,211,238,.4); }
+  .flip-card.c2 { border-color: rgba(249,115,22,.4); }
+  .flip-card.c2 .flip-back { background: rgba(249,115,22,.1); }
+  .flip-card.c2 .flip-back i { color: #fdba74; }
+
+  /* Agent chapter */
+  .bd-sub { font-size: 20px; color: var(--muted); margin: -6px 0 16px; }
+
+  /* Cool HUD — grid layout so parts never collide */
+  .agent-hud {
+    position: relative;
+    width: min(1100px, 100%);
+    height: min(460px, 56vh);
+    margin: 0 auto 14px;
+    display: grid;
+    grid-template-columns: 1fr 220px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      ". goal ."
+      "memory core skill"
+      "brain . spec";
+    align-items: center;
+    justify-items: center;
+    gap: 14px 28px;
+  }
+  .agent-orbit {
+    position: absolute; inset: 8% 12%; width: auto; height: auto;
+    pointer-events: none; z-index: 0;
+  }
+  .orb-ring { fill: none; stroke: rgba(34,211,238,.28); stroke-width: 1.5; }
+  .orb-ring.r1 { stroke-dasharray: 6 10; animation: orbSpin 22s linear infinite; transform-origin: 320px 210px; }
+  .orb-ring.r2 { stroke: rgba(249,115,22,.32); animation: orbSpin 16s linear infinite reverse; transform-origin: 320px 210px; }
+  .orb-ring.r3 { stroke: rgba(34,211,238,.45); stroke-width: 2; }
+  .orb-beam { stroke: rgba(34,211,238,.3); stroke-width: 1.2; stroke-dasharray: 4 7; animation: beamPulse 2.6s ease-in-out infinite; }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes beamPulse { 0%,100% { opacity: .3; } 50% { opacity: .85; } }
+  .agent-core-wrap { grid-area: core; position: relative; z-index: 2; }
+  .agent-core {
+    width: 168px; height: 168px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; font-weight: 900; font-size: 28px; font-family: var(--font-en); color: #fff;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 28%),
+      radial-gradient(circle at 50% 50%, #22d3ee 0%, #1d4ed8 42%, #070d1a 78%);
+    border: 2px solid rgba(255,255,255,.55);
+    box-shadow:
+      0 0 0 10px rgba(34,211,238,.08),
+      0 0 40px rgba(34,211,238,.55),
+      0 0 80px rgba(249,115,22,.25);
+    animation: corePulse 3.2s ease-in-out infinite;
+  }
+  .agent-core span { display: block; font-size: 16px; font-weight: 700; opacity: .9; margin-top: 4px; letter-spacing: .08em; }
+  @keyframes corePulse {
+    0%,100% { box-shadow: 0 0 0 10px rgba(34,211,238,.08), 0 0 40px rgba(34,211,238,.5), 0 0 70px rgba(249,115,22,.2); }
+    50% { box-shadow: 0 0 0 16px rgba(34,211,238,.14), 0 0 56px rgba(34,211,238,.7), 0 0 96px rgba(249,115,22,.35); }
+  }
+  .agent-hud .part {
+    position: relative; z-index: 3; width: min(220px, 100%); padding: 14px 18px 16px;
+    text-align: left; border: 1px solid rgba(34,211,238,.45);
+    background: linear-gradient(160deg, rgba(14,28,48,.94), rgba(8,14,28,.9));
+    border-radius: 16px; cursor: pointer; font-family: inherit;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .agent-hud .part i {
+    display: block; font-style: normal; font-family: var(--font-en);
+    font-size: 13px; color: var(--cyan); letter-spacing: .12em; margin-bottom: 4px;
+  }
+  .agent-hud .part b { display: block; font-size: 26px; color: #fff; }
+  .agent-hud .part span { display: block; font-size: 16px; color: var(--muted); margin-top: 4px; }
+  .agent-hud .part:hover { transform: translateY(-3px); border-color: var(--cyan); }
+  .agent-hud .part.on {
+    border-color: var(--orange);
+    background: linear-gradient(160deg, rgba(249,115,22,.28), rgba(8,14,28,.92));
+    box-shadow: 0 0 28px var(--orange-glow), inset 0 1px 0 rgba(255,255,255,.1);
+  }
+  .agent-hud .part.on i { color: var(--orange); }
+  .p-goal { grid-area: goal; }
+  .p-memory { grid-area: memory; justify-self: end; }
+  .p-skill { grid-area: skill; justify-self: start; }
+  .p-brain { grid-area: brain; justify-self: end; }
+  .p-spec { grid-area: spec; justify-self: start; }
+  .part-detail {
+    max-width: 980px; margin: 0 auto; font-size: 22px !important; line-height: 1.5;
+    text-align: center; padding: 14px 24px; min-height: 56px;
+  }
+
+  .ag-work { display: grid; grid-template-columns: 1.25fr .75fr; gap: 22px; width: min(1480px,100%); align-items: stretch; }
+  .ag-pipeline { display: flex; flex-direction: column; gap: 10px; }
+  .ag-row {
+    display: grid; grid-template-columns: 72px 1fr; gap: 16px; align-items: start;
+    padding: 14px 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-card);
+  }
+  .ag-row .rl-num { font-size: 28px; line-height: 1; padding-top: 2px; }
+  .ag-row b { display: block; font-size: 24px; color: #fff; margin-bottom: 4px; }
+  .ag-row p { font-size: 18px; color: var(--ink); line-height: 1.45; margin: 0; }
+  .ag-row em { display: block; font-style: normal; font-size: 16px; color: var(--muted); margin-top: 6px; }
+  .ag-side-panel {
+    border-radius: 18px; border: 1px solid rgba(249,115,22,.4);
+    background: rgba(249,115,22,.08); padding: 22px 24px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .ag-side-panel .bd-head { margin: 0; }
+  .ag-side-panel h3 { font-size: 24px; color: #fff; margin: 0; }
+  .ag-cap-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .ag-cap-list li {
+    display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start;
+    font-size: 18px; color: #fff; line-height: 1.4;
+  }
+  .ag-cap-list li b {
+    width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+    background: rgba(34,211,238,.16); color: var(--cyan); font-size: 16px;
+  }
+  .ag-side-note { font-size: 16px; color: var(--muted); line-height: 1.45; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,.08); }
+
+  .ps-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; width: 100%; }
+  .ps-card { padding: 22px 18px; border-radius: 16px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); text-align: center; }
+  .ps-card b { display: block; font-size: 28px; color: var(--cyan); margin-bottom: 10px; }
+  .ps-card p { font-size: 21px; color: #fff; line-height: 1.45; }
+
+  /* Agent builds web apps */
+  .webapp-teach {
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 22px;
+    width: min(1480px, 100%); align-items: stretch;
+  }
+  .webapp-steps { display: flex; flex-direction: column; gap: 12px; }
+  .webapp-step {
+    display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: start;
+    padding: 16px 18px; border-radius: 14px; border: 1px solid rgba(34,211,238,.3);
+    background: rgba(34,211,238,.05);
+  }
+  .webapp-step .rl-num { font-size: 26px; }
+  .webapp-step b { display: block; font-size: 22px; color: #fff; margin-bottom: 4px; }
+  .webapp-step p { font-size: 17px; color: var(--ink); line-height: 1.4; margin: 0; }
+  .webapp-step code {
+    display: inline-block; margin-top: 8px; padding: 6px 10px; border-radius: 8px;
+    background: rgba(0,0,0,.35); color: var(--cyan); font-size: 14px; font-family: ui-monospace, Menlo, monospace;
+  }
+  .browser-frame {
+    border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,.12);
+    background: #0b1220; display: flex; flex-direction: column; min-height: 420px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .browser-chrome {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: rgba(255,255,255,.04); border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .browser-dots { display: flex; gap: 6px; }
+  .browser-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+  .browser-dots i:nth-child(1) { background: #ff5f57; }
+  .browser-dots i:nth-child(2) { background: #febc2e; }
+  .browser-dots i:nth-child(3) { background: #28c840; }
+  .browser-url {
+    flex: 1; font-size: 13px; color: var(--muted); font-family: var(--font-en);
+    background: rgba(0,0,0,.35); border-radius: 8px; padding: 6px 12px;
+  }
+  .browser-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .browser-body h3 { font-size: 20px; color: #fff; margin: 0; }
+  .browser-body .sub { font-size: 14px; color: var(--muted); margin: 0; }
+  .lf-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .lf-mini .card {
+    padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.08);
+    background: rgba(255,255,255,.03);
+  }
+  .lf-mini label { font-size: 12px; margin: 4px 0; }
+  .lf-mini input[type=text] { font-size: 14px; padding: 8px 10px; }
+  .lf-mini .go { font-size: 14px; padding: 8px 12px; margin-top: 8px; }
+  #lfPreview { font-size: 15px; color: var(--cyan); min-height: 40px; margin: 0; line-height: 1.4; }
+  .webapp-note {
+    font-size: 16px; color: var(--muted); text-align: center; margin-top: 12px;
+    width: min(1480px,100%);
+  }
+
+  /* Design Thinking */
+  .dt-wrap {
+    width: min(1480px, 100%); display: flex; flex-direction: column; align-items: center; gap: 18px;
+  }
+  .dt-loop {
+    position: relative; width: 100%; max-width: 1320px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; align-items: stretch;
+  }
+  .dt-stage {
+    position: relative; text-align: center; padding: 22px 14px 20px;
+    border-radius: 20px; border: 1px solid rgba(34,211,238,.35);
+    background: linear-gradient(180deg, rgba(34,211,238,.1), rgba(8,14,28,.6));
+    min-height: 220px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .dt-stage:not(:last-child)::after {
+    content: ""; position: absolute; right: -14px; top: 48%;
+    width: 16px; height: 16px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan);
+    transform: rotate(45deg); z-index: 2;
+  }
+  .dt-stage .dt-ico {
+    width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center;
+    font-size: 22px; font-weight: 900; font-family: var(--font-en); color: #04121a;
+    background: linear-gradient(135deg, var(--cyan), #60a5fa);
+    box-shadow: 0 0 20px rgba(34,211,238,.4);
+  }
+  .dt-stage.define .dt-ico { background: linear-gradient(135deg, var(--orange), #fb923c); box-shadow: 0 0 20px rgba(249,115,22,.4); }
+  .dt-stage.define { border-color: rgba(249,115,22,.5); background: linear-gradient(180deg, rgba(249,115,22,.14), rgba(8,14,28,.6)); }
+  .dt-stage .en-label { font-size: 12px; letter-spacing: .14em; color: var(--muted); font-family: var(--font-en); text-transform: uppercase; }
+  .dt-stage b { font-size: 26px; color: #fff; }
+  .dt-stage p { font-size: 16px; color: var(--ink); line-height: 1.4; margin: 0; }
+  .dt-ask {
+    font-size: 15px; color: var(--cyan); margin-top: auto; padding-top: 8px;
+    border-top: 1px dashed rgba(255,255,255,.12); width: 100%;
+  }
+  .dt-foot {
+    display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+    width: 100%; max-width: 1100px;
+  }
+  .dt-loop-badge {
+    font-size: 18px; color: #fff; padding: 10px 22px; border-radius: 99px;
+    border: 1px solid rgba(249,115,22,.5); background: rgba(249,115,22,.12);
+  }
+  .dt-hw { font-size: 18px; color: var(--muted); }
+  .dt-hw a { color: var(--cyan); }
+
+  @media (max-width: 1100px) {
+    .agent-hud { grid-template-columns: 1fr 1fr; grid-template-areas: "goal goal" "memory skill" "core core" "brain spec"; height: auto; }
+    .webapp-teach, .ag-work, .dt-loop { grid-template-columns: 1fr; }
+    .dt-stage:not(:last-child)::after { display: none; }
+  }
+
+  /* Prompt chapter */
+  .ic-case .ic-result { font-size: 20px; color: var(--muted); margin-top: 12px; }
+  .hb-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 1500px; }
+  .hb-card { position: relative; padding: 26px 20px; border-radius: 18px; border: 1px solid rgba(34,211,238,.3); background: rgba(34,211,238,.05); text-align: center; }
+  .hb-card .rl-num { font-size: 38px; }
+  .hb-card b { display: block; font-size: 26px; color: #fff; margin: 8px 0 12px; }
+  .hb-card p { font-size: 19px; color: var(--ink); line-height: 1.5; }
+  .hb-card.key { border-color: rgba(249,115,22,.6); background: rgba(249,115,22,.1); box-shadow: 0 0 22px rgba(249,115,22,.18); }
+  .hb-card.key .rl-num { color: var(--orange); text-shadow: 0 0 20px var(--orange-glow); }
+  .pb-wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; max-width: 1440px; align-items: stretch; }
+  .pb-card { border-radius: 20px; padding: 24px 28px; border: 1px solid var(--line); background: var(--bg-card); display: flex; flex-direction: column; gap: 14px; }
+  .pb-card.old { border-color: rgba(249,115,22,.4); }
+  .pb-card.old .bd-head { color: var(--orange); margin: 0; }
+  .pb-card.new { border-color: rgba(34,211,238,.4); }
+  .pb-card.new .bd-head { color: var(--cyan); margin: 0; }
+  .pb-text { font-size: 24px; color: #fff; line-height: 1.5; }
+  .pb-note { font-size: 19px; color: var(--muted); line-height: 1.5; }
+  .pb-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pb-btns button { font-size: 18px; font-weight: 700; padding: 8px 16px; border-radius: 99px; border: 1px solid rgba(34,211,238,.4); background: rgba(34,211,238,.06); color: var(--cyan); cursor: pointer; }
+  .pb-btns button.on { background: var(--cyan); color: #04121a; }
+  .pb-box { min-height: 260px; border-radius: 14px; padding: 16px 20px; background: rgba(0,0,0,.3); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .pb-box p { font-size: 20px; color: #fff; line-height: 1.5; animation: pbIn .35s ease; }
+  .pb-box p b { font-size: 14px; padding: 2px 10px; border-radius: 99px; background: rgba(34,211,238,.2); color: var(--cyan); margin-right: 10px; vertical-align: 2px; }
+  .pb-empty { font-size: 18px; color: var(--muted); margin: auto; }
+  .pb-text { font-size: 28px; }
+  .pb-note { font-size: 21px; }
+  .pb-btns button { font-size: 20px; padding: 10px 18px; }
+  .pb-box { min-height: 300px; }
+  .pb-box p { font-size: 22px; }
+  .hb-card b { font-size: 28px; }
+  .hb-card p { font-size: 21px; }
+
+  /* Mission + lost & found: classroom-size type */
+  .slide .task { max-width: 1400px; gap: 22px; }
+  .task .card { padding: 24px 28px; }
+  .task h3 { font-size: 26px; margin-bottom: 8px; }
+  .task label { font-size: 18px; margin: 12px 0 6px; }
+  .task input[type=text] { font-size: 20px; padding: 12px 14px; }
+  .task .clean li { font-size: 22px; padding: 10px 0; }
+  .task .small { font-size: 18px; }
+  @media (max-height: 820px) {
+    .agent-hud .part b { font-size: 22px; }
+    .agent-core { width: 140px; height: 140px; font-size: 22px; }
+    .ag-row b { font-size: 20px; }
+    .ag-row p { font-size: 16px; }
+    .dt-stage b { font-size: 22px; }
+    .dt-stage p { font-size: 14px; }
+    .webapp-step b { font-size: 18px; }
+  }
+  @media (max-width: 1100px) {
+    .ag-work, .webapp-teach { grid-template-columns: 1fr; }
+  }
+  @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* Word map: larger type for the classroom */
+  .vector-console .insight-panel { justify-content: safe center; gap: 16px; overflow: hidden; }
+  .vector-console .insight-box { padding: 16px 20px; }
+  .vector-console .insight-box h3 { font-size: 22px; margin-bottom: 10px; }
+  .vector-console .preset-btns { gap: 10px; }
+  .vector-console .preset-btn { font-size: 20px; padding: 12px 14px; }
+  .vector-console .preset-btn span { display: block; font-size: 15px; font-family: inherit; margin-top: 4px; }
+  .vector-console .readout-tag { font-size: 14px; }
+  .vector-console .readout-score { font-size: 24px; }
+  .vector-console .readout-score span { font-size: 15px; }
+  .vector-console .sim-bar { width: 130px; height: 10px; }
+  .vector-console .sim-bar-val { font-size: 20px; }
+  .vector-console .readout-desc { font-size: 18px; line-height: 1.55; }
+  .vector-console .cat-pills { gap: 6px; max-height: 150px; }
+  .vector-console .cat-pill { font-size: 17px; padding: 4px 10px; }
+
+  /* Word bank drawer */
+  .bank-drawer summary { cursor: pointer; font-size: 20px; font-weight: 700; color: #fff; list-style: none; }
+  .bank-drawer summary::-webkit-details-marker { display: none; }
+  .bank-drawer summary::before { content: "+ "; color: var(--cyan); }
+  .bank-drawer[open] summary::before { content: "− "; }
+  .bank-drawer summary span { font-size: 15px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .bank-top { display: flex; justify-content: flex-end; margin: 6px 0; }
+  .bank-clear { border: none; background: transparent; color: var(--orange); font-size: 16px; cursor: pointer; font-weight: 700; }
+  @media (max-height: 820px) {
+    .ic-wrap { gap: 18px; }
+    .ic-num { font-size: 64px; }
+    .ic-title { font-size: 54px; }
+    .ic-title .en { font-size: 18px; margin-top: 4px; }
+    .ic-lead { font-size: 26px; }
+    .ic-remember { font-size: 22px; padding: 10px 26px; }
+    .tk-chip { font-size: 32px; padding: 10px 20px; }
+    .emb-row { padding: 8px 22px; }
+    .emb-word { font-size: 26px; }
+    .emb-nums { font-size: 21px; }
+    .site-hint { font-size: 18px; padding: 8px 20px; }
+    .prob-list { gap: 6px; }
+    .prob-word { font-size: 21px; }
+    .prob-bar { height: 16px; }
+    .temp-box { gap: 10px; }
+    .att-note { font-size: 21px; }
+    .guess-sent { font-size: 44px; }
+    .vector-console .insight-box { padding: 10px 14px; }
+    .vector-console .insight-box h3 { font-size: 18px; margin-bottom: 6px; }
+    .vector-console .preset-btn { font-size: 16px; padding: 8px 10px; }
+    .vector-console .preset-btn span { display: none; }
+    .vector-console .readout-score { font-size: 18px; }
+    .vector-console .readout-desc { font-size: 14px; }
+    .vector-console .cat-pills { max-height: 64px; }
+    .vector-console .cat-pill { font-size: 14px; padding: 3px 8px; }
+  }
+
+  /* Form controls shared by interactive slides */
+  label { display: block; font-size: 12.5px; color: var(--muted); margin: 6px 0 3px; font-family: var(--font-en); }
+  input[type=text] { width: 100%; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,.3); color: #fff; font-size: 13.5px; }
+  input[type=text]:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 10px var(--cyan-glow); }
+  .go { margin-top: 8px; padding: 7px 14px; border-radius: 8px; border: 0; background: var(--orange); color: #fff; font-weight: 700; font-family: var(--font-en); cursor: pointer; }
+  .go:hover { box-shadow: 0 0 12px var(--orange-glow); }
+  .chip { cursor: pointer; }
+  .mini { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+
+  /* Lightbox */
+  #lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 90; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 24px; gap: 12px; }
+  #lightbox.show { display: flex; }
+  #lightbox img { max-width: 94vw; max-height: 80vh; object-fit: contain; border-radius: 12px; border: 1px solid var(--line); }
+  #lightbox p { max-width: 900px; text-align: center; font-size: 14px; color: var(--ink); }
+
+
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cover-chapters .cover-card p { font-size: 15px; }
+  .cover-chapters .cover-card .small { font-size: 12px; }
+  @media (max-width: 1100px) {
+    .cover-chapters { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Context chapter */
+  .ctx-hooks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; width: 100%; max-width: 1400px; }
+  .ctx-hook { padding: 24px 22px; border-radius: 18px; border: 1px solid rgba(34,211,238,.35); background: rgba(34,211,238,.06); text-align: left; }
+  .ctx-hook .rl-num { font-size: 34px; }
+  .ctx-hook b { display: block; font-size: 26px; color: #fff; margin: 8px 0 10px; }
+  .ctx-hook p { font-size: 20px; color: var(--ink); line-height: 1.5; margin: 0; }
+  @media (max-height: 820px) {
+    .ctx-hook b { font-size: 22px; }
+    .ctx-hook p { font-size: 17px; }
+  }
+
+  /* Cover slide enhancements */
+  .cover-grad {
+    background: linear-gradient(92deg, var(--cyan) 0%, #60a5fa 55%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.32));
+  }
+  .cover-card { position: relative; overflow: hidden; transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
+  .cover-card:hover { transform: translateY(-3px); border-color: var(--line-strong); background: var(--bg-card-hover); }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="deck">
+
+  <section class="slide cover-slide active" data-hint="方向键或两侧圆按钮翻页">
+    <div class="bg-glow" style="width:480px;height:480px;background:var(--blue);top:-120px;right:-80px"></div>
+    <div class="bg-glow" style="width:340px;height:340px;background:var(--cyan);bottom:-150px;left:-110px;opacity:.14"></div>
+    <div class="bg-glow" style="width:260px;height:260px;background:var(--orange);top:34%;right:14%;opacity:.12"></div>
+    <div class="kicker">BILDEN EDU · 青少年 AI 创想营 <span class="en">· Youth AI Innovation Camp</span></div>
+    <h1>AI 创想营<br><span class="cover-grad">把好奇变成能力</span></h1>
+    <div class="grid4 cover-chapters">
+      <div class="card cover-card"><b class="org" style="font-family:var(--font-en);font-size:15px">01 · 辨智能</b><p style="margin-top:4px">从现实生活中认知智能</p><span class="small">Definition & Recognition</span></div>
+      <div class="card cover-card"><b class="accent" style="font-family:var(--font-en);font-size:15px">02 · 探黑盒</b><p style="margin-top:4px">你发给 AI 的话都去了哪里</p><span class="small">Physical Computing Journey</span></div>
+      <div class="card cover-card"><b style="color:var(--cyan);font-family:var(--font-en);font-size:15px">03 · 会提问</b><p style="margin-top:4px">把任务说清楚，把情况讲明白</p><span class="small">Prompt & Context</span></div>
+      <div class="card cover-card"><b style="color:var(--blue);font-family:var(--font-en);font-size:15px">04 · 造 Agent</b><p style="margin-top:4px">一起构建我们自己的智能体</p><span class="small">Living Agent Architecture</span></div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="点你觉得算智能的东西，可以多选。先别公布答案">
+    <div class="kicker">01 辨智能 <span class="en">· Interactive Poll</span></div>
+    <h2>这张图里，哪些东西算智能？ <span class="sub-en">Which of These Objects Possess Real Intelligence?</span></h2>
+    <div class="stage" id="voteStage">
+      <div class="hud-bracket hud-tl"></div>
+      <div class="hud-bracket hud-tr"></div>
+      <div class="hud-bracket hud-bl"></div>
+      <div class="hud-bracket hud-br"></div>
+      <div class="hud-banner">CAMPUS RECON SENSORS · 7 TARGETS DETECTED</div>
+      <div class="hud-compass">SYS STATUS: NOMINAL // 60 FPS SCAN</div>
+      <img src="assets/camp/vote-2050.jpg" alt="2050 年的未来校园夜景：金毛犬、自动配送车、手持 AI 终端的同学、门禁闸机、玻璃大门、自动喷淋器与户外温度计">
+      <button class="hs" style="left:26%;top:70%" data-n="1" type="button">01</button>
+      <button class="hs" style="left:78%;top:72%" data-n="2" type="button">02</button>
+      <button class="hs" style="left:63.5%;top:50%" data-n="3" type="button">03</button>
+      <button class="hs" style="left:46.7%;top:61%" data-n="4" type="button">04</button>
+      <button class="hs" style="left:53.5%;top:55%" data-n="5" type="button">05</button>
+      <button class="hs" style="left:8%;top:76%" data-n="6" type="button">06</button>
+      <button class="hs" style="left:91.5%;top:45%" data-n="7" type="button">07</button>
+    </div>
+    <div class="legend" id="voteLegend"></div>
+    <p class="small" style="margin-top:8px">学生：<b>飞书群发起投票</b>，一人一票、可多选。老师：点图上的圆点，现场揭示答案。</p>
+  </section>
+
+<section class="slide" data-hint="先问学生：喷淋器和金毛犬，谁更聪明？为什么">
+    <div class="kicker">01 什么是智能 <span class="en">· What Is Intelligence</span></div>
+    <h2>什么才算智能？ <span class="sub-en">A Simple Test</span></h2>
+    <div class="ic-wrap">
+      <div class="ic-quote">
+        <p class="ic-quote-main">环境变了，还能想办法<span class="cover-grad">把事办成</span>。</p>
+        <span class="ic-quote-src">DeepMind 联合创始人 Shane Legg 对智能的定义（简化版）</span>
+      </div>
+      <div class="ic-pair">
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div>
+            <span class="ic-label">只会按规则 · 喷淋器</span>
+            <p>到点就喷水。<br>下雨了？照样喷。</p>
+          </div>
+        </div>
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div>
+            <span class="ic-label">会随机应变 · 金毛犬</span>
+            <p>这扇门关了，<br>它会绕到另一扇门找到你。</p>
+          </div>
+        </div>
+      </div>
+      <div class="ic-next">
+        <span class="ic-next-title">智能要有 5 项本领</span>
+        <span class="ic-chip">01 感知</span><span class="ic-chip">02 理解</span><span class="ic-chip">03 判断</span><span class="ic-chip">04 行动</span><span class="ic-chip key">05 学习</span>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="本领 1/5：让学生再举一个身边会「察觉」的例子">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 1 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">01</span><div class="ic-title">感知<span class="en">Perceive · 看得见，听得到</span></div></div>
+      <p class="ic-lead">先要能察觉：周围正在发生什么。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>还没看见你，<br>听脚步声就知道你回来了。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div><span class="ic-label">做不到 · 喷淋器</span><p>它不知道正在下雨，<br>还是按时喷水。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>先能察觉，才谈得上聪明</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="本领 2/5：追问一句，它知道「为什么」吗">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 2 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">02</span><div class="ic-title">理解<span class="en">World Model · 心里有张地图</span></div></div>
+      <p class="ic-lead">知道东西在哪里，也明白一件事会引起什么后果。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>飞盘飞过了围墙，<br>它知道要绕到门口去捡。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:91.5;--y:45"></div>
+          <div><span class="ic-label">做不到 · 温度计</span><p>显示 35 度，<br>但它不知道「热」是什么。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>明白为什么，才不是死记硬背</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="本领 3/5：有好几条路时，它会不会挑">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 3 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">03</span><div class="ic-title">判断<span class="en">Plan · 想好怎么办</span></div></div>
+      <p class="ic-lead">有好几条路可以走时，能挑出最合适的那一条。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:78;--y:74"></div>
+          <div><span class="ic-label">做得到 · 配送车</span><p>前面有人挡路，<br>它会想：停下等，还是绕过去？</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:53.5;--y:55"></div>
+          <div><span class="ic-label">做不到 · 玻璃门</span><p>有人快撞上来，<br>它也不会做任何选择。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>会挑路，不是只会走一条路</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="本领 4/5：只会说、不会做，算不算智能">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 4 of 5</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">04</span><div class="ic-title">行动<span class="en">Act · 动手去做</span></div></div>
+      <p class="ic-lead">想好之后，真的动手，让事情发生变化。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:78;--y:74"></div>
+          <div><span class="ic-label">做得到 · 配送车</span><p>把快递从校门口，<br>一路送到宿舍楼下。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:63.5;--y:50"></div>
+          <div><span class="ic-label">做不到 · AI 助手</span><p>能告诉你该怎么做，<br>但它没有手脚，没法替你去做。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>只会说、不会做，事情办不成</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="本领 5/5：这是最关键的一项，停下来多讲一会儿">
+    <div class="kicker">智能的 5 项本领 <span class="en">· Ability 5 of 5 · 最关键的一项</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="on key"></span></div>
+      <div class="ic-hero key"><span class="ic-num">05</span><div class="ic-title">学习<span class="en">Learn · 吃一堑，长一智</span></div></div>
+      <p class="ic-lead">做错一次，下次就改。这是区分真假智能的分水岭。</p>
+      <div class="ic-pair">
+        <div class="ic-case yes">
+          <div class="ic-thumb" style="--x:26;--y:72"></div>
+          <div><span class="ic-label">做得到 · 金毛犬</span><p>被刺猬扎过一次，<br>下次再也不去碰。</p></div>
+        </div>
+        <div class="ic-case no">
+          <div class="ic-thumb" style="--x:8;--y:76"></div>
+          <div><span class="ic-label">做不到 · 喷淋器</span><p>把花浇坏了也不会改，<br>明天同一时间继续浇。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember key"><b>记住</b>会从错误里学习，才是真正的智能</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="对照五格亮灯，揭晓刚才的投票">
+    <div class="kicker">01 揭晓答案 <span class="en">· The Verdict</span></div>
+    <h2>用 5 项本领，给 7 个东西打分 <span class="sub-en">Perceive · Understand · Plan · Act · Learn</span></h2>
+    <div class="rv-grid" id="verdicts"></div>
+    <p class="ic-foot">五格全亮的只有金毛犬。今天的 AI 已经很强，但离真正的智能还有一段路。</p>
+  </section>
+
+<section class="slide" data-hint="先让大家举手投票，再点按钮揭晓">
+    <div class="kicker">01 现场实验 <span class="en">· Live Hallucination Lab</span></div>
+    <h2>它说的话，你信不信？ <span class="sub-en">Fact-Check Terminal</span></h2>
+    <div class="terminal-card lab">
+      <div class="terminal-topbar">
+        <div class="term-dots"><span></span><span></span><span></span></div>
+        <span class="term-title">FACT-CHECK TERMINAL · 现场测谎实验</span>
+        <span class="term-status" id="termStatus">STATUS: 等待指令</span>
+      </div>
+      <div class="term-body">
+        <div class="term-claim">
+          <span class="claim-label">AI 助手给出了一条回答：</span>
+          <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
+        </div>
+        <div class="term-actions" id="expBtns">
+          <button type="button" data-v="信" class="term-btn">直接相信</button>
+          <button type="button" data-v="不信" class="term-btn">毫不相信</button>
+          <button type="button" data-v="要查" class="term-btn best-btn">亲自查验</button>
+        </div>
+        <div class="term-screen" id="expConsole">
+          <div class="screen-header"><span class="screen-prompt">&gt; DIAGNOSTIC REPORT:</span></div>
+          <p id="expReveal" class="screen-text">先让大家举手投票，再点上面的按钮揭晓。</p>
+        </div>
+        <div class="term-footnote"><b>为什么会这样？</b> 它只是在猜下一个最像的词。不知道答案时，也会说得很流畅，这叫<b>幻觉</b>。</div>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="三条建议，请全班齐读一遍">
+    <div class="kicker">01 使用建议 <span class="en">· 3 Tips</span></div>
+    <h2>看完了幻觉，记住这三条 <span class="sub-en">Three Tips After the Lab</span></h2>
+    <div class="rl-grid">
+      <div class="rl-card">
+        <span class="rl-num">01</span>
+        <b>掌握思考的主动权</b>
+        <p>珍惜脑海里蹦出的小点子、小创意。先自己想，再请 AI 帮你评估、完善和丰富。自己拿主意，脑子会越用越灵。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">02</span>
+        <b>心事找真人</b>
+        <p>开心、难过、和朋友闹别扭的时候，去找爸妈、朋友和老师聊一聊。真人的陪伴和拥抱，最温暖。</p>
+      </div>
+      <div class="rl-card">
+        <span class="rl-num">03</span>
+        <b>事实亲自验</b>
+        <p>做一个会查证的小侦探：AI 说的事实，去书上、网上或问老师核对一下。密码、学号这些小秘密，自己好好保管。</p>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="点「下一步」，跟着光点把一句话的旅程走完；点图可以放大">
+    <div class="kicker">02 物理旅程 <span class="en">· Physical Journey of a Prompt</span></div>
+    <h2>你给豆包发一句话，中间发生了什么 <span class="sub-en">From Tap to Answer</span></h2>
+    <div class="journey-board">
+      <div class="journey-left">
+        <div class="steps" id="journeySteps"></div>
+        <button class="go big" type="button" id="journeyNext">下一步</button>
+      </div>
+      <div class="photo" id="journeyView"></div>
+    </div>
+    
+  </section>
+
+<section class="slide" data-hint="机房到底有多大？和身边的建筑比一比" style="padding:18px 48px;align-items:center;justify-content:center">
+    <div style="position:relative;width:min(100%,calc((100vh - 84px) * 16 / 9));aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 0 40px rgba(0,0,0,0.6);cursor:zoom-in" id="teraShot">
+      <img src="assets/camp/terafab.png" alt="TERAFAB 100M+ Sq Ft 算力中心规模对比" style="width:100%;height:100%;object-fit:contain;display:block;background:#050912">
+    </div>
+  </section>
+
+<section class="slide" data-hint="先让学生猜空格里填什么，再点按钮看 AI 的答案">
+    <div class="kicker">02 AI 怎么想 <span class="en">· How AI Writes</span></div>
+    <h2>AI 说的每句话，都是一个词一个词猜出来的 <span class="sub-en">Next-Word Prediction</span></h2>
+    <div class="ic-wrap">
+      <div class="guess-box">
+        <p class="guess-sent">我口渴了，想喝一杯 <span class="guess-blank" id="guessBlank">？</span></p>
+        <div class="prob-list" id="probOverview"></div>
+        <button class="go big" type="button" id="guessReveal">看看 AI 怎么猜</button>
+      </div>
+      <div class="ic-remember"><b>记住</b>它不是「查到」答案，而是猜下一个最可能的词</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="第 1 步：一起数一数，这句话被切成了几块">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 1 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="on"></span><span></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">01</span><div class="ic-title">切成小块<span class="en">Token · 像把乐高拆成积木</span></div></div>
+      <p class="ic-lead">AI 读不了一整句话，要先把句子剪成一小块一小块。<br>每一块，叫一个 Token。</p>
+      <div class="tk-row">
+        <span class="tk-chip">我</span><span class="tk-chip">口渴</span><span class="tk-chip">了</span><span class="tk-chip">，</span><span class="tk-chip">想</span><span class="tk-chip">喝</span><span class="tk-chip">一杯</span>
+      </div>
+      <div class="site-hint"><b>网站上看哪里</b>最左边一列，每一行就是一块 Token</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="第 2 步：比一比猫、狗、卡车的数字，哪两个更像">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 2 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="on"></span><span></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">02</span><div class="ic-title">变成数字<span class="en">Embedding · 每个词都有一串坐标</span></div></div>
+      <p class="ic-lead">电脑不认识字，只认识数字。<br>每一块都会换成一长串数字，就像它在地图上的坐标。</p>
+      <div class="emb-rows">
+        <div class="emb-row near"><span class="emb-word">猫</span><span class="emb-nums">0.21 · -0.53 · 0.88 · 0.07 · …</span></div>
+        <div class="emb-row near"><span class="emb-word">狗</span><span class="emb-nums">0.19 · -0.49 · 0.85 · 0.11 · …</span></div>
+        <div class="emb-row far"><span class="emb-word">卡车</span><span class="emb-nums">-0.72 · 0.34 · -0.10 · 0.66 · …</span></div>
+      </div>
+      <div class="site-hint"><b>网站上看哪里</b>Embedding 那一列的彩色小格子</div>
+      <div class="ic-remember"><b>记住</b>意思越像的词，数字越像。下一页亲手试</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="先点三组实验，再让学生从抽屉里挑词放上去">
+    <div class="kicker">02 亲手试 <span class="en">· Word Map</span></div>
+    <h2>在 AI 的地图上，意思像的词住得近 <span class="sub-en">Similar Words Live Close</span></h2>
+    <div class="vector-console">
+      <!-- Left: 2D Radar Vector Space -->
+      <div class="radar-panel" id="mapwrap">
+        <svg class="radar-svg" id="radarSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <!-- Center Axes -->
+          <line x1="50" y1="0" x2="50" y2="100" class="radar-axis" />
+          <line x1="0" y1="50" x2="100" y2="50" class="radar-axis" />
+          <!-- Concentric Circles (Sim Distance 0.75, 0.5, 0.25) -->
+          <circle cx="50" cy="50" r="16" class="radar-circle" />
+          <circle cx="50" cy="50" r="32" class="radar-circle" />
+          <circle cx="50" cy="50" r="46" class="radar-circle" />
+          <!-- Quadrant Watermarks -->
+          <text x="8" y="10" class="radar-quadrant">[动物聚类区]</text>
+          <text x="68" y="10" class="radar-quadrant">[交通工具区]</text>
+          <text x="8" y="93" class="radar-quadrant">[情绪感受区]</text>
+          <text x="68" y="93" class="radar-quadrant">[校园日常区]</text>
+          <!-- Coordinates & Semantics -->
+          <text x="51" y="4" class="radar-label">+Y 抽象概念</text>
+          <text x="78" y="48.5" class="radar-label">+X 工具设备</text>
+          <text x="2" y="48.5" class="radar-label">-X 情绪体验</text>
+          <text x="51" y="98" class="radar-label">-Y 社会环境</text>
+          <!-- Dynamic Measurement Beam -->
+          <line id="beamLine" x1="0" y1="0" x2="0" y2="0" class="beam-line" style="display:none" />
+        </svg>
+        <div class="vector-points" id="pointsContainer"></div>
+        <div id="beamBadge" class="beam-badge" style="display:none">相似度 0.57</div>
+      </div>
+
+      <!-- Right: Insight & Explorer Panel -->
+      <div class="insight-panel">
+        <!-- Preset Experiments -->
+        <div class="insight-box">
+          <h3>先试这三组</h3>
+          <div class="preset-btns">
+            <button class="preset-btn" type="button" id="dropTrio">猫 vs 狗 vs 卡车 <span>猫狗是邻居，卡车住得远</span></button>
+            <button class="preset-btn" type="button" id="dropFeel">开心 vs 难过 <span>意思相反，却住得很近</span></button>
+            <button class="preset-btn" type="button" id="dropSchool">老师·同学·作业 <span>常在同一句话里出现</span></button>
+            <button class="preset-btn" type="button" id="dropAll">31 个词全景 <span>看看全部的词</span></button>
+          </div>
+        </div>
+
+        <!-- Realtime Distance Readout -->
+        <div class="insight-box" style="border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.04)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <h3 style="color:#fff;margin:0">它们有多近</h3>
+            <span id="readoutTag" class="readout-tag">等待测距</span>
+          </div>
+          <div class="readout" id="readoutBox">
+            <div class="readout-header">
+              <div class="readout-score" id="readoutScore">点地图上的两个词</div>
+              <div class="sim-bar-wrap" id="meterWrap" style="display:none">
+                <div class="sim-bar"><div class="sim-bar-fill" id="meterFill" style="width:0%"></div></div>
+                <span class="sim-bar-val" id="meterVal">0.00</span>
+              </div>
+            </div>
+            <div class="readout-desc" id="readoutDesc">点地图上的两个词，看看它们离得多近。</div>
+          </div>
+        </div>
+
+        <details class="insight-box bank-drawer">
+          <summary>更多词语 <span>点开，挑词放上地图</span></summary>
+          <div class="bank-top"><button class="bank-clear" type="button" id="clearMap">清空地图</button></div>
+          <div class="cat-pills" id="wordBank"></div>
+        </details>
+      </div>
+    </div>
+    <p class="small">开心和难过常出现在一样的句子里，所以住得近。AI 算的是距离，它自己并没有感情。</p>
+  </section>
+
+<section class="slide" data-hint="第 3 步：点不同的词，看看它最在意谁">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 3 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="on"></span><span></span></div>
+      <div class="ic-hero"><span class="ic-num">03</span><div class="ic-title">互相看一眼<span class="en">Attention · 找出谁跟谁有关系</span></div></div>
+      <p class="ic-lead">每个词都会回头看看句子里的其他词，<br>找出跟自己最有关系的那几个。</p>
+      <div class="tk-row att" id="attRow"></div>
+      <p class="att-note" id="attNote">点一个词，看看它最在意谁</p>
+      <div class="site-hint"><b>网站上看哪里</b>中间 Attention 的彩色连线，线越粗越在意</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="第 4 步：拖动温度滑块，让学生说说变化">
+    <div class="kicker">AI 猜词的 4 个步骤 <span class="en">· Step 4 of 4</span></div>
+    <div class="ic-wrap">
+      <div class="ic-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="on"></span></div>
+      <div class="ic-hero"><span class="ic-num">04</span><div class="ic-title">打分，挑一个<span class="en">Probabilities · 选出下一个词</span></div></div>
+      <p class="ic-lead">给每个可能的词打分，挑一个接到句尾，再从头猜下一个。</p>
+      <div class="temp-box">
+        <div class="prob-list" id="probTemp"></div>
+        <div class="temp-ctl">
+          <span>稳一点</span>
+          <input type="range" id="tempSlider" min="0.2" max="2" step="0.1" value="1" aria-label="温度">
+          <span>大胆一点</span>
+          <b id="tempVal">温度 1.0</b>
+        </div>
+        <p class="att-note" id="tempNote">温度正常：大多数时候选「水」，偶尔选别的</p>
+      </div>
+      <div class="site-hint"><b>网站上看哪里</b>右边 Probabilities 的条形，和顶上的 Temperature 滑块</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="切到 Transformer Explainer，按三个任务带学生操作">
+    <div class="kicker">02 动手试 <span class="en">· Try It Yourself</span></div>
+    <h2>现在，换你们来操作 <span class="sub-en">Transformer Explainer</span></h2>
+    <div class="try-wrap">
+      <button class="tx-shot" type="button" id="txShot">
+        <img src="assets/camp/transformer-teaser.jpg" alt="Transformer Explainer 界面截图">
+      </button>
+      <div class="try-tasks">
+        <div class="try-card"><span class="rl-num">1</span><p>输入一句话，<br>看它猜的下一个词</p></div>
+        <div class="try-card"><span class="rl-num">2</span><p>把 Temperature 往右拖，<br>看猜的词怎么变</p></div>
+        <div class="try-card"><span class="rl-num">3</span><p>点一个词，<br>看它最在意哪几个词</p></div>
+        <a class="go big" href="https://poloclub.github.io/transformer-explainer/" target="_blank">打开网站 ↗</a>
+      </div>
+    </div>
+    <p class="small">Transformer Explainer · Georgia Tech Polo Club · MIT License</p>
+  </section>
+
+<section class="slide" data-hint="先让学生说答案，再点卡片翻面核对">
+    <div class="kicker">复习一下 <span class="en">· Quick Review</span></div>
+    <h2>辨智能和探黑盒，记住了什么？ <span class="sub-en">Tap a Card to Check</span></h2>
+    <div class="flip-grid" id="flipGrid">
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>智能</b><i>点一下看答案</i></span><span class="flip-back"><b>环境变了，还能想办法把事办成</b><i>会随机应变，才算聪明</i></span></button>
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>五项本领</b><i>点一下看答案</i></span><span class="flip-back"><b>感知、理解、判断、行动、学习</b><i>学习是最关键的一项</i></span></button>
+      <button class="flip-card c1" type="button"><span class="flip-front"><b>幻觉</b><i>点一下看答案</i></span><span class="flip-back"><b>AI 不知道答案时，也会说得很流畅</b><i>说得越具体，越要去查证</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>机房</b><i>点一下看答案</i></span><span class="flip-back"><b>你的一句话，会跑到很远的机房里被计算</b><i>不是云里有仙气，是厂房和电费</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>Token 和数字</b><i>点一下看答案</i></span><span class="flip-back"><b>句子先切成小块，每块变成一串数字</b><i>意思越像，数字越近</i></span></button>
+      <button class="flip-card c2" type="button"><span class="flip-front"><b>猜下一个词</b><i>点一下看答案</i></span><span class="flip-back"><b>一次猜一个最可能的词，再接着猜</b><i>一场超级成语接龙</i></span></button>
+    </div>
+  </section>
+
+<section class="slide" data-hint="今天先学把任务说清楚，再学搭 Agent">
+    <div class="kicker">03 会提问 · 台阶 <span class="en">· AI Capability Ladder</span></div>
+    <h2>使用 AI 的五个台阶 <span class="sub-en">5 Levels of AI Usage</span></h2>
+    <div class="ic-wrap">
+    <div class="ladder">
+      <div class="ld-row" style="--w:56%;--c:#0d2a5e"><span class="ld-lv">L5</span><b>造模型</b><span class="ld-desc">自己训练一个 AI，研究员做的事</span></div>
+      <div class="ld-row" style="--w:66%;--c:#1e40af"><span class="ld-lv">L4</span><b>会管</b><span class="ld-desc">管好一整个公司都在用的 AI 应用</span></div>
+      <div class="ld-row" style="--w:76%;--c:#2563eb"><span class="ld-lv">L3</span><b>会做</b><span class="ld-desc">做出同学真能用的网站或小程序</span></div>
+      <div class="ld-row" style="--w:88%;--c:#f97316"><span class="ld-lv">L2</span><b>会搭 · 稍后</b><span class="ld-desc">给 AI 目标、记忆和工具，搭一个 Agent</span></div>
+      <div class="ld-row today" style="--w:100%;--c:#22d3ee"><span class="ld-lv">L1</span><b>会提问 · 现在</b><span class="ld-desc">把任务说清楚，把情况讲明白</span></div>
+    </div>
+    <div class="ic-remember"><b>记住</b>先学会提问，再学搭 Agent</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="让学生先说：如果是你，会怎么交代同学帮你带午饭">
+    <div class="kicker">03 会提问 <span class="en">· What Is a Prompt</span></div>
+    <h2>Prompt，就是你对 AI 说的话 <span class="sub-en">A Prompt Is What You Tell It</span></h2>
+    <div class="ic-wrap">
+      <p class="ic-lead">AI 很能干，但它猜不到你心里想什么。<br>你说得越清楚，它办得越好。这几句话，就叫 <b class="accent">Prompt</b>。</p>
+      <div class="ic-pair">
+        <div class="ic-case no">
+          <div><span class="ic-label">Prompt 含糊</span><p>「帮我带个吃的。」</p><p class="ic-result">结果：带回来一包辣条，可你不吃辣。</p></div>
+        </div>
+        <div class="ic-case yes">
+          <div><span class="ic-label">Prompt 清楚</span><p>「帮我从食堂二楼带一份不辣的面，12:10 前送到教室。没有面就先发消息问我。」</p><p class="ic-result">结果：正好是你想要的。</p></div>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>Prompt 写清楚，事情才办得对</div>
+    </div>
+  </section>
+
+  <section class="slide" data-hint="先问：AI 怎么会知道你们学校门口有几棵树？">
+    <div class="kicker">03 上下文 <span class="en">· What Is Context</span></div>
+    <h2>AI 只知道你告诉它的 <span class="sub-en">Context Is Everything It Sees</span></h2>
+    <div class="ic-wrap">
+      <p class="ic-lead">它没眼睛，看不见你们教室；它没来过你们学校，也不认识你。<br>当前对话里出现的话，就是它的整个世界。这一堆话，叫<b class="accent">上下文</b>。</p>
+      <div class="ctx-hooks">
+        <div class="ctx-hook">
+          <span class="rl-num">01</span>
+          <b>它没来过你们学校</b>
+          <p>所以会一本正经说「门口有 17 棵香樟树」。它不是记得，是在猜。</p>
+        </div>
+        <div class="ctx-hook">
+          <span class="rl-num">02</span>
+          <b>前面的词，决定后面的词</b>
+          <p>「我口渴了，想喝一杯__」和「我在咖啡店，困了，想喝一杯__」，答案会不一样。</p>
+        </div>
+        <div class="ctx-hook">
+          <span class="rl-num">03</span>
+          <b>关掉窗口，世界就没了</b>
+          <p>普通聊天一关就忘。Agent 的「记忆」，就是把重要上下文写进小本子。</p>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>你多告诉它一点，它就聪明一点</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="重点讲 02 和 03：给足 Context，再让 AI 多想几种办法，由你来做决定">
+    <div class="kicker">03 写好 Prompt <span class="en">· 5 Good Habits</span></div>
+    <h2>写好 Prompt 的五个习惯 <span class="sub-en">Goal · Context · Options · Decide · Check</span></h2>
+    <div class="hb-grid">
+      <div class="hb-card"><span class="rl-num">01</span><b>说清目标</b><p>说你想要什么结果，不用一步步教它怎么做</p></div>
+      <div class="hb-card key"><span class="rl-num">02</span><b>给足 Context</b><p>你是谁、在哪里、已经试过什么——它只知道你告诉它的</p></div>
+      <div class="hb-card key"><span class="rl-num">03</span><b>让它多想几种办法</b><p>请它给出 2 到 3 种不同的方法，说说好处和难处</p></div>
+      <div class="hb-card key"><span class="rl-num">04</span><b>你来做决定</b><p>你选一种，说清楚为什么，再让它接着做</p></div>
+      <div class="hb-card"><span class="rl-num">05</span><b>对照目标检查</b><p>办成了吗？不确定的地方，让它说「不知道」</p></div>
+    </div>
+    <p class="ic-foot">网上很多技巧教你背模板、写「你是一个专家」。我们更看重：目标清楚、Context 够、决定在你。</p>
+  </section>
+
+<section class="slide" data-hint="按 01 到 05 依次点，每加一句问学生：它现在会怎么回答">
+    <div class="kicker">03 现场写一个 <span class="en">· Build a Prompt</span></div>
+    <h2>一起写出一个好 Prompt <span class="sub-en">Prompt + Context, Piece by Piece</span></h2>
+    <div class="pb-wrap">
+      <div class="pb-card old">
+        <span class="bd-head">常见写法</span>
+        <p class="pb-text">「你是一位资深的阅读推广专家。请帮我写一份班级读书角方案。」</p>
+        <p class="pb-note">AI 会直接交给你一份看起来很完整的方案，但它不认识你们班，你也没得选。</p>
+      </div>
+      <div class="pb-card new">
+        <span class="bd-head">我们的写法</span>
+        <div class="pb-btns" id="pbBtns">
+          <button type="button" data-i="0">01 目标</button>
+          <button type="button" data-i="1">02 Context</button>
+          <button type="button" data-i="2">03 多种办法</button>
+          <button type="button" data-i="3">04 你来决定</button>
+          <button type="button" data-i="4">05 检查</button>
+        </div>
+        <div class="pb-box" id="pbBox"><span class="pb-empty">依次点上面的按钮，Prompt 会一句一句长出来</span></div>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="先问学生：你用豆包的时候，它会记得你昨天说过什么吗">
+    <div class="kicker">04 什么是 Agent <span class="en">· From Chat to Agent</span></div>
+    <h2>会聊天的 AI，和会办事的 Agent <span class="sub-en">Chatbot vs Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="bd-pair">
+        <div class="bd-card human">
+          <span class="bd-head">普通聊天</span>
+          <p class="bd-sub">像一本会说话的百科全书</p>
+          <ul>
+            <li>你问一句，它答一句</li>
+            <li>关掉窗口，就忘了你</li>
+            <li>只会说，不会去做</li>
+          </ul>
+        </div>
+        <div class="bd-card assist">
+          <span class="bd-head">Agent</span>
+          <p class="bd-sub">像你请来的一个小助手</p>
+          <ul>
+            <li>交代一件事，它一直做到办完</li>
+            <li>记得你之前说过什么</li>
+            <li>会用工具：查资料、发消息</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ic-remember"><b>记住</b>聊天一关就忘；Agent 把上下文记在小本子上，把事办完</div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="逐个点开五个零件，都用找水壶的例子来讲">
+    <div class="kicker">04 Agent 智能体 <span class="en">· Anatomy of an Agent</span></div>
+    <h2>一个 Agent，由五个零件组成 <span class="sub-en">Five Core Parts</span></h2>
+    <div class="agent-hud" id="agentBoard">
+      <svg class="agent-orbit" viewBox="0 0 640 420" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <ellipse class="orb-ring r1" cx="320" cy="210" rx="210" ry="150"/>
+        <ellipse class="orb-ring r2" cx="320" cy="210" rx="155" ry="108"/>
+        <ellipse class="orb-ring r3" cx="320" cy="210" rx="95" ry="66"/>
+        <line class="orb-beam" x1="320" y1="70" x2="320" y2="140"/>
+        <line class="orb-beam" x1="120" y1="210" x2="210" y2="210"/>
+        <line class="orb-beam" x1="430" y1="210" x2="520" y2="210"/>
+        <line class="orb-beam" x1="185" y1="340" x2="255" y2="280"/>
+        <line class="orb-beam" x1="455" y1="340" x2="385" y2="280"/>
+      </svg>
+      <button class="part p-goal on" type="button" data-part="goal"><i>01</i><b>目标</b><span>要办成的事</span></button>
+      <button class="part p-memory" type="button" data-part="memory"><i>02</i><b>记忆</b><span>它的小本子</span></button>
+      <div class="agent-core-wrap"><div class="agent-core">AGENT<span>智能体</span></div></div>
+      <button class="part p-skill" type="button" data-part="skill"><i>03</i><b>工具</b><span>它的手和脚</span></button>
+      <button class="part p-brain" type="button" data-part="brain"><i>04</i><b>大脑</b><span>会想办法的 AI</span></button>
+      <button class="part p-spec" type="button" data-part="spec"><i>05</i><b>规矩</b><span>什么绝对不能做</span></button>
+    </div>
+    <div class="card part-detail" id="partDetail">目标：要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。</div>
+  </section>
+
+<section class="slide" data-hint="顺着五步讲：接到任务 → 翻记忆 → 想办法 → 用工具 → 交结果；右边是它常干的活">
+    <div class="kicker">04 Agent 怎么干活 <span class="en">· How an Agent Works</span></div>
+    <h2>从接到任务，到把事办完 <span class="sub-en">Task In → Result Out</span></h2>
+    <div class="ag-work">
+      <div class="ag-pipeline">
+        <div class="ag-row">
+          <span class="rl-num">01</span>
+          <div>
+            <b>接到任务</b>
+            <p>读懂你的 Prompt：要办成什么、有什么限制。</p>
+            <em>例：小明说「我丢了蓝色水壶，最后在图书馆三楼见过。」</em>
+          </div>
+        </div>
+        <div class="ag-row">
+          <span class="rl-num">02</span>
+          <div>
+            <b>翻翻记忆</b>
+            <p>在 Context / 小本子里找：以前有没有相关记录。</p>
+            <em>例：有没有人登记过「捡到蓝色水壶」？</em>
+          </div>
+        </div>
+        <div class="ag-row">
+          <span class="rl-num">03</span>
+          <div>
+            <b>想出下一步</b>
+            <p>大脑规划：现在该查表、该通知，还是先问清楚。</p>
+            <em>例：对上了 → 通知两边；对不上 → 先记下来，不编。</em>
+          </div>
+        </div>
+        <div class="ag-row">
+          <span class="rl-num">04</span>
+          <div>
+            <b>调用工具去做</b>
+            <p>真正动手：写进登记、比对、发消息、查网页……</p>
+            <em>例：把失物写入记忆；匹配成功就各发一条通知。</em>
+          </div>
+        </div>
+        <div class="ag-row">
+          <span class="rl-num">05</span>
+          <div>
+            <b>交回结果，等人检查</b>
+            <p>把结果给你看。没办完就回到第 3 步继续；不确定就说不知道。</p>
+            <em>例：「疑似对上了，请两边自己确认是不是同一件。」</em>
+          </div>
+        </div>
+      </div>
+      <div class="ag-side-panel">
+        <span class="bd-head">Agent 常干的活</span>
+        <h3>不是只会聊天</h3>
+        <ul class="ag-cap-list">
+          <li><b>查</b><span>网页、课表、登记表</span></li>
+          <li><b>记</b><span>把 Context 写进记忆</span></li>
+          <li><b>写</b><span>通知、总结、草稿</span></li>
+          <li><b>发</b><span>群消息、提醒</span></li>
+          <li><b>比</b><span>失物对号、表格核对</span></li>
+          <li><b>跟</b><span>没办完就继续盯</span></li>
+          <li><b>问</b><span>缺 Context 先问你</span></li>
+        </ul>
+        <p class="ag-side-note">关键差别：普通聊天停在「说」；Agent 会「记 + 做 + 回报」。</p>
+      </div>
+    </div>
+  </section>
+
+<section class="slide" data-hint="切到老师自己的屏幕，把早报小助手讲透">
+    <div class="kicker">04 老师示范 <span class="en">· Teacher's Agent</span></div>
+    <h2>我每天都在用的「早报小助手」 <span class="sub-en">Daily News Briefing Agent</span></h2>
+    <div class="ic-wrap">
+      <div class="ps-grid">
+        <div class="ps-card"><b>目标</b><p>每个上学日早上，给我 3 条跟我有关的消息</p></div>
+        <div class="ps-card"><b>记忆</b><p>记得我关心课程和学校通知，不看八卦</p></div>
+        <div class="ps-card"><b>工具</b><p>去真实的网页上查，每条带上出处</p></div>
+        <div class="ps-card"><b>大脑</b><p>把查到的写成一眼能看懂的话</p></div>
+        <div class="ps-card"><b>规矩</b><p>查不到出处就空着，不许编</p></div>
+      </div>
+      <div class="ic-remember"><b>你也能做</b>社团通知小助手：明天训练改到几点？</div>
+      <p class="ic-foot">老师还在用请假条草稿助手、周末出行清单助手，拆开都是这五个零件。它们都搭在豆包里，放进飞书群运行。</p>
+    </div>
+  </section>
+
+<section class="slide" data-hint="重点：Agent 能帮你写出可在浏览器打开的网页。左边讲怎么做，右边是成品预览">
+    <div class="kicker">04 Agent 做网页 <span class="en">· Build a Web App with Agents</span></div>
+    <h2>校园寻物：Agent 做出的网页应用 <span class="sub-en">From Prompt to Browser</span></h2>
+    <div class="webapp-teach">
+      <div class="webapp-steps">
+        <div class="webapp-step">
+          <span class="rl-num">01</span>
+          <div>
+            <b>说清你要什么网页</b>
+            <p>用 Prompt 讲清楚：谁用、干什么、长什么样、不能乱编。</p>
+            <code>「做一个校园寻物网页：左边登记丢失，右边登记捡到，能对上号。」</code>
+          </div>
+        </div>
+        <div class="webapp-step">
+          <span class="rl-num">02</span>
+          <div>
+            <b>让 Agent 写代码</b>
+            <p>它会生成 HTML / CSS / JS。你不用先会编程，但要看得懂页面在干什么。</p>
+          </div>
+        </div>
+        <div class="webapp-step">
+          <span class="rl-num">03</span>
+          <div>
+            <b>在浏览器里打开试</b>
+            <p>拖进 Chrome / Safari，点一点。哪里不对？截图或描述给 Agent。</p>
+          </div>
+        </div>
+        <div class="webapp-step">
+          <span class="rl-num">04</span>
+          <div>
+            <b>再说一遍，让它改</b>
+            <p>「按钮再大一点」「对不上要说不知道」。Agent 改完，你再试——这就是做产品。</p>
+          </div>
+        </div>
+      </div>
+      <div class="browser-frame">
+        <div class="browser-chrome">
+          <div class="browser-dots"><i></i><i></i><i></i></div>
+          <div class="browser-url">campus-lost-found.local / index.html</div>
+        </div>
+        <div class="browser-body">
+          <h3>校园寻物</h3>
+          <p class="sub">成品预览 · 用 Agent 写出来的小网页</p>
+          <div class="lf-mini">
+            <div class="card">
+              <b style="color:#fff;font-size:15px">我丢了</b>
+              <label>物品</label><input id="lostWhat" type="text" placeholder="蓝色水壶" value="蓝色水壶">
+              <label>地点</label><input id="lostWhere" type="text" placeholder="图书馆" value="图书馆三楼">
+              <button class="go" type="button" id="addLost">登记丢失</button>
+            </div>
+            <div class="card">
+              <b style="color:#fff;font-size:15px">我捡到了</b>
+              <label>物品</label><input id="foundWhat" type="text" placeholder="蓝色水壶" value="蓝色水壶">
+              <label>地点</label><input id="foundWhere" type="text" placeholder="门口" value="图书馆门口">
+              <button class="go" type="button" id="addFound">登记捡到</button>
+            </div>
+          </div>
+          <p id="lfPreview">点两边按钮，试一下这个网页能不能对上号。</p>
+        </div>
+      </div>
+    </div>
+    <p class="webapp-note">下一节你们也会这样：找到真问题 → 跟 Agent 一起做出能在浏览器里用的东西。</p>
+  </section>
+
+<section class="slide" data-hint="顺着五个圆讲 Design Thinking：观察→定义→构想→做出→验证，强调定义问题最关键">
+    <div class="kicker">衔接下一节 <span class="en">· Design Thinking</span></div>
+    <h2>找到真问题，再动手解决 <span class="sub-en">A Kid-Friendly Design Loop</span></h2>
+    <div class="dt-wrap">
+      <div class="dt-loop">
+        <div class="dt-stage">
+          <div class="dt-ico">1</div>
+          <span class="en-label">Empathize</span>
+          <b>观察</b>
+          <p>身边谁在反复抱怨？什么时候最烦？</p>
+          <div class="dt-ask">先看，先听</div>
+        </div>
+        <div class="dt-stage define">
+          <div class="dt-ico">2</div>
+          <span class="en-label">Define</span>
+          <b>定义</b>
+          <p>写成一句：「让谁，在什么场景，不用再怎样。」</p>
+          <div class="dt-ask">写不清 = 还不是真问题</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">3</div>
+          <span class="en-label">Ideate</span>
+          <b>构想</b>
+          <p>让 AI 给 2–3 种办法，你来挑一种。</p>
+          <div class="dt-ask">多想几种，再决定</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">4</div>
+          <span class="en-label">Prototype</span>
+          <b>做出</b>
+          <p>跟 Agent 一起做最小可用版：网页、表格、小助手。</p>
+          <div class="dt-ask">先跑通一件真事</div>
+        </div>
+        <div class="dt-stage">
+          <div class="dt-ico">5</div>
+          <span class="en-label">Test</span>
+          <b>验证</b>
+          <p>真的有人用了吗？哪里卡？改完再试。</p>
+          <div class="dt-ask">不确定就说不知道</div>
+        </div>
+      </div>
+      <div class="dt-foot">
+        <span class="dt-loop-badge">做完第 5 步 → 回到第 1 步，继续改</span>
+        <span class="dt-hw">作业：带一个真问题来（谁 · 场景 · 现状 · 想要的结果）· <a href="https://solverealproblem.com" target="_blank" rel="noopener">solverealproblem.com</a></span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button class="navbtn" id="prev" type="button" aria-label="上一页">‹</button>
+<button class="navbtn" id="next" type="button" aria-label="下一页">›</button>
+<div id="pager">1 / 33</div>
+<div id="hint"></div>
+<div id="lightbox"><img alt=""><p></p></div>
+
+<script id="word-data" type="application/json">{"points":[{"name":"猫","x":21.16,"y":19.73},{"name":"狗","x":20.6,"y":33.58},{"name":"小狗","x":25.59,"y":24.97},{"name":"老虎","x":31.46,"y":12.01},{"name":"鸟","x":28.08,"y":18.33},{"name":"鱼","x":24.81,"y":12.04},{"name":"汽车","x":88.0,"y":24.13},{"name":"卡车","x":66.96,"y":17.11},{"name":"公交车","x":61.75,"y":32.89},{"name":"自行车","x":69.39,"y":28.32},{"name":"火车","x":55.7,"y":28.93},{"name":"书包","x":51.38,"y":52.19},{"name":"铅笔","x":46.89,"y":46.61},{"name":"教室","x":58.47,"y":68.99},{"name":"老师","x":39.42,"y":88.2},{"name":"同学","x":37.67,"y":81.25},{"name":"作业","x":51.42,"y":68.66},{"name":"手机","x":58.68,"y":52.87},{"name":"电脑","x":64.04,"y":57.6},{"name":"笔记本","x":71.15,"y":56.57},{"name":"开心","x":8.71,"y":49.17},{"name":"难过","x":11.94,"y":61.9},{"name":"生气","x":10.29,"y":55.4},{"name":"害怕","x":15.19,"y":50.55},{"name":"妈妈","x":16.87,"y":57.44},{"name":"爸爸","x":21.95,"y":52.87},{"name":"米饭","x":30.18,"y":30.32},{"name":"面条","x":32.69,"y":23.86},{"name":"学校","x":54.49,"y":74.79},{"name":"朋友","x":27.82,"y":63.6},{"name":"投影仪","x":66.75,"y":51.27}],"sim":{"猫":{"猫":1.0,"狗":0.57,"小狗":0.644,"老虎":0.437,"鸟":0.391,"鱼":0.39,"汽车":-0.13,"卡车":0.048,"公交车":0.026,"自行车":0.012,"火车":0.039,"书包":0.185,"铅笔":0.118,"教室":0.073,"老师":-0.058,"同学":0.055,"作业":0.011,"手机":0.059,"电脑":0.091,"笔记本":0.036,"开心":0.183,"难过":0.058,"生气":0.13,"害怕":0.087,"妈妈":0.26,"爸爸":0.293,"米饭":0.111,"面条":0.149,"学校":-0.112,"朋友":0.064,"投影仪":0.069},"狗":{"猫":0.57,"狗":1.0,"小狗":0.608,"老虎":0.331,"鸟":0.307,"鱼":0.234,"汽车":-0.188,"卡车":0.047,"公交车":0.086,"自行车":0.08,"火车":0.087,"书包":0.177,"铅笔":0.065,"教室":0.105,"老师":0.058,"同学":0.153,"作业":0.103,"手机":0.053,"电脑":0.102,"笔记本":-0.012,"开心":0.214,"难过":0.215,"生气":0.237,"害怕":0.199,"妈妈":0.246,"爸爸":0.324,"米饭":0.022,"面条":0.091,"学校":0.022,"朋友":0.116,"投影仪":0.004},"小狗":{"猫":0.644,"狗":0.608,"小狗":1.0,"老虎":0.468,"鸟":0.243,"鱼":0.273,"汽车":-0.019,"卡车":0.191,"公交车":0.243,"自行车":0.216,"火车":0.188,"书包":0.255,"铅笔":0.129,"教室":0.149,"老师":-0.029,"同学":0.164,"作业":0.039,"手机":0.075,"电脑":0.103,"笔记本":0.018,"开心":0.208,"难过":0.227,"生气":0.226,"害怕":0.233,"妈妈":0.406,"爸爸":0.422,"米饭":0.124,"面条":0.18,"学校":0.004,"朋友":0.15,"投影仪":0.043},"老虎":{"猫":0.437,"狗":0.331,"小狗":0.468,"老虎":1.0,"鸟":0.285,"鱼":0.237,"汽车":0.003,"卡车":0.135,"公交车":0.017,"自行车":0.036,"火车":0.045,"书包":0.029,"铅笔":0.109,"教室":-0.045,"老师":-0.111,"同学":-0.063,"作业":-0.11,"手机":-0.013,"电脑":-0.033,"笔记本":-0.072,"开心":0.019,"难过":0.047,"生气":0.046,"害怕":0.088,"妈妈":0.155,"爸爸":0.154,"米饭":0.008,"面条":0.07,"学校":-0.118,"朋友":-0.062,"投影仪":-0.053},"鸟":{"猫":0.391,"狗":0.307,"小狗":0.243,"老虎":0.285,"鸟":1.0,"鱼":0.407,"汽车":-0.161,"卡车":0.021,"公交车":-0.014,"自行车":0.04,"火车":0.041,"书包":0.113,"铅笔":0.208,"教室":0.013,"老师":-0.07,"同学":-0.077,"作业":-0.009,"手机":0.029,"电脑":-0.017,"笔记本":-0.008,"开心":0.137,"难过":0.038,"生气":0.08,"害怕":0.035,"妈妈":0.064,"爸爸":0.069,"米饭":0.055,"面条":0.112,"学校":-0.11,"朋友":-0.119,"投影仪":0.012},"鱼":{"猫":0.39,"狗":0.234,"小狗":0.273,"老虎":0.237,"鸟":0.407,"鱼":1.0,"汽车":-0.135,"卡车":-0.04,"公交车":0.052,"自行车":0.03,"火车":0.029,"书包":0.131,"铅笔":0.078,"教室":-0.076,"老师":-0.118,"同学":-0.1,"作业":-0.045,"手机":-0.059,"电脑":-0.056,"笔记本":-0.004,"开心":0.044,"难过":-0.038,"生气":0.02,"害怕":-0.116,"妈妈":0.126,"爸爸":0.101,"米饭":0.328,"面条":0.377,"学校":-0.073,"朋友":-0.02,"投影仪":-0.018},"汽车":{"猫":-0.13,"狗":-0.188,"小狗":-0.019,"老虎":0.003,"鸟":-0.161,"鱼":-0.135,"汽车":1.0,"卡车":0.499,"公交车":0.331,"自行车":0.485,"火车":0.256,"书包":-0.008,"铅笔":-0.025,"教室":0.02,"老师":-0.188,"同学":-0.185,"作业":-0.011,"手机":0.185,"电脑":0.184,"笔记本":0.221,"开心":-0.237,"难过":-0.249,"生气":-0.25,"害怕":-0.25,"妈妈":-0.229,"爸爸":-0.224,"米饭":-0.138,"面条":-0.119,"学校":-0.026,"朋友":-0.12,"投影仪":0.203},"卡车":{"猫":0.048,"狗":0.047,"小狗":0.191,"老虎":0.135,"鸟":0.021,"鱼":-0.04,"汽车":0.499,"卡车":1.0,"公交车":0.443,"自行车":0.437,"火车":0.474,"书包":0.169,"铅笔":0.019,"教室":0.085,"老师":-0.2,"同学":-0.073,"作业":0.077,"手机":0.056,"电脑":0.075,"笔记本":0.072,"开心":-0.086,"难过":-0.058,"生气":-0.075,"害怕":-0.066,"妈妈":-0.061,"爸爸":-0.02,"米饭":-0.01,"面条":0.042,"学校":-0.009,"朋友":-0.09,"投影仪":0.05},"公交车":{"猫":0.026,"狗":0.086,"小狗":0.243,"老虎":0.017,"鸟":-0.014,"鱼":0.052,"汽车":0.331,"卡车":0.443,"公交车":1.0,"自行车":0.47,"火车":0.64,"书包":0.218,"铅笔":-0.028,"教室":0.27,"老师":-0.029,"同学":0.084,"作业":0.053,"手机":0.151,"电脑":0.133,"笔记本":0.056,"开心":-0.027,"难过":0.005,"生气":0.045,"害怕":0.014,"妈妈":0.076,"爸爸":0.047,"米饭":-0.003,"面条":0.021,"学校":0.199,"朋友":0.081,"投影仪":0.019},"自行车":{"猫":0.012,"狗":0.08,"小狗":0.216,"老虎":0.036,"鸟":0.04,"鱼":0.03,"汽车":0.485,"卡车":0.437,"公交车":0.47,"自行车":1.0,"火车":0.351,"书包":0.277,"铅笔":0.067,"教室":0.185,"老师":-0.087,"同学":0.02,"作业":0.026,"手机":0.181,"电脑":0.173,"笔记本":0.157,"开心":-0.041,"难过":-0.101,"生气":-0.099,"害怕":-0.094,"妈妈":0.049,"爸爸":0.06,"米饭":-0.055,"面条":0.032,"学校":0.148,"朋友":0.008,"投影仪":0.14},"火车":{"猫":0.039,"狗":0.087,"小狗":0.188,"老虎":0.045,"鸟":0.041,"鱼":0.029,"汽车":0.256,"卡车":0.474,"公交车":0.64,"自行车":0.351,"火车":1.0,"书包":0.156,"铅笔":0.02,"教室":0.207,"老师":-0.139,"同学":0.045,"作业":0.077,"手机":0.106,"电脑":0.157,"笔记本":0.026,"开心":0.092,"难过":0.051,"生气":0.051,"害怕":0.071,"妈妈":0.101,"爸爸":0.117,"米饭":0.082,"面条":0.103,"学校":0.089,"朋友":0.132,"投影仪":0.039},"书包":{"猫":0.185,"狗":0.177,"小狗":0.255,"老虎":0.029,"鸟":0.113,"鱼":0.131,"汽车":-0.008,"卡车":0.169,"公交车":0.218,"自行车":0.277,"火车":0.156,"书包":1.0,"铅笔":0.314,"教室":0.458,"老师":0.159,"同学":0.268,"作业":0.29,"手机":0.268,"电脑":0.272,"笔记本":0.393,"开心":0.106,"难过":0.063,"生气":0.091,"害怕":0.009,"妈妈":0.309,"爸爸":0.29,"米饭":0.074,"面条":0.154,"学校":0.273,"朋友":-0.002,"投影仪":0.205},"铅笔":{"猫":0.118,"狗":0.065,"小狗":0.129,"老虎":0.109,"鸟":0.208,"鱼":0.078,"汽车":-0.025,"卡车":0.019,"公交车":-0.028,"自行车":0.067,"火车":0.02,"书包":0.314,"铅笔":1.0,"教室":0.203,"老师":0.109,"同学":0.106,"作业":0.221,"手机":0.116,"电脑":0.188,"笔记本":0.309,"开心":0.033,"难过":0.03,"生气":0.002,"害怕":0.032,"妈妈":0.135,"爸爸":0.085,"米饭":0.025,"面条":0.138,"学校":0.015,"朋友":-0.001,"投影仪":0.209},"教室":{"猫":0.073,"狗":0.105,"小狗":0.149,"老虎":-0.045,"鸟":0.013,"鱼":-0.076,"汽车":0.02,"卡车":0.085,"公交车":0.27,"自行车":0.185,"火车":0.207,"书包":0.458,"铅笔":0.203,"教室":1.0,"老师":0.378,"同学":0.406,"作业":0.395,"手机":0.236,"电脑":0.346,"笔记本":0.327,"开心":0.076,"难过":0.072,"生气":0.088,"害怕":0.073,"妈妈":0.182,"爸爸":0.178,"米饭":0.015,"面条":0.005,"学校":0.525,"朋友":0.008,"投影仪":0.318},"老师":{"猫":-0.058,"狗":0.058,"小狗":-0.029,"老虎":-0.111,"鸟":-0.07,"鱼":-0.118,"汽车":-0.188,"卡车":-0.2,"公交车":-0.029,"自行车":-0.087,"火车":-0.139,"书包":0.159,"铅笔":0.109,"教室":0.378,"老师":1.0,"同学":0.597,"作业":0.405,"手机":-0.012,"电脑":0.03,"笔记本":0.063,"开心":0.076,"难过":0.006,"生气":0.073,"害怕":-0.034,"妈妈":0.223,"爸爸":0.236,"米饭":-0.155,"面条":-0.133,"学校":0.365,"朋友":0.165,"投影仪":0.081},"同学":{"猫":0.055,"狗":0.153,"小狗":0.164,"老虎":-0.063,"鸟":-0.077,"鱼":-0.1,"汽车":-0.185,"卡车":-0.073,"公交车":0.084,"自行车":0.02,"火车":0.045,"书包":0.268,"铅笔":0.106,"教室":0.406,"老师":0.597,"同学":1.0,"作业":0.282,"手机":0.071,"电脑":0.122,"笔记本":0.102,"开心":0.146,"难过":0.07,"生气":0.081,"害怕":0.068,"妈妈":0.334,"爸爸":0.33,"米饭":-0.062,"面条":-0.023,"学校":0.417,"朋友":0.511,"投影仪":0.111},"作业":{"猫":0.011,"狗":0.103,"小狗":0.039,"老虎":-0.11,"鸟":-0.009,"鱼":-0.045,"汽车":-0.011,"卡车":0.077,"公交车":0.053,"自行车":0.026,"火车":0.077,"书包":0.29,"铅笔":0.221,"教室":0.395,"老师":0.405,"同学":0.282,"作业":1.0,"手机":0.176,"电脑":0.284,"笔记本":0.282,"开心":0.077,"难过":0.065,"生气":0.105,"害怕":-0.0,"妈妈":0.14,"爸爸":0.085,"米饭":-0.036,"面条":0.049,"学校":0.292,"朋友":-0.021,"投影仪":0.154},"手机":{"猫":0.059,"狗":0.053,"小狗":0.075,"老虎":-0.013,"鸟":0.029,"鱼":-0.059,"汽车":0.185,"卡车":0.056,"公交车":0.151,"自行车":0.181,"火车":0.106,"书包":0.268,"铅笔":0.116,"教室":0.236,"老师":-0.012,"同学":0.071,"作业":0.176,"手机":1.0,"电脑":0.59,"笔记本":0.529,"开心":0.073,"难过":0.068,"生气":0.139,"害怕":0.083,"妈妈":0.133,"爸爸":0.145,"米饭":0.001,"面条":0.011,"学校":0.013,"朋友":0.15,"投影仪":0.45},"电脑":{"猫":0.091,"狗":0.102,"小狗":0.103,"老虎":-0.033,"鸟":-0.017,"鱼":-0.056,"汽车":0.184,"卡车":0.075,"公交车":0.133,"自行车":0.173,"火车":0.157,"书包":0.272,"铅笔":0.188,"教室":0.346,"老师":0.03,"同学":0.122,"作业":0.284,"手机":0.59,"电脑":1.0,"笔记本":0.696,"开心":0.015,"难过":0.044,"生气":0.043,"害怕":0.004,"妈妈":0.058,"爸爸":0.104,"米饭":0.024,"面条":0.04,"学校":0.145,"朋友":0.089,"投影仪":0.54},"笔记本":{"猫":0.036,"狗":-0.012,"小狗":0.018,"老虎":-0.072,"鸟":-0.008,"鱼":-0.004,"汽车":0.221,"卡车":0.072,"公交车":0.056,"自行车":0.157,"火车":0.026,"书包":0.393,"铅笔":0.309,"教室":0.327,"老师":0.063,"同学":0.102,"作业":0.282,"手机":0.529,"电脑":0.696,"笔记本":1.0,"开心":-0.064,"难过":-0.029,"生气":-0.068,"害怕":-0.086,"妈妈":0.033,"爸爸":0.026,"米饭":0.026,"面条":0.026,"学校":0.06,"朋友":0.004,"投影仪":0.583},"开心":{"猫":0.183,"狗":0.214,"小狗":0.208,"老虎":0.019,"鸟":0.137,"鱼":0.044,"汽车":-0.237,"卡车":-0.086,"公交车":-0.027,"自行车":-0.041,"火车":0.092,"书包":0.106,"铅笔":0.033,"教室":0.076,"老师":0.076,"同学":0.146,"作业":0.077,"手机":0.073,"电脑":0.015,"笔记本":-0.064,"开心":1.0,"难过":0.588,"生气":0.5,"害怕":0.347,"妈妈":0.364,"爸爸":0.351,"米饭":0.083,"面条":0.085,"学校":0.0,"朋友":0.279,"投影仪":-0.053},"难过":{"猫":0.058,"狗":0.215,"小狗":0.227,"老虎":0.047,"鸟":0.038,"鱼":-0.038,"汽车":-0.249,"卡车":-0.058,"公交车":0.005,"自行车":-0.101,"火车":0.051,"书包":0.063,"铅笔":0.03,"教室":0.072,"老师":0.006,"同学":0.07,"作业":0.065,"手机":0.068,"电脑":0.044,"笔记本":-0.029,"开心":0.588,"难过":1.0,"生气":0.615,"害怕":0.647,"妈妈":0.357,"爸爸":0.26,"米饭":0.065,"面条":0.032,"学校":-0.004,"朋友":0.222,"投影仪":-0.062},"生气":{"猫":0.13,"狗":0.237,"小狗":0.226,"老虎":0.046,"鸟":0.08,"鱼":0.02,"汽车":-0.25,"卡车":-0.075,"公交车":0.045,"自行车":-0.099,"火车":0.051,"书包":0.091,"铅笔":0.002,"教室":0.088,"老师":0.073,"同学":0.081,"作业":0.105,"手机":0.139,"电脑":0.043,"笔记本":-0.068,"开心":0.5,"难过":0.615,"生气":1.0,"害怕":0.48,"妈妈":0.349,"爸爸":0.315,"米饭":0.094,"面条":0.014,"学校":0.034,"朋友":0.183,"投影仪":-0.094},"害怕":{"猫":0.087,"狗":0.199,"小狗":0.233,"老虎":0.088,"鸟":0.035,"鱼":-0.116,"汽车":-0.25,"卡车":-0.066,"公交车":0.014,"自行车":-0.094,"火车":0.071,"书包":0.009,"铅笔":0.032,"教室":0.073,"老师":-0.034,"同学":0.068,"作业":-0.0,"手机":0.083,"电脑":0.004,"笔记本":-0.086,"开心":0.347,"难过":0.647,"生气":0.48,"害怕":1.0,"妈妈":0.317,"爸爸":0.221,"米饭":0.059,"面条":-0.008,"学校":-0.049,"朋友":0.196,"投影仪":-0.047},"妈妈":{"猫":0.26,"狗":0.246,"小狗":0.406,"老虎":0.155,"鸟":0.064,"鱼":0.126,"汽车":-0.229,"卡车":-0.061,"公交车":0.076,"自行车":0.049,"火车":0.101,"书包":0.309,"铅笔":0.135,"教室":0.182,"老师":0.223,"同学":0.334,"作业":0.14,"手机":0.133,"电脑":0.058,"笔记本":0.033,"开心":0.364,"难过":0.357,"生气":0.349,"害怕":0.317,"妈妈":1.0,"爸爸":0.772,"米饭":0.189,"面条":0.262,"学校":0.099,"朋友":0.341,"投影仪":0.025},"爸爸":{"猫":0.293,"狗":0.324,"小狗":0.422,"老虎":0.154,"鸟":0.069,"鱼":0.101,"汽车":-0.224,"卡车":-0.02,"公交车":0.047,"自行车":0.06,"火车":0.117,"书包":0.29,"铅笔":0.085,"教室":0.178,"老师":0.236,"同学":0.33,"作业":0.085,"手机":0.145,"电脑":0.104,"笔记本":0.026,"开心":0.351,"难过":0.26,"生气":0.315,"害怕":0.221,"妈妈":0.772,"爸爸":1.0,"米饭":0.155,"面条":0.223,"学校":0.119,"朋友":0.282,"投影仪":0.038},"米饭":{"猫":0.111,"狗":0.022,"小狗":0.124,"老虎":0.008,"鸟":0.055,"鱼":0.328,"汽车":-0.138,"卡车":-0.01,"公交车":-0.003,"自行车":-0.055,"火车":0.082,"书包":0.074,"铅笔":0.025,"教室":0.015,"老师":-0.155,"同学":-0.062,"作业":-0.036,"手机":0.001,"电脑":0.024,"笔记本":0.026,"开心":0.083,"难过":0.065,"生气":0.094,"害怕":0.059,"妈妈":0.189,"爸爸":0.155,"米饭":1.0,"面条":0.714,"学校":0.008,"朋友":0.041,"投影仪":-0.006},"面条":{"猫":0.149,"狗":0.091,"小狗":0.18,"老虎":0.07,"鸟":0.112,"鱼":0.377,"汽车":-0.119,"卡车":0.042,"公交车":0.021,"自行车":0.032,"火车":0.103,"书包":0.154,"铅笔":0.138,"教室":0.005,"老师":-0.133,"同学":-0.023,"作业":0.049,"手机":0.011,"电脑":0.04,"笔记本":0.026,"开心":0.085,"难过":0.032,"生气":0.014,"害怕":-0.008,"妈妈":0.262,"爸爸":0.223,"米饭":0.714,"面条":1.0,"学校":0.004,"朋友":-0.014,"投影仪":0.042},"学校":{"猫":-0.112,"狗":0.022,"小狗":0.004,"老虎":-0.118,"鸟":-0.11,"鱼":-0.073,"汽车":-0.026,"卡车":-0.009,"公交车":0.199,"自行车":0.148,"火车":0.089,"书包":0.273,"铅笔":0.015,"教室":0.525,"老师":0.365,"同学":0.417,"作业":0.292,"手机":0.013,"电脑":0.145,"笔记本":0.06,"开心":0.0,"难过":-0.004,"生气":0.034,"害怕":-0.049,"妈妈":0.099,"爸爸":0.119,"米饭":0.008,"面条":0.004,"学校":1.0,"朋友":0.048,"投影仪":0.068},"朋友":{"猫":0.064,"狗":0.116,"小狗":0.15,"老虎":-0.062,"鸟":-0.119,"鱼":-0.02,"汽车":-0.12,"卡车":-0.09,"公交车":0.081,"自行车":0.008,"火车":0.132,"书包":-0.002,"铅笔":-0.001,"教室":0.008,"老师":0.165,"同学":0.511,"作业":-0.021,"手机":0.15,"电脑":0.089,"笔记本":0.004,"开心":0.279,"难过":0.222,"生气":0.183,"害怕":0.196,"妈妈":0.341,"爸爸":0.282,"米饭":0.041,"面条":-0.014,"学校":0.048,"朋友":1.0,"投影仪":0.042},"投影仪":{"猫":0.069,"狗":0.004,"小狗":0.043,"老虎":-0.053,"鸟":0.012,"鱼":-0.018,"汽车":0.203,"卡车":0.05,"公交车":0.019,"自行车":0.14,"火车":0.039,"书包":0.205,"铅笔":0.209,"教室":0.318,"老师":0.081,"同学":0.111,"作业":0.154,"手机":0.45,"电脑":0.54,"笔记本":0.583,"开心":-0.053,"难过":-0.062,"生气":-0.094,"害怕":-0.047,"妈妈":0.025,"爸爸":0.038,"米饭":-0.006,"面条":0.042,"学校":0.068,"朋友":0.042,"投影仪":1.0}}}</script>
+<script>
+const objs=[
+  "草坪上的金毛犬",
+  "校园自动配送车",
+  "同学手里的 AI 助手",
+  "智能门禁闸机",
+  "创新大楼的玻璃门",
+  "草坪自动喷淋器",
+  "柱子上的户外温度计"
+];
+const verdicts=[
+  {name:"金毛犬",cls:"best",x:26,y:72,s:[1,1,1,1,1],why:"五项全有，还会一直学习"},
+  {name:"配送车",x:78,y:74,s:[1,0,1,1,0],why:"会看路、会送货，地图一变就懵"},
+  {name:"AI 助手",x:63.5,y:50,s:[0,1,1,0,0],why:"懂很多知识，但没有身体，也不认识你"},
+  {name:"门禁闸机",x:46.7,y:61,s:[1,0,1,1,0],why:"只会认脸放行这一件事"},
+  {name:"玻璃门",x:53.5,y:55,s:[0,0,0,0,0],why:"不会看、不会想、不会动"},
+  {name:"喷淋器",x:8,y:76,s:[0,0,0,1,0],why:"到点就喷水，是人写好的规则"},
+  {name:"温度计",x:91.5,y:45,s:[0,0,0,0,0],why:"只显示数字，不懂冷和热"}
+];
+const abilityChars=["感","懂","判","做","学"];
+const vbox=document.getElementById("verdicts");
+verdicts.forEach(v=>{
+  const card=document.createElement("div");
+  card.className=`rv-card ${v.cls||""}`;
+  const dots=v.s.map((on,k)=>`<i class="${on?"on":""}">${abilityChars[k]}</i>`).join("");
+  card.innerHTML=`<div class="rv-thumb" style="--x:${v.x};--y:${v.y}"></div><div class="rv-body"><div class="rv-top"><span class="rv-name">${v.name}</span></div><div class="rv-dots">${dots}</div><p class="rv-why">${v.why}</p></div>`;
+  vbox.appendChild(card);
+});
+const legend=document.getElementById("voteLegend");
+document.querySelectorAll(".hs").forEach(hs=>{
+  const n=+hs.dataset.n;
+  const lg=document.createElement("span");
+  lg.className="lg";
+  lg.innerHTML=`<span class="lg-num">${String(n).padStart(2,"0")}</span> <span>${objs[n-1]}</span>`;
+  legend.appendChild(lg);
+  hs.addEventListener("click",e=>{e.stopPropagation(); hs.classList.toggle("on"); lg.classList.toggle("on");});
+});
+
+const termStatus=document.getElementById("termStatus");
+const expReveal=document.getElementById("expReveal");
+document.getElementById("expBtns").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b) return;
+  document.querySelectorAll("#expBtns button").forEach(x=>x.classList.toggle("on",x===b));
+  const v=b.dataset.v;
+  if(v==="信"){
+    if(termStatus){ termStatus.className="term-status alert"; termStatus.textContent="STATUS: [误信幻觉]"; }
+    expReveal.innerHTML=`<span style="color:#fb7185;font-weight:700">[踩坑啦]</span> 它连你们学校大门朝哪开都不知道。这句话完全是模型根据概率顺口编造的。<b>记住：越自信的假话越危险！</b>`;
+  }else if(v==="不信"){
+    if(termStatus){ termStatus.className="term-status"; termStatus.textContent="STATUS: [直觉敏锐]"; }
+    expReveal.innerHTML=`<span style="color:var(--cyan);font-weight:700">[敏锐直觉]</span> 大模型没有物理眼睛，它根本不可能知道校门口有几棵树。时刻保持怀疑与警惕！`;
+  }else if(v==="要查"){
+    if(termStatus){ termStatus.className="term-status success"; termStatus.textContent="STATUS: [最佳答案]"; }
+    expReveal.innerHTML=`<span style="color:#34d399;font-weight:700">[满分答案]</span> 「亲自查验」是对付 AI 幻觉最好的办法。<b>人负责求真批判，AI 负责打下手！</b>`;
+  }
+});
+
+const journey=[
+  {t:"01 从手机发出去",s:"你按下发送。这一刻，它还只是屏幕上的字。",img:"assets/camp/pulse-phone.jpg",cap:"示意图 · 从手机发出去"},
+  {t:"02 变成电信号",s:"字变成数字，沿国内网络送到字节跳动。这一程不穿海底。",img:"assets/camp/pulse-fiber.jpg",cap:"示意图 · 国内网络里的信号"},
+  {t:"03 落到一座厂房",s:"到了。豆包的机房在国内。这张是谷歌在爱荷华的机房，无人机实拍，让你看见外面有多大。",img:"assets/camp/aerial-bluffs.jpg",cap:"实拍 · 谷歌爱荷华机房航拍 · Chad Davis / CC BY 2.0"},
+  {t:"04 走进机柜",s:"进门是一排排机器。这是美国能源部的 Sierra，通道两边都是算力设备。",img:"assets/camp/sierra.jpg",cap:"实拍 · Sierra 超算通道 · 美国能源部，公有领域"},
+  {t:"05 显卡同时开算",s:"一块板子上有许多核心，同时算。你这句话被拆开，一起算。",img:"assets/camp/pulse-gpu.jpg",cap:"示意图 · 显卡同时开算"},
+  {t:"06 算法挑下一个词",s:"算完不是直接给你整句话。它一次挑一个最可能的下一个词，再连起来。",img:"assets/camp/pulse-algo.jpg",cap:"示意图 · 算法挑下一个词"},
+  {t:"07 答案回到你屏幕",s:"算好的词连成句子，沿原路送回你手机。你问一次，它就跑一整圈——它没有身体，只有这条路。",img:"assets/camp/pulse-back.jpg",cap:"示意图 · 答案回到你屏幕"}
+];
+const jSteps=document.getElementById("journeySteps");
+const jView=document.getElementById("journeyView");
+jSteps.insertAdjacentHTML("afterbegin",`<div class="rail-track"></div><div class="rail-fill" id="railFill"></div><div class="rail-pulse" id="railPulse"></div>`);
+function placeRail(i){
+  const nodes=[].slice.call(jSteps.querySelectorAll(".step"));
+  if(!nodes.length) return;
+  const box=jSteps.getBoundingClientRect();
+  const first=nodes[0].getBoundingClientRect();
+  const cur=nodes[i].getBoundingClientRect();
+  const y0=first.top+first.height/2-box.top;
+  const yI=cur.top+cur.height/2-box.top;
+  const fill=document.getElementById("railFill");
+  fill.style.top=y0+"px";
+  fill.style.height=Math.max(2,yI-y0)+"px";
+  document.getElementById("railPulse").style.top=(yI-6)+"px";
+}
+function showJourney(i){
+  jSteps.querySelectorAll(".step").forEach((el,k)=>{
+    el.classList.toggle("on",k===i);
+    el.classList.toggle("done",k<i);
+  });
+  const s=journey[i];
+  jView.style.cursor="zoom-in";
+  jView.innerHTML=`<img src="${s.img}" alt="${s.cap}"><div class="cap">${s.cap}</div>`;
+  jView.onclick=()=>openPhoto(s.img,s.cap+"。"+s.s);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>placeRail(i)));
+}
+journey.forEach((s,i)=>{
+  const b=document.createElement("button");
+  b.type="button"; b.className="step";
+  b.innerHTML=`<b>${s.t}</b><span class="step-say">${s.s}</span>`;
+  b.onclick=()=>showJourney(i);
+  jSteps.appendChild(b);
+});
+showJourney(0);
+document.getElementById("journeyNext").onclick=()=>{
+  const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
+  showJourney((on+1)%journey.length);
+};
+window.addEventListener("resize",()=>{
+  const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
+  if(on>=0) placeRail(on);
+});
+
+document.getElementById("teraShot").onclick=()=>openPhoto("assets/camp/terafab.png","TERAFAB 100M+ Sq Ft 算力中心规模对比（对比 Giga Texas、五角大楼、Apple Park 与美国商城）。");
+document.getElementById("txShot").onclick=()=>openPhoto("assets/camp/transformer-teaser.jpg","Transformer Explainer 界面截图。Georgia Tech Polo Club / MIT License。课堂上打开原站操作。");
+const box=document.getElementById("lightbox");
+function openPhoto(src,cap){
+  box.classList.add("show");
+  box.querySelector("img").src=src;
+  box.querySelector("p").textContent=cap;
+}
+box.addEventListener("click",()=>box.classList.remove("show"));
+
+const WORDMAP=JSON.parse(document.getElementById("word-data").textContent);
+const groupMeta = {
+  "猫": {color:"#38bdf8"}, "狗": {color:"#38bdf8"}, "小狗": {color:"#38bdf8"}, "老虎": {color:"#38bdf8"}, "鸟": {color:"#38bdf8"}, "鱼": {color:"#38bdf8"},
+  "汽车": {color:"#fb923c"}, "卡车": {color:"#fb923c"}, "公交车": {color:"#fb923c"}, "自行车": {color:"#fb923c"}, "火车": {color:"#fb923c"},
+  "书包": {color:"#22d3ee"}, "铅笔": {color:"#22d3ee"}, "教室": {color:"#22d3ee"}, "老师": {color:"#22d3ee"}, "同学": {color:"#22d3ee"}, "作业": {color:"#22d3ee"}, "学校": {color:"#22d3ee"}, "朋友": {color:"#22d3ee"},
+  "手机": {color:"#c084fc"}, "电脑": {color:"#c084fc"}, "笔记本": {color:"#c084fc"}, "投影仪": {color:"#c084fc"},
+  "开心": {color:"#f43f5e"}, "难过": {color:"#f43f5e"}, "生气": {color:"#f43f5e"}, "害怕": {color:"#f43f5e"},
+  "妈妈": {color:"#facc15"}, "爸爸": {color:"#facc15"}, "米饭": {color:"#a3e635"}, "面条": {color:"#a3e635"}
+};
+
+const mapwrap=document.getElementById("mapwrap");
+const bank=document.getElementById("wordBank");
+const pointsContainer=document.getElementById("pointsContainer");
+const beamLine=document.getElementById("beamLine");
+const beamBadge=document.getElementById("beamBadge");
+const readoutScore=document.getElementById("readoutScore");
+const readoutDesc=document.getElementById("readoutDesc");
+const readoutTag=document.getElementById("readoutTag");
+const meterWrap=document.getElementById("meterWrap");
+const meterFill=document.getElementById("meterFill");
+const meterVal=document.getElementById("meterVal");
+
+const placed=new Set();
+let sel=[];
+
+function simOf(a,b){return WORDMAP.sim[a]&&WORDMAP.sim[a][b]!==undefined?WORDMAP.sim[a][b]:0;}
+
+function place(name){
+  if(placed.has(name)) return;
+  placed.add(name);
+  const p=WORDMAP.points.find(x=>x.name===name);
+  if(!p) return;
+  const d=document.createElement("button");
+  d.type="button"; d.className="v-dot"; d.dataset.name=name;
+  d.style.left=p.x+"%"; d.style.top=p.y+"%";
+  const c=(groupMeta[name]&&groupMeta[name].color)||'#38bdf8';
+  d.innerHTML=`<i style="background:${c};color:${c}"></i><span>${name}</span>`;
+  d.onclick=()=>pick(name,d);
+  pointsContainer.appendChild(d);
+  const pill=bank.querySelector(`[data-w="${name}"]`);
+  if(pill) pill.classList.add("placed");
+}
+
+function clearMap(){
+  placed.clear(); sel=[];
+  pointsContainer.innerHTML="";
+  bank.querySelectorAll("button").forEach(b=>b.classList.remove("placed"));
+  beamLine.style.display="none";
+  beamBadge.style.display="none";
+  meterWrap.style.display="none";
+  readoutTag.className="readout-tag";
+  readoutTag.textContent="等待测距";
+  readoutScore.innerHTML="点击地图两点或上方实验";
+  readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
+}
+
+function updateBeam(){
+  if(sel.length<2){
+    beamLine.style.display="none";
+    beamBadge.style.display="none";
+    return;
+  }
+  const p1=WORDMAP.points.find(x=>x.name===sel[0]);
+  const p2=WORDMAP.points.find(x=>x.name===sel[1]);
+  if(!p1||!p2) return;
+
+  beamLine.setAttribute("x1", p1.x);
+  beamLine.setAttribute("y1", p1.y);
+  beamLine.setAttribute("x2", p2.x);
+  beamLine.setAttribute("y2", p2.y);
+  beamLine.style.display="block";
+
+  const s=simOf(sel[0],sel[1]);
+  beamBadge.textContent=`相似度 ${s.toFixed(2)}`;
+  beamBadge.style.left=((p1.x+p2.x)/2)+"%";
+  beamBadge.style.top=((p1.y+p2.y)/2)+"%";
+  beamBadge.style.display="block";
+}
+
+function comment(a,b,s){
+  const key=[a,b].sort().join("-");
+  const special={
+    "狗-猫":"【同类聚类】网上的海量文章里，猫和狗总跟『宠物、喂养、陪伴』一起出现，所以挨得很近。",
+    "卡车-猫":"【跨界遥远】一个是动物，一个是拉货的车，在词与词的关系网里几乎不沾边，离得老远。",
+    "卡车-汽车":"【同属交通】都在交通工具这一堆里，意思和用途高度重合。",
+    "开心-难过":"【反义却邻近】它们虽然情感对立，但在句式里（如『我感到…』『他看起来很…』）语法槽位完全一致！模型靠上下文统计，因此放得极近。"
+  };
+  if(special[key]) return special[key];
+  if(s>=0.5) return `【高度紧密】几何距离极近（${s.toFixed(2)}），经常在相同的话题与句式中一起出现。`;
+  if(s>=0.25) return `【中度关联】有一定上下文联系（${s.toFixed(2)}），处于相近的语义分支。`;
+  return `【低关联/遥远】（${s.toFixed(2)}）在语料库中几乎不共享相似的上下文环境。`;
+}
+
+function pick(name,el){
+  if(sel.length===1 && sel[0]===name){
+    sel=[];
+    pointsContainer.querySelectorAll(".v-dot").forEach(d=>d.classList.remove("sel"));
+    updateBeam();
+    meterWrap.style.display="none";
+    readoutTag.className="readout-tag";
+    readoutTag.textContent="等待测距";
+    readoutScore.innerHTML="点击地图两点或上方实验";
+    readoutDesc.textContent="大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角。";
+    return;
+  }
+  if(sel.length>=2){
+    sel=[];
+    pointsContainer.querySelectorAll(".v-dot").forEach(d=>d.classList.remove("sel"));
+  }
+  sel.push(name);
+  el.classList.add("sel");
+
+  if(sel.length===1){
+    beamLine.style.display="none";
+    beamBadge.style.display="none";
+    meterWrap.style.display="none";
+    readoutTag.className="readout-tag active";
+    readoutTag.textContent="已选 1 词";
+    readoutScore.innerHTML=`已选: <b>${name}</b> <span>请再点一个词发射测距光束</span>`;
+    readoutDesc.textContent="观察两词在大模型高维空间映射下的空间几何距离。";
+  }else if(sel.length===2){
+    const s=simOf(sel[0],sel[1]);
+    const key=[sel[0],sel[1]].sort().join("-");
+    readoutTag.className="readout-tag active";
+    if(key==="开心-难过") readoutTag.textContent="反义邻近";
+    else if(s>=0.5) readoutTag.textContent="极高聚类";
+    else if(s>=0.25) readoutTag.textContent="中度关联";
+    else readoutTag.textContent="跨界遥远";
+
+    readoutScore.innerHTML=`<b>${sel[0]}</b> ↔ <b>${sel[1]}</b>`;
+    meterWrap.style.display="flex";
+    const pct=Math.max(0,Math.min(100,Math.round(((s+0.3)/1.3)*100)));
+    meterFill.style.width=pct+"%";
+    meterVal.textContent=s.toFixed(2);
+    readoutDesc.textContent=comment(sel[0],sel[1],s);
+    updateBeam();
+  }
+}
+
+WORDMAP.points.forEach(p=>{
+  const b=document.createElement("button");
+  b.type="button"; b.className="cat-pill"; b.dataset.w=p.name;
+  const c=(groupMeta[p.name]&&groupMeta[p.name].color)||'#38bdf8';
+  b.innerHTML=`<i style="background:${c}"></i><span>${p.name}</span>`;
+  b.onclick=()=>place(p.name);
+  bank.appendChild(b);
+});
+
+document.getElementById("dropTrio").onclick=()=>{
+  clearMap();
+  ["猫","狗","卡车"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="猫"]');
+    const b=pointsContainer.querySelector('[data-name="狗"]');
+    if(a&&b){pick("猫",a); pick("狗",b);}
+  },30);
+};
+
+document.getElementById("dropFeel").onclick=()=>{
+  clearMap();
+  ["开心","难过","生气","害怕"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="开心"]');
+    const b=pointsContainer.querySelector('[data-name="难过"]');
+    if(a&&b){pick("开心",a); pick("难过",b);}
+  },30);
+};
+
+document.getElementById("dropSchool").onclick=()=>{
+  clearMap();
+  ["老师","同学","作业","教室","学校"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="老师"]');
+    const b=pointsContainer.querySelector('[data-name="同学"]');
+    if(a&&b){pick("老师",a); pick("同学",b);}
+  },30);
+};
+
+document.getElementById("dropAll").onclick=()=>{
+  clearMap();
+  WORDMAP.points.forEach(p=>place(p.name));
+};
+
+document.getElementById("clearMap").onclick=clearMap;
+
+  // Initial setup on page load
+  ["猫","狗","卡车"].forEach(place);
+  setTimeout(()=>{
+    const a=pointsContainer.querySelector('[data-name="猫"]');
+    const b=pointsContainer.querySelector('[data-name="狗"]');
+    if(a&&b){pick("猫",a); pick("狗",b);}
+  },50);
+
+const nextWords=[["水",.52],["奶茶",.2],["果汁",.12],["可乐",.09],["热汤",.06],["书",.01]];
+function drawProbs(el,T,hidden){
+  const w=nextWords.map(([,p])=>Math.pow(p,1/T)), sum=w.reduce((a,b)=>a+b,0);
+  el.innerHTML=nextWords.map(([word],k)=>{
+    const pct=w[k]/sum*100;
+    return `<div class="prob-row${k===0?" top":""}"><span class="prob-word">${word}</span><span class="prob-bar"><i style="width:${hidden?0:pct}%"></i></span><span class="prob-pct">${hidden?"?":pct.toFixed(pct<1?1:0)+"%"}</span></div>`;
+  }).join("");
+}
+const probOverview=document.getElementById("probOverview");
+drawProbs(probOverview,1,true);
+document.getElementById("guessReveal").onclick=()=>{
+  drawProbs(probOverview,1,false);
+  document.getElementById("guessBlank").textContent="水";
+  document.getElementById("guessBlank").classList.add("on");
+};
+
+const probTemp=document.getElementById("probTemp"), tempSlider=document.getElementById("tempSlider");
+function updateTemp(){
+  const T=+tempSlider.value;
+  drawProbs(probTemp,T,false);
+  document.getElementById("tempVal").textContent="温度 "+T.toFixed(1);
+  document.getElementById("tempNote").textContent=
+    T<0.6?"温度低：几乎总是选「水」，很稳，但每次都一样":
+    T>1.4?"温度高：冷门的词也有机会，更有创意，也更容易乱说":
+    "温度正常：大多数时候选「水」，偶尔选别的";
+}
+tempSlider.oninput=updateTemp; updateTemp();
+
+const attTokens=["我","口渴","了","，","想","喝","一杯"];
+const attWeights={
+  "我":{"想":.6,"口渴":.5},
+  "口渴":{"喝":.9,"我":.5},
+  "了":{"口渴":.8},
+  "，":{"了":.5,"想":.4},
+  "想":{"喝":.8,"我":.6},
+  "喝":{"口渴":.9,"一杯":.7,"想":.4},
+  "一杯":{"喝":.9,"口渴":.5}
+};
+const attRow=document.getElementById("attRow");
+attRow.innerHTML=attTokens.map(t=>`<button class="tk-chip" type="button" data-t="${t}">${t}</button>`).join("");
+function pickAtt(t){
+  const w=attWeights[t];
+  attRow.querySelectorAll(".tk-chip").forEach(c=>{
+    const v=w[c.dataset.t]||0;
+    c.classList.toggle("self",c.dataset.t===t);
+    c.style.setProperty("--a",v);
+    c.classList.toggle("lit",v>0);
+  });
+  const top=Object.entries(w).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>"「"+k+"」").join("和");
+  document.getElementById("attNote").textContent=`「${t}」最在意的是 ${top}`;
+}
+attRow.addEventListener("click",e=>{const c=e.target.closest(".tk-chip"); if(c) pickAtt(c.dataset.t);});
+pickAtt("喝");
+
+document.getElementById("flipGrid").addEventListener("click",e=>{
+  const c=e.target.closest(".flip-card"); if(c) c.classList.toggle("flipped");
+});
+
+const pbLines=[
+  ["目标","我想在班里办一个读书角，让每个同学一个月内至少读完一本书。"],
+  ["Context","我们班 40 个人，教室后面有一个空书架，没有经费。之前贴过通知，没什么人理。你可以先问我几个问题。"],
+  ["多种办法","请给我 3 种完全不同的办法，每种说说好处和难处。"],
+  ["你来决定","先不要写详细方案，等我选好一种再继续。"],
+  ["检查","不确定的地方直接说不知道，不要编。最后帮我对照目标检查一遍。"]
+];
+const pbBox=document.getElementById("pbBox");
+document.getElementById("pbBtns").addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b||b.classList.contains("on")) return;
+  b.classList.add("on");
+  const empty=pbBox.querySelector(".pb-empty"); if(empty) empty.remove();
+  const [tag,text]=pbLines[+b.dataset.i];
+  const line=document.createElement("p");
+  line.innerHTML=`<b>${tag}</b>${text}`;
+  pbBox.appendChild(line);
+});
+
+const partText={
+  goal:"目标：要办成的事，来自你的 Prompt。比如「帮丢东西的同学和捡到东西的同学对上号」。",
+  memory:"记忆：它的小本子。把重要 Context 写下来——谁丢了什么、谁捡到了什么。关掉窗口也还在。",
+  brain:"大脑：就是大语言模型。听懂任务，决定下一步该查、该问，还是该通知。",
+  skill:"工具：它的手和脚。比如查网页、写代码、发消息。没有工具，它只能说「好的」，办不成事。",
+  spec:"规矩：底线。对不上就说不知道，不许编；不许泄露同学的隐私。"
+};
+document.getElementById("agentBoard").addEventListener("click",e=>{
+  const b=e.target.closest(".part"); if(!b) return;
+  document.querySelectorAll("#agentBoard .part").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("partDetail").textContent=partText[b.dataset.part];
+});
+
+const losts=[], founds=[];
+function sameItem(a,b){
+  a=(a||"").replace(/\s/g,""); b=(b||"").replace(/\s/g,"");
+  if(!a||!b) return false;
+  if(a===b) return true;
+  const short=a.length<=b.length?a:b, long=a.length<=b.length?b:a;
+  return short.length>=2 && long.includes(short);
+}
+function addItem(side){
+  const what=document.getElementById(side==="lost"?"lostWhat":"foundWhat").value.trim();
+  const where=document.getElementById(side==="lost"?"lostWhere":"foundWhere").value.trim();
+  const preview=document.getElementById("lfPreview");
+  if(!what){ preview.textContent="先写下是什么东西。"; return; }
+  const item={what,where:where||"地点没写"};
+  (side==="lost"?losts:founds).push(item);
+  const other=side==="lost"?founds:losts;
+  const hit=other.find(x=>sameItem(x.what,what));
+  if(hit){
+    preview.textContent=`对上了：${what}。两边可以去确认。这就是一个能在浏览器里用的小网页。`;
+  }else{
+    preview.textContent=`记下了「${what}」。还没有对得上的。网页会老实地等下一条登记。`;
+  }
+}
+document.getElementById("addLost").onclick=()=>addItem("lost");
+document.getElementById("addFound").onclick=()=>addItem("found");
+
+const slides=[...document.querySelectorAll(".slide")];
+let cur=0;
+function typing(el){return el && (el.tagName==="INPUT"||el.tagName==="TEXTAREA");}
+function show(i){
+  if(box.classList.contains("show")) return;
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle("active",k===cur));
+  document.getElementById("bar").style.width=((cur+1)/slides.length*100)+"%";
+  document.getElementById("pager").textContent=(cur+1)+" / "+slides.length;
+  document.getElementById("hint").textContent=slides[cur].dataset.hint||"";
+  if(slides[cur].contains(jSteps)){
+    const on=[].slice.call(jSteps.querySelectorAll(".step")).findIndex(el=>el.classList.contains("on"));
+    requestAnimationFrame(()=>requestAnimationFrame(()=>placeRail(on>=0?on:0)));
+  }
+}
+document.getElementById("prev").onclick=()=>show(cur-1);
+document.getElementById("next").onclick=()=>show(cur+1);
+addEventListener("keydown",e=>{
+  if(e.key==="Escape"){box.classList.remove("show"); return;}
+  if(box.classList.contains("show")) return;
+  if(typing(e.target)) return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"||e.key===" "){e.preventDefault(); show(cur+1);}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault(); show(cur-1);}
+});
+
+show(0);
+</script>
+</body>
+</html>

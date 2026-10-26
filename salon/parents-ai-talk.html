@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 时代的家庭陪伴指南 · 家长宣讲</title>
+<style>
+  :root{
+    --bg:#0f1419;
+    --panel:#1a2129;
+    --ink:#f5f1e8;
+    --ink-dim:#b8b0a0;
+    --accent:#f4a836;
+    --accent2:#5dbfa8;
+    --warn:#e5735c;
+    --line:rgba(245,241,232,.14);
+    --radius:20px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  #deck{height:100%;position:relative}
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:6vh 8vw;
+    opacity:0;visibility:hidden;transform:translateY(24px);
+    transition:opacity .5s ease,transform .5s ease,visibility .5s;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:translateY(0)}
+  .kicker{
+    font-size:clamp(13px,1.3vw,16px);letter-spacing:.35em;
+    color:var(--accent);text-transform:uppercase;margin-bottom:2.2vh;font-weight:600;
+  }
+  h1{font-size:clamp(34px,5.2vw,72px);line-height:1.22;font-weight:800;letter-spacing:.01em}
+  h2{font-size:clamp(26px,3.6vw,48px);line-height:1.3;font-weight:800;margin-bottom:3.5vh}
+  h2 em{color:var(--accent);font-style:normal}
+  .sub{font-size:clamp(16px,1.6vw,21px);color:var(--ink-dim);line-height:1.8;max-width:60ch}
+  .grid{display:grid;gap:2vw;margin-top:1vh}
+  .cols-2{grid-template-columns:1fr 1fr}
+  .cols-3{grid-template-columns:1fr 1fr 1fr}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:3.2vh 2vw;
+  }
+  .card h3{font-size:clamp(17px,1.7vw,23px);margin-bottom:1.4vh;font-weight:700}
+  .card p{font-size:clamp(14px,1.3vw,17px);color:var(--ink-dim);line-height:1.75}
+  .big-num{
+    font-size:clamp(48px,7vw,104px);font-weight:800;line-height:1;
+    color:var(--accent);font-variant-numeric:tabular-nums;
+  }
+  .big-num.red{color:var(--warn)}
+  .big-num.green{color:var(--accent2)}
+  .num-label{font-size:clamp(14px,1.4vw,18px);color:var(--ink-dim);margin-top:1.2vh;line-height:1.6}
+  .bar-row{display:flex;align-items:center;gap:1.4vw;margin:1.8vh 0}
+  .bar-label{width:14em;font-size:clamp(13px,1.3vw,17px);color:var(--ink-dim);text-align:right;flex-shrink:0}
+  .bar-track{flex:1;height:clamp(22px,2.6vh,30px);background:rgba(245,241,232,.07);border-radius:99px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0;transition:width 1s cubic-bezier(.2,.7,.3,1) .3s;display:flex;align-items:center;justify-content:flex-end;padding-right:.8em;font-size:clamp(12px,1.1vw,15px);font-weight:700;color:#0f1419}
+  .bar-fill.warn{background:linear-gradient(90deg,#c9584a,var(--warn))}
+  .slide.active .bar-fill{width:var(--w)}
+  .tag{
+    display:inline-block;padding:.35em 1em;border-radius:99px;
+    font-size:clamp(12px,1.1vw,14px);font-weight:700;letter-spacing:.05em;
+  }
+  .tag.green{background:rgba(93,191,168,.15);color:var(--accent2);border:1px solid rgba(93,191,168,.4)}
+  .tag.yellow{background:rgba(244,168,54,.15);color:var(--accent);border:1px solid rgba(244,168,54,.4)}
+  .tag.red{background:rgba(229,115,92,.15);color:var(--warn);border:1px solid rgba(229,115,92,.4)}
+  .quote{
+    border-left:4px solid var(--accent);padding-left:2vw;
+    font-size:clamp(20px,2.4vw,32px);line-height:1.7;font-weight:600;
+  }
+  .quote small{display:block;margin-top:2vh;font-size:clamp(13px,1.3vw,16px);color:var(--ink-dim);font-weight:400}
+  .src{position:absolute;bottom:3.2vh;left:8vw;right:8vw;font-size:clamp(11px,1vw,13px);color:rgba(184,176,160,.55);line-height:1.5}
+  .talk-list{list-style:none;margin-top:1vh}
+  .talk-list li{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:2vh 1.8vw;margin-bottom:1.6vh;
+    font-size:clamp(15px,1.5vw,19px);line-height:1.7;
+    display:flex;gap:1.2vw;align-items:baseline;
+  }
+  .talk-list li b{color:var(--accent);flex-shrink:0}
+  .talk-list li q{color:var(--ink);quotes:"“" "”"}
+  .talk-list li span.note{color:var(--ink-dim);font-size:.85em}
+  table{width:100%;border-collapse:collapse;margin-top:1vh}
+  th,td{padding:1.6vh 1.2vw;text-align:left;font-size:clamp(13px,1.35vw,17px);line-height:1.6;border-bottom:1px solid var(--line)}
+  th{color:var(--accent);font-weight:700;font-size:clamp(14px,1.4vw,18px)}
+  td{color:var(--ink-dim)}
+  td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+  /* nav */
+  #progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;transition:width .4s;z-index:10}
+  #pager{
+    position:fixed;bottom:3vh;right:3vw;z-index:10;
+    font-size:13px;color:var(--ink-dim);font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:14px;
+  }
+  #pager button{
+    background:var(--panel);border:1px solid var(--line);color:var(--ink);
+    width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:16px;
+    transition:border-color .2s;
+  }
+  #pager button:hover{border-color:var(--accent)}
+  #hint{position:fixed;bottom:3vh;left:3vw;font-size:12px;color:rgba(184,176,160,.5);z-index:10;transition:opacity .4s}
+  #hint.hidden{opacity:0}
+  .cover-deco{
+    position:absolute;right:-8vw;top:-14vh;width:46vw;height:46vw;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(244,168,54,.16), transparent 65%);
+    pointer-events:none;
+  }
+  .footer-note{margin-top:4vh;font-size:clamp(13px,1.2vw,15px);color:var(--ink-dim)}
+  @media (max-width:760px){
+    .cols-2,.cols-3{grid-template-columns:1fr}
+    .slide{padding:5vh 6vw;overflow-y:auto;justify-content:flex-start}
+    .bar-label{width:8em}
+  }
+  @media print{
+    body{overflow:visible;background:#fff;color:#111}
+    .slide{position:static;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}
+    #pager,#hint,#progress{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="deck">
+
+  <!-- 1 封面 -->
+  <section class="slide active">
+    <div class="cover-deco"></div>
+    <div class="kicker">家长课堂 · AI 素养专题</div>
+    <h1>别让孩子把思考<br>“外包”出去</h1>
+    <p class="sub" style="margin-top:3vh">AI 时代的家庭陪伴指南<br>—— 基于皮尤研究中心、Common Sense Media、国内青少年 AI 素养蓝皮书等 2025–2026 年最新调研</p>
+    <p class="footer-note">主讲人：＿＿＿＿　|　＿＿＿＿学校 · 家长会专场</p>
+  </section>
+
+  <!-- 2 开场共鸣 -->
+  <section class="slide">
+    <div class="kicker">开场 · 三个问题</div>
+    <h2>今晚开始前，请各位在心里回答</h2>
+    <ul class="talk-list">
+      <li><b>①</b><span>您的孩子用过 ChatGPT、豆包、Kimi 或者会聊天的 AI 玩具吗？</span></li>
+      <li><b>②</b><span>您知道孩子<strong style="color:var(--accent)">上一次</strong>用 AI，是拿来做什么的吗？</span></li>
+      <li><b>③</b><span>孩子遇到不开心的事，第一个倾诉对象——是您，还是一个 AI？</span></li>
+    </ul>
+    <p class="footer-note">如果第 ② ③ 题您答不上来，今晚的内容正是为您准备的。</p>
+  </section>
+
+  <!-- 3 现状：高渗透 -->
+  <section class="slide">
+    <div class="kicker">第一部分 · 现状</div>
+    <h2>AI 对孩子来说，<em>早已不是新鲜事</em></h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="big-num">70–92%</div>
+        <div class="num-label">全球中学生已在学习或生活中使用过生成式 AI。对他们而言，AI 就是日常的“搜索引擎”和“电子玩伴”。</div>
+      </div>
+      <div class="card">
+        <div class="big-num red">60%+</div>
+        <div class="num-label">的家长和学校，并不完全清楚孩子具体在用 AI 做什么。这就是横在两代人之间的“信息盲区”。</div>
+      </div>
+    </div>
+    <p class="footer-note">结论很直接：<strong style="color:var(--ink)">孩子已经生活在 AI 里，而多数大人还站在门外。</strong></p>
+    <div class="src">数据来源：Pew Research Center《How Teens Use and View AI》(2026)；Common Sense Media 青少年 AI 综合报告；国内青少年 AI 素养蓝皮书 (2025)。不同调研口径略有差异，取区间呈现。</div>
+  </section>
+
+  <!-- 4 孩子在用 AI 做什么 -->
+  <section class="slide">
+    <div class="kicker">第一部分 · 现状</div>
+    <h2>孩子们在用 AI 做什么？</h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>📚 课业辅助</h3>
+        <p>查资料、写作业、总结长文——约 <strong style="color:var(--accent)">53%</strong> 的使用集中在这里。这是家长最熟悉、也最纠结的场景。</p>
+      </div>
+      <div class="card">
+        <h3>🎨 娱乐创作</h3>
+        <p>AI 绘画、写歌、做视频文案。这一面其实是好事：孩子在把 AI 当成创作工具，而不只是抄袭工具。</p>
+      </div>
+      <div class="card">
+        <h3>💬 情感陪伴</h3>
+        <p>和 Character.AI 一类的“AI 角色”聊天倾诉，因为“它不评判我、随叫随到”。<strong style="color:var(--warn)">这是家长最容易忽略、风险却最高的一面。</strong></p>
+      </div>
+    </div>
+    <div class="src">数据来源：Common Sense Media / Hopelab 青少年 AI 使用调研 (2025–2026)。</div>
+  </section>
+
+  <!-- 5 三个警示数字 -->
+  <section class="slide">
+    <div class="kicker">第二部分 · 真正的风险</div>
+    <h2>三个数字，值得每位家长记住</h2>
+    <div class="bar-row"><div class="bar-label">直接采用 AI 生成的作业答案</div><div class="bar-track"><div class="bar-fill warn" style="--w:63%">63%</div></div></div>
+    <div class="bar-row"><div class="bar-label">自己承认独立思考能力在下降</div><div class="bar-track"><div class="bar-fill warn" style="--w:67%">67%</div></div></div>
+    <div class="bar-row"><div class="bar-label">从未接受过系统的 AI 安全与伦理教育</div><div class="bar-track"><div class="bar-fill warn" style="--w:73%">73%</div></div></div>
+    <p class="footer-note" style="max-width:60ch">请注意第二个数字：连孩子<strong style="color:var(--ink)">自己都察觉到</strong>“过度依赖 AI 在损害我的思考能力”。问题不是孩子不明白，而是没有人教他们怎么办。</p>
+    <div class="src">数据来源：Common Sense Media《Teens in the AI Era》(2026)；RAND 青少年 AI 教育研究 (2025)。均为青少年自我报告数据。</div>
+  </section>
+
+  <!-- 6 核心判断 -->
+  <section class="slide">
+    <div class="kicker">第二部分 · 真正的风险</div>
+    <div class="quote">
+      真正的风险，从来不是“孩子用了 AI”，<br>
+      而是孩子在不知不觉中<span style="color:var(--warn)">交出了两样东西</span>：<br>
+      对<span style="color:var(--accent)">思考</span>的主导权，和无人守护的<span style="color:var(--accent)">情感出口</span>。
+      <small>用 AI 查资料、改文章、做创作，是能力；让 AI 替自己思考、替真实的人陪伴自己，才是危险。我们要管的是后者，不是前者。</small>
+    </div>
+  </section>
+
+  <!-- 7 情感陪伴风险 -->
+  <section class="slide">
+    <div class="kicker">第二部分 · 真正的风险</div>
+    <h2>单独说说“AI 情感陪伴”——<em>最容易被忽略的一块</em></h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>为什么孩子会依赖 AI 倾诉？</h3>
+        <p>AI 永远耐心、不批评、秒回、说你爱听的话。对一个在现实中感到压力或孤独的青少年，这是极强的情感磁铁。但 AI 的“共情”是算法迎合，它不会在孩子真正危险时拉住他，长期依赖还会挤掉真实的人际交往。</p>
+      </div>
+      <div class="card">
+        <h3>家长应留意的预警信号</h3>
+        <p>· 与 AI 聊天时间明显超过与真人交流<br>
+           · 提到某个 AI 角色像提到“好朋友”甚至“恋人”<br>
+           · 现实社交退缩，情绪波动却拒绝和家人谈<br>
+           · 深夜长时间使用聊天类 AI 应用</p>
+      </div>
+    </div>
+    <p class="footer-note">出现信号 ≠ 出事了，但意味着：孩子在现实中的情感需求没有被接住。<strong style="color:var(--ink)">先补陪伴，再谈限制。</strong></p>
+    <div class="src">参考：Common Sense Media 青少年 AI 安全研究所对 AI 陪伴类应用的风险提示 (2025–2026)。</div>
+  </section>
+
+  <!-- 8 禁止没用 -->
+  <section class="slide">
+    <div class="kicker">第三部分 · 破除误区</div>
+    <h2>先说结论：<em>“一禁了之”已被证明无效</em></h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <div class="big-num red">59%</div>
+        <div class="num-label">的学生会绕过学校的网络封锁继续使用 AI。堵，只会把使用行为赶到家长和老师都看不见的地方。</div>
+      </div>
+      <div class="card">
+        <h3>两种常见的失败姿势</h3>
+        <p><strong style="color:var(--warn)">盲目禁止</strong>：孩子转入“地下”，用得更隐蔽、更无引导。<br><br>
+        <strong style="color:var(--warn)">完全不管</strong>：孩子把 AI 当成全知的权威，照单全收，包括错误和偏见。</p>
+      </div>
+    </div>
+    <p class="footer-note">正确的姿势只有一种：<strong style="color:var(--accent2)">从“监管者”变成“同行者”</strong>——和孩子站在一起面对 AI，而不是站在 AI 和孩子中间。</p>
+    <div class="src">数据来源：国内青少年 AI 使用调研蓝皮书 (2025)。</div>
+  </section>
+
+  <!-- 9 未来视角 -->
+  <section class="slide">
+    <div class="kicker">第三部分 · 为什么值得投入</div>
+    <h2>往前看十年：AI 时代<em>什么样的孩子有优势</em>？</h2>
+    <table>
+      <tr><th>正在贬值的能力</th><th>正在升值的能力</th></tr>
+      <tr><td>死记硬背、标准答案</td><td>提出好问题的能力（会向 AI 精准提问，本质是会拆解问题）</td></tr>
+      <tr><td>基础文案、初级翻译、数据录入</td><td>判断与修改的能力（能发现 AI 答案里的错误并改得更好）</td></tr>
+      <tr><td>单纯的信息检索</td><td>辨别真伪的能力（识破深度伪造、虚假信息、算法投喂）</td></tr>
+      <tr><td>被动完成任务</td><td>创意与决策（AI 负责效率，人负责方向）</td></tr>
+    </table>
+    <p class="footer-note">一句话：<strong style="color:var(--ink)">未来不是“会用 AI 的人”淘汰“不会用的人”，而是“会驾驭 AI 思考的人”淘汰“被 AI 替代思考的人”。</strong>这个分水岭，恰恰是在中小学阶段形成的。</p>
+  </section>
+
+  <!-- 10 行动总览 -->
+  <section class="slide">
+    <div class="kicker">第四部分 · 家长行动指南</div>
+    <h2>回到家，您可以做的<em>三件事</em></h2>
+    <div class="grid cols-3">
+      <div class="card">
+        <h3><span style="color:var(--accent)">01</span>　餐桌上的 AI 话题</h3>
+        <p>每周一次，用聊天代替盘问。目标不是查岗，而是让孩子愿意把 AI 使用“摆到桌面上”。</p>
+      </div>
+      <div class="card">
+        <h3><span style="color:var(--accent)">02</span>　家庭 AI 红绿灯公约</h3>
+        <p>和孩子一起制定“什么能用、什么要商量、什么不能碰”，规则共建才会被遵守。</p>
+      </div>
+      <div class="card">
+        <h3><span style="color:var(--accent)">03</span>　当好“情感的第一出口”</h3>
+        <p>观察预警信号，把倾诉的位置从 AI 那里“赢”回来——靠陪伴，不靠没收手机。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 行动1 话术 -->
+  <section class="slide">
+    <div class="kicker">行动一 · 餐桌上的 AI 话题</div>
+    <h2>不会开口？<em>直接抄这几句</em></h2>
+    <ul class="talk-list">
+      <li><b>破冰</b><span><q>你们同学现在写作业都用什么 AI？哪个好用？教教我。</q>　<span class="note">—— 请教姿态，孩子最愿意接</span></span></li>
+      <li><b>共测</b><span><q>咱俩一起问 AI 一个问题，看它会不会胡说八道。</q>　<span class="note">—— 一起“找茬 AI”，顺便建立“AI 会出错”的认知</span></span></li>
+      <li><b>深入</b><span><q>这个答案你觉得哪里写得不如你？如果让你改，你改哪里？</q>　<span class="note">—— 把“抄答案”引向“批判和重写”</span></span></li>
+      <li><b>避免</b><span><q style="text-decoration:line-through;color:var(--warn)">你是不是又用 AI 抄作业了？！</q>　<span class="note">—— 审问一开口，对话就结束了</span></span></li>
+    </ul>
+  </section>
+
+  <!-- 12 行动2 红绿灯 -->
+  <section class="slide">
+    <div class="kicker">行动二 · 家庭 AI 红绿灯公约</div>
+    <h2>和孩子一起签一份<em>“红绿灯”约定</em></h2>
+    <table>
+      <tr><th style="width:9em">级别</th><th>范围（示例，可与孩子协商调整）</th></tr>
+      <tr>
+        <td><span class="tag green">绿灯 · 放心用</span></td>
+        <td>查资料后自己核实、让 AI 讲解错题思路、创作绘画音乐、练外语口语</td>
+      </tr>
+      <tr>
+        <td><span class="tag yellow">黄灯 · 先商量</span></td>
+        <td>作业中直接引用 AI 内容（须标注并自己重写）、下载新的 AI 应用、和 AI 角色长时间聊天</td>
+      </tr>
+      <tr>
+        <td><span class="tag red">红灯 · 不能碰</span></td>
+        <td>向 AI 提供真实姓名/住址/照片等隐私、用 AI 伪造他人图像或声音、考试作弊、深夜挂机聊天</td>
+      </tr>
+    </table>
+    <p class="footer-note">两个关键：① 规则由<strong style="color:var(--ink)">全家共同制定</strong>（包括家长自己也遵守，比如“爸妈用 AI 也告诉你”）；② 小学阶段建议 AI 使用<strong style="color:var(--ink)">全程有大人在场</strong>，初中过渡到事后分享，高中过渡到自主+定期交流。</p>
+  </section>
+
+  <!-- 13 行动3 情感 -->
+  <section class="slide">
+    <div class="kicker">行动三 · 当好“情感的第一出口”</div>
+    <h2>把倾诉的位置，从 AI 那里<em>“赢”回来</em></h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>AI 为什么会赢？</h3>
+        <p>因为它做到了三件事：<strong style="color:var(--accent)">不打断、不评判、随时在</strong>。孩子转向 AI 倾诉，多数时候不是叛逆，而是现实中的倾诉成本太高——一开口就被教育。</p>
+      </div>
+      <div class="card">
+        <h3>家长怎么赢回来？</h3>
+        <p>· 孩子倾诉时，先听完，忍住 3 秒再回应<br>
+        · 把“我早就说过”换成“这确实挺难的”<br>
+        · 每周留一段不谈成绩的独处时间<br>
+        · 发现预警信号时，增加陪伴而非没收设备</p>
+      </div>
+    </div>
+    <p class="footer-note">AI 可以是孩子的工具，但<strong style="color:var(--ink)">不能是孩子唯一的听众</strong>。这一条，没有任何技术手段可以替代家长。</p>
+  </section>
+
+  <!-- 14 家校共育 -->
+  <section class="slide">
+    <div class="kicker">第五部分 · 家校共育</div>
+    <h2>学校在做什么，需要您配合什么</h2>
+    <div class="grid cols-2">
+      <div class="card">
+        <h3>🏫 学校侧的行动</h3>
+        <p>· 开设 AI 素养课：教孩子精准提问、拆解问题<br>
+        · “批判性重塑”作业：允许用 AI 写初稿，考核的是<strong style="color:var(--accent)">怎么修改和纠错</strong><br>
+        · 项目式学习（PBL）：用真实问题做研学，AI 当工具、人做决策<br>
+        · 数字免疫力必修：隐私保护、算法偏见、虚假信息识别</p>
+      </div>
+      <div class="card">
+        <h3>🏠 需要家长配合的</h3>
+        <p>· 收到学校的《AI 工具清单与使用边界指南》后，与孩子逐条聊一遍<br>
+        · 不再以“有没有用 AI”评判作业，改问“哪部分是你自己的想法”<br>
+        · 参加每学期一次的家长 AI 工作坊（亲自上手用一次）<br>
+        · 发现孩子异常使用情况，第一时间与班主任沟通而非独自处理</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 结尾金句 -->
+  <section class="slide">
+    <div class="kicker">结语</div>
+    <div class="quote">
+      我们无法替孩子挡住 AI 时代，<br>
+      但我们可以决定：孩子是<span style="color:var(--warn)">独自</span>面对它，<br>
+      还是有我们<span style="color:var(--accent2)">同行</span>。
+      <small>禁止，是把孩子推向看不见的地方；同行，是把 AI 变成全家共同面对的课题。从今晚的一次餐桌对话开始。</small>
+    </div>
+  </section>
+
+  <!-- 16 QA -->
+  <section class="slide">
+    <div class="kicker">交流答疑</div>
+    <h1 style="font-size:clamp(30px,4.5vw,60px)">Q&amp;A</h1>
+    <p class="sub" style="margin-top:3vh">欢迎提问 · 也欢迎会后单独交流孩子的具体情况</p>
+    <div class="footer-note">
+      本材料数据来源：Pew Research Center (2026) · Common Sense Media (2025–2026) · RAND (2025) · 国内青少年 AI 素养蓝皮书 (2025) 等公开调研。<br>
+      各调研样本与口径不同，数字用于呈现趋势量级，非精确统计。
+    </div>
+  </section>
+
+</div>
+
+<div id="pager">
+  <button id="prev" aria-label="上一页">←</button>
+  <span id="page-num">1 / 16</span>
+  <button id="next" aria-label="下一页">→</button>
+</div>
+<div id="hint">← → 方向键 / 空格 / 点击翻页　·　Cmd+P 可打印为讲义</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let cur=0;
+  const progress=document.getElementById('progress');
+  const pageNum=document.getElementById('page-num');
+  function go(n){
+    cur=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    progress.style.width=((cur+1)/slides.length*100)+'%';
+    pageNum.textContent=(cur+1)+' / '+slides.length;
+    history.replaceState(null,'','#'+(cur+1));
+    document.getElementById('hint').classList.toggle('hidden',cur>0);
+  }
+  document.getElementById('next').onclick=e=>{e.stopPropagation();go(cur+1)};
+  document.getElementById('prev').onclick=e=>{e.stopPropagation();go(cur-1)};
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(cur+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+  });
+  document.getElementById('deck').addEventListener('click',()=>go(cur+1));
+  go((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>

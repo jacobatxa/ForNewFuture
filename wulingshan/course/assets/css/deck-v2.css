@@ -1,0 +1,422 @@
+/* ============================================================
+   Day 1 · v2 样式（独立文件，不改动 deck.css）
+   - 在 deck.css 之上叠加：三幕分色 / 4 组任务板 / 更暖的反馈色
+   ============================================================ */
+
+@import url("deck.css");
+
+:root {
+  --bg-deep: #0b1220;
+  --ink: #f5f7fb;
+  --ink-dim: rgba(245, 247, 251, 0.68);
+  --ink-faint: rgba(245, 247, 251, 0.42);
+
+  /* 默认强调色 = 第一幕琥珀；各幕再用 data-act 覆盖 */
+  --amber: #ffb454;
+  --amber-soft: rgba(255, 180, 84, 0.9);
+
+  --act-1: #ffb454;          /* 自然 · 琥珀 */
+  --act-2: #e89a6a;          /* 人类 · 赭石 */
+  --act-3: #4ec9d8;          /* 机器 · 电光青 */
+
+  --ok: #4fdb8b;             /* 成功反馈更鲜明 */
+  --bad: #ff6b5c;            /* 错误反馈更鲜明 */
+
+  --g1: #ff7a6e;
+  --g2: #ffb454;
+  --g3: #4ec9d8;
+  --g4: #b48cff;
+}
+
+/* 舞台随当前页幕色变强调色 */
+.stage[data-act="1"] { --amber: var(--act-1); --amber-soft: rgba(255, 180, 84, 0.9); }
+.stage[data-act="2"] { --amber: var(--act-2); --amber-soft: rgba(232, 154, 106, 0.9); }
+.stage[data-act="3"] { --amber: var(--act-3); --amber-soft: rgba(78, 201, 216, 0.92); }
+
+.stage[data-act="1"] .hud .progress-fill {
+  background: linear-gradient(90deg, rgba(255,180,84,0.45), var(--act-1));
+}
+.stage[data-act="2"] .hud .progress-fill {
+  background: linear-gradient(90deg, rgba(232,154,106,0.45), var(--act-2));
+}
+.stage[data-act="3"] .hud .progress-fill {
+  background: linear-gradient(90deg, rgba(78,201,216,0.45), var(--act-3));
+}
+
+/* ---------- 节奏标签：必讲 / 可跳过 ---------- */
+.pace-tag {
+  position: absolute;
+  top: 48px;
+  right: 72px;
+  z-index: 8;
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  color: var(--ink-faint);
+  background: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+}
+.pace-tag.must {
+  color: var(--amber);
+  border-color: color-mix(in srgb, var(--amber) 55%, transparent);
+}
+.pace-tag.skip {
+  color: var(--ink-faint);
+  opacity: 0.85;
+}
+
+/* ---------- 4 组条 ---------- */
+.group-strip {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 300px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  z-index: 2;
+}
+.group-card {
+  padding: 28px 26px 32px;
+  border-radius: 22px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 4px solid transparent;
+}
+.group-card[data-g="1"] { border-top-color: var(--g1); }
+.group-card[data-g="2"] { border-top-color: var(--g2); }
+.group-card[data-g="3"] { border-top-color: var(--g3); }
+.group-card[data-g="4"] { border-top-color: var(--g4); }
+
+.group-card .g-label {
+  font-size: 22px;
+  letter-spacing: 0.28em;
+  font-weight: 700;
+}
+.group-card[data-g="1"] .g-label { color: var(--g1); }
+.group-card[data-g="2"] .g-label { color: var(--g2); }
+.group-card[data-g="3"] .g-label { color: var(--g3); }
+.group-card[data-g="4"] .g-label { color: var(--g4); }
+
+.group-card .g-edit {
+  flex: 1;
+  font-size: 26px;
+  line-height: 1.55;
+  color: var(--ink);
+  outline: none;
+  min-height: 140px;
+}
+.group-card .g-edit:empty::before {
+  content: attr(data-ph);
+  color: var(--ink-faint);
+}
+.group-card .g-hint {
+  font-size: 20px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- 规则页 ---------- */
+.s-rules .rule-grid {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 320px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  z-index: 2;
+}
+.s-rules .rule-box {
+  padding: 42px 44px;
+  border-radius: 24px;
+}
+.s-rules .rule-box h3 {
+  font-size: 32px;
+  margin-bottom: 22px;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+}
+.s-rules .rule-box ol,
+.s-rules .rule-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.s-rules .rule-box li {
+  font-size: 28px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+  padding-left: 42px;
+  position: relative;
+}
+.s-rules .rule-box li::before {
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--amber) 60%, transparent);
+  color: var(--amber);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.s-rules .rule-box ol { counter-reset: r; }
+.s-rules .rule-box ol li { counter-increment: r; }
+.s-rules .rule-box ol li::before { content: counter(r); }
+.s-rules .rule-box ul li::before { content: ""; width: 12px; height: 12px; top: 12px; border-radius: 3px; background: var(--amber); border: none; }
+.s-rules .g-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 10px;
+}
+.s-rules .g-pill {
+  text-align: center;
+  padding: 18px 10px;
+  border-radius: 16px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.s-rules .g-pill[data-g="1"] { color: var(--g1); border-color: color-mix(in srgb, var(--g1) 45%, transparent); }
+.s-rules .g-pill[data-g="2"] { color: var(--g2); border-color: color-mix(in srgb, var(--g2) 45%, transparent); }
+.s-rules .g-pill[data-g="3"] { color: var(--g3); border-color: color-mix(in srgb, var(--g3) 45%, transparent); }
+.s-rules .g-pill[data-g="4"] { color: var(--g4); border-color: color-mix(in srgb, var(--g4) 45%, transparent); }
+
+/* ---------- 户外任务 v2 ---------- */
+.s-task-v2 .timer-pill {
+  position: absolute;
+  top: 96px;
+  right: 120px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 28px;
+  border-radius: 999px;
+}
+.s-task-v2 .timer-pill .t-val {
+  font-size: 40px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--amber);
+  min-width: 3.2em;
+  text-align: center;
+}
+.s-task-v2 .timer-pill button {
+  font-family: var(--font-stack);
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: #1a1108;
+  background: var(--amber);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 22px;
+  cursor: pointer;
+}
+.s-task-v2 .say-template {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  bottom: 200px;
+  z-index: 2;
+  padding: 34px 48px;
+  border-radius: 22px;
+  font-size: 34px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+}
+.s-task-v2 .say-template b {
+  color: var(--amber);
+  border-bottom: 2px dashed color-mix(in srgb, var(--amber) 55%, transparent);
+  padding: 0 8px 2px;
+}
+.s-task-v2 .example-row { top: 360px; }
+.s-task-v2 .ex-card { height: 250px; }
+.s-task-v2 .ex-card .ex-name { font-size: 30px; }
+.s-task-v2 .ex-card .ex-line { font-size: 21px; }
+
+/* ---------- 分享 4 组 ---------- */
+.s-share-v2 .group-strip { top: 300px; }
+.s-share-v2 .group-card { min-height: 420px; }
+
+/* ---------- 猫狗 v2：组轮流 ---------- */
+.s-catdog-v2 .turn-bar {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 265px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.s-catdog-v2 .turn-now {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+.s-catdog-v2 .turn-now em {
+  font-style: normal;
+  color: var(--amber);
+}
+.s-catdog-v2 .score-row {
+  display: flex;
+  gap: 14px;
+}
+.s-catdog-v2 .score-pill {
+  min-width: 88px;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.s-catdog-v2 .score-pill.on {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--amber) 70%, transparent);
+}
+.s-catdog-v2 .score-pill[data-g="1"] { color: var(--g1); }
+.s-catdog-v2 .score-pill[data-g="2"] { color: var(--g2); }
+.s-catdog-v2 .score-pill[data-g="3"] { color: var(--g3); }
+.s-catdog-v2 .score-pill[data-g="4"] { color: var(--g4); }
+
+.s-catdog-v2 .bins { top: 340px; }
+.s-catdog-v2 .bin { height: 280px; }
+.s-catdog-v2 .bin.ok-flash {
+  border-color: var(--ok) !important;
+  background: rgba(79, 219, 139, 0.12) !important;
+  box-shadow: 0 0 50px rgba(79, 219, 139, 0.22);
+}
+.s-catdog-v2 .bin.wrong {
+  border-color: var(--bad) !important;
+  background: rgba(255, 107, 92, 0.12) !important;
+}
+.s-catdog-v2 .pop {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%) scale(0.6);
+  z-index: 20;
+  font-size: 64px;
+  font-weight: 800;
+  color: var(--ok);
+  text-shadow: 0 8px 40px rgba(79, 219, 139, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+.s-catdog-v2 .pop.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ---------- 先玩后讲：命名页 ---------- */
+.s-nameit .big-line {
+  position: absolute;
+  left: 140px;
+  right: 140px;
+  top: 340px;
+  z-index: 2;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.55;
+  text-align: center;
+}
+.s-nameit .big-line em {
+  font-style: normal;
+  color: var(--amber);
+}
+.s-nameit .three-words {
+  position: absolute;
+  left: 160px;
+  right: 160px;
+  top: 560px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  z-index: 2;
+}
+.s-nameit .w-card {
+  padding: 36px 28px;
+  border-radius: 22px;
+  text-align: center;
+}
+.s-nameit .w-card .w-en {
+  font-size: 22px;
+  letter-spacing: 0.2em;
+  color: var(--amber);
+  margin-bottom: 14px;
+}
+.s-nameit .w-card .w-cn {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.s-nameit .w-card .w-say {
+  font-size: 24px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* ---------- 喂 AI 4 组 ---------- */
+.s-feed-v2 .team-grid {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  z-index: 2;
+}
+.s-feed-v2 .team {
+  padding: 36px 40px;
+  border-radius: 22px;
+  min-height: 220px;
+}
+.s-feed-v2 .team .tm-role {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--amber);
+  margin-bottom: 16px;
+  letter-spacing: 0.08em;
+}
+.s-feed-v2 .team p {
+  font-size: 28px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.s-feed-v2 .round-card {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 200px;
+  width: 520px;
+  padding: 28px 36px;
+  border-radius: 22px;
+  text-align: center;
+  z-index: 2;
+}
+
+/* ---------- 幕间文案略口语 ---------- */
+.s-divider .act-sub { max-width: 1200px; }
+
+/* 成功主按钮通用 */
+.timer-btn.primary:hover,
+.s-deep .deep-btn:hover {
+  filter: brightness(1.08);
+}

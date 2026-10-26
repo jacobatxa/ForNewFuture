@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超级AI五日营 · 课程介绍屏</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#04070b; }
+  body { font-family:-apple-system,"PingFang SC","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif; -webkit-font-smoothing:antialiased; }
+
+  #stage {
+    width:1080px; height:1920px; position:relative; overflow:hidden;
+    background:#0a0f14; transform-origin:top left;
+  }
+  #stage::before {
+    content:""; position:absolute; inset:0; z-index:0;
+    background:url('img/bg-mountain.jpg') center 25%/cover no-repeat;
+    filter:brightness(.42) saturate(.92) contrast(1.05);
+  }
+  #stage::after {
+    content:""; position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(180deg,
+        rgba(4,7,11,.78) 0%,
+        rgba(4,7,11,.42) 22%,
+        rgba(4,7,11,.58) 48%,
+        rgba(4,7,11,.86) 78%,
+        rgba(4,7,11,.97) 100%);
+  }
+
+  .wrap { position:relative; z-index:2; padding:58px 60px 44px; height:100%; display:flex; flex-direction:column; }
+
+  .meta {
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    font-size:21px; letter-spacing:6px; color:rgba(255,255,255,.85); font-weight:500;
+  }
+  .meta .dot { width:7px; height:7px; border-radius:50%; background:#f97316; }
+
+  .hero { text-align:center; margin-top:26px; }
+  .hero h1 { font-size:74px; font-weight:800; color:#fff; letter-spacing:2px; line-height:1.12; }
+  .hero h1 em { font-style:normal; color:#fb923c; }
+  .hero .lead {
+    margin:24px auto 0; max-width:880px;
+    font-size:22px; line-height:1.6; color:rgba(255,255,255,.78); font-weight:400;
+  }
+  .hero .lead b { color:#fff; font-weight:600; }
+
+  .days { margin-top:30px; flex:1; display:flex; flex-direction:column; gap:14px; }
+
+  .card {
+    position:relative; border-radius:20px; padding:20px 32px;
+    background:linear-gradient(135deg, rgba(255,255,255,.085), rgba(255,255,255,.04));
+    backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.13);
+    box-shadow:0 14px 36px rgba(0,0,0,.36);
+    overflow:hidden;
+  }
+  .card::before {
+    content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
+    background:linear-gradient(180deg,#fb923c,#ea580c);
+  }
+  .card-top { display:flex; align-items:baseline; gap:16px; }
+  .card-day {
+    font-size:42px; font-weight:800; line-height:1;
+    background:linear-gradient(135deg,#fbbf24,#fb923c,#ea580c);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .card-topic { font-size:28px; font-weight:700; color:#fff; letter-spacing:1px; }
+  .card-en {
+    margin-left:auto; font-size:16px; letter-spacing:4px; font-weight:600;
+    color:rgba(255,255,255,.35); text-transform:uppercase;
+  }
+  .card-tagline { margin-top:6px; font-size:22px; font-weight:600; color:#fdba74; }
+  .card-body { margin-top:8px; font-size:20px; line-height:1.55; color:rgba(255,255,255,.82); }
+  .card-body .hl { color:#fb923c; font-weight:700; }
+  .card-eve { margin-top:6px; font-size:19px; line-height:1.5; color:#fda4af; font-weight:500; }
+  .card-eve .e { color:#fda4af; font-weight:700; }
+
+  .takeaway {
+    margin-top:22px; padding:20px 36px; border-radius:20px; text-align:center;
+    background:linear-gradient(135deg, rgba(249,115,22,.16), rgba(234,88,12,.07));
+    border:1px solid rgba(251,146,60,.35);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  }
+  .takeaway .t-title { font-size:21px; letter-spacing:4px; color:#fdba74; font-weight:700; }
+  .takeaway .t-line { margin-top:10px; font-size:24px; color:#fff; font-weight:600; letter-spacing:1px; }
+  .takeaway .t-line span { color:#fb923c; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="wrap">
+
+    <div class="meta">
+      <span>10-15岁</span><span class="dot"></span><span>白天在山里</span><span class="dot"></span><span>每天两小时智慧课</span>
+    </div>
+
+    <div class="hero">
+      <h1>不是 <em>AI 科普课</em></h1>
+      <p class="lead">五天里，孩子先<b>看懂自然和人类的智慧</b>，再上手<b>最前沿的 AI 工具</b>，最后用<b>商业和工程</b>两套真实世界的思维方式，把一个想法做成<b>能讲给人听的东西</b>。</p>
+    </div>
+
+    <div class="days">
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-day">01</span>
+          <span class="card-topic">自然智慧</span>
+          <span class="card-en">Perceive</span>
+        </div>
+        <div class="card-tagline">在山里，发现第一件聪明的东西</div>
+        <div class="card-body">带着任务进山：找一样「聪明」的东西，回来讲给大家听。西番莲与蝴蝶对峙了几百万年——谁也没赢，却都被逼成了更聪明的样子；蜂巢的六边形，没有图纸，没有会议，却精确得像被计算过。夜里，回到古人第一次仰望星空的年代：从满天混沌中，看出第一道秩序。</div>
+        <div class="card-eve"><span class="e">第二天</span>，孩子会指着某样东西告诉你：这个，其实很聪明。为什么。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-day">02</span>
+          <span class="card-topic">超级智能体</span>
+          <span class="card-en">Explore</span>
+        </div>
+        <div class="card-tagline">上手全球最大的开源大模型</div>
+        <div class="card-body">今年7月刚发布、全球参数最大的开源大模型 <span class="hl">Kimi K3</span>，就在孩子手边：写诗、画图、编故事、查资料。再认识两种「不聊天」的智能体——直接替你操作电脑的 <span class="hl">OpenClaw</span>，靠记忆自我进化的 <span class="hl">Hermes</span>。盲测：三个AI回答同一道题，全班投票猜作者。</div>
+        <div class="card-eve"><span class="e">选AI像选工具</span>——没有最强的，只有最合适的。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-day">03</span>
+          <span class="card-topic">商业思维</span>
+          <span class="card-en">Insight</span>
+        </div>
+        <div class="card-tagline">像创业者一样，想清楚一个问题</div>
+        <div class="card-body">写下10个真正在意的问题，三轮筛选，只留1个。然后像创业者一样追问：谁会为它买单？他还缺什么？一句话讲得明白吗？当天就用AI走出最关键的一步——</div>
+        <div class="card-eve"><span class="e">让方案第一次接受现实的检验</span>。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-day">04</span>
+          <span class="card-topic">工程思维</span>
+          <span class="card-en">Create</span>
+        </div>
+        <div class="card-tagline">像工程团队一样，把方案做成作品</div>
+        <div class="card-body">一整天的产品工作坊：AI对话应用、海报、网页，或一场情景演出。三个检查点，一次交叉彩排——拆任务、分工、卡时间、迭代。把想法一步一步，</div>
+        <div class="card-eve"><span class="e">逼成一件拿得出手的作品</span>。</div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-day">05</span>
+          <span class="card-topic">商业路演</span>
+          <span class="card-en">Express</span>
+        </div>
+        <div class="card-tagline">一场真路演，不是表演</div>
+        <div class="card-body">5分钟，讲清楚问题和方案；3分钟，站在家长面前接受追问——包括那句最不留情面的：这个东西，真有人要吗？</div>
+        <div class="card-eve"><span class="e">答得上来，孩子就真的学会了</span>。</div>
+      </div>
+
+    </div>
+
+    <div class="takeaway">
+      <div class="t-title">五天后带走</div>
+      <div class="t-line">发现智慧的眼睛 · 用过前沿工具的手 · 想清楚的商业头脑 · 亲手做成的作品 · <span>扛得住追问的故事</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function fit(){
+    var s = document.getElementById('stage');
+    var scale = Math.min(window.innerWidth/1080, window.innerHeight/1920);
+    s.style.transform = 'scale(' + scale + ')';
+    document.body.style.height = 1920*scale + 'px';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+</script>
+</body>
+</html>

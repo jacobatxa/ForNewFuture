@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超级AI营 · 重庆武陵山</title>
+<style>
+  :root {
+    --ink: #f2f5fa;
+    --ink-dim: rgba(242,245,250,0.6);
+    --ink-faint: rgba(242,245,250,0.35);
+    --amber: #ffb454;
+    --font-stack: "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    font-family: var(--font-stack);
+    color: var(--ink);
+    background: #070d18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .backdrop {
+    position: fixed; inset: 0;
+    background: url('assets/photos/hero-mountain-ridge.png') center/cover;
+    filter: blur(26px) brightness(0.42) saturate(1.1);
+    transform: scale(1.1);
+  }
+  .wrap {
+    position: relative;
+    width: min(880px, 92vw);
+    padding: 40px 0;
+  }
+  .kicker {
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 0.42em; color: var(--amber);
+    margin-bottom: 18px;
+  }
+  h1 { font-size: 58px; font-weight: 700; letter-spacing: 0.05em; }
+  .tagline { margin-top: 14px; font-size: 19px; color: var(--ink-dim); letter-spacing: 0.14em; margin-bottom: 52px; }
+  .day {
+    display: flex; align-items: center; gap: 26px;
+    padding: 26px 32px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.055);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    margin-bottom: 16px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.22s ease;
+  }
+  a.day:hover {
+    background: rgba(255,255,255,0.11);
+    transform: translateX(6px);
+    border-color: rgba(255,180,84,0.4);
+  }
+  .day .num {
+    font-size: 15px; letter-spacing: 0.2em;
+    color: var(--amber); width: 74px; flex: none;
+    font-weight: 600;
+  }
+  .day .name { font-size: 24px; font-weight: 600; letter-spacing: 0.04em; flex: 1; }
+  .day .state { font-size: 15px; color: var(--ink-faint); letter-spacing: 0.14em; }
+  .day.locked { opacity: 0.42; }
+  .day.locked .num { color: var(--ink-faint); }
+  .foot { margin-top: 46px; font-size: 14px; color: var(--ink-faint); letter-spacing: 0.18em; }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<div class="wrap">
+  <div class="kicker">SUPER AI CAMP · 重庆武陵山</div>
+  <h1>超级AI营</h1>
+  <div class="tagline">五天 · 三种智慧 · 一个真问题</div>
+
+  <a class="day" href="day1.html">
+    <span class="num">DAY 1</span>
+    <span class="name">自然智慧与人类智力起源探索</span>
+    <span class="state">30 页 · 完整版</span>
+  </a>
+  <div class="day locked">
+    <span class="num">DAY 2</span>
+    <span class="name">大模型与超级智能体实践</span>
+    <span class="state">待建</span>
+  </div>
+  <div class="day locked">
+    <span class="num">DAY 3</span>
+    <span class="name">用AI解决真实世界问题（上）· 商业思维挑战</span>
+    <span class="state">待建</span>
+  </div>
+  <div class="day locked">
+    <span class="num">DAY 4</span>
+    <span class="name">用AI解决真实世界问题（下）· 工程化思维实战</span>
+    <span class="state">待建</span>
+  </div>
+  <div class="day locked">
+    <span class="num">DAY 5</span>
+    <span class="name">AI商业路演</span>
+    <span class="state">待建</span>
+  </div>
+
+  <div class="foot">完全离线运行 · 方向键翻页 · 1920 × 1080 自适应</div>
+</div>
+</body>
+</html>

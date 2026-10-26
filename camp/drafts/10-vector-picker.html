@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创想营课件 · 词向量空间页面方案对比</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070d1a;
+    --ink: #e2e8f0;
+    --ink-bright: #ffffff;
+    --muted: #94a3b8;
+    --blue: #3b82f6;
+    --cyan: #22d3ee;
+    --cyan-glow: rgba(34, 211, 238, 0.3);
+    --orange: #f97316;
+    --orange-glow: rgba(249, 115, 22, 0.35);
+    --emerald: #34d399;
+    --rose: #fb7185;
+    --line: rgba(255, 255, 255, 0.09);
+    --line-strong: rgba(255, 255, 255, 0.18);
+    --font-en: "Space Grotesk", system-ui, sans-serif;
+    --font-mono: "Geist Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #050811;
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", sans-serif;
+    padding: 24px 20px 80px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header-bar {
+    max-width: 1240px;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .title-area h1 { font-size: 22px; font-weight: 900; color: #fff; }
+  .title-area p { font-size: 13px; color: var(--muted); margin-top: 3px; }
+  
+  .tabs { display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 4px; border-radius: 999px; border: 1px solid var(--line); }
+  .tabs button {
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .2s ease;
+  }
+  .tabs button.on {
+    background: var(--cyan);
+    color: #070d1a;
+    box-shadow: 0 0 16px var(--cyan-glow);
+  }
+
+  .stage-wrap {
+    max-width: 1240px;
+    margin: 0 auto;
+    border: 1px solid var(--line-strong);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    background: var(--bg);
+  }
+  .stage {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+  .variant {
+    position: absolute;
+    inset: 0;
+    display: none;
+    padding: 24px 44px 24px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    overflow: hidden;
+  }
+  .variant.on { display: flex; }
+
+  /* Common Headings */
+  .kicker { font-family: var(--font-en); font-size: 11.5px; letter-spacing: 0.12em; color: var(--orange); font-weight: 700; text-transform: uppercase; }
+  h2 { font-size: 26px; line-height: 1.15; font-weight: 900; color: #fff; display: flex; align-items: baseline; gap: 8px; }
+  .sub-en { font-family: var(--font-en); font-size: 13px; font-weight: 500; color: var(--muted); }
+  .small { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ---------------- VARIANT B (NEW CONSOLE LAYOUT) ---------------- */
+  .console-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+  
+  /* Left: Radar Vector Map */
+  .radar-panel {
+    position: relative;
+    background:
+      radial-gradient(circle at center, rgba(34, 211, 238, 0.08) 0%, transparent 70%),
+      #080f22;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Radar Grid lines */
+  .radar-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .radar-axis { stroke: rgba(255, 255, 255, 0.12); stroke-width: 1; }
+  .radar-circle { stroke: rgba(34, 211, 238, 0.12); stroke-dasharray: 4 4; fill: none; }
+  .radar-label { font-family: var(--font-mono); font-size: 10px; fill: rgba(148, 163, 184, 0.45); }
+
+  .vector-points { position: absolute; inset: 0; }
+  .v-dot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: transparent;
+    font-weight: 800;
+    font-size: 13.5px;
+    color: #fff;
+    text-shadow: 0 1px 4px #000;
+    padding: 3px 6px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform .15s ease, background .15s ease;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .v-dot i { display: block; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+  .v-dot:hover { transform: translate(-50%, -50%) scale(1.2); z-index: 10; background: rgba(0,0,0,0.6); }
+  .v-dot.sel {
+    outline: 2px solid #fff;
+    background: rgba(7, 13, 26, 0.85);
+    box-shadow: 0 0 16px rgba(255,255,255,0.7);
+    z-index: 15;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  /* SVG Measurement Beam */
+  .beam-line { stroke: var(--cyan); stroke-width: 2; stroke-dasharray: 5 3; animation: dash 1s linear infinite; }
+  @keyframes dash { to { stroke-dashoffset: -16; } }
+  .beam-badge {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(7, 13, 26, 0.95);
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    box-shadow: 0 0 12px var(--cyan-glow);
+    z-index: 20;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Right: Insight Console */
+  .insight-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+    min-height: 0;
+  }
+  .card-box {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 14px;
+    backdrop-filter: blur(4px);
+  }
+  .card-box h3 {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--cyan);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .preset-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .preset-btn {
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: all .2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .preset-btn:hover { border-color: var(--cyan); background: rgba(34, 211, 238, 0.08); color: #fff; }
+  .preset-btn span { font-size: 11px; color: var(--muted); font-weight: 400; }
+
+  /* Live Readout */
+  .readout { min-height: 68px; display: flex; flex-direction: column; justify-content: center; }
+  .readout-score { font-family: var(--font-mono); font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 2px; }
+  .readout-score span { font-size: 12px; color: var(--cyan); font-weight: 600; margin-left: 6px; }
+  .readout-desc { font-size: 12.5px; color: var(--ink); line-height: 1.45; }
+
+  /* Compact Categories */
+  .cat-pills { display: flex; flex-wrap: wrap; gap: 4px; max-height: 100px; overflow-y: auto; padding-right: 2px; }
+  .cat-pill {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.03);
+    border-radius: 6px;
+    padding: 3px 7px;
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .cat-pill:hover { border-color: rgba(255,255,255,0.3); }
+  .cat-pill.placed { opacity: 0.35; text-decoration: line-through; }
+
+  /* ---------------- VARIANT A (OLD STACKED LAYOUT) ---------------- */
+  #mapwrap_old {
+    position: relative;
+    height: 220px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(59,130,246,.08),transparent 40%),
+      radial-gradient(circle at 80% 40%,rgba(249,115,22,.08),transparent 42%),
+      #080f20;
+    overflow: hidden;
+  }
+  .bank_old { display: flex; flex-wrap: wrap; gap: 4px; max-height: 80px; overflow: auto; }
+  .bank_old button { border: 1px solid var(--line); background: rgba(255,255,255,.04); border-radius: 999px; padding: 3px 8px; font-size: 12px; }
+  .bank_old button.placed { opacity: .35; }
+</style>
+</head>
+<body>
+
+<div class="header-bar">
+  <div class="title-area">
+    <h1>第 10 页「词向量空间游戏」方案对比</h1>
+    <p>请点击右侧选项卡实时体验：旧版上下堆叠 vs 新版 16:9 双栏雷达测距控制台</p>
+  </div>
+  <div class="tabs">
+    <button class="on" id="tabB" onclick="switchTab('B')">✨ 方案 B · 双栏雷达测距控制台 (新设计)</button>
+    <button id="tabA" onclick="switchTab('A')">方案 A · 垂直堆叠 (原设计)</button>
+  </div>
+</div>
+
+<div class="stage-wrap">
+  <div class="stage">
+
+    <!-- ==================== VARIANT B: NEW CONSOLE ==================== -->
+    <div class="variant on" id="viewB">
+      <div>
+        <div class="kicker">02 语义空间几何 · SEMANTIC VECTOR SPACE</div>
+        <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Words with Similar Contexts Cluster Together in Embedding Space</span></h2>
+      </div>
+
+      <div class="console-grid">
+        <!-- Left: 2D Radar Space -->
+        <div class="radar-panel" id="radarB">
+          <svg class="radar-svg" id="radarSvg" viewBox="0 0 600 380" preserveAspectRatio="none">
+            <!-- Center Axes -->
+            <line x1="300" y1="0" x2="300" y2="380" class="radar-axis" />
+            <line x1="0" y1="190" x2="600" y2="190" class="radar-axis" />
+            <!-- Concentric Circles (Sim Distance 0.25, 0.5, 0.75, 1.0) -->
+            <circle cx="300" cy="190" r="60" class="radar-circle" />
+            <circle cx="300" cy="190" r="120" class="radar-circle" />
+            <circle cx="300" cy="190" r="170" class="radar-circle" />
+            <!-- Coordinates -->
+            <text x="306" y="16" class="radar-label">+Y 抽象语境</text>
+            <text x="540" y="184" class="radar-label">+X 具体对象</text>
+            <text x="10" y="184" class="radar-label">-X 情绪心理</text>
+            <text x="306" y="372" class="radar-label">-Y 社会关系</text>
+            <!-- Dynamic Connection Line Beam -->
+            <line id="beamLine" x1="0" y1="0" x2="0" y2="0" class="beam-line" style="display:none" />
+          </svg>
+          <div class="vector-points" id="pointsContainerB"></div>
+          <div id="beamBadge" class="beam-badge" style="display:none">相似度 0.57</div>
+        </div>
+
+        <!-- Right: Insight & Explorer Panel -->
+        <div class="insight-panel">
+          <!-- Card 1: Guided Experiments -->
+          <div class="card-box">
+            <h3>🔬 课堂探究实验 · Guided Tests</h3>
+            <div class="preset-btns">
+              <button class="preset-btn" onclick="runPreset('animals')">🐾 猫 vs 狗 vs 卡车 <span>语义聚类</span></button>
+              <button class="preset-btn" onclick="runPreset('emotion')">🎭 开心 vs 难过 <span>反义却邻近</span></button>
+              <button class="preset-btn" onclick="runPreset('school')">🏫 老师·同学·作业 <span>高频共现</span></button>
+              <button class="preset-btn" onclick="runPreset('all')">🌐 全部 31 个词 <span>全景地图</span></button>
+            </div>
+          </div>
+
+          <!-- Card 2: Realtime Distance Readout -->
+          <div class="card-box" style="border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.04)">
+            <h3 style="color:#fff">📐 实时空间测距透视 · Distance Insight</h3>
+            <div class="readout" id="readoutB">
+              <div class="readout-score" id="readoutScore">👈 点击地图两点或探究按钮</div>
+              <div class="readout-desc" id="readoutDesc">大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。</div>
+            </div>
+          </div>
+
+          <!-- Card 3: Word Bank by Category -->
+          <div class="card-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <h3 style="margin:0;font-size:12.5px;color:var(--muted)">词库分类放词 (点词放置)</h3>
+              <button style="border:none;background:transparent;color:var(--orange);font-size:11.5px;cursor:pointer;font-weight:700" onclick="clearMapB()">清空重置</button>
+            </div>
+            <div class="cat-pills" id="wordBankB"></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="small" style="margin-top:-2px">
+        坐标来自标准中文预训练词向量降维映射。<b>核心结论：</b>两个词意思相反（如开心/难过），在空间中依然很近，因为它们出现在相同的句式结构中；模型没有人类情感体验。
+      </p>
+    </div>
+
+    <!-- ==================== VARIANT A: OLD STACKED ==================== -->
+    <div class="variant" id="viewA">
+      <div>
+        <div class="kicker">02 空间游戏 · SEMANTIC VECTOR SPACE</div>
+        <h2>在它眼里，有的词很近，有的词很远 <span class="sub-en">Semantic Distance in 2D Embedding Space</span></h2>
+      </div>
+
+      <div id="mapwrap_old"></div>
+      <div class="bank_old" id="wordBankA"></div>
+
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button style="border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:4px 10px;font-size:13px" onclick="oldDropTrio()">放下猫、狗、卡车</button>
+        <button style="border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:4px 10px;font-size:13px" onclick="oldDropFeel()">放下开心和难过</button>
+        <button style="border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:4px 10px;font-size:13px" onclick="oldDropAll()">全部放下</button>
+        <button style="border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:4px 10px;font-size:13px" onclick="oldClear()">清空</button>
+      </div>
+
+      <p id="pairbox_old" style="min-height:36px;font-size:14px;color:var(--cyan)">先把词放到地图上，再点两个词。</p>
+      <p class="small">坐标来自苹果系统自带的简体中文词向量，压到平面上。接近程度按真实向量计算，越接近 1 越近。颜色是为了分类标的。</p>
+    </div>
+
+  </div>
+</div>
+
+<script id="word-data" type="application/json">{"points":[{"name":"猫","x":21.16,"y":19.73},{"name":"狗","x":20.6,"y":33.58},{"name":"小狗","x":25.59,"y":24.97},{"name":"老虎","x":31.46,"y":12.01},{"name":"鸟","x":28.08,"y":18.33},{"name":"鱼","x":24.81,"y":12.04},{"name":"汽车","x":88.0,"y":24.13},{"name":"卡车","x":66.96,"y":17.11},{"name":"公交车","x":61.75,"y":32.89},{"name":"自行车","x":69.39,"y":28.32},{"name":"火车","x":55.7,"y":28.93},{"name":"书包","x":51.38,"y":52.19},{"name":"铅笔","x":46.89,"y":46.61},{"name":"教室","x":58.47,"y":68.99},{"name":"老师","x":39.42,"y":88.2},{"name":"同学","x":37.67,"y":81.25},{"name":"作业","x":51.42,"y":68.66},{"name":"手机","x":58.68,"y":52.87},{"name":"电脑","x":64.04,"y":57.6},{"name":"笔记本","x":71.15,"y":56.57},{"name":"开心","x":8.71,"y":49.17},{"name":"难过","x":11.94,"y":61.9},{"name":"生气","x":10.29,"y":55.4},{"name":"害怕","x":15.19,"y":50.55},{"name":"妈妈","x":16.87,"y":57.44},{"name":"爸爸","x":21.95,"y":52.87},{"name":"米饭","x":30.18,"y":30.32},{"name":"面条","x":32.69,"y":23.86},{"name":"学校","x":54.49,"y":74.79},{"name":"朋友","x":27.82,"y":63.6},{"name":"投影仪","x":66.75,"y":51.27}],"sim":{"猫":{"猫":1.0,"狗":0.57,"小狗":0.644,"老虎":0.437,"鸟":0.391,"鱼":0.39,"汽车":-0.13,"卡车":0.048,"公交车":0.026,"自行车":0.012,"火车":0.039,"书包":0.185,"铅笔":0.118,"教室":0.073,"老师":-0.058,"同学":0.055,"作业":0.011,"手机":0.059,"电脑":0.091,"笔记本":0.036,"开心":0.183,"难过":0.058,"生气":0.13,"害怕":0.087,"妈妈":0.26,"爸爸":0.293,"米饭":0.111,"面条":0.149,"学校":-0.112,"朋友":0.064,"投影仪":0.069},"狗":{"猫":0.57,"狗":1.0,"小狗":0.608,"老虎":0.331,"鸟":0.307,"鱼":0.234,"汽车":-0.188,"卡车":0.047,"公交车":0.086,"自行车":0.08,"火车":0.087,"书包":0.177,"铅笔":0.065,"教室":0.105,"老师":0.058,"同学":0.153,"作业":0.103,"手机":0.053,"电脑":0.102,"笔记本":-0.012,"开心":0.214,"难过":0.215,"生气":0.237,"害怕":0.199,"妈妈":0.246,"爸爸":0.324,"米饭":0.022,"面条":0.091,"学校":0.022,"朋友":0.116,"投影仪":0.004},"小狗":{"猫":0.644,"狗":0.608,"小狗":1.0,"老虎":0.468,"鸟":0.243,"鱼":0.273,"汽车":-0.019,"卡车":0.191,"公交车":0.243,"自行车":0.216,"火车":0.188,"书包":0.255,"铅笔":0.129,"教室":0.149,"老师":-0.029,"同学":0.164,"作业":0.039,"手机":0.075,"电脑":0.103,"笔记本":0.018,"开心":0.208,"难过":0.227,"生气":0.226,"害怕":0.233,"妈妈":0.406,"爸爸":0.422,"米饭":0.124,"面条":0.18,"学校":0.004,"朋友":0.15,"投影仪":0.043},"老虎":{"猫":0.437,"狗":0.331,"小狗":0.468,"老虎":1.0,"鸟":0.285,"鱼":0.237,"汽车":0.003,"卡车":0.135,"公交车":0.017,"自行车":0.036,"火车":0.045,"书包":0.029,"铅笔":0.109,"教室":-0.045,"老师":-0.111,"同学":-0.063,"作业":-0.11,"手机":-0.013,"电脑":-0.033,"笔记本":-0.072,"开心":0.019,"难过":0.047,"生气":0.046,"害怕":0.088,"妈妈":0.155,"爸爸":0.154,"米饭":0.008,"面条":0.07,"学校":-0.118,"朋友":-0.062,"投影仪":-0.053},"鸟":{"猫":0.391,"狗":0.307,"小狗":0.243,"老虎":0.285,"鸟":1.0,"鱼":0.407,"汽车":-0.161,"卡车":0.021,"公交车":-0.014,"自行车":0.04,"火车":0.041,"书包":0.113,"铅笔":0.208,"教室":0.013,"老师":-0.07,"同学":-0.077,"作业":-0.009,"手机":0.029,"电脑":-0.017,"笔记本":-0.008,"开心":0.137,"难过":0.038,"生气":0.08,"害怕":0.035,"妈妈":0.064,"爸爸":0.069,"米饭":0.055,"面条":0.112,"学校":-0.11,"朋友":-0.119,"投影仪":0.012},"鱼":{"猫":0.39,"狗":0.234,"小狗":0.273,"老虎":0.237,"鸟":0.407,"鱼":1.0,"汽车":-0.135,"卡车":-0.04,"公交车":0.052,"自行车":0.03,"火车":0.029,"书包":0.131,"铅笔":0.078,"教室":-0.076,"老师":-0.118,"同学":-0.1,"作业":-0.045,"手机":-0.059,"电脑":-0.056,"笔记本":-0.004,"开心":0.044,"难过":-0.038,"生气":0.02,"害怕":-0.116,"妈妈":0.126,"爸爸":0.101,"米饭":0.328,"面条":0.377,"学校":-0.073,"朋友":-0.02,"投影仪":-0.018},"汽车":{"猫":-0.13,"狗":-0.188,"小狗":-0.019,"老虎":0.003,"鸟":-0.161,"鱼":-0.135,"汽车":1.0,"卡车":0.499,"公交车":0.331,"自行车":0.485,"火车":0.256,"书包":-0.008,"铅笔":-0.025,"教室":0.02,"老师":-0.188,"同学":-0.185,"作业":-0.011,"手机":0.185,"电脑":0.184,"笔记本":0.221,"开心":-0.237,"难过":-0.249,"生气":-0.25,"害怕":-0.25,"妈妈":-0.229,"爸爸":-0.224,"米饭":-0.138,"面条":-0.119,"学校":-0.026,"朋友":-0.12,"投影仪":0.203},"卡车":{"猫":0.048,"狗":0.047,"小狗":0.191,"老虎":0.135,"鸟":0.021,"鱼":-0.04,"汽车":0.499,"卡车":1.0,"公交车":0.443,"自行车":0.437,"火车":0.474,"书包":0.169,"铅笔":0.019,"教室":0.085,"老师":-0.2,"同学":-0.073,"作业":0.077,"手机":0.056,"电脑":0.075,"笔记本":0.072,"开心":-0.086,"难过":-0.058,"生气":-0.075,"害怕":-0.066,"妈妈":-0.061,"爸爸":-0.02,"米饭":-0.01,"面条":0.042,"学校":-0.009,"朋友":-0.09,"投影仪":0.05},"公交车":{"猫":0.026,"狗":0.086,"小狗":0.243,"老虎":0.017,"鸟":-0.014,"鱼":0.052,"汽车":0.331,"卡车":0.443,"公交车":1.0,"自行车":0.47,"火车":0.64,"书包":0.218,"铅笔":-0.028,"教室":0.27,"老师":-0.029,"同学":0.084,"作业":0.053,"手机":0.151,"电脑":0.133,"笔记本":0.056,"开心":-0.027,"难过":0.005,"生气":0.045,"害怕":0.014,"妈妈":0.076,"爸爸":0.047,"米饭":-0.003,"面条":0.021,"学校":0.199,"朋友":0.081,"投影仪":0.019},"自行车":{"猫":0.012,"狗":0.08,"小狗":0.216,"老虎":0.036,"鸟":0.04,"鱼":0.03,"汽车":0.485,"卡车":0.437,"公交车":0.47,"自行车":1.0,"火车":0.351,"书包":0.277,"铅笔":0.067,"教室":0.185,"老师":-0.087,"同学":0.02,"作业":0.026,"手机":0.181,"电脑":0.173,"笔记本":0.157,"开心":-0.041,"难过":-0.101,"生气":-0.099,"害怕":-0.094,"妈妈":0.049,"爸爸":0.06,"米饭":-0.055,"面条":0.032,"学校":0.148,"朋友":0.008,"投影仪":0.14},"火车":{"猫":0.039,"狗":0.087,"小狗":0.188,"老虎":0.045,"鸟":0.041,"鱼":0.029,"汽车":0.256,"卡车":0.474,"公交车":0.64,"自行车":0.351,"火车":1.0,"书包":0.156,"铅笔":0.02,"教室":0.207,"老师":-0.139,"同学":0.045,"作业":0.077,"手机":0.106,"电脑":0.157,"笔记本":0.026,"开心":0.092,"难过":0.051,"生气":0.051,"害怕":0.071,"妈妈":0.101,"爸爸":0.117,"米饭":0.082,"面条":0.103,"学校":0.089,"朋友":0.132,"投影仪":0.039},"书包":{"猫":0.185,"狗":0.177,"小狗":0.255,"老虎":0.029,"鸟":0.113,"鱼":0.131,"汽车":-0.008,"卡车":0.169,"公交车":0.218,"自行车":0.277,"火车":0.156,"书包":1.0,"铅笔":0.314,"教室":0.458,"老师":0.159,"同学":0.268,"作业":0.29,"手机":0.268,"电脑":0.272,"笔记本":0.393,"开心":0.106,"难过":0.063,"生气":0.091,"害怕":0.009,"妈妈":0.309,"爸爸":0.29,"米饭":0.074,"面条":0.154,"学校":0.273,"朋友":-0.002,"投影仪":0.205},"铅笔":{"猫":0.118,"狗":0.065,"小狗":0.129,"老虎":0.109,"鸟":0.208,"鱼":0.078,"汽车":-0.025,"卡车":0.019,"公交车":-0.028,"自行车":0.067,"火车":0.02,"书包":0.314,"铅笔":1.0,"教室":0.203,"老师":0.109,"同学":0.106,"作业":0.221,"手机":0.116,"电脑":0.188,"笔记本":0.309,"开心":0.033,"难过":0.03,"生气":0.002,"害怕":0.032,"妈妈":0.135,"爸爸":0.085,"米饭":0.025,"面条":0.138,"学校":0.015,"朋友":-0.001,"投影仪":0.209},"教室":{"猫":0.073,"狗":0.105,"小狗":0.149,"老虎":-0.045,"鸟":0.013,"鱼":-0.076,"汽车":0.02,"卡车":0.085,"公交车":0.27,"自行车":0.185,"火车":0.207,"书包":0.458,"铅笔":0.203,"教室":1.0,"老师":0.378,"同学":0.406,"作业":0.395,"手机":0.236,"电脑":0.346,"笔记本":0.327,"开心":0.076,"难过":0.072,"生气":0.088,"害怕":0.073,"妈妈":0.182,"爸爸":0.178,"米饭":0.015,"面条":0.005,"学校":0.525,"朋友":0.008,"投影仪":0.318},"老师":{"猫":-0.058,"狗":0.058,"小狗":-0.029,"老虎":-0.111,"鸟":-0.07,"鱼":-0.118,"汽车":-0.188,"卡车":-0.2,"公交车":-0.029,"自行车":-0.087,"火车":-0.139,"书包":0.159,"铅笔":0.109,"教室":0.378,"老师":1.0,"同学":0.597,"作业":0.405,"手机":-0.012,"电脑":0.03,"笔记本":0.063,"开心":0.076,"难过":0.006,"生气":0.073,"害怕":-0.034,"妈妈":0.223,"爸爸":0.236,"米饭":-0.155,"面条":-0.133,"学校":0.365,"朋友":0.165,"投影仪":0.081},"同学":{"猫":0.055,"狗":0.153,"小狗":0.164,"老虎":-0.063,"鸟":-0.077,"鱼":-0.1,"汽车":-0.185,"卡车":-0.073,"公交车":0.084,"自行车":0.02,"火车":0.045,"书包":0.268,"铅笔":0.106,"教室":0.406,"老师":0.597,"同学":1.0,"作业":0.282,"手机":0.071,"电脑":0.122,"笔记本":0.102,"开心":0.146,"难过":0.07,"生气":0.081,"害怕":0.068,"妈妈":0.334,"爸爸":0.33,"米饭":-0.062,"面条":-0.023,"学校":0.417,"朋友":0.511,"投影仪":0.111},"作业":{"猫":0.011,"狗":0.103,"小狗":0.039,"老虎":-0.11,"鸟":-0.009,"鱼":-0.045,"汽车":-0.011,"卡车":0.077,"公交车":0.053,"自行车":0.026,"火车":0.077,"书包":0.29,"铅笔":0.221,"教室":0.395,"老师":0.405,"同学":0.282,"作业":1.0,"手机":0.176,"电脑":0.284,"笔记本":0.282,"开心":0.077,"难过":0.065,"生气":0.105,"害怕":-0.0,"妈妈":0.14,"爸爸":0.085,"米饭":-0.036,"面条":0.049,"学校":0.292,"朋友":-0.021,"投影仪":0.154},"手机":{"猫":0.059,"狗":0.053,"小狗":0.075,"老虎":-0.013,"鸟":0.029,"鱼":-0.059,"汽车":0.185,"卡车":0.056,"公交车":0.151,"自行车":0.181,"火车":0.106,"书包":0.268,"铅笔":0.116,"教室":0.236,"老师":-0.012,"同学":0.071,"作业":0.176,"手机":1.0,"电脑":0.59,"笔记本":0.529,"开心":0.073,"难过":0.068,"生气":0.139,"害怕":0.083,"妈妈":0.133,"爸爸":0.145,"米饭":0.001,"面条":0.011,"学校":0.013,"朋友":0.15,"投影仪":0.45},"电脑":{"猫":0.091,"狗":0.102,"小狗":0.103,"老虎":-0.033,"鸟":-0.017,"鱼":-0.056,"汽车":0.184,"卡车":0.075,"公交车":0.133,"自行车":0.173,"火车":0.157,"书包":0.272,"铅笔":0.188,"教室":0.346,"老师":0.03,"同学":0.122,"作业":0.284,"手机":0.59,"电脑":1.0,"笔记本":0.696,"开心":0.015,"难过":0.044,"生气":0.043,"害怕":0.004,"妈妈":0.058,"爸爸":0.104,"米饭":0.024,"面条":0.04,"学校":0.145,"朋友":0.089,"投影仪":0.54},"笔记本":{"猫":0.036,"狗":-0.012,"小狗":0.018,"老虎":-0.072,"鸟":-0.008,"鱼":-0.004,"汽车":0.221,"卡车":0.072,"公交车":0.056,"自行车":0.157,"火车":0.026,"书包":0.393,"铅笔":0.309,"教室":0.327,"老师":0.063,"同学":0.102,"作业":0.282,"手机":0.529,"电脑":0.696,"笔记本":1.0,"开心":-0.064,"难过":-0.029,"生气":-0.068,"害怕":-0.086,"妈妈":0.033,"爸爸":0.026,"米饭":0.026,"面条":0.026,"学校":0.06,"朋友":0.004,"投影仪":0.583},"开心":{"猫":0.183,"狗":0.214,"小狗":0.208,"老虎":0.019,"鸟":0.137,"鱼":0.044,"汽车":-0.237,"卡车":-0.086,"公交车":-0.027,"自行车":-0.041,"火车":0.092,"书包":0.106,"铅笔":0.033,"教室":0.076,"老师":0.076,"同学":0.146,"作业":0.077,"手机":0.073,"电脑":0.015,"笔记本":-0.064,"开心":1.0,"难过":0.588,"生气":0.5,"害怕":0.347,"妈妈":0.364,"爸爸":0.351,"米饭":0.083,"面条":0.085,"学校":0.0,"朋友":0.279,"投影仪":-0.053},"难过":{"猫":0.058,"狗":0.215,"小狗":0.227,"老虎":0.047,"鸟":0.038,"鱼":-0.038,"汽车":-0.249,"卡车":-0.058,"公交车":0.005,"自行车":-0.101,"火车":0.051,"书包":0.063,"铅笔":0.03,"教室":0.072,"老师":0.006,"同学":0.07,"作业":0.065,"手机":0.068,"电脑":0.044,"笔记本":-0.029,"开心":0.588,"难过":1.0,"生气":0.615,"害怕":0.647,"妈妈":0.357,"爸爸":0.26,"米饭":0.065,"面条":0.032,"学校":-0.004,"朋友":0.222,"投影仪":-0.062},"生气":{"猫":0.13,"狗":0.237,"小狗":0.226,"老虎":0.046,"鸟":0.08,"鱼":0.02,"汽车":-0.25,"卡车":-0.075,"公交车":0.045,"自行车":-0.099,"火车":0.051,"书包":0.091,"铅笔":0.002,"教室":0.088,"老师":0.073,"同学":0.081,"作业":0.105,"手机":0.139,"电脑":0.043,"笔记本":-0.068,"开心":0.5,"难过":0.615,"生气":1.0,"害怕":0.48,"妈妈":0.349,"爸爸":0.315,"米饭":0.094,"面条":0.014,"学校":0.034,"朋友":0.183,"投影仪":-0.094},"害怕":{"猫":0.087,"狗":0.199,"小狗":0.233,"老虎":0.088,"鸟":0.035,"鱼":-0.116,"汽车":-0.25,"卡车":-0.066,"公交车":0.014,"自行车":-0.094,"火车":0.071,"书包":0.009,"铅笔":0.032,"教室":0.073,"老师":-0.034,"同学":0.068,"作业":-0.0,"手机":0.083,"电脑":0.004,"笔记本":-0.086,"开心":0.347,"难过":0.647,"生气":0.48,"害怕":1.0,"妈妈":0.317,"爸爸":0.221,"米饭":0.059,"面条":-0.008,"学校":-0.049,"朋友":0.196,"投影仪":-0.047},"妈妈":{"猫":0.26,"狗":0.246,"小狗":0.406,"老虎":0.155,"鸟":0.064,"鱼":0.126,"汽车":-0.229,"卡车":-0.061,"公交车":0.076,"自行车":0.049,"火车":0.101,"书包":0.309,"铅笔":0.135,"教室":0.182,"老师":0.223,"同学":0.334,"作业":0.14,"手机":0.133,"电脑":0.058,"笔记本":0.033,"开心":0.364,"难过":0.357,"生气":0.349,"害怕":0.317,"妈妈":1.0,"爸爸":0.772,"米饭":0.189,"面条":0.262,"学校":0.099,"朋友":0.341,"投影仪":0.025},"爸爸":{"猫":0.293,"狗":0.324,"小狗":0.422,"老虎":0.154,"鸟":0.069,"鱼":0.101,"汽车":-0.224,"卡车":-0.02,"公交车":0.047,"自行车":0.06,"火车":0.117,"书包":0.29,"铅笔":0.085,"教室":0.178,"老师":0.236,"同学":0.33,"作业":0.085,"手机":0.145,"电脑":0.104,"笔记本":0.026,"开心":0.351,"难过":0.26,"生气":0.315,"害怕":0.221,"妈妈":0.772,"爸爸":1.0,"米饭":0.155,"面条":0.223,"学校":0.119,"朋友":0.282,"投影仪":0.038},"米饭":{"猫":0.111,"狗":0.022,"小狗":0.124,"老虎":0.008,"鸟":0.055,"鱼":0.328,"汽车":-0.138,"卡车":-0.01,"公交车":-0.003,"自行车":-0.055,"火车":0.082,"书包":0.074,"铅笔":0.025,"教室":0.015,"老师":-0.155,"同学":-0.062,"作业":-0.036,"手机":0.001,"电脑":0.024,"笔记本":0.026,"开心":0.083,"难过":0.065,"生气":0.094,"害怕":0.059,"妈妈":0.189,"爸爸":0.155,"米饭":1.0,"面条":0.714,"学校":0.008,"朋友":0.041,"投影仪":-0.006},"面条":{"猫":0.149,"狗":0.091,"小狗":0.18,"老虎":0.07,"鸟":0.112,"鱼":0.377,"汽车":-0.119,"卡车":0.042,"公交车":0.021,"自行车":0.032,"火车":0.103,"书包":0.154,"铅笔":0.138,"教室":0.005,"老师":-0.133,"同学":-0.023,"作业":0.049,"手机":0.011,"电脑":0.04,"笔记本":0.026,"开心":0.085,"难过":0.032,"生气":0.014,"害怕":-0.008,"妈妈":0.262,"爸爸":0.223,"米饭":0.714,"面条":1.0,"学校":0.004,"朋友":-0.014,"投影仪":0.042},"学校":{"猫":-0.112,"狗":0.022,"小狗":0.004,"老虎":-0.118,"鸟":-0.11,"鱼":-0.073,"汽车":-0.026,"卡车":-0.009,"公交车":0.199,"自行车":0.148,"火车":0.089,"书包":0.273,"铅笔":0.015,"教室":0.525,"老师":0.365,"同学":0.417,"作业":0.292,"手机":0.013,"电脑":0.145,"笔记本":0.06,"开心":0.0,"难过":-0.004,"生气":0.034,"害怕":-0.049,"妈妈":0.099,"爸爸":0.119,"米饭":0.008,"面条":0.004,"学校":1.0,"朋友":0.048,"投影仪":0.068},"朋友":{"猫":0.064,"狗":0.116,"小狗":0.15,"老虎":-0.062,"鸟":-0.119,"鱼":-0.02,"汽车":-0.12,"卡车":-0.09,"公交车":0.081,"自行车":0.008,"火车":0.132,"书包":-0.002,"铅笔":-0.001,"教室":0.008,"老师":0.165,"同学":0.511,"作业":-0.021,"手机":0.15,"电脑":0.089,"笔记本":0.004,"开心":0.279,"难过":0.222,"生气":0.183,"害怕":0.196,"妈妈":0.341,"爸爸":0.282,"米饭":0.041,"面条":-0.014,"学校":0.048,"朋友":1.0,"投影仪":0.042},"投影仪":{"猫":0.069,"狗":0.004,"小狗":0.043,"老虎":-0.053,"鸟":0.012,"鱼":-0.018,"汽车":0.203,"卡车":0.05,"公交车":0.019,"自行车":0.14,"火车":0.039,"书包":0.205,"铅笔":0.209,"教室":0.318,"老师":0.081,"同学":0.111,"作业":0.154,"手机":0.45,"电脑":0.54,"笔记本":0.583,"开心":-0.053,"难过":-0.062,"生气":-0.094,"害怕":-0.047,"妈妈":0.025,"爸爸":0.038,"米饭":-0.006,"面条":0.042,"学校":0.068,"朋友":0.042,"投影仪":1.0}}}</script>
+
+<script>
+const WORDMAP = JSON.parse(document.getElementById("word-data").textContent);
+const groupMeta = {
+  "猫": {cat:"animal", color:"#3b82f6"}, "狗": {cat:"animal", color:"#3b82f6"}, "小狗": {cat:"animal", color:"#3b82f6"}, "老虎": {cat:"animal", color:"#3b82f6"}, "鸟": {cat:"animal", color:"#3b82f6"}, "鱼": {cat:"animal", color:"#3b82f6"},
+  "汽车": {cat:"trans", color:"#f97316"}, "卡车": {cat:"trans", color:"#f97316"}, "公交车": {cat:"trans", color:"#f97316"}, "自行车": {cat:"trans", color:"#f97316"}, "火车": {cat:"trans", color:"#f97316"},
+  "书包": {cat:"school", color:"#22d3ee"}, "铅笔": {cat:"school", color:"#22d3ee"}, "教室": {cat:"school", color:"#22d3ee"}, "老师": {cat:"school", color:"#22d3ee"}, "同学": {cat:"school", color:"#22d3ee"}, "作业": {cat:"school", color:"#22d3ee"}, "学校": {cat:"school", color:"#22d3ee"}, "朋友": {cat:"school", color:"#22d3ee"},
+  "手机": {cat:"tech", color:"#a78bfa"}, "电脑": {cat:"tech", color:"#a78bfa"}, "笔记本": {cat:"tech", color:"#a78bfa"}, "投影仪": {cat:"tech", color:"#a78bfa"},
+  "开心": {cat:"mood", color:"#fb7185"}, "难过": {cat:"mood", color:"#fb7185"}, "生气": {cat:"mood", color:"#fb7185"}, "害怕": {cat:"mood", color:"#fb7185"},
+  "妈妈": {cat:"fam", color:"#fbbf24"}, "爸爸": {cat:"fam", color:"#fbbf24"}, "米饭": {cat:"food", color:"#a3e635"}, "面条": {cat:"food", color:"#a3e635"}
+};
+
+function switchTab(t) {
+  document.getElementById("tabA").classList.toggle("on", t==='A');
+  document.getElementById("tabB").classList.toggle("on", t==='B');
+  document.getElementById("viewA").classList.toggle("on", t==='A');
+  document.getElementById("viewB").classList.toggle("on", t==='B');
+}
+
+/* ================= VARIANT B LOGIC ================= */
+const placedB = new Set();
+let selB = [];
+
+function simOf(a, b) { return WORDMAP.sim[a][b]; }
+
+function placeWordB(name) {
+  if (placedB.has(name)) return;
+  placedB.add(name);
+  const p = WORDMAP.points.find(x => x.name === name);
+  const d = document.createElement("button");
+  d.type = "button";
+  d.className = "v-dot";
+  d.dataset.name = name;
+  d.style.left = p.x + "%";
+  d.style.top = p.y + "%";
+  const c = (groupMeta[name] && groupMeta[name].color) || "#fff";
+  d.innerHTML = `<i style="background:${c};color:${c}"></i><span>${name}</span>`;
+  d.onclick = () => pickWordB(name, d);
+  document.getElementById("pointsContainerB").appendChild(d);
+
+  const pill = document.querySelector(`#wordBankB [data-w="${name}"]`);
+  if (pill) pill.classList.add("placed");
+}
+
+function clearMapB() {
+  placedB.clear();
+  selB = [];
+  document.getElementById("pointsContainerB").innerHTML = "";
+  document.querySelectorAll("#wordBankB .cat-pill").forEach(p => p.classList.remove("placed"));
+  document.getElementById("beamLine").style.display = "none";
+  document.getElementById("beamBadge").style.display = "none";
+  document.getElementById("readoutScore").textContent = "👈 点击地图两点或探究按钮";
+  document.getElementById("readoutDesc").textContent = "大模型在机房里不看字面意思，而是计算词坐标之间的几何夹角距离。";
+}
+
+function updateBeam() {
+  if (selB.length < 2) {
+    document.getElementById("beamLine").style.display = "none";
+    document.getElementById("beamBadge").style.display = "none";
+    return;
+  }
+  const p1 = WORDMAP.points.find(x => x.name === selB[0]);
+  const p2 = WORDMAP.points.find(x => x.name === selB[1]);
+  if (!p1 || !p2) return;
+
+  const svg = document.getElementById("radarSvg");
+  const rect = svg.getBoundingClientRect();
+  const x1 = (p1.x / 100) * 600;
+  const y1 = (p1.y / 100) * 380;
+  const x2 = (p2.x / 100) * 600;
+  const y2 = (p2.y / 100) * 380;
+
+  const beam = document.getElementById("beamLine");
+  beam.setAttribute("x1", x1);
+  beam.setAttribute("y1", y1);
+  beam.setAttribute("x2", x2);
+  beam.setAttribute("y2", y2);
+  beam.style.display = "block";
+
+  const badge = document.getElementById("beamBadge");
+  const s = simOf(selB[0], selB[1]);
+  badge.textContent = `余弦相似度 ${s.toFixed(2)}`;
+  badge.style.left = ((p1.x + p2.x) / 2) + "%";
+  badge.style.top = ((p1.y + p2.y) / 2) + "%";
+  badge.style.display = "block";
+}
+
+function commentB(a, b, s) {
+  const key = [a, b].sort().join("-");
+  const special = {
+    "狗-猫": "【同类聚合】猫和狗在大量语料中共享『宠物/喂养/陪伴』等上下文，因此距离极近。",
+    "卡车-猫": "【跨界极远】一个是动物一个是载重工具，在语义网络中几乎没有重合关联，因此相隔遥远。",
+    "卡车-汽车": "【同属交通】同在交通工具聚类中心，方向与功能高度重合。",
+    "开心-难过": "【反义却邻近】它们虽然情感对立，但在句式里（如『我感到…』『他看起来很…』）语法槽位完全一致！模型靠上下文统计，因此把它们放得极近。"
+  };
+  if (special[key]) return special[key];
+  if (s >= 0.5) return `【高度紧密】几何距离极近（${s.toFixed(2)}），经常在相同的话题与句式中一起出现。`;
+  if (s >= 0.25) return `【中度关联】有一定上下文联系，处于相近的语义分支。`;
+  return `【低关联/遥远】（${s.toFixed(2)}）在语料库中几乎不共享相似的上下文环境。`;
+}
+
+function pickWordB(name, el) {
+  if (selB.length === 1 && selB[0] === name) {
+    selB = [];
+    document.querySelectorAll("#pointsContainerB .v-dot").forEach(d => d.classList.remove("sel"));
+    updateBeam();
+    return;
+  }
+  if (selB.length >= 2) {
+    selB = [];
+    document.querySelectorAll("#pointsContainerB .v-dot").forEach(d => d.classList.remove("sel"));
+  }
+  selB.push(name);
+  el.classList.add("sel");
+
+  if (selB.length === 1) {
+    document.getElementById("readoutScore").innerHTML = `已选: <b>${name}</b> <span>请再点一个词测距</span>`;
+    document.getElementById("readoutDesc").textContent = "观察大模型眼里的两词几何距离。";
+  } else if (selB.length === 2) {
+    const s = simOf(selB[0], selB[1]);
+    document.getElementById("readoutScore").innerHTML = `${selB[0]} ↔ ${selB[1]} <span>相似度: ${s.toFixed(2)}</span>`;
+    document.getElementById("readoutDesc").textContent = commentB(selB[0], selB[1], s);
+    updateBeam();
+  }
+}
+
+function runPreset(type) {
+  clearMapB();
+  if (type === 'animals') {
+    ["猫", "狗", "卡车"].forEach(placeWordB);
+    setTimeout(() => {
+      const a = document.querySelector('#pointsContainerB [data-name="猫"]');
+      const b = document.querySelector('#pointsContainerB [data-name="狗"]');
+      if (a && b) { pickWordB("猫", a); pickWordB("狗", b); }
+    }, 50);
+  } else if (type === 'emotion') {
+    ["开心", "难过", "生气", "害怕"].forEach(placeWordB);
+    setTimeout(() => {
+      const a = document.querySelector('#pointsContainerB [data-name="开心"]');
+      const b = document.querySelector('#pointsContainerB [data-name="难过"]');
+      if (a && b) { pickWordB("开心", a); pickWordB("难过", b); }
+    }, 50);
+  } else if (type === 'school') {
+    ["老师", "同学", "作业", "教室", "学校"].forEach(placeWordB);
+    setTimeout(() => {
+      const a = document.querySelector('#pointsContainerB [data-name="老师"]');
+      const b = document.querySelector('#pointsContainerB [data-name="同学"]');
+      if (a && b) { pickWordB("老师", a); pickWordB("同学", b); }
+    }, 50);
+  } else if (type === 'all') {
+    WORDMAP.points.forEach(p => placeWordB(p.name));
+  }
+}
+
+// Init Word Bank B
+const bankB = document.getElementById("wordBankB");
+WORDMAP.points.forEach(p => {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "cat-pill";
+  btn.textContent = p.name;
+  btn.dataset.w = p.name;
+  btn.onclick = () => placeWordB(p.name);
+  bankB.appendChild(btn);
+});
+
+// Auto run default preset for B on load
+runPreset('animals');
+
+
+/* ================= VARIANT A LOGIC ================= */
+const placedA = new Set();
+let selA = [];
+const mapwrapA = document.getElementById("mapwrap_old");
+const bankA = document.getElementById("wordBankA");
+
+function placeA(name) {
+  if (placedA.has(name)) return;
+  placedA.add(name);
+  const p = WORDMAP.points.find(x => x.name === name);
+  const d = document.createElement("button");
+  d.type = "button";
+  d.style.position = "absolute";
+  d.style.transform = "translate(-50%,-50%)";
+  d.style.border = "0";
+  d.style.background = "transparent";
+  d.style.color = "#fff";
+  d.style.fontWeight = "800";
+  d.style.fontSize = "13px";
+  d.style.left = p.x + "%";
+  d.style.top = p.y + "%";
+  d.dataset.name = name;
+  const c = (groupMeta[name] && groupMeta[name].color) || "#fff";
+  d.innerHTML = `<i style="display:block;width:8px;height:8px;border-radius:50%;margin:0 auto 2px;background:${c}"></i>${name}`;
+  d.onclick = () => pickA(name, d);
+  mapwrapA.appendChild(d);
+  const b = bankA.querySelector(`[data-w="${name}"]`);
+  if (b) b.classList.add("placed");
+}
+
+function oldClear() {
+  placedA.clear(); selA = [];
+  mapwrapA.innerHTML = "";
+  bankA.querySelectorAll("button").forEach(b => b.classList.remove("placed"));
+  document.getElementById("pairbox_old").textContent = "先把词放到地图上，再点两个词。";
+}
+function pickA(name, el) {
+  if (selA.length === 1 && selA[0] === name) { selA = []; mapwrapA.querySelectorAll("button").forEach(d => d.style.outline = "none"); return; }
+  if (selA.length >= 2) { selA = []; mapwrapA.querySelectorAll("button").forEach(d => d.style.outline = "none"); }
+  selA.push(name);
+  el.style.outline = "2px solid #fff";
+  if (selA.length === 2) {
+    const s = simOf(selA[0], selA[1]);
+    document.getElementById("pairbox_old").innerHTML = `<b>${selA[0]}</b> 和 <b>${selA[1]}</b>　接近程度 ${s.toFixed(2)}。${commentB(selA[0], selA[1], s)}`;
+  }
+}
+function oldDropTrio() { ["猫","狗","卡车"].forEach(placeA); }
+function oldDropFeel() { ["开心","难过"].forEach(placeA); }
+function oldDropAll() { WORDMAP.points.forEach(p => placeA(p.name)); }
+
+WORDMAP.points.forEach(p => {
+  const b = document.createElement("button");
+  b.type = "button"; b.textContent = p.name; b.dataset.w = p.name;
+  b.onclick = () => placeA(p.name);
+  bankA.appendChild(b);
+});
+oldDropTrio();
+</script>
+</body>
+</html>
