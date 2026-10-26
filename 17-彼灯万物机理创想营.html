@@ -35,44 +35,31 @@
     background:var(--paper);
   }
   .poster-blur{
-    position:absolute;inset:-40px;
-    background:url("assets/baicao/banana-wide.jpg") center 30%/cover;
-    filter:blur(36px) saturate(.9);
-    opacity:.42;
+    position:absolute;inset:-60px;
+    background:url("assets/baicao/banana-wide.jpg") center 18%/cover;
+    filter:blur(52px) saturate(.85);
+    opacity:.22;
     pointer-events:none;
   }
   .poster > *{position:relative;z-index:1}
   img{display:block;width:100%;height:100%;object-fit:cover}
   .kicker{
-    font-size:9.5px;
-    letter-spacing:.2em;
+    font-size:12px;
+    letter-spacing:.18em;
     color:var(--gold-2);
-    text-transform:uppercase;
     font-weight:600;
   }
   .sec{
     position:relative;
-    padding:16px 16px 4px;
-    overflow:hidden;
-  }
-  .sec-blur{
-    position:absolute;inset:-30px;
-    background-size:cover;
-    background-position:center;
-    filter:blur(22px) saturate(1);
-    opacity:.38;
-    pointer-events:none;
+    padding:6px 20px 2px;
   }
   .glass{
     position:relative;
-    background:var(--glass);
-    backdrop-filter:blur(18px) saturate(1.2);
-    -webkit-backdrop-filter:blur(18px) saturate(1.2);
-    border:1px solid var(--glass-edge);
-    box-shadow:0 8px 24px rgba(27,25,20,.05);
-    border-radius:14px;
-    padding:14px 14px 13px;
+    padding:14px 0 18px;
+    border-bottom:1px solid rgba(27,25,20,.07);
   }
+  .sec:last-of-type .glass,
+  .sec.sec-last .glass{border-bottom:0;padding-bottom:8px}
   .sec h2{
     font-family:"Songti SC","STSong","Noto Serif SC",serif;
     font-size:22px;
@@ -84,9 +71,18 @@
   .sec h2 em{font-style:normal;color:var(--lake)}
   .gold-line{width:22px;height:2px;background:var(--gold);margin:6px 0 10px}
 
-  .hero-photo{height:220px;overflow:hidden}
+  .hero-photo{height:220px;overflow:hidden;position:relative}
   .hero-photo img{filter:saturate(1.06) contrast(1.04)}
-  .hero-copy{padding:14px 16px 8px}
+  .hero-photo::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:0;height:90px;
+    background:linear-gradient(180deg,transparent 0%,rgba(243,238,227,.55) 55%,var(--paper) 100%);
+  }
+  .hero-copy{
+    margin-top:-28px;
+    padding:0 20px 10px;
+    position:relative;z-index:2;
+  }
   .hero-brand{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
   .hero-brand img{width:96px;height:auto;object-fit:contain}
   .hero-brand span{font-size:9.5px;letter-spacing:.16em;color:var(--ink-3)}
@@ -211,10 +207,13 @@
   .why-item h3{font-size:13.5px;margin-bottom:2px}
   .why-item p{font-size:12px;color:var(--ink-2);line-height:1.5}
 
-  .cta{position:relative;min-height:200px;padding:32px 20px 26px;text-align:center;color:#fff}
+  .cta{position:relative;min-height:220px;padding:48px 20px 28px;text-align:center;color:#fff;margin-top:8px}
   .cta-bg{position:absolute;inset:0}
-  .cta-bg img{filter:brightness(.5) saturate(1.05) blur(1.2px)}
-  .cta-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(27,25,20,.2),rgba(27,25,20,.58))}
+  .cta-bg img{filter:brightness(.52) saturate(1.05)}
+  .cta-veil{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,var(--paper) 0%,rgba(243,238,227,.78) 14%,rgba(27,25,20,.18) 42%,rgba(27,25,20,.62) 100%);
+  }
   .cta > *:not(.cta-bg):not(.cta-veil){position:relative;z-index:2}
   .cta h2{font-family:"Songti SC","STSong",serif;font-size:28px;line-height:1.2;letter-spacing:.08em;margin:6px 0 8px}
   .cta p{font-size:12.5px;color:rgba(255,255,255,.86)}
@@ -226,8 +225,9 @@
   }
 
   footer{
-    padding:14px 16px 20px;text-align:center;
+    padding:16px 20px 22px;text-align:center;
     color:var(--ink-3);font-size:10.5px;line-height:1.7;
+    background:linear-gradient(180deg,rgba(27,25,20,.04),transparent 40%);
   }
   footer img{width:80px;height:auto;margin:0 auto 6px;object-fit:contain}
 </style>
@@ -241,9 +241,9 @@
     <div class="hero-copy">
       <div class="hero-brand">
         <img src="assets/bilden-logo.png" alt="Bilden Edu 彼灯教育">
-        <span>BISHAN · BAICAO</span>
+        <span>璧山 · 百草湖</span>
       </div>
-      <div class="kicker">Bilden Edu · Nature × Intelligence</div>
+      <div class="kicker">彼灯教育 · 自然里学智能</div>
       <h1>彼灯<br>万物机理<br>创想营</h1>
       <p class="lead">从湖山山色看见自然智慧，到算力中心看见人工智能</p>
       <div class="chips">
@@ -257,9 +257,8 @@
   </header>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/banana-wide.jpg')"></div>
     <div class="glass">
-      <div class="kicker">核心理念</div>
+      <div class="kicker">这一期</div>
       <h2>用 AI 向<em>自然</em>提问</h2>
       <div class="gold-line"></div>
       <div class="quote">
@@ -269,10 +268,9 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/hotel.jpg')"></div>
     <div class="glass">
-      <div class="kicker">营地现场</div>
-      <h2>百草湖乡的<em>山野教室</em></h2>
+      <div class="kicker">营地环境</div>
+      <h2>真<em>山野</em>教室</h2>
       <div class="gallery">
         <div class="tile">
           <img src="assets/baicao/hotel.jpg" alt="所岸仰山酒店">
@@ -299,10 +297,9 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/study.jpg')"></div>
     <div class="glass">
-      <div class="kicker">三条并行线</div>
-      <h2>山野 · 创想 · <em>企业</em></h2>
+      <div class="kicker">营怎么过</div>
+      <h2>山野、课堂、<em>企业</em></h2>
       <div class="pillars">
         <div class="pillar">
           <div class="n">01</div>
@@ -330,28 +327,27 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/gate.jpg')"></div>
     <div class="glass">
-      <div class="kicker">AI 课 · 每课 2–4 小时 · 下午或晚上</div>
-      <h2>四步，把好奇<em>做成能力</em></h2>
+      <div class="kicker">学到什么</div>
+      <h2>万物机理<em>四步课</em></h2>
       <div class="mods">
         <div class="mod">
-          <div class="no">01 · SEE</div>
+          <div class="no">01</div>
           <h3>辨智能</h3>
           <p>从湖山和日常里认出什么算智能。先判断，再碰工具。</p>
         </div>
         <div class="mod">
-          <div class="no">02 · OPEN</div>
+          <div class="no">02</div>
           <h3>探黑盒</h3>
           <p>你发给 AI 的话都去了哪里。下一词、算力、机房，连成一条路。</p>
         </div>
         <div class="mod">
-          <div class="no">03 · ASK</div>
+          <div class="no">03</div>
           <h3>会提问</h3>
-          <p>把任务说清楚，把情况讲明白。Prompt 不是咒语，是把事说清楚。</p>
+          <p>把任务说清楚，把情况讲明白。提问不是咒语，是把事说清楚。</p>
         </div>
         <div class="mod">
-          <div class="no">04 · BUILD</div>
+          <div class="no">04</div>
           <h3>造 Agent</h3>
           <p>自己搭一个立了规矩的智能体。目标自己定，对错自己核。</p>
         </div>
@@ -360,10 +356,9 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/water.jpg')"></div>
     <div class="glass">
-      <div class="kicker">四日行程 · 11.20 到营 — 11.23 回城路演</div>
-      <h2>山野学院 · 企业 · <em>夜间课</em></h2>
+      <div class="kicker">日程安排</div>
+      <h2>四天，从湖山走到<em>会议室</em></h2>
       <div class="clubs">
         <div class="club"><b>湖岸开营</b><p>所岸仰山露台授旗、分队、领观察手册</p></div>
         <div class="club"><b>湖上学堂</b><p>桨板与环湖：平衡、风向、岸线观察</p></div>
@@ -414,15 +409,14 @@
           </div>
         </div>
       </div>
-      <div class="take">带走：山野里的观察手册 · 两场企业现场 · 一场市区路演 · 自己搭的 Agent</div>
+      <div class="take">结营在重庆市区路演，工程师和管理层当场追问</div>
     </div>
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/server-aisle.jpg')"></div>
     <div class="glass">
-      <div class="kicker">企业学习 · 两次 · 最后一天回城路演</div>
-      <h2>进会议室，不只<em>进展厅</em></h2>
+      <div class="kicker">企业现场</div>
+      <h2>进会议室，不<em>进展厅</em></h2>
       <div class="ent-photo"><img src="assets/baicao/server-aisle.jpg" alt="算力中心机房"></div>
       <div class="ent-list">
         <div class="ent">
@@ -438,10 +432,9 @@
   </section>
 
   <section class="sec">
-    <div class="sec-blur" style="background-image:url('assets/baicao/hotel.jpg')"></div>
     <div class="glass">
       <div class="kicker">费用</div>
-      <h2>透明<em>定价</em></h2>
+      <h2>课程住宿餐饮，<em>都在里面</em></h2>
       <div class="price-box">
         <div class="tag">4 天 3 晚 · 全包</div>
         <div class="num">2980<small>元</small></div>
@@ -456,17 +449,16 @@
     </div>
   </section>
 
-  <section class="sec" style="padding-bottom:16px">
-    <div class="sec-blur" style="background-image:url('assets/baicao/scene-02.jpg')"></div>
+  <section class="sec sec-last">
     <div class="glass">
-      <div class="kicker">为什么是这一期</div>
-      <h2>技能做成<em>价值</em></h2>
+      <div class="kicker">为什么报这一期</div>
+      <h2>真技能，真问题，<em>真路演</em></h2>
       <div class="why">
         <div class="why-item">
           <div class="n">01</div>
           <div>
             <h3>拒绝枯燥、变形的编程课</h3>
-            <p>不堆工具，不把 AI 做成另一门奥数。拆开背后的逻辑，带走的是真技能。</p>
+            <p>不堆工具，不把 AI 做成另一门奥数。拆开背后的逻辑，练的是真技能。</p>
           </div>
         </div>
         <div class="why-item">
