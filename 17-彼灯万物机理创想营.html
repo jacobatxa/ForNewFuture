@@ -173,10 +173,10 @@
     font-size:12px;line-height:1.6;color:var(--lake);
   }
 
-  .ent-shots{display:grid;gap:5px;margin:0 0 8px}
-  .ent-shots .shot{position:relative;overflow:hidden;border-radius:8px}
-  .ent-shots .shot.meet{aspect-ratio:4/3}
-  .ent-shots .shot.room{aspect-ratio:16/9}
+  .ent-shots{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:0 0 8px}
+  .ent-shots .shot{position:relative;overflow:hidden;border-radius:8px;aspect-ratio:4/3}
+  .ent-shots .shot.meet img{object-position:center 38%}
+  .ent-shots .shot.room img{object-position:center 45%}
   .ent-shots .shot .cap{
     position:absolute;left:0;right:0;bottom:0;
     padding:16px 9px 7px;
@@ -429,7 +429,7 @@
       <h2>进会议室，不<em>进展厅</em></h2>
       <div class="ent-shots">
         <div class="shot meet">
-          <img src="assets/baicao/ent-meeting.jpg" alt="企业会议室讨论">
+          <img src="assets/baicao/ent-meeting.jpg" alt="中小学生在企业会议室讨论">
           <div class="cap">会议室<small>立项会、站会、当面追问</small></div>
         </div>
         <div class="shot room">
