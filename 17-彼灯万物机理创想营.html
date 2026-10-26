@@ -173,7 +173,17 @@
     font-size:12px;line-height:1.6;color:var(--lake);
   }
 
-  .ent-photo{aspect-ratio:2/1;overflow:hidden;border-radius:10px;margin:0 0 8px}
+  .ent-shots{display:grid;gap:5px;margin:0 0 8px}
+  .ent-shots .shot{position:relative;overflow:hidden;border-radius:8px}
+  .ent-shots .shot.meet{aspect-ratio:4/3}
+  .ent-shots .shot.room{aspect-ratio:16/9}
+  .ent-shots .shot .cap{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:16px 9px 7px;
+    background:linear-gradient(0deg,rgba(27,25,20,.72),transparent);
+    color:#fff;font-size:11px;font-weight:600;
+  }
+  .ent-shots .shot .cap small{display:block;font-weight:400;opacity:.8;font-size:9.5px;margin-top:1px}
   .ent-list{display:grid;grid-template-columns:1fr 1fr;gap:6px}
   .ent{
     background:rgba(255,255,255,.45);
@@ -417,7 +427,16 @@
     <div class="glass">
       <div class="kicker">企业现场</div>
       <h2>进会议室，不<em>进展厅</em></h2>
-      <div class="ent-photo"><img src="assets/baicao/server-aisle.jpg" alt="算力中心机房"></div>
+      <div class="ent-shots">
+        <div class="shot meet">
+          <img src="assets/baicao/ent-meeting.jpg" alt="企业会议室讨论">
+          <div class="cap">会议室<small>立项会、站会、当面追问</small></div>
+        </div>
+        <div class="shot room">
+          <img src="assets/baicao/ent-server.jpg" alt="算力中心机房">
+          <div class="cap">机房<small>机柜、调度、运维现场</small></div>
+        </div>
+      </div>
       <div class="ent-list">
         <div class="ent">
           <b>① 周五 · 省级算力中心</b>
