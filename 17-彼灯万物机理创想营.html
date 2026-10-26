@@ -240,7 +240,11 @@
     background:linear-gradient(180deg,rgba(27,25,20,.04),transparent 40%);
   }
   footer img{width:80px;height:auto;margin:0 auto 6px;object-fit:contain}
+
+  html.export, html.export body{background:var(--paper);margin:0}
+  html.export .poster{width:420px;margin:0}
 </style>
+<script>if(/\bexport=1\b/.test(location.search))document.documentElement.className+=" export"</script>
 </head>
 <body>
 <article class="poster">
@@ -426,15 +430,15 @@
   <section class="sec">
     <div class="glass">
       <div class="kicker">企业现场</div>
-      <h2>进会议室，不<em>进展厅</em></h2>
+      <h2>在真实会议室讨论企业<em>真问题</em></h2>
       <div class="ent-shots">
         <div class="shot meet">
           <img src="assets/baicao/ent-meeting.jpg" alt="中小学生在企业会议室讨论">
           <div class="cap">会议室<small>立项会、站会、当面追问</small></div>
         </div>
         <div class="shot room">
-          <img src="assets/baicao/ent-server.jpg" alt="算力中心机房">
-          <div class="cap">AI 算力中心</div>
+          <img src="assets/baicao/ent-server.jpg" alt="算力中心">
+          <div class="cap">算力中心</div>
         </div>
       </div>
     </div>
