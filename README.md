@@ -15,5 +15,6 @@ AI 课程库：https://jacobatxa.github.io/ForNewFuture/
 | `literacy/` | AI 通识进阶（周末 18 小时）。`course/` 里是大纲和 M1 课件 |
 | `salon/` | 家长场沙龙 |
 | `framework/` | 教育理念与施工规范，不属于某一门课。**先读 `00-课程设计大纲.md`**，再看 `01-教育框架.md` |
+| `framework/skills/` | **给 agent 用的技能库**：教案设计 / 交互可视化 / 中文文案 / 标准对齐，含各家 agent 的安装方法 |
 
 根目录留下的旧文件名只做跳转，例如原来的 `16-m1-deck.html` 会转到 `literacy/course/16-m1-deck.html`。
