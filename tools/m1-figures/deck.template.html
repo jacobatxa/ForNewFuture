@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M1 抽象 · 第一节（线上 1 小时）· AI 通识进阶</title>
+<meta name="description" content="M1 第一节线上课件：AI 住在哪里、吃什么、长什么样；什么是抽象；AI 是照着人的本事抽象出来的；算法、算力、Token、提示词都是什么。">
+<style>
+/*@ISO_CSS@*/
+:root{
+  --bg:#F3F2EE;--paper:#FBFBF9;--ink:#1A1A1C;--ink2:#4A4A50;--muted:#85858B;
+  --line:#DCDAD3;--line2:#C9C6BE;--accent:#B9762A;--accent-soft:#F3E6D4;
+  --ok:#2E7D4F;--ok-soft:#DDEFE3;--bad:#B4413A;--bad-soft:#F5DEDB;--half:#8A6D1F;--half-soft:#F2EACB;
+  --blue:#2F5BD3;--blue-soft:#DDE5F8;
+  --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+#bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--accent);z-index:30;transition:width .3s}
+.slide{position:fixed;inset:0;display:none;flex-direction:column;padding:26px 64px 64px;gap:12px;overflow-y:auto}
+.slide.active{display:flex}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.when{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em}
+.when b{color:var(--accent);font-weight:700}
+.feishu{font-size:12px;font-weight:700;color:var(--blue);background:var(--blue-soft);padding:4px 10px;border-radius:999px}
+h1{font-size:clamp(36px,5.4vw,64px);font-weight:900;letter-spacing:-.02em;line-height:1.12}
+h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-height:1.25}
+.en{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:4px}
+.lead{font-size:16px;color:var(--ink2);line-height:1.6;max-width:46em}
+.lead b{color:var(--ink)}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.cols{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;flex:1;min-height:0}
+.cols>*,.sort>*,.vote>*,.hw>*,.demo>*{min-width:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line2);background:var(--paper);border-radius:8px;padding:9px 14px;font-weight:700;font-size:14px;transition:background .2s,border-color .2s,color .2s}
+.btn:hover{border-color:var(--ink2)}
+.btn.on,.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.primary:hover{background:#000}
+.say{border-left:3px solid var(--accent);background:var(--accent-soft);padding:10px 14px;font-size:15px;line-height:1.55;border-radius:0 8px 8px 0}
+.say b{color:#7A4A12}
+.small{font-size:12.5px;color:var(--muted);line-height:1.5}
+.readout{font-family:var(--mono);font-size:13px;color:var(--ink2)}
+.hidden{display:none!important}
+
+/* figure card (anatomy layout: Fig 左上, 标题右上, 提示左下, 读数右下) */
+.figcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:34px 14px 34px;position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.figcard .c{position:absolute;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.figcard .tl{left:14px;top:10px}.figcard .tr{right:14px;top:10px;font-family:var(--font);font-weight:700;color:var(--ink2)}
+.figcard .bl{left:14px;bottom:10px;font-family:var(--font)}.figcard .br{right:14px;bottom:10px;color:var(--ink)}
+
+/* nav */
+.nav{position:fixed;bottom:14px;right:16px;display:flex;gap:8px;align-items:center;z-index:25}
+.nav button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:var(--paper);font-size:18px}
+#pager{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:52px;text-align:center}
+#noteBtn{width:auto!important;border-radius:999px!important;padding:0 14px;font-size:13px!important;font-weight:700}
+.notes{display:none}
+#notePanel{position:fixed;left:16px;right:16px;bottom:62px;max-height:42vh;overflow:auto;background:#1C1C1E;color:#EDEDED;border-radius:12px;padding:16px 18px;font-size:14px;line-height:1.65;z-index:24;display:none;box-shadow:0 10px 30px #0003}
+#notePanel.show{display:block}
+#notePanel h4{font-size:12px;color:#E0B57A;letter-spacing:.08em;margin:8px 0 2px}
+#notePanel h4:first-child{margin-top:0}
+#notePanel ul{padding-left:18px}
+#keys{position:fixed;left:18px;bottom:22px;font-size:12px;color:var(--muted);z-index:25}
+
+/* cover */
+.cover{justify-content:center;gap:20px}
+.cover .kick{font-size:13px;font-weight:800;letter-spacing:.18em;color:var(--accent)}
+.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px;max-width:980px}
+.agenda div{border-top:2px solid var(--ink);padding-top:8px;font-size:14px;line-height:1.45}
+.agenda span{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:2px}
+
+/* vote */
+.vote{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.q h3{font-size:19px;margin-bottom:10px}
+.q h3 em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 11px;margin-bottom:7px;font-size:14.5px;line-height:1.4;transition:all .2s}
+.opt i{font-style:normal;font-family:var(--mono);font-weight:700;color:var(--muted);flex:none;width:16px}
+.opt.pick{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.opt .v{display:none;font-size:12.5px;margin-top:3px;color:var(--ink2)}
+.revealed .opt .v{display:block}
+.revealed .opt[data-v="ok"]{background:var(--ok-soft);border-color:var(--ok)}
+.revealed .opt[data-v="half"]{background:var(--half-soft);border-color:#C9A64A}
+.revealed .opt[data-v="no"]{background:var(--bad-soft);border-color:#D9A19B}
+.tagv{font-weight:800;margin-right:4px}
+
+/* path */
+.path-svg{width:100%;height:auto;display:block}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.steps div{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:8px 10px;font-size:13px;line-height:1.45;color:var(--muted);transition:all .3s}
+.steps div b{display:block;color:var(--ink2);font-size:13.5px}
+.steps div.on{border-color:var(--accent);background:var(--accent-soft);color:var(--ink2)}
+.steps div.on b{color:#7A4A12}
+
+/* rack */
+.rack-wrap{position:relative;width:100%;max-width:860px}
+.rack-wrap .iso-svg{width:100%}
+.rack-state{transition:opacity .5s var(--anatomy-ease,ease),transform .6s var(--anatomy-ease,ease)}
+.rack-out{position:absolute;inset:0;opacity:0;transform:translate(10px,-6px)}
+.pulled .rack-out{opacity:1;transform:none}
+.pulled .rack-in{opacity:0}
+.facts{display:flex;flex-direction:column;gap:10px}
+.fact{display:flex;gap:12px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px}
+.fact b{font-family:var(--mono);font-size:22px;min-width:84px}
+.fact span{font-size:14px;color:var(--ink2);line-height:1.45}
+
+/* eat game */
+.foods{display:flex;flex-wrap:wrap;gap:8px}
+.food{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;transition:all .25s}
+.food.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.food.done{opacity:.35;pointer-events:none}
+.bowls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:180px}
+.bowl{border:1.5px dashed var(--line2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--paper);text-align:left;transition:border-color .2s,background .2s}
+.bowl:hover{border-color:var(--ink2)}
+.bowl h4{font-size:16px}
+.bowl h4 small{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
+.bowl .in{display:flex;flex-wrap:wrap;gap:6px}
+.bowl .in span{font-size:12.5px;padding:4px 9px;border-radius:999px;background:var(--ok-soft);border:1px solid #A9D3B7;animation:pop .35s ease}
+.bowl.shake{animation:shake .4s}
+.bowl svg{width:46px;height:30px}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#eatMsg{min-height:44px}
+
+/* zoom */
+.zoom-svg{width:100%;height:100%;max-height:52vh}
+.zs{opacity:0;transition:opacity .5s, transform .6s;transform-origin:300px 170px;transform:scale(.92)}
+.zs.on{opacity:1;transform:none}
+.ladder{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ladder input{flex:1;min-width:180px;accent-color:var(--ink)}
+.stops{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;font-size:12px;color:var(--muted);text-align:center}
+.stops span.on{color:var(--ink);font-weight:800}
+
+/* cartoon */
+.toon{width:100%;max-height:56vh}
+#kid{transform-origin:200px 330px;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+#ele{transform:translateY(150px);transition:transform .9s cubic-bezier(.25,1.5,.45,1)}
+.pulling #kid{animation:tug .5s ease-in-out 3}
+.out #ele{transform:translateY(0)}
+.out #kid{transform:rotate(-14deg) translateX(-14px)}
+#bubble,#sweat{opacity:0;transition:opacity .4s .6s}
+.out #bubble,.out #sweat{opacity:1}
+@keyframes tug{50%{transform:translateX(-10px) rotate(-4deg)}}
+
+/* elephant ladder */
+.el{opacity:0;transition:opacity .45s}
+.el.on{opacity:1}
+.keep{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.keep div{border-radius:8px;padding:10px 12px;font-size:14px;line-height:1.5}
+.keep .k1{background:var(--ok-soft)}.keep .k2{background:var(--bad-soft)}
+.keep b{display:block;font-size:12px;letter-spacing:.06em;margin-bottom:2px}
+
+/* sort */
+.sort{display:grid;grid-template-columns:1fr 1.15fr;gap:16px;flex:1;min-height:340px}
+.pile,.binwrap{position:relative;border-radius:12px;border:1px solid var(--line);background:var(--paper);min-height:320px}
+.pile h4,.binwrap>h4{position:absolute;left:12px;top:10px;font-size:12px;color:var(--muted);letter-spacing:.06em}
+.binwrap .bins{position:absolute;inset:34px 10px 10px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px}
+.binwrap .b{border:1.5px dashed var(--line2);border-radius:10px;position:relative}
+.binwrap .b span{position:absolute;left:8px;top:6px;font-size:13px;font-weight:800;color:var(--ink2)}
+.thing.ghost{opacity:.22;transition:none;z-index:1}
+.thing{position:absolute;width:72px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;color:var(--ink2);transition:left .7s cubic-bezier(.3,.9,.3,1),top .7s cubic-bezier(.3,.9,.3,1),transform .3s;z-index:2}
+.thing svg{width:42px;height:42px;color:var(--ink)}
+.thing.hl svg{color:var(--accent)}
+.thing.hl{transform:scale(1.15)}
+
+/* human-machine */
+.hm{width:100%;height:auto;max-height:50vh}
+.hm .part{transition:opacity .3s}
+.hm .part *{transition:stroke .3s,fill .3s}
+.hm.focus .part{opacity:.28}
+.hm.focus .part.on{opacity:1}
+.hm .part.on .hl{stroke:var(--accent)!important}
+.hm .part.on .hf{fill:var(--accent-soft)!important}
+.hm .link{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:6 6;opacity:0;transition:opacity .3s}
+.hm .link.on{opacity:1;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+
+/* big words */
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.word{border:1.5px solid var(--ink);background:#fff;border-radius:8px;padding:8px 14px;font-weight:900;font-size:16px}
+.word.sel{background:var(--ink);color:#fff}
+.word.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft);pointer-events:none}
+.slots{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.slot{border:1.5px dashed var(--line2);border-radius:12px;padding:10px;min-height:128px;text-align:left;background:var(--paper);display:flex;flex-direction:column;gap:6px}
+.slot h4{font-size:15px}
+.slot h4 small{display:block;font-size:12px;color:var(--muted);font-weight:500}
+.slot .in span{display:inline-block;font-size:13px;font-weight:800;padding:3px 8px;border-radius:6px;background:var(--ok-soft);color:var(--ok);margin:0 4px 4px 0;animation:pop .35s}
+.slot.shake{animation:shake .4s}
+
+/* token */
+.tk-input{width:100%;font:inherit;font-size:20px;padding:10px 14px;border:1px solid var(--line2);border-radius:8px;background:#fff}
+.tk-out{display:flex;flex-wrap:wrap;gap:6px;min-height:64px;align-items:flex-start}
+.tk{font-size:22px;font-weight:700;padding:6px 10px;border-radius:6px;border:1px solid;animation:drop .4s cubic-bezier(.3,1.4,.5,1) both}
+.tk:nth-child(odd){background:var(--accent-soft);border-color:#DDBB8E}
+.tk:nth-child(even){background:var(--blue-soft);border-color:#AFC0EC}
+@keyframes drop{from{transform:translateY(-24px) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+.machine{width:100%;max-height:150px}
+#blade{transition:transform .15s}
+.chop #blade{animation:chop .25s ease-in-out infinite}
+@keyframes chop{50%{transform:translateY(18px)}}
+
+/* next word */
+.sent{font-size:clamp(22px,2.6vw,32px);font-weight:800;line-height:1.5}
+.blank{display:inline-block;min-width:3em;border-bottom:3px solid var(--accent);color:var(--accent);text-align:center;padding:0 6px}
+.probs{display:flex;flex-direction:column;gap:8px}
+.pr{display:grid;grid-template-columns:70px 1fr 50px;gap:10px;align-items:center;font-size:15px;font-weight:700}
+.pr .bar{height:14px;background:#E8E6E0;border-radius:99px;overflow:hidden}
+.pr .bar i{display:block;height:100%;background:var(--ink2);border-radius:99px;transition:width .5s}
+.pr.win .bar i{background:var(--accent)}
+.pr.win{color:var(--accent)}
+.hist{font-family:var(--mono);font-size:13px;color:var(--ink2)}
+
+/* guess */
+.lane{border:1px solid var(--line);border-radius:12px;background:var(--paper);padding:14px;display:flex;flex-direction:column;gap:10px}
+.lane h4{font-size:16px}
+.lane h4 small{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.track{position:relative;height:34px;background:#ECEAE4;border-radius:6px}
+.range{position:absolute;top:0;bottom:0;background:var(--blue-soft);border:1px solid #AFC0EC;border-radius:6px;transition:left .45s,width .45s}
+.ptr{position:absolute;top:-6px;width:2px;height:46px;background:var(--ink);transition:left .2s}
+.ptr::after{content:attr(data-n);position:absolute;top:-18px;left:-12px;font-family:var(--mono);font-size:12px;font-weight:700}
+.target{position:absolute;top:0;bottom:0;width:3px;background:var(--accent);opacity:0;transition:opacity .3s}
+.done .target{opacity:1}
+.count{font-family:var(--mono);font-size:28px;font-weight:800}
+.count small{font-size:13px;color:var(--muted);font-weight:500;margin-left:6px}
+
+/* paint */
+.paint{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;width:100%;max-width:420px;aspect-ratio:1}
+.paint i{background:#E6E4DE;border-radius:2px;transition:background .15s}
+.paint i.p{background:var(--ink2)}
+.paint i.p.a{background:var(--accent)}
+
+/* demo */
+.demo{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.demo .card h4{font-size:15px;margin-bottom:6px;display:flex;gap:8px;align-items:baseline}
+.demo .card h4 em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--accent)}
+.demo .card p{font-size:14px;line-height:1.55;color:var(--ink2)}
+.demo .card p b{color:var(--ink)}
+.ask{display:block;font-family:var(--mono);font-size:13.5px;background:#F0EEE8;border-radius:6px;padding:6px 10px;margin:6px 0;color:var(--ink)}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin-top:6px}
+.chk input{accent-color:var(--ok);width:16px;height:16px}
+
+/* homework / next */
+.hw{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hw .card b.n{font-family:var(--mono);color:var(--accent);font-size:13px}
+.hw .card h4{font-size:17px;margin:4px 0 6px}
+.hw .card p{font-size:14px;color:var(--ink2);line-height:1.55}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.three div{background:var(--ink);color:#fff;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:800}
+.three div small{display:block;font-size:12px;font-weight:500;color:#BDBDBD;margin-top:3px}
+table.plan{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper)}
+table.plan th,table.plan td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
+table.plan th{font-size:12px;color:var(--muted);font-weight:700}
+table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(--accent);font-weight:700}
+
+@media (max-width:860px){
+  .slide{padding:20px 16px 76px}
+  .cols,.sort,.vote,.hw,.demo,.three,.keep{grid-template-columns:1fr}
+  .agenda{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .slots{grid-template-columns:1fr 1fr}
+  .bowls{grid-template-columns:1fr}
+  #keys{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-apple" viewBox="0 0 48 48"><path d="M24 15c-4-4-14-3-14 9 0 10 7 18 11 18 1.5 0 2-1 3-1s1.5 1 3 1c4 0 11-8 11-18 0-12-10-13-14-9z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M24 15c0-4 1-7 3-9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M26 11c3-3 7-3 9-2-2 3-5 4-9 2z" fill="currentColor"/></symbol>
+    <symbol id="i-banana" viewBox="0 0 48 48"><path d="M8 18c4 14 20 22 34 14-2 6-10 10-18 9C14 40 6 30 8 18z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 18l-2-4 4 1" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-melon" viewBox="0 0 48 48"><path d="M5 18h38c0 12-9 21-19 21S5 30 5 18z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 21c1 8 7 13 14 13s13-5 14-13" fill="none" stroke="currentColor" stroke-width="1.6"/><g fill="currentColor"><circle cx="18" cy="25" r="1.4"/><circle cx="24" cy="28" r="1.4"/><circle cx="30" cy="25" r="1.4"/></g></symbol>
+    <symbol id="i-bike" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="31" r="8"/><circle cx="37" cy="31" r="8"/><path d="M11 31l8-14h12l6 14M19 17l6 14h-14M31 17l-2-5h-4M19 17l-2-4h-4"/></g></symbol>
+    <symbol id="i-car" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M5 31v-7l5-1 5-8h16l7 8 5 1v7z"/><circle cx="14" cy="32" r="4" fill="var(--paper)"/><circle cx="35" cy="32" r="4" fill="var(--paper)"/><path d="M17 17l-3 6h10v-6zM27 17v6h9l-5-6z"/></g></symbol>
+    <symbol id="i-cat" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M10 20l-1-12 9 6h12l9-6-1 12c2 3 2 6 2 8 0 8-7 12-15 12S10 36 10 28c0-2 0-5 0-8z"/><path d="M4 28h9M4 32h9M35 28h9M35 32h9M22 30l2 2 2-2"/></g><circle cx="18" cy="24" r="1.8" fill="currentColor"/><circle cx="30" cy="24" r="1.8" fill="currentColor"/></symbol>
+    <symbol id="i-dog" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M14 12h20c3 0 5 3 5 7v9c0 8-7 13-15 13S9 36 9 28v-9c0-4 2-7 5-7z"/><path d="M14 12C8 12 5 18 6 26l5-2M34 12c6 0 9 6 8 14l-5-2"/><path d="M21 31c2 2 4 2 6 0"/></g><circle cx="19" cy="23" r="1.8" fill="currentColor"/><circle cx="29" cy="23" r="1.8" fill="currentColor"/><ellipse cx="24" cy="28" rx="2.6" ry="1.8" fill="currentColor"/></symbol>
+    <symbol id="i-fish" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 24c6-9 18-12 28-4l8-6v20l-8-6C24 36 12 33 6 24z"/><path d="M24 17c-2 4-2 10 0 14"/></g><circle cx="13" cy="22" r="1.8" fill="currentColor"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M34 6l8 8-24 24-11 3 3-11z"/><path d="M29 11l8 8M10 30l8 8"/></g></symbol>
+    <symbol id="i-book" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M24 12c-5-4-12-4-17-2v28c5-2 12-2 17 2 5-4 12-4 17-2V10c-5-2-12-2-17 2z"/><path d="M24 12v28"/></g></symbol>
+    <symbol id="i-phone" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2"><rect x="13" y="4" width="22" height="40" rx="4"/><path d="M13 10h22M13 37h22"/></g><circle cx="24" cy="40.5" r="1.4" fill="currentColor"/></symbol>
+    <symbol id="i-ball" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M24 16l7 5-3 8h-8l-3-8zM24 16V8M31 21l8-3M28 29l5 7M20 29l-5 7M17 21l-8-3"/></g></symbol>
+  </defs>
+</svg>
+
+<!-- 1 封面 -->
+<section class="slide cover" data-t="0–2">
+  <div class="kick">AI 通识进阶 · M1 抽象 · 第一节（线上 1 小时）</div>
+  <h1>AI 是怎么<br>被"造"出来的？</h1>
+  <p class="lead">今天先问三个关于 AI 的怪问题，再学一个词——<b>抽象</b>。学完你能用自己的话说清：算法、算力、Token、提示词，到底都是啥。</p>
+  <div class="agenda">
+    <div><span>第 2–19 分钟</span>AI 住哪、吃啥、长啥样</div>
+    <div><span>第 19–28 分钟</span>什么叫抽象</div>
+    <div><span>第 28–35 分钟</span>AI 是照着人造的</div>
+    <div><span>第 35–46 分钟</span>四个大词，一个个拆</div>
+    <div><span>第 46–60 分钟</span>看老师考 AI，交作业</div>
+  </div>
+  <aside class="notes">
+    <h4>开场 2 分钟</h4>
+    <ul><li>请大家打开摄像头、把飞书会议的聊天区展开，今天会用到投票、聊天区接龙和举手。</li>
+    <li>一句话定调：今天不教你用哪个软件，教你看懂 AI 是怎么造出来的。</li>
+    <li>提醒：这份课件发在群里，课后可以自己点着玩。</li></ul>
+  </aside>
+</section>
+
+<!-- 2 三个问题投票 -->
+<section class="slide" data-t="2–5" data-fs="飞书会议 · 投票（三题一起发，限时 90 秒）">
+  <div><h2>先猜：关于 AI 的三个怪问题<span class="en">Three odd questions about AI</span></h2></div>
+  <p class="lead">凭感觉选，不用怕错。<b>每题可能不止一个对</b>。选完在聊天区说一句理由。</p>
+  <div class="stage">
+    <div class="vote" id="vote">
+      <div class="card q" data-q="1"><h3><em>问题 1</em>AI 到底住在哪里？</h3>
+        <button class="opt" data-v="half"><i>A</i><span>我的手机、电脑里<span class="v"><span class="tagv">一半对</span>有些小号 AI 能装进手机；你平时聊天的大 AI 不在手机里，手机只是"窗口"。</span></span></button>
+        <button class="opt" data-v="half"><i>B</i><span>天上的"云"里<span class="v"><span class="tagv">一半对</span>"云"是个比喻，它其实在地上。</span></span></button>
+        <button class="opt" data-v="ok"><i>C</i><span>很远的一个大机房里<span class="v"><span class="tagv">对</span>大 AI 住在机房的服务器里。</span></span></button>
+        <button class="opt" data-v="no"><i>D</i><span>网线里<span class="v"><span class="tagv">不对</span>网线是路，不是家。</span></span></button>
+      </div>
+      <div class="card q" data-q="2"><h3><em>问题 2</em>AI "吃"什么？</h3>
+        <button class="opt" data-v="ok"><i>A</i><span>电<span class="v"><span class="tagv">对</span>每回答一句都在耗电。</span></span></button>
+        <button class="opt" data-v="ok"><i>B</i><span>书和网页上的文字<span class="v"><span class="tagv">对</span>学本事的时候吃。</span></span></button>
+        <button class="opt" data-v="ok"><i>C</i><span>我问它的问题<span class="v"><span class="tagv">对</span>干活的时候吃。</span></span></button>
+        <button class="opt" data-v="no"><i>D</i><span>它什么都不吃<span class="v"><span class="tagv">不对</span>它吃得可多了。</span></span></button>
+      </div>
+      <div class="card q" data-q="3"><h3><em>问题 3</em>AI 长什么样？</h3>
+        <button class="opt" data-v="no"><i>A</i><span>像个机器人<span class="v"><span class="tagv">不对</span>机器人只是它可以用的一个外壳。</span></span></button>
+        <button class="opt" data-v="half"><i>B</i><span>像一块芯片<span class="v"><span class="tagv">一半对</span>芯片是它的"身体"，但还不是全部。</span></span></button>
+        <button class="opt" data-v="ok"><i>C</i><span>是一大堆数字<span class="v"><span class="tagv">对</span>它的本事存在一大堆数字里。</span></span></button>
+        <button class="opt" data-v="half"><i>D</i><span>它没有样子<span class="v"><span class="tagv">一半对</span>没有固定样子，但有身体。</span></span></button>
+      </div>
+    </div>
+    <div class="btns"><button class="btn" id="revealVote">揭晓答案（讲完三题再点）</button><button class="btn" id="resetVote">清空</button></div>
+  </div>
+  <aside class="notes">
+    <h4>飞书操作</h4>
+    <ul><li>会议底部「投票」→ 新建三道单选题，选项照屏幕抄 A–D，限时 90 秒；如果投票功能不可用，就让孩子在聊天区打"1C 2B 3A"这种格式。</li>
+    <li>你在屏幕上点一下全班最多人选的那个选项（会加粗），记住它，后面三页逐题揭晓。</li></ul>
+    <h4>别做的事</h4>
+    <ul><li>这一页不揭晓。说一句"每题都有坑，我们一题一题拆"就翻页。最后一页"交作业"会让他们对照自己现在的答案。</li></ul>
+  </aside>
+</section>
+
+<!-- 3 消息去哪了 -->
+<section class="slide" data-t="5–8" data-fs="聊天区：猜一猜，这句话跑了多远">
+  <div><h2>问题 1 · 你按下"发送"，这句话去哪了？<span class="en">Where does your message go?</span></h2></div>
+  <div class="stage">
+    <div class="card">
+      <svg class="path-svg" viewBox="0 0 900 250" role="img" aria-label="一条消息从手机出发，经过家里的路由器、通信基站、很长的光缆，到达远方机房里的服务器，再原路回来。">
+        <g fill="none" stroke="#1A1A1C" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <rect x="40" y="70" width="64" height="116" rx="10" fill="#fff"/><path d="M40 86h64M40 170h64"/>
+          <rect x="52" y="96" width="40" height="14" rx="4" fill="#F3E6D4"/><rect x="58" y="116" width="34" height="14" rx="4" fill="#DDE5F8"/>
+          <rect x="178" y="150" width="78" height="30" rx="6" fill="#fff"/><path d="M196 150l-8-34M238 150l8-34"/><circle cx="200" cy="165" r="2.5" fill="#1A1A1C"/><circle cx="212" cy="165" r="2.5" fill="#1A1A1C"/>
+          <path d="M330 186l18-110 18 110M336 150h24M341 120h14M348 76v-12"/><path d="M332 70c4-8 28-8 32 0M326 60c8-14 36-14 44 0" stroke="#85858B"/>
+          <path d="M730 186V92l50-26 50 26v94z" fill="#fff"/><path d="M730 92h100"/>
+          <g fill="#F3F2EE"><rect x="744" y="104" width="18" height="70" rx="2"/><rect x="771" y="104" width="18" height="70" rx="2"/><rect x="798" y="104" width="18" height="70" rx="2"/></g>
+          <path d="M748 116h10M748 128h10M748 140h10M748 152h10M775 116h10M775 128h10M775 140h10M775 152h10M802 116h10M802 128h10M802 140h10M802 152h10" stroke="#85858B" stroke-width="1.5"/>
+        </g>
+        <path id="msgPath" d="M104 128 C140 128 150 150 178 160 M256 165 C290 165 310 150 340 130 M366 130 C450 80 560 210 640 140 C680 110 700 150 730 150" fill="none" stroke="#C9C6BE" stroke-width="2.5" stroke-dasharray="5 6"/>
+        <path d="M366 130 C450 80 560 210 640 140 C680 110 700 150 730 150" fill="none" stroke="#B9762A" stroke-width="1" opacity=".5"/>
+        <g font-size="14" fill="#4A4A50" font-family="PingFang SC,sans-serif" text-anchor="middle">
+          <text x="72" y="212">你的手机</text><text x="217" y="212">家里路由器</text><text x="348" y="212">通信基站</text><text x="520" y="232">光缆：可能几百到上千公里</text><text x="780" y="212">机房里的服务器</text>
+        </g>
+        <circle id="msgDot" r="8" fill="#B9762A" cx="104" cy="128"/>
+      </svg>
+    </div>
+    <div class="steps" id="pathSteps">
+      <div><b>1 手机</b>把你的字变成信号发出去，自己不负责"想"。</div>
+      <div><b>2 路由器</b>把信号送进网络。</div>
+      <div><b>3 基站和光缆</b>光在光缆里每秒约跑 20 万公里。</div>
+      <div><b>4 机房</b>服务器里的 AI 算出回答。</div>
+      <div><b>5 原路回来</b>回答一块一块传回你的屏幕。</div>
+    </div>
+    <div class="btns"><button class="btn primary" id="sendBtn">按下发送</button><span class="readout" id="pathRead" style="align-self:center"></span></div>
+  </div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>先问：手机关掉网络，还能和豆包聊天吗？（不能）——说明 AI 不在手机里。</li>
+    <li>点"按下发送"，小点一步一步走，底下五格会亮。走到第 4 格停一下："真正'想'的地方在这里。"</li>
+    <li>读数会算出 1000 公里光缆单程大约 5 毫秒，所以感觉不到它很远。</li></ul>
+    <h4>知识点要讲准</h4>
+    <ul><li>"云"是比喻，指别人机房里的电脑。</li><li>有些小模型可以装在手机里离线跑（端侧模型），所以投票 A 算一半对。</li></ul>
+  </aside>
+</section>
+
+<!-- 4 机柜 -->
+<section class="slide" data-t="8–11" data-fs="举手：猜一台服务器里有几块 GPU">
+  <div><h2>问题 1 · 机房里，AI 住在这样的柜子里<span class="en">A rack in a data center</span></h2></div>
+  <div class="cols">
+    <div class="figcard" id="rackCard">
+      <span class="c tl">Fig 1</span><span class="c tr">机房里的一个机柜</span>
+      <div class="rack-wrap">
+        <div class="iso rack-state rack-in" data-theme="light"><!--@RACK_IN@--></div>
+        <div class="iso rack-state rack-out" data-theme="light" aria-hidden="true"><!--@RACK_OUT@--></div>
+      </div>
+      <span class="c bl">点下面的按钮，拉出一台服务器</span><span class="c br" id="rackRead">4 台 AI 服务器</span>
+    </div>
+    <div class="facts">
+      <div class="btns"><button class="btn primary" id="pullBtn">拉出一台服务器</button></div>
+      <div class="fact"><b>~2 米</b><span>一个机柜差不多和门一样高，从下到上是电源、4 台 AI 服务器、两台网络交换机。</span></div>
+      <div class="fact"><b>8 块</b><span>一台 AI 服务器里装 8 块 GPU（显卡芯片），每块都顶着一大块散热片。</span></div>
+      <div class="fact"><b>上万块</b><span>大的 AI 机房里，这样的柜子一排一排，加起来有上万块 GPU。</span></div>
+      <div class="say">AI 住在机房里。<b>它的"身体"就是这些芯片</b>，你的手机只是跟它说话的窗口。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>怎么用这张图</h4>
+    <ul><li>先不点，问："这柜子里哪一层是 AI？"让孩子在聊天区猜第几层。</li>
+    <li>点"拉出一台服务器"，盖子打开：8 块亮着的就是 GPU。问："为什么它们头上都顶着一大块带齿的铁？"——发热，散热片。</li>
+    <li>为下一页埋伏笔：这么多芯片一直在算，它们要"吃"什么？</li></ul>
+    <h4>数字来源</h4>
+    <ul><li>标准机柜约 60×105×200 厘米；常见 AI 服务器一台 8 块 GPU、高 8U；一个柜子按供电通常放 4 台。图按这些尺寸画的。</li></ul>
+  </aside>
+</section>
+
+<!-- 5 吃什么 -->
+<section class="slide" data-t="11–15" data-fs="聊天区：把每样食物喂给哪张嘴">
+  <div><h2>问题 2 · AI 吃什么？分三张嘴喂<span class="en">What does AI eat?</span></h2></div>
+  <p class="lead">先点一样"食物"，再点它该进的那张嘴。喂错了，嘴会摇头。</p>
+  <div class="stage">
+    <div class="foods" id="foods">
+      <button class="food" data-to="learn">书和网页上的文字</button>
+      <button class="food" data-to="learn">人给它的回答打分</button>
+      <button class="food" data-to="work">你问它的问题</button>
+      <button class="food" data-to="work learn">你发给它的图片</button>
+      <button class="food" data-to="always">电</button>
+      <button class="food" data-to="always">给芯片降温的水和风</button>
+    </div>
+    <div class="bowls">
+      <button class="bowl" data-b="learn"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#F3E6D4" stroke="#1A1A1C" stroke-width="2"/></svg><h4>学本事时吃<small>它还在"上学"的时候</small></h4><div class="in"></div></button>
+      <button class="bowl" data-b="work"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#DDE5F8" stroke="#1A1A1C" stroke-width="2"/></svg><h4>干活时吃<small>你跟它聊天的时候</small></h4><div class="in"></div></button>
+      <button class="bowl" data-b="always"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#DDEFE3" stroke="#1A1A1C" stroke-width="2"/></svg><h4>一直在吃<small>只要机器开着</small></h4><div class="in"></div></button>
+    </div>
+    <div class="say" id="eatMsg">AI 有三张嘴：学的时候吃文字，干活的时候吃你的问题，<b>只要开着就一直吃电</b>。</div>
+  </div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>你共享屏幕，孩子在聊天区喊"1 号喂第 2 张嘴"，你来点。也可以每人一样轮流喊。</li>
+    <li>"你发给它的图片"进"干活"或"学本事"都算对：有的公司会拿用户内容去训练，所以很多 AI 有"不让我的内容用于训练"的开关——顺口提一句隐私。</li></ul>
+    <h4>可以说的真数字</h4>
+    <ul><li>DeepSeek-V3 的技术报告（2024）写着：它学本事时读了约 14.8 万亿个 Token。Token 是什么，后面会讲。</li></ul>
+  </aside>
+</section>
+
+<!-- 6 长什么样 -->
+<section class="slide" data-t="15–19" data-fs="聊天区：每拉一格，喊出你看到了什么">
+  <div><h2>问题 3 · AI 长什么样？一层一层放大看<span class="en">Zoom in until you see what AI really is</span></h2></div>
+  <div class="cols">
+    <div class="card" style="display:flex;align-items:center;justify-content:center">
+      <svg class="zoom-svg" viewBox="0 0 600 340" role="img" aria-label="把 AI 一层层放大：聊天框和机器人外壳，机房，服务器里的 GPU，一块芯片，最后是一大堆数字。">
+        <g class="zs" data-z="1" fill="none" stroke="#1A1A1C" stroke-width="2" stroke-linejoin="round">
+          <rect x="120" y="40" width="150" height="260" rx="18" fill="#fff"/><path d="M120 70h150M120 270h150"/>
+          <rect x="140" y="90" width="90" height="26" rx="8" fill="#F3E6D4"/><rect x="160" y="128" width="90" height="40" rx="8" fill="#DDE5F8"/><rect x="140" y="180" width="70" height="26" rx="8" fill="#F3E6D4"/>
+          <rect x="360" y="80" width="110" height="90" rx="20" fill="#fff"/><circle cx="392" cy="122" r="10"/><circle cx="438" cy="122" r="10"/><path d="M400 150h30M415 80V56"/><circle cx="415" cy="50" r="7"/>
+          <rect x="370" y="180" width="90" height="80" rx="10" fill="#fff"/><path d="M370 200h-24v40M460 200h24v40M392 260v34M438 260v34"/>
+        </g>
+        <g class="zs" data-z="2" stroke="#1A1A1C" stroke-width="1.6" stroke-linejoin="round" id="zRoom"></g>
+        <g class="zs" data-z="3" fill="none" stroke="#1A1A1C" stroke-width="2">
+          <rect x="90" y="40" width="420" height="260" rx="10" fill="#fff"/>
+          <g id="zGpus"></g>
+          <path d="M110 270h380" stroke="#C9C6BE"/>
+        </g>
+        <g class="zs" data-z="4" stroke="#1A1A1C" stroke-width="2" fill="none">
+          <rect x="190" y="60" width="220" height="220" rx="6" fill="#fff"/>
+          <g id="zPins"></g>
+          <rect x="230" y="100" width="140" height="140" fill="#F3E6D4"/>
+          <g id="zCores" stroke="#B9762A" stroke-width="1"></g>
+        </g>
+        <g class="zs" data-z="5"><rect x="40" y="30" width="520" height="280" rx="10" fill="#1C1C1E"/><g id="zNums" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#E0B57A"></g></g>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="ladder"><button class="btn" id="zMinus" aria-label="缩小">－</button><input type="range" min="1" max="5" value="1" id="zoom" aria-label="放大级别"><button class="btn" id="zPlus" aria-label="放大">＋</button></div>
+      <div class="stops" id="zStops"><span>你看到的</span><span>机房</span><span>服务器</span><span>芯片</span><span>数字</span></div>
+      <div class="card"><b id="zTitle" style="font-size:18px"></b><p class="lead" id="zText" style="margin-top:6px"></p></div>
+      <div class="say hidden" id="zEnd">AI 没有固定的样子：<b>身体是芯片，本事存在一大堆数字里</b>，外壳可以随便换——聊天框、音箱、机器人都行。<br>那问题来了：人是怎么把"本事"变成一堆数字的？先学一个词：<b>抽象</b>。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>每拉一格先停，让孩子在聊天区说"我看到了 ___"，你再读右边的解释。</li>
+    <li>拉到最后一格："它会写诗、会讲题，靠的不是哪个零件，而是这堆数字的大小。人管这些数叫'参数'。"</li></ul>
+    <h4>可以说的真数字</h4>
+    <ul><li>DeepSeek-V3 共有 6710 亿个参数（技术报告，2024）。一块常见 AI 芯片 H100 里有一万六千多个小计算单元。</li>
+    <li>数字墙上的数是随手生成的示意，不是真参数。</li></ul>
+  </aside>
+</section>
+
+<!-- 7 抽大象 -->
+<section class="slide" data-t="19–21" data-fs="聊天区：抽象是什么意思？先瞎猜">
+  <div><h2>什么叫抽象？是"抽大象"吗？<span class="en">Abstraction is not pulling an elephant</span></h2></div>
+  <div class="cols">
+    <div class="card" id="toonCard" style="display:flex;align-items:center;justify-content:center">
+      <svg class="toon" viewBox="0 0 560 360" role="img" aria-label="漫画：一个孩子拽着绳子，从魔术帽里拽出了一头大象，自己摔了个屁股墩。">
+        <path d="M20 330h520" stroke="#C9C6BE" stroke-width="2"/>
+        <clipPath id="hatClip"><rect x="0" y="0" width="560" height="270"/></clipPath>
+        <g clip-path="url(#hatClip)"><g id="ele">
+          <g stroke="#1A1A1C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M330 270c-20-40 -10-110 50-120 60-8 90 40 80 90-6 30-30 40-30 40" fill="#D9D6CF"/>
+            <path d="M398 160c40-6 56 30 48 60-6 22-30 26-40 10" fill="#C9C6BE"/>
+            <path d="M335 190c-30 10-50 0-56-24-4-16 6-30 14-26" fill="none"/>
+            <path d="M342 226c4 8 12 10 18 6" fill="none"/>
+            <path d="M332 200c-8 4-14 2-16-4M330 210c-8 4-14 2-16-4" fill="none" stroke-width="1.6"/>
+          </g>
+          <circle cx="360" cy="194" r="5" fill="#1A1A1C"/>
+          <path d="M350 178l14 4" stroke="#1A1A1C" stroke-width="2" stroke-linecap="round"/>
+        </g></g>
+        <g id="hat">
+          <path d="M300 268h170l-10 62H310z" fill="#1A1A1C"/>
+          <ellipse cx="385" cy="268" rx="96" ry="14" fill="#2A2A2E" stroke="#1A1A1C" stroke-width="2"/>
+          <path d="M310 300h150" stroke="#B9762A" stroke-width="6"/>
+        </g>
+        <path id="rope" d="M236 214 C 270 222 300 230 330 236" fill="none" stroke="#8A6D1F" stroke-width="3" stroke-linecap="round"/>
+        <g id="kid" stroke="#1A1A1C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <circle cx="170" cy="150" r="30" fill="#fff"/>
+          <circle cx="182" cy="146" r="3" fill="#1A1A1C"/><path d="M178 164c4 2 8 2 12-2"/>
+          <path d="M162 180l-6 80M160 205l40 10 36 0M160 210l70 6M156 260l-26 66M156 260l26 66"/>
+        </g>
+        <g id="sweat" fill="#2F5BD3"><path d="M134 126c-4 6-4 10 0 12 4-2 4-6 0-12z"/><path d="M122 146c-3 5-3 8 0 10 3-2 3-5 0-10z"/></g>
+        <g id="bubble"><path d="M70 40h220a14 14 0 0 1 14 14v40a14 14 0 0 1-14 14H150l-24 22 4-22H70a14 14 0 0 1-14-14V54a14 14 0 0 1 14-14z" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><text x="180" y="82" text-anchor="middle" font-size="20" font-weight="800" fill="#1A1A1C" font-family="PingFang SC,sans-serif">我抽出了一头大象！</text></g>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="btns"><button class="btn primary" id="tugBtn">用力抽！</button><button class="btn" id="tugReset">再来一次</button></div>
+      <div class="say hidden" id="toonSay">可惜，<b>抽象不是抽大象</b>。<br>"象"在这里是"样子"的意思。抽象，就是从很多具体的东西里，<b>把它们共同的样子抽出来，把不要的细节扔掉</b>。</div>
+      <p class="lead hidden" id="toonNext">比如一头真大象，你能"抽"掉多少东西，还认得出它是大象？下一页试试。</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>节奏</h4>
+    <ul><li>先让孩子在聊天区猜"抽象"是什么意思，收 3–4 个答案，不评对错。</li>
+    <li>点"用力抽！"——孩子拽出大象摔倒。笑完再出右边那句话。</li>
+    <li>这页只立一个梗：抽象 = 抽出共同的样子，扔掉细节。下一页马上动手扔细节。</li></ul>
+  </aside>
+</section>
+
+<!-- 8 抽象台阶 -->
+<section class="slide" data-t="21–24" data-fs="聊天区：哪一级你还认得出大象？哪一级它和小猫一样了？">
+  <div><h2>把一头大象，一级一级"抽"<span class="en">Climbing the abstraction ladder</span></h2></div>
+  <div class="cols">
+    <div class="card" style="display:flex;align-items:center;justify-content:center">
+      <svg viewBox="0 0 520 320" style="width:100%;max-height:50vh" role="img" aria-label="一头大象被逐级抽象：一头叫阿宝的真大象，大象剪影，简笔大象，文字“大象”，最后是“动物”。">
+        <g class="el" data-e="1" stroke="#1A1A1C" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M120 230c-10-60 30-110 110-110 70 0 120 30 120 90v20H120z" fill="#C9C6BE"/>
+          <path d="M140 240v50h30v-50M190 240v50h30v-50M290 240v50h30v-50M330 240v50h28v-50" fill="#BDBAB2"/>
+          <path d="M140 290h30M190 290h30M290 290h30M330 290h28" stroke-width="3"/>
+          <path d="M350 160c40-10 70 20 66 60-2 30 -20 50 -10 70 6 10 20 8 22 0" fill="none" stroke-width="12" stroke="#C9C6BE"/>
+          <path d="M350 160c40-10 70 20 66 60-2 30 -20 50 -10 70 6 10 20 8 22 0" fill="none"/>
+          <path d="M300 120c-40-20-80 0-80 50 0 40 30 60 60 50 20-6 30-30 30-50" fill="#D9D6CF"/>
+          <path d="M235 140l10 6-6 8" fill="none"/>
+          <circle cx="352" cy="170" r="4" fill="#1A1A1C"/>
+          <path d="M376 210c10 4 22 2 30-6" fill="#fff"/>
+          <path d="M120 200c-10 4-16 16-14 26" fill="none"/>
+          <path d="M160 150c4 10 4 20 0 30M200 135c4 12 4 26 0 40M260 132c4 12 4 26 0 40M400 200l8 2M402 214l8 2M398 228l8 2M396 242l8 2" fill="none" stroke-width="1.3"/>
+          <path d="M424 288c6-10 20-10 22 2l-6 10c-6 2-14 0-16-12z" fill="#E8D27A"/>
+          <text x="260" y="40" text-anchor="middle" font-size="15" fill="#4A4A50" stroke="none" font-family="PingFang SC,sans-serif">动物园的"阿宝"：左耳缺一个角，爱吃香蕉</text>
+        </g>
+        <g class="el" data-e="2" fill="#1A1A1C">
+          <path d="M120 230c-10-60 30-110 110-110 70 0 120 30 120 90v20H120z"/>
+          <path d="M140 240v50h30v-50zM190 240v50h30v-50zM290 240v50h30v-50zM330 240v50h28v-50z"/>
+          <path d="M350 160c40-10 70 20 66 60-2 30-20 50-10 70" fill="none" stroke="#1A1A1C" stroke-width="12" stroke-linecap="round"/>
+          <path d="M300 120c-40-20-80 0-80 50 0 40 30 60 60 50 20-6 30-30 30-50z"/>
+        </g>
+        <g class="el" data-e="3" fill="none" stroke="#1A1A1C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="240" cy="190" rx="110" ry="60"/><circle cx="355" cy="170" r="34"/>
+          <path d="M160 240v50M200 245v45M280 245v45M320 240v50M380 190c20 30 10 70 30 90"/><circle cx="364" cy="160" r="3" fill="#1A1A1C"/>
+        </g>
+        <g class="el" data-e="4"><text x="260" y="200" text-anchor="middle" font-size="110" font-weight="900" fill="#1A1A1C" font-family="PingFang SC,sans-serif">大象</text></g>
+        <g class="el" data-e="5">
+          <text x="260" y="150" text-anchor="middle" font-size="96" font-weight="900" fill="#1A1A1C" font-family="PingFang SC,sans-serif">动物</text>
+          <g color="#85858B"><use href="#i-cat" x="130" y="200" width="64" height="64"/><use href="#i-dog" x="228" y="200" width="64" height="64"/><use href="#i-fish" x="326" y="200" width="64" height="64"/></g>
+        </g>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="ladder"><button class="btn" id="eMinus" aria-label="退一级">－</button><input type="range" min="1" max="5" value="1" id="eLvl" aria-label="抽象级别"><button class="btn" id="ePlus" aria-label="再抽一级">＋</button></div>
+      <div class="stops" id="eStops"><span>阿宝</span><span>剪影</span><span>简笔</span><span>"大象"</span><span>"动物"</span></div>
+      <div class="keep"><div class="k1"><b>留下了</b><span id="eKeep"></span></div><div class="k2"><b>扔掉了</b><span id="eDrop"></span></div></div>
+      <div class="say">越往上抽，<b>能装下的东西越多，细节丢得也越多</b>。抽象不是越高越好——要看你拿它干什么。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>每拉一级问一句："扔掉了什么？还认得出吗？"让孩子先说，再看右下角。</li>
+    <li>拉到"动物"时问：现在大象和小猫有什么区别？——没有了。这就是抽象"有损"：扔掉的东西找不回来。</li>
+    <li>拉回"简笔"：为什么交通标志、厕所门上的小人都画成这样？——刚好够认出来，又不多余。</li></ul>
+  </aside>
+</section>
+
+<!-- 9 分门别类 -->
+<section class="slide" data-t="24–28" data-fs="聊天区接龙：你还能想出什么分法？">
+  <div><h2>抽象的第一招：分门别类，标准由你定<span class="en">Sorting things: you choose the rule</span></h2></div>
+  <div class="btns" id="sortBtns">
+    <button class="btn" data-s="what">按"它是什么"分</button>
+    <button class="btn" data-s="use">按"能拿来干什么"分</button>
+    <button class="btn" data-s="bag">按"能不能塞进书包"分</button>
+    <button class="btn" data-s="none">打散</button>
+  </div>
+  <div class="sort">
+    <div class="pile" id="pile"><h4>具体的东西</h4></div>
+    <div class="binwrap"><h4 id="binTitle">分好的类</h4><div class="bins" id="bins"></div></div>
+  </div>
+  <div class="say" id="sortSay">同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是"动物"，一会儿是"能吃的"。</div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>先不点，问："你会怎么分这 12 样？"收两种说法。</li>
+    <li>依次点三个按钮，盯住"鱼"和"手机"在跳。问：鱼到底算哪类？——看你用什么标准。</li>
+    <li>聊天区接龙：再想一个分法（按颜色、按要不要充电、按几条腿……）。说不出标准的，不算分类。</li>
+    <li>收口：AI 的设计者也是这样干活的——先定一个标准，把乱七八糟的东西分成几块。</li></ul>
+  </aside>
+</section>
+
+<!-- 10 人与机器 -->
+<section class="slide" data-t="28–32" data-fs="举手：先说人的本事，再猜机器用什么替">
+  <div><h2>AI 也是抽象出来的：照着人的本事，一样一样造<span class="en">AI is built by abstracting what people can do</span></h2></div>
+  <div class="btns" id="hmBtns">
+    <button class="btn" data-f="in">看和听</button>
+    <button class="btn" data-f="mem">记</button>
+    <button class="btn" data-f="think">想</button>
+    <button class="btn" data-f="out">说和做</button>
+    <button class="btn" data-f="learn">学</button>
+    <button class="btn" data-f="all">全看</button>
+  </div>
+  <div class="cols" style="grid-template-columns:1.4fr 1fr">
+    <div class="card" style="display:flex;align-items:center">
+      <svg class="hm" id="hm" viewBox="0 0 700 360" role="img" aria-label="左边是一个人，右边是一台 AI 机器。人的眼睛耳朵对应摄像头麦克风和键盘，人的记忆对应一大堆数字，人的大脑对应芯片，人的嘴和手对应屏幕和喇叭，人读书学习对应机器读海量文字的训练。">
+        <g fill="none" stroke="#1A1A1C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M70 330c0-50 30-80 80-80s80 30 80 80" />
+          <path d="M150 250c-48 0-74-36-74-84 0-52 32-90 80-90 46 0 70 34 70 76 0 14 10 24 10 34 0 6-10 6-12 10l2 20c0 14-14 18-26 16l-6 18" />
+        </g>
+        <g class="part" data-f="in"><circle class="hl hf" cx="198" cy="148" r="9" fill="#fff" stroke="#1A1A1C" stroke-width="2.2"/><circle cx="200" cy="148" r="3.5" fill="#1A1A1C"/><path class="hl" d="M120 150c-12 0-14 26 0 26" fill="none" stroke="#1A1A1C" stroke-width="2.2"/></g>
+        <g class="part" data-f="mem"><path class="hl hf" d="M96 120c0-20 22-30 40-24 10-10 34-8 40 6" fill="#fff" stroke="#1A1A1C" stroke-width="2.2"/></g>
+        <g class="part" data-f="think"><path class="hl hf" d="M108 136c-4-14 10-22 22-16 10-8 26-6 30 6 14 0 16 18 6 22" fill="#fff" stroke="#1A1A1C" stroke-width="2.2"/></g>
+        <g class="part" data-f="out"><path class="hl" d="M210 200c6 2 12 2 16-2" fill="none" stroke="#1A1A1C" stroke-width="2.6"/><path class="hl hf" d="M232 300l26-30 10 6-20 34z" fill="#fff" stroke="#1A1A1C" stroke-width="2.2"/></g>
+        <g class="part" data-f="learn"><g class="hl" stroke="#1A1A1C" stroke-width="2"><rect class="hf" x="20" y="300" width="56" height="12" fill="#fff"/><rect class="hf" x="24" y="288" width="50" height="12" fill="#fff"/><rect class="hf" x="18" y="276" width="54" height="12" fill="#fff"/></g></g>
+
+        <rect x="420" y="40" width="260" height="290" rx="14" fill="#fff" stroke="#1A1A1C" stroke-width="2.2"/>
+        <g class="part" data-f="in"><rect class="hl hf" x="440" y="58" width="44" height="34" rx="6" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><circle cx="462" cy="75" r="9" fill="none" stroke="#1A1A1C" stroke-width="2"/><rect class="hl hf" x="500" y="56" width="16" height="30" rx="8" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><path d="M508 86v8" stroke="#1A1A1C" stroke-width="2"/><rect class="hl hf" x="530" y="64" width="64" height="26" rx="4" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><path d="M538 72h48M538 80h48" stroke="#85858B" stroke-width="1.5" stroke-dasharray="4 3"/></g>
+        <g class="part" data-f="mem"><rect class="hl hf" x="440" y="116" width="110" height="74" rx="6" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><g font-family="ui-monospace,Menlo,monospace" font-size="10" fill="#85858B"><text x="448" y="134">0.12 -0.87 0.03</text><text x="448" y="150">-0.41 0.66 0.29</text><text x="448" y="166">0.95 -0.08 0.51</text><text x="448" y="182">-0.33 0.17 -0.7</text></g></g>
+        <g class="part" data-f="think"><rect class="hl hf" x="576" y="122" width="62" height="62" rx="4" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><rect x="590" y="136" width="34" height="34" fill="#E8E6E0" stroke="#1A1A1C" stroke-width="1.5"/><path d="M584 122v-8M598 122v-8M612 122v-8M626 122v-8M584 184v8M598 184v8M612 184v8M626 184v8M576 132h-8M576 146h-8M576 160h-8M576 174h-8M638 132h8M638 146h8M638 160h8M638 174h8" stroke="#1A1A1C" stroke-width="1.6"/></g>
+        <g class="part" data-f="out"><rect class="hl hf" x="440" y="212" width="120" height="70" rx="6" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><path d="M452 232h70M452 248h90M452 264h50" stroke="#85858B" stroke-width="2"/><path class="hl hf" d="M584 236h14l18-14v56l-18-14h-14z" fill="#fff" stroke="#1A1A1C" stroke-width="2"/><path d="M626 236c6 6 6 18 0 24M634 228c10 10 10 30 0 40" fill="none" stroke="#1A1A1C" stroke-width="2"/></g>
+        <g class="part" data-f="learn"><g class="hl" stroke="#1A1A1C" stroke-width="2"><rect class="hf" x="452" y="300" width="70" height="10" fill="#fff"/><rect class="hf" x="530" y="300" width="70" height="10" fill="#fff"/><rect class="hf" x="608" y="300" width="60" height="10" fill="#fff"/></g></g>
+
+        <path class="link" data-f="in" d="M210 148 C 300 120, 360 70, 440 75"/>
+        <path class="link" data-f="mem" d="M176 102 C 280 100, 360 150, 440 152"/>
+        <path class="link" data-f="think" d="M168 134 C 320 190, 480 210, 576 153"/>
+        <path class="link" data-f="out" d="M228 200 C 320 240, 380 250, 440 247"/>
+        <path class="link" data-f="learn" d="M76 300 C 200 340, 360 320, 452 305"/>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card"><b id="hmTitle" style="font-size:18px">先点一个本事</b><p class="lead" id="hmText" style="margin-top:6px">人有五样本事：看和听、记、想、说和做、学。AI 的设计者把它们一样一样拆出来，用机器重新做了一遍。</p></div>
+      <div class="say">这就是<b>抽象设计</b>：先把人分成"五样本事"这几类，再给每一类造一个零件。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>提问链（先人后机）</h4>
+    <ul><li>"你听到妈妈喊你吃饭，到你回答'来了'，用了哪几样本事？"——听、认出是妈妈的声音（记）、决定先不打游戏（想）、说"来了"（说）。</li>
+    <li>每点一个按钮前，先让孩子猜机器用什么零件替这样本事，再点出来。</li>
+    <li>"学"最关键：人靠读书做题，AI 靠读海量文字，这个过程叫"训练"，学到的本事就存进那堆数字里。</li></ul>
+    <h4>讲准一点</h4>
+    <ul><li>AI 的"记"不是把原文一句句存起来，而是学出来的"手感"，所以它会记错、会编。</li></ul>
+  </aside>
+</section>
+
+<!-- 11 大词归位 -->
+<section class="slide" data-t="32–35" data-fs="聊天区：抢答，这个词归哪样本事">
+  <div><h2>你听过的大词，其实都能放回这五样本事里<span class="en">Put each buzzword back where it belongs</span></h2></div>
+  <p class="lead">先点一个大词，再点它属于哪样本事。放对了，会告诉你它"相当于人的什么"。</p>
+  <div class="stage">
+    <div class="words" id="words">
+      <button class="word" data-to="in">提示词</button>
+      <button class="word" data-to="in out">Token</button>
+      <button class="word" data-to="mem">参数</button>
+      <button class="word" data-to="think">算法</button>
+      <button class="word" data-to="think">算力</button>
+      <button class="word" data-to="learn">训练</button>
+    </div>
+    <div class="slots" id="slots">
+      <button class="slot" data-s="in"><h4>看和听<small>输入</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="mem"><h4>记<small>记忆</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="think"><h4>想<small>分析</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="out"><h4>说和做<small>输出</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="learn"><h4>学<small>训练</small></h4><div class="in"></div></button>
+    </div>
+    <div class="say" id="wordMsg">六个大词，一个一个来。</div>
+  </div>
+  <aside class="notes">
+    <h4>标准答案（附一句人话）</h4>
+    <ul>
+      <li>提示词 → 看和听：你对它说的话、给它布置的任务。</li>
+      <li>Token → 看和听（放"说和做"也算对）：它读字、写字的"一口"，文字被切成的小块。</li>
+      <li>参数 → 记：它学到的本事，存成一大堆数。</li>
+      <li>算法 → 想：做事的步骤和方法，像解题思路。</li>
+      <li>算力 → 想：算得多快、能同时算多少，像脑子转得多快、有几个人一起算。</li>
+      <li>训练 → 学：让它读大量文字，一遍遍调整参数，直到答得像样。</li>
+    </ul>
+    <h4>接下来</h4><ul><li>后面四页，每个大词配一个小机器，亲手玩一遍。</li></ul>
+  </aside>
+</section>
+
+<!-- 12 Token -->
+<section class="slide" data-t="35–38" data-fs="聊天区：猜这句话会被切成几块">
+  <div><h2>Token：AI 读字是一口一口"咬"的<span class="en">Tokens: how AI bites text</span></h2></div>
+  <div class="cols">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <input class="tk-input" id="tkIn" value="我今天想吃一个大西瓜" aria-label="输入一句话">
+      <div class="btns"><button class="btn primary" id="tkGo">切！</button><button class="btn" data-ex="人工智能为什么会胡说八道？">换一句中文</button><button class="btn" data-ex="I love watermelon and elephants.">换一句英文</button></div>
+      <div class="card" style="display:flex;justify-content:center">
+        <svg class="machine" id="tkMachine" viewBox="0 0 420 150" aria-hidden="true">
+          <g stroke="#1A1A1C" stroke-width="2" fill="#fff" stroke-linejoin="round">
+            <rect x="20" y="96" width="380" height="18" rx="4"/><circle cx="40" cy="105" r="6"/><circle cx="380" cy="105" r="6"/>
+            <rect x="170" y="10" width="80" height="40" rx="6"/><path d="M190 50v14M230 50v14" fill="none"/>
+            <g id="blade"><rect x="182" y="58" width="56" height="12" rx="2" fill="#E8E6E0"/><path d="M186 70l24 18 24-18" fill="#C9C6BE"/></g>
+            <path d="M60 114v26M360 114v26" fill="none"/>
+          </g>
+          <text x="210" y="36" text-anchor="middle" font-size="13" fill="#4A4A50" font-family="PingFang SC,sans-serif">切字机</text>
+        </svg>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card"><div class="tk-out" id="tkOut"></div><p class="readout" id="tkRead" style="margin-top:10px"></p></div>
+      <div class="say">AI 不是一个字一个字读，也不是一句一句读，而是<b>一块一块读</b>。一块就叫一个 Token。它按块读、按块写，<b>用 AI 也按块收费</b>。</div>
+      <p class="small">这里的切法是示意。每家 AI 的切法都不一样；中文大约一两个字一块，英文常常一个词一块，长词会被切开。</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>按"切！"之前，先让孩子在聊天区猜几块。</li>
+    <li>让孩子在聊天区出句子，你粘进输入框切给大家看。</li>
+    <li>回扣前面：AI 学本事时读了约 14.8 万亿块，就是这个"块"。</li></ul>
+  </aside>
+</section>
+
+<!-- 13 接龙 -->
+<section class="slide" data-t="38–41" data-fs="聊天区：你觉得下一块最可能是什么">
+  <div><h2>参数：AI 说话，就是一块一块往下接<span class="en">Parameters decide what comes next</span></h2></div>
+  <div class="cols">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card"><p class="sent">小明打开冰箱，拿出了一瓶<span class="blank" id="nwBlank">？</span></p></div>
+      <div class="probs" id="probs"></div>
+      <div class="btns"><button class="btn primary" id="nwGo">让 AI 接一块</button><button class="btn" id="nwReset">清空</button></div>
+      <p class="hist" id="nwHist"></p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="say">AI 每次只做一件事：<b>猜下一块最可能是什么</b>。这些可能性从哪来？从它的参数算出来——参数就是它读了海量文字后学到的"手感"。</div>
+      <div class="say">多按几次你会发现：<b>同一句话，它每次接的可能不一样</b>。它是按可能性"抽签"，不是查标准答案。所以它能写出新句子，也会一本正经地接错。</div>
+      <p class="small">百分比是示意数字，用来演示原理，不是某个真 AI 的读数。</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>先让孩子在聊天区填空，你数一数全班答案——全班的分布本身就是一张"概率表"。</li>
+    <li>点 5–6 次"让 AI 接一块"，下面会记下每次接的结果。问：为什么不是每次都是牛奶？</li>
+    <li>为老师演示埋伏笔：等会儿把同一个问题问 AI 两遍，看它答得一不一样。</li></ul>
+  </aside>
+</section>
+
+<!-- 14 算法 -->
+<section class="slide" data-t="41–44" data-fs="先在聊天区玩一轮：老师心里想一个 1–100 的数">
+  <div><h2>算法：同样的电脑，换一种步骤，能快十倍<span class="en">An algorithm is a way of doing things</span></h2></div>
+  <p class="lead">电脑心里藏了一个 1 到 100 之间的数，只会告诉你"大了"或"小了"。两个机器人用两种办法猜。</p>
+  <div class="stage">
+    <div class="lane" id="laneA"><h4>机器人甲<small>从 1 开始，挨个猜</small></h4><div class="track"><div class="target"></div><div class="ptr" data-n="1"></div></div><div class="count"><span>0</span><small>次</small></div></div>
+    <div class="lane" id="laneB"><h4>机器人乙<small>每次猜剩下范围的正中间</small></h4><div class="track"><div class="range"></div><div class="target"></div><div class="ptr" data-n="50"></div></div><div class="count"><span>0</span><small>次</small></div></div>
+    <div class="btns"><button class="btn primary" id="gsGo">藏一个数，开猜</button></div>
+    <div class="say">乙从来不会超过 7 次。范围越大差得越多：猜 1 到 100 万，甲可能要猜几十万次，乙最多 20 次。<b>做事的步骤和方法，就叫算法</b>。AI 里的算法，就是它"怎么想"的那套步骤。</div>
+  </div>
+  <aside class="notes">
+    <h4>先玩后看</h4>
+    <ul><li>你心里想一个数，孩子在聊天区猜，你只回"大了/小了"。数一数全班用了几次。</li>
+    <li>再点"开猜"，看两个机器人。多点几次：甲有时 3 次、有时 90 次；乙总在 7 次以内。</li>
+    <li>为什么是 7？每猜一次，范围砍掉一半：100→50→25→13→7→4→2→1。</li></ul>
+  </aside>
+</section>
+
+<!-- 15 算力 -->
+<section class="slide" data-t="44–46" data-fs="举手：猜 256 个人一起涂要几轮">
+  <div><h2>算力：一个人涂，还是一大群人同时涂？<span class="en">Computing power: many hands at once</span></h2></div>
+  <div class="cols">
+    <div class="card" style="display:flex;justify-content:center;align-items:center"><div class="paint" id="paint" role="img" aria-label="16 乘 16 的格子画，被逐格涂色"></div></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="btns" id="paintBtns"><button class="btn" data-n="1">1 个人涂</button><button class="btn" data-n="16">16 个人一起涂</button><button class="btn" data-n="256">256 个人一起涂</button></div>
+      <div class="count" id="paintRead">0<small>轮</small></div>
+      <div class="say">一幅画 256 个格子。一个人要涂 256 轮，256 个人同时涂只要 1 轮。<b>GPU 就是"一大群人同时算"</b>：一块 H100 芯片里有一万六千多个小计算单元。</div>
+      <div class="say"><b>算力 = 每秒能算多少</b>。AI 要算的东西特别多，所以要那一整柜一整柜的 GPU——还记得 Fig 1 吗？</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>依次点三个按钮，读右边的轮数。</li>
+    <li>追问：如果每个格子要先等左边那格涂完才能涂，人再多有用吗？——没用。所以有的活适合 GPU，有的不适合。点到为止。</li></ul>
+  </aside>
+</section>
+
+<!-- 16 老师演示 -->
+<section class="slide" data-t="46–54" data-fs="老师共享屏幕 · 学生在聊天区先猜再看">
+  <div><h2>动手：老师当众考一考 AI<span class="en">Live demo: we test the AI</span></h2></div>
+  <p class="lead">今天学的东西，现在拿去对付一个真 AI。<b>每一问之前，先在聊天区猜它会怎么答</b>。</p>
+  <div class="demo">
+    <div class="card"><h4><em>第 1 问</em>问它今天的三个问题</h4><span class="ask">你住在哪里？你吃什么？你长什么样？</span><p>对照今天学的：它<b>哪句说对了</b>？哪句说得含糊、或者往好听里说？</p><label class="chk"><input type="checkbox">做完了</label></div>
+    <div class="card"><h4><em>第 2 问</em>同一个问题问两遍</h4><span class="ask">用一句话介绍大象。</span><p>新开一个对话再问一次。两次一样吗？用"接龙机"解释为什么。</p><label class="chk"><input type="checkbox">做完了</label></div>
+    <div class="card"><h4><em>第 3 问</em>让它数自己的 Token</h4><span class="ask">"我今天想吃一个大西瓜"你会切成几个 Token？分别是哪几块？</span><p>它说得很肯定，但<b>它其实看不清自己是怎么切的</b>，常常数错。抓到它说错的地方了吗？</p><label class="chk"><input type="checkbox">做完了</label></div>
+    <div class="card"><h4><em>第 4 问</em>用大词考它</h4><span class="ask">用小学生能听懂的话解释"算力"，并举一个例子。</span><p>它的例子，和我们的"涂格子"比，谁更好懂？<b>你觉得哪里还可以讲得更清楚</b>？</p><label class="chk"><input type="checkbox">做完了</label></div>
+  </div>
+  <aside class="notes">
+    <h4>演示前准备</h4>
+    <ul><li>用班级账号登录一个 AI 对话工具（豆包、DeepSeek 等任选），提前清空历史对话，别露出个人信息。</li>
+    <li>第 2 问一定要新开对话，否则它会参考上一轮的话。</li></ul>
+    <h4>可能出现的情况</h4>
+    <ul><li>第 1 问：它常说"我没有实体""我存在于服务器中"——问孩子：它说的"服务器"，就是 Fig 1 里哪一层？</li>
+    <li>第 3 问：它数的块数和我们示意切法不同很正常，因为每家切法都不一样。重点是它说得很肯定，但它自己也没法核对。这就是"AI 会一本正经地说错"的第一个现场证据。</li>
+    <li>如果它这次全答对了，就换一句更长的、夹着英文的句子再问一次。</li></ul>
+  </aside>
+</section>
+
+<!-- 17 交作业 + 三问 -->
+<section class="slide" data-t="54–58" data-fs="飞书文档 · 班级作业表（课后 24 小时内交）">
+  <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things, answer three questions</span></h2></div>
+  <div class="hw">
+    <div class="card"><b class="n">01 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写一句"我是按 ___ 分的"。再换一个标准，分第二次。</p></div>
+    <div class="card"><b class="n">02 大词</b><h4>挑一个今天的大词，用一句话讲给家人听</h4><p>格式："___ 就像人的 ___，因为 ___。"说完让家人复述一遍，复述不出来就重写。</p></div>
+    <div class="card"><b class="n">03 改口</b><h4>开课时你投了什么票？现在呢？</h4><p>"我开始以为 AI 住在 ___，现在我觉得 ___，因为 ___。"没改口也行，写出理由。</p></div>
+  </div>
+  <p class="lead" style="margin-top:6px">老师随机点三个人，每人一分钟，回答：</p>
+  <div class="three"><div>你今天做了什么？<small>比如：我给 12 样东西换了三种分法</small></div><div>AI 做了什么？<small>比如：它回答了自己住在哪</small></div><div>你质疑过 AI 什么？<small>比如：它数 Token 数错了</small></div></div>
+  <aside class="notes">
+    <h4>操作</h4>
+    <ul><li>把班级作业表（飞书文档或多维表格）的链接发到会议聊天区，三样东西各一栏，可以贴照片。</li>
+    <li>交作业比例低于八成，下一节开头先补，不讲新内容。</li></ul>
+    <h4>点名三问</h4>
+    <ul><li>随机点三个人，每人一分钟。答不上第三问没关系，但要请他说出今天哪一刻对 AI 起过疑心。</li></ul>
+  </aside>
+</section>
+
+<!-- 18 下一节预告 -->
+<section class="slide" data-t="58–60">
+  <div><h2>下一节（2 小时）：拆开一台机器，找它的眼睛、耳朵和脑子<span class="en">Next: open a real machine</span></h2></div>
+  <div class="cols">
+    <div class="facts">
+      <div class="fact"><b>拆</b><span>每组一台老师准备好的旧设备，找出它的输入、记忆、分析、输出零件，贴上标签。</span></div>
+      <div class="fact"><b>考</b><span>让 AI 讲"一台智能音箱从听见你说话到回答，经过哪几步"，对照拆开的实物，抓它说错的地方。</span></div>
+      <div class="fact"><b>画</b><span>每人选一个常见的 AI 产品，画出它的"人 ↔ 机器"对照图，标出至少 3 个大词在哪一步。</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card"><b>请带上</b><p class="lead" style="margin-top:6px">家里一样会"听"或会"看"的电器的照片：智能音箱、扫地机器人、带语音的遥控器、门铃摄像头都行。<b>拍正面和背面，不用拆。</b></p></div>
+      <div class="say">留一个问题回家想：AI 听懂你，靠的是你说得清楚。<b>你今天对 AI 说的话里，哪一句说得不够清楚？</b></div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>收尾一句话</h4>
+    <ul><li>"今天我们发现，AI 是照着人的本事一样一样造出来的。下节课我们把真机器拆开，看看这些零件长什么样。"</li></ul>
+    <h4>课后 24 小时内发家长群一条</h4>
+    <ul><li>今天学了什么：AI 住在机房、吃文字和电、本事存在一堆数字里；它是照着人的五样本事"抽象"出来的。</li>
+    <li>孩子拿出了什么：两种分法的分类照片，一句讲大词的话。</li>
+    <li>今晚可以问他一句：<b>"你跟 AI 说话时，那句话跑去哪儿了？"</b></li></ul>
+  </aside>
+</section>
+
+<!-- 19 教师附页 -->
+<section class="slide" data-t="附页">
+  <div><h2>教师附页：第二节 2 小时的流程<span class="en">Teacher sheet: the 2-hour follow-up session</span></h2></div>
+  <p class="lead">目标：孩子能在一台真机器上<b>指出它的输入、记忆、分析、输出零件</b>，并能<b>找出 AI 对这台机器说错或说含糊的一处</b>。</p>
+  <table class="plan">
+    <tr><th>时间</th><th>做什么</th><th>孩子交什么</th><th>备注</th></tr>
+    <tr><td>0–10</td><td>不翻笔记复述：老师念六个大词，孩子把它们贴回"五样本事"。再口答上节课三个问题。</td><td>白板截图</td><td>答错的词，本节课里再出现一次。</td></tr>
+    <tr><td>10–40</td><td>拆机找"器官"：每组一台旧设备（旧键盘、旧鼠标、智能音箱、旧路由器）。找输入（按键、麦克风、摄像头）、记忆（存储芯片）、分析（主芯片）、输出（喇叭、灯、屏幕），贴标签拍照。</td><td>一张贴好标签的照片</td><td>电池提前取出；老师预先拧开难拆的螺丝；不拆手机和任何鼓包电池。</td></tr>
+    <tr><td>40–50</td><td>休息</td><td></td><td></td></tr>
+    <tr><td>50–80</td><td>用 AI 拆 AI：小组问 AI"一台智能音箱从听见你说话到回答，经过哪几步"，对照刚拆的实物和上节课的"发送"动画，找出它说错、说漏或说含糊的一处。同一问题新开对话再问一次，比较两次回答。</td><td>一处"AI 说的 / 实物是 / 我的判断"</td><td>"智能音箱自己就能听懂所有话"是常见错误：多数要把声音传到机房去算。</td></tr>
+    <tr><td>80–105</td><td>画"我的 AI 解剖图"：每人选一个 AI 产品（拍照翻译、语音助手、扫地机器人、短视频推荐），画它的"人 ↔ 机器"对照图，标出至少 3 个大词各在哪一步。</td><td>一张对照图</td><td>不会画的，可以拿上节课的五格模板填。</td></tr>
+    <tr><td>105–120</td><td>每组派一人讲解剖图，其他组各问一个问题；随机三问；交作业；预告 M2。</td><td>作业表</td><td>M2 的钩子：AI 听懂你，靠你说清楚。</td></tr>
+  </table>
+  <aside class="notes">
+    <h4>待确认</h4>
+    <ul><li>这一节是线下还是线上？线下就按上表拆实物；线上则改成老师镜头拆、孩子在飞书白板上给照片贴标签，第 10–40 分钟的产出改成白板截图。</li></ul>
+  </aside>
+</section>
+
+<div id="notePanel" aria-live="polite"></div>
+<div id="keys">← → 翻页 · N 打开讲稿</div>
+<div class="nav">
+  <button id="noteBtn">讲稿</button>
+  <button id="prev" aria-label="上一页">‹</button>
+  <span id="pager"></span>
+  <button id="next" aria-label="下一页">›</button>
+</div>
+
+<script>
+(() => {
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const slides = $$('.slide');
+let cur = 0;
+
+slides.forEach((s) => {
+  const top = document.createElement('div');
+  top.className = 'top';
+  const t = s.dataset.t;
+  top.innerHTML = `<span class="when">${t === '附页' ? '<b>教师附页</b> · 不给学生看' : `第 <b>${t}</b> 分钟`}</span>` + (s.dataset.fs ? `<span class="feishu">${s.dataset.fs}</span>` : '');
+  s.prepend(top);
+});
+
+function go(i) {
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, j) => s.classList.toggle('active', j === cur));
+  $('#bar').style.width = ((cur + 1) / slides.length * 100) + '%';
+  $('#pager').textContent = `${cur + 1} / ${slides.length}`;
+  const n = $('.notes', slides[cur]);
+  $('#notePanel').innerHTML = n ? n.innerHTML : '<p>本页没有讲稿。</p>';
+  history.replaceState(null, '', '#' + (cur + 1));
+  slides[cur].scrollTop = 0;
+  if (window.__sortLayout) requestAnimationFrame(window.__sortLayout);
+}
+$('#prev').onclick = () => go(cur - 1);
+$('#next').onclick = () => go(cur + 1);
+$('#noteBtn').onclick = () => $('#notePanel').classList.toggle('show');
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input[type=text],input:not([type]),textarea')) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') go(cur + 1);
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(cur - 1);
+  else if (e.key === 'n' || e.key === 'N') $('#notePanel').classList.toggle('show');
+});
+let tx = null;
+document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', (e) => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 70 && !e.target.closest('input,.sort,.paint')) go(cur + (dx < 0 ? 1 : -1));
+  tx = null;
+});
+
+/* 2 投票 */
+$$('#vote .q').forEach((q) => $$('.opt', q).forEach((o) => o.onclick = () => {
+  $$('.opt', q).forEach((x) => x.classList.remove('pick'));
+  o.classList.add('pick');
+}));
+$('#revealVote').onclick = () => $('#vote').classList.add('revealed');
+$('#resetVote').onclick = () => { $('#vote').classList.remove('revealed'); $$('#vote .opt').forEach((x) => x.classList.remove('pick')); };
+
+/* 3 发送 */
+(() => {
+  const path = $('#msgPath'), dot = $('#msgDot'), steps = $$('#pathSteps div'), read = $('#pathRead');
+  const L = path.getTotalLength();
+  const marks = [0, 0.16, 0.3, 1];
+  let raf = null;
+  const place = (f) => { const p = path.getPointAtLength(f * L); dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y); };
+  const light = (k) => steps.forEach((s, i) => s.classList.toggle('on', i === k));
+  $('#sendBtn').onclick = () => {
+    cancelAnimationFrame(raf);
+    if (RM) { place(1); light(3); read.textContent = '1000 公里光缆，单程约 5 毫秒'; return; }
+    const T = 4200, back = 1800; let t0 = null;
+    read.textContent = '';
+    const tick = (t) => {
+      if (t0 === null) t0 = t;
+      const e = t - t0;
+      if (e < T) {
+        const f = e / T, g = f < .5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2;
+        place(g);
+        light(g < marks[1] ? 0 : g < marks[2] ? 1 : g < .97 ? 2 : 3);
+      } else if (e < T + 900) { place(1); light(3); read.textContent = '服务器在算……'; }
+      else if (e < T + 900 + back) { const f = (e - T - 900) / back; place(1 - f); light(4); read.textContent = '回答正在回来'; }
+      else { place(0); light(4); read.textContent = '1000 公里光缆，单程约 5 毫秒，所以你感觉不到远'; return; }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  };
+})();
+
+/* 4 机柜 */
+(() => {
+  const card = $('#rackCard'), btn = $('#pullBtn'), read = $('#rackRead');
+  btn.onclick = () => {
+    const on = card.classList.toggle('pulled');
+    btn.textContent = on ? '推回去' : '拉出一台服务器';
+    read.textContent = on ? '这一台：8 块 GPU · 全柜 4 × 8 = 32 块' : '4 台 AI 服务器';
+    $('.rack-out', card).setAttribute('aria-hidden', on ? 'false' : 'true');
+    $('.rack-in', card).setAttribute('aria-hidden', on ? 'true' : 'false');
+  };
+})();
+
+/* 5 吃什么 */
+(() => {
+  let sel = null;
+  const msg = $('#eatMsg'), base = msg.innerHTML;
+  const why = {
+    '书和网页上的文字': '对：AI 学本事时读了海量文字。',
+    '人给它的回答打分': '对：人告诉它哪个回答更好，它再调整自己，这也是"学"。',
+    '你问它的问题': '对：你一问，它就要"吃"下你的话才能干活。',
+    '你发给它的图片': '对：干活时它要看图；有的公司还会拿用户内容去训练，所以要留意隐私设置。',
+    '电': '对：只要机器开着，就一直在吃电。',
+    '给芯片降温的水和风': '对：芯片很烫，机房要一直吹风、用水降温。'
+  };
+  $$('#foods .food').forEach((f) => f.onclick = () => { $$('#foods .food').forEach((x) => x.classList.remove('sel')); f.classList.add('sel'); sel = f; });
+  $$('.bowl').forEach((b) => b.onclick = () => {
+    if (!sel) { msg.textContent = '先点上面一样"食物"。'; return; }
+    const ok = sel.dataset.to.split(' ').includes(b.dataset.b);
+    if (ok) {
+      const s = document.createElement('span'); s.textContent = sel.textContent; $('.in', b).append(s);
+      sel.classList.add('done'); sel.classList.remove('sel'); msg.textContent = why[sel.textContent] || '对！'; sel = null;
+      if (!$$('#foods .food:not(.done)').length) msg.innerHTML = base;
+    } else { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); msg.textContent = '这张嘴摇头了。再想想：它是什么时候吃这个的？'; }
+  });
+})();
+
+/* 6 放大 */
+(() => {
+  const room = $('#zRoom');
+  let h = '';
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 6; c++) {
+    const x = 60 + c * 62 + r * 40, y = 70 + r * 80;
+    h += `<path d="M${x} ${y + 20}l20-12 22 10v52l-20 12-22-10z" fill="#fff"/><path d="M${x} ${y + 20}l22 10 20-12M${x + 22} ${y + 30}v52" fill="none"/>`;
+    for (let k = 0; k < 4; k++) h += `<path d="M${x + 3} ${y + 34 + k * 11}l16 7" stroke="#C9C6BE" fill="none" stroke-width="1.2"/>`;
+  }
+  room.innerHTML = h;
+  let g = '';
+  for (let r = 0; r < 2; r++) for (let c = 0; c < 4; c++) {
+    const x = 120 + c * 95, y = 70 + r * 100;
+    g += `<rect x="${x}" y="${y}" width="76" height="82" rx="4" fill="#F3E6D4" stroke="#B9762A"/>`;
+    for (let k = 0; k < 8; k++) g += `<path d="M${x + 8 + k * 8.5} ${y + 6}v70" stroke="#B9762A" stroke-width="1"/>`;
+  }
+  $('#zGpus').innerHTML = g;
+  let p = '', cc = '';
+  for (let i = 0; i < 10; i++) {
+    const x = 205 + i * 21, y = 75 + i * 21;
+    p += `<path d="M${x} 60v-12M${x} 280v12M190 ${y}h-12M410 ${y}h12"/>`;
+  }
+  $('#zPins').innerHTML = p;
+  for (let i = 1; i < 10; i++) cc += `<path d="M${230 + i * 14} 100v140M230 ${100 + i * 14}h140"/>`;
+  $('#zCores').innerHTML = cc;
+  let n = '';
+  for (let r = 0; r < 15; r++) {
+    let line = '';
+    for (let c = 0; c < 7; c++) { const v = (Math.random() * 2 - 1); line += (v < 0 ? '' : ' ') + v.toFixed(3) + '  '; }
+    n += `<text x="60" y="${56 + r * 17}" xml:space="preserve">${line}</text>`;
+  }
+  $('#zNums').innerHTML = n;
+  const info = [
+    ['你看到的：一个聊天框，或者一个机器人', '这只是 AI 的"外壳"。同一个 AI 可以装进聊天框、音箱、汽车，也可以装进机器人。'],
+    ['往里看：机房', '外壳背后连着远方的机房，一排排机柜，就是 Fig 1 里的那种。'],
+    ['再往里：一台服务器', '打开一台服务器，8 块 GPU 整整齐齐排着，这是 AI 的"身体"。'],
+    ['再往里：一块芯片', '芯片里是成千上万个小计算单元，每个只会做很简单的乘法和加法。'],
+    ['最里面：一大堆数字', '芯片一直在拿这堆数字做乘法和加法。AI 的本事，就存在这堆数字的大小里。DeepSeek-V3 有 6710 亿个这样的数。']
+  ];
+  const z = $('#zoom');
+  const set = (v) => {
+    v = Math.max(1, Math.min(5, v)); z.value = v;
+    $$('.zs').forEach((g) => g.classList.toggle('on', +g.dataset.z === v));
+    $$('#zStops span').forEach((s, i) => s.classList.toggle('on', i + 1 === v));
+    $('#zTitle').textContent = info[v - 1][0]; $('#zText').textContent = info[v - 1][1];
+    $('#zEnd').classList.toggle('hidden', v !== 5);
+  };
+  z.oninput = () => set(+z.value);
+  $('#zMinus').onclick = () => set(+z.value - 1);
+  $('#zPlus').onclick = () => set(+z.value + 1);
+  set(1);
+})();
+
+/* 7 抽大象 */
+(() => {
+  const card = $('#toonCard');
+  $('#tugBtn').onclick = () => {
+    card.classList.remove('out'); card.classList.add('pulling');
+    setTimeout(() => { card.classList.remove('pulling'); card.classList.add('out'); $('#toonSay').classList.remove('hidden'); setTimeout(() => $('#toonNext').classList.remove('hidden'), RM ? 0 : 900); }, RM ? 0 : 1500);
+  };
+  $('#tugReset').onclick = () => { card.classList.remove('out', 'pulling'); $('#toonSay').classList.add('hidden'); $('#toonNext').classList.add('hidden'); };
+})();
+
+/* 8 抽象台阶 */
+(() => {
+  const data = [
+    ['它的名字、缺角的耳朵、皱纹、颜色、爱吃香蕉', '还什么都没扔'],
+    ['大象的轮廓：大身子、长鼻子、大耳朵、四条腿', '名字、缺角、皱纹、颜色、香蕉——现在它可以是任何一头大象'],
+    ['四条腿、一个长鼻子', '耳朵、身体的形状、大小'],
+    ['"大象"这两个字：所有大象都装得下', '样子本身。没见过大象的人，看到这两个字想不出它长什么样'],
+    ['"会动、会吃、活着"', '长鼻子、四条腿——现在大象、小猫、小鱼没区别了']
+  ];
+  const r = $('#eLvl');
+  const set = (v) => {
+    v = Math.max(1, Math.min(5, v)); r.value = v;
+    $$('.el').forEach((g) => g.classList.toggle('on', +g.dataset.e === v));
+    $$('#eStops span').forEach((s, i) => s.classList.toggle('on', i + 1 === v));
+    $('#eKeep').textContent = data[v - 1][0]; $('#eDrop').textContent = data[v - 1][1];
+  };
+  r.oninput = () => set(+r.value);
+  $('#eMinus').onclick = () => set(+r.value - 1);
+  $('#ePlus').onclick = () => set(+r.value + 1);
+  set(1);
+})();
+
+/* 9 分类 */
+(() => {
+  const things = [
+    ['apple', '苹果'], ['banana', '香蕉'], ['melon', '西瓜'], ['bike', '自行车'], ['car', '汽车'], ['cat', '小猫'],
+    ['dog', '小狗'], ['fish', '鱼'], ['pencil', '铅笔'], ['book', '书'], ['phone', '手机'], ['ball', '足球']
+  ];
+  const rules = {
+    what: { title: '按"它是什么"', bins: ['水果', '交通工具', '动物', '用品'], map: { apple: 0, banana: 0, melon: 0, bike: 1, car: 1, cat: 2, dog: 2, fish: 2, pencil: 3, book: 3, phone: 3, ball: 3 } },
+    use: { title: '按"能拿来干什么"', bins: ['能吃', '能载人走', '能写字、看字', '能陪你玩'], map: { apple: 0, banana: 0, melon: 0, fish: 0, bike: 1, car: 1, pencil: 2, book: 2, phone: 2, cat: 3, dog: 3, ball: 3 } },
+    bag: { title: '按"能不能塞进书包"', bins: ['塞得进', '塞不进', '', ''], map: { apple: 0, banana: 0, pencil: 0, book: 0, phone: 0, ball: 0, melon: 1, bike: 1, car: 1, cat: 1, dog: 1, fish: 1 } }
+  };
+  const says = {
+    none: '同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是"动物"，一会儿是"能吃的"。',
+    what: '按"它是什么"分：鱼是<b>动物</b>，手机是<b>用品</b>。',
+    use: '按"能拿来干什么"分：鱼跑到了<b>能吃</b>那一格，手机跑去了<b>写字、看字</b>。东西没变，变的是你的标准。',
+    bag: '按"能不能塞进书包"分：小猫小狗和鱼都塞不进——<b>活的不能塞</b>。标准一换，分法完全不一样。'
+  };
+  const pile = $('#pile'), bins = $('#bins'), wrap = bins.parentElement;
+  const els = things.map(([id, name], i) => {
+    const d = document.createElement('div');
+    d.className = 'thing'; d.dataset.id = id;
+    d.innerHTML = `<svg aria-hidden="true"><use href="#i-${id}"/></svg><span>${name}</span>`;
+    document.body.append(d);
+    return d;
+  });
+  const seed = [[.08, .12], [.42, .08], [.72, .14], [.18, .4], [.55, .34], [.8, .44], [.06, .66], [.36, .6], [.62, .62], [.22, .84], [.5, .84], [.8, .8]];
+  let mode = 'none';
+  function layout() {
+    const pr = pile.getBoundingClientRect(), sr = slides[cur].getBoundingClientRect();
+    const host = pile.closest('.slide');
+    if (!host.classList.contains('active')) return;
+    const off = (r) => [r.left - sr.left + host.scrollLeft, r.top - sr.top + host.scrollTop];
+    if (mode === 'none') {
+      els.forEach((e, i) => { const [ox, oy] = off(pr); e.style.left = ox + seed[i][0] * (pr.width - 70) + 4 + 'px'; e.style.top = oy + 26 + seed[i][1] * (pr.height - 96) + 'px'; });
+      return;
+    }
+    const rule = rules[mode];
+    const boxes = $$('.b', bins);
+    const fill = boxes.map(() => 0);
+    els.forEach((e) => {
+      const k = rule.map[e.dataset.id];
+      const br = boxes[k].getBoundingClientRect();
+      const [ox, oy] = off(br);
+      const per = Math.max(1, Math.floor((br.width - 8) / 74));
+      const n = fill[k]++;
+      e.style.left = ox + 4 + (n % per) * 74 + 'px';
+      e.style.top = oy + 22 + Math.floor(n / per) * 70 + 'px';
+    });
+  }
+  els.forEach((e) => { pile.closest('.slide').append(e); });
+  things.forEach(([id, name], i) => {
+    const g = document.createElement('div');
+    g.className = 'thing ghost'; g.setAttribute('aria-hidden', 'true');
+    g.style.left = `calc(${seed[i][0] * 100}% - ${seed[i][0] * 70 - 4}px)`;
+    g.style.top = `calc(${seed[i][1] * 100}% - ${seed[i][1] * 96 - 26}px)`;
+    g.innerHTML = `<svg><use href="#i-${id}"/></svg><span>${name}</span>`;
+    pile.append(g);
+  });
+  function set(m) {
+    mode = m;
+    $$('#sortBtns .btn').forEach((b) => b.classList.toggle('on', b.dataset.s === m));
+    if (m === 'none') { bins.innerHTML = ''; $('#binTitle').textContent = '分好的类'; }
+    else {
+      const r = rules[m];
+      const used = r.bins.filter(Boolean);
+      bins.style.gridTemplateColumns = used.length === 2 ? '1fr 1fr' : '1fr 1fr';
+      bins.style.gridTemplateRows = used.length === 2 ? '1fr' : '1fr 1fr';
+      bins.innerHTML = used.map((t) => `<div class="b"><span>${t}</span></div>`).join('');
+      $('#binTitle').textContent = r.title;
+    }
+    $('#sortSay').innerHTML = says[m];
+    els.forEach((e) => { e.classList.toggle('hl', m !== 'none' && (e.dataset.id === 'fish' || e.dataset.id === 'phone')); });
+    requestAnimationFrame(layout);
+  }
+  $$('#sortBtns .btn').forEach((b) => b.onclick = () => set(b.dataset.s));
+  window.addEventListener('resize', layout);
+  window.__sortLayout = layout;
+  set('none');
+})();
+
+/* 10 人与机器 */
+(() => {
+  const info = {
+    in: ['看和听 → 输入', '人用眼睛、耳朵；AI 用摄像头、麦克风，还有你打进去的字。'],
+    mem: ['记 → 记忆', '人把经验记在脑子里；AI 把学到的本事存成一大堆数字，叫"参数"。'],
+    think: ['想 → 分析', '人用大脑想；AI 用芯片，按一套步骤拿那堆数字飞快地算。'],
+    out: ['说和做 → 输出', '人说话、写字、动手；AI 在屏幕上出字、从喇叭出声，装进机器人还能动手。'],
+    learn: ['学 → 训练', '人读书、做题、被老师纠正；AI 读海量文字、被人打分，一遍遍调整那堆数字，这叫"训练"。'],
+    all: ['五样本事，五个零件', 'AI 的设计者先把人分成五样本事，再给每一样造一个零件。这就是抽象设计。']
+  };
+  const hm = $('#hm');
+  $$('#hmBtns .btn').forEach((b) => b.onclick = () => {
+    const f = b.dataset.f;
+    $$('#hmBtns .btn').forEach((x) => x.classList.toggle('on', x === b));
+    hm.classList.toggle('focus', f !== 'all');
+    $$('.part,.link', hm).forEach((p) => p.classList.toggle('on', f === 'all' || p.dataset.f === f));
+    $('#hmTitle').textContent = info[f][0]; $('#hmText').textContent = info[f][1];
+  });
+})();
+
+/* 11 大词 */
+(() => {
+  let sel = null;
+  const msg = $('#wordMsg');
+  const why = {
+    '提示词': '提示词 = 你对它说的话、给它布置的任务。就像别人对你说的话，从"耳朵"进来。',
+    'Token': 'Token = 它读字、写字的"一口"，文字被切成的小块。读进来、写出去都按块走。',
+    '参数': '参数 = 它学到的本事，存成一大堆数。就像你的经验和手感。',
+    '算法': '算法 = 做事的步骤和方法。就像你的解题思路。',
+    '算力': '算力 = 算得多快、能同时算多少。就像脑子转得多快、有几个人一起算。',
+    '训练': '训练 = 让它读大量文字、一遍遍调整参数，直到答得像样。就像上学练题。'
+  };
+  $$('#words .word').forEach((w) => w.onclick = () => { $$('#words .word').forEach((x) => x.classList.remove('sel')); w.classList.add('sel'); sel = w; });
+  $$('#slots .slot').forEach((s) => s.onclick = () => {
+    if (!sel) { msg.textContent = '先点上面一个大词。'; return; }
+    if (sel.dataset.to.split(' ').includes(s.dataset.s)) {
+      const t = document.createElement('span'); t.textContent = sel.textContent; $('.in', s).append(t);
+      sel.classList.add('done'); sel.classList.remove('sel'); msg.textContent = why[sel.textContent]; sel = null;
+      if (!$$('#words .word:not(.done)').length) msg.innerHTML = '六个大词都归位了。<b>听起来吓人的词，放回人的本事里，就不神秘了。</b>';
+    } else { s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake'); msg.textContent = '不太对。想一想：它像人的哪样本事？'; }
+  });
+})();
+
+/* 12 Token */
+(() => {
+  const dict = ['人工', '智能', '胡说', '八道', '西瓜', '今天', '一个', '我们', '什么', '大象', '喜欢', '因为', '所以', '电脑', '手机', '老师', '同学', '学习', '问题', '回答', '时候', '知道', '可以', '没有', '怎么', '自己', '现在', '小明', '冰箱', '世界', '中国', '北京', '会'];
+  const cut = (s) => {
+    const out = [];
+    let i = 0;
+    while (i < s.length) {
+      const ch = s[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (/[A-Za-z]/.test(ch)) {
+        let j = i; while (j < s.length && /[A-Za-z']/.test(s[j])) j++;
+        const w = s.slice(i, j);
+        if (w.length <= 6) out.push(w);
+        else { let k = 0; while (k < w.length) { const n = w.length - k <= 6 ? w.length - k : 4; out.push(w.slice(k, k + n)); k += n; } }
+        i = j; continue;
+      }
+      if (/[0-9]/.test(ch)) { let j = i; while (j < s.length && /[0-9]/.test(s[j]) && j - i < 3) j++; out.push(s.slice(i, j)); i = j; continue; }
+      const hit = dict.find((d) => s.startsWith(d, i));
+      if (hit) { out.push(hit); i += hit.length; continue; }
+      out.push(ch); i++;
+    }
+    return out;
+  };
+  const go = () => {
+    const toks = cut($('#tkIn').value.trim());
+    const outEl = $('#tkOut'); outEl.innerHTML = '';
+    const m = $('#tkMachine').parentElement;
+    m.classList.add('chop');
+    toks.forEach((t, i) => {
+      const s = document.createElement('span'); s.className = 'tk'; s.textContent = t;
+      s.style.animationDelay = (RM ? 0 : i * 0.12) + 's'; outEl.append(s);
+    });
+    setTimeout(() => m.classList.remove('chop'), RM ? 0 : toks.length * 120 + 300);
+    const chars = [...$('#tkIn').value.replace(/\s/g, '')].length;
+    $('#tkRead').textContent = `${chars} 个字符 → ${toks.length} 块（示意）`;
+  };
+  $('#tkGo').onclick = go;
+  $$('[data-ex]').forEach((b) => b.onclick = () => { $('#tkIn').value = b.dataset.ex; go(); });
+  $('#tkIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+})();
+
+/* 13 接龙 */
+(() => {
+  const cands = [['牛奶', 46], ['可乐', 23], ['水', 17], ['果汁', 14]];
+  const box = $('#probs');
+  box.innerHTML = cands.map(([w, p]) => `<div class="pr" data-w="${w}"><span>${w}</span><div class="bar"><i style="width:0"></i></div><span>${p}%</span></div>`).join('');
+  const show = () => $$('.pr', box).forEach((r, i) => $('i', r).style.width = cands[i][1] + '%');
+  const hist = [];
+  $('#nwGo').onclick = () => {
+    show();
+    let x = Math.random() * 100, pick = cands[0][0];
+    for (const [w, p] of cands) { if (x < p) { pick = w; break; } x -= p; }
+    $$('.pr', box).forEach((r) => r.classList.toggle('win', r.dataset.w === pick));
+    $('#nwBlank').textContent = pick;
+    hist.push(pick);
+    $('#nwHist').textContent = '这几次接的：' + hist.join('、');
+  };
+  $('#nwReset').onclick = () => { hist.length = 0; $('#nwHist').textContent = ''; $('#nwBlank').textContent = '？'; $$('.pr', box).forEach((r) => { r.classList.remove('win'); $('i', r).style.width = '0'; }); };
+})();
+
+/* 14 猜数 */
+(() => {
+  const A = $('#laneA'), B = $('#laneB');
+  let timers = [];
+  const pos = (n) => ((n - 1) / 99 * 100) + '%';
+  $('#gsGo').onclick = () => {
+    timers.forEach(clearTimeout); timers = [];
+    const secret = 1 + Math.floor(Math.random() * 100);
+    [A, B].forEach((l) => { l.classList.remove('done'); $('.target', l).style.left = pos(secret); $('.count span', l).textContent = '0'; });
+    const pa = $('.ptr', A); let g = 0;
+    const stepA = () => {
+      g++; pa.style.left = pos(g); pa.dataset.n = g; $('.count span', A).textContent = g;
+      if (g === secret) A.classList.add('done'); else timers.push(setTimeout(stepA, RM ? 0 : 45));
+    };
+    const pb = $('.ptr', B), rg = $('.range', B);
+    let lo = 1, hi = 100, c = 0;
+    const stepB = () => {
+      const m = Math.floor((lo + hi) / 2); c++;
+      rg.style.left = pos(lo); rg.style.width = ((hi - lo) / 99 * 100) + '%';
+      pb.style.left = pos(m); pb.dataset.n = m; $('.count span', B).textContent = c;
+      if (m === secret) { B.classList.add('done'); return; }
+      if (m < secret) lo = m + 1; else hi = m - 1;
+      timers.push(setTimeout(stepB, RM ? 0 : 700));
+    };
+    stepA(); stepB();
+  };
+  $('.range', B).style.cssText = 'left:0;width:100%';
+})();
+
+/* 15 涂格子 */
+(() => {
+  const P = [
+    '0000011111100000','0001100000011000','0010000000000100','0100000000000010','0100110000110010','1000110000110001','1000000000000001','1000000000000001',
+    '1001000000001001','1000100000010001','0100011111100010','0100000000000010','0010000000000100','0001100000011000','0000011111100000','0000000000000000'
+  ].join('');
+  const box = $('#paint');
+  box.innerHTML = Array.from({ length: 256 }, () => '<i></i>').join('');
+  const cells = $$('i', box);
+  let tm = null;
+  $$('#paintBtns .btn').forEach((b) => b.onclick = () => {
+    clearInterval(tm);
+    $$('#paintBtns .btn').forEach((x) => x.classList.toggle('on', x === b));
+    cells.forEach((c) => c.className = '');
+    const n = +b.dataset.n; let k = 0, round = 0;
+    const paint = () => {
+      round++;
+      for (let j = 0; j < n && k < 256; j++, k++) cells[k].className = 'p' + (P[k] === '1' ? ' a' : '');
+      $('#paintRead').innerHTML = round + '<small>轮</small>';
+      if (k >= 256) clearInterval(tm);
+    };
+    if (RM) { while (k < 256) paint(); return; }
+    paint(); tm = setInterval(paint, n === 1 ? 22 : 160);
+  });
+})();
+
+const fromHash = () => { const n = parseInt(location.hash.slice(1), 10); if (Number.isFinite(n) && n - 1 !== cur) go(n - 1); };
+cur = -1;
+fromHash();
+if (cur < 0) go(0);
+window.addEventListener('hashchange', fromHash);
+})();
+</script>
+</body>
+</html>

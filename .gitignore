@@ -4,3 +4,4 @@
 .env.*
 node_modules/
 .cursor/
+tools/m1-figures/out/
