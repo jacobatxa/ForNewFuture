@@ -35,7 +35,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .lead b{color:var(--ink)}
 .stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
 .cols{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;flex:1;min-height:0}
-.cols>*,.sort>*,.vote>*,.hw>*,.demo>*{min-width:0}
+.cols>*,.sort>*,.hw>*,.demo>*{min-width:0}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
 .btns{display:flex;flex-wrap:wrap;gap:8px}
 .btn{border:1px solid var(--line2);background:var(--paper);border-radius:8px;padding:9px 14px;font-weight:700;font-size:14px;transition:background .2s,border-color .2s,color .2s}
@@ -74,19 +74,30 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .agenda div{border-top:2px solid var(--ink);padding-top:8px;font-size:14px;line-height:1.45}
 .agenda span{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:2px}
 
-/* vote */
-.vote{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.q h3{font-size:19px;margin-bottom:10px}
-.q h3 em{font-style:normal;font-family:var(--mono);font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
-.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 11px;margin-bottom:7px;font-size:14.5px;line-height:1.4;transition:all .2s}
-.opt i{font-style:normal;font-family:var(--mono);font-weight:700;color:var(--muted);flex:none;width:16px}
-.opt.pick{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
-.opt .v{display:none;font-size:12.5px;margin-top:3px;color:var(--ink2)}
-.revealed .opt .v{display:block}
-.revealed .opt[data-v="ok"]{background:var(--ok-soft);border-color:var(--ok)}
-.revealed .opt[data-v="half"]{background:var(--half-soft);border-color:#C9A64A}
-.revealed .opt[data-v="no"]{background:var(--bad-soft);border-color:#D9A19B}
-.tagv{font-weight:800;margin-right:4px}
+/* picture options */
+.pics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-content:start}
+.pics>*{min-width:0}
+.pic{position:relative;border:0;padding:0;border-radius:14px;overflow:hidden;aspect-ratio:1;background:#2A2A2E;text-align:left;color:#fff;transition:box-shadow .25s,transform .25s}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .8s,transform 1.2s}
+.pic:hover img{transform:scale(1.035)}
+.pic .cap{position:absolute;left:0;right:0;bottom:0;padding:36px 14px 12px;background:linear-gradient(#0000,#000000A8 55%);font-size:24px;font-weight:900;line-height:1.25}
+.pic .cap i{font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;border:1px solid #FFFFFF90;border-radius:6px;padding:1px 6px;margin-right:8px;vertical-align:4px}
+.pic.pick{box-shadow:0 0 0 4px var(--accent);transform:translateY(-3px)}
+.pic.pick .cap i{background:var(--accent);border-color:var(--accent)}
+.flip .pic{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);color:var(--ink)}
+.flip .ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden}
+.flip .pic .b{opacity:0}
+.flip .pic.open .a{opacity:0}
+.flip .pic.open .b{opacity:1}
+.flip .cap{padding-top:28px;font-size:20px;color:#fff;transition:opacity .4s}
+.flip .open .cap{opacity:0}
+.txt .to small{font-size:13px;color:var(--muted);font-weight:700}
+.txt{display:block;padding:10px 14px 14px;min-height:118px}
+.txt .q{font-size:14px;color:var(--muted)}
+.txt .to,.txt .pf{display:none}
+.open .txt .q{display:none}
+.open .txt .to{display:block;font-size:17px;color:#7A4A12;animation:pop .4s ease}
+.open .txt .pf{display:block;font-size:13.5px;line-height:1.55;color:var(--ink2);margin-top:4px}
 
 /* path */
 .path-svg{width:100%;height:auto;display:block}
@@ -258,7 +269,9 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 
 @media (max-width:860px){
   .slide{padding:20px 16px 76px}
-  .cols,.sort,.vote,.hw,.demo,.three,.keep{grid-template-columns:1fr}
+  .pics{grid-template-columns:1fr 1fr}
+  .pics.flip{grid-template-columns:1fr}
+  .cols,.sort,.hw,.demo,.three,.keep{grid-template-columns:1fr}
   .agenda{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
   .slots{grid-template-columns:1fr 1fr}
@@ -310,44 +323,53 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
   </aside>
 </section>
 
-<!-- 2 三个问题投票 -->
-<section class="slide" data-t="2–5" data-fs="飞书会议 · 投票（三题一起发，限时 90 秒）">
-  <div><h2>先猜：关于 AI 的三个怪问题<span class="en">Three odd questions about AI</span></h2></div>
-  <p class="lead">凭感觉选，不用怕错。<b>每题可能不止一个对</b>。选完在聊天区说一句理由。</p>
-  <div class="stage">
-    <div class="vote" id="vote">
-      <div class="card q" data-q="1"><h3><em>问题 1</em>AI 到底住在哪里？</h3>
-        <button class="opt" data-v="half"><i>A</i><span>我的手机、电脑里<span class="v"><span class="tagv">一半对</span>有些小号 AI 能装进手机；你平时聊天的大 AI 不在手机里，手机只是"窗口"。</span></span></button>
-        <button class="opt" data-v="half"><i>B</i><span>天上的"云"里<span class="v"><span class="tagv">一半对</span>"云"是个比喻，它其实在地上。</span></span></button>
-        <button class="opt" data-v="ok"><i>C</i><span>很远的一个大机房里<span class="v"><span class="tagv">对</span>大 AI 住在机房的服务器里。</span></span></button>
-        <button class="opt" data-v="no"><i>D</i><span>网线里<span class="v"><span class="tagv">不对</span>网线是路，不是家。</span></span></button>
-      </div>
-      <div class="card q" data-q="2"><h3><em>问题 2</em>AI "吃"什么？</h3>
-        <button class="opt" data-v="ok"><i>A</i><span>电<span class="v"><span class="tagv">对</span>每回答一句都在耗电。</span></span></button>
-        <button class="opt" data-v="ok"><i>B</i><span>书和网页上的文字<span class="v"><span class="tagv">对</span>学本事的时候吃。</span></span></button>
-        <button class="opt" data-v="ok"><i>C</i><span>我问它的问题<span class="v"><span class="tagv">对</span>干活的时候吃。</span></span></button>
-        <button class="opt" data-v="no"><i>D</i><span>它什么都不吃<span class="v"><span class="tagv">不对</span>它吃得可多了。</span></span></button>
-      </div>
-      <div class="card q" data-q="3"><h3><em>问题 3</em>AI 长什么样？</h3>
-        <button class="opt" data-v="no"><i>A</i><span>像个机器人<span class="v"><span class="tagv">不对</span>机器人只是它可以用的一个外壳。</span></span></button>
-        <button class="opt" data-v="half"><i>B</i><span>像一块芯片<span class="v"><span class="tagv">一半对</span>芯片是它的"身体"，但还不是全部。</span></span></button>
-        <button class="opt" data-v="ok"><i>C</i><span>是一大堆数字<span class="v"><span class="tagv">对</span>它的本事存在一大堆数字里。</span></span></button>
-        <button class="opt" data-v="half"><i>D</i><span>它没有样子<span class="v"><span class="tagv">一半对</span>没有固定样子，但有身体。</span></span></button>
-      </div>
-    </div>
-    <div class="btns"><button class="btn" id="revealVote">揭晓答案（讲完三题再点）</button><button class="btn" id="resetVote">清空</button></div>
+<!-- 2 问题 1 · 猜 -->
+<section class="slide" data-t="2–4" data-fs="聊天区：打 A、B、C 或 D，可以选好几个">
+  <div><h2>问题 1 · AI 住在哪里？<span class="en">Where does AI live?</span></h2></div>
+  <p class="lead">选一张图。<b>悄悄说一句：可能不止一个对。</b></p>
+  <div class="pics" id="q1Pick">
+    <button class="pic" aria-pressed="false"><img src="@IMG:q1-sky@" alt="黄昏时云层上方的天空，挂着一弯月亮"><span class="cap"><i>A</i>天上</span></button>
+    <button class="pic" aria-pressed="false"><img src="@IMG:q1-earth@" alt="地下的土层剖面，埋着沙子和石英晶体"><span class="cap"><i>B</i>土里</span></button>
+    <button class="pic" aria-pressed="false"><img src="@IMG:q1-water@" alt="阳光照进深海，海底有沙和水草"><span class="cap"><i>C</i>水里</span></button>
+    <button class="pic" aria-pressed="false"><img src="@IMG:q1-air@" alt="蒲公英的种子被风吹进天空"><span class="cap"><i>D</i>空气里</span></button>
   </div>
   <aside class="notes">
     <h4>飞书操作</h4>
-    <ul><li>会议底部「投票」→ 新建三道单选题，选项照屏幕抄 A–D，限时 90 秒；如果投票功能不可用，就让孩子在聊天区打"1C 2B 3A"这种格式。</li>
-    <li>你在屏幕上点一下全班最多人选的那个选项（会加粗），记住它，后面三页逐题揭晓。</li></ul>
-    <h4>别做的事</h4>
-    <ul><li>这一页不揭晓。说一句"每题都有坑，我们一题一题拆"就翻页。最后一页"交作业"会让他们对照自己现在的答案。</li></ul>
+    <ul><li>会议底部「投票」→ 新建一道<b>多选题</b>，选项 A–D，限时 60 秒；投票用不了，就让孩子在聊天区打字母。</li>
+    <li>点一下全班选得最多的图，它会描边。</li></ul>
+    <h4>提问链</h4>
+    <ul><li>这一页不揭晓。点两三个孩子说"为什么选它"。</li>
+    <li>有人选"空气里"，追问一句：AI 怎么可能住在空气里？先别回答，翻页。</li></ul>
+  </aside>
+</section>
+
+<!-- 3 问题 1 · 解密 -->
+<section class="slide" data-t="4–8" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+  <div><h2>问题 1 · 解密<span class="en">What is really behind each picture</span></h2></div>
+  <p class="lead">点一张，看它背后藏着什么。</p>
+  <div class="pics flip" id="q1Flip">
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-sky@" alt=""><img class="b" src="@IMG:q1-sky-truth@" alt="一排卫星绕着地球飞，彼此之间连着激光"><span class="cap"><i>A</i>天上</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>天上 · </small>太空里的计算卫星</b><span class="pf">2025 年 5 月，中国一次发射了 12 颗会算数的卫星。它们在太空里用激光互相传话，自己就能跑 AI。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-earth@" alt=""><img class="b" src="@IMG:q1-earth-truth@" alt="一堆沙子和石英，旁边是一块芯片和一张刻满芯片的圆形硅片"><span class="cap"><i>B</i>土里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>土里 · </small>沙子变成的芯片</b><span class="pf">芯片的主要材料是硅，硅从石英砂里炼出来，切成薄圆片，再刻出一块块芯片。AI 的身体就是它。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-water@" alt=""><img class="b" src="@IMG:q1-water-truth@" alt="海底躺着一个白色的大罐子，连着一根粗电缆"><span class="cap"><i>C</i>水里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>水里 · </small>海底的机房</b><span class="pf">海南陵水的海底，沉着装满服务器的大罐子，用海水给它降温。跨海的网络，大多也走海底光缆。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-air@" alt=""><img class="b" src="@IMG:q1-air-truth@" alt="一只手举着手机，看不见的波穿过空气飞向远处山坡上的信号塔"><span class="cap"><i>D</i>空气里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>空气里 · </small>穿过空气的信号</b><span class="pf">你的问题变成看不见的电波，穿过空气跑到基站。每秒约 30 万公里，1 秒能绕地球七圈半。</span></span></button>
+  </div>
+  <div class="btns"><button class="btn primary" id="q1All">全部翻开</button><button class="btn" id="q1Reset">翻回去</button></div>
+  <div class="say hidden" id="q1End"><b>四个都对。</b>天上和海底真有 AI 在住，土里长出了它的身体，空气是它跑的路。不过你每天聊天的那个 AI，大多住在<b>地上的大机房</b>里。下一页，跟着你的一句话跑一趟。</div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>一张一张翻。每张翻开前先问："天上？天上能有什么？"让孩子在聊天区猜一句再点。</li>
+    <li>建议顺序：天上 → 水里 → 土里 → 空气。空气放最后，正好接下一页的"发送"动画。</li>
+    <li>四张都翻开后，底下会出现总结。重点讲清"住、身体、路"三件事不一样。</li></ul>
+    <h4>知识点要讲准</h4>
+    <ul><li>天上：2025 年 5 月 14 日发射的"三体计算星座"首批 12 颗卫星（国星宇航、之江实验室），星上装了 80 亿参数的模型。</li>
+    <li>水里：海南陵水海底数据中心 2023 年起商用，2025 年又建了能跑 AI 的海底智算中心。用海水降温，比陆地机房省电。</li>
+    <li>空气：无线电波在空气里约 30 万公里每秒；进了光纤，光大约 20 万公里每秒。</li>
+    <li>土里：芯片的硅来自石英砂。说"沙子变芯片"可以，但中间要提纯到极纯，工序很多。</li></ul>
   </aside>
 </section>
 
 <!-- 3 消息去哪了 -->
-<section class="slide" data-t="5–8" data-fs="聊天区：猜一猜，这句话跑了多远">
+<section class="slide" data-t="8–10" data-fs="聊天区：猜一猜，这句话跑了多远">
   <div><h2>问题 1 · 你按下"发送"，这句话去哪了？<span class="en">Where does your message go?</span></h2></div>
   <div class="stage">
     <div class="card">
@@ -384,12 +406,12 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
     <li>点"按下发送"，小点一步一步走，底下五格会亮。走到第 4 格停一下："真正'想'的地方在这里。"</li>
     <li>读数会算出 1000 公里光缆单程大约 5 毫秒，所以感觉不到它很远。</li></ul>
     <h4>知识点要讲准</h4>
-    <ul><li>"云"是比喻，指别人机房里的电脑。</li><li>有些小模型可以装在手机里离线跑（端侧模型），所以投票 A 算一半对。</li></ul>
+    <ul><li>"云"是比喻，指别人机房里的电脑。</li><li>有些小模型可以装在手机里离线跑（端侧模型），所以手机里也能住一个小号 AI。</li></ul>
   </aside>
 </section>
 
 <!-- 4 机柜 -->
-<section class="slide" data-t="8–11" data-fs="举手：猜一台服务器里有几块 GPU">
+<section class="slide" data-t="10–12" data-fs="举手：猜一台服务器里有几块 GPU">
   <div><h2>问题 1 · 机房里，AI 住在这样的柜子里<span class="en">A rack in a data center</span></h2></div>
   <div class="cols">
     <div class="figcard" id="rackCard">
@@ -419,7 +441,7 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 </section>
 
 <!-- 5 吃什么 -->
-<section class="slide" data-t="11–15" data-fs="聊天区：把每样食物喂给哪张嘴">
+<section class="slide" data-t="12–15" data-fs="聊天区：把每样食物喂给哪张嘴">
   <div><h2>问题 2 · AI 吃什么？分三张嘴喂<span class="en">What does AI eat?</span></h2></div>
   <p class="lead">先点一样"食物"，再点它该进的那张嘴。喂错了，嘴会摇头。</p>
   <div class="stage">
@@ -825,7 +847,7 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
   <div class="hw">
     <div class="card"><b class="n">01 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写一句"我是按 ___ 分的"。再换一个标准，分第二次。</p></div>
     <div class="card"><b class="n">02 大词</b><h4>挑一个今天的大词，用一句话讲给家人听</h4><p>格式："___ 就像人的 ___，因为 ___。"说完让家人复述一遍，复述不出来就重写。</p></div>
-    <div class="card"><b class="n">03 改口</b><h4>开课时你投了什么票？现在呢？</h4><p>"我开始以为 AI 住在 ___，现在我觉得 ___，因为 ___。"没改口也行，写出理由。</p></div>
+    <div class="card"><b class="n">03 改口</b><h4>开课时你选了哪张图？现在呢？</h4><p>"我开始以为 AI 住在 ___，现在我觉得 ___，因为 ___。"没改口也行，写出理由。</p></div>
   </div>
   <p class="lead" style="margin-top:6px">老师随机点三个人，每人一分钟，回答：</p>
   <div class="three"><div>你今天做了什么？<small>比如：我给 12 样东西换了三种分法</small></div><div>AI 做了什么？<small>比如：它回答了自己住在哪</small></div><div>你质疑过 AI 什么？<small>比如：它数 Token 数错了</small></div></div>
@@ -935,15 +957,19 @@ document.addEventListener('touchend', (e) => {
   tx = null;
 });
 
-/* 2 投票 */
-$$('#vote .q').forEach((q) => $$('.opt', q).forEach((o) => o.onclick = () => {
-  $$('.opt', q).forEach((x) => x.classList.remove('pick'));
-  o.classList.add('pick');
-}));
-$('#revealVote').onclick = () => $('#vote').classList.add('revealed');
-$('#resetVote').onclick = () => { $('#vote').classList.remove('revealed'); $$('#vote .opt').forEach((x) => x.classList.remove('pick')); };
+/* 2 问题 1 猜 */
+$$('#q1Pick .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed', p.classList.toggle('pick')));
 
-/* 3 发送 */
+/* 3 问题 1 解密 */
+(() => {
+  const cards = $$('#q1Flip .pic'), end = $('#q1End');
+  const set = (c, on) => { c.classList.toggle('open', on); c.setAttribute('aria-pressed', on); end.classList.toggle('hidden', !cards.every((x) => x.classList.contains('open'))); };
+  cards.forEach((c) => c.onclick = () => set(c, !c.classList.contains('open')));
+  $('#q1All').onclick = () => cards.forEach((c, i) => setTimeout(() => set(c, true), RM ? 0 : i * 450));
+  $('#q1Reset').onclick = () => cards.forEach((c) => set(c, false));
+})();
+
+/* 4 发送 */
 (() => {
   const path = $('#msgPath'), dot = $('#msgDot'), steps = $$('#pathSteps div'), read = $('#pathRead');
   const L = path.getTotalLength();
