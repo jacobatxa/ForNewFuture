@@ -1,0 +1,441 @@
+<!-- 12 过渡：抽象 → 工具地图 -->
+<section class="slide" data-t="34–36" data-fs="聊天区：你平时打开的「AI」到底是哪一种？">
+  <div><h2>抽象练完了 · 下一关认清货架<span class="en">From abstraction → three kinds of AI tools</span></h2></div>
+  <p class="lead">刚才我们把人的本事抽成零件。现在换一个标准：市场上的 AI，按「你打开的是什么」分成三格。</p>
+  <div class="bridge-grid">
+    <div class="bridge-card">
+      <em>01</em>
+      <h3>刚才练的</h3>
+      <p>舍 · 取 · 命 · 验<br>四句式能说出口</p>
+    </div>
+    <div class="bridge-arrow" aria-hidden="true">→</div>
+    <div class="bridge-card on">
+      <em>02</em>
+      <h3>接下来认货架</h3>
+      <p>大模型 · 运行环境 · Personal Agent<br>先分清，再拆零件</p>
+    </div>
+    <div class="bridge-arrow" aria-hidden="true">→</div>
+    <div class="bridge-card">
+      <em>03</em>
+      <h3>再展开零件</h3>
+      <p>记忆 · 提示词 · Token<br>技能 · 猜下一个词</p>
+    </div>
+  </div>
+  <div class="say">聊天区先猜：豆包聊天、Cursor 写代码、飞书助手办事——它们是同一种东西吗？</div>
+  <aside class="notes">
+    <h4>收口</h4>
+    <ul><li>强调顺序：先认货架，再讲记忆/提示词，不然孩子会以为「所有 AI 都长一个样」。</li>
+    <li>收集聊天区猜测，别急着给标准答案，翻页揭晓。</li></ul>
+  </aside>
+</section>
+
+<!-- 13 三类总览 -->
+<section class="slide" data-t="36–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
+  <div><h2>先分清三格货架<span class="en">Model · Runtime · Personal Agent</span></h2></div>
+  <p class="lead one-line">点一格。先认清你打开的是哪一种——名字叫什么不重要，<b>它在干什么</b>才重要。</p>
+  <div class="shelves shelves-viz shelves-rich" id="shelves">
+    <button class="shelf" data-s="model" aria-pressed="false">
+      <div class="shelf-brands">
+        <img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-deepseek@" alt=""><img src="@IMG:brand-chatgpt@" alt="">
+      </div>
+      <h3>大模型<small>Model</small></h3>
+      <p>豆包 · DeepSeek · ChatGPT</p>
+      <span class="shelf-tag">接话 · 写草稿 · 答问题</span>
+    </button>
+    <button class="shelf" data-s="runtime" aria-pressed="false">
+      <div class="shelf-brands">
+        <img src="@IMG:brand-cursor@" alt=""><img src="@IMG:brand-claude@" alt=""><img src="@IMG:brand-codex@" alt="">
+      </div>
+      <h3>运行环境<small>Runtime</small></h3>
+      <p>Cursor · Claude Code · Codex</p>
+      <span class="shelf-tag">打开项目 · 改文件 · 跑命令</span>
+    </button>
+    <button class="shelf" data-s="agent" aria-pressed="false">
+      <div class="shelf-brands">
+        <img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-feishu@" alt=""><img src="@IMG:brand-hermes@" alt="">
+      </div>
+      <h3>Personal Agent<small>个人助手</small></h3>
+      <p>豆包工作台 · 飞书 · Hermes</p>
+      <span class="shelf-tag">有目标 · 有记忆 · 能办事</span>
+    </button>
+  </div>
+  <div class="say" id="shelfSay">点一下看它干什么。三格可以叠用，但打开时先认清是哪一格。</div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>孩子说「我用 AI」时，追问：你打开的是聊天、写代码的环境，还是一个会办事的助手？</li>
+    <li>术语统一：叫「运行环境」，不叫「编程工具」——它是大模型干活的车间。</li>
+    <li>和国庆创想营错开：营地搭过 Agent 零件；这里先把市场上的东西分到货架上。</li></ul>
+  </aside>
+</section>
+
+<!-- 14 大模型展开 -->
+<section class="slide" data-t="40–44" data-fs="聊天区：你最常用哪个大模型？打名字">
+  <div><h2>第一格 · 大模型<span class="en">What a model actually is</span></h2></div>
+  <p class="lead one-line">大模型 = 被训练好的「会接话的大脑」。你跟它聊天，它在猜下一个最可能的词。</p>
+  <div class="triad-detail">
+    <div class="triad-hero">
+      <div class="mock-ui mock-chat" aria-hidden="true">
+        <div class="mock-bar"><i></i><i></i><i></i><span>豆包 / DeepSeek / ChatGPT</span></div>
+        <div class="mock-bubble you">用小学生能懂的话，解释什么是抽象</div>
+        <div class="mock-bubble bot">抽象就是：丢掉差别，留下共同的那一点，再给它起个名字……</div>
+        <div class="mock-input">发消息给大模型…</div>
+      </div>
+    </div>
+    <div class="triad-side">
+      <div class="brand-row">
+        <figure><img src="@IMG:brand-doubao@" alt="豆包"><figcaption>豆包</figcaption></figure>
+        <figure><img src="@IMG:brand-deepseek@" alt="DeepSeek"><figcaption>DeepSeek</figcaption></figure>
+        <figure><img src="@IMG:brand-chatgpt@" alt="ChatGPT"><figcaption>ChatGPT</figcaption></figure>
+      </div>
+      <ul class="fact-list">
+        <li><b>它擅长</b>写、改、翻译、出主意、解释概念</li>
+        <li><b>它不自带</b>你的文件、你的日历、你的真实世界</li>
+        <li><b>平时最常用</b>：手机/网页里直接开聊——多数人的第一站</li>
+      </ul>
+      <div class="say tight">记住：大模型是「发动机」。没装进环境或助手里时，它主要就是聊天。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>讲法</h4>
+    <ul><li>屏幕上指：输入框 = 你说话；回复气泡 = 它猜出来的下一串词。</li>
+    <li>追问：它知不知道你学校门口有几棵树？——不知道，除非你告诉它或联网查。</li></ul>
+  </aside>
+</section>
+
+<!-- 15 运行环境展开 -->
+<section class="slide" data-t="44–48" data-fs="聊天区：运行环境和大模型，差在哪？">
+  <div><h2>第二格 · 运行环境<span class="en">Runtime: where the model works on a project</span></h2></div>
+  <p class="lead one-line">运行环境 = 大模型的「车间」。它能看见文件夹、改代码、跑命令——不只是聊两句。</p>
+  <div class="triad-detail">
+    <div class="triad-hero">
+      <div class="mock-ui mock-ide" aria-hidden="true">
+        <div class="mock-bar"><i></i><i></i><i></i><span>Cursor / Claude Code / Codex</span></div>
+        <div class="mock-ide-body">
+          <div class="mock-side">src/<br>app.js<br>index.html<br>README</div>
+          <div class="mock-main">
+            <div class="mock-code">function greet(name) {<br>&nbsp;&nbsp;return `你好，${name}`;<br>}</div>
+            <div class="mock-agent">AI：我帮你把这个函数改成中英双语…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="triad-side">
+      <div class="brand-row">
+        <figure><img src="@IMG:brand-cursor@" alt="Cursor"><figcaption>Cursor</figcaption></figure>
+        <figure><img src="@IMG:brand-claude@" alt="Claude Code"><figcaption>Claude Code</figcaption></figure>
+        <figure><img src="@IMG:brand-codex@" alt="Codex"><figcaption>Codex</figcaption></figure>
+      </div>
+      <ul class="fact-list">
+        <li><b>里面仍有大模型</b>——换模型像换发动机</li>
+        <li><b>多出来的本事</b>：读项目、改文件、开终端</li>
+        <li><b>谁常用</b>：要做网页、小程序、作业脚本的人</li>
+      </ul>
+      <div class="say tight">别叫「编程工具」——它是<b>运行环境</b>：大模型在这里对着真实项目干活。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>讲法</h4>
+    <ul><li>对比上一页：聊天窗口 vs 左边文件树。问：哪一边更像「车间」？</li>
+    <li>强调：Cursor ≠ 大模型本身；Cursor 里可以选不同模型。</li></ul>
+  </aside>
+</section>
+
+<!-- 16 Personal Agent 展开 -->
+<section class="slide" data-t="48–52" data-fs="聊天区：助手和大模型聊天，差在哪？">
+  <div><h2>第三格 · Personal Agent<span class="en">A helper that remembers and gets things done</span></h2></div>
+  <p class="lead one-line">个人助手 = 带着目标去办事的 AI。它能记住你、装卸技能，不只是回一句完事。</p>
+  <div class="triad-detail">
+    <div class="triad-hero">
+      <div class="mock-ui mock-agent" aria-hidden="true">
+        <div class="mock-bar"><i></i><i></i><i></i><span>豆包工作台 / 飞书助手 / Hermes</span></div>
+        <div class="mock-agent-grid">
+          <div class="mock-chip">记忆</div>
+          <div class="mock-chip">技能</div>
+          <div class="mock-chip">规矩</div>
+          <div class="mock-chip on">目标：整理本周作业</div>
+        </div>
+        <div class="mock-bubble bot">已记住你的科目表。要不要我按截止日期排出今晚的三件事？</div>
+      </div>
+    </div>
+    <div class="triad-side">
+      <div class="brand-row">
+        <figure><img src="@IMG:brand-doubao@" alt="豆包工作台"><figcaption>豆包工作台</figcaption></figure>
+        <figure><img src="@IMG:brand-feishu@" alt="飞书"><figcaption>飞书助手</figcaption></figure>
+        <figure><img src="@IMG:brand-hermes@" alt="Hermes"><figcaption>Hermes</figcaption></figure>
+      </div>
+      <ul class="fact-list">
+        <li><b>比聊天多</b>：记忆、技能、流程、权限</li>
+        <li><b>仍靠大模型</b>想词；多出来的是「办事结构」</li>
+        <li><b>本课后半</b>会拆：提示词、记忆、技能各是什么</li>
+      </ul>
+      <div class="say tight">国庆营搭过零件；这里先认货架——Personal Agent 是第三格，不是第一格。</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>讲法</h4>
+    <ul><li>问：如果助手「记住你过敏不能吃花生」，这算哪样本事？——记忆。</li>
+    <li>预告：下一页画三者关系，再往后才拆提示词/Token。</li></ul>
+  </aside>
+</section>
+
+<!-- 17 关系 + 常用 -->
+<section class="slide" data-t="52–56" data-fs="聊天区：你这周用得最多的是哪一格？">
+  <div><h2>三格怎么叠在一起<span class="en">How the three shelves stack</span></h2></div>
+  <p class="lead one-line">大模型是发动机；运行环境是车间；Personal Agent 是带目标的管家。</p>
+  <div class="stack-viz">
+    <div class="stack-col">
+      <div class="stack-layer l3">
+        <b>Personal Agent</b>
+        <span>目标 · 记忆 · 技能 · 规矩</span>
+        <div class="mini-brands"><img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-feishu@" alt=""><img src="@IMG:brand-hermes@" alt=""></div>
+      </div>
+      <div class="stack-layer l2">
+        <b>运行环境</b>
+        <span>文件 · 终端 · 项目</span>
+        <div class="mini-brands"><img src="@IMG:brand-cursor@" alt=""><img src="@IMG:brand-claude@" alt=""><img src="@IMG:brand-codex@" alt=""></div>
+      </div>
+      <div class="stack-layer l1">
+        <b>大模型</b>
+        <span>接话 · 写字 · 猜下一个词</span>
+        <div class="mini-brands"><img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-deepseek@" alt=""><img src="@IMG:brand-chatgpt@" alt=""></div>
+      </div>
+    </div>
+    <div class="stack-side">
+      <div class="usage-card">
+        <h3>平时大多数人</h3>
+        <p>停在<b>第一格</b>：打开豆包 / ChatGPT 聊几句就走。</p>
+      </div>
+      <div class="usage-card">
+        <h3>要交作品、改网页</h3>
+        <p>进到<b>第二格</b>：在 Cursor 这类运行环境里让模型改文件。</p>
+      </div>
+      <div class="usage-card">
+        <h3>要它长期帮你办事</h3>
+        <p>才认真用<b>第三格</b>：装记忆、技能、规矩的 Personal Agent。</p>
+      </div>
+      <div class="say tight">聊天区投票：这周你用得最多的是 1 / 2 / 3？</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>收口</h4>
+    <ul><li>三格不是互斥：Agent 和运行环境里都「装着」大模型。</li>
+    <li>下一页开始：把人机配对里抽出的名字（记忆·技能…）装回机器。</li></ul>
+  </aside>
+</section>
+
+<!-- 18 五样本事装回 -->
+<section class="slide viz-slide" data-t="56–60" data-fs="聊天区：用命名句说「记忆」">
+  <div><h2>把抽出来的名字装回机器<span class="en">Plug: input · memory · think · output · skill</span></h2></div>
+  <p class="lead one-line">货架认清了。把五张标签点进空位——装完用命名句说清「记忆」。</p>
+  <div class="plugboard">
+    <div class="machine-body" id="plugMachine" aria-label="AI 功能机">
+      <svg viewBox="0 0 640 280" class="mach-svg">
+        <rect x="20" y="30" width="600" height="220" rx="28" fill="#0A1424" stroke="#2A3A55" stroke-width="2"/>
+        <rect x="40" y="50" width="560" height="40" rx="10" fill="#121C30" stroke="#3DD9FF" stroke-opacity=".35"/>
+        <text x="320" y="76" text-anchor="middle" fill="#9EC5FF" font-size="14" font-family="ui-monospace,monospace">FUNCTION CHASSIS</text>
+        <g id="slotsSvg"></g>
+      </svg>
+      <div class="slot-row" id="slotRow">
+        <button class="pslot" data-need="in" aria-pressed="false"><i>01</i><span>空位</span></button>
+        <button class="pslot" data-need="mem" aria-pressed="false"><i>02</i><span>空位</span></button>
+        <button class="pslot" data-need="think" aria-pressed="false"><i>03</i><span>空位</span></button>
+        <button class="pslot" data-need="out" aria-pressed="false"><i>04</i><span>空位</span></button>
+        <button class="pslot" data-need="skill" aria-pressed="false"><i>05</i><span>空位</span></button>
+      </div>
+    </div>
+    <div class="tag-tray" id="tagTray">
+      <button class="ptag" data-k="in">输入</button>
+      <button class="ptag" data-k="mem">记忆</button>
+      <button class="ptag" data-k="think">分析</button>
+      <button class="ptag" data-k="out">输出</button>
+      <button class="ptag" data-k="skill">技能</button>
+    </div>
+  </div>
+  <div class="say" id="plugSay">先点一张标签，再点一个空位。装对会亮。装完：「我把『还能想起什么』命名为记忆」。</div>
+  <aside class="notes">
+    <h4>收口</h4>
+    <ul><li>五个都装上后，聊天区只收命名句。</li>
+    <li>下一页起逐个展开：记忆、提示词、Token、技能、「想」。</li></ul>
+  </aside>
+</section>
+
+<!-- 19 记忆展开 -->
+<section class="slide" data-t="60–64" data-fs="聊天区：记忆和参数，是一回事吗？">
+  <div><h2>展开 · 记忆到底是什么<span class="en">Memory: what it can still recall</span></h2></div>
+  <p class="lead one-line">记忆 = 它还能想起什么。分两层：写进模型里的「本事」，和写在助手里的「关于你」。</p>
+  <div class="split-two">
+    <div class="split-card">
+      <em>A · 模型里的记忆</em>
+      <h3>参数</h3>
+      <p>训练时读过海量文字，本事存成一大堆数。你关了网页，它还「会说话」——靠的是参数。</p>
+      <div class="pill-row"><span>6710 亿参数</span><span>DeepSeek-V3</span></div>
+    </div>
+    <div class="split-card">
+      <em>B · 助手里的记忆</em>
+      <h3>关于你的记录</h3>
+      <p>Personal Agent 可以记住：你的名字、科目、偏好、上次没做完的事。换一台电脑也可能还在。</p>
+      <div class="pill-row"><span>偏好</span><span>任务</span><span>资料库</span></div>
+    </div>
+  </div>
+  <div class="say">聊天区：大模型刚开聊时，知不知道你昨天吃了什么？——一般不知道。那是 B 层记忆的事。</div>
+  <aside class="notes">
+    <h4>别混</h4>
+    <ul><li>参数 ≠ 聊天记录。聊天记录可以删；参数是模型本体。</li>
+    <li>隐私：告诉助手的家庭住址、密码——不要。</li></ul>
+  </aside>
+</section>
+
+<!-- 20 提示词 -->
+<section class="slide" data-t="64–68" data-fs="看老师演示：提示词 · 模型 · 技能">
+  <div><h2>展开 · 提示词就是输入<span class="en">Prompt = what you put in</span></h2></div>
+  <p class="lead one-line">今天只立一个入口：<b>提示词 = 输入</b>。你说不清，它就只好猜。</p>
+  <div class="how-steps" id="howSteps">
+    <button class="how-step on" data-h="1"><b>1</b><span>写一句提示词</span></button>
+    <button class="how-step" data-h="2"><b>2</b><span>指出模型开关</span></button>
+    <button class="how-step" data-h="3"><b>3</b><span>指一下技能入口</span></button>
+  </div>
+  <div class="prompt-demo">
+    <div class="prompt-bad">
+      <span>含糊</span>
+      <p>「帮我写作业」</p>
+    </div>
+    <div class="prompt-good">
+      <span>清楚</span>
+      <p>「你是小学科学老师。用 80 字解释光合作用。不要超纲。结尾出一道判断题。」</p>
+    </div>
+  </div>
+  <div class="say" id="howSay">第 1 步：在助手里写清角色、任务、不能做什么。说不清，它就猜。</div>
+  <aside class="notes">
+    <h4>演示边界</h4>
+    <ul><li>只「指认」三处，不展开写长提示词、不装复杂 skill——留给第二节。</li>
+    <li>落到 Personal Agent 货架上真用；运行环境里的提示词同理。</li></ul>
+  </aside>
+</section>
+
+<!-- 21 Token -->
+<section class="slide" data-t="68–72" data-fs="聊天区：猜这句话会被切成几块">
+  <div><h2>展开 · Token：一口一口咬字<span class="en">Tokens: how AI bites text</span></h2></div>
+  <div class="cols">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <input class="tk-input" id="tkIn" value="我今天想吃一个大西瓜" aria-label="输入一句话">
+      <div class="btns"><button class="btn primary" id="tkGo">切！</button><button class="btn" data-ex="人工智能为什么会胡说八道？">换一句中文</button><button class="btn" data-ex="I love watermelon and elephants.">换一句英文</button></div>
+      <div class="card" style="display:flex;justify-content:center">
+        <svg class="machine" id="tkMachine" viewBox="0 0 420 150" aria-hidden="true">
+          <g stroke="#C8D4E8" stroke-width="2" fill="#101A2E" stroke-linejoin="round">
+            <rect x="20" y="96" width="380" height="18" rx="4"/><circle cx="40" cy="105" r="6"/><circle cx="380" cy="105" r="6"/>
+            <rect x="170" y="10" width="80" height="40" rx="6"/><path d="M190 50v14M230 50v14" fill="none"/>
+            <g id="blade"><rect x="182" y="58" width="56" height="12" rx="2" fill="#1A2640"/><path d="M186 70l24 18 24-18" fill="#46587E"/></g>
+            <path d="M60 114v26M360 114v26" fill="none"/>
+          </g>
+          <text x="210" y="36" text-anchor="middle" font-size="13" fill="#A9B4C7" font-family="PingFang SC,sans-serif">切字机</text>
+        </svg>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div class="card"><div class="tk-out" id="tkOut"></div><p class="readout" id="tkRead" style="margin-top:10px"></p></div>
+      <div class="say">AI 不是一个字一个字读，而是<b>一块一块读</b>。一块叫 Token。它按块读、按块写，<b>用 AI 也常按块收费</b>。</div>
+      <p class="small">切法是示意。每家不一样；中文大约一两个字一块，英文常一个词一块。</p>
+    </div>
+  </div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>按「切！」前先让孩子猜几块。</li>
+    <li>回扣：训练读了约 14.8 万亿块，就是这个「块」。</li></ul>
+  </aside>
+</section>
+
+<!-- 22 技能展开 -->
+<section class="slide" data-t="72–76" data-fs="聊天区：技能和模型，谁能拔掉？">
+  <div><h2>展开 · 技能是可装卸的本事包<span class="en">Skills: plug-in abilities</span></h2></div>
+  <p class="lead one-line">技能（Skill）= 临时插上的本事。模型是发动机；技能是工具箱里多出来的那几件。</p>
+  <div class="skill-board">
+    <div class="skill-core">
+      <b>大模型</b>
+      <span>会说话 · 会写字</span>
+    </div>
+    <div class="skill-slots">
+      <div class="skill-slot on"><b>查日历</b><span>Skill</span></div>
+      <div class="skill-slot on"><b>读表格</b><span>Skill</span></div>
+      <div class="skill-slot"><b>空槽</b><span>可装卸</span></div>
+      <div class="skill-slot"><b>空槽</b><span>可装卸</span></div>
+    </div>
+  </div>
+  <div class="say">聊天区：拔掉「查日历」技能，模型还会不会聊天？——会。它只是少了一样本事。</div>
+  <aside class="notes">
+    <h4>收口</h4>
+    <ul><li>第二节才真装一个 Skill；今天只建立「可装卸」的图景。</li>
+    <li>和个人助手第三格呼应：Agent 才认真谈技能入口。</li></ul>
+  </aside>
+</section>
+
+<!-- 23 想 = 猜下一个词 -->
+<section class="slide" data-t="76–80" data-fs="聊天区：猜它下一个词是什么">
+  <div><h2>展开 · 「想」就是猜下一个词<span class="en">Thinking ≈ next-token prediction</span></h2></div>
+  <p class="lead">拆零件时，「想」最神秘。打开公开演示站：看它怎么接龙。</p>
+  <div class="try-wrap">
+    <div class="tx-shot"><img src="@IMG:transformer-teaser@" alt="Transformer Explainer 界面截图"></div>
+    <div class="try-tasks">
+      <div class="try-card"><span class="n">1</span><p>输入一句话，看它猜的下一个词</p></div>
+      <div class="try-card"><span class="n">2</span><p>把 Temperature 往右拖，看猜的词怎么变</p></div>
+      <div class="try-card"><span class="n">3</span><p>点一个词，看它最在意前面哪几个字</p></div>
+      <a class="btn primary" href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">打开 Transformer Explainer ↗</a>
+    </div>
+  </div>
+  <p class="small">Transformer Explainer · Georgia Tech Polo Club · MIT License · 打不开就用页上三步口述</p>
+  <aside class="notes">
+    <h4>操作</h4>
+    <ul><li>老师共享屏幕；学生聊天区猜下一个词。</li>
+    <li>只压一件事：不是「理解人生」，是在算下一个最可能的词。</li></ul>
+  </aside>
+</section>
+
+<!-- 24 大词归位 -->
+<section class="slide" data-t="80–84" data-fs="聊天区：抢答，这个词归哪样本事">
+  <div><h2>大词归位：放回五样本事里<span class="en">Put each buzzword back</span></h2></div>
+  <p class="lead">先点一个大词，再点它属于哪样本事。放对了，会告诉你它相当于人的什么。</p>
+  <div class="stage">
+    <div class="words" id="words">
+      <button class="word" data-to="in">提示词</button>
+      <button class="word" data-to="in out">Token</button>
+      <button class="word" data-to="mem">参数</button>
+      <button class="word" data-to="think">算法</button>
+      <button class="word" data-to="think">算力</button>
+      <button class="word" data-to="learn">训练</button>
+    </div>
+    <div class="slots" id="slots">
+      <button class="slot" data-s="in"><h4>看和听<small>输入</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="mem"><h4>记<small>记忆</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="think"><h4>想<small>分析</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="out"><h4>说和做<small>输出</small></h4><div class="in"></div></button>
+      <button class="slot" data-s="learn"><h4>学<small>训练</small></h4><div class="in"></div></button>
+    </div>
+    <div class="say" id="wordMsg">六个大词，一个一个来。对照刚才三格货架想：它常出现在哪一格？</div>
+  </div>
+  <aside class="notes">
+    <h4>标准答案</h4>
+    <ul>
+      <li>提示词 → 看和听</li>
+      <li>Token → 看和听（放「说和做」也算对）</li>
+      <li>参数 → 记</li>
+      <li>算法 / 算力 → 想</li>
+      <li>训练 → 学</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- 25 作业 -->
+<section class="slide" data-t="84–58" data-fs="课后把三样东西交到班级表">
+  <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things</span></h2></div>
+  <div class="hw">
+    <div class="card"><b class="n">01 货架</b><h4>你家常用的 AI，归哪一格？</h4><p>拍一张打开界面的照片（可遮隐私）。写：「这是大模型 / 运行环境 / Personal Agent，因为 ___。」</p></div>
+    <div class="card"><b class="n">02 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写「我是按 ___ 分的」。再换一个标准，分第二次。</p></div>
+    <div class="card"><b class="n">03 大词</b><h4>挑一个今天的大词讲给家人听</h4><p>格式：「___ 就像人的 ___，因为 ___。」说完让家人复述一遍。</p></div>
+  </div>
+  <p class="lead" style="margin-top:6px">交完作业，试着回答这三个问题：</p>
+  <div class="three"><div>你今天做了什么？<small>比如：我把三个 App 分进了三格货架</small></div><div>AI 做了什么？<small>比如：它按我的提示词写了一段话</small></div><div>你质疑过 AI 什么？<small>比如：它把运行环境说成大模型</small></div></div>
+  <aside class="notes">
+    <h4>操作</h4>
+    <ul><li>班级表链接发到聊天区；交作业低于八成，下节先补。</li>
+    <li>点名三问：随机三人，答不上第三问也要说出今天哪一刻起过疑心。</li></ul>
+  </aside>
+</section>
