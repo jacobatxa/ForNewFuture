@@ -211,6 +211,14 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .shelves-viz .shelf{border-radius:18px;min-height:220px}
 .how-step{border-radius:18px}
 
+
+#q1Live.expanded .q1-head .lead{display:none}
+#q1Live.expanded #q1Pics{display:none}
+#q1Live.expanded .q1-expand{display:flex!important;flex:1;min-height:0}
+.q1-expand{display:none;flex-direction:column;flex:1;min-height:0}
+#q1Live.expanded .q1-expand.hidden{display:flex}
+.q1-expand .dual{flex:1}
+.stat em{font-style:normal;color:var(--accent);font-weight:900;font-size:1.15em}
 /* dual: real photo + copy */
 .dual{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.9fr);gap:18px;flex:1;min-height:0;align-items:stretch}
 .dual-photo{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--edge);background:#000;min-height:48vh;box-shadow:0 18px 48px rgba(0,0,0,.45)}
@@ -628,7 +636,7 @@ h2{color:#F3F7FD}
   <h1>AI 是怎么<br>被"造"出来的？</h1>
   <p class="lead">今天你会亲手拆开 AI：它由哪些本事拼起来、什么叫抽象、记忆和技能站在哪一格。</p>
   <div class="agenda">
-    <div><span>01</span>实拍深看：它住哪、吃啥、长啥样</div>
+    <div><span>01</span>猜一猜再双击：它住哪、吃啥、长啥样</div>
     <div><span>02</span>点一点：人的本事接到机器上</div>
     <div><span>03</span>玩抽象：分类 · 四动作 · 造句</div>
     <div><span>04</span>认一认：记忆、技能、身边的 AI</div>
@@ -642,236 +650,52 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 2 问题 1 · 猜 -->
-<section class="slide" data-t="2–4" data-fs="聊天区：打 A、B、C 或 D，可以选好几个">
-  <div><h2>问题 1 · AI 住在哪里？<span class="en">Where does AI live?</span></h2></div>
-  <p class="lead">选一张<b>真实照片</b>。<b>悄悄说一句：可能不止一个对。</b></p>
-  <div class="pics">
-    <button class="pic" aria-pressed="false"><img data-k="q1-sky" src="@IMG:real-starlink@" alt="SpaceX 星链卫星叠在火箭顶部的实拍"><span class="cap"><i>A</i>天上</span></button>
-    <button class="pic" aria-pressed="false"><img data-k="q1-earth" src="@IMG:real-wafer-chips@" alt="刻满芯片的硅晶圆实拍"><span class="cap"><i>B</i>土里</span></button>
-    <button class="pic" aria-pressed="false"><img data-k="q1-water" src="@IMG:real-cable-landing@" alt="海底光缆登陆站实拍"><span class="cap"><i>C</i>水里</span></button>
-    <button class="pic" aria-pressed="false"><img data-k="q1-air" src="@IMG:real-cell-tower@" alt="手机基站铁塔实拍"><span class="cap"><i>D</i>空气里</span></button>
+<!-- 2 问题 1 · 猜 + 本页展开 -->
+<section class="slide" data-t="2–12" data-fs="聊天区：打 A–D · 双击一张图看真相" id="q1Live">
+  <div class="q1-head">
+    <div><h2>问题 1 · AI 住在哪里？<span class="en">Where does AI live?</span></h2></div>
+    <p class="lead" id="q1Lead">先点选，再<b>双击</b>一张图，展开看酷图 + 要记住的数字。</p>
   </div>
-  <aside class="notes">
-    <h4>飞书操作</h4>
-    <ul><li>会议底部「投票」→ 新建一道<b>多选题</b>，选项 A–D，限时 60 秒；投票用不了，就让孩子在聊天区打字母。</li>
-    <li>点一下全班选得最多的图，它会描边。</li></ul>
-    <h4>提问链</h4>
-    <ul><li>这一页不揭晓。点两三个孩子说"为什么选它"。</li>
-    <li>有人选"空气里"，追问一句：AI 怎么可能住在空气里？先别回答，翻页。</li></ul>
-  </aside>
-</section>
-
-<!-- 3 问题 1 · 天上 -->
-<section class="slide viz-slide" data-t="4–7" data-fs="聊天区：卫星在天上干什么？">
-  <div><h2>天上：星链卫星是真的<span class="en">Starlink — real hardware in orbit</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-starlink@" alt="SpaceX 公开的星链卫星堆叠实拍：60 颗试验星叠在火箭顶部">
-      <div class="credit">实拍 · SpaceX 公开照片（公有领域）· 2019 年首批星链试验星叠在火箭上</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">A · 天上</div>
-      <h3>不是科幻海报，是已经飞上天的铁盒子</h3>
-      <p class="body">马斯克的 SpaceX 把一摞摞卫星送进近地轨道。它们主要干一件事：<b>铺一条天上的网</b>——让偏远地方也能连上互联网，你的问题才能飞到机房里的 AI。</p>
-      <div class="stats">
-        <div class="stat"><b>规模</b><span>星链已发射数千颗卫星，组成绕地球转的「星座」。一箭常常一次送上几十颗。</span></div>
-        <div class="stat"><b>和算力的关系</b><span>今天大多数大模型仍在地面机房训练。卫星更像「路」：把信号送出去。太空里跑 AI（星上推理）刚起步，例如中国「三体计算星座」2025 年首批 12 颗星，星上带着约 80 亿参数的小模型。</span></div>
-        <div class="stat"><b>为什么要讲清楚</b><span>没有天上的路、海里的缆、地上的站，你手机里的 AI 一句话也到不了机房。</span></div>
+  <div class="pics" id="q1Pics">
+    <button class="pic" data-q1="sky" aria-pressed="false"><img data-k="q1-sky" src="@IMG:q1-sky@" alt="天上"><span class="cap"><i>A</i>天上</span></button>
+    <button class="pic" data-q1="earth" aria-pressed="false"><img data-k="q1-earth" src="@IMG:q1-earth@" alt="土里"><span class="cap"><i>B</i>土里</span></button>
+    <button class="pic" data-q1="water" aria-pressed="false"><img data-k="q1-water" src="@IMG:q1-water@" alt="水里"><span class="cap"><i>C</i>水里</span></button>
+    <button class="pic" data-q1="air" aria-pressed="false"><img data-k="q1-air" src="@IMG:q1-air@" alt="空气里"><span class="cap"><i>D</i>空气里</span></button>
+  </div>
+  <div class="q1-expand hidden" id="q1Expand" aria-hidden="true">
+    <div class="dual">
+      <div class="dual-photo">
+        <img id="q1ExpImg" src="" alt="">
+        <div class="credit" id="q1ExpCredit"></div>
+      </div>
+      <div class="dual-copy">
+        <div class="eyebrow" id="q1ExpEye"></div>
+        <h3 id="q1ExpTitle"></h3>
+        <p class="body" id="q1ExpBody"></p>
+        <div class="stats" id="q1ExpStats"></div>
+        <div class="btns">
+          <button class="btn primary" type="button" id="q1Back">← 返回四选一</button>
+        </div>
       </div>
     </div>
   </div>
+  
+  <div class="hidden" id="q1Assets" aria-hidden="true">
+    <img data-k="sky" src="@IMG:expand-sky@" alt="">
+    <img data-k="earth" src="@IMG:expand-earth@" alt="">
+    <img data-k="water" src="@IMG:expand-water@" alt="">
+    <img data-k="air" src="@IMG:expand-air@" alt="">
+  </div>
+<div class="say hidden" id="q1Done">四个都对。<b>路</b>在天上、水里、空气里；<b>身体</b>从土里的芯片长出来；你天天聊的 AI，主屋在<b>地上大机房</b>。</div>
   <aside class="notes">
-    <h4>讲准</h4>
+    <h4>操作</h4>
     <ul>
-      <li>别把星链说成「AI 住在卫星里」。它是宽带星座；星上算力是另一条刚起步的线。</li>
-      <li>图源：SpaceX 捐赠公有领域照片。</li>
+      <li>先让孩子投票/打字母。单击只高亮选择；<b>双击</b>才展开左图右文。</li>
+      <li>展开后点「返回四选一」再开下一张。四张都看过会出收口。</li>
     </ul>
   </aside>
 </section>
 
-<!-- 3b 问题 1 · 土里 · 晶圆 -->
-<section class="slide viz-slide" data-t="7–10" data-fs="聊天区：芯片是从哪来的？">
-  <div><h2>土里：沙子变成晶圆<span class="en">From sand to silicon wafer</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-wafer-chips@" alt="刻满芯片的硅晶圆实拍特写">
-      <div class="credit">实拍 · 硅晶圆上已经切好的芯片阵列（Wikimedia Commons）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">B · 土里</div>
-      <h3>AI 的身体，从石英砂开始</h3>
-      <p class="body">芯片的骨架是硅。硅藏在石英砂里：提纯 → 拉成单晶棒 → 切成薄圆片，叫<b>晶圆</b>。你看到的这一片，上面密密麻麻全是将来要切开的芯片。</p>
-      <div class="stats">
-        <div class="stat"><b>一片有多大</b><span>先进产线常用 300 毫米直径晶圆。一片上能排布成百上千颗芯片，再切开、封装。</span></div>
-        <div class="stat"><b>和 AI 的关系</b><span>训练大模型的 GPU，就是这种晶圆上刻出来的。没有晶圆产线，就没有算力「身体」。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>讲准</h4>
-    <ul><li>可以说「沙子变芯片」，但要补一句：中间要提纯到极高纯度，工序极多。</li></ul>
-  </aside>
-</section>
-
-<!-- 3c 问题 1 · 土里 · 光刻 -->
-<section class="slide viz-slide" data-t="10–13" data-fs="聊天区：芯片怎么被「印」出来？">
-  <div><h2>土里：光刻车间长这样<span class="en">Photolithography cleanroom — real lab</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-photolith@" alt="光刻洁净室实验室实拍">
-      <div class="credit">实拍 · 光刻洁净室（London Centre for Nanotechnology / Wikimedia）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">B · 制造</div>
-      <h3>不是「画」芯片，是用光「印」电路</h3>
-      <p class="body">晶圆进洁净室，穿上光刻胶，再用极短波长的光，透过掩模把电路图案印上去——这叫<b>光刻</b>。一层层印、刻、镀，才堆出晶体管。</p>
-      <div class="stats">
-        <div class="stat"><b>产线有多贵</b><span>一座先进晶圆厂投资常以百亿美元计。一台顶尖 EUV 光刻机本身就要上亿美元量级，全球能造的厂家极少。</span></div>
-        <div class="stat"><b>产能卡点</b><span>先进制程产能有限。AI 爆发后，高端 GPU 晶圆供不应求——算力不够，常常不是「没电」，而是「没芯片」。</span></div>
-        <div class="stat"><b>外面看厂</b><span>下一页看一座真实晶圆厂外观：厂房本身就是巨型机器。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>讲准</h4>
-    <ul><li>别把普通实验室照片说成 ASML 量产 EUV 机台内部；点明这是光刻洁净室实拍，用来建立「真车间」直觉。</li></ul>
-  </aside>
-</section>
-
-<!-- 3d 问题 1 · 晶圆厂外观 -->
-<section class="slide viz-slide" data-t="13–15" data-fs="聊天区：这座厂房在干什么？">
-  <div><h2>土里：晶圆厂是一座巨兽<span class="en">A real semiconductor fab</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-tsmc-fab@" alt="台积电晶圆厂厂房外观实拍">
-      <div class="credit">实拍 · 晶圆厂厂房（TSMC Fab 外观，Wikimedia Commons）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">B · 工厂</div>
-      <h3>日夜不停，给全世界「印」算力</h3>
-      <p class="body">先进芯片几乎都在这种巨型厂房里诞生。洁净室、超纯水、稳定电力、特种气体——全套齐了，才能稳定出货。</p>
-      <div class="stats">
-        <div class="stat"><b>和算力需求</b><span>大模型训练要成千上万张加速卡。每一张卡，都来自这种产线。产线扩容要好几年，所以算力增长会「抢芯片」。</span></div>
-        <div class="stat"><b>记住一句</b><span>AI 看起来飘在云上，身体却长在土里的晶圆上。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>图源</h4>
-    <ul><li>TSMC Fab5 外观，按 Wikimedia 许可使用；课上可说「一座真实晶圆厂」。</li></ul>
-  </aside>
-</section>
-
-<!-- 3e 问题 1 · 水里 -->
-<section class="slide viz-slide" data-t="15–18" data-fs="聊天区：海底那根缆干什么？">
-  <div><h2>水里：海底光缆是真的「高速公路」<span class="en">Submarine cable landing — real site</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-cable-landing@" alt="俄勒冈州海底光缆登陆站实拍">
-      <div class="credit">实拍 · 海底光缆登陆站（Hillsboro, Oregon · Wikimedia Commons）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">C · 水里</div>
-      <h3>跨洋互联网，几乎全靠海底那几根缆</h3>
-      <p class="body">大陆和大陆之间，百分之九十以上的国际数据走<b>海底光缆</b>。登陆站就是缆爬上岸的地方——外表像普通房子，里面连着整个大洋的流量。</p>
-      <div class="stats">
-        <div class="stat"><b>和 AI 的关系</b><span>你问一句、模型答一句，常常要跨城甚至跨洋。没有光缆，再强的机房也是孤岛。</span></div>
-        <div class="stat"><b>海底机房</b><span>还有人把服务器沉进海里用海水降温（如海南陵水海底数据中心）。那是「住在水里」的另一种真实验：省电、低温，但仍靠缆连回陆地。</span></div>
-        <div class="stat"><b>光纤特写</b><span>下一页看机房里的光纤链路实拍——光在玻璃丝里跑。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>讲准</h4>
-    <ul><li>登陆站照片用于建立「缆是真的」；陵水海底舱可口述，避免用不实 AI 图。</li></ul>
-  </aside>
-</section>
-
-<!-- 3f 光纤 -->
-<section class="slide viz-slide" data-t="18–19" data-fs="聊天区：光怎么传话？">
-  <div><h2>水里 · 路上：光纤里跑的是光<span class="en">Fiber — light carrying your words</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-pulse-fiber@" alt="数据中心光纤链路实拍">
-      <div class="credit">实拍 · 数据中心里的光纤链路</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">链路</div>
-      <h3>你的一句话，被拆成光脉冲往前冲</h3>
-      <p class="body">光纤是极细的玻璃丝。电信号变成光脉冲，在里面以约每秒 20 万公里的速度跑——比空气里的无线电慢一点，但能扛海量数据。</p>
-      <div class="stats">
-        <div class="stat"><b>记住</b><span>天上卫星、海底缆、地上光纤，都是「路」。AI 的「家」还在下一页。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes"><h4>衔接</h4><ul><li>为地面机房铺垫：路都通了，家在机房。</li></ul></aside>
-</section>
-
-<!-- 3g 空气 -->
-<section class="slide viz-slide" data-t="19–21" data-fs="聊天区：空气里有什么？">
-  <div><h2>空气里：基站接着你的手机<span class="en">Cell tower — the last meters in air</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-cell-tower@" alt="手机基站铁塔实拍">
-      <div class="credit">实拍 · 移动通信基站（Wikimedia Commons）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">D · 空气里</div>
-      <h3>看不见的电波，是最后几公里的路</h3>
-      <p class="body">手机 ↔ 基站这一段，靠无线电波穿过空气。进了基站，就钻进光纤和海底缆，奔向机房。</p>
-      <div class="stats">
-        <div class="stat"><b>速度感</b><span>无线电波在空气里约 30 万公里/秒。慢的往往不是「飞」，而是排队、算、再飞回来。</span></div>
-        <div class="stat"><b>和 AI</b><span>没有这段空气里的路，你根本问不到云端的模型。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes"><h4>收口预备</h4><ul><li>下一页揭晓：你每天聊的 AI，大多住在地上机房。</li></ul></aside>
-</section>
-
-<!-- 3h 地上机房 -->
-<section class="slide viz-slide" data-t="21–24" data-fs="聊天区：这才是 AI 最常住的地方">
-  <div><h2>地上：大机房才是 AI 的主屋<span class="en">Data center racks — where most AI lives</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-frontier-racks@" alt="超级计算机机房机柜实拍">
-      <div class="credit">实拍 · 超算 / 智算机房机柜（Frontier 机房摄影）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">主屋</div>
-      <h3>一排排柜子，装满会算的芯片</h3>
-      <p class="body">你每天聊天的大模型，训练和推理大多发生在这种机房：机柜、加速卡、狂转的风扇、成吨的电和冷却。</p>
-      <div class="stats">
-        <div class="stat"><b>规模感</b><span>训练一次顶级模型，常要数千到上万张加速卡同时算，耗电以兆瓦计。一座大厂的算力园区，可以大过好几个购物中心。</span></div>
-        <div class="stat"><b>回扣四问</b><span>天上、土里、水里、空气里——路和零件都在；<b>家</b>主要在地上机房。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>讲准</h4>
-    <ul><li>用 Frontier / 同类机房实拍建立震撼；可对照 terafab 规模图（下一页可选）。</li></ul>
-  </aside>
-</section>
-
-<!-- 3i 规模对比 -->
-<section class="slide viz-slide" data-t="24–25" data-fs="聊天区：这座算力园有多大？">
-  <div><h2>算力园区有多大？看真实尺度<span class="en">How big is a compute campus</span></h2></div>
-  <div class="dual">
-    <div class="dual-photo">
-      <img src="@IMG:real-terafab@" alt="超大型算力园区与知名地标的尺度对比图">
-      <div class="credit">尺度对比 · 超大型算力园区与知名地标（课程既有素材）</div>
-    </div>
-    <div class="dual-copy">
-      <div class="eyebrow">尺度</div>
-      <h3>不是一间教室，是一座「城」</h3>
-      <p class="body">为了喂饱人对算力的胃口，园区不断扩建：更多机柜、更多电、更多冷却。这就是为什么前面要讲芯片产能——没有芯片和电，园区只是空壳。</p>
-      <div class="stats">
-        <div class="stat"><b>收口</b><span>四个地方都对：天上路、土里长身体、水里穿缆、空气传最后一跳；你天天用的那个，住在地上的大机房。</span></div>
-      </div>
-    </div>
-  </div>
-  <aside class="notes"><h4>下一题</h4><ul><li>翻到问题 2：它吃什么。</li></ul></aside>
-</section>
 
 <!-- 6 问题 2 · 猜 -->
 <section class="slide" data-t="7–8" data-fs="聊天区：AI 吃哪几样？打字母">
@@ -1420,9 +1244,115 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
   $('#shelfSay').textContent = on.length ? (on[0].dataset.s==='model' ? '大模型：负责接话、接下文。' : on[0].dataset.s==='code' ? '编程环境：文件、终端、改项目。' : '个人助手：有目标、记忆、技能，要把事办完。') : '点一格货架。先认清你打开的是哪一种。';
 });
 
+
+/* 问题 1：单击选，双击展开 */
+(() => {
+  const root = $('#q1Live'); if (!root) return;
+  const pics = $$('#q1Pics .pic');
+  const expand = $('#q1Expand');
+  const seen = new Set();
+  const data = {
+    sky: {
+      img: '',
+      credit: '视觉海报 · 星链式星座（示意，非实拍登录站）',
+      eye: 'A · 天上',
+      title: '天上铺的是「路」，不是整座 AI 家园',
+      body: '星链一类卫星，把信号送去偏远地方。大模型训练仍多在地面机房；太空里跑小模型，才刚起步。',
+      stats: [
+        ['已上天', '星链已部署 <em>数千颗</em> 卫星，一箭常送几十颗'],
+        ['星上算力刚起步', '中国「三体计算星座」首批 <em>12</em> 颗星，星上约 <em>80 亿</em> 参数小模型'],
+        ['记住', '天上 = 路。没有路，手机问不到机房里的 AI']
+      ]
+    },
+    earth: {
+      img: '',
+      credit: '视觉海报 · 晶圆与电路（示意）',
+      eye: 'B · 土里',
+      title: 'AI 的身体，从沙子变成的晶圆里长出来',
+      body: '石英砂炼成硅 → 切成晶圆 → 光刻「印」电路 → 切开封装成 GPU。没有芯片，再多电也算不动。',
+      stats: [
+        ['一片晶圆', '先进产线常用 <em>300 mm</em> 直径，一片上成百上千颗芯片'],
+        ['工厂有多贵', '一座先进晶圆厂投资常以 <em>百亿美元</em> 计；顶尖光刻机单台上 <em>亿美元</em>'],
+        ['记住', '算力不够，常常先卡在「芯片产能」，不是只会卡在软件']
+      ]
+    },
+    water: {
+      img: '',
+      credit: '视觉海报 · 发光海底光缆（示意）',
+      eye: 'C · 水里',
+      title: '跨洋数据，几乎全靠海底那几根发光的缆',
+      body: '大陆之间的互联网主干在海底。登陆站只是上岸口；真正酷的是整条深海光缆高速公路。也有人把机房沉进海里用海水降温。',
+      stats: [
+        ['主干占比', '国际数据交换 <em>90% 以上</em> 走海底光缆'],
+        ['速度感', '光纤里光速约 <em>20 万 km/s</em>，扛得住海量问答流量'],
+        ['记住', '水里 = 跨洋的路；海底机房 = 另一种「住法」']
+      ]
+    },
+    air: {
+      img: '',
+      credit: '视觉海报 · 基站与空气中的信号（示意）',
+      eye: 'D · 空气里',
+      title: '最后几公里，靠看不见的电波',
+      body: '手机到基站这一段走无线电。进了基站，就钻进光纤和海底缆，奔向机房。',
+      stats: [
+        ['电波有多快', '空气里约 <em>30 万 km/s</em>，1 秒能绕地球七圈半'],
+        ['慢在哪', '慢的往往不是「飞」，是排队、进机房算、再飞回来'],
+        ['记住', '空气 = 最后一跳的路']
+      ]
+    }
+  };
+
+  const asset = (k) => { const i = $(`#q1Assets img[data-k="${k}"]`); return i ? i.src : ''; };
+  const open = (key) => {
+    const d = data[key]; if (!d) return;
+    $('#q1ExpImg').src = asset(key) || d.img;
+    $('#q1ExpImg').alt = d.title;
+    $('#q1ExpCredit').textContent = d.credit;
+    $('#q1ExpEye').textContent = d.eye;
+    $('#q1ExpTitle').textContent = d.title;
+    $('#q1ExpBody').textContent = d.body;
+    $('#q1ExpStats').innerHTML = d.stats.map(([k,v]) => `<div class="stat"><b>${k}</b><span>${v}</span></div>`).join('');
+    root.classList.add('expanded');
+    expand.classList.remove('hidden');
+    expand.setAttribute('aria-hidden', 'false');
+    seen.add(key);
+    if (seen.size >= 4) $('#q1Done').classList.remove('hidden');
+  };
+  const close = () => {
+    root.classList.remove('expanded');
+    expand.classList.add('hidden');
+    expand.setAttribute('aria-hidden', 'true');
+  };
+
+  pics.forEach((btn) => {
+    let taps = 0, timer = null;
+    const select = () => {
+      pics.forEach((p) => p.setAttribute('aria-pressed', p === btn ? 'true' : 'false'));
+    };
+    btn.addEventListener('click', (e) => {
+      // double-click detection for classroom trackpads
+      taps++;
+      if (taps === 1) {
+        select();
+        timer = setTimeout(() => { taps = 0; }, 320);
+      } else if (taps === 2) {
+        clearTimeout(timer); taps = 0;
+        select();
+        open(btn.dataset.q1);
+      }
+    });
+    btn.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      select();
+      open(btn.dataset.q1);
+    });
+  });
+  $('#q1Back').onclick = close;
+})();
+
 /* 猜图页 */
 $$('img[data-same]').forEach((i) => { i.src = $(`img[data-k="${i.dataset.same}"]`).src; });
-$$('.pics:not(.flip) .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed', p.classList.toggle('pick')));
+$$('.pics:not(.flip):not(#q1Pics) .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed', p.classList.toggle('pick')));
 
 /* 解密页：点一张翻出真相，全部翻开后出总结 */
 $$('.pics.flip').forEach((box) => {
