@@ -133,7 +133,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 
 /* rack */
 .rack-wrap{position:relative;width:100%;max-width:860px}
-.rack-wrap .iso-svg{width:100%}
+.rack-wrap .iso-svg{width:100%;max-height:58vh}
 .rack-state{transition:opacity .5s var(--anatomy-ease,ease),transform .6s var(--anatomy-ease,ease)}
 .rack-out{position:absolute;inset:0;opacity:0;transform:translate(10px,-6px)}
 .pulled .rack-out{opacity:1;transform:none}
@@ -264,16 +264,22 @@ table.plan th,table.plan td{border-bottom:1px solid var(--line);padding:8px 10px
 table.plan th{font-size:12px;color:var(--muted);font-weight:700}
 table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(--accent);font-weight:700}
 
-@media (max-width:860px){
+@media (max-width:1000px){
+  .slide{padding:22px 28px 70px}
+}
+@media (max-width:720px){
   .slide{padding:20px 16px 76px}
   .pics{grid-template-columns:1fr 1fr}
-  .pics.flip{grid-template-columns:1fr}
   .cols,.sort,.hw,.demo,.three,.keep{grid-template-columns:1fr}
+  .cols{flex:none}
+  .cols .figcard,.cols .card{min-height:auto}
   .agenda{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
   .slots{grid-template-columns:1fr 1fr}
-  .bowls{grid-template-columns:1fr}
   #keys{display:none}
+}
+@media (max-width:520px){
+  .pics.flip{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -295,7 +301,7 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 .orb .r2{animation-duration:26s;animation-direction:reverse}
 .orb .r3{animation-duration:14s}
 @keyframes spin{to{transform:rotate(360deg)}}
-@media (max-width:860px){.orb{right:-20vw;opacity:.5;width:90vw}}
+@media (max-width:720px){.orb{right:-20vw;opacity:.5;width:90vw}}
 /* ---- tech layer ---- */
 .slide svg:not(.iso-svg){fill:var(--ink)}
 html,body{background:var(--bg)}
