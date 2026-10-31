@@ -186,6 +186,10 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .bridge-card em{font:800 12px var(--mono);color:var(--accent);font-style:normal}
 .bridge-card h3{font-size:22px;margin:0}
 .bridge-card p{font-size:15px;color:var(--ink2);line-height:1.55;margin:0}
+.bridge-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.bridge-chips span{font:700 11px var(--mono);padding:4px 8px;border-radius:8px;border:1px solid var(--edge);color:var(--ink2);background:rgba(255,255,255,.03)}
+.bridge-brands{display:flex;gap:8px;margin-top:auto}
+.bridge-brands img{width:36px;height:36px;border-radius:10px;border:1px solid var(--edge);background:#0B1220;object-fit:cover}
 .bridge-arrow{display:flex;align-items:center;font:800 28px var(--mono);color:var(--muted)}
 .triad-detail{display:grid;grid-template-columns:1.15fr .95fr;gap:16px;flex:1;min-height:0}
 .triad-hero,.triad-side{min-height:0;display:flex;flex-direction:column;gap:12px}
@@ -515,12 +519,12 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 @keyframes flow{to{stroke-dashoffset:-24}}
 
 /* big words */
-.words{display:flex;flex-wrap:wrap;gap:8px}
-.word{border:1.5px solid var(--line2);background:var(--paper);border-radius:8px;padding:8px 14px;font-weight:900;font-size:16px}
+.words{display:flex;flex-wrap:wrap;gap:10px}
+.word{border:1.5px solid var(--line2);background:linear-gradient(165deg,#152238,#0C1526);border-radius:12px;padding:10px 16px;font-weight:900;font-size:17px;color:var(--ink)}
 .word.sel{background:var(--accent);color:#04101C;border-color:var(--accent);box-shadow:var(--glow)}
 .word.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft);pointer-events:none}
 .slots{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.slot{border:1.5px dashed var(--line2);border-radius:12px;padding:10px;min-height:128px;text-align:left;background:var(--paper);display:flex;flex-direction:column;gap:6px}
+.slot{border:1.5px dashed rgba(61,217,255,.28);border-radius:16px;padding:12px;min-height:136px;text-align:left;background:linear-gradient(165deg,rgba(16,27,48,.9),rgba(8,14,26,.95));display:flex;flex-direction:column;gap:6px}
 .slot h4{font-size:15px}
 .slot h4 small{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .slot .in span{display:inline-block;font-size:13px;font-weight:800;padding:3px 8px;border-radius:6px;background:var(--ok-soft);color:var(--ok);margin:0 4px 4px 0;animation:pop .35s}
@@ -1055,24 +1059,29 @@ h2{color:#F3F7FD}
 <!-- 12 过渡：抽象 → 工具地图 -->
 <section class="slide" data-t="36–38" data-fs="聊天区：你平时打开的「AI」到底是哪一种？">
   <div><h2>抽象练完了 · 下一关认清货架<span class="en">From abstraction → three kinds of AI tools</span></h2></div>
-  <p class="lead">刚才我们把人的本事抽成零件。现在换一个标准：市场上的 AI，按「你打开的是什么」分成三格。</p>
+  <p class="lead one-line">刚才抽的是「本事零件」。现在换标准：按你打开的东西，市场上的 AI 分三格。</p>
   <div class="bridge-grid">
     <div class="bridge-card">
-      <em>01</em>
-      <h3>刚才练的</h3>
+      <em>01 · 刚才</em>
+      <h3>抽象四动作</h3>
       <p>舍 · 取 · 命 · 验<br>四句式能说出口</p>
+      <div class="bridge-chips"><span>归纳</span><span>命名</span><span>边界</span><span>反思</span></div>
     </div>
     <div class="bridge-arrow" aria-hidden="true">→</div>
     <div class="bridge-card on">
-      <em>02</em>
-      <h3>接下来认货架</h3>
-      <p>大模型 · 运行环境 · Personal Agent<br>先分清，再拆零件</p>
+      <em>02 · 下一关</em>
+      <h3>认清三格货架</h3>
+      <p>大模型 · 运行环境 · Personal Agent</p>
+      <div class="bridge-brands">
+        <img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-cursor@" alt=""><img src="@IMG:brand-feishu@" alt="">
+      </div>
     </div>
     <div class="bridge-arrow" aria-hidden="true">→</div>
     <div class="bridge-card">
-      <em>03</em>
-      <h3>再展开零件</h3>
+      <em>03 · 再往后</em>
+      <h3>展开零件</h3>
       <p>记忆 · 提示词 · Token<br>技能 · 猜下一个词</p>
+      <div class="bridge-chips"><span>先货架</span><span>后零件</span></div>
     </div>
   </div>
   <div class="say">聊天区先猜：豆包聊天、Cursor 写代码、飞书助手办事——它们是同一种东西吗？</div>
