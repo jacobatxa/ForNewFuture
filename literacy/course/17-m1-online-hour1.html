@@ -194,8 +194,10 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .pic .cap i{font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;border:1px solid #FFFFFF90;border-radius:6px;padding:1px 6px;margin-right:8px;vertical-align:4px}
 .pic.pick{box-shadow:0 0 0 4px var(--accent);transform:translateY(-3px)}
 .pic.pick .cap i{background:var(--accent);border-color:var(--accent)}
-.flip .pic{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);color:var(--ink)}
-.flip .ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden}
+.flip .pic{aspect-ratio:auto;display:flex;flex-direction:column;background:linear-gradient(165deg,rgba(16,27,48,.95),rgba(8,14,26,.98));border:1px solid var(--edge);color:var(--ink);border-radius:16px;overflow:hidden}
+.flip .pic:hover{border-color:rgba(61,217,255,.4)}
+.flip .pic.open{border-color:rgba(61,217,255,.5);box-shadow:var(--glow)}
+.flip .ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#050A14}
 .flip .ph .b{position:absolute;inset:0;width:100%;height:100%;transition:opacity .8s}
 .flip .pic .b{opacity:0}
 .flip .pic.open .a{opacity:0}
@@ -203,12 +205,12 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .flip .cap{padding-top:28px;font-size:20px;color:#fff;transition:opacity .4s}
 .flip .open .cap{opacity:0}
 .txt .to small{font-size:13px;color:var(--muted);font-weight:700}
-.txt{display:block;padding:10px 14px 14px;min-height:118px}
+.txt{display:block;padding:12px 14px 16px;min-height:124px;border-top:1px solid rgba(61,217,255,.08)}
 .txt .q{font-size:14px;color:var(--muted)}
 .txt .to,.txt .pf{display:none}
 .open .txt .q{display:none}
 .open .txt .to{display:block;font-size:17px;color:var(--accent);animation:pop .4s ease}
-.open .txt .pf{display:block;font-size:13.5px;line-height:1.55;color:var(--ink2);margin-top:4px}
+.open .txt .pf{display:block;font-size:13.5px;line-height:1.55;color:var(--ink2);margin-top:6px}
 
 .flip .pic .b.mfig{background:var(--paper);display:flex;align-items:center;justify-content:center;padding:4px}
 .mfig svg{width:auto;height:100%}
@@ -303,15 +305,15 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .bridge-arrow{display:flex;align-items:center;font:800 28px var(--mono);color:var(--muted)}
 .triad-detail{display:grid;grid-template-columns:1.15fr .95fr;gap:16px;flex:1;min-height:0}
 .triad-hero,.triad-side{min-height:0;display:flex;flex-direction:column;gap:12px}
-.mock-ui{flex:1;border:1px solid var(--edge);border-radius:18px;background:linear-gradient(180deg,#121C30,#0A1220);overflow:hidden;display:flex;flex-direction:column;min-height:260px}
-.mock-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--edge);font:600 12px var(--mono);color:var(--ink2)}
+.mock-ui{flex:1;border:1px solid var(--edge);border-radius:18px;background:linear-gradient(180deg,#121C30,#0A1220);overflow:hidden;display:flex;flex-direction:column;min-height:280px;box-shadow:0 16px 40px rgba(0,0,0,.35)}
+.mock-bar{display:flex;align-items:center;gap:6px;padding:11px 14px;border-bottom:1px solid var(--edge);font:600 12px var(--mono);color:var(--ink2);background:rgba(0,0,0,.18)}
 .mock-bar i{width:8px;height:8px;border-radius:50%;background:#334769;display:block}
 .mock-bar i:nth-child(1){background:#FF5F57}.mock-bar i:nth-child(2){background:#FEBC2E}.mock-bar i:nth-child(3){background:#28C840}
 .mock-bar span{margin-left:8px}
 .mock-bubble{margin:12px 14px;padding:12px 14px;border-radius:14px;font-size:14px;line-height:1.5;max-width:88%}
 .mock-bubble.you{background:rgba(61,217,255,.12);border:1px solid rgba(61,217,255,.25);margin-left:auto;color:var(--ink)}
 .mock-bubble.bot{background:rgba(255,255,255,.04);border:1px solid var(--edge);color:var(--ink2)}
-.mock-input{margin:auto 14px 14px;padding:12px 14px;border-radius:12px;border:1px dashed var(--edge);color:var(--muted);font-size:13px}
+.mock-input{margin:auto 14px 14px;padding:12px 14px;border-radius:12px;border:1px solid rgba(61,217,255,.2);color:var(--muted);font-size:13px;background:rgba(0,0,0,.22)}
 .mock-ide-body{display:grid;grid-template-columns:110px 1fr;flex:1;min-height:0}
 .mock-side{padding:12px;border-right:1px solid var(--edge);font:600 12px var(--mono);color:var(--ink2);line-height:1.8;background:rgba(0,0,0,.2)}
 .mock-main{padding:12px;display:flex;flex-direction:column;gap:10px}
