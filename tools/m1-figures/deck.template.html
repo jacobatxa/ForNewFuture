@@ -178,15 +178,43 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 }
 
 
-.hotboard{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
-.hot-svg{width:100%;height:auto;max-height:58vh;border-radius:16px;background:radial-gradient(ellipse at 30% 20%,rgba(61,217,255,.06),transparent 50%),#070D18;border:1px solid var(--edge)}
-.hot{cursor:pointer;transition:opacity .2s}
-.hot.sel{filter:url(#glow)}
-.hot.sel rect,.hot.sel circle{stroke:#FFB020!important;stroke-width:2.6}
+.hotboard{flex:1;display:flex;flex-direction:column;gap:6px;min-height:0}
+.hm-frame{position:relative;flex:1;min-height:0;border:1px solid rgba(255,255,255,.08);border-radius:18px;background:
+  radial-gradient(ellipse at 50% 0%,#1a1a1a,transparent 55%),
+  #0b0b0b;
+  padding:26px 10px 34px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  /* 跟 Anatomy 深色主题一致：灰阶实体 + 一条青色点亮，体积才读得出来 */
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#222222;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#161616;--anatomy-shade-3:#1a1a1a;
+  --anatomy-lit-top:#2a2a2a;--anatomy-lit-shade:#1f1f1f;
+  --anatomy-hi:#e6e6e6;--anatomy-mid:#7a7a7a;--anatomy-lo:#4a4a4a;--anatomy-faint:#2e2e2e;
+  --anatomy-lit:#3DD9FF;--anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#3DD9FF;
+  --anatomy-weight:.7px}
+.hm-frame .fig-tag,.hm-frame .fig-title{color:#8a8a8a}
+.hm-frame .fig-hint{color:#a3a3a3}
+.hm-frame .fig-read{color:#3DD9FF}
+.hm-frame .fig-tag{position:absolute;left:14px;top:10px;font:600 11px var(--mono);color:var(--muted);letter-spacing:.08em}
+.hm-frame .fig-title{position:absolute;right:14px;top:10px;font:600 12px var(--mono);color:var(--ink2)}
+.hm-frame .fig-hint{position:absolute;left:14px;bottom:10px;font-size:12.5px;color:var(--ink2);max-width:55%}
+.hm-frame .fig-read{position:absolute;right:14px;bottom:10px;font:700 12px var(--mono);color:var(--accent)}
+.hm-svg{width:100%;height:auto;max-height:52vh;display:block}
+.hot{cursor:pointer;outline:none}
+.hot .iso-fill,.hot .iso-top,.hot .iso-shade{transition:fill .2s,opacity .2s}
+.hot.sel .iso-top{fill:#2a2a2a}
+.hot.sel .hm-hit{stroke:#FFB020;stroke-width:1.6;fill:rgba(255,176,32,.12)}
 .hot.ok{pointer-events:none}
-.hot.ok rect,.hot.ok circle,.hot.ok path{stroke:#3DFFB0!important}
+.hot.ok .iso-top{fill:#1a3a2a}
+.hot.ok .hm-hit{stroke:#3DFFB0;stroke-width:1.5;fill:rgba(61,255,176,.1)}
 .hot.shake{animation:shake .4s}
-.hot-bar{display:flex;align-items:center;justify-content:space-between}
+.hm-hit{pointer-events:all;fill:rgba(255,255,255,.01)}
+.hm-cable{opacity:.2;transition:opacity .35s}
+.hm-cable.on{opacity:1}
+.hm-cable.on .hm-cable-stroke{stroke:#3DD9FF!important;stroke-width:1.7}
+.hm-legend{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;font-size:12.5px;color:var(--ink2)}
+.hm-legend b{color:var(--ink);font-weight:700}
+.hm-legend i{font-style:normal;color:var(--accent);font-family:var(--mono);font-size:11px;margin:0 4px}
+.hot-bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hot-count{font:800 14px var(--mono);color:var(--accent)}
 
 /* fig stage · anatomy-style frame */
@@ -201,7 +229,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .fig-stage .pile,.fig-stage .binwrap{background:rgba(8,14,26,.55);border-color:rgba(61,217,255,.18)}
 .fig-stage .btns{justify-content:center;flex-wrap:wrap}
 .agenda div span{font-family:var(--mono);color:var(--accent);font-weight:800;min-width:2.2em}
-.hot-svg{box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.hm-frame{box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
 .abs-stage{border-radius:18px}
 .sent-frame{border-radius:18px;background:
   radial-gradient(ellipse at 10% 0%,rgba(61,217,255,.08),transparent 50%),
@@ -791,85 +819,35 @@ h2{color:#F3F7FD}
 <!-- 正题 · AI 拆成几块 -->
 <section class="slide viz-slide" data-t="15–22" data-fs="聊天区：先点人，再点机器">
   <div><h2>正题 · 点人身上的本事，接到机器上<span class="en">Tap human → tap machine</span></h2></div>
-  <p class="lead one-line">科学家造 AI，是把人的本事<b>抽成零件</b>。先点左边热区，再点右边对应舱。</p>
+  <p class="lead one-line">科学家造 AI，是把人的本事<b>抽成零件</b>，再装进一台机器。先点左边模组，再点右边对应舱。</p>
   <div class="hotboard" id="hmMatch">
-    <svg class="hot-svg" viewBox="0 0 900 420" role="img" aria-label="人与机器配对台">
-      <defs>
-        <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A2740"/><stop offset="1" stop-color="#0E1628"/></linearGradient>
-        <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#143044"/><stop offset="1" stop-color="#0B1522"/></linearGradient>
-        <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-      </defs>
-      <!-- human body -->
-      <rect x="40" y="36" width="360" height="348" rx="28" fill="url(#skin)" stroke="#2A3A55" stroke-width="2"/>
-      <text x="220" y="64" text-anchor="middle" fill="#7A8CA3" font-size="13" font-family="ui-monospace,monospace" letter-spacing="2">HUMAN</text>
-      <circle cx="220" cy="120" r="42" fill="#121C30" stroke="#C8D4E8" stroke-width="2.5"/>
-      <path d="M220 162v78" stroke="#C8D4E8" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M220 190l-48 36M220 190l48 36" stroke="#C8D4E8" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M220 240l-28 70M220 240l28 70" stroke="#C8D4E8" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- human hotspots -->
-      <g class="hot h" data-f="in" data-side="h" tabindex="0" role="button" aria-label="看和听">
-        <circle cx="198" cy="112" r="10" fill="rgba(61,217,255,.15)" stroke="#3DD9FF" stroke-width="2"/>
-        <circle cx="242" cy="112" r="10" fill="rgba(61,217,255,.15)" stroke="#3DD9FF" stroke-width="2"/>
-        <text x="220" y="98" text-anchor="middle" fill="#3DD9FF" font-size="12" font-weight="700" font-family="PingFang SC,sans-serif">看·听</text>
-      </g>
-      <g class="hot h" data-f="mem" data-side="h" tabindex="0" role="button" aria-label="记">
-        <circle cx="220" cy="120" r="18" fill="rgba(61,217,255,.08)" stroke="#3DD9FF" stroke-width="1.5" stroke-dasharray="4 3"/>
-        <text x="220" y="152" text-anchor="middle" fill="#3DD9FF" font-size="12" font-weight="700" font-family="PingFang SC,sans-serif">记</text>
-      </g>
-      <g class="hot h" data-f="think" data-side="h" tabindex="0" role="button" aria-label="想">
-        <path d="M246 96c14-10 28-4 30 10" fill="none" stroke="#3DD9FF" stroke-width="2"/>
-        <circle cx="280" cy="100" r="14" fill="rgba(61,217,255,.12)" stroke="#3DD9FF" stroke-width="2"/>
-        <text x="280" y="104" text-anchor="middle" fill="#3DD9FF" font-size="12" font-weight="700" font-family="PingFang SC,sans-serif">想</text>
-      </g>
-      <g class="hot h" data-f="out" data-side="h" tabindex="0" role="button" aria-label="说和做">
-        <circle cx="172" cy="226" r="16" fill="rgba(61,217,255,.12)" stroke="#3DD9FF" stroke-width="2"/>
-        <circle cx="268" cy="226" r="16" fill="rgba(61,217,255,.12)" stroke="#3DD9FF" stroke-width="2"/>
-        <text x="220" y="270" text-anchor="middle" fill="#3DD9FF" font-size="12" font-weight="700" font-family="PingFang SC,sans-serif">说·做</text>
-      </g>
-      <g class="hot h" data-f="learn" data-side="h" tabindex="0" role="button" aria-label="技能">
-        <rect x="176" y="300" width="88" height="36" rx="10" fill="rgba(61,217,255,.1)" stroke="#3DD9FF" stroke-width="2"/>
-        <text x="220" y="323" text-anchor="middle" fill="#3DD9FF" font-size="13" font-weight="700" font-family="PingFang SC,sans-serif">技能</text>
-      </g>
-
-      <!-- machine -->
-      <rect x="500" y="36" width="360" height="348" rx="28" fill="url(#metal)" stroke="#2A3A55" stroke-width="2"/>
-      <text x="680" y="64" text-anchor="middle" fill="#7A8CA3" font-size="13" font-family="ui-monospace,monospace" letter-spacing="2">MACHINE</text>
-      <rect x="530" y="88" width="300" height="260" rx="16" fill="#070D18" stroke="#3DD9FF" stroke-opacity=".25" stroke-width="2"/>
-      <!-- machine bays -->
-      <g class="hot m" data-f="in" data-side="m" tabindex="0" role="button" aria-label="摄像头麦克风键盘">
-        <rect x="548" y="104" width="120" height="52" rx="10" fill="#101A2E" stroke="#3DD9FF" stroke-width="1.8"/>
-        <text x="608" y="126" text-anchor="middle" fill="#E7EEF9" font-size="13" font-weight="700" font-family="PingFang SC,sans-serif">输入舱</text>
-        <text x="608" y="144" text-anchor="middle" fill="#7A8CA3" font-size="10" font-family="PingFang SC,sans-serif">摄像头·麦·键盘</text>
-      </g>
-      <g class="hot m" data-f="mem" data-side="m" tabindex="0" role="button" aria-label="参数记忆">
-        <rect x="682" y="104" width="130" height="52" rx="10" fill="#101A2E" stroke="#3DD9FF" stroke-width="1.8"/>
-        <text x="747" y="126" text-anchor="middle" fill="#E7EEF9" font-size="13" font-weight="700" font-family="PingFang SC,sans-serif">记忆舱</text>
-        <text x="747" y="144" text-anchor="middle" fill="#7A8CA3" font-size="10" font-family="PingFang SC,sans-serif">一大堆参数</text>
-      </g>
-      <g class="hot m" data-f="think" data-side="m" tabindex="0" role="button" aria-label="芯片">
-        <rect x="548" y="172" width="264" height="56" rx="10" fill="#101A2E" stroke="#3DD9FF" stroke-width="1.8"/>
-        <text x="680" y="196" text-anchor="middle" fill="#E7EEF9" font-size="14" font-weight="700" font-family="PingFang SC,sans-serif">分析芯 · 芯片</text>
-        <text x="680" y="214" text-anchor="middle" fill="#7A8CA3" font-size="10" font-family="PingFang SC,sans-serif">按步骤飞快地算</text>
-      </g>
-      <g class="hot m" data-f="out" data-side="m" tabindex="0" role="button" aria-label="屏幕喇叭">
-        <rect x="548" y="244" width="120" height="52" rx="10" fill="#101A2E" stroke="#3DD9FF" stroke-width="1.8"/>
-        <text x="608" y="266" text-anchor="middle" fill="#E7EEF9" font-size="13" font-weight="700" font-family="PingFang SC,sans-serif">输出舱</text>
-        <text x="608" y="284" text-anchor="middle" fill="#7A8CA3" font-size="10" font-family="PingFang SC,sans-serif">屏幕·喇叭</text>
-      </g>
-      <g class="hot m" data-f="learn" data-side="m" tabindex="0" role="button" aria-label="Skill插件">
-        <rect x="682" y="244" width="130" height="52" rx="10" fill="#101A2E" stroke="#3DD9FF" stroke-width="1.8"/>
-        <text x="747" y="266" text-anchor="middle" fill="#E7EEF9" font-size="13" font-weight="700" font-family="PingFang SC,sans-serif">技能槽</text>
-        <text x="747" y="284" text-anchor="middle" fill="#7A8CA3" font-size="10" font-family="PingFang SC,sans-serif">Skill / 插件</text>
-      </g>
-      <text x="680" y="330" text-anchor="middle" fill="#7A8CA3" font-size="12" font-family="PingFang SC,sans-serif" id="hmSvgMsg">先点左边的人</text>
-    </svg>
-    <div class="hot-bar"><button class="btn" id="hmReset">打散重来</button><span class="hot-count" id="hmCount">0 / 5</span></div>
+    <div class="hm-frame iso" data-theme="dark">
+      <span class="fig-tag">Fig 08</span>
+      <span class="fig-title">本事转接台</span>
+      <svg width="0" height="0" aria-hidden="true">
+        <filter id="hmGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="2.4" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </svg>
+      <!--@HM_BENCH@-->
+      <span class="fig-hint" id="hmSvgMsg">先点左边人身上的模组</span>
+      <span class="fig-read" id="hmCount">0 / 5</span>
+    </div>
+    <div class="hm-legend" aria-hidden="true">
+      <span><b>看·听</b><i>→</i>输入舱</span>
+      <span><b>想</b><i>→</i>分析芯</span>
+      <span><b>记</b><i>→</i>记忆舱</span>
+      <span><b>说·做</b><i>→</i>输出舱</span>
+      <span><b>技能</b><i>→</i>技能槽</span>
+    </div>
+    <div class="hot-bar"><button class="btn" id="hmReset">打散重来</button><span class="muted" style="font-size:12.5px;color:var(--ink2)">对了会亮起一根转接线</span></div>
   </div>
   <div class="say hidden" id="hmWin">五对都接上了——这就是「照着人抽」。下一页把抽象这招玩明白。</div>
   <aside class="notes">
     <h4>玩法</h4>
     <ul><li>共享屏幕，孩子喊「看听对接输入舱」，你来点。</li>
-    <li>点错会闪红；对了两侧一起亮。</li></ul>
+    <li>点错会闪；对了两侧模组亮起，中间线槽里的线接通。</li></ul>
   </aside>
 </section>
 
@@ -1844,46 +1822,61 @@ $$('.numwall').forEach((w) => {
 })();
 
 
-/* 人机热区配对 */
+/* 人机热区配对 · 本事转接台 */
 (() => {
   const root = $('#hmMatch'); if (!root) return;
   const hots = $$('.hot', root);
+  const cables = $$('.hm-cable', root);
   const msg = $('#hmSvgMsg');
   const win = $('#hmWin');
   const count = $('#hmCount');
+  const mean = {
+    in: '看·听 → 输入舱（摄像头·麦·键盘）',
+    think: '想 → 分析芯（按步骤飞快地算）',
+    mem: '记 → 记忆舱（一大堆参数）',
+    out: '说·做 → 输出舱（屏幕·喇叭）',
+    learn: '技能 → 技能槽（Skill / 插件）',
+  };
   let pick = null, done = 0;
   const clearSel = () => hots.forEach((h) => h.classList.remove('sel'));
   const setMsg = (t) => { if (msg) msg.textContent = t; };
+  const lightCable = (f, on) => cables.forEach((c) => { if (c.dataset.f === f) c.classList.toggle('on', on); });
+  const goFor = (h) => () => {
+    if (h.classList.contains('ok')) return;
+    const side = h.dataset.side, f = h.dataset.f;
+    if (side === 'h') {
+      clearSel(); h.classList.add('sel'); pick = h;
+      setMsg('再点右边机箱里对应的舱');
+      return;
+    }
+    if (!pick) { setMsg('先点左边人身上的模组'); return; }
+    if (pick.dataset.f !== f) {
+      h.classList.add('shake'); pick.classList.add('shake');
+      setTimeout(() => { h.classList.remove('shake'); pick && pick.classList.remove('shake'); }, 400);
+      setMsg('不对，看下面图例再想一想');
+      return;
+    }
+    pick.classList.remove('sel');
+    pick.classList.add('ok'); h.classList.add('ok');
+    lightCable(f, true);
+    pick = null; done++;
+    count.textContent = done + ' / 5';
+    setMsg(done === 5 ? '五根线都接通了' : mean[f] + ' · 继续');
+    if (done === 5) win.classList.remove('hidden');
+  };
   hots.forEach((h) => {
-    const go = () => {
-      if (h.classList.contains('ok')) return;
-      const side = h.dataset.side, f = h.dataset.f;
-      if (side === 'h') {
-        clearSel(); h.classList.add('sel'); pick = h;
-        setMsg('再点右边对应的舱');
-        return;
-      }
-      if (!pick) { setMsg('先点左边的人'); return; }
-      if (pick.dataset.f !== f) {
-        h.classList.add('shake'); pick.classList.add('shake');
-        setTimeout(() => { h.classList.remove('shake'); pick && pick.classList.remove('shake'); }, 400);
-        setMsg('不对，再想想人的这一步对应哪一舱');
-        return;
-      }
-      pick.classList.remove('sel');
-      pick.classList.add('ok'); h.classList.add('ok');
-      pick = null; done++;
-      count.textContent = done + ' / 5';
-      setMsg(done === 5 ? '全部接上了' : '接上了！继续');
-      if (done === 5) win.classList.remove('hidden');
-    };
-    h.addEventListener('click', go);
-    h.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    // SVG <g> 用 onclick 属性，比 addEventListener 更稳（触控/无障碍都走得到）
+    const go = goFor(h);
+    h.onclick = go;
+    h.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
   });
-  $('#hmReset').onclick = () => {
+  window.__hmReady = hots.length;
+  const resetBtn = $('#hmReset');
+  if (resetBtn) resetBtn.onclick = () => {
     pick = null; done = 0; count.textContent = '0 / 5';
     hots.forEach((h) => h.classList.remove('sel','ok','shake'));
-    win.classList.add('hidden'); setMsg('先点左边的人');
+    cables.forEach((c) => c.classList.remove('on'));
+    win.classList.add('hidden'); setMsg('先点左边人身上的模组');
   };
 })();
 
