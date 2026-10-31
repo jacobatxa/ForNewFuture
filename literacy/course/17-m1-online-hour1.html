@@ -141,7 +141,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .en{display:block;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-top:4px}
 .lead{font-size:16px;color:var(--ink2);line-height:1.6;max-width:46em}
 .lead b{color:var(--ink)}
-.stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px}
+.stage{flex:1;min-height:0;display:flex;flex-direction:column;gap:14px;padding:4px 0}
 .cols{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;flex:1;min-height:0}
 .cols>*,.sort>*,.hw>*,.demo>*{min-width:0}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px;position:relative}
@@ -178,9 +178,9 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 /* cover */
 .cover{justify-content:center;gap:20px}
 .cover .kick{font-size:13px;font-weight:800;letter-spacing:.18em;color:var(--accent)}
-.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px;max-width:980px}
-.agenda div{border-top:2px solid var(--ink);padding-top:8px;font-size:14px;line-height:1.45}
-.agenda span{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:2px}
+.agenda{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px;max-width:1040px}
+.agenda div{border:1px solid var(--edge);border-radius:14px;padding:14px 12px 16px;font-size:14px;line-height:1.45;background:linear-gradient(165deg,rgba(16,27,48,.75),rgba(8,14,26,.9));min-height:108px}
+.agenda span{display:block;font-family:var(--mono);font-size:12px;color:var(--accent);margin-bottom:8px;font-weight:800;letter-spacing:.06em}
 
 /* picture options */
 .pics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-content:start}
@@ -392,8 +392,9 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
   .bridge-grid{display:grid}
   .bridge-arrow{display:none}
 }
-.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.how-step{border:1px solid var(--edge);background:var(--glass);border-radius:16px;padding:22px 14px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:10px;min-height:120px;justify-content:center}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.how-step{border:1px solid var(--edge);background:linear-gradient(165deg,rgba(16,27,48,.85),rgba(8,14,26,.95));border-radius:16px;padding:20px 14px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:10px;min-height:112px;justify-content:center;transition:transform .15s,border-color .2s,box-shadow .2s}
+.how-step:hover{transform:translateY(-2px)}
 .how-step b{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(61,217,255,.15);color:var(--accent);font:900 16px var(--mono)}
 .how-step span{font-size:16px;font-weight:800}
 .how-step.on{border-color:var(--accent);box-shadow:var(--glow)}
@@ -730,12 +731,18 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
   .cols{flex:none}
   .cols .figcard,.cols .card{min-height:auto}
   .agenda{grid-template-columns:1fr 1fr}
+  .agenda div{min-height:0}
   .steps{grid-template-columns:1fr 1fr}
   .slots{grid-template-columns:1fr 1fr}
+  .shelves,.stack-viz{grid-template-columns:1fr}
+  .slot-row{grid-template-columns:1fr 1fr;gap:8px}
+  .pslot{min-height:88px}
   #keys{display:none}
 }
 @media (max-width:520px){
   .pics.flip{grid-template-columns:1fr}
+  .agenda{grid-template-columns:1fr}
+  .slot-row{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -829,8 +836,8 @@ h2{color:#F3F7FD}
 .btn:hover{border-color:var(--accent);color:#fff}
 .say{background:linear-gradient(90deg,rgba(61,217,255,.13),rgba(61,217,255,.02));border-left-color:var(--accent);color:var(--ink)}
 .cover .kick{color:var(--accent);font-family:var(--mono);letter-spacing:.2em}
-.agenda div{border-top:1px solid var(--line2);position:relative;color:var(--ink2)}
-.agenda div::before{content:"";position:absolute;left:0;top:-1px;width:34px;height:2px;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.agenda div{position:relative;color:var(--ink2)}
+.agenda div::before{content:"";position:absolute;left:12px;top:0;width:28px;height:2px;background:var(--accent);box-shadow:0 0 10px var(--accent);border-radius:2px}
 .agenda span{color:var(--accent)}
 .nav button{background:rgba(15,23,38,.8);border-color:var(--line2);color:var(--ink)}
 .nav button:hover{border-color:var(--accent)}
