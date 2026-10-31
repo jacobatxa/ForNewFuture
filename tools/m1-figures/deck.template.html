@@ -215,6 +215,14 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 #q1Live.expanded .q1-head .lead{display:none}
 #q1Live.expanded #q1Pics{display:none}
 #q1Live.expanded .q1-expand{display:flex!important;flex:1;min-height:0}
+
+.q1-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.q1-compare.hidden{display:none}
+.q1-compare .cc{border:1px solid var(--edge);border-radius:12px;overflow:hidden;background:rgba(8,14,26,.7)}
+.q1-compare img{width:100%;height:72px;object-fit:cover;display:block}
+.q1-compare b{display:block;padding:6px 8px;font-size:12px;color:var(--ink2)}
+.q1-compare b em{font-style:normal;color:var(--accent);font-weight:800}
+
 .q1-expand{display:none;flex-direction:column;flex:1;min-height:0}
 #q1Live.expanded .q1-expand.hidden{display:flex}
 .q1-expand .dual{flex:1}
@@ -673,6 +681,7 @@ h2{color:#F3F7FD}
         <h3 id="q1ExpTitle"></h3>
         <p class="body" id="q1ExpBody"></p>
         <div class="stats" id="q1ExpStats"></div>
+        <div class="q1-compare hidden" id="q1Compare"></div>
         <div class="btns">
           <button class="btn primary" type="button" id="q1Back">← 返回四选一</button>
         </div>
@@ -682,6 +691,7 @@ h2{color:#F3F7FD}
   
   <div class="hidden" id="q1Assets" aria-hidden="true">
     <img data-k="sky" src="@IMG:expand-sky@" alt="">
+    <img data-k="starlink" src="@IMG:expand-starlink@" alt="">
     <img data-k="earth" src="@IMG:expand-earth@" alt="">
     <img data-k="water" src="@IMG:expand-water@" alt="">
     <img data-k="air" src="@IMG:expand-air@" alt="">
@@ -1254,14 +1264,15 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
   const data = {
     sky: {
       img: '',
-      credit: '视觉海报 · 星链式星座（示意，非实拍登录站）',
+      credit: '示意 · 单颗计算卫星（贴近真实构型：平台 + 太阳能板；非星链通信星）',
       eye: 'A · 天上',
-      title: '天上铺的是「路」，不是整座 AI 家园',
-      body: '星链一类卫星，把信号送去偏远地方。大模型训练仍多在地面机房；太空里跑小模型，才刚起步。',
+      title: '先分清：星链是路，计算星才是太空算力',
+      body: '星链主要做通信，把信号送到偏远地方。太空算力是另一回事：卫星自己在天上算，再把结果传回地面。',
       stats: [
-        ['已上天', '星链已部署 <em>数千颗</em> 卫星，一箭常送几十颗'],
-        ['星上算力刚起步', '中国「三体计算星座」首批 <em>12</em> 颗星，星上约 <em>80 亿</em> 参数小模型'],
-        ['记住', '天上 = 路。没有路，手机问不到机房里的 AI']
+        ['星链 · 通信', '已部署 <em>数千颗</em> 通信卫星，本质是「天上的基站」，不负责训练大模型'],
+        ['三体计算星座 · 算力', '2025-05-14 一箭 <em>12</em> 星；最高单星 <em>744 TOPS</em>；12 星合计约 <em>5 POPS</em>、存储 <em>30 TB</em>'],
+        ['它算什么', '星上带着约 <em>80 亿</em> 参数天基模型，在轨处理遥感数据；规划千星级，目标总算力约 <em>1000 POPS</em>'],
+        ['记住', '通信星 ≠ 计算星。你天天聊的大模型，主算力仍在地面机房']
       ]
     },
     earth: {
@@ -1278,10 +1289,10 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
     },
     water: {
       img: '',
-      credit: '视觉海报 · 发光海底光缆（示意）',
+      credit: '示意 · 深海光缆（克制表现，非怪兽风）',
       eye: 'C · 水里',
-      title: '跨洋数据，几乎全靠海底那几根发光的缆',
-      body: '大陆之间的互联网主干在海底。登陆站只是上岸口；真正酷的是整条深海光缆高速公路。也有人把机房沉进海里用海水降温。',
+      title: '跨洋数据，几乎全靠海底光缆',
+      body: '大陆之间的互联网主干在海底。登陆站只是上岸口；真正干活的是整条光缆。也有实验把机房沉进海里，用海水降温。',
       stats: [
         ['主干占比', '国际数据交换 <em>90% 以上</em> 走海底光缆'],
         ['速度感', '光纤里光速约 <em>20 万 km/s</em>，扛得住海量问答流量'],
@@ -1290,7 +1301,7 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
     },
     air: {
       img: '',
-      credit: '视觉海报 · 基站与空气中的信号（示意）',
+      credit: '示意 · 城市基站（克制信号表现）',
       eye: 'D · 空气里',
       title: '最后几公里，靠看不见的电波',
       body: '手机到基站这一段走无线电。进了基站，就钻进光纤和海底缆，奔向机房。',
@@ -1312,6 +1323,15 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
     $('#q1ExpTitle').textContent = d.title;
     $('#q1ExpBody').textContent = d.body;
     $('#q1ExpStats').innerHTML = d.stats.map(([k,v]) => `<div class="stat"><b>${k}</b><span>${v}</span></div>`).join('');
+    const cmp = $('#q1Compare');
+    if (key === 'sky') {
+      const st = asset('starlink');
+      cmp.classList.remove('hidden');
+      cmp.innerHTML = `<div class="cc"><img src="${st}" alt="星链实拍"><b>星链 · <em>通信星</em>（SpaceX 实拍）</b></div><div class="cc"><img src="${asset('sky')}" alt="计算星示意"><b>三体计算星座 · <em>计算星</em>（构型示意）</b></div>`;
+    } else {
+      cmp.classList.add('hidden');
+      cmp.innerHTML = '';
+    }
     root.classList.add('expanded');
     expand.classList.remove('hidden');
     expand.setAttribute('aria-hidden', 'false');
