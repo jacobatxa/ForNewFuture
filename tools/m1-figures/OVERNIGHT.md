@@ -9,7 +9,7 @@ Done:
 Next polish ticks (pick one each wake):
 1. Q1–Q3 pic density / mobile
 2. Abstract four-moves + sort game — done
-3. Four-sentence game density
+3. Four-sentence game — denser frame/chips
 4. Triad detail pages — mostly ok
 5. Stack relation page motion polish
 6. hm-bench / plug machine density pass
