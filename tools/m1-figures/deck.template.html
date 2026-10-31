@@ -139,25 +139,121 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .fact b{font-family:var(--mono);font-size:22px;min-width:84px}
 .fact span{font-size:14px;color:var(--ink2);line-height:1.45}
 
-/* cartoon */
-.toon{width:100%;max-height:56vh}
-#kid{transform-origin:200px 330px;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
-#ele{transform:translateY(150px);transition:transform .9s cubic-bezier(.25,1.5,.45,1)}
-.pulling #kid{animation:tug .5s ease-in-out 3}
-.out #ele{transform:translateY(0)}
-.out #kid{transform:rotate(-14deg) translateX(-14px)}
-#bubble,#sweat{opacity:0;transition:opacity .4s .6s}
-.out #bubble,.out #sweat{opacity:1}
-@keyframes tug{50%{transform:translateX(-10px) rotate(-4deg)}}
+/* abstraction lab */
+.abs-lab{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:stretch;flex:1;min-height:0}
+.abs-stage{position:relative;border:1px solid var(--edge);border-radius:14px;background:
+  radial-gradient(ellipse at 30% 20%,rgba(61,217,255,.08),transparent 55%),
+  linear-gradient(160deg,#0A1220,#0E1830 60%,#0A1424);overflow:hidden;min-height:340px;padding:16px}
+.abs-stage .fig{position:absolute;left:14px;top:12px;font:600 11px var(--mono);color:var(--muted);letter-spacing:.08em}
+.abs-stage .hint{position:absolute;left:14px;bottom:12px;font-size:12.5px;color:var(--ink2)}
+.abs-stage .read{position:absolute;right:14px;bottom:12px;font:600 12px var(--mono);color:var(--accent);text-align:right}
+.abs-side{display:flex;flex-direction:column;gap:12px}
+.spec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;height:100%;padding-top:18px;padding-bottom:36px}
+.spec{appearance:none;border:1px solid var(--edge);background:rgba(10,18,32,.75);border-radius:12px;padding:12px 8px 10px;color:var(--ink);display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .2s}
+.spec svg{width:54px;height:54px}
+.spec b{font-size:13px;font-weight:800}
+.spec small{font-size:11px;color:var(--muted)}
+.spec[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow);transform:translateY(-2px)}
+.spec.dim{opacity:.35}
+.spec.core svg .detail{opacity:.15}
+.spec.core svg .struct{stroke:var(--accent);filter:drop-shadow(0 0 4px rgba(61,217,255,.55))}
+.tray{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tray div{border-radius:10px;padding:10px 12px;font-size:13.5px;line-height:1.45;border:1px solid var(--edge)}
+.tray .keep{background:var(--ok-soft)}.tray .drop{background:var(--bad-soft)}
+.tray b{display:block;font-size:11px;letter-spacing:.06em;margin-bottom:4px;color:var(--muted)}
+.rungs{display:flex;flex-direction:column;gap:8px;height:100%;justify-content:center;padding:28px 18px 40px}
+.rung{display:grid;grid-template-columns:52px 1fr 88px;gap:12px;align-items:center;border:1px solid var(--edge);background:rgba(10,18,32,.7);border-radius:12px;padding:10px 12px;opacity:.42;transition:opacity .25s,border-color .25s,box-shadow .25s}
+.rung.on{opacity:1;border-color:var(--accent);box-shadow:var(--glow)}
+.rung .lv{font:800 18px var(--mono);color:var(--accent)}
+.rung .nm{font-size:15px;font-weight:800}
+.rung .nm small{display:block;font-size:12px;font-weight:500;color:var(--ink2);margin-top:2px}
+.rung .viz{height:48px;display:grid;place-items:center}
+.rung .viz svg{width:72px;height:48px}
+.ladder-ctrl{display:flex;align-items:center;gap:10px}
+.ladder-ctrl input[type=range]{flex:1;accent-color:var(--accent)}
+.loss-meter{height:10px;border-radius:99px;background:#18233A;overflow:hidden}
+.loss-meter i{display:block;height:100%;width:20%;background:linear-gradient(90deg,var(--ok),var(--warn),var(--bad));transition:width .35s}
+.chassis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:8px}
+.bay{border:1px solid var(--edge);border-radius:14px;background:var(--glass);padding:12px 10px;min-height:168px;text-align:left;transition:border-color .2s,box-shadow .2s}
+.bay[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow)}
+.bay .tag{font:700 11px var(--mono);color:var(--muted);letter-spacing:.08em}
+.bay h3{font-size:18px;margin:6px 0 8px}
+.bay p{font-size:13.5px;color:var(--ink2);line-height:1.45}
+.bay .plug{margin-top:10px;font-size:12.5px;color:var(--accent);font-family:var(--mono)}
+.bridge{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin:6px 0 4px}
+.bridge .col{border:1px solid var(--edge);border-radius:14px;padding:12px;background:var(--glass)}
+.bridge .col h4{font-size:13px;color:var(--muted);margin-bottom:8px;letter-spacing:.06em}
+.bridge .row{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.bridge .row:last-child{border-bottom:0}
+.bridge .n{width:22px;height:22px;border-radius:50%;background:rgba(61,217,255,.15);color:var(--accent);display:grid;place-items:center;font:800 11px var(--mono)}
+.bridge .arrow{font-size:28px;color:var(--accent);font-weight:900}
+@media (max-width:720px){
+  .abs-lab,.bridge,.chassis{grid-template-columns:1fr}
+  .bridge .arrow{display:none}
+  .spec-grid{grid-template-columns:repeat(2,1fr)}
+}
 
-/* elephant ladder */
-.el{opacity:0;transition:opacity .45s}
-.el.on{opacity:1}
-.keep{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.keep div{border-radius:8px;padding:10px 12px;font-size:14px;line-height:1.5}
-.keep .k1{background:var(--ok-soft)}.keep .k2{background:var(--bad-soft)}
-.keep b{display:block;font-size:12px;letter-spacing:.06em;margin-bottom:2px}
-
+.abs-hero{background:linear-gradient(120deg,rgba(61,217,255,.12),rgba(122,140,255,.08));border:1px solid var(--edge);border-radius:14px;padding:14px 18px;font-size:16px;line-height:1.65;margin-bottom:12px}
+.abs-hero b{color:var(--accent);font-size:18px}
+.abs-hero span{display:block;margin-top:6px;color:var(--ink2);font-size:14.5px}
+.abs-flow{display:grid;grid-template-columns:140px auto 1fr auto 140px;gap:10px;align-items:stretch;margin-bottom:10px}
+.af-in,.af-out{border-radius:12px;border:1px dashed var(--edge);background:var(--glass);padding:12px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.af-out{border-style:solid;border-color:rgba(61,217,255,.35)}
+.af-in span,.af-out span{font-size:11px;color:var(--muted);letter-spacing:.06em}
+.af-in b,.af-out b{font-size:15px}
+.af-in i,.af-out i{font-style:normal;font-size:12px;color:var(--ink2)}
+.af-arrow{display:grid;place-items:center;font-size:22px;font-weight:900;color:var(--accent)}
+.af-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.af{text-align:left;border:1px solid var(--edge);background:rgba(10,18,32,.75);border-radius:12px;padding:10px;color:var(--ink)}
+.af em{display:block;font:800 12px var(--mono);color:var(--accent);font-style:normal}
+.af b{display:block;font-size:15px;margin:4px 0}
+.af p{font-size:12.5px;color:var(--ink2);line-height:1.4}
+.af small{color:var(--warn)}
+.af[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow)}
+.play-rail{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 12px}
+.pr{border:1px solid var(--edge);background:rgba(10,18,32,.7);color:var(--ink2);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:700}
+.pr.on{background:var(--accent);color:#04101C;border-color:var(--accent)}
+.play-board{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start;min-height:180px;padding-bottom:36px}
+.pb{border:1px solid var(--edge);border-radius:12px;background:rgba(8,14,26,.8);padding:12px 14px;min-width:100px;text-align:center}
+.pb b{display:block;font-size:15px;margin-top:4px}
+.pb.gone{opacity:.3;text-decoration:line-through}
+.pb.keep{border-color:var(--accent);box-shadow:var(--glow)}
+.pb.ask{cursor:pointer}
+.pb.ask.on{border-color:var(--ok);background:var(--ok-soft)}
+.pb.ask.bad{border-color:var(--bad);background:var(--bad-soft)}
+.sent-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.sent-tabs button{border:1px solid var(--edge);background:var(--glass);color:var(--ink);border-radius:999px;padding:8px 14px;font-weight:800}
+.sent-tabs button.on{background:var(--accent);color:#04101C;border-color:var(--accent)}
+.sent-stage{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-bottom:10px}
+.sent-frame{border:1px solid var(--edge);border-radius:14px;background:var(--glass);padding:18px 20px;font-size:clamp(18px,2.2vw,24px);font-weight:800;line-height:1.7;min-height:120px}
+.sent-frame .blank{display:inline-block;min-width:4.5em;border-bottom:3px solid var(--accent);color:var(--accent);text-align:center;padding:0 6px;margin:0 2px}
+.sent-frame .blank.filled{border-bottom-color:var(--ok);color:var(--ok)}
+.sent-chips{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.chip{border:1px solid var(--edge);background:rgba(10,18,32,.85);color:var(--ink);border-radius:10px;padding:8px 12px;font-weight:800;font-size:14px}
+.chip:disabled{opacity:.35}
+.chip.used{opacity:.35;pointer-events:none}
+.sent-done{margin-top:8px;font-size:15px;color:var(--ok);font-weight:700}
+.lvl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:12px}
+.lvl{text-align:left;border:1px solid var(--edge);background:var(--glass);border-radius:12px;padding:12px;color:var(--ink)}
+.lvl b{display:block;font-size:15px;color:var(--accent);margin-bottom:4px}
+.lvl span{font-size:12.5px;color:var(--ink2);line-height:1.4}
+.lvl.meta{border-color:rgba(255,176,32,.45);background:rgba(255,176,32,.06)}
+.lvl.meta b{color:var(--warn)}
+.lvl[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow)}
+.split2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.split-card{border:1px solid var(--edge);border-radius:14px;padding:14px 16px;background:var(--glass)}
+.split-card h3{font-size:16px;margin-bottom:6px}
+.split-card p{font-size:14px;color:var(--ink2);line-height:1.55}
+.split-card.human{border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.06)}
+.split-card.human h3{color:var(--warn)}
+@media (max-width:900px){
+  .abs-flow{grid-template-columns:1fr; }
+  .af-arrow{display:none}
+  .af-steps,.lvl-grid,.sent-stage,.split2{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){
+  .af-steps,.lvl-grid{grid-template-columns:1fr}
+}
 /* sort */
 .sort{display:grid;grid-template-columns:1fr 1.15fr;gap:16px;flex:1;min-height:340px}
 .pile,.binwrap{position:relative;border-radius:12px;border:1px solid var(--line);background:var(--paper);min-height:320px}
@@ -444,9 +540,9 @@ h2{color:#F3F7FD}
   <p class="lead">先热身三个怪问题。然后进入正题：把 AI <b>拆成几块零件</b>，弄清它为什么这么设计，再学一个工具——<b>抽象</b>，最后看怎么用。</p>
   <div class="agenda">
     <div><span>第 2–15 分钟</span>热身：住哪、吃啥、长啥样</div>
-    <div><span>第 15–28 分钟</span>正题：AI 拆成几块 · 为什么</div>
-    <div><span>第 28–40 分钟</span>抽象这个工具</div>
-    <div><span>第 40–52 分钟</span>工具地图 · 开始怎么用</div>
+    <div><span>第 15–24 分钟</span>正题：AI 拆成几块 · 为什么</div>
+    <div><span>第 24–40 分钟</span>抽象实验室：结构 · 四动作 · 造句</div>
+    <div><span>第 40–52 分钟</span>落到记忆/技能 · 工具地图</div>
     <div><span>第 52–60 分钟</span>演示收口 · 交作业</div>
   </div>
   <aside class="notes">
@@ -696,141 +792,186 @@ h2{color:#F3F7FD}
     <div class="why-arrow">→</div>
     <div class="why-card"><b>AI</b><p>输入进来 → 参数里有印象 → 芯片里算 → 屏幕/喇叭输出 → 可装卸的技能包</p></div>
   </div>
-  <div class="say">这叫<b>抽象设计</b>：先把人办事的过程抽干净，再一块块做成机器。下一页专门练这个「抽」的本事。</div>
+  <div class="say">这叫<b>抽象设计</b>：先把人办事的过程抽干净，再一块块做成机器。下一页进抽象实验室：结构图 + 互动 + 造句——把抽象练成能说出口的语言。</div>
   <aside class="notes">
     <h4>提问链</h4>
     <ul><li>先让孩子在聊天区写「听见喊吃饭到回一句」用了哪几步，再对照屏幕。</li>
     <li>点明：今天的正题不是某个软件按钮，是「AI 的整套设计，其实是对人的抽象」。</li>
-    <li>下一页开始教抽象这个工具本身：抽大象、换标准分类。</li></ul>
+    <li>下一页进抽象实验室：先看结构图，再玩四动作与四句式造句，最后落到记忆/技能。</li></ul>
   </aside>
 </section>
 
-<!-- 抽象工具 · 抽大象 -->
-<section class="slide" data-t="24–26" data-fs="聊天区：抽象是什么意思？先瞎猜">
-  <div><h2>抽象这个工具：不是"抽大象"<span class="en">Abstraction is not pulling an elephant</span></h2></div>
-  <div class="cols">
-    <div class="card" id="toonCard" style="display:flex;align-items:center;justify-content:center">
-      <svg class="toon" viewBox="0 0 560 360" role="img" aria-label="漫画：一个孩子拽着绳子，从魔术帽里拽出了一头大象，自己摔了个屁股墩。">
-        <path d="M20 330h520" stroke="#33415E" stroke-width="2"/>
-        <clipPath id="hatClip"><rect x="0" y="0" width="560" height="270"/></clipPath>
-        <g clip-path="url(#hatClip)"><g id="ele">
-          <g stroke="#C8D4E8" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
-            <path d="M330 270c-20-40 -10-110 50-120 60-8 90 40 80 90-6 30-30 40-30 40" fill="#55688F"/>
-            <path d="M398 160c40-6 56 30 48 60-6 22-30 26-40 10" fill="#46587E"/>
-            <path d="M335 190c-30 10-50 0-56-24-4-16 6-30 14-26" fill="none"/>
-            <path d="M342 226c4 8 12 10 18 6" fill="none"/>
-            <path d="M332 200c-8 4-14 2-16-4M330 210c-8 4-14 2-16-4" fill="none" stroke-width="1.6"/>
-          </g>
-          <circle cx="360" cy="194" r="5" fill="#E6EDF8"/>
-          <path d="M350 178l14 4" stroke="#C8D4E8" stroke-width="2" stroke-linecap="round"/>
-        </g></g>
-        <g id="hat">
-          <path d="M300 268h170l-10 62H310z" fill="#0A0F1A"/>
-          <ellipse cx="385" cy="268" rx="96" ry="14" fill="#1E2A44" stroke="#C8D4E8" stroke-width="2"/>
-          <path d="M310 300h150" stroke="#3DD9FF" stroke-width="6"/>
-        </g>
-        <path id="rope" d="M236 214 C 270 222 300 230 330 236" fill="none" stroke="#C9A24A" stroke-width="3" stroke-linecap="round"/>
-        <g id="kid" stroke="#C8D4E8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <circle cx="170" cy="150" r="30" fill="#101A2E"/>
-          <circle cx="182" cy="146" r="3" fill="#E6EDF8"/><path d="M178 164c4 2 8 2 12-2"/>
-          <path d="M162 180l-6 80M160 205l40 10 36 0M160 210l70 6M156 260l-26 66M156 260l26 66"/>
-        </g>
-        <g id="sweat" fill="#7AA2FF"><path d="M134 126c-4 6-4 10 0 12 4-2 4-6 0-12z"/><path d="M122 146c-3 5-3 8 0 10 3-2 3-5 0-10z"/></g>
-        <g id="bubble"><path d="M70 40h220a14 14 0 0 1 14 14v40a14 14 0 0 1-14 14H150l-24 22 4-22H70a14 14 0 0 1-14-14V54a14 14 0 0 1 14-14z" fill="#101A2E" stroke="#C8D4E8" stroke-width="2"/><text x="180" y="82" text-anchor="middle" font-size="20" font-weight="800" fill="#E6EDF8" font-family="PingFang SC,sans-serif">我抽出了一头大象！</text></g>
-      </svg>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="btns"><button class="btn primary" id="tugBtn">用力抽！</button><button class="btn" id="tugReset">再来一次</button></div>
-      <div class="say hidden" id="toonSay">可惜，<b>抽象不是抽大象</b>。<br>"象"在这里是"样子"的意思。抽象，就是从很多具体的东西里，<b>把它们共同的样子抽出来，把不要的细节扔掉</b>。</div>
-      <p class="lead hidden" id="toonNext">比如一头真大象，你能"抽"掉多少东西，还认得出它是大象？下一页试试。</p>
-    </div>
+<!-- 抽象实验室 · 结构图 -->
+<section class="slide" data-t="24–27" data-fs="聊天区：用自己的话，抽象到底在干什么？">
+  <div><h2>抽象思维长这样<span class="en">The structure of abstract thinking</span></h2></div>
+  <div class="abs-hero">
+    <b>抽象</b>＝ 舍差异 · 取共同 · 命概念 · 再用概念处理新事物。
+    <span>产物不是画面，而是<b>概念</b>与<b>规则</b>——所以它能被说出口，也能交给 AI。</span>
   </div>
+  <div class="abs-flow" aria-label="认知机制四个动作">
+    <div class="af-in"><span>输入</span><b>苹果 · 香蕉 · 梨</b><i>具体事物群</i></div>
+    <div class="af-arrow">→</div>
+    <div class="af-steps">
+      <button class="af" data-step="1" aria-pressed="false"><em>①</em><b>找共同</b><p>都是可吃的果实</p></button>
+      <button class="af" data-step="2" aria-pressed="false"><em>②</em><b>舍差异</b><p>颜色、大小、产地丢掉<br><small>力量在「舍」</small></p></button>
+      <button class="af" data-step="3" aria-pressed="false"><em>③</em><b>命概念</b><p>共同点命名为「水果」</p></button>
+      <button class="af" data-step="4" aria-pressed="false"><em>④</em><b>验边界</b><p>猕猴桃算吗？椰子算吗？</p></button>
+    </div>
+    <div class="af-arrow">→</div>
+    <div class="af-out"><span>输出</span><b>概念「水果」</b><i>可携带 · 可判断新例子</i></div>
+  </div>
+  <div class="say" id="afSay">点上面四个动作。记住：<b>抽象的力量来自「舍」，不来自「取」</b>；敢丢才有迁移力，丢错了就要靠第④步刹车。</div>
   <aside class="notes">
-    <h4>节奏</h4>
-    <ul><li>先让孩子在聊天区猜"抽象"是什么意思，收 3–4 个答案，不评对错。</li>
-    <li>点"用力抽！"——孩子拽出大象摔倒。笑完再出右边那句话。</li>
-    <li>这页只立一个梗：抽象 = 抽出共同的样子，扔掉细节。下一页马上动手扔细节。</li></ul>
+    <h4>理论依据（豆包结构 · 教师用）</h4>
+    <ul>
+      <li>一句话定义先立住，再点四动作。静态结构图最合适——本页以结构为主，点一下只高亮释义。</li>
+      <li>两句关键：力量在「舍」；概念必须落成语言，否则既不能携带也不能交给 AI。</li>
+      <li>下一页用同一水果案例做互动，再下一页把四句式造句玩起来。</li>
+    </ul>
   </aside>
 </section>
 
-<!-- 抽象工具 · 台阶 -->
-<section class="slide" data-t="26–30" data-fs="聊天区：哪一级你还认得出大象？哪一级它和小猫一样了？">
-  <div><h2>把一头大象，一级一级"抽"<span class="en">Climbing the abstraction ladder</span></h2></div>
-  <div class="cols">
-    <div class="card" style="display:flex;align-items:center;justify-content:center">
-      <svg viewBox="0 0 520 320" style="width:100%;max-height:50vh" role="img" aria-label="一头大象被逐级抽象：一头叫阿宝的真大象，大象剪影，简笔大象，文字“大象”，最后是“动物”。">
-        <g class="el" data-e="1" stroke="#C8D4E8" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
-          <path d="M120 230c-10-60 30-110 110-110 70 0 120 30 120 90v20H120z" fill="#46587E"/>
-          <path d="M140 240v50h30v-50M190 240v50h30v-50M290 240v50h30v-50M330 240v50h28v-50" fill="#3B4B6E"/>
-          <path d="M140 290h30M190 290h30M290 290h30M330 290h28" stroke-width="3"/>
-          <path d="M350 160c40-10 70 20 66 60-2 30 -20 50 -10 70 6 10 20 8 22 0" fill="none" stroke-width="12" stroke="#46587E"/>
-          <path d="M350 160c40-10 70 20 66 60-2 30 -20 50 -10 70 6 10 20 8 22 0" fill="none"/>
-          <path d="M300 120c-40-20-80 0-80 50 0 40 30 60 60 50 20-6 30-30 30-50" fill="#55688F"/>
-          <path d="M235 140l10 6-6 8" fill="none"/>
-          <circle cx="352" cy="170" r="4" fill="#E6EDF8"/>
-          <path d="M376 210c10 4 22 2 30-6" fill="#101A2E"/>
-          <path d="M120 200c-10 4-16 16-14 26" fill="none"/>
-          <path d="M160 150c4 10 4 20 0 30M200 135c4 12 4 26 0 40M260 132c4 12 4 26 0 40M400 200l8 2M402 214l8 2M398 228l8 2M396 242l8 2" fill="none" stroke-width="1.3"/>
-          <path d="M424 288c6-10 20-10 22 2l-6 10c-6 2-14 0-16-12z" fill="#E8D27A"/>
-          <text x="260" y="40" text-anchor="middle" font-size="15" fill="#A9B4C7" stroke="none" font-family="PingFang SC,sans-serif">动物园的"阿宝"：左耳缺一个角，爱吃香蕉</text>
-        </g>
-        <g class="el" data-e="2" fill="#E6EDF8">
-          <path d="M120 230c-10-60 30-110 110-110 70 0 120 30 120 90v20H120z"/>
-          <path d="M140 240v50h30v-50zM190 240v50h30v-50zM290 240v50h30v-50zM330 240v50h28v-50z"/>
-          <path d="M350 160c40-10 70 20 66 60-2 30-20 50-10 70" fill="none" stroke="#C8D4E8" stroke-width="12" stroke-linecap="round"/>
-          <path d="M300 120c-40-20-80 0-80 50 0 40 30 60 60 50 20-6 30-30 30-50z"/>
-        </g>
-        <g class="el" data-e="3" fill="none" stroke="#C8D4E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-          <ellipse cx="240" cy="190" rx="110" ry="60"/><circle cx="355" cy="170" r="34"/>
-          <path d="M160 240v50M200 245v45M280 245v45M320 240v50M380 190c20 30 10 70 30 90"/><circle cx="364" cy="160" r="3" fill="#E6EDF8"/>
-        </g>
-        <g class="el" data-e="4"><text x="260" y="200" text-anchor="middle" font-size="110" font-weight="900" fill="#E6EDF8" font-family="PingFang SC,sans-serif">大象</text></g>
-        <g class="el" data-e="5">
-          <text x="260" y="150" text-anchor="middle" font-size="96" font-weight="900" fill="#E6EDF8" font-family="PingFang SC,sans-serif">动物</text>
-          <g color="#7D8AA3"><use href="#i-cat" x="130" y="200" width="64" height="64"/><use href="#i-dog" x="228" y="200" width="64" height="64"/><use href="#i-fish" x="326" y="200" width="64" height="64"/></g>
-        </g>
-      </svg>
+<!-- 抽象实验室 · 四动作游戏 -->
+<section class="slide" data-t="27–31" data-fs="聊天区：猕猴桃算水果吗？为什么？">
+  <div><h2>玩一遍：找共同 → 舍差异 → 命概念 → 验边界<span class="en">Play the four moves</span></h2></div>
+  <div class="abs-lab">
+    <div class="abs-stage">
+      <span class="fig">FIG · 四动作台</span>
+      <div class="play-rail" id="playRail">
+        <button class="pr on" data-p="1">① 找共同</button>
+        <button class="pr" data-p="2">② 舍差异</button>
+        <button class="pr" data-p="3">③ 命概念</button>
+        <button class="pr" data-p="4">④ 验边界</button>
+      </div>
+      <div class="play-board" id="playBoard"></div>
+      <span class="hint">一步一步点 · 同一组水果走完四步</span>
+      <span class="read" id="playRead">步骤 1 / 4</span>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="ladder"><button class="btn" id="eMinus" aria-label="退一级">－</button><input type="range" min="1" max="5" value="1" id="eLvl" aria-label="抽象级别"><button class="btn" id="ePlus" aria-label="再抽一级">＋</button></div>
-      <div class="stops" id="eStops"><span>阿宝</span><span>剪影</span><span>简笔</span><span>"大象"</span><span>"动物"</span></div>
-      <div class="keep"><div class="k1"><b>留下了</b><span id="eKeep"></span></div><div class="k2"><b>扔掉了</b><span id="eDrop"></span></div></div>
-      <div class="say">越往上抽，<b>能装下的东西越多，细节丢得也越多</b>。抽象不是越高越好——要看你拿它干什么。</div>
+    <div class="abs-side">
+      <div class="say" id="playSay">先看这三样：苹果、香蕉、梨。它们共同点是什么？在聊天区先写，再点左边下一步。</div>
+      <div class="tray">
+        <div class="keep"><b>留下</b><span id="playKeep">（还没抽）</span></div>
+        <div class="drop"><b>舍掉</b><span id="playDrop">（还没丢）</span></div>
+      </div>
+      <div class="btns">
+        <button class="btn" id="playPrev">上一步</button>
+        <button class="btn primary" id="playNext">下一步</button>
+      </div>
     </div>
   </div>
-  <aside class="notes">
-    <h4>提问链</h4>
-    <ul><li>每拉一级问一句："扔掉了什么？还认得出吗？"让孩子先说，再看右下角。</li>
-    <li>拉到"动物"时问：现在大象和小猫有什么区别？——没有了。这就是抽象"有损"：扔掉的东西找不回来。</li>
-    <li>拉回"简笔"：为什么交通标志、厕所门上的小人都画成这样？——刚好够认出来，又不多余。</li></ul>
-  </aside>
-</section>
-
-<!-- 抽象工具 · 分类 -->
-<section class="slide" data-t="30–34" data-fs="聊天区接龙：你还能想出什么分法？">
-  <div><h2>抽象这个工具：分门别类，标准由你定<span class="en">Sorting things: you choose the rule</span></h2></div>
-  <div class="btns" id="sortBtns">
-    <button class="btn" data-s="what">按"它是什么"分</button>
-    <button class="btn" data-s="use">按"能拿来干什么"分</button>
-    <button class="btn" data-s="bag">按"能不能塞进书包"分</button>
-    <button class="btn" data-s="none">打散</button>
-  </div>
-  <div class="sort">
-    <div class="pile" id="pile"><h4>具体的东西</h4></div>
-    <div class="binwrap"><h4 id="binTitle">分好的类</h4><div class="bins" id="bins"></div></div>
-  </div>
-  <div class="say" id="sortSay">同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是"动物"，一会儿是"能吃的"。</div>
   <aside class="notes">
     <h4>玩法</h4>
-    <ul><li>先不点，问："你会怎么分这 12 样？"收两种说法。</li>
-    <li>依次点三个按钮，盯住"鱼"和"手机"在跳。问：鱼到底算哪类？——看你用什么标准。</li>
-    <li>聊天区接龙：再想一个分法（按颜色、按要不要充电、按几条腿……）。说不出标准的，不算分类。</li>
-    <li>收口：刚才拆 AI，用的就是这一招。现在你手里有了「抽象」这个工具。下一页看身边这些 AI 产品，各站在哪一层。</li></ul>
+    <ul>
+      <li>第①步先收聊天区答案，再揭「可吃的果实」。</li>
+      <li>第②步强调：敢舍才有迁移；把颜色产地丢进「舍掉」托盘。</li>
+      <li>第④步投猕猴桃/椰子/番茄——故意吵起来，说明边界要人把关。</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- 抽象实验室 · 造句游戏 -->
+<section class="slide" data-t="31–37" data-fs="聊天区：用四句式各造一句，贴出来">
+  <div><h2>把抽象说出口：四句式造句游戏<span class="en">Say it out loud: four sentence frames</span></h2></div>
+  <p class="lead">学一种新思维，就是学一种<b>能说出口的句式</b>。点句式 → 点词块填空 → 在聊天区再造一句自己的。</p>
+  <div class="sent-tabs" id="sentTabs">
+    <button class="on" data-f="ind">归纳句</button>
+    <button data-f="name">命名句</button>
+    <button data-f="bound">边界句</button>
+    <button data-f="meta">反思句</button>
+  </div>
+  <div class="sent-stage">
+    <div class="sent-frame" id="sentFrame"></div>
+    <div class="sent-chips" id="sentChips"></div>
+  </div>
+  <div class="sent-out">
+    <div class="say" id="sentSay">先选「归纳句」。点词块填进横线，拼出一句完整的抽象表达。</div>
+    <div class="sent-done" id="sentDone" hidden></div>
+  </div>
+  <aside class="notes">
+    <h4>四句式（必须显性化）</h4>
+    <ul>
+      <li>归纳：「它们都有___，所以归为___」</li>
+      <li>命名：「我把___的共同点命名为___」</li>
+      <li>边界：「凡是___都属于___；只要___，就不算___」</li>
+      <li>反思：「我舍掉了___只留___；换个抽法会___」</li>
+      <li>课堂：屏幕拼一句示范 → 聊天区每人再造一句（可换「出行 / 动物 / AI零件」主题）。</li>
+      <li>收口：会说这四句，抽象才算内化；下一阶段用 AI 工具时，这就是你的方向盘。</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- 抽象实验室 · 层次与人机 -->
+<section class="slide" data-t="37–40" data-fs="聊天区：AI 擅长哪一层？人必须守哪一层？">
+  <div><h2>越往上越要判断 · 人和 AI 怎么分工<span class="en">Levels + human–AI split</span></h2></div>
+  <div class="lvl-grid">
+    <button class="lvl" data-l="1" aria-pressed="false"><b>L1 归类</b><span>这些都是水果</span></button>
+    <button class="lvl" data-l="2" aria-pressed="false"><b>L2 概念化</b><span>说清是什么 / 不是什么</span></button>
+    <button class="lvl" data-l="3" aria-pressed="false"><b>L3 规则化</b><span>概念连成判断</span></button>
+    <button class="lvl" data-l="4" aria-pressed="false"><b>L4 模型化</b><span>规则连成解释系统</span></button>
+    <button class="lvl meta" data-l="5" aria-pressed="false"><b>L5 元抽象</b><span>我为何这么抽？换抽法？· 人的护城河</span></button>
+  </div>
+  <div class="split2">
+    <div class="split-card">
+      <h3>AI · 抽象机器</h3>
+      <p>海量数据里高速找统计共同点（分类 / 聚类 / 归纳）。<b>快，但无方向、不反思。</b></p>
+    </div>
+    <div class="split-card human">
+      <h3>人 · 定方向 + 把关</h3>
+      <p>决定抽什么、舍什么、边界在哪、要不要换抽法。<b>慢，但可控、可反思。</b></p>
+    </div>
+  </div>
+  <div class="say" id="lvlSay">点一层看释义。今天课上我们主要练到 L2–L3，并碰到 L5 的边——<b>会问「我为何这么抽」的是人。</b></div>
+  <aside class="notes">
+    <h4>课程定位</h4>
+    <ul>
+      <li>AI 本质是抽象机器；教原理就是教抽象。人机分工嵌进：解剖 / 协作 / 质疑 / 共创。</li>
+      <li>下一页把这套抽象，钉回「记忆」「技能」——科学家抽的就是人的功能。</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- 抽象实验室 · 落到 AI -->
+<section class="slide" data-t="40–44" data-fs="聊天区：记忆、Skill，分别对应人的哪一步？">
+  <div><h2>抽完了：记忆 · 技能 不是黑话<span class="en">Memory & Skill come from functional abstraction</span></h2></div>
+  <p class="lead">科学家用同一套抽象，把人办事的功能抽成概念，再做成 AI 零件。所以你会用四句式，就会看懂这些名字。</p>
+  <div class="bridge">
+    <div class="col">
+      <h4>人办事 · 具体</h4>
+      <div class="row"><span class="n">1</span><span>听见妈妈喊吃饭</span></div>
+      <div class="row"><span class="n">2</span><span>小本子里记得：这是妈妈</span></div>
+      <div class="row"><span class="n">3</span><span>想一想：要不要立刻去</span></div>
+      <div class="row"><span class="n">4</span><span>开口说「来了」</span></div>
+      <div class="row"><span class="n">5</span><span>学会：被催就别磨蹭</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <h4>命概念 · 做成 AI</h4>
+      <div class="row"><span class="n">1</span><span><b>输入</b></span></div>
+      <div class="row"><span class="n">2</span><span><b>记忆</b> · 还留着什么</span></div>
+      <div class="row"><span class="n">3</span><span><b>分析</b></span></div>
+      <div class="row"><span class="n">4</span><span><b>输出</b></span></div>
+      <div class="row"><span class="n">5</span><span><b>技能 Skill</b> · 可装卸</span></div>
+    </div>
+  </div>
+  <div class="chassis" id="bays">
+    <button class="bay" data-k="in" aria-pressed="false"><span class="tag">PART 01</span><h3>输入</h3><p>人：看听摸<br>机：摄像头 / 键盘 / 麦</p><div class="plug">点亮</div></button>
+    <button class="bay" data-k="mem" aria-pressed="false"><span class="tag">PART 02</span><h3>记忆</h3><p>它还能想起什么<br>记录 · 知识库 · 参数</p><div class="plug">点亮</div></button>
+    <button class="bay" data-k="think" aria-pressed="false"><span class="tag">PART 03</span><h3>分析</h3><p>猜下一个最可能的词</p><div class="plug">点亮</div></button>
+    <button class="bay" data-k="out" aria-pressed="false"><span class="tag">PART 04</span><h3>输出</h3><p>字 · 声 · 图 · 动作</p><div class="plug">点亮</div></button>
+    <button class="bay" data-k="skill" aria-pressed="false"><span class="tag">PART 05</span><h3>技能</h3><p>Skill = 可装卸的本事</p><div class="plug">点亮</div></button>
+  </div>
+  <div class="say" id="baySay">试着用命名句说一句：<b>「我把『还能想起什么』的共同点命名为记忆」</b>。会说，就会用。</div>
+  <aside class="notes">
+    <h4>收口</h4>
+    <ul>
+      <li>两个好处钉死：① 抽象思维工具（四动作+四句式）；② 后面学 AI 工具时，记忆/Skill 有形象。</li>
+      <li>下一页工具地图：大模型 / 编程环境 / 个人助手。</li>
+    </ul>
   </aside>
 </section>
 
 <!-- 工具地图 -->
-<section class="slide" data-t="34–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
+<section class="slide" data-t="44–48" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
   <div><h2>先分清：大模型 · 编程环境 · 个人助手<span class="en">Three shelves: model, coding bench, personal agent</span></h2></div>
   <p class="lead">很多人把这些混着叫「AI」。点一栏，看它到底是什么。</p>
   <div class="shelves" id="shelves">
@@ -1214,146 +1355,211 @@ $$('.numwall').forEach((w) => {
   };
 })();
 
-/* 7 抽大象 */
+/* 抽象 · 结构四点 */
 (() => {
-  const card = $('#toonCard');
-  $('#tugBtn').onclick = () => {
-    card.classList.remove('out'); card.classList.add('pulling');
-    setTimeout(() => { card.classList.remove('pulling'); card.classList.add('out'); $('#toonSay').classList.remove('hidden'); setTimeout(() => $('#toonNext').classList.remove('hidden'), RM ? 0 : 900); }, RM ? 0 : 1500);
+  const tip = {
+    1: '① 找共同：从具体事物群里抽出共享结构——「都是可吃的果实」。',
+    2: '② 舍差异：颜色、大小、产地统统丢掉。<b>力量在「舍」</b>——敢丢才有迁移力。',
+    3: '③ 命概念：给共同点一个名字「水果」。不命名，就既带不走，也交不给 AI。',
+    4: '④ 验边界：猕猴桃算吗？椰子算吗？概念的外延就是抽象的刹车。'
   };
-  $('#tugReset').onclick = () => { card.classList.remove('out', 'pulling'); $('#toonSay').classList.add('hidden'); $('#toonNext').classList.add('hidden'); };
+  $$('.af-steps .af').forEach((b) => b.onclick = () => {
+    $$('.af-steps .af').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    $('#afSay').innerHTML = tip[b.dataset.step];
+  });
 })();
 
-/* 8 抽象台阶 */
+/* 抽象 · 四动作游戏 */
 (() => {
-  const data = [
-    ['它的名字、缺角的耳朵、皱纹、颜色、爱吃香蕉', '还什么都没扔'],
-    ['大象的轮廓：大身子、长鼻子、大耳朵、四条腿', '名字、缺角、皱纹、颜色、香蕉——现在它可以是任何一头大象'],
-    ['四条腿、一个长鼻子', '耳朵、身体的形状、大小'],
-    ['"大象"这两个字：所有大象都装得下', '样子本身。没见过大象的人，看到这两个字想不出它长什么样'],
-    ['"会动、会吃、活着"', '长鼻子、四条腿——现在大象、小猫、小鱼没区别了']
+  let step = 1;
+  const board = $('#playBoard');
+  const fruits = ['苹果','香蕉','梨'];
+  const probes = [
+    ['猕猴桃','？','ask'],
+    ['椰子','？','ask'],
+    ['番茄','？','ask']
   ];
-  const r = $('#eLvl');
-  const set = (v) => {
-    v = Math.max(1, Math.min(5, v)); r.value = v;
-    $$('.el').forEach((g) => g.classList.toggle('on', +g.dataset.e === v));
-    $$('#eStops span').forEach((s, i) => s.classList.toggle('on', i + 1 === v));
-    $('#eKeep').textContent = data[v - 1][0]; $('#eDrop').textContent = data[v - 1][1];
+  const copy = {
+    1: { say:'三样具体的东西。共同点是什么？先写聊天区，再点「下一步」。', keep:'（还没抽）', drop:'（还没丢）', read:'步骤 1 / 4' },
+    2: { say:'把颜色、弯不弯、产地丢进右边「舍掉」。留下的才是可迁移的结构。', keep:'可吃的果实', drop:'红/黄、弯直、产地、大小……', read:'步骤 2 / 4' },
+    3: { say:'给共同点一个名字。命名句练习：我把「可吃的果实」命名为「水果」。', keep:'概念 · 水果', drop:'个别差异已舍', read:'步骤 3 / 4' },
+    4: { say:'验边界：点猕猴桃 / 椰子 / 番茄——它们算不算？边界要人把关，AI 只会找相关性。', keep:'概念 · 水果（外延待验）', drop:'仍已舍的个别差异', read:'步骤 4 / 4' }
   };
-  r.oninput = () => set(+r.value);
-  $('#eMinus').onclick = () => set(+r.value - 1);
-  $('#ePlus').onclick = () => set(+r.value + 1);
-  set(1);
-})();
-
-/* 9 分类 */
-(() => {
-  const things = [
-    ['apple', '苹果'], ['banana', '香蕉'], ['melon', '西瓜'], ['bike', '自行车'], ['car', '汽车'], ['cat', '小猫'],
-    ['dog', '小狗'], ['fish', '鱼'], ['pencil', '铅笔'], ['book', '书'], ['phone', '手机'], ['ball', '足球']
-  ];
-  const rules = {
-    what: { title: '按"它是什么"', bins: ['水果', '交通工具', '动物', '用品'], map: { apple: 0, banana: 0, melon: 0, bike: 1, car: 1, cat: 2, dog: 2, fish: 2, pencil: 3, book: 3, phone: 3, ball: 3 } },
-    use: { title: '按"能拿来干什么"', bins: ['能吃', '能载人走', '能写字、看字', '能陪你玩'], map: { apple: 0, banana: 0, melon: 0, fish: 0, bike: 1, car: 1, pencil: 2, book: 2, phone: 2, cat: 3, dog: 3, ball: 3 } },
-    bag: { title: '按"能不能塞进书包"', bins: ['塞得进', '塞不进', '', ''], map: { apple: 0, banana: 0, pencil: 0, book: 0, phone: 0, ball: 0, melon: 1, bike: 1, car: 1, cat: 1, dog: 1, fish: 1 } }
-  };
-  const says = {
-    none: '同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是"动物"，一会儿是"能吃的"。',
-    what: '按"它是什么"分：鱼是<b>动物</b>，手机是<b>用品</b>。',
-    use: '按"能拿来干什么"分：鱼跑到了<b>能吃</b>那一格，手机跑去了<b>写字、看字</b>。东西没变，变的是你的标准。',
-    bag: '按"能不能塞进书包"分：小猫小狗和鱼都塞不进——<b>活的不能塞</b>。标准一换，分法完全不一样。'
-  };
-  const pile = $('#pile'), bins = $('#bins'), wrap = bins.parentElement;
-  const els = things.map(([id, name], i) => {
-    const d = document.createElement('div');
-    d.className = 'thing'; d.dataset.id = id;
-    d.innerHTML = `<svg aria-hidden="true"><use href="#i-${id}"/></svg><span>${name}</span>`;
-    document.body.append(d);
-    return d;
-  });
-  const seed = [[.08, .12], [.42, .08], [.72, .14], [.18, .4], [.55, .34], [.8, .44], [.06, .66], [.36, .6], [.62, .62], [.22, .84], [.5, .84], [.8, .8]];
-  let mode = 'none';
-  function layout() {
-    const pr = pile.getBoundingClientRect(), sr = slides[cur].getBoundingClientRect();
-    const host = pile.closest('.slide');
-    if (!host.classList.contains('active')) return;
-    const off = (r) => [r.left - sr.left + host.scrollLeft, r.top - sr.top + host.scrollTop];
-    if (mode === 'none') {
-      els.forEach((e, i) => { const [ox, oy] = off(pr); e.style.left = ox + seed[i][0] * (pr.width - 70) + 4 + 'px'; e.style.top = oy + 26 + seed[i][1] * (pr.height - 96) + 'px'; });
-      return;
-    }
-    const rule = rules[mode];
-    const boxes = $$('.b', bins);
-    const fill = boxes.map(() => 0);
-    els.forEach((e) => {
-      const k = rule.map[e.dataset.id];
-      const br = boxes[k].getBoundingClientRect();
-      const [ox, oy] = off(br);
-      const per = Math.max(1, Math.floor((br.width - 8) / 74));
-      const n = fill[k]++;
-      e.style.left = ox + 4 + (n % per) * 74 + 'px';
-      e.style.top = oy + 22 + Math.floor(n / per) * 70 + 'px';
-    });
-  }
-  els.forEach((e) => { pile.closest('.slide').append(e); });
-  things.forEach(([id, name], i) => {
-    const g = document.createElement('div');
-    g.className = 'thing ghost'; g.setAttribute('aria-hidden', 'true');
-    g.style.left = `calc(${seed[i][0] * 100}% - ${seed[i][0] * 70 - 4}px)`;
-    g.style.top = `calc(${seed[i][1] * 100}% - ${seed[i][1] * 96 - 26}px)`;
-    g.innerHTML = `<svg><use href="#i-${id}"/></svg><span>${name}</span>`;
-    pile.append(g);
-  });
-  function set(m) {
-    mode = m;
-    $$('#sortBtns .btn').forEach((b) => b.classList.toggle('on', b.dataset.s === m));
-    if (m === 'none') { bins.innerHTML = ''; $('#binTitle').textContent = '分好的类'; }
-    else {
-      const r = rules[m];
-      const used = r.bins.filter(Boolean);
-      bins.style.gridTemplateColumns = used.length === 2 ? '1fr 1fr' : '1fr 1fr';
-      bins.style.gridTemplateRows = used.length === 2 ? '1fr' : '1fr 1fr';
-      bins.innerHTML = used.map((t) => `<div class="b"><span>${t}</span></div>`).join('');
-      $('#binTitle').textContent = r.title;
-    }
-    $('#sortSay').innerHTML = says[m];
-    els.forEach((e) => { e.classList.toggle('hl', m !== 'none' && (e.dataset.id === 'fish' || e.dataset.id === 'phone')); });
-    requestAnimationFrame(layout);
-  }
-  $$('#sortBtns .btn').forEach((b) => b.onclick = () => set(b.dataset.s));
-  window.addEventListener('resize', layout);
-  window.__sortLayout = layout;
-  set('none');
-})();
-
-/* 10 人与机器：配对赛 */
-(() => {
-  const left = $$('#hmLeft .mcard'), right = $$('#hmRight .mcard');
-  const msg = $('#hmMsg'), win = $('#hmWin');
-  let pick = null, done = 0;
-  const clearSel = () => $$('#hmMatch .mcard').forEach((c) => c.classList.remove('sel'));
-  const shake = (a, b) => {
-    [a, b].forEach((c) => { c.classList.add('shake'); setTimeout(() => c.classList.remove('shake'), 400); });
-  };
-  left.forEach((c) => c.onclick = () => {
-    if (c.classList.contains('ok')) return;
-    clearSel(); pick = c; c.classList.add('sel'); msg.textContent = '再点右边对应的零件。';
-  });
-  right.forEach((c) => c.onclick = () => {
-    if (c.classList.contains('ok')) return;
-    if (!pick) { msg.textContent = '先点左边一样本事。'; return; }
-    if (pick.dataset.f === c.dataset.f) {
-      pick.classList.add('ok'); c.classList.add('ok'); clearSel(); pick = null; done++;
-      msg.textContent = done === 5 ? '全对了！' : `对了 ${done} / 5`;
-      if (done === 5) win.classList.remove('hidden');
+  function render() {
+    $$('#playRail .pr').forEach((b) => b.classList.toggle('on', +b.dataset.p === step));
+    const c = copy[step];
+    $('#playSay').innerHTML = c.say;
+    $('#playKeep').textContent = c.keep;
+    $('#playDrop').textContent = c.drop;
+    $('#playRead').textContent = c.read;
+    board.innerHTML = '';
+    if (step <= 3) {
+      fruits.forEach((n) => {
+        const d = document.createElement('div');
+        d.className = 'pb' + (step >= 2 ? ' keep' : '');
+        d.innerHTML = '<b>' + n + '</b>';
+        board.append(d);
+      });
+      if (step === 2) {
+        ['红色','弯曲','中国产'].forEach((t) => {
+          const d = document.createElement('div');
+          d.className = 'pb gone'; d.innerHTML = `<b>${t}</b><span>已舍</span>`;
+          board.append(d);
+        });
+      }
+      if (step === 3) {
+        const d = document.createElement('div');
+        d.className = 'pb keep';
+        d.innerHTML = '<b>概念 · 水果</b>';
+        board.append(d);
+      }
     } else {
-      shake(pick, c); msg.textContent = '不对，再试。';
+      probes.forEach(([n, mark]) => {
+        const d = document.createElement('button');
+        d.className = 'pb ask';
+        d.type = 'button';
+        d.innerHTML = `<span>${mark}</span><b>${n}</b>`;
+        d.onclick = () => {
+          const ok = n === '猕猴桃';
+          d.classList.toggle('on', ok);
+          d.classList.toggle('bad', !ok);
+          $('#playSay').innerHTML = ok
+            ? '猕猴桃：多数定义下算水果——边界内。用边界句说：「凡是植物的可食用果实都属于水果」。'
+            : (n === '椰子'
+              ? '椰子有争议：有人算水果，有人算坚果。边界一吵，就要人重写定义。'
+              : '番茄：植物学上是果实，厨房里当蔬菜——同一物，换标准就换抽象。');
+        };
+        board.append(d);
+      });
     }
-  });
-  $('#hmReset').onclick = () => {
-    $$('#hmMatch .mcard').forEach((c) => c.classList.remove('ok', 'sel', 'shake'));
-    pick = null; done = 0; msg.textContent = '先点左边。'; win.classList.add('hidden');
+  }
+  $$('#playRail .pr').forEach((b) => b.onclick = () => { step = +b.dataset.p; render(); });
+  $('#playPrev').onclick = () => { step = Math.max(1, step - 1); render(); };
+  $('#playNext').onclick = () => { step = Math.min(4, step + 1); render(); };
+  render();
+})();
+
+/* 抽象 · 造句游戏 */
+(() => {
+  const frames = {
+    ind: {
+      label: '归纳句',
+      parts: ['它们都有 ', '_', '，所以归为 ', '_', '。'],
+      blanks: 2,
+      chips: ['可吃的果实', '水果', '四条腿', '动物', '会飞', '交通工具'],
+      answer: ['可吃的果实', '水果'],
+      tip: '归纳句：从共同点推出类别。填完后，在聊天区再造一句（换主题也行）。'
+    },
+    name: {
+      label: '命名句',
+      parts: ['我把 ', '_', ' 的共同点命名为 ', '_', '。'],
+      blanks: 2,
+      chips: ['苹果香蕉梨', '水果', '还能想起什么', '记忆', '可装卸的本事', '技能'],
+      answer: ['苹果香蕉梨', '水果'],
+      tip: '命名句：共同点必须落成词。也可以填：我把「还能想起什么」命名为「记忆」。'
+    },
+    bound: {
+      label: '边界句',
+      parts: ['凡是 ', '_', ' 都属于 ', '_', '；只要 ', '_', '，就不算 ', '_', '。'],
+      blanks: 4,
+      chips: ['植物的可食用果实', '水果', '不能吃', '水果', '四条腿', '动物', '不会动', '动物'],
+      answer: ['植物的可食用果实', '水果', '不能吃', '水果'],
+      tip: '边界句：概念的刹车。正反两边都要说清。'
+    },
+    meta: {
+      label: '反思句',
+      parts: ['我舍掉了 ', '_', ' 只留 ', '_', '；换个抽法会 ', '_', '。'],
+      blanks: 3,
+      chips: ['颜色产地', '可吃的果实', '把番茄也算进来', '外形', '四条腿', '把桌子也叫动物'],
+      answer: ['颜色产地', '可吃的果实', '把番茄也算进来'],
+      tip: '反思句：L5 元抽象——人的护城河。AI 不会主动问「我为何这么抽」。'
+    }
   };
+  let cur = 'ind';
+  let filled = [];
+  const frameEl = $('#sentFrame');
+  const chipsEl = $('#sentChips');
+  const say = $('#sentSay');
+  const done = $('#sentDone');
+
+  function paint() {
+    const f = frames[cur];
+    filled = [];
+    $$('#sentTabs button').forEach((b) => b.classList.toggle('on', b.dataset.f === cur));
+    let html = '';
+    let bi = 0;
+    f.parts.forEach((p) => {
+      if (p === '_') {
+        html += `<span class="blank" data-i="${bi}">____</span>`;
+        bi++;
+      } else html += p;
+    });
+    frameEl.innerHTML = html;
+    chipsEl.innerHTML = '';
+    f.chips.forEach((c) => {
+      const b = document.createElement('button');
+      b.className = 'chip'; b.type = 'button'; b.textContent = c;
+      b.onclick = () => {
+        if (filled.length >= f.blanks) return;
+        const i = filled.length;
+        filled.push(c);
+        const blank = frameEl.querySelector(`.blank[data-i="${i}"]`);
+        if (blank) { blank.textContent = c; blank.classList.add('filled'); }
+        b.classList.add('used');
+        if (filled.length === f.blanks) {
+          const ok = filled.every((v, idx) => v === f.answer[idx]) || filled.length === f.blanks;
+          done.hidden = false;
+          done.textContent = ok
+            ? `✓ 拼好了。聊天区请再用「${f.label}」造一句自己的。`
+            : `拼好了。对照标准答案想一想，然后在聊天区造一句自己的「${f.label}」。`;
+          say.innerHTML = f.tip;
+        }
+      };
+      chipsEl.append(b);
+    });
+    const clear = document.createElement('button');
+    clear.className = 'chip'; clear.textContent = '清空重拼';
+    clear.onclick = () => paint();
+    chipsEl.append(clear);
+    say.innerHTML = f.tip;
+    done.hidden = true;
+  }
+  $$('#sentTabs button').forEach((b) => b.onclick = () => { cur = b.dataset.f; paint(); });
+  paint();
+})();
+
+/* 抽象 · 层次 */
+(() => {
+  const tip = {
+    1: 'L1 归类：把相似的放一起——观察的产物。',
+    2: 'L2 概念化：说清是什么 / 不是什么。今天造句主要钉在这里。',
+    3: 'L3 规则化：概念连成判断，如「凡水果都含果糖」。',
+    4: 'L4 模型化：规则连成解释系统。',
+    5: 'L5 元抽象：反思抽象本身——「我为何这么抽？」AI 做不到，这是人的护城河。'
+  };
+  $$('.lvl-grid .lvl').forEach((b) => b.onclick = () => {
+    $$('.lvl-grid .lvl').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', 'true');
+    $('#lvlSay').innerHTML = tip[b.dataset.l];
+  });
+})();
+
+/* 抽象 · 零件舱 */
+(() => {
+  const tip = {
+    in: '输入：人靠眼耳，机器靠摄像头/键盘/麦。',
+    mem: '记忆：用命名句——「我把『还能想起什么』的共同点命名为记忆」。',
+    think: '分析：人想一想；模型猜下一个词。',
+    out: '输出：说、做 → 字、声、图、动作。',
+    skill: '技能 Skill：可装卸的本事。用命名句——「我把『装上就会干的新活』命名为技能」。'
+  };
+  $$('#bays .bay').forEach((b) => b.onclick = () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    $$('#bays .bay').forEach((x) => x.setAttribute('aria-pressed', 'false'));
+    b.setAttribute('aria-pressed', String(on));
+    $('#baySay').innerHTML = on ? tip[b.dataset.k] : '试着用命名句说一句：<b>「我把『还能想起什么』的共同点命名为记忆」</b>。会说，就会用。';
+  });
 })();
 
 /* 11 大词 */
