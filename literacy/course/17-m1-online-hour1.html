@@ -295,6 +295,28 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .hot.shake{animation:shake .4s}
 .hot-bar{display:flex;align-items:center;justify-content:space-between}
 .hot-count{font:800 14px var(--mono);color:var(--accent)}
+
+/* fig stage · anatomy-style frame */
+.fig-stage{position:relative;flex:1;min-height:0;border:1px solid var(--edge);border-radius:18px;background:
+  radial-gradient(ellipse at 20% 0%,rgba(61,217,255,.07),transparent 45%),
+  linear-gradient(165deg,#0A1220 0%,#0B1524 55%,#081018 100%);
+  padding:28px 16px 36px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.fig-tag{position:absolute;left:14px;top:12px;font:600 11px var(--mono);color:var(--muted);letter-spacing:.08em}
+.fig-hint{position:absolute;left:14px;bottom:12px;font-size:12.5px;color:var(--ink2)}
+.fig-read{position:absolute;right:14px;bottom:12px;font:600 12px var(--mono);color:var(--accent)}
+.fig-stage .sort{flex:1;min-height:280px;margin:0}
+.fig-stage .pile,.fig-stage .binwrap{background:rgba(8,14,26,.55);border-color:rgba(61,217,255,.18)}
+.fig-stage .btns{justify-content:center;flex-wrap:wrap}
+.agenda div span{font-family:var(--mono);color:var(--accent);font-weight:800;min-width:2.2em}
+.hot-svg{box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.abs-stage{border-radius:18px}
+.sent-frame{border-radius:18px;background:
+  radial-gradient(ellipse at 10% 0%,rgba(61,217,255,.08),transparent 50%),
+  rgba(10,18,32,.9)}
+.sent-tabs button{border-radius:12px}
+.plugboard .machine-body{border-radius:18px}
+.shelves-viz .shelf{border-radius:18px;min-height:220px}
+.how-step{border-radius:18px}
 /* abstraction lab */
 .abs-lab{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;align-items:stretch;flex:1;min-height:0}
 .abs-stage{position:relative;border:1px solid var(--edge);border-radius:14px;background:
@@ -693,13 +715,13 @@ h2{color:#F3F7FD}
 <section class="slide cover" data-t="0–2">
   <div class="kick">AI 通识初阶 · M1 抽象 · 第一节（线上 1 小时）</div>
   <h1>AI 是怎么<br>被"造"出来的？</h1>
-  <p class="lead">先热身三个怪问题。再配对拆零件，玩抽象四动作与造句，最后落到记忆、技能和怎么用。</p>
+  <p class="lead">今天你会亲手拆开 AI：它由哪些本事拼起来、什么叫抽象、记忆和技能站在哪一格。</p>
   <div class="agenda">
-    <div><span>第 2–15 分钟</span>热身：住哪、吃啥、长啥样</div>
-    <div><span>第 15–22 分钟</span>正题：配对拆零件</div>
-    <div><span>第 22–40 分钟</span>抽象：四动作 · 造句游戏</div>
-    <div><span>第 40–52 分钟</span>记忆技能 · 货架 · 怎么用</div>
-    <div><span>第 52–60 分钟</span>演示收口 · 交作业</div>
+    <div><span>01</span>猜一猜：它住哪、吃啥、长啥样</div>
+    <div><span>02</span>点一点：人的本事接到机器上</div>
+    <div><span>03</span>玩抽象：分类 · 四动作 · 造句</div>
+    <div><span>04</span>认一认：记忆、技能、身边的 AI</div>
+    <div><span>05</span>试着用：提示词开个头</div>
   </div>
   <aside class="notes">
     <h4>开场 2 分钟</h4>
@@ -959,6 +981,35 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
+<!-- 抽象实验室 · 分类 -->
+<section class="slide" data-t="28–32" data-fs="聊天区：你还能想出什么分法？">
+  <div><h2>换一个标准，就换一种分法<span class="en">Sorting things: you choose the rule</span></h2></div>
+  <p class="lead one-line">同一堆东西，换标准就换抽象。点下面三种分法，看鱼和手机怎么跳。</p>
+  <div class="fig-stage">
+    <span class="fig-tag">FIG · 分类台</span>
+    <div class="btns" id="sortBtns">
+      <button class="btn" data-s="what">按「它是什么」</button>
+      <button class="btn" data-s="use">按「能干什么」</button>
+      <button class="btn" data-s="bag">按「塞不塞进书包」</button>
+      <button class="btn" data-s="none">打散</button>
+    </div>
+    <div class="sort">
+      <div class="pile" id="pile"><h4>具体的东西</h4></div>
+      <div class="binwrap"><h4 id="binTitle">分好的类</h4><div class="bins" id="bins"></div></div>
+    </div>
+    <span class="fig-hint">点一种分法 · 盯住鱼和手机</span>
+    <span class="fig-read" id="sortRead">未分类</span>
+  </div>
+  <div class="say" id="sortSay">同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是「动物」，一会儿是「能吃的」。</div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>先不点，问："你会怎么分这 12 样？"收两种说法。</li>
+    <li>依次点三个按钮，盯住"鱼"和"手机"在跳。问：鱼到底算哪类？——看你用什么标准。</li>
+    <li>聊天区接龙：再想一个分法（按颜色、按要不要充电、按几条腿……）。说不出标准的，不算分类。</li>
+    <li>收口：AI 的设计者也是这样干活的——先定一个标准，把乱七八糟的东西分成几块。</li></ul>
+  </aside>
+</section>
+
 <!-- 抽象实验室 · 造句游戏 -->
 <section class="slide" data-t="28–34" data-fs="聊天区：用四句式各造一句，贴出来">
   <div><h2>把抽象说出口：四句式造句游戏<span class="en">Say it out loud: four sentence frames</span></h2></div>
@@ -986,52 +1037,6 @@ h2{color:#F3F7FD}
       <li>反思：「我舍掉了___只留___；换个抽法会___」</li>
       <li>课堂：屏幕拼一句示范 → 聊天区每人再造一句（可换「出行 / 动物 / AI零件」主题）。</li>
       <li>收口：会说这四句，抽象才算内化；下一阶段用 AI 工具时，这就是你的方向盘。</li>
-    </ul>
-  </aside>
-</section>
-
-<!-- 抽象实验室 · 人机一招 -->
-<section class="slide viz-slide" data-t="34–38" data-fs="聊天区：谁该定「抽什么」？">
-  <div><h2>同一招，谁来定方向？<span class="en">Same move — who sets the aim?</span></h2></div>
-  <div class="duel" id="duel">
-    <button class="duel-side" data-who="ai" aria-pressed="false">
-      <div class="duel-art" aria-hidden="true">
-        <svg viewBox="0 0 280 200" class="duel-svg">
-          <defs><linearGradient id="gAi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3DD9FF"/><stop offset="1" stop-color="#7A8CFF"/></linearGradient></defs>
-          <rect x="40" y="36" width="200" height="120" rx="18" fill="url(#gAi)" opacity=".15" stroke="#3DD9FF" stroke-width="2"/>
-          <circle cx="140" cy="88" r="28" fill="none" stroke="#3DD9FF" stroke-width="3"/>
-          <path d="M140 60v56M112 88h56" stroke="#3DD9FF" stroke-width="3" stroke-linecap="round"/>
-          <g stroke="#3DD9FF" stroke-width="2" fill="none" opacity=".7">
-            <path d="M70 150h40M170 150h40M90 165h20M170 165h20"/>
-          </g>
-          <text x="140" y="188" text-anchor="middle" fill="#9EC5FF" font-size="13" font-family="ui-monospace,monospace">FAST · NO AIM</text>
-        </svg>
-      </div>
-      <h3>AI · 抽象机器</h3>
-      <p>海量里飞快找共同点</p>
-    </button>
-    <div class="duel-vs">VS</div>
-    <button class="duel-side human" data-who="human" aria-pressed="false">
-      <div class="duel-art" aria-hidden="true">
-        <svg viewBox="0 0 280 200" class="duel-svg">
-          <defs><linearGradient id="gHu" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB020"/><stop offset="1" stop-color="#FF7A59"/></linearGradient></defs>
-          <circle cx="140" cy="78" r="32" fill="url(#gHu)" opacity=".2" stroke="#FFB020" stroke-width="2.5"/>
-          <circle cx="140" cy="70" r="16" fill="none" stroke="#FFB020" stroke-width="2.5"/>
-          <path d="M112 120c10 22 46 22 56 0" fill="none" stroke="#FFB020" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M100 150h80" stroke="#FFB020" stroke-width="2" opacity=".5"/>
-          <text x="140" y="188" text-anchor="middle" fill="#FFD08A" font-size="13" font-family="ui-monospace,monospace">SLOW · STEERS</text>
-        </svg>
-      </div>
-      <h3>人 · 定方向</h3>
-      <p>抽什么、舍什么、边界在哪</p>
-    </button>
-  </div>
-  <div class="say" id="duelSay">点一边。AI 跑得快；<b>方向和刹车是人的活</b>——尤其是「我为何这么抽」（元抽象）。</div>
-  <aside class="notes">
-    <h4>讲稿</h4>
-    <ul>
-      <li>不要展开 L1–L5 表格。只钉一句：速度归 AI，方向与反思归人。</li>
-      <li>接下一页：科学家用的就是人定方向的那套抽象，才抽出记忆、技能这些名字。</li>
     </ul>
   </aside>
 </section>
@@ -1103,7 +1108,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 想这一块 · Transformer -->
-<section class="slide" data-t="40–44" data-fs="老师切到外链网站 · 学生聊天区报下一个词">
+<section class="slide" data-t="40–44" data-fs="聊天区：猜它下一个词是什么">
   <div><h2>「想」这一块再打开：它在猜下一个词<span class="en">Inside "thinking": next-token prediction</span></h2></div>
   <p class="lead">拆零件时，「想」最神秘。打开同一个公开网站（国庆营用过）：看它怎么接龙。</p>
   <div class="try-wrap">
@@ -1125,7 +1130,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 怎么用 · 开头 -->
-<section class="slide" data-t="48–54" data-fs="老师共享屏幕 · 打开一个个人助手">
+<section class="slide" data-t="48–54" data-fs="看老师演示：提示词 · 模型 · 技能">
   <div><h2>怎么用：从提示词开始<span class="en">How to use: start with the prompt</span></h2></div>
   <p class="lead one-line">今天只立一个入口：<b>提示词 = 输入</b>。老师打开个人助手，现场指三处。</p>
   <div class="how-steps" id="howSteps">
@@ -1211,14 +1216,14 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 17 交作业 + 三问 -->
-<section class="slide" data-t="56–58" data-fs="飞书文档 · 班级作业表（课后 24 小时内交）">
+<section class="slide" data-t="56–58" data-fs="课后把三样东西交到班级表">
   <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things, answer three questions</span></h2></div>
   <div class="hw">
     <div class="card"><b class="n">01 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写一句"我是按 ___ 分的"。再换一个标准，分第二次。</p></div>
     <div class="card"><b class="n">02 大词</b><h4>挑一个今天的大词，用一句话讲给家人听</h4><p>格式："___ 就像人的 ___，因为 ___。"说完让家人复述一遍，复述不出来就重写。</p></div>
     <div class="card"><b class="n">03 改口</b><h4>开课时你选了哪张图？现在呢？</h4><p>"我开始以为 AI 住在 ___，现在我觉得 ___，因为 ___。"没改口也行，写出理由。</p></div>
   </div>
-  <p class="lead" style="margin-top:6px">老师随机点三个人，每人一分钟，回答：</p>
+  <p class="lead" style="margin-top:6px">交完作业，试着回答这三个问题：</p>
   <div class="three"><div>你今天做了什么？<small>比如：我给 12 样东西换了三种分法</small></div><div>AI 做了什么？<small>比如：它回答了自己住在哪</small></div><div>你质疑过 AI 什么？<small>比如：它数 Token 数错了</small></div></div>
   <aside class="notes">
     <h4>操作</h4>
@@ -1229,50 +1234,8 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 18 下一节预告 -->
-<section class="slide" data-t="58–60">
-  <div><h2>下一节（2 小时）：拆真机器 + 装 skill 真用一遍<span class="en">Next: open a real machine</span></h2></div>
-  <div class="cols">
-    <div class="facts">
-      <div class="fact"><b>拆</b><span>每组一台旧设备，找出输入、记忆、分析、输出，贴标签。</span></div>
-      <div class="fact"><b>用</b><span>在个人助手里写提示词、选模型、装一个 skill，跑通一件小事。</span></div>
-      <div class="fact"><b>考</b><span>问 AI 音箱流程，对照实物抓它说错的地方；画人 ↔ 机器对照图。</span></div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="card"><b>请带上</b><p class="lead" style="margin-top:6px">家里一样会"听"或会"看"的电器的照片：智能音箱、扫地机器人、带语音的遥控器、门铃摄像头都行。<b>拍正面和背面，不用拆。</b></p></div>
-      <div class="say">留一个问题回家想：AI 听懂你，靠的是你说得清楚。<b>你今天对 AI 说的话里，哪一句说得不够清楚？</b></div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>收尾一句话</h4>
-    <ul><li>"今天我们发现，AI 是照着人的本事一样一样造出来的。下节课我们把真机器拆开，看看这些零件长什么样。"</li></ul>
-    <h4>课后 24 小时内发家长群一条</h4>
-    <ul><li>今天学了什么：AI 住在机房、吃文字和电、本事存在一堆数字里；它是照着人的五样本事"抽象"出来的。</li>
-    <li>孩子拿出了什么：两种分法的分类照片，一句讲大词的话。</li>
-    <li>今晚可以问他一句：<b>"你跟 AI 说话时，那句话跑去哪儿了？"</b></li></ul>
-  </aside>
-</section>
-
-<!-- 19 教师附页 -->
-<section class="slide" data-t="附页">
-  <div><h2>教师附页：第二节 2 小时怎么走<span class="en">Teacher sheet: the 2-hour follow-up</span></h2></div>
-  <p class="lead">目标：指出真机器零件 + 在个人助手里完成「提示词 / 选模型 / 装 skill」最小闭环 + 找出 AI 说错的一处。</p>
-  <div class="timeline">
-    <div class="tl"><b>0–10</b><h4>复述</h4><p>念六个大词，贴回五样本事；口答上节三个问题。</p><span>交：白板截图</span></div>
-    <div class="tl"><b>10–40</b><h4>拆机找"器官"</h4><p>旧键盘、音箱、路由器。找输入、记忆、分析、输出，贴标签拍照。电池提前取出，不拆手机。</p><span>交：贴好标签的照片</span></div>
-    <div class="tl"><b>40–50</b><h4>休息</h4><p></p></div>
-    <div class="tl"><b>50–80</b><h4>用 AI 拆 AI</h4><p>问"智能音箱从听见到回答经过哪几步"，对照实物和"发送"动画，抓一处说错或含糊；新开对话再问一次。</p><span>交：AI 说的 / 实物是 / 我的判断</span></div>
-    <div class="tl"><b>80–105</b><h4>画解剖图</h4><p>选一个 AI 产品，画人 ↔ 机器对照，标至少 3 个大词。</p><span>交：一张对照图</span></div>
-    <div class="tl"><b>105–120</b><h4>讲出来</h4><p>每组一人讲；随机三问；交作业；预告 M2。</p><span>交：作业表</span></div>
-  </div>
-  <aside class="notes">
-    <h4>待确认</h4>
-    <ul><li>这一节是线下还是线上？线下按上面拆实物；线上改成老师镜头拆、孩子在飞书白板上贴标签，10–40 分钟的产出改成白板截图。</li></ul>
-  </aside>
-</section>
-
 <div id="notePanel" aria-live="polite"></div>
-<div id="keys">← → 翻页 · N 打开讲稿</div>
+<div id="keys">← → 翻页</div>
 <div class="nav">
   <button id="noteBtn">讲稿</button>
   <button id="prev" aria-label="上一页">‹</button>
@@ -1289,11 +1252,11 @@ const slides = $$('.slide');
 let cur = 0;
 
 slides.forEach((s) => {
+  const t = s.dataset.t;
+  if (t === '封面' || !s.dataset.fs) return;
   const top = document.createElement('div');
   top.className = 'top';
-  const t = s.dataset.t;
-  if (t === '封面') return;
-  top.innerHTML = `<span class="when">${t === '附页' ? '<b>教师附页</b> · 不给学生看' : `第 <b>${t}</b> 分钟`}</span>` + (s.dataset.fs ? `<span class="feishu">${s.dataset.fs}</span>` : '');
+  top.innerHTML = `<span class="feishu">${s.dataset.fs}</span>`;
   s.prepend(top);
 });
 
@@ -1752,6 +1715,88 @@ $$('.numwall').forEach((w) => {
 })();
 
 
+/* 分类游戏 */
+(() => {
+  const things = [
+    ['apple', '苹果'], ['banana', '香蕉'], ['melon', '西瓜'], ['bike', '自行车'], ['car', '汽车'], ['cat', '小猫'],
+    ['dog', '小狗'], ['fish', '鱼'], ['pencil', '铅笔'], ['book', '书'], ['phone', '手机'], ['ball', '足球']
+  ];
+  const rules = {
+    what: { title: '按"它是什么"', bins: ['水果', '交通工具', '动物', '用品'], map: { apple: 0, banana: 0, melon: 0, bike: 1, car: 1, cat: 2, dog: 2, fish: 2, pencil: 3, book: 3, phone: 3, ball: 3 } },
+    use: { title: '按"能拿来干什么"', bins: ['能吃', '能载人走', '能写字、看字', '能陪你玩'], map: { apple: 0, banana: 0, melon: 0, fish: 0, bike: 1, car: 1, pencil: 2, book: 2, phone: 2, cat: 3, dog: 3, ball: 3 } },
+    bag: { title: '按"能不能塞进书包"', bins: ['塞得进', '塞不进', '', ''], map: { apple: 0, banana: 0, pencil: 0, book: 0, phone: 0, ball: 0, melon: 1, bike: 1, car: 1, cat: 1, dog: 1, fish: 1 } }
+  };
+  const says = {
+    none: '同样 12 样东西，<b>换一个标准，就换一种分法</b>。注意那条鱼：它一会儿是"动物"，一会儿是"能吃的"。',
+    what: '按"它是什么"分：鱼是<b>动物</b>，手机是<b>用品</b>。',
+    use: '按"能拿来干什么"分：鱼跑到了<b>能吃</b>那一格，手机跑去了<b>写字、看字</b>。东西没变，变的是你的标准。',
+    bag: '按"能不能塞进书包"分：小猫小狗和鱼都塞不进——<b>活的不能塞</b>。标准一换，分法完全不一样。'
+  };
+  const pile = $('#pile'), bins = $('#bins'), wrap = bins.parentElement;
+  const els = things.map(([id, name], i) => {
+    const d = document.createElement('div');
+    d.className = 'thing'; d.dataset.id = id;
+    d.innerHTML = `<svg aria-hidden="true"><use href="#i-${id}"/></svg><span>${name}</span>`;
+    document.body.append(d);
+    return d;
+  });
+  const seed = [[.08, .12], [.42, .08], [.72, .14], [.18, .4], [.55, .34], [.8, .44], [.06, .66], [.36, .6], [.62, .62], [.22, .84], [.5, .84], [.8, .8]];
+  let mode = 'none';
+  function layout() {
+    const pr = pile.getBoundingClientRect(), sr = slides[cur].getBoundingClientRect();
+    const host = pile.closest('.slide');
+    if (!host.classList.contains('active')) return;
+    const off = (r) => [r.left - sr.left + host.scrollLeft, r.top - sr.top + host.scrollTop];
+    if (mode === 'none') {
+      els.forEach((e, i) => { const [ox, oy] = off(pr); e.style.left = ox + seed[i][0] * (pr.width - 70) + 4 + 'px'; e.style.top = oy + 26 + seed[i][1] * (pr.height - 96) + 'px'; });
+      return;
+    }
+    const rule = rules[mode];
+    const boxes = $$('.b', bins);
+    const fill = boxes.map(() => 0);
+    els.forEach((e) => {
+      const k = rule.map[e.dataset.id];
+      const br = boxes[k].getBoundingClientRect();
+      const [ox, oy] = off(br);
+      const per = Math.max(1, Math.floor((br.width - 8) / 74));
+      const n = fill[k]++;
+      e.style.left = ox + 4 + (n % per) * 74 + 'px';
+      e.style.top = oy + 22 + Math.floor(n / per) * 70 + 'px';
+    });
+  }
+  els.forEach((e) => { pile.closest('.slide').append(e); });
+  things.forEach(([id, name], i) => {
+    const g = document.createElement('div');
+    g.className = 'thing ghost'; g.setAttribute('aria-hidden', 'true');
+    g.style.left = `calc(${seed[i][0] * 100}% - ${seed[i][0] * 70 - 4}px)`;
+    g.style.top = `calc(${seed[i][1] * 100}% - ${seed[i][1] * 96 - 26}px)`;
+    g.innerHTML = `<svg><use href="#i-${id}"/></svg><span>${name}</span>`;
+    pile.append(g);
+  });
+  function set(m) {
+    mode = m;
+    $$('#sortBtns .btn').forEach((b) => b.classList.toggle('on', b.dataset.s === m));
+    if (m === 'none') { bins.innerHTML = ''; $('#binTitle').textContent = '分好的类'; }
+    else {
+      const r = rules[m];
+      const used = r.bins.filter(Boolean);
+      bins.style.gridTemplateColumns = used.length === 2 ? '1fr 1fr' : '1fr 1fr';
+      bins.style.gridTemplateRows = used.length === 2 ? '1fr' : '1fr 1fr';
+      bins.innerHTML = used.map((t) => `<div class="b"><span>${t}</span></div>`).join('');
+      $('#binTitle').textContent = r.title;
+    }
+    $('#sortSay').innerHTML = says[m];
+    const sr = $('#sortRead'); if (sr) sr.textContent = m === 'none' ? '未分类' : (m === 'what' ? '按本质' : m === 'use' ? '按用途' : '按能不能装');
+    els.forEach((e) => { e.classList.toggle('hl', m !== 'none' && (e.dataset.id === 'fish' || e.dataset.id === 'phone')); });
+    requestAnimationFrame(layout);
+  }
+  $$('#sortBtns .btn').forEach((b) => b.onclick = () => set(b.dataset.s));
+  window.addEventListener('resize', layout);
+  window.__sortLayout = layout;
+  set('none');
+})();
+
+
 /* 人机热区配对 */
 (() => {
   const root = $('#hmMatch'); if (!root) return;
@@ -1793,20 +1838,6 @@ $$('.numwall').forEach((w) => {
     hots.forEach((h) => h.classList.remove('sel','ok','shake'));
     win.classList.add('hidden'); setMsg('先点左边的人');
   };
-})();
-
-/* 人机对决 */
-(() => {
-  const tip = {
-    ai: 'AI：抽象机器。分类、聚类、归纳都快。<b>但无方向、不反思。</b>',
-    human: '人：决定抽什么、舍什么、边界在哪。<b>慢，但是方向盘和刹车。</b>'
-  };
-  const root = $('#duel'); if (!root) return;
-  $$('.duel-side', root).forEach((b) => b.onclick = () => {
-    $$('.duel-side', root).forEach((x) => x.setAttribute('aria-pressed', 'false'));
-    b.setAttribute('aria-pressed', 'true');
-    $('#duelSay').innerHTML = tip[b.dataset.who];
-  });
 })();
 
 /* 插标签 */
