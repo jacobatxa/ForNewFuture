@@ -691,12 +691,13 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 
 /* homework / next */
 .hw{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.hw .card b.n{font-family:var(--mono);color:var(--accent);font-size:13px}
-.hw .card h4{font-size:17px;margin:4px 0 6px}
+.hw .card{border:1px solid var(--edge);border-radius:18px;padding:16px 16px 18px;background:linear-gradient(165deg,rgba(18,32,52,.9),rgba(8,14,26,.95));min-height:168px}
+.hw .card b.n{font-family:var(--mono);color:var(--accent);font-size:13px;letter-spacing:.06em}
+.hw .card h4{font-size:17px;margin:8px 0 8px}
 .hw .card p{font-size:14px;color:var(--ink2);line-height:1.55}
 .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.three div{background:linear-gradient(160deg,#13233F,#0C1528);border:1px solid var(--line2);color:var(--ink);border-radius:10px;padding:12px 14px;font-size:16px;font-weight:800}
-.three div small{display:block;font-size:12px;font-weight:500;color:#8C9AB3;margin-top:3px}
+.three div{background:linear-gradient(160deg,#13233F,#0C1528);border:1px solid var(--line2);color:var(--ink);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:800}
+.three div small{display:block;font-size:12px;font-weight:500;color:#8C9AB3;margin-top:6px;line-height:1.45}
 table.plan{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--paper)}
 table.plan th,table.plan td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;line-height:1.5}
 table.plan th{font-size:12px;color:var(--muted);font-weight:700}
