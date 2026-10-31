@@ -323,6 +323,33 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 .tl p{font-size:13.5px;color:var(--ink2);line-height:1.5;min-height:3.2em}
 .tl span{display:block;font-size:12px;color:var(--muted);margin-top:8px;border-top:1px solid var(--line);padding-top:8px}
 .mfig-live{width:100%;max-width:640px;margin:0 auto}
+
+.why{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:8px 0 12px}
+.why-card{border:1px solid var(--edge);background:var(--glass);border-radius:14px;padding:16px 18px}
+.why-card b{display:block;font-size:18px;color:var(--accent);margin-bottom:8px}
+.why-card p{font-size:15px;line-height:1.55;color:var(--ink2)}
+.why-arrow{font-size:28px;color:var(--accent);font-weight:900}
+.shelves{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.shelf{text-align:left;border:1px solid var(--edge);background:var(--glass);border-radius:14px;padding:16px;transition:box-shadow .2s,border-color .2s}
+.shelf h3{font-size:18px;margin-bottom:10px}
+.shelf h3 small{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-top:4px}
+.shelf ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.shelf li{font-size:13px;padding:4px 9px;border-radius:8px;background:rgba(61,217,255,.08);border:1px solid var(--line2);color:var(--ink)}
+.shelf-note{font-size:13.5px;line-height:1.5;color:var(--ink2)}
+.shelf[aria-pressed="true"],.shelf:hover{border-color:var(--accent);box-shadow:var(--glow)}
+.try-wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center}
+.tx-shot{border-radius:12px;overflow:hidden;border:1px solid var(--edge);background:#000}
+.tx-shot img{display:block;width:100%;height:auto}
+.try-tasks{display:flex;flex-direction:column;gap:10px}
+.try-card{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--edge);background:var(--glass);border-radius:12px;padding:12px 14px}
+.try-card .n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#04101C;font-weight:900;display:grid;place-items:center}
+.try-card p{font-size:15px;line-height:1.45}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 12px}
+.how-grid .ask{display:block;margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--accent)}
+@media (max-width:720px){
+  .why,.shelves,.try-wrap,.how-grid{grid-template-columns:1fr}
+  .why-arrow{display:none}
+}
 /* ---- tech layer ---- */
 .slide svg:not(.iso-svg){fill:var(--ink)}
 html,body{background:var(--bg)}
@@ -414,13 +441,13 @@ h2{color:#F3F7FD}
 <section class="slide cover" data-t="0–2">
   <div class="kick">AI 通识初阶 · M1 抽象 · 第一节（线上 1 小时）</div>
   <h1>AI 是怎么<br>被"造"出来的？</h1>
-  <p class="lead">今天先问三个关于 AI 的怪问题，再学一个词——<b>抽象</b>。学完你能用自己的话说清：算法、算力、Token、提示词，到底都是啥。</p>
+  <p class="lead">先热身三个怪问题。然后进入正题：把 AI <b>拆成几块零件</b>，弄清它为什么这么设计，再学一个工具——<b>抽象</b>，最后看怎么用。</p>
   <div class="agenda">
-    <div><span>第 2–17 分钟</span>三个怪问题，连着问完</div>
-    <div><span>第 17–19 分钟</span>跟着一句话进机房</div>
-    <div><span>第 19–28 分钟</span>什么叫抽象</div>
-    <div><span>第 28–46 分钟</span>照着人造 + 四个大词</div>
-    <div><span>第 46–60 分钟</span>看老师考 AI，交作业</div>
+    <div><span>第 2–15 分钟</span>热身：住哪、吃啥、长啥样</div>
+    <div><span>第 15–28 分钟</span>正题：AI 拆成几块 · 为什么</div>
+    <div><span>第 28–40 分钟</span>抽象这个工具</div>
+    <div><span>第 40–52 分钟</span>工具地图 · 开始怎么用</div>
+    <div><span>第 52–60 分钟</span>演示收口 · 交作业</div>
   </div>
   <aside class="notes">
     <h4>开场 2 分钟</h4>
@@ -544,10 +571,10 @@ h2{color:#F3F7FD}
     <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q3-stars" alt=""><div class="b numwall" aria-hidden="true"></div><span class="cap"><i>D</i>星星</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>星星 · </small>几千亿个数字</b><span class="pf">DeepSeek-V3 里有 6710 亿个数字（叫"参数"），比银河系的星星还多。它的本事，就存在这些数字里。</span></span></button>
   </div>
   <div class="btns"><button class="btn primary flip-all">全部翻开</button><button class="btn flip-reset">翻回去</button></div>
-  <div class="say hidden flip-end"><b>AI 没有固定的样子。</b>外壳随便换，身体是成千上万块芯片，脑子是一层层的网，本事存在几千亿个数字里。下一页，把脑子立起来看一眼。</div>
+  <div class="say hidden flip-end"><b>AI 没有固定的样子。</b>外壳随便换，身体是成千上万块芯片，脑子是一层层的网，本事存在几千亿个数字里。热身够了。下一页进入正题：把 AI 拆成几块零件。</div>
   <aside class="notes">
     <h4>提问链</h4>
-    <ul><li>建议顺序：机器人 → 芯片 → 星星 → 大脑。大脑放最后，直接接下一页。</li>
+    <ul><li>建议顺序：机器人 → 芯片 → 星星 → 大脑。四张翻完，宣布热身结束，进入正题。</li>
     <li>翻"星星"时停一下：银河系大约有一千亿到四千亿颗星，6710 亿比它还多。</li></ul>
     <h4>知识点要讲准</h4>
     <ul><li>芯片：一块 H100 里约有 800 亿个晶体管（就是"开关"）。训练大模型通常要几千到几万块这样的芯片，DeepSeek-V3 训练用了 2048 块。</li>
@@ -556,43 +583,9 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 10 AI 的脑子 -->
-<section class="slide" data-t="13–17" data-fs="聊天区：猜它下一个字会说什么">
-  <div><h2>问题 3 · AI 的"脑子"长这样<span class="en">Inside a large language model</span></h2></div>
-  <p class="lead">先猜：<b>"床前明月"后面是哪个字？</b>再按"让它想一遍"，看四个字一层层往上走。</p>
-  <div class="stage">
-    <div class="figcard" id="modelCard">
-      <span class="c tl">Fig 2</span><span class="c tr">一个大模型，立起来看</span>
-      <div class="iso mfig-live" data-theme="dark"><!--@MODEL@--></div>
-      <span class="c bl">按按钮，看字往上走</span><span class="c br" id="modelRead"></span>
-    </div>
-    <div class="chips" id="thinkChips">
-      <span class="chip tfs" data-s="in">读进四个字</span>
-      <span class="chip tfs" data-s="tok">切成 Token</span>
-      <span class="chip tfs" data-s="emb">变成数字</span>
-      <span class="chip tfs" data-s="att">互相看一眼</span>
-      <span class="chip tfs" data-s="ffn">自己想一想</span>
-      <span class="chip tfs" data-s="prob">算可能性</span>
-      <span class="chip tfs" data-s="out">猜出：光</span>
-    </div>
-    <div class="btns"><button class="btn primary" id="thinkBtn">让它想一遍</button><button class="btn" id="thinkReset">再来</button></div>
-    <div class="say hidden" id="modelEnd">它的"想"，就是一层层地<b>拿数字做乘法和加法</b>，最后猜出最可能的下一个字。<br>三问问完了。下一页跟着一句话跑一趟，看它真的住在哪。</div>
-  </div>
-  <aside class="notes">
-    <h4>提问链</h4>
-    <ul><li>先让孩子在聊天区猜："床前明月"后面是什么字？全班都会说"光"。再问：你是怎么猜出来的？——你读过这首诗。AI 也一样，它"读过"。</li>
-    <li>按"让它想一遍"：底下的步骤一格格亮，立体图里的字一层层往上走，每层都有弧线——那就是"互相看一眼"。</li>
-    <li>这一页收完问题 3。下一页是"发送"动画，再下一页是机柜，然后才进"抽象"。</li></ul>
-    <h4>知识点要讲准</h4>
-    <ul><li>这是 Transformer 的简化画法。真结构里每层还有"加回原来的"（残差连接）和"调一调大小"（归一化），这里省了。</li>
-    <li>DeepSeek-V3 共 61 层。它的"自己想一想"分给了很多个"专家"小网络，每个字只叫其中几个，这叫混合专家（MoE）。</li>
-    <li>最后一步算的是词表里每一块的可能性（十几万个候选），挑一个说出来，再把它接到后面，接着猜下一个。</li></ul>
-  </aside>
-</section>
-
-<!-- 消息去哪了 · 三问之后补一场 -->
-<section class="slide" data-t="17–18" data-fs="聊天区：猜一猜，这句话跑了多远">
-  <div><h2>补一场 · 你按下"发送"，这句话去哪了？<span class="en">Where does your message go?</span></h2></div>
+<!-- 热身收口 · 发送 -->
+<section class="slide" data-t="13–14" data-fs="聊天区：猜一猜，这句话跑了多远">
+  <div><h2>热身收口 · 你按下"发送"，这句话去哪了？<span class="en">Where does your message go?</span></h2></div>
   <div class="stage">
     <div class="card">
       <svg class="path-svg" viewBox="0 0 900 250" role="img" aria-label="一条消息从手机出发，经过家里的路由器、通信基站、很长的光缆，到达远方机房里的服务器，再原路回来。">
@@ -632,9 +625,9 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 机柜 · 三问之后补一场 -->
-<section class="slide" data-t="18–19" data-fs="举手：猜一台服务器里有几块 GPU">
-  <div><h2>补一场 · 机房里，AI 住在这样的柜子里<span class="en">A rack in a data center</span></h2></div>
+<!-- 热身收口 · 机柜 -->
+<section class="slide" data-t="14–15" data-fs="举手：猜一台服务器里有几块 GPU">
+  <div><h2>热身收口 · 机房里，AI 住在这样的柜子里<span class="en">A rack in a data center</span></h2></div>
   <div class="cols">
     <div class="figcard" id="rackCard">
       <span class="c tl">Fig 1</span><span class="c tr">机房里的一个机柜</span>
@@ -656,15 +649,65 @@ h2{color:#F3F7FD}
     <h4>怎么用这张图</h4>
     <ul><li>先不点，问："这柜子里哪一层是 AI？"让孩子在聊天区猜第几层。</li>
     <li>点"拉出一台服务器"，盖子打开：8 块亮着的就是 GPU。问："为什么它们头上都顶着一大块带齿的铁？"——发热，散热片。</li>
-    <li>收口：三问都问完了。下一页开始学"抽象"——人是怎么把这些本事变成数字的。</li></ul>
+    <li>收口：热身结束。下一页进入正题——把 AI 拆成几块零件。</li></ul>
     <h4>数字来源</h4>
     <ul><li>标准机柜约 60×105×200 厘米；常见 AI 服务器一台 8 块 GPU、高 8U；一个柜子按供电通常放 4 台。图按这些尺寸画的。</li></ul>
   </aside>
 </section>
 
-<!-- 7 抽大象 -->
-<section class="slide" data-t="19–21" data-fs="聊天区：抽象是什么意思？先瞎猜">
-  <div><h2>什么叫抽象？是"抽大象"吗？<span class="en">Abstraction is not pulling an elephant</span></h2></div>
+<!-- 正题 · AI 拆成几块 -->
+<section class="slide" data-t="15–20" data-fs="聊天区：先点左边，再点右边配对">
+  <div><h2>正题 · 把 AI 拆成几块<span class="en">Match human abilities to machine parts</span></h2></div>
+  <p class="lead">热身完了，进入正题。AI 不是一整块黑盒子，可以拆成几块。<b>先点左边人的本事，再点右边机器零件。</b></p>
+  <div class="match" id="hmMatch">
+    <div class="match-col" id="hmLeft">
+      <button class="mcard" data-f="in" data-side="h"><b>看和听</b><span>眼睛、耳朵</span></button>
+      <button class="mcard" data-f="mem" data-side="h"><b>记</b><span>经验和手感</span></button>
+      <button class="mcard" data-f="think" data-side="h"><b>想</b><span>脑子里算</span></button>
+      <button class="mcard" data-f="out" data-side="h"><b>说和做</b><span>嘴和手</span></button>
+      <button class="mcard" data-f="learn" data-side="h"><b>技能</b><span>可装卸的本事</span></button>
+    </div>
+    <div class="match-mid"><div class="say" id="hmMsg">先点左边。</div><button class="btn" id="hmReset">打散重来</button></div>
+    <div class="match-col" id="hmRight">
+      <button class="mcard" data-f="out" data-side="m"><b>屏幕和喇叭</b><span>甚至机器人的手</span></button>
+      <button class="mcard" data-f="learn" data-side="m"><b>Skill / 插件</b><span>装上就会干新活</span></button>
+      <button class="mcard" data-f="in" data-side="m"><b>摄像头、麦克风、键盘</b><span>你打进去的字</span></button>
+      <button class="mcard" data-f="think" data-side="m"><b>芯片</b><span>按步骤飞快地算</span></button>
+      <button class="mcard" data-f="mem" data-side="m"><b>一大堆数字</b><span>叫"参数"</span></button>
+    </div>
+  </div>
+  <div class="say hidden" id="hmWin">五对都对上了。下一页问：<b>为什么要拆成这几块？</b></div>
+  <aside class="notes">
+    <h4>玩法</h4>
+    <ul><li>你共享屏幕，孩子在聊天区喊"左边第 2 个对右边第 __ 个"，你来点。</li>
+    <li>配对成功会锁住并亮起来；点错了两边都会摇一下。</li>
+    <li>收口：AI 的设计者就是这样把人的本事拆开、再造一遍的。</li></ul>
+    <h4>讲准一点</h4>
+    <ul><li>AI 的"记"不是把原文一句句存起来，而是学出来的"手感"，所以它会记错、会编。</li></ul>
+  </aside>
+</section>
+
+<!-- 正题 · 为什么这么设计 -->
+<section class="slide" data-t="20–24" data-fs="聊天区：人吃饭到回一句“来了”，用了哪几块？">
+  <div><h2>为什么拆成这几块？因为是照着人抽的<span class="en">Why these parts: abstracted from people</span></h2></div>
+  <p class="lead">上一页拆出来的输入、记忆、分析、输出、技能，不是工程师随便想的。<b>人怎么办事，AI 就照着抽成零件。</b></p>
+  <div class="why">
+    <div class="why-card"><b>人</b><p>听见妈妈喊 → 认出是妈妈 → 想要不要去 → 说「来了」→ 学会下次别磨蹭</p></div>
+    <div class="why-arrow">→</div>
+    <div class="why-card"><b>AI</b><p>输入进来 → 参数里有印象 → 芯片里算 → 屏幕/喇叭输出 → 可装卸的技能包</p></div>
+  </div>
+  <div class="say">这叫<b>抽象设计</b>：先把人办事的过程抽干净，再一块块做成机器。下一页专门练这个「抽」的本事。</div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>先让孩子在聊天区写「听见喊吃饭到回一句」用了哪几步，再对照屏幕。</li>
+    <li>点明：今天的正题不是某个软件按钮，是「AI 的整套设计，其实是对人的抽象」。</li>
+    <li>下一页开始教抽象这个工具本身：抽大象、换标准分类。</li></ul>
+  </aside>
+</section>
+
+<!-- 抽象工具 · 抽大象 -->
+<section class="slide" data-t="24–26" data-fs="聊天区：抽象是什么意思？先瞎猜">
+  <div><h2>抽象这个工具：不是"抽大象"<span class="en">Abstraction is not pulling an elephant</span></h2></div>
   <div class="cols">
     <div class="card" id="toonCard" style="display:flex;align-items:center;justify-content:center">
       <svg class="toon" viewBox="0 0 560 360" role="img" aria-label="漫画：一个孩子拽着绳子，从魔术帽里拽出了一头大象，自己摔了个屁股墩。">
@@ -710,8 +753,8 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 8 抽象台阶 -->
-<section class="slide" data-t="21–24" data-fs="聊天区：哪一级你还认得出大象？哪一级它和小猫一样了？">
+<!-- 抽象工具 · 台阶 -->
+<section class="slide" data-t="26–30" data-fs="聊天区：哪一级你还认得出大象？哪一级它和小猫一样了？">
   <div><h2>把一头大象，一级一级"抽"<span class="en">Climbing the abstraction ladder</span></h2></div>
   <div class="cols">
     <div class="card" style="display:flex;align-items:center;justify-content:center">
@@ -763,9 +806,9 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 9 分门别类 -->
-<section class="slide" data-t="24–28" data-fs="聊天区接龙：你还能想出什么分法？">
-  <div><h2>抽象的第一招：分门别类，标准由你定<span class="en">Sorting things: you choose the rule</span></h2></div>
+<!-- 抽象工具 · 分类 -->
+<section class="slide" data-t="30–34" data-fs="聊天区接龙：你还能想出什么分法？">
+  <div><h2>抽象这个工具：分门别类，标准由你定<span class="en">Sorting things: you choose the rule</span></h2></div>
   <div class="btns" id="sortBtns">
     <button class="btn" data-s="what">按"它是什么"分</button>
     <button class="btn" data-s="use">按"能拿来干什么"分</button>
@@ -782,44 +825,87 @@ h2{color:#F3F7FD}
     <ul><li>先不点，问："你会怎么分这 12 样？"收两种说法。</li>
     <li>依次点三个按钮，盯住"鱼"和"手机"在跳。问：鱼到底算哪类？——看你用什么标准。</li>
     <li>聊天区接龙：再想一个分法（按颜色、按要不要充电、按几条腿……）。说不出标准的，不算分类。</li>
-    <li>收口：AI 的设计者也是这样干活的——先定一个标准，把乱七八糟的东西分成几块。</li></ul>
+    <li>收口：刚才拆 AI，用的就是这一招。现在你手里有了「抽象」这个工具。下一页看身边这些 AI 产品，各站在哪一层。</li></ul>
   </aside>
 </section>
 
-<!-- 10 人与机器 -->
-<section class="slide" data-t="28–32" data-fs="聊天区：人的本事对上机器的哪一块？">
-  <div><h2>配对赛：人的本事，机器用什么替？<span class="en">Match human abilities to machine parts</span></h2></div>
-  <p class="lead">先点左边一样人的本事，再点右边一块机器零件。五对都对上，才算赢。</p>
-  <div class="match" id="hmMatch">
-    <div class="match-col" id="hmLeft">
-      <button class="mcard" data-f="in" data-side="h"><b>看和听</b><span>眼睛、耳朵</span></button>
-      <button class="mcard" data-f="mem" data-side="h"><b>记</b><span>经验和手感</span></button>
-      <button class="mcard" data-f="think" data-side="h"><b>想</b><span>脑子里算</span></button>
-      <button class="mcard" data-f="out" data-side="h"><b>说和做</b><span>嘴和手</span></button>
-      <button class="mcard" data-f="learn" data-side="h"><b>学</b><span>读书、被纠正</span></button>
-    </div>
-    <div class="match-mid"><div class="say" id="hmMsg">先点左边。</div><button class="btn" id="hmReset">打散重来</button></div>
-    <div class="match-col" id="hmRight">
-      <button class="mcard" data-f="out" data-side="m"><b>屏幕和喇叭</b><span>甚至机器人的手</span></button>
-      <button class="mcard" data-f="learn" data-side="m"><b>训练</b><span>读海量文字、调数字</span></button>
-      <button class="mcard" data-f="in" data-side="m"><b>摄像头、麦克风、键盘</b><span>你打进去的字</span></button>
-      <button class="mcard" data-f="think" data-side="m"><b>芯片</b><span>按步骤飞快地算</span></button>
-      <button class="mcard" data-f="mem" data-side="m"><b>一大堆数字</b><span>叫"参数"</span></button>
+<!-- 工具地图 -->
+<section class="slide" data-t="34–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
+  <div><h2>先分清：大模型 · 编程环境 · 个人助手<span class="en">Three shelves: model, coding bench, personal agent</span></h2></div>
+  <p class="lead">很多人把这些混着叫「AI」。点一栏，看它到底是什么。</p>
+  <div class="shelves" id="shelves">
+    <button class="shelf" data-s="model" aria-pressed="false">
+      <h3>大模型<small>脑子 / 对话壳</small></h3>
+      <ul>
+        <li>豆包对话</li><li>DeepSeek</li><li>ChatGPT</li><li>通义 / 星火</li>
+      </ul>
+      <p class="shelf-note">负责「读懂话、接下文」。多数时候你打开的是一个聊天窗口。</p>
+    </button>
+    <button class="shelf" data-s="code" aria-pressed="false">
+      <h3>编程环境<small>写代码的台子</small></h3>
+      <ul>
+        <li>Cursor</li><li>Claude Code</li><li>Codex</li><li>各类 AI IDE</li>
+      </ul>
+      <p class="shelf-note">里面装着大模型，但台面上是文件、终端、改代码。面向「把软件做出来」。</p>
+    </button>
+    <button class="shelf" data-s="agent" aria-pressed="false">
+      <h3>个人助手<small>Personal Agent</small></h3>
+      <ul>
+        <li>豆包工作台</li><li>飞书助手</li><li>WorkBuddy</li><li>Hermes</li>
+      </ul>
+      <p class="shelf-note">有目标、记忆、技能、规矩。帮你把一件事办完，不只是聊两句。</p>
+    </button>
+  </div>
+  <div class="say" id="shelfSay">三栏可以叠在一起用：助手调用大模型，编程环境也调用大模型。<b>先分清你打开的是哪一栏。</b></div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>孩子说「我用 AI」时，追问：你打开的是聊天、写代码，还是一个会办事的助手？</li>
+    <li>强调：编程环境 ≠ 大模型本身；个人助手里才开始认真谈技能、记忆、规矩。</li>
+    <li>和国庆创想营错开：营地搭过 Agent 零件；这里先把市场上的东西分到货架上。</li></ul>
+  </aside>
+</section>
+
+<!-- 想这一块 · Transformer -->
+<section class="slide" data-t="40–44" data-fs="老师切到外链网站 · 学生聊天区报下一个词">
+  <div><h2>「想」这一块再打开：它在猜下一个词<span class="en">Inside "thinking": next-token prediction</span></h2></div>
+  <p class="lead">拆零件时，「想」最神秘。打开同一个公开网站（国庆营用过）：看它怎么接龙。</p>
+  <div class="try-wrap">
+    <div class="tx-shot"><img src="@IMG:transformer-teaser@" alt="Transformer Explainer 界面截图"></div>
+    <div class="try-tasks">
+      <div class="try-card"><span class="n">1</span><p>输入一句话，看它猜的下一个词</p></div>
+      <div class="try-card"><span class="n">2</span><p>把 Temperature 往右拖，看猜的词怎么变</p></div>
+      <div class="try-card"><span class="n">3</span><p>点一个词，看它最在意前面哪几个字</p></div>
+      <a class="btn primary" href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener">打开 Transformer Explainer ↗</a>
     </div>
   </div>
-  <div class="say hidden" id="hmWin">五对都对上了。这就是<b>抽象设计</b>：先把人分成五样本事，再给每一类造一个零件。</div>
+  <p class="small">Transformer Explainer · Georgia Tech Polo Club · MIT License · 打不开就用页上三步口述</p>
   <aside class="notes">
-    <h4>玩法</h4>
-    <ul><li>你共享屏幕，孩子在聊天区喊"左边第 2 个对右边第 __ 个"，你来点。</li>
-    <li>配对成功会锁住并亮起来；点错了两边都会摇一下。</li>
-    <li>收口：AI 的设计者就是这样把人的本事拆开、再造一遍的。</li></ul>
-    <h4>讲准一点</h4>
-    <ul><li>AI 的"记"不是把原文一句句存起来，而是学出来的"手感"，所以它会记错、会编。</li></ul>
+    <h4>操作</h4>
+    <ul><li>复用国庆创想营同一站。老师共享屏幕操作，学生在聊天区猜下一个词。</li>
+    <li>只压一件事：它不是「理解人生」，是在算下一个最可能的词。</li>
+    <li>外链挂了就口述三步，不卡课。</li></ul>
   </aside>
 </section>
 
-<!-- 11 大词归位 -->
-<section class="slide" data-t="32–35" data-fs="聊天区：抢答，这个词归哪样本事">
+<!-- 怎么用 · 开头 -->
+<section class="slide" data-t="44–52" data-fs="老师共享屏幕 · 打开一个个人助手">
+  <div><h2>怎么用：从提示词开始<span class="en">How to use: start with the prompt</span></h2></div>
+  <p class="lead">分清货架之后，才谈「怎么用」。今天先立一个入口：<b>提示词 = 你给它的输入</b>。</p>
+  <div class="how-grid">
+    <div class="card"><h4>01 提示词</h4><p>你对它说的话、布置的任务。说不清，它就猜；猜错很正常。</p><span class="ask">角色是谁？任务是什么？有什么不能做？</span></div>
+    <div class="card"><h4>02 选模型</h4><p>同一个助手里可以换「脑子」。快的、稳的、会看图的，不一样。</p><span class="ask">今天演示：指出设置里的模型开关</span></div>
+    <div class="card"><h4>03 装技能</h4><p>Skill / 插件 = 可装卸的本事。装上才会查表、才会走流程。</p><span class="ask">下一节细练：装一个 skill 跑通</span></div>
+  </div>
+  <div class="say">老师现在打开<b>豆包工作台 / 飞书 / Hermes</b>任一栏个人助手，现场走一遍：写一句提示词 → 看模型在哪 → 指一下技能入口。</div>
+  <aside class="notes">
+    <h4>演示边界</h4>
+    <ul><li>这一节只「指认」三处，不展开写长提示词、不装复杂 skill——留给第二节。</li>
+    <li>和创想营错开：营地搭过五零件；这里接工具地图，落到「个人助手」货架上真用。</li></ul>
+  </aside>
+</section>
+
+<!-- 大词归位 · 收束 -->
+<section class="slide" data-t="52–54" data-fs="聊天区：抢答，这个词归哪样本事">
   <div><h2>你听过的大词，其实都能放回这五样本事里<span class="en">Put each buzzword back where it belongs</span></h2></div>
   <p class="lead">先点一个大词，再点它属于哪样本事。放对了，会告诉你它"相当于人的什么"。</p>
   <div class="stage">
@@ -854,8 +940,8 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 12 Token -->
-<section class="slide" data-t="35–38" data-fs="聊天区：猜这句话会被切成几块">
+<!-- Token 小游戏 -->
+<section class="slide" data-t="54–56" data-fs="聊天区：猜这句话会被切成几块">
   <div><h2>Token：AI 读字是一口一口"咬"的<span class="en">Tokens: how AI bites text</span></h2></div>
   <div class="cols">
     <div style="display:flex;flex-direction:column;gap:12px">
@@ -887,90 +973,8 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 13 接龙 -->
-<section class="slide" data-t="38–41" data-fs="聊天区：你觉得下一块最可能是什么">
-  <div><h2>参数：AI 说话，就是一块一块往下接<span class="en">Parameters decide what comes next</span></h2></div>
-  <div class="cols">
-    <div style="display:flex;flex-direction:column;gap:14px">
-      <div class="card"><p class="sent">小明打开冰箱，拿出了一瓶<span class="blank" id="nwBlank">？</span></p></div>
-      <div class="probs" id="probs"></div>
-      <div class="btns"><button class="btn primary" id="nwGo">让 AI 接一块</button><button class="btn" id="nwReset">清空</button></div>
-      <p class="hist" id="nwHist"></p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="say">AI 每次只做一件事：<b>猜下一块最可能是什么</b>。这些可能性从哪来？从它的参数算出来——参数就是它读了海量文字后学到的"手感"。</div>
-      <div class="say">多按几次你会发现：<b>同一句话，它每次接的可能不一样</b>。它是按可能性"抽签"，不是查标准答案。所以它能写出新句子，也会一本正经地接错。</div>
-      <p class="small">百分比是示意数字，用来演示原理，不是某个真 AI 的读数。</p>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>玩法</h4>
-    <ul><li>先让孩子在聊天区填空，你数一数全班答案——全班的分布本身就是一张"概率表"。</li>
-    <li>点 5–6 次"让 AI 接一块"，下面会记下每次接的结果。问：为什么不是每次都是牛奶？</li>
-    <li>为老师演示埋伏笔：等会儿把同一个问题问 AI 两遍，看它答得一不一样。</li></ul>
-  </aside>
-</section>
-
-<!-- 14 算法 -->
-<section class="slide" data-t="41–44" data-fs="先在聊天区玩一轮：老师心里想一个 1–100 的数">
-  <div><h2>算法：同样的电脑，换一种步骤，能快十倍<span class="en">An algorithm is a way of doing things</span></h2></div>
-  <p class="lead">电脑心里藏了一个 1 到 100 之间的数，只会告诉你"大了"或"小了"。两个机器人用两种办法猜。</p>
-  <div class="stage">
-    <div class="lane" id="laneA"><h4>机器人甲<small>从 1 开始，挨个猜</small></h4><div class="track"><div class="target"></div><div class="ptr" data-n="1"></div></div><div class="count"><span>0</span><small>次</small></div></div>
-    <div class="lane" id="laneB"><h4>机器人乙<small>每次猜剩下范围的正中间</small></h4><div class="track"><div class="range"></div><div class="target"></div><div class="ptr" data-n="50"></div></div><div class="count"><span>0</span><small>次</small></div></div>
-    <div class="btns"><button class="btn primary" id="gsGo">藏一个数，开猜</button></div>
-    <div class="say">乙从来不会超过 7 次。范围越大差得越多：猜 1 到 100 万，甲可能要猜几十万次，乙最多 20 次。<b>做事的步骤和方法，就叫算法</b>。AI 里的算法，就是它"怎么想"的那套步骤。</div>
-  </div>
-  <aside class="notes">
-    <h4>先玩后看</h4>
-    <ul><li>你心里想一个数，孩子在聊天区猜，你只回"大了/小了"。数一数全班用了几次。</li>
-    <li>再点"开猜"，看两个机器人。多点几次：甲有时 3 次、有时 90 次；乙总在 7 次以内。</li>
-    <li>为什么是 7？每猜一次，范围砍掉一半：100→50→25→13→7→4→2→1。</li></ul>
-  </aside>
-</section>
-
-<!-- 15 算力 -->
-<section class="slide" data-t="44–46" data-fs="举手：猜 256 个人一起涂要几轮">
-  <div><h2>算力：一个人涂，还是一大群人同时涂？<span class="en">Computing power: many hands at once</span></h2></div>
-  <div class="cols">
-    <div class="card" style="display:flex;justify-content:center;align-items:center"><div class="paint" id="paint" role="img" aria-label="16 乘 16 的格子画，被逐格涂色"></div></div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="btns" id="paintBtns"><button class="btn" data-n="1">1 个人涂</button><button class="btn" data-n="16">16 个人一起涂</button><button class="btn" data-n="256">256 个人一起涂</button></div>
-      <div class="count" id="paintRead">0<small>轮</small></div>
-      <div class="say">一幅画 256 个格子。一个人要涂 256 轮，256 个人同时涂只要 1 轮。<b>GPU 就是"一大群人同时算"</b>：一块 H100 芯片里有一万六千多个小计算单元。</div>
-      <div class="say"><b>算力 = 每秒能算多少</b>。AI 要算的东西特别多，所以要那一整柜一整柜的 GPU——还记得 Fig 1 吗？</div>
-    </div>
-  </div>
-  <aside class="notes">
-    <h4>玩法</h4>
-    <ul><li>依次点三个按钮，读右边的轮数。</li>
-    <li>追问：如果每个格子要先等左边那格涂完才能涂，人再多有用吗？——没用。所以有的活适合 GPU，有的不适合。点到为止。</li></ul>
-  </aside>
-</section>
-
-<!-- 16 老师演示 -->
-<section class="slide" data-t="46–54" data-fs="老师共享屏幕 · 学生在聊天区先猜再看">
-  <div><h2>动手：老师当众考一考 AI<span class="en">Live demo: we test the AI</span></h2></div>
-  <p class="lead">今天学的东西，现在拿去对付一个真 AI。<b>每一问之前，先在聊天区猜它会怎么答</b>。</p>
-  <div class="demo">
-    <div class="card"><h4><em>第 1 问</em>问它今天的三个问题</h4><span class="ask">你住在哪里？你吃什么？你长什么样？</span><p>对照今天学的：它<b>哪句说对了</b>？哪句说得含糊、或者往好听里说？</p><label class="chk"><input type="checkbox">做完了</label></div>
-    <div class="card"><h4><em>第 2 问</em>同一个问题问两遍</h4><span class="ask">用一句话介绍大象。</span><p>新开一个对话再问一次。两次一样吗？用"接龙机"解释为什么。</p><label class="chk"><input type="checkbox">做完了</label></div>
-    <div class="card"><h4><em>第 3 问</em>让它数自己的 Token</h4><span class="ask">"我今天想吃一个大西瓜"你会切成几个 Token？分别是哪几块？</span><p>它说得很肯定，但<b>它其实看不清自己是怎么切的</b>，常常数错。抓到它说错的地方了吗？</p><label class="chk"><input type="checkbox">做完了</label></div>
-    <div class="card"><h4><em>第 4 问</em>用大词考它</h4><span class="ask">用小学生能听懂的话解释"算力"，并举一个例子。</span><p>它的例子，和我们的"涂格子"比，谁更好懂？<b>你觉得哪里还可以讲得更清楚</b>？</p><label class="chk"><input type="checkbox">做完了</label></div>
-  </div>
-  <aside class="notes">
-    <h4>演示前准备</h4>
-    <ul><li>用班级账号登录一个 AI 对话工具（豆包、DeepSeek 等任选），提前清空历史对话，别露出个人信息。</li>
-    <li>第 2 问一定要新开对话，否则它会参考上一轮的话。</li></ul>
-    <h4>可能出现的情况</h4>
-    <ul><li>第 1 问：它常说"我没有实体""我存在于服务器中"——问孩子：它说的"服务器"，就是 Fig 1 里哪一层？</li>
-    <li>第 3 问：它数的块数和我们示意切法不同很正常，因为每家切法都不一样。重点是它说得很肯定，但它自己也没法核对。这就是"AI 会一本正经地说错"的第一个现场证据。</li>
-    <li>如果它这次全答对了，就换一句更长的、夹着英文的句子再问一次。</li></ul>
-  </aside>
-</section>
-
 <!-- 17 交作业 + 三问 -->
-<section class="slide" data-t="54–58" data-fs="飞书文档 · 班级作业表（课后 24 小时内交）">
+<section class="slide" data-t="56–58" data-fs="飞书文档 · 班级作业表（课后 24 小时内交）">
   <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things, answer three questions</span></h2></div>
   <div class="hw">
     <div class="card"><b class="n">01 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写一句"我是按 ___ 分的"。再换一个标准，分第二次。</p></div>
@@ -990,12 +994,12 @@ h2{color:#F3F7FD}
 
 <!-- 18 下一节预告 -->
 <section class="slide" data-t="58–60">
-  <div><h2>下一节（2 小时）：拆开一台机器，找它的眼睛、耳朵和脑子<span class="en">Next: open a real machine</span></h2></div>
+  <div><h2>下一节（2 小时）：拆真机器 + 装 skill 真用一遍<span class="en">Next: open a real machine</span></h2></div>
   <div class="cols">
     <div class="facts">
-      <div class="fact"><b>拆</b><span>每组一台老师准备好的旧设备，找出它的输入、记忆、分析、输出零件，贴上标签。</span></div>
-      <div class="fact"><b>考</b><span>让 AI 讲"一台智能音箱从听见你说话到回答，经过哪几步"，对照拆开的实物，抓它说错的地方。</span></div>
-      <div class="fact"><b>画</b><span>每人选一个常见的 AI 产品，画出它的"人 ↔ 机器"对照图，标出至少 3 个大词在哪一步。</span></div>
+      <div class="fact"><b>拆</b><span>每组一台旧设备，找出输入、记忆、分析、输出，贴标签。</span></div>
+      <div class="fact"><b>用</b><span>在个人助手里写提示词、选模型、装一个 skill，跑通一件小事。</span></div>
+      <div class="fact"><b>考</b><span>问 AI 音箱流程，对照实物抓它说错的地方；画人 ↔ 机器对照图。</span></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px">
       <div class="card"><b>请带上</b><p class="lead" style="margin-top:6px">家里一样会"听"或会"看"的电器的照片：智能音箱、扫地机器人、带语音的遥控器、门铃摄像头都行。<b>拍正面和背面，不用拆。</b></p></div>
@@ -1015,7 +1019,7 @@ h2{color:#F3F7FD}
 <!-- 19 教师附页 -->
 <section class="slide" data-t="附页">
   <div><h2>教师附页：第二节 2 小时怎么走<span class="en">Teacher sheet: the 2-hour follow-up</span></h2></div>
-  <p class="lead">目标：孩子能在一台真机器上<b>指出输入、记忆、分析、输出零件</b>，并能<b>找出 AI 说错或说含糊的一处</b>。</p>
+  <p class="lead">目标：指出真机器零件 + 在个人助手里完成「提示词 / 选模型 / 装 skill」最小闭环 + 找出 AI 说错的一处。</p>
   <div class="timeline">
     <div class="tl"><b>0–10</b><h4>复述</h4><p>念六个大词，贴回五样本事；口答上节三个问题。</p><span>交：白板截图</span></div>
     <div class="tl"><b>10–40</b><h4>拆机找"器官"</h4><p>旧键盘、音箱、路由器。找输入、记忆、分析、输出，贴标签拍照。电池提前取出，不拆手机。</p><span>交：贴好标签的照片</span></div>
@@ -1110,6 +1114,14 @@ document.addEventListener('touchend', (e) => {
   addEventListener('resize', () => { size(); draw(); });
   if (!RM) requestAnimationFrame(loop);
 })();
+
+
+/* 工具地图 */
+$$('#shelves .shelf').forEach((s) => s.onclick = () => {
+  $$('#shelves .shelf').forEach((x) => x.setAttribute('aria-pressed', x === s ? String(!(s.getAttribute('aria-pressed')==='true')) : 'false'));
+  const on = [...$$('#shelves .shelf')].filter((x) => x.getAttribute('aria-pressed')==='true');
+  $('#shelfSay').textContent = on.length ? (on[0].dataset.s==='model' ? '这一栏是「脑子」：主要负责接话。' : on[0].dataset.s==='code' ? '这一栏是写代码的台子：文件、终端、改项目。' : '这一栏是个人助手：有目标、记忆、技能，要把事办完。') : '三栏可以叠在一起用：助手调用大模型，编程环境也调用大模型。先分清你打开的是哪一栏。';
+});
 
 /* 猜图页 */
 $$('img[data-same]').forEach((i) => { i.src = $(`img[data-k="${i.dataset.same}"]`).src; });
