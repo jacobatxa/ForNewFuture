@@ -153,10 +153,18 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .plugboard{display:flex;flex-direction:column;gap:14px;flex:1}
 .machine-body{position:relative;border:1px solid var(--edge);border-radius:20px;background:radial-gradient(ellipse at 50% 0%,rgba(61,217,255,.08),transparent 55%),#070D18;padding:12px 12px 16px;overflow:hidden}
 .mach-svg{display:none}
+.plug-rich{padding:16px 16px 18px;border-radius:20px;background:
+  radial-gradient(ellipse at 20% 0%,rgba(61,217,255,.1),transparent 45%),
+  linear-gradient(165deg,#101B30,#0A1220);border:1px solid var(--edge)}
+.plug-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:12.5px;color:var(--ink2)}
+.plug-head .fig-tag{position:static;font:600 11px var(--mono);color:var(--muted);letter-spacing:.08em}
 .slot-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.pslot{border:1.5px dashed rgba(61,217,255,.35);background:rgba(10,18,32,.8);border-radius:14px;min-height:88px;color:var(--ink2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
-.pslot i{font:800 12px var(--mono);color:var(--accent);font-style:normal}
+.pslot{border:1.5px dashed rgba(61,217,255,.35);background:rgba(10,18,32,.8);border-radius:16px;min-height:108px;color:var(--ink2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 6px}
+.pslot i{font:800 11px var(--mono);color:var(--accent);font-style:normal}
+.pslot b{font-size:14px;color:var(--ink);font-weight:800}
+.pslot span{font-size:12px}
 .pslot.filled{border-style:solid;border-color:var(--accent);color:var(--ink);box-shadow:var(--glow)}
+.pslot.filled span{color:var(--accent);font-weight:800}
 .pslot.target{border-color:var(--warn);animation:pulse .9s ease-in-out infinite}
 @keyframes pulse{50%{box-shadow:0 0 0 4px rgba(255,176,32,.15)}}
 .tag-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
@@ -221,10 +229,19 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .usage-card h3{font-size:15px;margin:0 0 6px}
 .usage-card p{font-size:13.5px;color:var(--ink2);margin:0;line-height:1.5}
 .split-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
-.split-card{border:1px solid var(--edge);border-radius:18px;padding:20px;background:linear-gradient(165deg,rgba(18,32,52,.85),rgba(8,14,26,.95));display:flex;flex-direction:column;gap:10px}
+.split-card{border:1px solid var(--edge);border-radius:18px;padding:20px;background:linear-gradient(165deg,rgba(18,32,52,.85),rgba(8,14,26,.95));display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.split-card::before{content:"";position:absolute;inset:auto -20% -40% auto;width:160px;height:160px;border-radius:50%;opacity:.35;pointer-events:none}
+.split-card.mem-a::before{background:radial-gradient(circle,rgba(122,162,255,.55),transparent 70%)}
+.split-card.mem-b::before{background:radial-gradient(circle,rgba(61,217,255,.45),transparent 70%)}
 .split-card em{font:800 12px var(--mono);color:var(--accent);font-style:normal}
 .split-card h3{font-size:24px;margin:0}
 .split-card p{font-size:15px;color:var(--ink2);line-height:1.55;margin:0}
+.mem-viz{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:4px 0 2px}
+.mem-viz i{display:block;height:10px;border-radius:3px;background:rgba(122,162,255,.22)}
+.mem-viz i.on{background:linear-gradient(90deg,#7AA2FF,#3DD9FF)}
+.mem-notes{display:flex;flex-direction:column;gap:8px;margin:4px 0}
+.mem-notes div{border:1px solid var(--edge);border-radius:12px;padding:10px 12px;font-size:13.5px;color:var(--ink2);background:rgba(0,0,0,.22)}
+.mem-notes b{color:var(--ink);margin-right:6px}
 .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
 .pill-row span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(61,217,255,.08);border:1px solid rgba(61,217,255,.22);color:var(--accent)}
 .prompt-demo{display:grid;grid-template-columns:1fr 1.2fr;gap:12px;margin-top:8px}
@@ -234,13 +251,22 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .prompt-bad span,.prompt-good span{font:800 11px var(--mono);letter-spacing:.06em}
 .prompt-bad span{color:#FF8A8A}.prompt-good span{color:#3DFFB0}
 .prompt-bad p,.prompt-good p{margin:8px 0 0;font-size:15px;line-height:1.55;color:var(--ink)}
-.skill-board{display:grid;grid-template-columns:220px 1fr;gap:16px;flex:1;align-items:center;min-height:0}
-.skill-core{border:1px solid rgba(61,217,255,.4);border-radius:22px;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:radial-gradient(circle at 50% 30%,rgba(61,217,255,.18),transparent 60%),#0A1220;box-shadow:var(--glow)}
-.skill-core b{font-size:22px}.skill-core span{color:var(--ink2);font-size:13px}
+.prompt-bits{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.prompt-bits i{font:700 11px var(--mono);font-style:normal;padding:4px 8px;border-radius:8px;background:rgba(61,255,176,.1);border:1px solid rgba(61,255,176,.28);color:#9FF5D0}
+.skill-board{display:grid;grid-template-columns:240px 1fr;gap:16px;flex:1;align-items:center;min-height:0}
+.skill-core{border:1px solid rgba(61,217,255,.4);border-radius:22px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:radial-gradient(circle at 50% 30%,rgba(61,217,255,.18),transparent 60%),#0A1220;box-shadow:var(--glow);position:relative}
+.skill-core::after{content:"";position:absolute;inset:18px;border-radius:16px;border:1px dashed rgba(61,217,255,.18);pointer-events:none}
+.skill-core b{font-size:22px;position:relative;z-index:1}.skill-core span{color:var(--ink2);font-size:13px;position:relative;z-index:1}
+.skill-core small{position:relative;z-index:1;font:700 11px var(--mono);color:var(--muted);letter-spacing:.08em}
 .skill-slots{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.skill-slot{border:1.5px dashed rgba(61,217,255,.3);border-radius:16px;min-height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:rgba(8,14,26,.7)}
+.skill-slot{border:1.5px dashed rgba(61,217,255,.3);border-radius:16px;min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:rgba(8,14,26,.7);color:var(--ink);cursor:pointer;transition:border-color .2s,box-shadow .2s,transform .15s}
+.skill-slot:hover{transform:translateY(-1px)}
 .skill-slot.on{border-style:solid;border-color:var(--accent);box-shadow:var(--glow)}
 .skill-slot b{font-size:16px}.skill-slot span{font:700 11px var(--mono);color:var(--muted)}
+.skill-slot.on span{color:var(--accent)}
+.tk-panel{border:1px solid var(--edge);border-radius:18px;padding:14px;background:linear-gradient(165deg,#101B30,#0A1220)}
+.tk-meter{display:flex;gap:10px;align-items:center;margin-top:10px;font:700 12px var(--mono);color:var(--ink2)}
+.tk-meter b{color:var(--accent);font-size:18px}
 @media (max-width:900px){
   .bridge-grid,.triad-detail,.stack-viz,.split-two,.prompt-demo,.skill-board{grid-template-columns:1fr;display:grid}
   .bridge-grid{display:grid}
@@ -453,11 +479,8 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .lvl.meta b{color:var(--warn)}
 .lvl[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow)}
 .split2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
-.split-card{border:1px solid var(--edge);border-radius:14px;padding:14px 16px;background:var(--glass)}
-.split-card h3{font-size:16px;margin-bottom:6px}
-.split-card p{font-size:14px;color:var(--ink2);line-height:1.55}
 .split-card.human{border-color:rgba(255,176,32,.4);background:rgba(255,176,32,.06)}
-.split-card.human h3{color:var(--warn)}
+.split-card.human h3{color:var(--warn);font-size:16px}
 @media (max-width:900px){
   .abs-flow{grid-template-columns:1fr; }
   .af-arrow{display:none}
@@ -766,7 +789,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 2 问题 1 · 猜 + 本页展开 -->
-<section class="slide" data-t="2–12" data-fs="聊天区：打 A–D · 双击一张图看真相" id="q1Live">
+<section class="slide" data-t="2–8" data-fs="聊天区：打 A–D · 双击一张图看真相" id="q1Live">
   <div class="q1-head">
     <div><h2>问题 1 · AI 住在哪里？<span class="en">Where does AI live?</span></h2></div>
     <p class="lead" id="q1Lead">先点选，再<b>双击</b>一张图，展开看酷图 + 要记住的数字。</p>
@@ -815,7 +838,7 @@ h2{color:#F3F7FD}
 
 
 <!-- 6 问题 2 · 猜 -->
-<section class="slide" data-t="7–8" data-fs="聊天区：AI 吃哪几样？打字母">
+<section class="slide" data-t="8–10" data-fs="聊天区：AI 吃哪几样？打字母">
   <div><h2>问题 2 · AI 吃什么？<span class="en">What does AI eat?</span></h2></div>
   <p class="lead">选你觉得它吃的，<b>可以选好几个</b>。</p>
   <div class="pics">
@@ -832,7 +855,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 7 问题 2 · 解密 -->
-<section class="slide" data-t="8–10" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+<section class="slide" data-t="10–12" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
   <div><h2>问题 2 · 解密<span class="en">What is really behind each picture</span></h2></div>
   <p class="lead">点一张，看它背后藏着什么。</p>
   <div class="pics flip">
@@ -856,7 +879,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 8 问题 3 · 猜 -->
-<section class="slide" data-t="10–11" data-fs="聊天区：AI 长得像哪张图？打字母">
+<section class="slide" data-t="12–14" data-fs="聊天区：AI 长得像哪张图？打字母">
   <div><h2>问题 3 · AI 长什么样？<span class="en">What does AI look like?</span></h2></div>
   <p class="lead">选一张最像的。<b>选完说一句为什么。</b></p>
   <div class="pics">
@@ -873,7 +896,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 9 问题 3 · 解密 -->
-<section class="slide" data-t="11–13" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+<section class="slide" data-t="14–16" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
   <div><h2>问题 3 · 解密<span class="en">What is really behind each picture</span></h2></div>
   <p class="lead">点一张，看它背后藏着什么。</p>
   <div class="pics flip">
@@ -896,7 +919,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 正题 · AI 拆成几块 -->
-<section class="slide viz-slide" data-t="15–22" data-fs="聊天区：先点人，再点机器">
+<section class="slide viz-slide" data-t="16–22" data-fs="聊天区：先点人，再点机器">
   <div><h2>正题 · 点人身上的本事，接到机器上<span class="en">Tap human → tap machine</span></h2></div>
   <p class="lead one-line">科学家造 AI，是把人的本事<b>抽成零件</b>，再装进一台机器。先点左边模组，再点右边对应舱。</p>
   <div class="hotboard" id="hmMatch">
@@ -931,7 +954,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 抽象实验室 · 四动作游戏 -->
-<section class="slide" data-t="20–28" data-fs="聊天区：猕猴桃算水果吗？为什么？">
+<section class="slide" data-t="22–28" data-fs="聊天区：猕猴桃算水果吗？为什么？">
   <div><h2>抽象 · 四个动作玩一遍<span class="en">Abstraction in four moves</span></h2></div>
   <p class="lead one-line">舍差异 · 取共同 · 命概念 · 验边界。<b>产物是概念，不是画。</b></p>
   <div class="abs-lab">
@@ -999,7 +1022,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 抽象实验室 · 造句游戏 -->
-<section class="slide" data-t="28–34" data-fs="聊天区：用四句式各造一句，贴出来">
+<section class="slide" data-t="32–36" data-fs="聊天区：用四句式各造一句，贴出来">
   <div><h2>把抽象说出口：四句式造句游戏<span class="en">Say it out loud: four sentence frames</span></h2></div>
   <p class="lead">学一种新思维，就是学一种<b>能说出口的句式</b>。点句式 → 点词块填空 → 在聊天区再造一句自己的。</p>
   <div class="sent-tabs" id="sentTabs">
@@ -1030,7 +1053,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 12 过渡：抽象 → 工具地图 -->
-<section class="slide" data-t="34–36" data-fs="聊天区：你平时打开的「AI」到底是哪一种？">
+<section class="slide" data-t="36–38" data-fs="聊天区：你平时打开的「AI」到底是哪一种？">
   <div><h2>抽象练完了 · 下一关认清货架<span class="en">From abstraction → three kinds of AI tools</span></h2></div>
   <p class="lead">刚才我们把人的本事抽成零件。现在换一个标准：市场上的 AI，按「你打开的是什么」分成三格。</p>
   <div class="bridge-grid">
@@ -1061,7 +1084,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 13 三类总览 -->
-<section class="slide" data-t="36–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
+<section class="slide" data-t="38–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
   <div><h2>先分清三格货架<span class="en">Model · Runtime · Personal Agent</span></h2></div>
   <p class="lead one-line">点一格。先认清你打开的是哪一种——名字叫什么不重要，<b>它在干什么</b>才重要。</p>
   <div class="shelves shelves-viz shelves-rich" id="shelves">
@@ -1100,7 +1123,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 14 大模型展开 -->
-<section class="slide" data-t="40–44" data-fs="聊天区：你最常用哪个大模型？打名字">
+<section class="slide" data-t="40–43" data-fs="聊天区：你最常用哪个大模型？打名字">
   <div><h2>第一格 · 大模型<span class="en">What a model actually is</span></h2></div>
   <p class="lead one-line">大模型 = 被训练好的「会接话的大脑」。你跟它聊天，它在猜下一个最可能的词。</p>
   <div class="triad-detail">
@@ -1134,7 +1157,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 15 运行环境展开 -->
-<section class="slide" data-t="44–48" data-fs="聊天区：运行环境和大模型，差在哪？">
+<section class="slide" data-t="43–46" data-fs="聊天区：运行环境和大模型，差在哪？">
   <div><h2>第二格 · 运行环境<span class="en">Runtime: where the model works on a project</span></h2></div>
   <p class="lead one-line">运行环境 = 大模型的「车间」。它能看见文件夹、改代码、跑命令——不只是聊两句。</p>
   <div class="triad-detail">
@@ -1172,7 +1195,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 16 Personal Agent 展开 -->
-<section class="slide" data-t="48–52" data-fs="聊天区：助手和大模型聊天，差在哪？">
+<section class="slide" data-t="46–49" data-fs="聊天区：助手和大模型聊天，差在哪？">
   <div><h2>第三格 · Personal Agent<span class="en">A helper that remembers and gets things done</span></h2></div>
   <p class="lead one-line">个人助手 = 带着目标去办事的 AI。它能记住你、装卸技能，不只是回一句完事。</p>
   <div class="triad-detail">
@@ -1210,7 +1233,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 17 关系 + 常用 -->
-<section class="slide" data-t="52–56" data-fs="聊天区：你这周用得最多的是哪一格？">
+<section class="slide" data-t="49–51" data-fs="聊天区：你这周用得最多的是哪一格？">
   <div><h2>三格怎么叠在一起<span class="en">How the three shelves stack</span></h2></div>
   <p class="lead one-line">大模型是发动机；运行环境是车间；Personal Agent 是带目标的管家。</p>
   <div class="stack-viz">
@@ -1255,23 +1278,18 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 18 五样本事装回 -->
-<section class="slide viz-slide" data-t="56–60" data-fs="聊天区：用命名句说「记忆」">
+<section class="slide viz-slide" data-t="51–53" data-fs="聊天区：用命名句说「记忆」">
   <div><h2>把抽出来的名字装回机器<span class="en">Plug: input · memory · think · output · skill</span></h2></div>
   <p class="lead one-line">货架认清了。把五张标签点进空位——装完用命名句说清「记忆」。</p>
   <div class="plugboard">
-    <div class="machine-body" id="plugMachine" aria-label="AI 功能机">
-      <svg viewBox="0 0 640 280" class="mach-svg">
-        <rect x="20" y="30" width="600" height="220" rx="28" fill="#0A1424" stroke="#2A3A55" stroke-width="2"/>
-        <rect x="40" y="50" width="560" height="40" rx="10" fill="#121C30" stroke="#3DD9FF" stroke-opacity=".35"/>
-        <text x="320" y="76" text-anchor="middle" fill="#9EC5FF" font-size="14" font-family="ui-monospace,monospace">FUNCTION CHASSIS</text>
-        <g id="slotsSvg"></g>
-      </svg>
+    <div class="machine-body plug-rich" id="plugMachine" aria-label="AI 功能机">
+      <div class="plug-head"><span class="fig-tag">Fig · 功能机</span><span>五个空位 · 装上抽出来的名字</span></div>
       <div class="slot-row" id="slotRow">
-        <button class="pslot" data-need="in" aria-pressed="false"><i>01</i><span>空位</span></button>
-        <button class="pslot" data-need="mem" aria-pressed="false"><i>02</i><span>空位</span></button>
-        <button class="pslot" data-need="think" aria-pressed="false"><i>03</i><span>空位</span></button>
-        <button class="pslot" data-need="out" aria-pressed="false"><i>04</i><span>空位</span></button>
-        <button class="pslot" data-need="skill" aria-pressed="false"><i>05</i><span>空位</span></button>
+        <button class="pslot" data-need="in" aria-pressed="false"><i>01</i><b>输入舱</b><span>空位</span></button>
+        <button class="pslot" data-need="mem" aria-pressed="false"><i>02</i><b>记忆舱</b><span>空位</span></button>
+        <button class="pslot" data-need="think" aria-pressed="false"><i>03</i><b>分析芯</b><span>空位</span></button>
+        <button class="pslot" data-need="out" aria-pressed="false"><i>04</i><b>输出舱</b><span>空位</span></button>
+        <button class="pslot" data-need="skill" aria-pressed="false"><i>05</i><b>技能槽</b><span>空位</span></button>
       </div>
     </div>
     <div class="tag-tray" id="tagTray">
@@ -1291,21 +1309,26 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 19 记忆展开 -->
-<section class="slide" data-t="60–64" data-fs="聊天区：记忆和参数，是一回事吗？">
+<section class="slide" data-t="53–55" data-fs="聊天区：记忆和参数，是一回事吗？">
   <div><h2>展开 · 记忆到底是什么<span class="en">Memory: what it can still recall</span></h2></div>
   <p class="lead one-line">记忆 = 它还能想起什么。分两层：写进模型里的「本事」，和写在助手里的「关于你」。</p>
   <div class="split-two">
-    <div class="split-card">
+    <div class="split-card mem-a">
       <em>A · 模型里的记忆</em>
       <h3>参数</h3>
+      <div class="mem-viz" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i></div>
       <p>训练时读过海量文字，本事存成一大堆数。你关了网页，它还「会说话」——靠的是参数。</p>
-      <div class="pill-row"><span>6710 亿参数</span><span>DeepSeek-V3</span></div>
+      <div class="pill-row"><span>≈6710 亿参数</span><span>DeepSeek-V3</span><span>关网页还在</span></div>
     </div>
-    <div class="split-card">
+    <div class="split-card mem-b">
       <em>B · 助手里的记忆</em>
       <h3>关于你的记录</h3>
-      <p>Personal Agent 可以记住：你的名字、科目、偏好、上次没做完的事。换一台电脑也可能还在。</p>
-      <div class="pill-row"><span>偏好</span><span>任务</span><span>资料库</span></div>
+      <div class="mem-notes">
+        <div><b>偏好</b>不吃花生 · 爱短句</div>
+        <div><b>任务</b>上周作文没改完</div>
+        <div><b>资料</b>班级课表 · 错题本</div>
+      </div>
+      <div class="pill-row"><span>Personal Agent</span><span>可删可改</span><span>别塞密码</span></div>
     </div>
   </div>
   <div class="say">聊天区：大模型刚开聊时，知不知道你昨天吃了什么？——一般不知道。那是 B 层记忆的事。</div>
@@ -1317,7 +1340,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 20 提示词 -->
-<section class="slide" data-t="64–68" data-fs="看老师演示：提示词 · 模型 · 技能">
+<section class="slide" data-t="55–57" data-fs="看老师演示：提示词 · 模型 · 技能">
   <div><h2>展开 · 提示词就是输入<span class="en">Prompt = what you put in</span></h2></div>
   <p class="lead one-line">今天只立一个入口：<b>提示词 = 输入</b>。你说不清，它就只好猜。</p>
   <div class="how-steps" id="howSteps">
@@ -1327,12 +1350,13 @@ h2{color:#F3F7FD}
   </div>
   <div class="prompt-demo">
     <div class="prompt-bad">
-      <span>含糊</span>
+      <span>含糊 · BAD</span>
       <p>「帮我写作业」</p>
     </div>
     <div class="prompt-good">
-      <span>清楚</span>
+      <span>清楚 · GOOD</span>
       <p>「你是小学科学老师。用 80 字解释光合作用。不要超纲。结尾出一道判断题。」</p>
+      <div class="prompt-bits"><i>角色</i><i>字数</i><i>边界</i><i>交付物</i></div>
     </div>
   </div>
   <div class="say" id="howSay">第 1 步：在助手里写清角色、任务、不能做什么。说不清，它就猜。</div>
@@ -1344,28 +1368,35 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 21 Token -->
-<section class="slide" data-t="68–72" data-fs="聊天区：猜这句话会被切成几块">
+<section class="slide" data-t="57–58" data-fs="聊天区：猜这句话会被切成几块">
   <div><h2>展开 · Token：一口一口咬字<span class="en">Tokens: how AI bites text</span></h2></div>
   <div class="cols">
     <div style="display:flex;flex-direction:column;gap:12px">
       <input class="tk-input" id="tkIn" value="我今天想吃一个大西瓜" aria-label="输入一句话">
       <div class="btns"><button class="btn primary" id="tkGo">切！</button><button class="btn" data-ex="人工智能为什么会胡说八道？">换一句中文</button><button class="btn" data-ex="I love watermelon and elephants.">换一句英文</button></div>
-      <div class="card" style="display:flex;justify-content:center">
+      <div class="tk-panel">
         <svg class="machine" id="tkMachine" viewBox="0 0 420 150" aria-hidden="true">
-          <g stroke="#C8D4E8" stroke-width="2" fill="#101A2E" stroke-linejoin="round">
-            <rect x="20" y="96" width="380" height="18" rx="4"/><circle cx="40" cy="105" r="6"/><circle cx="380" cy="105" r="6"/>
-            <rect x="170" y="10" width="80" height="40" rx="6"/><path d="M190 50v14M230 50v14" fill="none"/>
-            <g id="blade"><rect x="182" y="58" width="56" height="12" rx="2" fill="#1A2640"/><path d="M186 70l24 18 24-18" fill="#46587E"/></g>
-            <path d="M60 114v26M360 114v26" fill="none"/>
-          </g>
-          <text x="210" y="36" text-anchor="middle" font-size="13" fill="#A9B4C7" font-family="PingFang SC,sans-serif">切字机</text>
+          <defs>
+            <linearGradient id="tkBelt" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1A2740"/><stop offset="1" stop-color="#0E1728"/></linearGradient>
+            <linearGradient id="tkHead" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#243552"/><stop offset="1" stop-color="#121C30"/></linearGradient>
+          </defs>
+          <rect x="18" y="18" width="384" height="114" rx="18" fill="#0A1220" stroke="#2A3A55"/>
+          <rect x="36" y="100" width="348" height="16" rx="4" fill="url(#tkBelt)" stroke="#3A4E6E"/>
+          <circle cx="52" cy="108" r="5" fill="#3DD9FF" opacity=".7"/><circle cx="368" cy="108" r="5" fill="#3DD9FF" opacity=".7"/>
+          <rect x="168" y="28" width="84" height="36" rx="10" fill="url(#tkHead)" stroke="#3DD9FF" stroke-opacity=".45"/>
+          <text x="210" y="51" text-anchor="middle" font-size="13" fill="#9EC5FF" font-family="ui-monospace,monospace">TOKENIZER</text>
+          <path d="M190 64v10M230 64v10" stroke="#5A7AA8" stroke-width="2" fill="none"/>
+          <g id="blade"><rect x="184" y="72" width="52" height="12" rx="3" fill="#1A2640" stroke="#3DD9FF" stroke-opacity=".5"/><path d="M190 84l20 16 20-16" fill="#3DD9FF" opacity=".55"/></g>
+          <text x="70" y="88" font-size="11" fill="#6A7A94" font-family="ui-monospace,monospace">IN</text>
+          <text x="330" y="88" font-size="11" fill="#6A7A94" font-family="ui-monospace,monospace">OUT</text>
         </svg>
+        <div class="tk-meter">块数 <b id="tkCount">—</b><span>先猜再切 · 中文常 1–2 字一块</span></div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:12px">
       <div class="card"><div class="tk-out" id="tkOut"></div><p class="readout" id="tkRead" style="margin-top:10px"></p></div>
       <div class="say">AI 不是一个字一个字读，而是<b>一块一块读</b>。一块叫 Token。它按块读、按块写，<b>用 AI 也常按块收费</b>。</div>
-      <p class="small">切法是示意。每家不一样；中文大约一两个字一块，英文常一个词一块。</p>
+      <p class="small">切法是示意。每家不一样；英文常一个词一块。</p>
     </div>
   </div>
   <aside class="notes">
@@ -1376,22 +1407,23 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 22 技能展开 -->
-<section class="slide" data-t="72–76" data-fs="聊天区：技能和模型，谁能拔掉？">
+<section class="slide" data-t="58–59" data-fs="聊天区：点技能槽装卸 · 模型和谁能拔掉？">
   <div><h2>展开 · 技能是可装卸的本事包<span class="en">Skills: plug-in abilities</span></h2></div>
   <p class="lead one-line">技能（Skill）= 临时插上的本事。模型是发动机；技能是工具箱里多出来的那几件。</p>
-  <div class="skill-board">
+  <div class="skill-board" id="skillBoard">
     <div class="skill-core">
+      <small>ENGINE</small>
       <b>大模型</b>
       <span>会说话 · 会写字</span>
     </div>
     <div class="skill-slots">
-      <div class="skill-slot on"><b>查日历</b><span>Skill</span></div>
-      <div class="skill-slot on"><b>读表格</b><span>Skill</span></div>
-      <div class="skill-slot"><b>空槽</b><span>可装卸</span></div>
-      <div class="skill-slot"><b>空槽</b><span>可装卸</span></div>
+      <button type="button" class="skill-slot on" data-name="查日历"><b>查日历</b><span>已插上 · 点一下拔掉</span></button>
+      <button type="button" class="skill-slot on" data-name="读表格"><b>读表格</b><span>已插上 · 点一下拔掉</span></button>
+      <button type="button" class="skill-slot" data-name="发邮件"><b>发邮件</b><span>空槽 · 点一下插上</span></button>
+      <button type="button" class="skill-slot" data-name="画图"><b>画图</b><span>空槽 · 点一下插上</span></button>
     </div>
   </div>
-  <div class="say">聊天区：拔掉「查日历」技能，模型还会不会聊天？——会。它只是少了一样本事。</div>
+  <div class="say" id="skillSay">点右边技能槽装卸。拔掉「查日历」，模型还会不会聊天？——会。它只是少了一样本事。</div>
   <aside class="notes">
     <h4>收口</h4>
     <ul><li>第二节才真装一个 Skill；今天只建立「可装卸」的图景。</li>
@@ -1400,9 +1432,9 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 23 想 = 猜下一个词 -->
-<section class="slide" data-t="76–80" data-fs="聊天区：猜它下一个词是什么">
+<section class="slide" data-t="59–60" data-fs="聊天区：猜它下一个词是什么">
   <div><h2>展开 · 「想」就是猜下一个词<span class="en">Thinking ≈ next-token prediction</span></h2></div>
-  <p class="lead">拆零件时，「想」最神秘。打开公开演示站：看它怎么接龙。</p>
+  <p class="lead one-line">拆零件时，「想」最神秘。打开公开演示站：看它怎么接龙。</p>
   <div class="try-wrap">
     <div class="tx-shot"><img src="@IMG:transformer-teaser@" alt="Transformer Explainer 界面截图"></div>
     <div class="try-tasks">
@@ -1421,9 +1453,9 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 24 大词归位 -->
-<section class="slide" data-t="80–84" data-fs="聊天区：抢答，这个词归哪样本事">
+<section class="slide" data-t="60" data-fs="聊天区：抢答，这个词归哪样本事">
   <div><h2>大词归位：放回五样本事里<span class="en">Put each buzzword back</span></h2></div>
-  <p class="lead">先点一个大词，再点它属于哪样本事。放对了，会告诉你它相当于人的什么。</p>
+  <p class="lead one-line">先点一个大词，再点它属于哪样本事。放对了，会告诉你它相当于人的什么。</p>
   <div class="stage">
     <div class="words" id="words">
       <button class="word" data-to="in">提示词</button>
@@ -1455,7 +1487,7 @@ h2{color:#F3F7FD}
 </section>
 
 <!-- 25 作业 -->
-<section class="slide" data-t="84–90" data-fs="课后把三样东西交到班级表">
+<section class="slide" data-t="收束" data-fs="课后把三样东西交到班级表">
   <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things</span></h2></div>
   <div class="hw">
     <div class="card"><b class="n">01 货架</b><h4>你家常用的 AI，归哪一格？</h4><p>拍一张打开界面的照片（可遮隐私）。写：「这是大模型 / 运行环境 / Personal Agent，因为 ___。」</p></div>
@@ -1993,6 +2025,7 @@ $$('.numwall').forEach((w) => {
     setTimeout(() => m.classList.remove('chop'), RM ? 0 : toks.length * 120 + 300);
     const chars = [...$('#tkIn').value.replace(/\s/g, '')].length;
     $('#tkRead').textContent = `${chars} 个字符 → ${toks.length} 块（示意）`;
+    const c = $('#tkCount'); if (c) c.textContent = String(toks.length);
   };
   $('#tkGo').onclick = go;
   $$('[data-ex]').forEach((b) => b.onclick = () => { $('#tkIn').value = b.dataset.ex; go(); });
@@ -2240,6 +2273,23 @@ $$('.numwall').forEach((w) => {
     $('#plugSay').innerHTML = mean[sel.dataset.k] + ' · 试着说命名句。';
     sel.classList.add('used'); sel.classList.remove('sel'); sel = null;
     if ($$('.pslot.filled').length === 5) $('#plugSay').innerHTML = '五格都亮了。聊天区用命名句说：「我把『还能想起什么』命名为记忆」。';
+  });
+})();
+
+/* 技能装卸 */
+(() => {
+  const board = $('#skillBoard'); if (!board) return;
+  const say = $('#skillSay');
+  $$('.skill-slot', board).forEach((slot) => {
+    slot.onclick = () => {
+      const on = slot.classList.toggle('on');
+      const name = slot.dataset.name || slot.querySelector('b')?.textContent || '技能';
+      slot.querySelector('span').textContent = on ? '已插上 · 点一下拔掉' : '空槽 · 点一下插上';
+      const plugged = $$('.skill-slot.on', board).map((s) => s.dataset.name).filter(Boolean);
+      say.textContent = on
+        ? `插上了「${name}」。模型还在；只是多了一样本事。现在插着：${plugged.join('、') || '无'}。`
+        : `拔掉了「${name}」。模型还会聊天——少的只是技能。现在插着：${plugged.join('、') || '无'}。`;
+    };
   });
 })();
 
