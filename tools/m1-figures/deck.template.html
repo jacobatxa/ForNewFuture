@@ -1288,9 +1288,10 @@ $$('.numwall').forEach((w) => {
   w.textContent = h;
 });
 
-/* AI 的脑子：字一层层往上走 */
+/* AI 的脑子：字一层层往上走（页已撤则跳过） */
 (() => {
-  const fig = $('.mfig-live'), layers = $$('.m-layer', fig), chips = $$('#thinkChips .chip'), read = $('#modelRead'), end = $('#modelEnd');
+  const fig = $('.mfig-live'); if (!fig) return;
+  const layers = $$('.m-layer', fig), chips = $$('#thinkChips .chip'), read = $('#modelRead'), end = $('#modelEnd');
   const names = [...new Set(layers.map((l) => l.querySelector('.m-tag').textContent))];
   let timers = [];
   const lightS = (k) => chips.forEach((p) => p.classList.toggle('on', p.dataset.s === k));
@@ -1628,8 +1629,8 @@ $$('.numwall').forEach((w) => {
 
 /* 13 接龙 */
 (() => {
+  const box = $('#probs'); if (!box) return;
   const cands = [['牛奶', 46], ['可乐', 23], ['水', 17], ['果汁', 14]];
-  const box = $('#probs');
   box.innerHTML = cands.map(([w, p]) => `<div class="pr" data-w="${w}"><span>${w}</span><div class="bar"><i style="width:0"></i></div><span>${p}%</span></div>`).join('');
   const show = () => $$('.pr', box).forEach((r, i) => $('i', r).style.width = cands[i][1] + '%');
   const hist = [];
@@ -1647,7 +1648,7 @@ $$('.numwall').forEach((w) => {
 
 /* 14 猜数 */
 (() => {
-  const A = $('#laneA'), B = $('#laneB');
+  const A = $('#laneA'), B = $('#laneB'); if (!A || !B) return;
   let timers = [];
   const pos = (n) => ((n - 1) / 99 * 100) + '%';
   $('#gsGo').onclick = () => {
@@ -1676,11 +1677,11 @@ $$('.numwall').forEach((w) => {
 
 /* 15 涂格子 */
 (() => {
+  const box = $('#paint'); if (!box) return;
   const P = [
     '0000011111100000','0001100000011000','0010000000000100','0100000000000010','0100110000110010','1000110000110001','1000000000000001','1000000000000001',
     '1001000000001001','1000100000010001','0100011111100010','0100000000000010','0010000000000100','0001100000011000','0000011111100000','0000000000000000'
   ].join('');
-  const box = $('#paint');
   box.innerHTML = Array.from({ length: 256 }, () => '<i></i>').join('');
   const cells = $$('i', box);
   let tm = null;
