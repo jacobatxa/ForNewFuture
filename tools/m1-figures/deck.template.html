@@ -86,6 +86,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .pic.pick .cap i{background:var(--accent);border-color:var(--accent)}
 .flip .pic{aspect-ratio:auto;display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--line);color:var(--ink)}
 .flip .ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden}
+.flip .ph .b{position:absolute;inset:0;width:100%;height:100%;transition:opacity .8s}
 .flip .pic .b{opacity:0}
 .flip .pic.open .a{opacity:0}
 .flip .pic.open .b{opacity:1}
@@ -98,6 +99,28 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .open .txt .q{display:none}
 .open .txt .to{display:block;font-size:17px;color:#7A4A12;animation:pop .4s ease}
 .open .txt .pf{display:block;font-size:13.5px;line-height:1.55;color:var(--ink2);margin-top:4px}
+
+.flip .pic .b.mfig{background:var(--paper);display:flex;align-items:center;justify-content:center;padding:4px}
+.mfig svg{width:auto;height:100%}
+.mfig .m-att,.mfig .m-out{opacity:1}
+.mfig text.m-tag{display:none}
+.numwall{background:#1C1C1E;color:#E0B57A;font-family:var(--mono);font-size:11px;line-height:1.45;white-space:pre;padding:10px 12px;overflow:hidden}
+
+/* model */
+.brain{grid-template-columns:.8fr 1.2fr}
+.tf{width:100%;height:auto;max-height:62vh}
+.tfs rect{transition:fill .25s,stroke .25s}
+.tfs.on rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.m-tag{font-size:15px;fill:var(--ink2);font-family:var(--font)}
+.m-word{font-size:19px;font-weight:800;fill:var(--ink);font-family:var(--font)}
+.mfig-live{width:100%;max-width:520px}
+.mfig-live svg{width:100%;height:auto;max-height:52vh}
+.m-att{opacity:0;transition:opacity .25s}
+.m-layer.on .m-att{opacity:1}
+.m-layer.on .iso-top{fill:var(--accent-soft)}
+.m-layer.on .iso-edge{stroke:var(--accent)}
+.mfig-live .m-out{opacity:0;transition:opacity .4s}
+.mfig-live.done .m-out{opacity:1}
 
 /* path */
 .path-svg{width:100%;height:auto;display:block}
@@ -118,33 +141,6 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .fact{display:flex;gap:12px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px}
 .fact b{font-family:var(--mono);font-size:22px;min-width:84px}
 .fact span{font-size:14px;color:var(--ink2);line-height:1.45}
-
-/* eat game */
-.foods{display:flex;flex-wrap:wrap;gap:8px}
-.food{border:1px solid var(--line2);background:#fff;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px;transition:all .25s}
-.food.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
-.food.done{opacity:.35;pointer-events:none}
-.bowls{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:180px}
-.bowl{border:1.5px dashed var(--line2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--paper);text-align:left;transition:border-color .2s,background .2s}
-.bowl:hover{border-color:var(--ink2)}
-.bowl h4{font-size:16px}
-.bowl h4 small{display:block;font-size:12px;color:var(--muted);font-weight:500;margin-top:2px}
-.bowl .in{display:flex;flex-wrap:wrap;gap:6px}
-.bowl .in span{font-size:12.5px;padding:4px 9px;border-radius:999px;background:var(--ok-soft);border:1px solid #A9D3B7;animation:pop .35s ease}
-.bowl.shake{animation:shake .4s}
-.bowl svg{width:46px;height:30px}
-@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
-@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-#eatMsg{min-height:44px}
-
-/* zoom */
-.zoom-svg{width:100%;height:100%;max-height:52vh}
-.zs{opacity:0;transition:opacity .5s, transform .6s;transform-origin:300px 170px;transform:scale(.92)}
-.zs.on{opacity:1;transform:none}
-.ladder{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.ladder input{flex:1;min-width:180px;accent-color:var(--ink)}
-.stops{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;font-size:12px;color:var(--muted);text-align:center}
-.stops span.on{color:var(--ink);font-weight:800}
 
 /* cartoon */
 .toon{width:100%;max-height:56vh}
@@ -327,11 +323,11 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 <section class="slide" data-t="2–4" data-fs="聊天区：打 A、B、C 或 D，可以选好几个">
   <div><h2>问题 1 · AI 住在哪里？<span class="en">Where does AI live?</span></h2></div>
   <p class="lead">选一张图。<b>悄悄说一句：可能不止一个对。</b></p>
-  <div class="pics" id="q1Pick">
-    <button class="pic" aria-pressed="false"><img src="@IMG:q1-sky@" alt="黄昏时云层上方的天空，挂着一弯月亮"><span class="cap"><i>A</i>天上</span></button>
-    <button class="pic" aria-pressed="false"><img src="@IMG:q1-earth@" alt="地下的土层剖面，埋着沙子和石英晶体"><span class="cap"><i>B</i>土里</span></button>
-    <button class="pic" aria-pressed="false"><img src="@IMG:q1-water@" alt="阳光照进深海，海底有沙和水草"><span class="cap"><i>C</i>水里</span></button>
-    <button class="pic" aria-pressed="false"><img src="@IMG:q1-air@" alt="蒲公英的种子被风吹进天空"><span class="cap"><i>D</i>空气里</span></button>
+  <div class="pics">
+    <button class="pic" aria-pressed="false"><img data-k="q1-sky" src="@IMG:q1-sky@" alt="黄昏时云层上方的天空，挂着一弯月亮"><span class="cap"><i>A</i>天上</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q1-earth" src="@IMG:q1-earth@" alt="地下的土层剖面，埋着沙子和石英晶体"><span class="cap"><i>B</i>土里</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q1-water" src="@IMG:q1-water@" alt="阳光照进深海，海底有沙和水草"><span class="cap"><i>C</i>水里</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q1-air" src="@IMG:q1-air@" alt="蒲公英的种子被风吹进天空"><span class="cap"><i>D</i>空气里</span></button>
   </div>
   <aside class="notes">
     <h4>飞书操作</h4>
@@ -344,17 +340,17 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 </section>
 
 <!-- 3 问题 1 · 解密 -->
-<section class="slide" data-t="4–8" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+<section class="slide" data-t="4–7" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
   <div><h2>问题 1 · 解密<span class="en">What is really behind each picture</span></h2></div>
   <p class="lead">点一张，看它背后藏着什么。</p>
-  <div class="pics flip" id="q1Flip">
-    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-sky@" alt=""><img class="b" src="@IMG:q1-sky-truth@" alt="一排卫星绕着地球飞，彼此之间连着激光"><span class="cap"><i>A</i>天上</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>天上 · </small>太空里的计算卫星</b><span class="pf">2025 年 5 月，中国一次发射了 12 颗会算数的卫星。它们在太空里用激光互相传话，自己就能跑 AI。</span></span></button>
-    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-earth@" alt=""><img class="b" src="@IMG:q1-earth-truth@" alt="一堆沙子和石英，旁边是一块芯片和一张刻满芯片的圆形硅片"><span class="cap"><i>B</i>土里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>土里 · </small>沙子变成的芯片</b><span class="pf">芯片的主要材料是硅，硅从石英砂里炼出来，切成薄圆片，再刻出一块块芯片。AI 的身体就是它。</span></span></button>
-    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-water@" alt=""><img class="b" src="@IMG:q1-water-truth@" alt="海底躺着一个白色的大罐子，连着一根粗电缆"><span class="cap"><i>C</i>水里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>水里 · </small>海底的机房</b><span class="pf">海南陵水的海底，沉着装满服务器的大罐子，用海水给它降温。跨海的网络，大多也走海底光缆。</span></span></button>
-    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" src="@IMG:q1-air@" alt=""><img class="b" src="@IMG:q1-air-truth@" alt="一只手举着手机，看不见的波穿过空气飞向远处山坡上的信号塔"><span class="cap"><i>D</i>空气里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>空气里 · </small>穿过空气的信号</b><span class="pf">你的问题变成看不见的电波，穿过空气跑到基站。每秒约 30 万公里，1 秒能绕地球七圈半。</span></span></button>
+  <div class="pics flip">
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q1-sky" alt=""><img class="b" src="@IMG:q1-sky-truth@" alt="一排卫星绕着地球飞，彼此之间连着激光"><span class="cap"><i>A</i>天上</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>天上 · </small>太空里的计算卫星</b><span class="pf">2025 年 5 月，中国一次发射了 12 颗会算数的卫星。它们在太空里用激光互相传话，自己就能跑 AI。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q1-earth" alt=""><img class="b" src="@IMG:q1-earth-truth@" alt="一堆沙子和石英，旁边是一块芯片和一张刻满芯片的圆形硅片"><span class="cap"><i>B</i>土里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>土里 · </small>沙子变成的芯片</b><span class="pf">芯片的主要材料是硅，硅从石英砂里炼出来，切成薄圆片，再刻出一块块芯片。AI 的身体就是它。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q1-water" alt=""><img class="b" src="@IMG:q1-water-truth@" alt="海底躺着一个白色的大罐子，连着一根粗电缆"><span class="cap"><i>C</i>水里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>水里 · </small>海底的机房</b><span class="pf">海南陵水的海底，沉着装满服务器的大罐子，用海水给它降温。跨海的网络，大多也走海底光缆。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q1-air" alt=""><img class="b" src="@IMG:q1-air-truth@" alt="一只手举着手机，看不见的波穿过空气飞向远处山坡上的信号塔"><span class="cap"><i>D</i>空气里</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>空气里 · </small>穿过空气的信号</b><span class="pf">你的问题变成看不见的电波，穿过空气跑到基站。每秒约 30 万公里，1 秒能绕地球七圈半。</span></span></button>
   </div>
-  <div class="btns"><button class="btn primary" id="q1All">全部翻开</button><button class="btn" id="q1Reset">翻回去</button></div>
-  <div class="say hidden" id="q1End"><b>四个都对。</b>天上和海底真有 AI 在住，土里长出了它的身体，空气是它跑的路。不过你每天聊天的那个 AI，大多住在<b>地上的大机房</b>里。下一页，跟着你的一句话跑一趟。</div>
+  <div class="btns"><button class="btn primary flip-all">全部翻开</button><button class="btn flip-reset">翻回去</button></div>
+  <div class="say hidden flip-end"><b>四个都对。</b>天上和海底真有 AI 在住，土里长出了它的身体，空气是它跑的路。不过你每天聊天的那个 AI，大多住在<b>地上的大机房</b>里。下一页，跟着你的一句话跑一趟。</div>
   <aside class="notes">
     <h4>提问链</h4>
     <ul><li>一张一张翻。每张翻开前先问："天上？天上能有什么？"让孩子在聊天区猜一句再点。</li>
@@ -369,7 +365,7 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 </section>
 
 <!-- 3 消息去哪了 -->
-<section class="slide" data-t="8–10" data-fs="聊天区：猜一猜，这句话跑了多远">
+<section class="slide" data-t="7–9" data-fs="聊天区：猜一猜，这句话跑了多远">
   <div><h2>问题 1 · 你按下"发送"，这句话去哪了？<span class="en">Where does your message go?</span></h2></div>
   <div class="stage">
     <div class="card">
@@ -411,7 +407,7 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
 </section>
 
 <!-- 4 机柜 -->
-<section class="slide" data-t="10–12" data-fs="举手：猜一台服务器里有几块 GPU">
+<section class="slide" data-t="9–11" data-fs="举手：猜一台服务器里有几块 GPU">
   <div><h2>问题 1 · 机房里，AI 住在这样的柜子里<span class="en">A rack in a data center</span></h2></div>
   <div class="cols">
     <div class="figcard" id="rackCard">
@@ -440,76 +436,132 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
   </aside>
 </section>
 
-<!-- 5 吃什么 -->
-<section class="slide" data-t="12–15" data-fs="聊天区：把每样食物喂给哪张嘴">
-  <div><h2>问题 2 · AI 吃什么？分三张嘴喂<span class="en">What does AI eat?</span></h2></div>
-  <p class="lead">先点一样"食物"，再点它该进的那张嘴。喂错了，嘴会摇头。</p>
-  <div class="stage">
-    <div class="foods" id="foods">
-      <button class="food" data-to="learn">书和网页上的文字</button>
-      <button class="food" data-to="learn">人给它的回答打分</button>
-      <button class="food" data-to="work">你问它的问题</button>
-      <button class="food" data-to="work learn">你发给它的图片</button>
-      <button class="food" data-to="always">电</button>
-      <button class="food" data-to="always">给芯片降温的水和风</button>
-    </div>
-    <div class="bowls">
-      <button class="bowl" data-b="learn"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#F3E6D4" stroke="#1A1A1C" stroke-width="2"/></svg><h4>学本事时吃<small>它还在"上学"的时候</small></h4><div class="in"></div></button>
-      <button class="bowl" data-b="work"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#DDE5F8" stroke="#1A1A1C" stroke-width="2"/></svg><h4>干活时吃<small>你跟它聊天的时候</small></h4><div class="in"></div></button>
-      <button class="bowl" data-b="always"><svg viewBox="0 0 46 30"><path d="M3 8h40c0 12-9 20-20 20S3 20 3 8z" fill="#DDEFE3" stroke="#1A1A1C" stroke-width="2"/></svg><h4>一直在吃<small>只要机器开着</small></h4><div class="in"></div></button>
-    </div>
-    <div class="say" id="eatMsg">AI 有三张嘴：学的时候吃文字，干活的时候吃你的问题，<b>只要开着就一直吃电</b>。</div>
+<!-- 6 问题 2 · 猜 -->
+<section class="slide" data-t="11–12" data-fs="聊天区：AI 吃哪几样？打字母">
+  <div><h2>问题 2 · AI 吃什么？<span class="en">What does AI eat?</span></h2></div>
+  <p class="lead">选你觉得它吃的，<b>可以选好几个</b>。</p>
+  <div class="pics">
+    <button class="pic" aria-pressed="false"><img data-k="q2-power" src="@IMG:q2-power@" alt="乌云里劈下一道闪电"><span class="cap"><i>A</i>电</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q2-token" src="@IMG:q2-token@" alt="一碗光滑的小方块"><span class="cap"><i>B</i>Token</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q2-books" src="@IMG:q2-books@" alt="窗边摞着一叠旧书"><span class="cap"><i>C</i>书</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q2-sun" src="@IMG:q2-sun@" alt="太阳从麦田上升起"><span class="cap"><i>D</i>太阳</span></button>
   </div>
   <aside class="notes">
-    <h4>玩法</h4>
-    <ul><li>你共享屏幕，孩子在聊天区喊"1 号喂第 2 张嘴"，你来点。也可以每人一样轮流喊。</li>
-    <li>"你发给它的图片"进"干活"或"学本事"都算对：有的公司会拿用户内容去训练，所以很多 AI 有"不让我的内容用于训练"的开关——顺口提一句隐私。</li></ul>
-    <h4>可以说的真数字</h4>
-    <ul><li>DeepSeek-V3 的技术报告（2024）写着：它学本事时读了约 14.8 万亿个 Token。Token 是什么，后面会讲。</li></ul>
+    <h4>提问链</h4>
+    <ul><li>"Token"这个词孩子多半没听过，就说"图上这碗小方块，你猜是什么"。</li>
+    <li>选"太阳"的追问一句：AI 又不是植物，吃太阳干嘛？先别答，翻页。</li></ul>
   </aside>
 </section>
 
-<!-- 6 长什么样 -->
-<section class="slide" data-t="15–19" data-fs="聊天区：每拉一格，喊出你看到了什么">
-  <div><h2>问题 3 · AI 长什么样？一层一层放大看<span class="en">Zoom in until you see what AI really is</span></h2></div>
-  <div class="cols">
+<!-- 7 问题 2 · 解密 -->
+<section class="slide" data-t="12–14" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+  <div><h2>问题 2 · 解密<span class="en">What is really behind each picture</span></h2></div>
+  <p class="lead">点一张，看它背后藏着什么。</p>
+  <div class="pics flip">
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q2-power" alt=""><img class="b" src="@IMG:q2-power-truth@" alt="闪电旁边，一座亮着灯的大机房连着变电站和高压线"><span class="cap"><i>A</i>电</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>电 · </small>机房要吃的电</b><span class="pf">一个大 AI 机房一年用的电，够几十万户人家用一年。你每问它一句，它都在用电。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q2-token" alt=""><img class="b" src="@IMG:q2-token-truth@" alt="一排小方块排着队，一块块走进一台发光的机器"><span class="cap"><i>B</i>Token</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>Token · </small>切成小块的字</b><span class="pf">AI 不是一个字一个字地读。它先把话切成小块，叫 Token。比如"床前明月光"可能被切成"床前""明月""光"。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q2-books" alt=""><img class="b" src="@IMG:q2-books-truth@" alt="无数本书化成金色的光点，流向一个点"><span class="cap"><i>C</i>书</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>书 · </small>它读过的书和网页</b><span class="pf">它学本事时读的文字，比一个人一辈子能读的多上万倍。DeepSeek-V3 读了大约 14.8 万亿个 Token。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q2-sun" alt=""><img class="b" src="@IMG:q2-sun-truth@" alt="朝阳下一大片太阳能板，尽头是一座机房"><span class="cap"><i>D</i>太阳</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>太阳 · </small>电的老家</b><span class="pf">一部分电来自太阳能板，天上的计算卫星也靠太阳能。煤、风、水的能量，追到最后，大多也来自太阳。</span></span></button>
+  </div>
+  <div class="btns"><button class="btn primary flip-all">全部翻开</button><button class="btn flip-reset">翻回去</button></div>
+  <div class="say hidden flip-end"><b>四个都对。</b>AI 吃两样东西：<b>电</b>，喂它的身体；<b>Token</b>，喂它的脑子。书是它上学时吃的 Token，太阳是电的老家。</div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>建议顺序：电 → 太阳 → 书 → Token。最后翻 Token，告诉孩子"这个词后面还会专门玩一次"。</li>
+    <li>可以顺口提隐私：你发给 AI 的话和图片，有的公司会拿去继续训练，所以很多 AI 有"不让我的内容用于训练"的开关。</li></ul>
+    <h4>知识点要讲准</h4>
+    <ul><li>电：大型 AI 机房功率常在十万千瓦以上，按一年满负荷约 8.8 亿千瓦时，够几十万户中国家庭一年的生活用电。不同机房差别很大，说"大的机房"。</li>
+    <li>书：DeepSeek-V3 技术报告（2024）写着训练用了约 14.8 万亿个 Token。一个人一辈子读几千本书，也就几亿字。</li>
+    <li>Token 的切法每个模型不一样，屏幕上的切法只是举例。</li>
+    <li>太阳：煤是远古植物存下的太阳能，风和水的流动也靠太阳晒热空气和蒸发海水。核电和地热不是来自太阳，所以说"大多"。</li></ul>
+  </aside>
+</section>
+
+<!-- 8 问题 3 · 猜 -->
+<section class="slide" data-t="14–15" data-fs="聊天区：AI 长得像哪张图？打字母">
+  <div><h2>问题 3 · AI 长什么样？<span class="en">What does AI look like?</span></h2></div>
+  <p class="lead">选一张最像的。<b>选完说一句为什么。</b></p>
+  <div class="pics">
+    <button class="pic" aria-pressed="false"><img data-k="q3-robot" src="@IMG:q3-robot@" alt="一个白色机器人在挥手"><span class="cap"><i>A</i>机器人</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q3-brain" src="@IMG:q3-brain@" alt="一个发着光的大脑，里面的神经连成网"><span class="cap"><i>B</i>大脑</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q3-chip" src="@IMG:q3-chip@" alt="指尖上放着一块小芯片"><span class="cap"><i>C</i>芯片</span></button>
+    <button class="pic" aria-pressed="false"><img data-k="q3-stars" src="@IMG:q3-stars@" alt="夜空里横着一条银河"><span class="cap"><i>D</i>星星</span></button>
+  </div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>多数孩子会选机器人。追问：你见过的 AI，有几个长得像机器人？豆包长什么样？</li>
+    <li>选"星星"的孩子请他说说理由，别急着说对错。</li></ul>
+  </aside>
+</section>
+
+<!-- 9 问题 3 · 解密 -->
+<section class="slide" data-t="15–17" data-fs="聊天区：翻开前先猜，这张图背后藏着什么">
+  <div><h2>问题 3 · 解密<span class="en">What is really behind each picture</span></h2></div>
+  <p class="lead">点一张，看它背后藏着什么。</p>
+  <div class="pics flip">
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q3-robot" alt=""><img class="b" src="@IMG:q3-robot-truth@" alt="手机、音箱、机器人和汽车方向盘放在一起，被一根光线连着"><span class="cap"><i>A</i>机器人</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>机器人 · </small>它的一种外壳</b><span class="pf">同一个 AI 可以装进手机、音箱、汽车，也可以装进机器人。机器人只是它能穿的一件外套。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q3-brain" alt=""><div class="b mfig iso" data-theme="light"><!--@MODEL@--></div><span class="cap"><i>B</i>大脑</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>大脑 · </small>一层层的"神经网络"</b><span class="pf">人脑里的神经一根连一根。科学家把这个样子抽象出来，搭成一层层的网。今天的大模型用的这种叫 Transformer。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q3-chip" alt=""><img class="b" src="@IMG:q3-chip-truth@" alt="一个大机房里，一排排机柜望不到头"><span class="cap"><i>C</i>芯片</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>芯片 · </small>不是一块，是几千上万块</b><span class="pf">一块芯片放得上指尖，里面有几百亿个开关。可大 AI 要几千到几万块芯片一起算，装满整个机房。</span></span></button>
+    <button class="pic" aria-pressed="false"><span class="ph"><img class="a" data-same="q3-stars" alt=""><div class="b numwall" aria-hidden="true"></div><span class="cap"><i>D</i>星星</span></span><span class="txt"><span class="q">这张图背后藏着什么？</span><b class="to"><small>星星 · </small>几千亿个数字</b><span class="pf">DeepSeek-V3 里有 6710 亿个数字（叫"参数"），比银河系的星星还多。它的本事，就存在这些数字里。</span></span></button>
+  </div>
+  <div class="btns"><button class="btn primary flip-all">全部翻开</button><button class="btn flip-reset">翻回去</button></div>
+  <div class="say hidden flip-end"><b>AI 没有固定的样子。</b>外壳随便换，身体是成千上万块芯片，脑子是一层层的网，本事存在几千亿个数字里。下一页，看看它的脑子是怎么搭的。</div>
+  <aside class="notes">
+    <h4>提问链</h4>
+    <ul><li>建议顺序：机器人 → 芯片 → 星星 → 大脑。大脑放最后，直接接下一页。</li>
+    <li>翻"星星"时停一下：银河系大约有一千亿到四千亿颗星，6710 亿比它还多。</li></ul>
+    <h4>知识点要讲准</h4>
+    <ul><li>芯片：一块 H100 里约有 800 亿个晶体管（就是"开关"）。训练大模型通常要几千到几万块这样的芯片，DeepSeek-V3 训练用了 2048 块。</li>
+    <li>参数：6710 亿来自 DeepSeek-V3 技术报告（2024）。数字墙上的数是随手生成的示意，不是真参数。</li>
+    <li>"神经网络"只是借了人脑的样子，真实的人脑比它复杂得多，别说"AI 和人脑一样"。</li></ul>
+  </aside>
+</section>
+
+<!-- 10 AI 的脑子 -->
+<section class="slide" data-t="17–19" data-fs="聊天区：猜它下一个字会说什么">
+  <div><h2>问题 3 · AI 的"脑子"长这样<span class="en">Inside a large language model</span></h2></div>
+  <div class="cols brain">
     <div class="card" style="display:flex;align-items:center;justify-content:center">
-      <svg class="zoom-svg" viewBox="0 0 600 340" role="img" aria-label="把 AI 一层层放大：聊天框和机器人外壳，机房，服务器里的 GPU，一块芯片，最后是一大堆数字。">
-        <g class="zs" data-z="1" fill="none" stroke="#1A1A1C" stroke-width="2" stroke-linejoin="round">
-          <rect x="120" y="40" width="150" height="260" rx="18" fill="#fff"/><path d="M120 70h150M120 270h150"/>
-          <rect x="140" y="90" width="90" height="26" rx="8" fill="#F3E6D4"/><rect x="160" y="128" width="90" height="40" rx="8" fill="#DDE5F8"/><rect x="140" y="180" width="70" height="26" rx="8" fill="#F3E6D4"/>
-          <rect x="360" y="80" width="110" height="90" rx="20" fill="#fff"/><circle cx="392" cy="122" r="10"/><circle cx="438" cy="122" r="10"/><path d="M400 150h30M415 80V56"/><circle cx="415" cy="50" r="7"/>
-          <rect x="370" y="180" width="90" height="80" rx="10" fill="#fff"/><path d="M370 200h-24v40M460 200h24v40M392 260v34M438 260v34"/>
+      <svg class="tf" viewBox="0 0 340 520" role="img" aria-label="大模型的结构图，从下往上：你给它的字，切成 Token，每块变成一串数字，然后重复 61 层：互相看一眼（注意力）、自己想一想（前馈网络），最后算出每个字的可能性，说出下一个字。">
+        <defs><marker id="tfArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#85858B"/></marker></defs>
+        <g fill="none" stroke="#85858B" stroke-width="1.6" marker-end="url(#tfArrow)">
+          <path d="M170 452v-14"/><path d="M170 398v-14"/><path d="M170 344v-18"/><path d="M170 258v-22"/><path d="M170 120v-16"/><path d="M170 64v-12"/>
         </g>
-        <g class="zs" data-z="2" stroke="#1A1A1C" stroke-width="1.6" stroke-linejoin="round" id="zRoom"></g>
-        <g class="zs" data-z="3" fill="none" stroke="#1A1A1C" stroke-width="2">
-          <rect x="90" y="40" width="420" height="260" rx="10" fill="#fff"/>
-          <g id="zGpus"></g>
-          <path d="M110 270h380" stroke="#C9C6BE"/>
-        </g>
-        <g class="zs" data-z="4" stroke="#1A1A1C" stroke-width="2" fill="none">
-          <rect x="190" y="60" width="220" height="220" rx="6" fill="#fff"/>
-          <g id="zPins"></g>
-          <rect x="230" y="100" width="140" height="140" fill="#F3E6D4"/>
-          <g id="zCores" stroke="#B9762A" stroke-width="1"></g>
-        </g>
-        <g class="zs" data-z="5"><rect x="40" y="30" width="520" height="280" rx="10" fill="#1C1C1E"/><g id="zNums" font-family="ui-monospace,Menlo,monospace" font-size="13" fill="#E0B57A"></g></g>
+        <g class="tfs" data-s="in"><g font-size="16" font-weight="800" text-anchor="middle" fill="#1A1A1C">
+          <rect x="88" y="458" width="34" height="34" rx="6" fill="#fff" stroke="#1A1A1C"/><text x="105" y="481">床</text>
+          <rect x="132" y="458" width="34" height="34" rx="6" fill="#fff" stroke="#1A1A1C"/><text x="149" y="481">前</text>
+          <rect x="176" y="458" width="34" height="34" rx="6" fill="#fff" stroke="#1A1A1C"/><text x="193" y="481">明</text>
+          <rect x="220" y="458" width="34" height="34" rx="6" fill="#fff" stroke="#1A1A1C"/><text x="237" y="481">月</text></g>
+          <text x="170" y="510" text-anchor="middle" font-size="12" fill="#85858B">你给它的字</text></g>
+        <g class="tfs" data-s="tok"><rect x="70" y="402" width="200" height="34" rx="8" fill="#fff" stroke="#1A1A1C"/><text x="170" y="424" text-anchor="middle" font-size="14" font-weight="700">切成小块 <tspan fill="#85858B" font-weight="500">Token</tspan></text></g>
+        <g class="tfs" data-s="emb"><rect x="70" y="348" width="200" height="34" rx="8" fill="#fff" stroke="#1A1A1C"/><text x="170" y="370" text-anchor="middle" font-size="14" font-weight="700">每块变成一串数字</text></g>
+        <rect x="40" y="132" width="260" height="190" rx="14" fill="none" stroke="#B9762A" stroke-width="1.6" stroke-dasharray="6 5"/>
+        <text x="288" y="150" text-anchor="end" font-size="13" font-weight="800" fill="#B9762A">重复 61 层</text>
+        <g class="tfs" data-s="att"><rect x="62" y="262" width="216" height="46" rx="8" fill="#fff" stroke="#1A1A1C"/><text x="170" y="282" text-anchor="middle" font-size="14" font-weight="700">互相看一眼</text><text x="170" y="299" text-anchor="middle" font-size="11.5" fill="#85858B">注意力：每个字回头看前面的字</text></g>
+        <g class="tfs" data-s="ffn"><rect x="62" y="186" width="216" height="46" rx="8" fill="#fff" stroke="#1A1A1C"/><text x="170" y="206" text-anchor="middle" font-size="14" font-weight="700">自己想一想</text><text x="170" y="223" text-anchor="middle" font-size="11.5" fill="#85858B">前馈网络：每个字各自加工</text></g>
+        <g class="tfs" data-s="prob"><rect x="70" y="68" width="200" height="34" rx="8" fill="#fff" stroke="#1A1A1C"/><text x="170" y="90" text-anchor="middle" font-size="14" font-weight="700">算出每个字的可能性</text></g>
+        <g class="tfs" data-s="out"><rect x="146" y="10" width="48" height="36" rx="8" fill="#F3E6D4" stroke="#B9762A" stroke-width="2"/><text x="170" y="35" text-anchor="middle" font-size="18" font-weight="900" fill="#7A4A12">光</text></g>
       </svg>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div class="ladder"><button class="btn" id="zMinus" aria-label="缩小">－</button><input type="range" min="1" max="5" value="1" id="zoom" aria-label="放大级别"><button class="btn" id="zPlus" aria-label="放大">＋</button></div>
-      <div class="stops" id="zStops"><span>你看到的</span><span>机房</span><span>服务器</span><span>芯片</span><span>数字</span></div>
-      <div class="card"><b id="zTitle" style="font-size:18px"></b><p class="lead" id="zText" style="margin-top:6px"></p></div>
-      <div class="say hidden" id="zEnd">AI 没有固定的样子：<b>身体是芯片，本事存在一大堆数字里</b>，外壳可以随便换——聊天框、音箱、机器人都行。<br>那问题来了：人是怎么把"本事"变成一堆数字的？先学一个词：<b>抽象</b>。</div>
+    <div style="display:flex;flex-direction:column;gap:10px;min-height:0">
+      <div class="figcard" id="modelCard" style="flex:1">
+        <span class="c tl">Fig 2</span><span class="c tr">一个大模型，立起来看</span>
+        <div class="iso mfig-live" data-theme="light"><!--@MODEL@--></div>
+        <span class="c bl">按"让它想一遍"，看字往上走</span><span class="c br" id="modelRead"></span>
+      </div>
+      <div class="btns"><button class="btn primary" id="thinkBtn">让它想一遍</button><button class="btn" id="thinkReset">再来</button></div>
+      <div class="say hidden" id="modelEnd">它的"想"，就是一层层地<b>拿数字做乘法和加法</b>，最后猜出最可能的下一个字。<br>那人是怎么把"本事"变成一堆数字的？先学一个词：<b>抽象</b>。</div>
     </div>
   </div>
   <aside class="notes">
     <h4>提问链</h4>
-    <ul><li>每拉一格先停，让孩子在聊天区说"我看到了 ___"，你再读右边的解释。</li>
-    <li>拉到最后一格："它会写诗、会讲题，靠的不是哪个零件，而是这堆数字的大小。人管这些数叫'参数'。"</li></ul>
-    <h4>可以说的真数字</h4>
-    <ul><li>DeepSeek-V3 共有 6710 亿个参数（技术报告，2024）。一块常见 AI 芯片 H100 里有一万六千多个小计算单元。</li>
-    <li>数字墙上的数是随手生成的示意，不是真参数。</li></ul>
+    <ul><li>先让孩子在聊天区猜："床前明月"后面是什么字？全班都会说"光"。再问：你是怎么猜出来的？——你读过这首诗。AI 也一样，它"读过"。</li>
+    <li>按"让它想一遍"：左边的框一格格亮，右边的字一层层往上走，每层都有弧线——那就是"互相看一眼"。</li>
+    <li>收尾的那句"人怎么把本事变成数字"，正好接下一页"抽象"。</li></ul>
+    <h4>知识点要讲准</h4>
+    <ul><li>这是 Transformer 的简化画法。真结构里每层还有"加回原来的"（残差连接）和"调一调大小"（归一化），这里省了。</li>
+    <li>DeepSeek-V3 共 61 层。它的"自己想一想"分给了很多个"专家"小网络，每个字只叫其中几个，这叫混合专家（MoE）。</li>
+    <li>最后一步算的是词表里每一块的可能性（十几万个候选），挑一个说出来，再把它接到后面，接着猜下一个。</li></ul>
   </aside>
 </section>
 
@@ -957,16 +1009,54 @@ document.addEventListener('touchend', (e) => {
   tx = null;
 });
 
-/* 2 问题 1 猜 */
-$$('#q1Pick .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed', p.classList.toggle('pick')));
+/* 猜图页 */
+$$('img[data-same]').forEach((i) => { i.src = $(`img[data-k="${i.dataset.same}"]`).src; });
+$$('.pics:not(.flip) .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed', p.classList.toggle('pick')));
 
-/* 3 问题 1 解密 */
-(() => {
-  const cards = $$('#q1Flip .pic'), end = $('#q1End');
+/* 解密页：点一张翻出真相，全部翻开后出总结 */
+$$('.pics.flip').forEach((box) => {
+  const slide = box.closest('.slide'), cards = $$('.pic', box), end = $('.flip-end', slide);
   const set = (c, on) => { c.classList.toggle('open', on); c.setAttribute('aria-pressed', on); end.classList.toggle('hidden', !cards.every((x) => x.classList.contains('open'))); };
   cards.forEach((c) => c.onclick = () => set(c, !c.classList.contains('open')));
-  $('#q1All').onclick = () => cards.forEach((c, i) => setTimeout(() => set(c, true), RM ? 0 : i * 450));
-  $('#q1Reset').onclick = () => cards.forEach((c) => set(c, false));
+  $('.flip-all', slide).onclick = () => cards.forEach((c, i) => setTimeout(() => set(c, true), RM ? 0 : i * 450));
+  $('.flip-reset', slide).onclick = () => cards.forEach((c) => set(c, false));
+});
+
+/* 数字墙 */
+$$('.numwall').forEach((w) => {
+  let h = '';
+  for (let r = 0; r < 14; r++) {
+    let line = '';
+    for (let c = 0; c < 5; c++) { const v = Math.random() * 2 - 1; line += (v < 0 ? '' : ' ') + v.toFixed(3) + ' '; }
+    h += line + '\n';
+  }
+  w.textContent = h;
+});
+
+/* AI 的脑子：字一层层往上走 */
+(() => {
+  const fig = $('.mfig-live'), layers = $$('.m-layer', fig), parts = $$('.tfs'), read = $('#modelRead'), end = $('#modelEnd');
+  const names = [...new Set(layers.map((l) => l.querySelector('.m-tag').textContent))];
+  let timers = [];
+  const lightS = (k) => parts.forEach((p) => p.classList.toggle('on', p.dataset.s === k));
+  const reset = () => { timers.forEach(clearTimeout); timers = []; fig.classList.remove('done'); layers.forEach((l) => l.classList.remove('on')); parts.forEach((p) => p.classList.remove('on')); read.textContent = ''; end.classList.add('hidden'); };
+  const steps = [
+    () => { lightS('in'); read.textContent = '读进四个字'; },
+    () => { lightS('tok'); read.textContent = '切成 Token'; },
+    () => { lightS('emb'); read.textContent = '每块变成一串数字'; },
+    ...layers.flatMap((l, i) => [
+      () => { layers.forEach((x) => x.classList.toggle('on', x === l)); lightS('att'); read.textContent = `${names[i]}：互相看一眼`; },
+      () => { lightS('ffn'); read.textContent = `${names[i]}：自己想一想`; },
+    ]),
+    () => { layers.forEach((x) => x.classList.remove('on')); lightS('prob'); read.textContent = '算每个字的可能性'; },
+    () => { lightS('out'); fig.classList.add('done'); read.textContent = '猜出：光'; end.classList.remove('hidden'); },
+  ];
+  $('#thinkBtn').onclick = () => {
+    reset();
+    if (RM) { steps.forEach((f) => f()); return; }
+    steps.forEach((f, i) => timers.push(setTimeout(f, i * 520)));
+  };
+  $('#thinkReset').onclick = reset;
 })();
 
 /* 4 发送 */
@@ -1008,83 +1098,6 @@ $$('#q1Pick .pic').forEach((p) => p.onclick = () => p.setAttribute('aria-pressed
     $('.rack-out', card).setAttribute('aria-hidden', on ? 'false' : 'true');
     $('.rack-in', card).setAttribute('aria-hidden', on ? 'true' : 'false');
   };
-})();
-
-/* 5 吃什么 */
-(() => {
-  let sel = null;
-  const msg = $('#eatMsg'), base = msg.innerHTML;
-  const why = {
-    '书和网页上的文字': '对：AI 学本事时读了海量文字。',
-    '人给它的回答打分': '对：人告诉它哪个回答更好，它再调整自己，这也是"学"。',
-    '你问它的问题': '对：你一问，它就要"吃"下你的话才能干活。',
-    '你发给它的图片': '对：干活时它要看图；有的公司还会拿用户内容去训练，所以要留意隐私设置。',
-    '电': '对：只要机器开着，就一直在吃电。',
-    '给芯片降温的水和风': '对：芯片很烫，机房要一直吹风、用水降温。'
-  };
-  $$('#foods .food').forEach((f) => f.onclick = () => { $$('#foods .food').forEach((x) => x.classList.remove('sel')); f.classList.add('sel'); sel = f; });
-  $$('.bowl').forEach((b) => b.onclick = () => {
-    if (!sel) { msg.textContent = '先点上面一样"食物"。'; return; }
-    const ok = sel.dataset.to.split(' ').includes(b.dataset.b);
-    if (ok) {
-      const s = document.createElement('span'); s.textContent = sel.textContent; $('.in', b).append(s);
-      sel.classList.add('done'); sel.classList.remove('sel'); msg.textContent = why[sel.textContent] || '对！'; sel = null;
-      if (!$$('#foods .food:not(.done)').length) msg.innerHTML = base;
-    } else { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); msg.textContent = '这张嘴摇头了。再想想：它是什么时候吃这个的？'; }
-  });
-})();
-
-/* 6 放大 */
-(() => {
-  const room = $('#zRoom');
-  let h = '';
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 6; c++) {
-    const x = 60 + c * 62 + r * 40, y = 70 + r * 80;
-    h += `<path d="M${x} ${y + 20}l20-12 22 10v52l-20 12-22-10z" fill="#fff"/><path d="M${x} ${y + 20}l22 10 20-12M${x + 22} ${y + 30}v52" fill="none"/>`;
-    for (let k = 0; k < 4; k++) h += `<path d="M${x + 3} ${y + 34 + k * 11}l16 7" stroke="#C9C6BE" fill="none" stroke-width="1.2"/>`;
-  }
-  room.innerHTML = h;
-  let g = '';
-  for (let r = 0; r < 2; r++) for (let c = 0; c < 4; c++) {
-    const x = 120 + c * 95, y = 70 + r * 100;
-    g += `<rect x="${x}" y="${y}" width="76" height="82" rx="4" fill="#F3E6D4" stroke="#B9762A"/>`;
-    for (let k = 0; k < 8; k++) g += `<path d="M${x + 8 + k * 8.5} ${y + 6}v70" stroke="#B9762A" stroke-width="1"/>`;
-  }
-  $('#zGpus').innerHTML = g;
-  let p = '', cc = '';
-  for (let i = 0; i < 10; i++) {
-    const x = 205 + i * 21, y = 75 + i * 21;
-    p += `<path d="M${x} 60v-12M${x} 280v12M190 ${y}h-12M410 ${y}h12"/>`;
-  }
-  $('#zPins').innerHTML = p;
-  for (let i = 1; i < 10; i++) cc += `<path d="M${230 + i * 14} 100v140M230 ${100 + i * 14}h140"/>`;
-  $('#zCores').innerHTML = cc;
-  let n = '';
-  for (let r = 0; r < 15; r++) {
-    let line = '';
-    for (let c = 0; c < 7; c++) { const v = (Math.random() * 2 - 1); line += (v < 0 ? '' : ' ') + v.toFixed(3) + '  '; }
-    n += `<text x="60" y="${56 + r * 17}" xml:space="preserve">${line}</text>`;
-  }
-  $('#zNums').innerHTML = n;
-  const info = [
-    ['你看到的：一个聊天框，或者一个机器人', '这只是 AI 的"外壳"。同一个 AI 可以装进聊天框、音箱、汽车，也可以装进机器人。'],
-    ['往里看：机房', '外壳背后连着远方的机房，一排排机柜，就是 Fig 1 里的那种。'],
-    ['再往里：一台服务器', '打开一台服务器，8 块 GPU 整整齐齐排着，这是 AI 的"身体"。'],
-    ['再往里：一块芯片', '芯片里是成千上万个小计算单元，每个只会做很简单的乘法和加法。'],
-    ['最里面：一大堆数字', '芯片一直在拿这堆数字做乘法和加法。AI 的本事，就存在这堆数字的大小里。DeepSeek-V3 有 6710 亿个这样的数。']
-  ];
-  const z = $('#zoom');
-  const set = (v) => {
-    v = Math.max(1, Math.min(5, v)); z.value = v;
-    $$('.zs').forEach((g) => g.classList.toggle('on', +g.dataset.z === v));
-    $$('#zStops span').forEach((s, i) => s.classList.toggle('on', i + 1 === v));
-    $('#zTitle').textContent = info[v - 1][0]; $('#zText').textContent = info[v - 1][1];
-    $('#zEnd').classList.toggle('hidden', v !== 5);
-  };
-  z.oninput = () => set(+z.value);
-  $('#zMinus').onclick = () => set(+z.value - 1);
-  $('#zPlus').onclick = () => set(+z.value + 1);
-  set(1);
 })();
 
 /* 7 抽大象 */
