@@ -1,12 +1,8 @@
 # Overnight polish checklist (M1 hour1 ~25 pages)
 Done:
-- Core restructure + shelves + expand parts + mid/late polish
-- Agenda cards; how-steps; buzzword stage gap
-- Mobile 720/520: shelves/stack/slot-row/flip/agenda
-- Pushed overnight tick 4
+- Full ~25p teachable pass: shelves → expand; visual density across deck
+- Tick 5: buzzword contrast, skill/prompt micro, cover orb breathe
+- Smoke: critical ids unique; 运行环境 present; 编程工具 gone
+- STOP overnight loop — dense enough for morning teach
 
-Next polish ticks (pick one each wake):
-1. Buzzword slot tiles final contrast pass
-2. Skill board / prompt demo final micro
-3. Cover orb / title breathing polish
-4. Smoke interactions + stop if dense enough
+Next (only if user asks): live classroom dry-run notes
