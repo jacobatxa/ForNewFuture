@@ -185,7 +185,9 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 /* picture options */
 .pics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-content:start}
 .pics>*{min-width:0}
-.pic{position:relative;border:0;padding:0;border-radius:14px;overflow:hidden;aspect-ratio:1;background:#0B1222;text-align:left;color:#fff;transition:box-shadow .25s,transform .25s}
+.pic{position:relative;border:0;padding:0;border-radius:16px;overflow:hidden;aspect-ratio:1;background:#0B1222;text-align:left;color:#fff;transition:box-shadow .25s,transform .25s}
+.pic:hover{transform:translateY(-3px)}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
 .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .8s,transform 1.2s}
 .pic:hover img{transform:scale(1.035)}
 .pic .cap{position:absolute;left:0;right:0;bottom:0;padding:36px 14px 12px;background:linear-gradient(#0000,#000000A8 55%);font-size:24px;font-weight:900;line-height:1.25}
@@ -326,17 +328,21 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .fact-list b{color:var(--ink);margin-right:6px}
 .say.tight{margin:0}
 .stack-viz{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;flex:1;min-height:0}
-.stack-col{display:flex;flex-direction:column;gap:10px}
-.stack-layer{border:1px solid var(--edge);border-radius:18px;padding:16px 18px;background:rgba(8,14,26,.75);display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}
+.stack-col{display:flex;flex-direction:column;gap:10px;position:relative}
+.stack-col::before{content:"";position:absolute;left:22px;top:28px;bottom:28px;width:2px;background:linear-gradient(180deg,rgba(255,176,32,.55),rgba(122,162,255,.45),rgba(61,217,255,.55));opacity:.55;pointer-events:none}
+.stack-layer{border:1px solid var(--edge);border-radius:18px;padding:16px 18px;background:rgba(8,14,26,.75);display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;position:relative;transition:transform .25s,box-shadow .25s,border-color .25s}
+.stack-layer:hover{transform:translateX(4px)}
 .stack-layer b{font-size:18px}
 .stack-layer span{grid-column:1;font-size:13px;color:var(--ink2)}
-.stack-layer.l1{border-color:rgba(61,217,255,.35)}
-.stack-layer.l2{border-color:rgba(122,162,255,.4)}
-.stack-layer.l3{border-color:rgba(255,176,32,.4);box-shadow:0 0 24px rgba(255,176,32,.08)}
+.stack-layer.l1{border-color:rgba(61,217,255,.35);animation:stackIn .55s ease both .24s}
+.stack-layer.l2{border-color:rgba(122,162,255,.4);animation:stackIn .55s ease both .12s}
+.stack-layer.l3{border-color:rgba(255,176,32,.4);box-shadow:0 0 24px rgba(255,176,32,.08);animation:stackIn .55s ease both}
+@keyframes stackIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .mini-brands{display:flex;gap:6px}
 .mini-brands img{width:28px;height:28px;border-radius:8px;border:1px solid var(--edge)}
 .stack-side{display:flex;flex-direction:column;gap:10px}
-.usage-card{border:1px solid var(--edge);border-radius:16px;padding:14px 16px;background:rgba(10,18,32,.8)}
+.usage-card{border:1px solid var(--edge);border-radius:16px;padding:14px 16px;background:rgba(10,18,32,.8);transition:border-color .2s,transform .2s}
+.usage-card:hover{border-color:rgba(61,217,255,.35);transform:translateY(-1px)}
 .usage-card h3{font-size:15px;margin:0 0 6px}
 .usage-card p{font-size:13.5px;color:var(--ink2);margin:0;line-height:1.5}
 .split-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0}
