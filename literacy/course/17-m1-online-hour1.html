@@ -261,7 +261,7 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .duel-side h3{font-size:20px;margin:4px 0}
 .duel-side p{font-size:14px;color:var(--ink2)}
 .duel-vs{font:900 22px var(--mono);color:var(--muted)}
-.plugboard{display:flex;flex-direction:column;gap:14px;flex:1}
+.plugboard{display:flex;flex-direction:column;gap:14px;flex:1;min-height:0;padding-bottom:8px}
 .machine-body{position:relative;border:1px solid var(--edge);border-radius:20px;background:radial-gradient(ellipse at 50% 0%,rgba(61,217,255,.08),transparent 55%),#070D18;padding:12px 12px 16px;overflow:hidden}
 .mach-svg{display:none}
 .plug-rich{padding:18px 16px 20px;border-radius:20px;background:
@@ -278,10 +278,13 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .pslot.filled{border-style:solid;border-color:var(--accent);color:var(--ink);box-shadow:var(--glow);background:radial-gradient(circle at 50% 0%,rgba(61,217,255,.16),transparent 55%),rgba(10,18,32,.9)}
 .pslot.filled span{color:var(--accent);font-weight:800}
 .pslot.target{border-color:var(--warn);animation:pulse .9s ease-in-out infinite}
+.pslot.filled{pointer-events:none}
+.pslot.shake,.slot.shake,.hot.shake,.mcard.shake{animation:shake .4s}
 @keyframes pulse{50%{box-shadow:0 0 0 4px rgba(255,176,32,.15)}}
-.tag-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.ptag{border:1px solid var(--edge);background:linear-gradient(160deg,#122038,#0B1528);color:var(--ink);border-radius:999px;padding:10px 18px;font-weight:900;font-size:16px}
-.ptag.sel{background:var(--accent);color:#04101C;border-color:var(--accent)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.tag-tray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;position:relative;z-index:2;padding:4px 0 56px}
+.ptag{border:1px solid var(--edge);background:linear-gradient(160deg,#122038,#0B1528);color:var(--ink);border-radius:999px;padding:10px 18px;font-weight:900;font-size:16px;cursor:pointer}
+.ptag.sel{background:var(--accent);color:#04101C;border-color:var(--accent);box-shadow:var(--glow)}
 .ptag.used{opacity:.3;pointer-events:none}
 .shelves-viz .shelf{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:8px;padding:16px 14px;min-height:200px;justify-content:flex-start}
 .shelves-viz .shelf-ico{width:80px;height:64px;color:var(--accent)}
@@ -413,8 +416,13 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .how-step span{font-size:16px;font-weight:800}
 .how-step.on{border-color:var(--accent);box-shadow:var(--glow)}
 @media (max-width:720px){
-  .duel,.slot-row,.how-steps{grid-template-columns:1fr}
+  .duel,.how-steps{grid-template-columns:1fr}
   .duel-vs{display:none}
+  /* 功能机五舱保持横排，避免单列把标签顶出可视区 */
+  .slot-row{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .pslot{min-height:88px;padding:8px 4px}
+  .pslot b{font-size:12px}
+  .pslot span{font-size:11px}
 }
 
 
@@ -724,6 +732,39 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .hw .card b.n{font-family:var(--mono);color:var(--accent);font-size:13px;letter-spacing:.06em}
 .hw .card h4{font-size:17px;margin:8px 0 8px}
 .hw .card p{font-size:14px;color:var(--ink2);line-height:1.55}
+/* dismantle / abstract picker */
+.tear-layout{display:grid;grid-template-columns:1.35fr .95fr;gap:14px;flex:1;min-height:0}
+.tear-pool{border:1px solid var(--edge);border-radius:18px;background:linear-gradient(165deg,rgba(16,27,48,.88),rgba(8,14,26,.96));padding:12px;display:flex;flex-direction:column;gap:8px;min-height:0}
+.tear-pool h3{margin:0;font-size:14px;color:var(--ink2);font-weight:700}
+.tear-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;overflow:auto;flex:1;align-content:start}
+.tear-item{border:1px solid var(--edge);border-radius:12px;background:rgba(0,0,0,.22);color:var(--ink);padding:6px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.tear-item svg{width:28px;height:28px}
+.tear-item span{font-size:11px;font-weight:700;color:var(--ink2)}
+.tear-item:hover{transform:translateY(-1px);border-color:rgba(61,217,255,.4)}
+.tear-item[aria-pressed="true"]{border-color:var(--accent);box-shadow:var(--glow);background:rgba(61,217,255,.08)}
+.tear-item[aria-pressed="true"] span{color:var(--accent)}
+.tear-item.demo{border-color:rgba(242,179,94,.55);box-shadow:0 0 0 1px rgba(242,179,94,.2)}
+.tear-item.demo span{color:var(--warm)}
+.tear-side{display:flex;flex-direction:column;gap:10px;min-height:0}
+.tear-demo{border:1px solid rgba(242,179,94,.35);border-radius:16px;padding:12px 14px;background:linear-gradient(165deg,rgba(242,179,94,.08),rgba(8,14,26,.95));display:flex;flex-direction:column;gap:8px}
+.tear-demo em{font:800 11px var(--mono);color:var(--warm);font-style:normal;letter-spacing:.06em}
+.tear-demo h3{margin:0;font-size:18px}
+.tear-demo p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.5}
+.tear-parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tear-parts div{border:1px solid var(--edge);border-radius:10px;padding:7px 8px;font-size:12.5px;color:var(--ink2);background:rgba(0,0,0,.2)}
+.tear-parts b{color:var(--ink);display:block;font-size:13px;margin-bottom:2px}
+.tear-tools{border:1px solid var(--edge);border-radius:16px;padding:12px 14px;background:rgba(8,14,26,.85);display:flex;flex-direction:column;gap:8px}
+.tear-tools h3{margin:0;font-size:15px}
+.tear-tools ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.tear-tools li{font-size:13px;color:var(--ink2);line-height:1.4;padding:7px 9px;border-radius:10px;border:1px solid var(--edge);background:rgba(255,255,255,.02)}
+.tear-tools li b{color:var(--accent);margin-right:4px}
+@media (max-width:900px){
+  .tear-layout{grid-template-columns:1fr}
+  .tear-grid{grid-template-columns:repeat(6,1fr);max-height:42vh}
+}
+@media (max-width:520px){
+  .tear-grid{grid-template-columns:repeat(4,1fr)}
+}
 .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .three div{background:linear-gradient(160deg,#13233F,#0C1528);border:1px solid var(--line2);color:var(--ink);border-radius:14px;padding:14px 16px;font-size:16px;font-weight:800}
 .three div small{display:block;font-size:12px;font-weight:500;color:#8C9AB3;margin-top:6px;line-height:1.45}
@@ -750,14 +791,13 @@ table.plan td:first-child{font-family:var(--mono);white-space:nowrap;color:var(-
   .steps{grid-template-columns:1fr 1fr}
   .slots{grid-template-columns:1fr 1fr}
   .shelves,.stack-viz{grid-template-columns:1fr}
-  .slot-row{grid-template-columns:1fr 1fr;gap:8px}
-  .pslot{min-height:88px}
   #keys{display:none}
 }
 @media (max-width:520px){
   .pics.flip{grid-template-columns:1fr}
   .agenda{grid-template-columns:1fr}
-  .slot-row{grid-template-columns:1fr}
+  .slot-row{grid-template-columns:repeat(5,minmax(56px,1fr));gap:4px;overflow-x:auto}
+  .tag-tray{padding-bottom:64px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -886,6 +926,25 @@ h2{color:#F3F7FD}
     <symbol id="i-book" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M24 12c-5-4-12-4-17-2v28c5-2 12-2 17 2 5-4 12-4 17-2V10c-5-2-12-2-17 2z"/><path d="M24 12v28"/></g></symbol>
     <symbol id="i-phone" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2"><rect x="13" y="4" width="22" height="40" rx="4"/><path d="M13 10h22M13 37h22"/></g><circle cx="24" cy="40.5" r="1.4" fill="currentColor"/></symbol>
     <symbol id="i-ball" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="24" cy="24" r="17"/><path d="M24 16l7 5-3 8h-8l-3-8zM24 16V8M31 21l8-3M28 29l5 7M20 29l-5 7M17 21l-8-3"/></g></symbol>
+    <symbol id="i-raptor" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M8 28c6-10 14-14 22-10 4 2 8 2 12 0"/><path d="M30 18c4-6 10-8 14-6-2 4-4 7-8 9"/><path d="M18 28l-4 10M24 30l2 10M30 28l6 8"/><path d="M20 22c8 1 14 2 18 6"/><path d="M14 24l-6 2 4 3z"/></g><circle cx="34" cy="20" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M24 42V26"/><path d="M24 28c-10 0-14-8-8-14 1-6 7-8 8-8s7 2 8 8c6 6 2 14-8 14z"/></g></symbol>
+    <symbol id="i-clock" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="24" cy="24" r="16"/><path d="M24 14v11l7 5"/></g></symbol>
+    <symbol id="i-umbrella" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24c0-10 7-16 16-16s16 6 16 16H8z"/><path d="M24 24v14a3 3 0 006 0"/></g></symbol>
+    <symbol id="i-camera" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="6" y="14" width="36" height="24" rx="4"/><circle cx="24" cy="26" r="7"/><path d="M16 14l3-5h10l3 5"/></g></symbol>
+    <symbol id="i-guitar" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="16" cy="32" r="10"/><path d="M23 25l16-16 3 3-16 16"/><circle cx="16" cy="32" r="3"/></g></symbol>
+    <symbol id="i-rocket" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M24 6c8 8 10 18 8 26l-8 8-8-8c-2-8 0-18 8-26z"/><path d="M16 28l-6 2 2 6M32 28l6 2-2 6"/><circle cx="24" cy="20" r="3"/></g></symbol>
+    <symbol id="i-shoe" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M8 30c8-2 12-10 20-10h10c2 0 4 3 2 6-6 4-18 6-28 4z"/><path d="M10 30v4h26"/></g></symbol>
+    <symbol id="i-cup" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 12h20l-2 22H14z"/><path d="M32 16h4a5 5 0 010 10h-5"/><path d="M14 40h16"/></g></symbol>
+    <symbol id="i-key" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="16" cy="24" r="8"/><path d="M24 24h16l-3 4 3 3h-6"/><circle cx="14" cy="24" r="2" fill="currentColor"/></symbol>
+    <symbol id="i-lamp" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M16 22c0-8 4-14 8-14s8 6 8 14H16z"/><path d="M20 22v6h8v-6M24 28v8M18 40h12"/></g></symbol>
+    <symbol id="i-plane" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 26l36-10-4 8 4 8-36-10 8-2z"/><path d="M18 22l-2-10 6 8M18 30l-2 10 6-8"/></g></symbol>
+    <symbol id="i-flower" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="24" cy="20" r="5"/><path d="M24 15c0-6 8-8 10-4-4 2-6 4-10 4M29 23c5 3 5 10 0 10-1-4-3-7 0-10M19 23c-5 3-5 10 0 10 1-4 3-7 0-10M24 25v15"/></g></symbol>
+    <symbol id="i-house" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 22L24 8l18 14v18H6z"/><path d="M18 40V26h12v14"/></g></symbol>
+    <symbol id="i-bus" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="6" y="12" width="36" height="20" rx="3"/><path d="M6 22h36M14 32v4M34 32v4"/><circle cx="14" cy="32" r="3"/><circle cx="34" cy="32" r="3"/></g></symbol>
+    <symbol id="i-leaf" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M10 34C10 16 24 8 38 8c0 14-8 28-26 28z"/><path d="M18 28c6-4 12-10 16-18"/></g></symbol>
+    <symbol id="i-glasses" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="14" cy="26" r="8"/><circle cx="34" cy="26" r="8"/><path d="M22 26h4M6 26H2M46 26h-4"/></g></symbol>
+    <symbol id="i-backpack" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="12" y="14" width="24" height="28" rx="4"/><path d="M18 14c0-6 12-6 12 0M16 26h16"/></g></symbol>
+    <symbol id="i-drum" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="2.2"><ellipse cx="24" cy="16" rx="16" ry="6"/><path d="M8 16v14c0 4 7 6 16 6s16-2 16-6V16M12 20l-4 14M36 20l4 14"/></g></symbol>
   </defs>
 </svg>
 
@@ -1662,20 +1721,80 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 25 作业 -->
-<section class="slide" data-t="收束" data-fs="课后把三样东西交到班级表">
-  <div><h2>交三样东西，再答三个问题<span class="en">Hand in three things</span></h2></div>
-  <div class="hw">
-    <div class="card"><b class="n">01 货架</b><h4>你家常用的 AI，归哪一格？</h4><p>拍一张打开界面的照片（可遮隐私）。写：「这是大模型 / 运行环境 / Personal Agent，因为 ___。」</p></div>
-    <div class="card"><b class="n">02 分类</b><h4>用你自己的标准，给家里 8 样东西分组</h4><p>拍一张照片，写「我是按 ___ 分的」。再换一个标准，分第二次。</p></div>
-    <div class="card"><b class="n">03 大词</b><h4>挑一个今天的大词讲给家人听</h4><p>格式：「___ 就像人的 ___，因为 ___。」说完让家人复述一遍。</p></div>
+<!-- 25 拆解启发 -->
+<section class="slide" data-t="收束" data-fs="聊天区：选一格，贴命名句">
+  <div><h2>选一样东西，试着拆开它<span class="en">Pick one · tear it into parts · name the idea</span></h2></div>
+  <p class="lead one-line">老师先拆<strong>猛禽</strong>。你点一格选自己的，用今天的工具说清楚。</p>
+  <div class="tear-layout">
+    <div class="tear-pool">
+      <h3>点选 · 下面有很多具体的东西</h3>
+      <div class="tear-grid" id="tearGrid" role="list">
+        <button type="button" class="tear-item demo" data-name="猛禽" aria-pressed="true"><svg><use href="#i-raptor"/></svg><span>猛禽</span></button>
+        <button type="button" class="tear-item" data-name="苹果" aria-pressed="false"><svg><use href="#i-apple"/></svg><span>苹果</span></button>
+        <button type="button" class="tear-item" data-name="香蕉" aria-pressed="false"><svg><use href="#i-banana"/></svg><span>香蕉</span></button>
+        <button type="button" class="tear-item" data-name="西瓜" aria-pressed="false"><svg><use href="#i-melon"/></svg><span>西瓜</span></button>
+        <button type="button" class="tear-item" data-name="自行车" aria-pressed="false"><svg><use href="#i-bike"/></svg><span>自行车</span></button>
+        <button type="button" class="tear-item" data-name="汽车" aria-pressed="false"><svg><use href="#i-car"/></svg><span>汽车</span></button>
+        <button type="button" class="tear-item" data-name="公交车" aria-pressed="false"><svg><use href="#i-bus"/></svg><span>公交车</span></button>
+        <button type="button" class="tear-item" data-name="飞机" aria-pressed="false"><svg><use href="#i-plane"/></svg><span>飞机</span></button>
+        <button type="button" class="tear-item" data-name="火箭" aria-pressed="false"><svg><use href="#i-rocket"/></svg><span>火箭</span></button>
+        <button type="button" class="tear-item" data-name="小猫" aria-pressed="false"><svg><use href="#i-cat"/></svg><span>小猫</span></button>
+        <button type="button" class="tear-item" data-name="小狗" aria-pressed="false"><svg><use href="#i-dog"/></svg><span>小狗</span></button>
+        <button type="button" class="tear-item" data-name="鱼" aria-pressed="false"><svg><use href="#i-fish"/></svg><span>鱼</span></button>
+        <button type="button" class="tear-item" data-name="树" aria-pressed="false"><svg><use href="#i-tree"/></svg><span>树</span></button>
+        <button type="button" class="tear-item" data-name="叶子" aria-pressed="false"><svg><use href="#i-leaf"/></svg><span>叶子</span></button>
+        <button type="button" class="tear-item" data-name="花" aria-pressed="false"><svg><use href="#i-flower"/></svg><span>花</span></button>
+        <button type="button" class="tear-item" data-name="房子" aria-pressed="false"><svg><use href="#i-house"/></svg><span>房子</span></button>
+        <button type="button" class="tear-item" data-name="书包" aria-pressed="false"><svg><use href="#i-backpack"/></svg><span>书包</span></button>
+        <button type="button" class="tear-item" data-name="鞋子" aria-pressed="false"><svg><use href="#i-shoe"/></svg><span>鞋子</span></button>
+        <button type="button" class="tear-item" data-name="眼镜" aria-pressed="false"><svg><use href="#i-glasses"/></svg><span>眼镜</span></button>
+        <button type="button" class="tear-item" data-name="手表" aria-pressed="false"><svg><use href="#i-clock"/></svg><span>手表</span></button>
+        <button type="button" class="tear-item" data-name="雨伞" aria-pressed="false"><svg><use href="#i-umbrella"/></svg><span>雨伞</span></button>
+        <button type="button" class="tear-item" data-name="台灯" aria-pressed="false"><svg><use href="#i-lamp"/></svg><span>台灯</span></button>
+        <button type="button" class="tear-item" data-name="杯子" aria-pressed="false"><svg><use href="#i-cup"/></svg><span>杯子</span></button>
+        <button type="button" class="tear-item" data-name="钥匙" aria-pressed="false"><svg><use href="#i-key"/></svg><span>钥匙</span></button>
+        <button type="button" class="tear-item" data-name="相机" aria-pressed="false"><svg><use href="#i-camera"/></svg><span>相机</span></button>
+        <button type="button" class="tear-item" data-name="手机" aria-pressed="false"><svg><use href="#i-phone"/></svg><span>手机</span></button>
+        <button type="button" class="tear-item" data-name="书" aria-pressed="false"><svg><use href="#i-book"/></svg><span>书</span></button>
+        <button type="button" class="tear-item" data-name="铅笔" aria-pressed="false"><svg><use href="#i-pencil"/></svg><span>铅笔</span></button>
+        <button type="button" class="tear-item" data-name="吉他" aria-pressed="false"><svg><use href="#i-guitar"/></svg><span>吉他</span></button>
+        <button type="button" class="tear-item" data-name="鼓" aria-pressed="false"><svg><use href="#i-drum"/></svg><span>鼓</span></button>
+        <button type="button" class="tear-item" data-name="足球" aria-pressed="false"><svg><use href="#i-ball"/></svg><span>足球</span></button>
+      </div>
+    </div>
+    <div class="tear-side">
+      <div class="tear-demo" id="tearDemo">
+        <em>老师示范 · 猛禽</em>
+        <h3>先拆零件，再起名字</h3>
+        <p>看得见的：尖喙、利爪、大翅膀、锐利的眼。舍掉颜色和羽毛花样，留下「能捕猎的飞禽」。</p>
+        <div class="tear-parts">
+          <div><b>喙</b>撕开猎物</div>
+          <div><b>爪</b>抓住猎物</div>
+          <div><b>翅</b>滑翔追逐</div>
+          <div><b>眼</b>远处发现</div>
+        </div>
+        <p>命名句：我把「尖喙·利爪·大翅·锐眼」的共同点命名为<strong>猛禽</strong>。</p>
+      </div>
+      <div class="tear-tools">
+        <h3>你可以动用的工具</h3>
+        <ul>
+          <li><b>四句式</b>归纳 · 命名 · 边界 · 反思</li>
+          <li><b>三格货架</b>大模型 · 运行环境 · Personal Agent</li>
+          <li><b>提示词</b>把拆法写成一句清楚的输入</li>
+          <li><b>下一节</b>真装技能，让助手按你的拆法去办事</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <p class="lead" style="margin-top:6px">交完作业，试着回答这三个问题：</p>
-  <div class="three"><div>你今天做了什么？<small>比如：我把三个 App 分进了三格货架</small></div><div>AI 做了什么？<small>比如：它按我的提示词写了一段话</small></div><div>你质疑过 AI 什么？<small>比如：它把运行环境说成大模型</small></div></div>
+  <div class="say" id="tearSay">先看猛禽示范。再点左边任一格——聊天区用命名句说：「我把 ___ 的共同点命名为 ___」。</div>
   <aside class="notes">
-    <h4>操作</h4>
-    <ul><li>班级表链接发到聊天区；交作业低于八成，下节先补。</li>
-    <li>点名三问：随机三人，答不上第三问也要说出今天哪一刻起过疑心。</li></ul>
+    <h4>课堂流程</h4>
+    <ul>
+      <li>1–2 分钟讲猛禽：零件 → 舍差异 → 命名。故意问：企鹅算猛禽吗？逼出边界句。</li>
+      <li>让孩子点选自己的物体；聊天区只收命名句或边界句。</li>
+      <li>收口点工具条：今天学的四句式和货架，就是以后让 AI 帮你拆世界的方向盘。</li>
+      <li>作业可口头布置：回家再拆一样家里的东西，拍图 + 一句命名句交班级表。</li>
+    </ul>
   </aside>
 </section>
 
@@ -2425,30 +2544,81 @@ $$('.numwall').forEach((w) => {
 
 /* 插标签 */
 (() => {
-  const tray = $('#tagTray'); if (!tray) return;
+  const tray = $('#tagTray');
+  const row = $('#slotRow');
+  const say = $('#plugSay');
+  if (!tray || !row || !say) return;
   let sel = null;
   const mean = { in:'输入 = 看听摸 / 摄像头键盘麦', mem:'记忆 = 还能想起什么（记录·知识库·参数）', think:'分析 = 猜下一个最可能的词', out:'输出 = 字声图动作', skill:'技能 = 可装卸的本事包 Skill' };
-  $$('.ptag', tray).forEach((t) => t.onclick = () => {
-    if (t.classList.contains('used')) return;
-    $$('.ptag', tray).forEach((x) => x.classList.remove('sel'));
-    t.classList.add('sel'); sel = t;
-    $$('.pslot').forEach((s) => s.classList.add('target'));
-    $('#plugSay').textContent = '选好了「' + t.textContent + '」，点一个空位装上去。';
+  const tags = () => $$('.ptag', tray);
+  const slots = () => $$('.pslot', row);
+  const markTargets = () => {
+    slots().forEach((s) => s.classList.toggle('target', !!sel && !s.classList.contains('filled')));
+  };
+  tags().forEach((t) => {
+    t.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (t.classList.contains('used')) return;
+      tags().forEach((x) => x.classList.remove('sel'));
+      t.classList.add('sel');
+      sel = t;
+      markTargets();
+      say.textContent = '选好了「' + t.textContent.trim() + '」，点上面一个空位装上去。';
+    });
   });
-  $$('.pslot').forEach((slot) => slot.onclick = () => {
-    if (!sel) { $('#plugSay').textContent = '先点下面一张标签。'; return; }
-    $$('.pslot').forEach((s) => s.classList.remove('target'));
-    if (slot.dataset.need !== sel.dataset.k) {
-      slot.classList.add('shake');
-      setTimeout(() => slot.classList.remove('shake'), 400);
-      $('#plugSay').textContent = '位置不对。想想：这个名字对应人办事的哪一步？';
-      return;
-    }
-    slot.classList.add('filled');
-    slot.querySelector('span').textContent = sel.textContent;
-    $('#plugSay').innerHTML = mean[sel.dataset.k] + ' · 试着说命名句。';
-    sel.classList.add('used'); sel.classList.remove('sel'); sel = null;
-    if ($$('.pslot.filled').length === 5) $('#plugSay').innerHTML = '五格都亮了。聊天区用命名句说：「我把『还能想起什么』命名为记忆」。';
+  slots().forEach((slot) => {
+    slot.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (slot.classList.contains('filled')) {
+        say.textContent = '这一格已经装好了，换一张标签。';
+        return;
+      }
+      if (!sel) {
+        say.textContent = '先点下面一张标签。';
+        return;
+      }
+      if (slot.dataset.need !== sel.dataset.k) {
+        slot.classList.remove('shake');
+        void slot.offsetWidth;
+        slot.classList.add('shake');
+        setTimeout(() => slot.classList.remove('shake'), 400);
+        say.textContent = '位置不对。想想：这个名字对应人办事的哪一步？';
+        markTargets();
+        return;
+      }
+      slot.classList.add('filled');
+      slot.setAttribute('aria-pressed', 'true');
+      const label = slot.querySelector('span');
+      if (label) label.textContent = sel.textContent.trim();
+      say.innerHTML = mean[sel.dataset.k] + ' · 试着说命名句。';
+      sel.classList.add('used');
+      sel.classList.remove('sel');
+      sel = null;
+      markTargets();
+      if (slots().every((s) => s.classList.contains('filled'))) {
+        say.innerHTML = '五格都亮了。聊天区用命名句说：「我把『还能想起什么』命名为记忆」。';
+      }
+    });
+  });
+})();
+
+/* 拆解启发 · 选物体 */
+(() => {
+  const grid = $('#tearGrid'); if (!grid) return;
+  const say = $('#tearSay');
+  const demo = {
+    '猛禽': '示范：尖喙·利爪·大翅·锐眼 → 命名为「猛禽」。聊天区仿写一句。',
+  };
+  $$('.tear-item', grid).forEach((btn) => {
+    btn.addEventListener('click', () => {
+      $$('.tear-item', grid).forEach((x) => x.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      const name = btn.dataset.name || btn.textContent.trim();
+      if (demo[name]) say.textContent = demo[name];
+      else say.innerHTML = `你选了「<b>${name}</b>」。试着拆零件，再写命名句：我把「___」的共同点命名为「___」。`;
+    });
   });
 })();
 
