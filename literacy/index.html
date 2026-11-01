@@ -3,27 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI 通识初阶</title>
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>需要密码 · AI 课程库</title>
 <style>
-  body{font-family:"PingFang SC","Noto Sans SC",sans-serif;background:#F4F1EA;color:#1F2A2E;max-width:640px;margin:48px auto;padding:0 20px;line-height:1.65}
-  a{color:#B9762A}
-  h1{font-size:26px;margin-bottom:8px}
-  p{color:#5C6568}
-  ul{margin:18px 0 0 1.2em}
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; display: grid; place-items: center; background: #0A0A0A;
+    color: #FAFAFA; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
+  .card { width: min(420px, calc(100vw - 40px)); padding: 30px 28px 26px; border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; background: #111; box-shadow: 0 24px 60px rgba(0,0,0,.55); }
+  h1 { font-size: 17px; font-weight: 650; letter-spacing: .01em; }
+  p.sub { margin-top: 8px; font-size: 13px; line-height: 1.65; color: #8A8A8A; }
+  form { margin-top: 20px; display: grid; gap: 10px; }
+  input { width: 100%; padding: 11px 12px; font: inherit; font-size: 14px; color: #FAFAFA;
+    background: #0A0A0A; border: 1px solid rgba(255,255,255,.16); border-radius: 9px; }
+  input:focus { outline: none; border-color: rgba(255,255,255,.4); }
+  button { padding: 11px 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    color: #0A0A0A; background: #FAFAFA; border: 0; border-radius: 9px; }
+  button:disabled { opacity: .5; cursor: default; }
+  .err { min-height: 18px; font-size: 12.5px; color: #ff8a8a; }
+  .foot { margin-top: 16px; font-size: 11.5px; color: #525252; line-height: 1.6; }
 </style>
 </head>
 <body>
-  <p style="margin-bottom:18px"><a href="../" style="color:#B9762A">← AI 课程库</a></p>
-  <p style="letter-spacing:.14em;color:#B9762A;font-size:12px;font-weight:700">通识 · 子项目</p>
-  <h1>AI 通识初阶</h1>
-  <p>周末课，18 小时，六个模块。和创想营是两套教材。课件目前做到 M1。</p>
-  <ul>
-    <li><a href="course/17-m1-online-hour1.html">M1 第一节课件（线上 1 小时，含第二节 2 小时教师附页）</a></li>
-    <li><a href="course/16-m1-deck.html">M1 旧版课件</a></li>
-    <li><a href="promo/">宣传</a></li>
-    <li><a href="students/">学生档案 · 评价与作业</a></li>
-    <li><a href="course/11-ai-weekend-syllabus.html">课程大纲</a></li>
-    <li><a href="course/13-six-module-architecture.html">六模块对照表</a></li>
-  </ul>
+<div class="card">
+  <h1>这个课程库需要访问密码</h1>
+  <p class="sub">输入我给你们的密码即可查看。本机记住后，下次打开不用再输。</p>
+  <form id="f">
+    <input id="pw" type="password" autocomplete="current-password" placeholder="访问密码" autofocus>
+    <button id="go" type="submit">进入</button>
+    <div class="err" id="err"></div>
+  </form>
+  <p class="foot">内容已加密存放，没有密码无法读取正文。忘了密码请联系课程负责人。</p>
+</div>
+<script>
+const CT = "um+UW5VF927AqPrDjss1WJucwFqhxWczi8QPu7EB9SiHgJwYzUhLf/JNPXKdZuzN3Nnc3kQwJ64QXyK8+3zjKQSsJlOcyHMjbYaz/c8rHIXKSFLObyZvc9UyQsrd/wPV7oz6cJnkIneZuDHvYdrVyl5WKFCE5GmHJvSBcOvwaBxXhmJNV6m1kGm4twUeorhHyh0By2oI4EdT7NB+Q5w675ynUv7Lbry/pY+NGzMv7//1k1v4II1EMvChOkR5s5g/8ASwC8/O4gQuybswyXbcW1RBQmdKReKIdW0j/SXLQcXlHy45nf5muB2kCx0ALfU8C2nebxFzHWcxGHKfIjExHiagOmyAv2fys9sia//BybvY40rtj3JgxX9D3d4inR0+fTJz9w8+w/Nxm8J9HHhsxAXPTRTjDqgH+TpEMeEyp8nXK1jcVmWjqZd0ETmqUWTfyoUYf3lJAi0EIY52SrFOLENwQgPJq+G0AGAloxxFOpHgigBalVF5QObFOn/EscmWbs51hRi5gkINK5UyL3G25eFDgFnCwVp4R501ns5YAviDNEWaLh3krPnsqLjNX1gZ8fNljfJt02PZSu3Rqc0Igj2spEVvqBRgaxSULhLiBuryVbRcNyg5V+lnAceWsOg4fcB524X4W+bf1TCudiE0fEJo/hOt/CMCKdr15HdpIcZn64cE66fx6S2X9j/3tFW4ien42yNpPlldLxE4Atf7SBS9AkvF6WojN3qVGryTqqTlhXHmAbNdGR6WyyVtf7vznJD13+cfaRD9+cil9aCswU9Nt5/HZ/1QoWJRbQe2aYDRwJZgSQAPLz3/MWHarZ8Ns3agJQH4kE+dGINnISYPicCLnsReB/R8weOSySxZ/Se1Jvv817c/EqInGRAfo79zgV38+Wn7DJhJv+sTzkXoxiGdeuDaUWq5tu756EpA0QW6cvkrRi3m8qucshfeVILlGfxeFyrtFFP/cZph22J3S9yFYpInVP1bpS9hIfqTDOt/RQZdz6gVJ+poWAi58HYEozBfDs2WME4cx1slDZ8VvRoBK2wfx0H9t4apHNY8UymzfGpSNEuzT66REHOJvruVApg1lm5baImFKeAaIFdv8csTKqVjF/cWc/01Vct24cJbuxKwrgGj0Ly9PYSun3OVTWodNOeGxS6qfE+Ps57VWib0Fh/Dkpx6LkkRprCKDLGSI/cIb0gbYY4fu2riW5wk+fMvdCalCaflDU3nlFGnHt8t/9RZ/p+7OmeC6bNj0nrT61olBFuy8TD+IKfKIvMg8zb1cvd1+toGYyQMfdajA6G2463cTB3MTYaqf2FPRNKz5N5jw4oyOeNoHzP5t8T7hK2g5T5L2wLziinIy4sguqzyh8SKRxGWKV9eC4hI21EwAd4NJZkmkcKxh73asROguygUGroG6sEHv/SSHycsCPzV+yO2fJGfMLU0hlNTaixzCCJqGQ7SAxF3uMWUzbmd9W0dX1CfJFfMCv2Mp/RoSPUGyI/QAUc33iWJiz5pdSlfEy5M9M4HgKCfPP0L2S3Axul79gpGp+2zZP80MIKgel/p4KWPRdS8F2QPScngvgzjS6afXFfEn0Sp4Np+ELNa7FJW+WNlukRFWz7r+4pWU3d/ztt2WGF05rCC1ydVJ0Q4yleZu7DNjbF457xYgqoQ3deSTrVXf/JgwbWkGIusAvv6Lx6fdxF4mlsluvY21bB8j2670MhHyd455CJ62ezbNHF5MgP5gOk=", SALT = "HpldqpDc1rkR0fYriMwdlA==", IV = "0YQm53KToeNrcByl", STORE = "fnf-key";
+const enc = new TextEncoder(), dec = new TextDecoder();
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+
+async function deriveKey(pw, saltB64) {
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: b64(saltB64), iterations: 310000, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
+  );
+}
+
+async function open_(key) {
+  try {
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+    document.open(); document.write(dec.decode(plain)); document.close();
+    return true;
+  } catch (e) { return false; }
+}
+
+(async () => {
+  const saved = localStorage.getItem(STORE);
+  if (saved) {
+    try {
+      const raw = Uint8Array.from(atob(saved), (c) => c.charCodeAt(0));
+      const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["decrypt"]);
+      if (await open_(key)) return;
+    } catch (e) {}
+    localStorage.removeItem(STORE);
+  }
+})();
+
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById("go"), err = document.getElementById("err");
+  const pw = document.getElementById("pw").value;
+  if (!pw) return;
+  btn.disabled = true; btn.textContent = "验证中…"; err.textContent = "";
+  const key = await deriveKey(pw, SALT);
+  if (await open_(key)) {
+    try {
+      const raw = await crypto.subtle.exportKey("raw", key);
+      localStorage.setItem(STORE, btoa(String.fromCharCode(...new Uint8Array(raw))));
+    } catch (e) {}
+  } else {
+    btn.disabled = false; btn.textContent = "进入";
+    err.textContent = "密码不对，再试一次。";
+    document.getElementById("pw").select();
+  }
+});
+</script>
 </body>
 </html>

@@ -3,60 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>AI 通识初阶 · 学生档案</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>需要密码 · AI 课程库</title>
 <style>
-  :root{--bg:#0A0A0A;--surface:#111;--ink:#FAFAFA;--muted:#8A8A8A;--faint:#525252;--line:rgba(255,255,255,.08)}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:"Geist","PingFang SC","Noto Sans SC",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;padding:40px 24px 80px}
-  a{color:var(--muted);text-decoration:none} a:hover{color:var(--ink)}
-  .wrap{max-width:760px;margin:0 auto}
-  .back{font-size:13px;margin-bottom:28px;display:inline-block}
-  .mono{font-family:"Geist Mono",Menlo,monospace;font-size:12px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
-  h1{font-size:32px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
-  .lead{color:var(--muted);font-size:15px;margin-bottom:36px;max-width:36em}
-  .warn{font-size:13px;color:var(--faint);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:28px}
-  h2{font-size:14px;font-weight:600;margin:28px 0 12px;color:var(--muted)}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:10px}
-  .card h3{font-size:16px;font-weight:600;margin-bottom:4px}
-  .card p{font-size:13px;color:var(--muted)}
-  .empty{color:var(--faint);font-size:14px;padding:8px 0}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{color:var(--faint);font-weight:500;font-size:12px}
-  td{color:var(--muted)}
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; display: grid; place-items: center; background: #0A0A0A;
+    color: #FAFAFA; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
+  .card { width: min(420px, calc(100vw - 40px)); padding: 30px 28px 26px; border: 1px solid rgba(255,255,255,.12);
+    border-radius: 14px; background: #111; box-shadow: 0 24px 60px rgba(0,0,0,.55); }
+  h1 { font-size: 17px; font-weight: 650; letter-spacing: .01em; }
+  p.sub { margin-top: 8px; font-size: 13px; line-height: 1.65; color: #8A8A8A; }
+  form { margin-top: 20px; display: grid; gap: 10px; }
+  input { width: 100%; padding: 11px 12px; font: inherit; font-size: 14px; color: #FAFAFA;
+    background: #0A0A0A; border: 1px solid rgba(255,255,255,.16); border-radius: 9px; }
+  input:focus { outline: none; border-color: rgba(255,255,255,.4); }
+  button { padding: 11px 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+    color: #0A0A0A; background: #FAFAFA; border: 0; border-radius: 9px; }
+  button:disabled { opacity: .5; cursor: default; }
+  .err { min-height: 18px; font-size: 12.5px; color: #ff8a8a; }
+  .foot { margin-top: 16px; font-size: 11.5px; color: #525252; line-height: 1.6; }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="back" href="../../">← AI 课程库</a>
-  <p class="mono">Literacy · students</p>
-  <h1>AI 通识初阶 · 学生档案</h1>
-  <p class="lead">六个模块的过程评价、研究笔记、报告与讲述。M1 起开始收。</p>
-  <p class="warn">这个仓库是公开的。这里只放花名、评价摘要和作业链接，不要写手机号、身份证、家庭住址。</p>
-
-  <h2>本届名册</h2>
-  <div class="card">
-    <table>
-      <thead>
-        <tr><th>姓名</th><th>当前模块</th><th>命题</th><th>最近评价</th></tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="4" class="empty">还没有录入。开班后把名单和命题卡链到这里。</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2>按模块收作业</h2>
-  <div class="card"><h3>M1 抽象</h3><p class="empty">概念地图 / 层级图 / 设备三问卡</p></div>
-  <div class="card"><h3>M2 逻辑</h3><p class="empty">表达单 / Agent 规矩对比</p></div>
-  <div class="card"><h3>M3 选题</h3><p class="empty">命题卡</p></div>
-  <div class="card"><h3>M4 研究</h3><p class="empty">研究笔记（含一处否掉的 AI 说法）</p></div>
-  <div class="card"><h3>M5 成文</h3><p class="empty">报告初稿 + AI 使用声明</p></div>
-  <div class="card"><h3>M6 讲述</h3><p class="empty">定稿 + 讲述记录 + 反思卡</p></div>
+<div class="card">
+  <h1>这个课程库需要访问密码</h1>
+  <p class="sub">输入我给你们的密码即可查看。本机记住后，下次打开不用再输。</p>
+  <form id="f">
+    <input id="pw" type="password" autocomplete="current-password" placeholder="访问密码" autofocus>
+    <button id="go" type="submit">进入</button>
+    <div class="err" id="err"></div>
+  </form>
+  <p class="foot">内容已加密存放，没有密码无法读取正文。忘了密码请联系课程负责人。</p>
 </div>
+<script>
+const CT = "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", SALT = "/o17EEGgVku15ZVUO8raIw==", IV = "tlwXhgf/RGq1VcAN", STORE = "fnf-key";
+const enc = new TextEncoder(), dec = new TextDecoder();
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+
+async function deriveKey(pw, saltB64) {
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: b64(saltB64), iterations: 310000, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
+  );
+}
+
+async function open_(key) {
+  try {
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
+    document.open(); document.write(dec.decode(plain)); document.close();
+    return true;
+  } catch (e) { return false; }
+}
+
+(async () => {
+  const saved = localStorage.getItem(STORE);
+  if (saved) {
+    try {
+      const raw = Uint8Array.from(atob(saved), (c) => c.charCodeAt(0));
+      const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["decrypt"]);
+      if (await open_(key)) return;
+    } catch (e) {}
+    localStorage.removeItem(STORE);
+  }
+})();
+
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const btn = document.getElementById("go"), err = document.getElementById("err");
+  const pw = document.getElementById("pw").value;
+  if (!pw) return;
+  btn.disabled = true; btn.textContent = "验证中…"; err.textContent = "";
+  const key = await deriveKey(pw, SALT);
+  if (await open_(key)) {
+    try {
+      const raw = await crypto.subtle.exportKey("raw", key);
+      localStorage.setItem(STORE, btoa(String.fromCharCode(...new Uint8Array(raw))));
+    } catch (e) {}
+  } else {
+    btn.disabled = false; btn.textContent = "进入";
+    err.textContent = "密码不对，再试一次。";
+    document.getElementById("pw").select();
+  }
+});
+</script>
 </body>
 </html>
