@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M1 速查手册 · AI 通识初阶</title>
+<style>
+  :root{
+    --bg:#070B14;--panel:#0E1626;--ink:#E8EEF8;--muted:#8B98B0;--line:#243247;
+    --cyan:#3DD9FF;--blue:#7AA2FF;--warm:#F2B35E;--ok:#3DFFB0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#05080F;color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
+  .poster{
+    width:1600px;height:900px;margin:0 auto;padding:28px 32px 24px;
+    background:
+      radial-gradient(900px 480px at 92% -10%,rgba(61,217,255,.16),transparent 55%),
+      radial-gradient(700px 420px at -5% 110%,rgba(122,162,255,.12),transparent 50%),
+      linear-gradient(165deg,#0A1020,#060A12 60%,#080D18);
+    position:relative;overflow:hidden;
+  }
+  .poster::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(rgba(110,150,230,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(110,150,230,.06) 1px,transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 80%);
+  }
+  .top{display:flex;justify-content:space-between;align-items:flex-end;position:relative;z-index:1;margin-bottom:18px}
+  .brand{display:flex;flex-direction:column;gap:4px}
+  .brand .kick{font:800 12px ui-monospace,Menlo,monospace;letter-spacing:.18em;color:var(--cyan)}
+  .brand h1{font-size:36px;letter-spacing:.02em;line-height:1.1}
+  .brand h1 em{font-style:normal;color:var(--warm);font-weight:600;font-size:22px;margin-left:12px;letter-spacing:.2em;font-family:ui-monospace,Menlo,monospace}
+  .brand p{font-size:14px;color:var(--muted);margin-top:4px}
+  .badge{font:700 12px ui-monospace,Menlo,monospace;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:rgba(14,22,38,.7)}
+  .grid{display:grid;grid-template-columns:1.05fr 1.15fr 1fr;gap:14px;position:relative;z-index:1;height:calc(100% - 92px)}
+  .col{display:flex;flex-direction:column;gap:12px;min-height:0}
+  .card{
+    border:1px solid var(--line);border-radius:18px;background:rgba(14,22,38,.82);
+    padding:14px 16px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .card.grow2{flex:1.15}
+  .card h2{font-size:16px;display:flex;align-items:center;gap:8px}
+  .card h2 i{font:800 11px ui-monospace,Menlo,monospace;font-style:normal;color:#04101C;background:var(--cyan);border-radius:8px;padding:3px 7px}
+  .card h2.warm i{background:var(--warm)}
+  .card h2.blue i{background:var(--blue);color:#04101C}
+  .card h2.ok i{background:var(--ok);color:#04101C}
+  .card p.lead{font-size:13px;color:var(--muted);line-height:1.45}
+  .nodes{display:grid;gap:8px}
+  .node{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.22)}
+  .node b{display:block;font-size:14px;margin-bottom:3px}
+  .node span{font-size:12.5px;color:var(--muted);line-height:1.45}
+  .node b small{font-weight:600;color:var(--cyan);margin-left:6px;font-size:11px;font-family:ui-monospace,Menlo,monospace}
+  .flow{display:flex;align-items:stretch;gap:6px}
+  .flow .step{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center;background:rgba(0,0,0,.2)}
+  .flow .step b{display:block;font-size:15px;color:var(--cyan);margin-bottom:4px}
+  .flow .step span{font-size:12px;color:var(--muted);line-height:1.35}
+  .flow .arrow{align-self:center;color:var(--cyan);font:800 16px ui-monospace,Menlo,monospace;opacity:.7}
+  .shelves{display:grid;grid-template-columns:1fr;gap:8px}
+  .shelf{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.22);display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center}
+  .shelf em{font:800 11px ui-monospace,Menlo,monospace;font-style:normal;color:var(--cyan);grid-row:span 2}
+  .shelf b{font-size:14px}
+  .shelf span{font-size:12px;color:var(--muted);line-height:1.4}
+  .shelf.s2 em{color:var(--blue)}
+  .shelf.s3 em{color:var(--warm)}
+  .parts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .part{border:1px dashed rgba(61,217,255,.28);border-radius:12px;padding:10px 6px;text-align:center;background:rgba(0,0,0,.18)}
+  .part b{display:block;font-size:14px;margin-bottom:3px}
+  .part span{font-size:11px;color:var(--muted);line-height:1.35}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips span{font:700 11px ui-monospace,Menlo,monospace;padding:5px 8px;border-radius:8px;border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.02)}
+  .chips span.on{color:var(--cyan);border-color:rgba(61,217,255,.35);background:rgba(61,217,255,.08)}
+  .sentence{font-size:13px;line-height:1.55;color:var(--ink);border-left:3px solid var(--warm);padding:8px 10px;background:rgba(242,179,94,.06);border-radius:0 10px 10px 0}
+  .sentence b{color:var(--warm)}
+  .foot{position:absolute;left:32px;right:32px;bottom:14px;display:flex;justify-content:space-between;align-items:center;z-index:1;font:600 11px ui-monospace,Menlo,monospace;color:#5E6B82}
+  .foot b{color:var(--cyan);font-weight:800}
+  @media print{
+    body{background:#fff}
+    .poster{box-shadow:none;margin:0}
+  }
+</style>
+</head>
+<body>
+  <div class="poster" id="poster">
+    <div class="top">
+      <div class="brand">
+        <div class="kick">BILDEN EDU · M1 抽象 · 第一节</div>
+        <h1>AI 通识速查手册<em>CHEAT SHEET</em></h1>
+        <p>课后一张图：货架认清 → 零件拆开 → 用四句式说出口</p>
+      </div>
+      <div class="badge">线上 1 小时 · 学生版</div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="card">
+          <h2><i>01</i>抽象四动作</h2>
+          <p class="lead">产物是概念，不是画。敢舍，才能迁移。</p>
+          <div class="flow">
+            <div class="step"><b>舍</b><span>丢掉差别</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><b>取</b><span>留下共同</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><b>命</b><span>给它起名</span></div>
+            <div class="arrow">→</div>
+            <div class="step"><b>验</b><span>试边界</span></div>
+          </div>
+          <div class="sentence">命名句：我把「<b>___</b>」的共同点命名为「<b>___</b>」。</div>
+        </div>
+        <div class="card grow2">
+          <h2 class="warm"><i>02</i>四句式（能说出口才算会）</h2>
+          <div class="nodes">
+            <div class="node"><b>归纳</b><span>它们都有___，所以归为___</span></div>
+            <div class="node"><b>命名</b><span>我把___的共同点命名为___</span></div>
+            <div class="node"><b>边界</b><span>凡是___都属于___；只要___，就不算___</span></div>
+            <div class="node"><b>反思</b><span>我舍掉了___只留___；换个抽法会___</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <h2 class="blue"><i>03</i>三格货架 · 按用途认</h2>
+          <p class="lead">先问：谁在用？怎么用？名字不重要。</p>
+          <div class="shelves">
+            <div class="shelf"><em>01</em><b>大模型 · Model</b><span>谁：几乎人人　怎么用：打开聊 → 说清楚 → 看回答<br>例：豆包 / DeepSeek / ChatGPT</span></div>
+            <div class="shelf s2"><em>02</em><b>运行环境 · Runtime</b><span>谁：要交作品、改网页　怎么用：打开项目 → 指文件 → 让它改<br>例：Cursor / Claude Code / Codex　（别叫「编程工具」）</span></div>
+            <div class="shelf s3"><em>03</em><b>Personal Agent · 助手</b><span>谁：要长期办事　怎么用：定目标 → 装记忆/技能 → 它去办<br>例：豆包工作台 / 飞书 / Hermes</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2><i>04</i>五个本事零件</h2>
+          <div class="parts">
+            <div class="part"><b>输入</b><span>看听摸<br>提示词进来</span></div>
+            <div class="part"><b>记忆</b><span>还能想起<br>参数 / 关于你</span></div>
+            <div class="part"><b>分析</b><span>「想」≈<br>猜下一个词</span></div>
+            <div class="part"><b>输出</b><span>字声图动作<br>一块块吐出</span></div>
+            <div class="part"><b>技能</b><span>可装卸<br>Skill 包</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <h2 class="ok"><i>05</i>大词对照</h2>
+          <div class="nodes">
+            <div class="node"><b>提示词 <small>PROMPT</small></b><span>你说的话 / 布置的任务 = 输入</span></div>
+            <div class="node"><b>Token <small>块</small></b><span>切成小块读写；常按块计费</span></div>
+            <div class="node"><b>参数 <small>PARAMS</small></b><span>模型里的记忆（本事存成很多数）</span></div>
+            <div class="node"><b>算法 · 算力</b><span>怎么算、用多少电和芯片去「想」</span></div>
+            <div class="node"><b>训练</b><span>上学读海量文字，把本事写进参数</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="warm"><i>06</i>课后怎么用</h2>
+          <p class="lead">选一样具体的东西（猛禽、自行车、书包…）拆开再命名。</p>
+          <div class="chips">
+            <span class="on">四句式</span>
+            <span class="on">三格货架</span>
+            <span class="on">提示词</span>
+            <span>下一节装 Skill</span>
+          </div>
+          <div class="sentence" style="margin-top:4px">边界句：凡是___都属于___；只要___，就不算___。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>彼灯教育 · AI 通识初阶</span>
+      <span>保存本图复习 · 完整课件见课程链接</span>
+      <span><b>M1</b> PRINCIPLE</span>
+    </div>
+  </div>
+</body>
+</html>
