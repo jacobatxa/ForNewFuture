@@ -1,4 +1,4 @@
-// M1「AI 跟人的关系」：本事转接台 —— 教学人偶胸前五个模组插座，接到右侧 AI 机箱五个抽屉舱。
+// M1「AI 跟人的关系」：本事转接台 —— 左侧简化真人胸前五个本事牌，接到右侧 AI 机箱五个抽屉舱。
 // Anatomy iso-kit（MIT）。热区 .hot[data-f][data-side]；接通后 .hm-cable.on。
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -89,51 +89,54 @@ function trough() {
 }
 
 function mannequin() {
+  // 简化真人轮廓：圆头、软肩、毛衣躯干；胸前仍留五个本事模组位（交互点不变）
   const out = [];
-  // 底座
-  out.push(S(k.cylinder(MAN[0], MAN[1], 20, 0, 3.2, P, 36, 0.4), { tone: "lo" }));
-  out.push(L(k.ring(MAN[0], MAN[1], 15, 3.2, P, 28), { tone: "faint" }));
-  out.push(D(
-    [[-12, -12], [12, -12], [-12, 12], [12, 12]].map(([dx, dy]) => at([MAN[0] + dx, MAN[1] + dy, 3.2])),
-    { size: 0.4 },
-  ));
+  const mx = MAN[0];
+  const my = MAN[1];
 
-  // 立柱
-  out.push(S(k.cylinder(MAN[0], MAN[1], 6.5, 3.2, 22, P, 28, 0.3), { tone: "mid" }));
-  out.push(S(k.cylinder(MAN[0], MAN[1], 5.2, 25, 8, P, 24), { tone: "lo" })); // 腰环
+  // 软脚垫（不是机座螺丝盘）
+  out.push(S(k.cylinder(mx, my, 18, 0, 2.2, P, 36, 0.5), { tone: "lo" }));
+  out.push(L(k.ring(mx, my, 12, 2.2, P, 24), { tone: "faint" }));
 
-  // 骨盆 / 下躯干
-  const hips = { x: MAN[0] - 16, y: MAN[1] - 12, w: 32, d: 24, r: 4 };
-  out.push(S(k.slabOf(hips, 30, 14, P, 6, 0.7), { tone: "mid" }));
+  // 双腿
+  out.push(S(k.cylinder(mx - 7.5, my + 1, 5.2, 2.2, 28, P, 22, 0.35), { tone: "mid" }));
+  out.push(S(k.cylinder(mx + 7.5, my + 1, 5.2, 2.2, 28, P, 22, 0.35), { tone: "mid" }));
+  // 鞋尖一点点
+  out.push(S(k.cylinder(mx - 7.5, my + 4, 5.6, 2.2, 2.4, P, 18, 0.4), { tone: "lo" }));
+  out.push(S(k.cylinder(mx + 7.5, my + 4, 5.6, 2.2, 2.4, P, 18, 0.4), { tone: "lo" }));
 
-  // 主躯干
-  const torso = { x: MAN[0] - 20, y: MAN[1] - 15, w: 40, d: 30, r: 5 };
-  out.push(S(k.slabOf(torso, 44, 46, P, 7, 1), { tone: "hi", crease: "lo" }));
-  out.push(L(k.sideSeam(torso, 67, P, 5), { tone: "faint" }));
-  // 胸前模组导轨凹槽
-  const rail = { x: MAN[0] - 11, y: MAN[1] + 2, w: 22, d: 10, r: 1.5 };
-  out.push(S(k.slabOf(rail, 48, 48, P, 3, 0.3), { tone: "lo" })); // 凹进的槽底板（高但被模组盖住）
-  out.push(L(k.planOutline(k.insetPlan({ x: MAN[0] - 12, y: MAN[1] + 1, w: 24, d: 12, r: 2 }, 0), 90, P), { tone: "lo" }));
+  // 髋 / 下摆
+  const hips = { x: mx - 15, y: my - 11, w: 30, d: 22, r: 7 };
+  out.push(S(k.slabOf(hips, 28, 16, P, 7, 0.8), { tone: "mid" }));
 
-  // 肩
-  out.push(S(k.slabOf({ x: MAN[0] - 30, y: MAN[1] - 8, w: 60, d: 16, r: 4 }, 86, 7, P, 5, 0.5), { tone: "mid" }));
-  // 臂 stub
-  out.push(S(k.cylinder(MAN[0] - 28, MAN[1], 5, 70, 18, P, 20, 0.3), { tone: "mid" }));
-  out.push(S(k.cylinder(MAN[0] + 28, MAN[1], 5, 70, 18, P, 20, 0.3), { tone: "mid" }));
-  out.push(S(k.cylinder(MAN[0] - 28, MAN[1], 4.2, 52, 18, P, 18), { tone: "lo" }));
-  out.push(S(k.cylinder(MAN[0] + 28, MAN[1], 4.2, 52, 18, P, 18), { tone: "lo" }));
+  // 毛衣躯干（圆角更大）
+  const torso = { x: mx - 18, y: my - 13, w: 36, d: 26, r: 8 };
+  out.push(S(k.slabOf(torso, 42, 48, P, 8, 1.1), { tone: "hi", crease: "lo" }));
+  // 领口
+  out.push(S(k.cylinder(mx, my - 1, 8.5, 88, 3.5, P, 24, 0.4), { tone: "mid" }));
 
-  // 颈 + 头
-  out.push(S(k.cylinder(MAN[0], MAN[1], 7, 93, 6, P, 24, 0.3), { tone: "mid" }));
-  out.push(S(k.cylinder(MAN[0], MAN[1], 14, 99, 4, P, 32, 0.4), { tone: "lo" })); // 下颌环
-  out.push(S(k.cylinder(MAN[0], MAN[1], 13.5, 103, 20, P, 36, 0.7), { tone: "hi" }));
-  out.push(L(k.ring(MAN[0], MAN[1], 13.5, 113, P, 28), { tone: "faint" }));
-  // 面罩
-  out.push(S(k.slabOf({ x: MAN[0] - 8, y: MAN[1] + 6, w: 16, d: 7, r: 2.5 }, 108, 10, P, 4, 0.35), { tone: "mid" }));
-  // 眼孔
-  out.push(D([at([MAN[0] - 4, MAN[1] + 12, 115]), at([MAN[0] + 4, MAN[1] + 12, 115])], { size: 0.55, tone: "hi" }));
-  // 头顶传感器
-  out.push(S(k.cylinder(MAN[0], MAN[1], 3.2, 123, 4, P, 16), { tone: "mid", lit: true }));
+  // 胸前本事牌底板（软布条感，不是金属导轨）
+  const rail = { x: mx - 11, y: my + 2, w: 22, d: 10, r: 3 };
+  out.push(S(k.slabOf(rail, 48, 2.2, P, 3, 0.35), { tone: "lo" }));
+  out.push(L(k.planOutline(k.insetPlan({ x: mx - 12, y: my + 1, w: 24, d: 12, r: 3 }, 0), 90, P), { tone: "faint" }));
+
+  // 圆肩
+  out.push(S(k.cylinder(mx - 22, my - 1, 8, 84, 8, P, 22, 0.45), { tone: "mid" }));
+  out.push(S(k.cylinder(mx + 22, my - 1, 8, 84, 8, P, 22, 0.45), { tone: "mid" }));
+  // 手臂自然下垂
+  out.push(S(k.cylinder(mx - 24, my + 1, 4.6, 52, 34, P, 18, 0.3), { tone: "mid" }));
+  out.push(S(k.cylinder(mx + 24, my + 1, 4.6, 52, 34, P, 18, 0.3), { tone: "mid" }));
+  // 手
+  out.push(S(k.cylinder(mx - 24, my + 2, 5.2, 48, 5, P, 16, 0.4), { tone: "hi" }));
+  out.push(S(k.cylinder(mx + 24, my + 2, 5.2, 48, 5, P, 16, 0.4), { tone: "hi" }));
+
+  // 颈
+  out.push(S(k.cylinder(mx, my, 5.5, 90, 8, P, 22, 0.35), { tone: "hi" }));
+  // 圆头（无人脸面罩 / 传感器）
+  out.push(S(k.cylinder(mx, my, 12.5, 98, 22, P, 36, 0.75), { tone: "hi" }));
+  // 浅发顶暗示
+  out.push(S(k.cylinder(mx, my - 1.5, 12.8, 116, 6, P, 32, 0.5), { tone: "mid" }));
+  out.push(L(k.ring(mx, my, 10, 118, P, 22), { tone: "faint" }));
 
   return out.join("");
 }
@@ -283,7 +286,7 @@ export function hmBenchFigure() {
     svg: k.figureSvg({
       width: WIDTH,
       height: HEIGHT,
-      label: "本事转接台：左边教学人偶胸前五个模组，右边 AI 机箱五个抽屜舱，中间线槽接线。",
+      label: "本事转接台：左边人胸前五个本事牌，右边 AI 机箱五个抽屉舱，中间线槽接线。",
       body,
       className: "hm-svg",
     }),
