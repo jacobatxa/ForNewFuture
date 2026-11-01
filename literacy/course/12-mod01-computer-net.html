@@ -3,90 +3,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive">
-<title>需要密码 · AI 课程库</title>
+<title>M1 教材示例 · 一层套一层 · 手机也是电脑</title>
+<meta name="description" content="M1 认识智能 · 抽象思维：把 PC、Web、互联网拆成一层套一层；手机和笔记本是同一种机器；上网是你这边的程序在问远处的程序。">
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { min-height: 100vh; display: grid; place-items: center; background: #0A0A0A;
-    color: #FAFAFA; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
-  .card { width: min(420px, calc(100vw - 40px)); padding: 30px 28px 26px; border: 1px solid rgba(255,255,255,.12);
-    border-radius: 14px; background: #111; box-shadow: 0 24px 60px rgba(0,0,0,.55); }
-  h1 { font-size: 17px; font-weight: 650; letter-spacing: .01em; }
-  p.sub { margin-top: 8px; font-size: 13px; line-height: 1.65; color: #8A8A8A; }
-  form { margin-top: 20px; display: grid; gap: 10px; }
-  input { width: 100%; padding: 11px 12px; font: inherit; font-size: 14px; color: #FAFAFA;
-    background: #0A0A0A; border: 1px solid rgba(255,255,255,.16); border-radius: 9px; }
-  input:focus { outline: none; border-color: rgba(255,255,255,.4); }
-  button { padding: 11px 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-    color: #0A0A0A; background: #FAFAFA; border: 0; border-radius: 9px; }
-  button:disabled { opacity: .5; cursor: default; }
-  .err { min-height: 18px; font-size: 12.5px; color: #ff8a8a; }
-  .foot { margin-top: 16px; font-size: 11.5px; color: #525252; line-height: 1.6; }
+  :root {
+    --bg: #f3eee5;
+    --paper: #fffaf2;
+    --ink: #161410;
+    --muted: #5a544c;
+    --line: #d5ccbe;
+    --cpu: #1d4e89;
+    --os: #8a4a12;
+    --net: #2a6b45;
+    --fail: #b42318;
+    --accent: #c44b16;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font: 16px/1.6 "Source Han Sans SC", "Noto Sans SC", "PingFang SC", sans-serif;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 48px 0 28px; border-bottom: 1px solid var(--line); }
+  .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  h1 { font-size: clamp(28px, 4.5vw, 42px); line-height: 1.15; margin: 0 0 12px; }
+  .lead { color: var(--muted); max-width: 46em; margin: 0; }
+  h2 { font-size: 22px; margin: 40px 0 8px; }
+  .why { color: var(--muted); margin: 0 0 16px; }
+  .board {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 22px 20px 16px;
+    margin: 0 0 28px;
+  }
+  .board svg { width: 100%; height: auto; display: block; }
+  .cap { font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+  .spine {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin: 22px 0 8px;
+  }
+  .spine div {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 10px 10px 12px;
+    font-size: 13px;
+  }
+  .spine .on { border-color: var(--ink); background: #fff; }
+  .spine b { display: block; font-size: 12px; color: var(--accent); margin-bottom: 4px; }
+  .use {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .use div { background: var(--paper); border: 1px solid var(--line); padding: 16px 18px; }
+  .use h3 { margin: 0 0 8px; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--cpu); }
+  .use ol { margin: 0; padding-left: 1.2em; }
+  .use li { margin: 6px 0; }
+  .say { margin: 0; font-size: 15px; }
+  footer { padding: 20px 0 56px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+  a { color: var(--accent); }
+  @media (max-width: 800px) {
+    .spine, .use { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .spine, .use { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>这个课程库需要访问密码</h1>
-  <p class="sub">输入我给你们的密码即可查看。本机记住后，下次打开不用再输。</p>
-  <form id="f">
-    <input id="pw" type="password" autocomplete="current-password" placeholder="访问密码" autofocus>
-    <button id="go" type="submit">进入</button>
-    <div class="err" id="err"></div>
-  </form>
-  <p class="foot">内容已加密存放，没有密码无法读取正文。忘了密码请联系课程负责人。</p>
-</div>
-<script>
-const CT = "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", SALT = "hdmm2D8Ziefy5/Myq68d3A==", IV = "d3tEoAT9WjtNbWAg", STORE = "fnf-key";
-const enc = new TextEncoder(), dec = new TextDecoder();
-const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  <header>
+    <div class="wrap">
+      <p class="kicker">M1 认识智能 · 抽象思维 · 教材示例</p>
+      <h1>把熟悉的东西<br>拆成一层套一层</h1>
+      <p class="lead">这一模块练的是抽象：自己定标准去分类，从现象抽到机制。线下项目就把 PC（硬件→系统→应用）、Web、互联网拆开——手机和笔记本其实是同一种机器；你一点图标，系统就启动一个正在运行的程序；上网时，是你这边的程序在问远处另一台机器上的程序。后面的模型、Agent、应用，都落在这张层级图上。</p>
+    </div>
+  </header>
 
-async function deriveKey(pw, saltB64) {
-  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: b64(saltB64), iterations: 310000, hash: "SHA-256" },
-    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
-  );
-}
+  <main class="wrap">
+    <h2>这一模块在六条线里接什么</h2>
+    <p class="why">每张图都要能直接接到后面模块，不能只说「以后会用到」。</p>
+    <div class="spine">
+      <div class="on"><b>M1 本模块</b>抽象：一层套一层；手机也是电脑</div>
+      <div><b>M2</b> 立规矩 = 把抽象标准写清楚，让 AI 听得懂</div>
+      <div><b>M3</b> 开放题也要分层：现象、材料、你的判断</div>
+      <div><b>M4</b> 用 AI 查证 = 分清模型草稿和你核对过的材料</div>
+      <div><b>M5</b> 报告四段：问题、立场、证据与反方、裁决</div>
+      <div><b>M6</b> 讲述要讲清：人做了判断，AI 出了草稿</div>
+    </div>
 
-async function open_(key) {
-  try {
-    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-    document.open(); document.write(dec.decode(plain)); document.close();
-    return true;
-  } catch (e) { return false; }
-}
+    <h2>示例 1 · 切开对照</h2>
+    <p class="why">左边笔记本、右边手机。都有处理器、内存、存储、输入输出；中间一层是操作系统。学生要能在自己的「设置 / 关于本机」里指出对应项。</p>
+    <div class="board">
+      <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="笔记本与手机硬件对照，中间是操作系统">
+        <rect width="1000" height="420" fill="#fffaf2"/>
+        <text x="70" y="28" font-size="13" fill="#5a544c" font-family="sans-serif">笔记本</text>
+        <text x="780" y="28" font-size="13" fill="#5a544c" font-family="sans-serif">手机</text>
+        <text x="430" y="28" font-size="13" fill="#8a4a12" font-family="sans-serif">操作系统（同一类软件）</text>
 
-(async () => {
-  const saved = localStorage.getItem(STORE);
-  if (saved) {
-    try {
-      const raw = Uint8Array.from(atob(saved), (c) => c.charCodeAt(0));
-      const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["decrypt"]);
-      if (await open_(key)) return;
-    } catch (e) {}
-    localStorage.removeItem(STORE);
-  }
-})();
+        <!-- laptop body -->
+        <rect x="40" y="50" width="280" height="170" rx="8" fill="#e8eef6" stroke="#1d4e89" stroke-width="1.5"/>
+        <rect x="58" y="64" width="244" height="118" rx="4" fill="#1a2433"/>
+        <text x="180" y="128" text-anchor="middle" fill="#9aa7b8" font-size="12" font-family="sans-serif">屏幕 · 输出</text>
+        <rect x="70" y="230" width="220" height="36" rx="4" fill="#d9e2ee" stroke="#1d4e89"/>
+        <text x="180" y="253" text-anchor="middle" font-size="12" font-family="sans-serif">键盘 / 触控板 · 输入</text>
 
-document.getElementById("f").addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  const btn = document.getElementById("go"), err = document.getElementById("err");
-  const pw = document.getElementById("pw").value;
-  if (!pw) return;
-  btn.disabled = true; btn.textContent = "验证中…"; err.textContent = "";
-  const key = await deriveKey(pw, SALT);
-  if (await open_(key)) {
-    try {
-      const raw = await crypto.subtle.exportKey("raw", key);
-      localStorage.setItem(STORE, btoa(String.fromCharCode(...new Uint8Array(raw))));
-    } catch (e) {}
-  } else {
-    btn.disabled = false; btn.textContent = "进入";
-    err.textContent = "密码不对，再试一次。";
-    document.getElementById("pw").select();
-  }
-});
-</script>
+        <g font-family="sans-serif" font-size="13">
+          <rect x="40" y="286" width="84" height="54" fill="#1d4e89"/>
+          <text x="82" y="310" text-anchor="middle" fill="#fff">处理器</text>
+          <text x="82" y="328" text-anchor="middle" fill="#d7e4f5" font-size="10">运算</text>
+          <rect x="132" y="286" width="84" height="54" fill="#2a5f99"/>
+          <text x="174" y="310" text-anchor="middle" fill="#fff">内存</text>
+          <text x="174" y="328" text-anchor="middle" fill="#d7e4f5" font-size="10">正在运行</text>
+          <rect x="224" y="286" width="96" height="54" fill="#163a68"/>
+          <text x="272" y="310" text-anchor="middle" fill="#fff">存储</text>
+          <text x="272" y="328" text-anchor="middle" fill="#d7e4f5" font-size="10">关掉还在</text>
+        </g>
+
+        <!-- OS column -->
+        <rect x="390" y="50" width="220" height="290" fill="#f7efe4" stroke="#8a4a12" stroke-width="1.5"/>
+        <text x="500" y="82" text-anchor="middle" font-size="15" font-family="sans-serif" fill="#8a4a12">Windows / macOS</text>
+        <text x="500" y="104" text-anchor="middle" font-size="15" font-family="sans-serif" fill="#8a4a12">Android / iOS</text>
+        <line x1="420" y1="122" x2="580" y2="122" stroke="#d5ccbe"/>
+        <g font-family="sans-serif" font-size="13" fill="#161410">
+          <text x="500" y="152" text-anchor="middle">分配处理器时间</text>
+          <text x="500" y="178" text-anchor="middle">分配内存</text>
+          <text x="500" y="204" text-anchor="middle">读写存储</text>
+          <text x="500" y="230" text-anchor="middle">启动正在运行的程序</text>
+          <text x="500" y="256" text-anchor="middle">决定谁能上网</text>
+          <text x="500" y="300" text-anchor="middle" font-size="12" fill="#5a544c">桌面不是系统。系统是上面这些工作。</text>
+        </g>
+
+        <!-- phone -->
+        <rect x="680" y="50" width="140" height="290" rx="18" fill="#e8eef6" stroke="#1d4e89" stroke-width="1.5"/>
+        <rect x="694" y="68" width="112" height="200" rx="6" fill="#1a2433"/>
+        <text x="750" y="168" text-anchor="middle" fill="#9aa7b8" font-size="11" font-family="sans-serif">屏幕</text>
+        <text x="750" y="186" text-anchor="middle" fill="#9aa7b8" font-size="11" font-family="sans-serif">摄像头</text>
+        <text x="750" y="204" text-anchor="middle" fill="#9aa7b8" font-size="11" font-family="sans-serif">麦克风</text>
+        <text x="750" y="320" text-anchor="middle" font-size="11" font-family="sans-serif">无线电</text>
+
+        <g font-family="sans-serif" font-size="12">
+          <rect x="840" y="70" width="120" height="50" fill="#1d4e89"/>
+          <text x="900" y="92" text-anchor="middle" fill="#fff">处理器</text>
+          <text x="900" y="108" text-anchor="middle" fill="#d7e4f5" font-size="10">同一类芯片</text>
+          <rect x="840" y="132" width="120" height="50" fill="#2a5f99"/>
+          <text x="900" y="154" text-anchor="middle" fill="#fff">内存</text>
+          <text x="900" y="170" text-anchor="middle" fill="#d7e4f5" font-size="10">打开 App 占用</text>
+          <rect x="840" y="194" width="120" height="50" fill="#163a68"/>
+          <text x="900" y="216" text-anchor="middle" fill="#fff">存储</text>
+          <text x="900" y="232" text-anchor="middle" fill="#d7e4f5" font-size="10">照片、安装包</text>
+          <rect x="840" y="256" width="120" height="84" fill="#2a6b45"/>
+          <text x="900" y="282" text-anchor="middle" fill="#fff">多出来的</text>
+          <text x="900" y="300" text-anchor="middle" fill="#e4f3ea" font-size="10">蜂窝 / Wi-Fi</text>
+          <text x="900" y="316" text-anchor="middle" fill="#e4f3ea" font-size="10">GPS · 传感器</text>
+        </g>
+
+        <text x="500" y="400" text-anchor="middle" font-size="14" font-family="sans-serif">差异是外壳和传感器，不是「一边是电脑、一边是智能」。</text>
+      </svg>
+      <p class="cap">课堂上：左右同时打开「关于本机」和手机「设置 → 关于手机」，把处理器、内存、存储三项对上号。再打开任务管理器，指给学生看：你点的图标，操作系统会启动一个正在运行的程序。</p>
+    </div>
+
+    <h2>示例 2 · 你一点「发送」，到底去问谁</h2>
+    <p class="why">打开网页、发微信、问大模型，结构都一样：你这边的程序发出询问，远处某台机器上的程序回答。第 06 课说的「部署」，就是把那个回答你的程序，放到一台有网址、一直开着的电脑上。</p>
+    <div class="board">
+      <svg viewBox="0 0 1000 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="上网时你这边的程序在问远处那台机器上的程序">
+        <rect width="1000" height="380" fill="#fffaf2"/>
+        <text x="40" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">你手里的机器</text>
+        <text x="430" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">网络</text>
+        <text x="760" y="32" font-size="13" fill="#5a544c" font-family="sans-serif">远处那台机器</text>
+
+        <rect x="30" y="50" width="200" height="210" fill="#e8eef6" stroke="#1d4e89"/>
+        <text x="130" y="78" text-anchor="middle" font-size="13" font-family="sans-serif">浏览器 / App</text>
+        <text x="130" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">正在运行的程序</text>
+        <rect x="50" y="120" width="160" height="44" fill="#fff" stroke="#1d4e89"/>
+        <text x="130" y="147" text-anchor="middle" font-size="13" font-family="sans-serif">发出请求</text>
+        <rect x="50" y="178" width="160" height="56" fill="#fff" stroke="#8a4a12"/>
+        <text x="130" y="202" text-anchor="middle" font-size="12" font-family="sans-serif">操作系统</text>
+        <text x="130" y="220" text-anchor="middle" font-size="11" fill="#5a544c" font-family="sans-serif">网卡、权限、DNS</text>
+
+        <path d="M230 142 H310" stroke="#2a6b45" stroke-width="2" marker-end="url(#a)"/>
+        <text x="248" y="132" font-size="11" fill="#2a6b45" font-family="sans-serif">① 路</text>
+
+        <rect x="310" y="88" width="150" height="70" fill="#e7f4ec" stroke="#2a6b45"/>
+        <text x="385" y="118" text-anchor="middle" font-size="13" font-family="sans-serif">Wi-Fi / 蜂窝</text>
+        <text x="385" y="138" text-anchor="middle" font-size="11" fill="#5a544c" font-family="sans-serif">路由器 · 基站</text>
+
+        <path d="M460 123 H540" stroke="#2a6b45" stroke-width="2"/>
+        <text x="478" y="113" font-size="11" fill="#2a6b45" font-family="sans-serif">② 门牌</text>
+
+        <rect x="540" y="88" width="150" height="70" fill="#e7f4ec" stroke="#2a6b45"/>
+        <text x="615" y="118" text-anchor="middle" font-size="13" font-family="sans-serif">域名解析</text>
+        <text x="615" y="138" text-anchor="middle" font-size="11" fill="#5a544c" font-family="sans-serif">名字 → 地址</text>
+
+        <path d="M690 123 H760" stroke="#2a6b45" stroke-width="2"/>
+        <text x="700" y="113" font-size="11" fill="#2a6b45" font-family="sans-serif">③ 对面</text>
+
+        <rect x="760" y="50" width="210" height="210" fill="#e8eef6" stroke="#1d4e89"/>
+        <text x="865" y="78" text-anchor="middle" font-size="13" font-family="sans-serif">回答你的程序</text>
+        <text x="865" y="98" text-anchor="middle" font-size="12" fill="#5a544c" font-family="sans-serif">也在运行中</text>
+        <rect x="780" y="120" width="170" height="44" fill="#fff" stroke="#1d4e89"/>
+        <text x="865" y="147" text-anchor="middle" font-size="13" font-family="sans-serif">计算并返回</text>
+        <rect x="780" y="178" width="170" height="56" fill="#fff" stroke="#8a4a12"/>
+        <text x="865" y="202" text-anchor="middle" font-size="12" font-family="sans-serif">也有操作系统</text>
+        <text x="865" y="220" text-anchor="middle" font-size="11" fill="#5a544c" font-family="sans-serif">机房里那台电脑</text>
+
+        <defs>
+          <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#2a6b45"/></marker>
+        </defs>
+
+        <g font-family="sans-serif" font-size="13">
+          <rect x="30" y="286" width="300" height="70" fill="#fdecea" stroke="#b42318"/>
+          <text x="46" y="314" fill="#b42318">故障 A · 路断了</text>
+          <text x="46" y="336" fill="#161410" font-size="12">关 Wi-Fi / 校园网未认证 → 请求出不去</text>
+          <rect x="350" y="286" width="300" height="70" fill="#fdecea" stroke="#b42318"/>
+          <text x="366" y="314" fill="#b42318">故障 B · 名字找不到</text>
+          <text x="366" y="336" fill="#161410" font-size="12">网址写错 / DNS 失败 → 到不了那台机器</text>
+          <rect x="670" y="286" width="300" height="70" fill="#fdecea" stroke="#b42318"/>
+          <text x="686" y="314" fill="#b42318">故障 C · 对面没在跑</text>
+          <text x="686" y="336" fill="#161410" font-size="12">程序挂了、还没上线、机器关机 → 第 06 课</text>
+        </g>
+      </svg>
+      <p class="cap">同一张图也能讲三种形态：桌面软件多半在你这边跑，可以离线；网页里浏览器只是窗户，计算常在远处；手机 App 在你口袋里跑，又经常要问远处。选形态时只问一句：核心计算和数据，放在哪一边。</p>
+    </div>
+
+    <div class="use">
+      <div>
+        <h3>线上 1 小时怎么用</h3>
+        <ol>
+          <li>10 分钟：对照示例 1，打开真实设置，不讲空比喻。</li>
+          <li>15 分钟：操作系统只讲「启动程序、管资源」。看任务管理器。</li>
+          <li>20 分钟：沿示例 2 走一遍「打开百度 / 发一条消息」。先不提 AI。</li>
+          <li>15 分钟：三处故障演示（能演示就演示，不能就投影日志）。</li>
+        </ol>
+      </div>
+      <div>
+        <h3>下课必须能指着图说</h3>
+        <p class="say">1. 手机和笔记本是同一种机器，差在传感器和无线电。<br>
+        2. 我点的图标，是操作系统启动的一个正在运行的程序。<br>
+        3. 网页、App、大模型回答，只要联网，就是你这边的程序在问远处的程序；连不上，就查路、网址、对面有没有在跑。</p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="wrap">
+      <a href="11-ai-weekend-syllabus.html">返回课程大纲</a> ·
+      <a href="13-six-module-architecture.html">六模块对照表</a> ·
+      M1 教材示例
+    </div>
+  </footer>
 </body>
 </html>

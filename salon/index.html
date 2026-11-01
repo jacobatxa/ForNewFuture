@@ -3,90 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive">
-<title>需要密码 · AI 课程库</title>
+<title>家长场沙龙</title>
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { min-height: 100vh; display: grid; place-items: center; background: #0A0A0A;
-    color: #FAFAFA; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
-  .card { width: min(420px, calc(100vw - 40px)); padding: 30px 28px 26px; border: 1px solid rgba(255,255,255,.12);
-    border-radius: 14px; background: #111; box-shadow: 0 24px 60px rgba(0,0,0,.55); }
-  h1 { font-size: 17px; font-weight: 650; letter-spacing: .01em; }
-  p.sub { margin-top: 8px; font-size: 13px; line-height: 1.65; color: #8A8A8A; }
-  form { margin-top: 20px; display: grid; gap: 10px; }
-  input { width: 100%; padding: 11px 12px; font: inherit; font-size: 14px; color: #FAFAFA;
-    background: #0A0A0A; border: 1px solid rgba(255,255,255,.16); border-radius: 9px; }
-  input:focus { outline: none; border-color: rgba(255,255,255,.4); }
-  button { padding: 11px 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-    color: #0A0A0A; background: #FAFAFA; border: 0; border-radius: 9px; }
-  button:disabled { opacity: .5; cursor: default; }
-  .err { min-height: 18px; font-size: 12.5px; color: #ff8a8a; }
-  .foot { margin-top: 16px; font-size: 11.5px; color: #525252; line-height: 1.6; }
+  body{font-family:"PingFang SC","Noto Sans SC",sans-serif;background:#F4F1EA;color:#1F2A2E;max-width:640px;margin:48px auto;padding:0 20px;line-height:1.65}
+  a{color:#B9762A}
+  h1{font-size:26px;margin-bottom:8px}
+  p{color:#5C6568}
+  ul{margin:18px 0 0 1.2em}
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>这个课程库需要访问密码</h1>
-  <p class="sub">输入我给你们的密码即可查看。本机记住后，下次打开不用再输。</p>
-  <form id="f">
-    <input id="pw" type="password" autocomplete="current-password" placeholder="访问密码" autofocus>
-    <button id="go" type="submit">进入</button>
-    <div class="err" id="err"></div>
-  </form>
-  <p class="foot">内容已加密存放，没有密码无法读取正文。忘了密码请联系课程负责人。</p>
-</div>
-<script>
-const CT = "JT82Vuac08vVgepe0kYMfyMQiItz4EvMS2d0TFaaOn6R1KaYFTGT8QbCmdbaPEsWI3ckvd/ZUPeo82gcCZF3XzVeOsxHVVSjStRBJ0vvbbGnvOHl1Swvn75CggtAzwqtG8OPHxWAbMu1X8YB4LW/6uyLcQ0kJQ8YVDNzdA3DmxFkBhZkm1QV/uLsRYufivM8/6rvrAmH3cZ7yOa94hgtJuqBrx8x6jfxR8Tx8hCLge6NJZwXBvLHc5yDAjqqu1JI+F+HR1AgxiJHR0s18iw8Y+esiWhYhkBItjCzP4iRa1vmFx4vItPQiCYapcWdnaYOSdaoRqLV7L0g21VRYO6X9pCSHm7FpwWkhkVeuo0/p3YBcVbmnFXbKFXkpfuwcv7m6mMvmLn5Lv1j+eZMoLHyyAVqX6c0dV3OymXDqj4IgM2tnJ0luplVWxdjrAz3dhbn4JdeVZYqkXiSW+pv4GK9F/Czvb8K4nf8Q4pdkoG6pY7YD7i4nNFp1vD7D/ExHTT9HeftxxmwcW7wfj6o1hrkMAapE3KDsEP74/CDUUjjp01QXdZvLB2P0uKI8/cVPU3m25XKMYfBMXfU2R7fa1zpbRuCRQJyc9fuu2+aCf6Tdjsw1ioIXrU2rR1SXWmGCuPJw/lN/mNBHdqppQupdOWCRj7Lvo13qxlYuUmKksBmfb86CVJ3xR0VY0Z37AdV9vZAtamc0ynUgGXByGAuUBWOqGxEBJ461gx974UT7BObLItQexTrM8XJSz0qFMJ9wHrfRQKGtZ6Ik4ENrFrvB1PT/mTmL0PX7EGTb40AhTo6l7ZtZ1jkDraCcmknJ2rduI9h3UxaKWlUoKKj+DFmguVPUayRKY+rV77oktFju1c3Sovrvsx047GxzQTtzxITb2nkuk60ijIWylwV58usfXjZofnfU515/PlZ6Dj4iYv0gOzDx8BA9YoHyLOKNMKVdjIWDkaUQGaaK9zBaEpqvm35H4oai4HCgxHotvEBiHF8pvGLON7wyNRW8TLuKPhRHYNGatLc+TKSxEUJ3QXVtx9os0xKuNxKcdQWqPYAD637JRcWVc6CG8WpLmacvmrQz5my+yKdgFQoISmeNmrslPSnjNrujhlpykQ2LrHBF0JQYSNcs+r8U8iQiPiOf+9+A1Q8i1q14SYXIVYyhW1DNBFFmIedfxVOdZA/FAiFqRF71j2jInaks1m9FVd3tWl7uxZo96mK9wqf5Vo87O7UXGwR9lu6WV4Ws9Rp/6w6f8tunxn5oHX2Rt1uyR1o6jb0pwhNVnCHM8b8Rd7NK29n/3rkjUBZ6weJV/60gOf/9iGUA8mo1V+Xi0XDB6pCOuZ43AWv1984err02XECPcDEAwF+Au7abLTlri3GCEiAeka6NYMsF8+dJWNvCu0IVJNANyc/a/+V/jEOOQFrywP0ZCv+VUmbl6TTn76usZF7", SALT = "HkmJxTdGw+vT+dIAJL6S8g==", IV = "ewHlD6uw53HvvkIP", STORE = "fnf-key";
-const enc = new TextEncoder(), dec = new TextDecoder();
-const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
-
-async function deriveKey(pw, saltB64) {
-  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: b64(saltB64), iterations: 310000, hash: "SHA-256" },
-    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
-  );
-}
-
-async function open_(key) {
-  try {
-    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-    document.open(); document.write(dec.decode(plain)); document.close();
-    return true;
-  } catch (e) { return false; }
-}
-
-(async () => {
-  const saved = localStorage.getItem(STORE);
-  if (saved) {
-    try {
-      const raw = Uint8Array.from(atob(saved), (c) => c.charCodeAt(0));
-      const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["decrypt"]);
-      if (await open_(key)) return;
-    } catch (e) {}
-    localStorage.removeItem(STORE);
-  }
-})();
-
-document.getElementById("f").addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  const btn = document.getElementById("go"), err = document.getElementById("err");
-  const pw = document.getElementById("pw").value;
-  if (!pw) return;
-  btn.disabled = true; btn.textContent = "验证中…"; err.textContent = "";
-  const key = await deriveKey(pw, SALT);
-  if (await open_(key)) {
-    try {
-      const raw = await crypto.subtle.exportKey("raw", key);
-      localStorage.setItem(STORE, btoa(String.fromCharCode(...new Uint8Array(raw))));
-    } catch (e) {}
-  } else {
-    btn.disabled = false; btn.textContent = "进入";
-    err.textContent = "密码不对，再试一次。";
-    document.getElementById("pw").select();
-  }
-});
-</script>
+  <p style="margin-bottom:18px"><a href="../" style="color:#B9762A">← AI 课程库</a></p>
+  <p style="letter-spacing:.14em;color:#B9762A;font-size:12px;font-weight:700">沙龙 · 机构材料</p>
+  <h1>家长场</h1>
+  <p>对外宣讲和海报，不是某一门课的课件。</p>
+  <ul>
+    <li><a href="07-沙龙宣讲-家长场.html">沙龙宣讲</a></li>
+    <li><a href="08-沙龙海报-家长场.html">沙龙海报</a></li>
+    <li><a href="05-演讲版-AI教育变革.html">演讲版</a></li>
+    <li><a href="parents-ai-talk.html">家长宣讲（较早一版）</a></li>
+  </ul>
 </body>
 </html>

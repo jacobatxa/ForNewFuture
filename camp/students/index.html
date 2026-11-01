@@ -3,90 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow, noarchive">
-<title>需要密码 · AI 课程库</title>
+<meta name="color-scheme" content="dark">
+<title>创想营 · 学生档案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { min-height: 100vh; display: grid; place-items: center; background: #0A0A0A;
-    color: #FAFAFA; font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif; }
-  .card { width: min(420px, calc(100vw - 40px)); padding: 30px 28px 26px; border: 1px solid rgba(255,255,255,.12);
-    border-radius: 14px; background: #111; box-shadow: 0 24px 60px rgba(0,0,0,.55); }
-  h1 { font-size: 17px; font-weight: 650; letter-spacing: .01em; }
-  p.sub { margin-top: 8px; font-size: 13px; line-height: 1.65; color: #8A8A8A; }
-  form { margin-top: 20px; display: grid; gap: 10px; }
-  input { width: 100%; padding: 11px 12px; font: inherit; font-size: 14px; color: #FAFAFA;
-    background: #0A0A0A; border: 1px solid rgba(255,255,255,.16); border-radius: 9px; }
-  input:focus { outline: none; border-color: rgba(255,255,255,.4); }
-  button { padding: 11px 12px; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-    color: #0A0A0A; background: #FAFAFA; border: 0; border-radius: 9px; }
-  button:disabled { opacity: .5; cursor: default; }
-  .err { min-height: 18px; font-size: 12.5px; color: #ff8a8a; }
-  .foot { margin-top: 16px; font-size: 11.5px; color: #525252; line-height: 1.6; }
+  :root{--bg:#0A0A0A;--surface:#111;--ink:#FAFAFA;--muted:#8A8A8A;--faint:#525252;--line:rgba(255,255,255,.08)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Geist","PingFang SC","Noto Sans SC",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;padding:40px 24px 80px}
+  a{color:var(--muted);text-decoration:none} a:hover{color:var(--ink)}
+  .wrap{max-width:760px;margin:0 auto}
+  .back{font-size:13px;margin-bottom:28px;display:inline-block}
+  .mono{font-family:"Geist Mono",Menlo,monospace;font-size:12px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:32px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+  .lead{color:var(--muted);font-size:15px;margin-bottom:36px;max-width:36em}
+  .warn{font-size:13px;color:var(--faint);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:28px}
+  h2{font-size:14px;font-weight:600;margin:28px 0 12px;color:var(--muted)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:10px}
+  .card h3{font-size:16px;font-weight:600;margin-bottom:4px}
+  .card p{font-size:13px;color:var(--muted)}
+  .empty{color:var(--faint);font-size:14px;padding:8px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--faint);font-weight:500;font-size:12px}
+  td{color:var(--muted)}
+  td.name{color:var(--ink);font-weight:500}
 </style>
 </head>
 <body>
-<div class="card">
-  <h1>这个课程库需要访问密码</h1>
-  <p class="sub">输入我给你们的密码即可查看。本机记住后，下次打开不用再输。</p>
-  <form id="f">
-    <input id="pw" type="password" autocomplete="current-password" placeholder="访问密码" autofocus>
-    <button id="go" type="submit">进入</button>
-    <div class="err" id="err"></div>
-  </form>
-  <p class="foot">内容已加密存放，没有密码无法读取正文。忘了密码请联系课程负责人。</p>
+<div class="wrap">
+  <a class="back" href="../../">← AI 课程库</a>
+  <p class="mono">Camp · students</p>
+  <h1>创想营 · 学生档案</h1>
+  <p class="lead">学习评价、当堂产出、作业提交。点开就能看。国庆营与后续场地共用这一套课。</p>
+  <p class="warn">这个仓库是公开的。这里只放花名、评价摘要和作业链接，不要写手机号、身份证、家庭住址。</p>
+
+  <h2>本届名册</h2>
+  <div class="card">
+    <table>
+      <thead>
+        <tr><th>姓名</th><th>场次</th><th>进度</th><th>最近评价</th></tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="4" class="empty">还没有录入。把名单补进这一页，或在同目录加个人页再链过来。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>作业与产出</h2>
+  <div class="card">
+    <h3>辨智能 · 投票与打分</h3>
+    <p class="empty">照片 / 记录表待上传</p>
+  </div>
+  <div class="card">
+    <h3>探黑盒 · 下一词与发送路径</h3>
+    <p class="empty">笔记或截图待上传</p>
+  </div>
+  <div class="card">
+    <h3>会提问 · Prompt 五习惯</h3>
+    <p class="empty">学生 Prompt 原稿待上传</p>
+  </div>
+  <div class="card">
+    <h3>造 Agent · 成品</h3>
+    <p class="empty">网页 / 助手链接待上传</p>
+  </div>
 </div>
-<script>
-const CT = "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", SALT = "wvfZ72fJrYck8HbMIHj2OA==", IV = "PyC7C+hQGIr8Puv2", STORE = "fnf-key";
-const enc = new TextEncoder(), dec = new TextDecoder();
-const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
-
-async function deriveKey(pw, saltB64) {
-  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
-  return crypto.subtle.deriveKey(
-    { name: "PBKDF2", salt: b64(saltB64), iterations: 310000, hash: "SHA-256" },
-    base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]
-  );
-}
-
-async function open_(key) {
-  try {
-    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(IV) }, key, b64(CT));
-    document.open(); document.write(dec.decode(plain)); document.close();
-    return true;
-  } catch (e) { return false; }
-}
-
-(async () => {
-  const saved = localStorage.getItem(STORE);
-  if (saved) {
-    try {
-      const raw = Uint8Array.from(atob(saved), (c) => c.charCodeAt(0));
-      const key = await crypto.subtle.importKey("raw", raw, "AES-GCM", true, ["decrypt"]);
-      if (await open_(key)) return;
-    } catch (e) {}
-    localStorage.removeItem(STORE);
-  }
-})();
-
-document.getElementById("f").addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  const btn = document.getElementById("go"), err = document.getElementById("err");
-  const pw = document.getElementById("pw").value;
-  if (!pw) return;
-  btn.disabled = true; btn.textContent = "验证中…"; err.textContent = "";
-  const key = await deriveKey(pw, SALT);
-  if (await open_(key)) {
-    try {
-      const raw = await crypto.subtle.exportKey("raw", key);
-      localStorage.setItem(STORE, btoa(String.fromCharCode(...new Uint8Array(raw))));
-    } catch (e) {}
-  } else {
-    btn.disabled = false; btn.textContent = "进入";
-    err.textContent = "密码不对，再试一次。";
-    document.getElementById("pw").select();
-  }
-});
-</script>
 </body>
 </html>
