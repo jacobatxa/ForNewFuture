@@ -176,15 +176,29 @@ h2{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-.01em;line-hei
 .ptag{border:1px solid var(--edge);background:linear-gradient(160deg,#122038,#0B1528);color:var(--ink);border-radius:999px;padding:10px 18px;font-weight:900;font-size:16px}
 .ptag.sel{background:var(--accent);color:#04101C;border-color:var(--accent)}
 .ptag.used{opacity:.3;pointer-events:none}
-.shelves-viz .shelf{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:22px 14px;min-height:200px;justify-content:center}
+.shelves-viz .shelf{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:8px;padding:16px 14px;min-height:200px;justify-content:flex-start}
 .shelves-viz .shelf-ico{width:80px;height:64px;color:var(--accent)}
-.shelves-viz .shelf h3{font-size:20px;margin:0}
+.shelves-viz .shelf h3{font-size:18px;margin:0;text-align:center}
 .shelves-viz .shelf h3 small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;margin-top:4px;font-family:var(--mono)}
 .shelves-viz .shelf p{font-size:13px;color:var(--ink2);margin:0}
-.shelves-rich .shelf{gap:10px;padding:20px 12px 18px;min-height:240px}
-.shelf-brands{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:4px}
-.shelf-brands img{width:40px;height:40px;border-radius:12px;border:1px solid var(--edge);background:#0B1220;object-fit:cover}
-.shelf-tag{display:inline-block;margin-top:6px;font-size:12px;color:var(--accent);font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(61,217,255,.08);border:1px solid rgba(61,217,255,.22)}
+.shelves-rich .shelf{gap:8px;padding:14px 12px 14px;min-height:0}
+.shelf-brands{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:2px}
+.shelf-brands img{width:36px;height:36px;border-radius:10px;border:1px solid var(--edge);background:#0B1220;object-fit:cover}
+.shelf-tag{display:inline-block;margin-top:2px;font-size:12px;color:var(--accent);font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(61,217,255,.08);border:1px solid rgba(61,217,255,.22);align-self:center}
+.shelf-use{border:1px solid var(--edge);border-radius:12px;background:rgba(0,0,0,.22);padding:10px;display:flex;flex-direction:column;gap:8px}
+.shelf-use .who,.shelf-use .how{margin:0;font-size:12.5px;line-height:1.45;color:var(--ink2)}
+.shelf-use .who b,.shelf-use .how b{color:var(--ink);margin-right:4px}
+.shelf-steps{display:flex;flex-wrap:wrap;gap:5px}
+.shelf-steps span{font:700 11px var(--mono);padding:4px 7px;border-radius:8px;border:1px solid rgba(61,217,255,.22);color:var(--accent);background:rgba(61,217,255,.06)}
+.shelf-scene{border-radius:12px;border:1px solid var(--edge);background:linear-gradient(180deg,#101B2E,#0A1220);padding:8px;min-height:78px;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.shelf-scene .sc-row{display:flex;gap:6px;align-items:center}
+.shelf-scene .sc-bubble{flex:1;font-size:11px;line-height:1.35;padding:6px 8px;border-radius:8px;border:1px solid var(--edge);color:var(--ink2);background:rgba(255,255,255,.03)}
+.shelf-scene .sc-bubble.you{border-color:rgba(61,217,255,.28);color:var(--ink);background:rgba(61,217,255,.08)}
+.shelf-scene .sc-files{font:600 10px/1.5 var(--mono);color:var(--ink2);padding:0 4px}
+.shelf-scene .sc-files b{color:#9EC5FF}
+.shelf-scene .sc-chips{display:flex;gap:5px;flex-wrap:wrap}
+.shelf-scene .sc-chips i{font:700 10px var(--mono);font-style:normal;padding:4px 7px;border-radius:7px;border:1px solid var(--edge);color:var(--ink2)}
+.shelf-scene .sc-chips i.on{border-color:rgba(255,176,32,.4);color:var(--warm)}
 .bridge-grid{display:flex;align-items:stretch;gap:12px;flex:1;min-height:0}
 .bridge-card{flex:1;border:1px solid var(--edge);border-radius:18px;background:linear-gradient(165deg,rgba(18,32,52,.9),rgba(8,14,26,.95));padding:22px 18px;display:flex;flex-direction:column;gap:10px}
 .bridge-card.on{border-color:rgba(61,217,255,.45);box-shadow:var(--glow)}
@@ -1115,42 +1129,65 @@ h2{color:#F3F7FD}
   </aside>
 </section>
 
-<!-- 13 三类总览 -->
-<section class="slide" data-t="38–40" data-fs="聊天区：豆包、Cursor、飞书助手，各归哪一栏？">
-  <div><h2>先分清三格货架<span class="en">Model · Runtime · Personal Agent</span></h2></div>
-  <p class="lead one-line">点一格。先认清你打开的是哪一种——名字叫什么不重要，<b>它在干什么</b>才重要。</p>
+<!-- 13 三类总览 · 按用途 -->
+<section class="slide" data-t="38–40" data-fs="聊天区：你上周用 AI 是聊天、改文件，还是让它办事？">
+  <div><h2>先按用途分清三格<span class="en">Who uses what · how they use it</span></h2></div>
+  <p class="lead one-line">别先记名字。问两句：<b>谁在用？怎么用？</b>点一格看清楚。</p>
   <div class="shelves shelves-viz shelves-rich" id="shelves">
     <button class="shelf" data-s="model" aria-pressed="false">
       <div class="shelf-brands">
         <img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-deepseek@" alt=""><img src="@IMG:brand-chatgpt@" alt="">
       </div>
-      <h3>大模型<small>Model</small></h3>
-      <p>豆包 · DeepSeek · ChatGPT</p>
-      <span class="shelf-tag">接话 · 写草稿 · 答问题</span>
+      <h3>大模型<small>Model · 聊天窗</small></h3>
+      <div class="shelf-scene" aria-hidden="true">
+        <div class="sc-row"><div class="sc-bubble you">帮我改一段作文开头</div></div>
+        <div class="sc-row"><div class="sc-bubble">可以。先写环境，再点出心情……</div></div>
+      </div>
+      <div class="shelf-use">
+        <p class="who"><b>谁用</b>几乎所有人：写作业、问问题、翻译、出主意</p>
+        <p class="how"><b>怎么用</b>打开网页/App → 打字提问 → 读它回的话</p>
+        <div class="shelf-steps"><span>1 打开聊</span><span>2 说清楚</span><span>3 看回答</span></div>
+      </div>
+      <span class="shelf-tag">豆包 · DeepSeek · ChatGPT</span>
     </button>
     <button class="shelf" data-s="runtime" aria-pressed="false">
       <div class="shelf-brands">
         <img src="@IMG:brand-cursor@" alt=""><img src="@IMG:brand-claude@" alt=""><img src="@IMG:brand-codex@" alt="">
       </div>
-      <h3>运行环境<small>Runtime</small></h3>
-      <p>Cursor · Claude Code · Codex</p>
-      <span class="shelf-tag">打开项目 · 改文件 · 跑命令</span>
+      <h3>运行环境<small>Runtime · 车间</small></h3>
+      <div class="shelf-scene" aria-hidden="true">
+        <div class="sc-files">📁 我的网页/<br><b>index.html</b><br><b>style.css</b><br>↳ AI：我帮你改标题颜色</div>
+      </div>
+      <div class="shelf-use">
+        <p class="who"><b>谁用</b>要交作品、做网页、改脚本的人（营地、社团、作业）</p>
+        <p class="how"><b>怎么用</b>打开项目文件夹 → 让它改文件/跑命令 → 你验收结果</p>
+        <div class="shelf-steps"><span>1 打开项目</span><span>2 指文件</span><span>3 让它改</span></div>
+      </div>
+      <span class="shelf-tag">Cursor · Claude Code · Codex</span>
     </button>
     <button class="shelf" data-s="agent" aria-pressed="false">
       <div class="shelf-brands">
         <img src="@IMG:brand-doubao@" alt=""><img src="@IMG:brand-feishu@" alt=""><img src="@IMG:brand-hermes@" alt="">
       </div>
-      <h3>Personal Agent<small>个人助手</small></h3>
-      <p>豆包工作台 · 飞书 · Hermes</p>
-      <span class="shelf-tag">有目标 · 有记忆 · 能办事</span>
+      <h3>Personal Agent<small>助手 · 办事</small></h3>
+      <div class="shelf-scene" aria-hidden="true">
+        <div class="sc-chips"><i>记忆</i><i>技能</i><i class="on">目标：整理作业</i></div>
+        <div class="sc-row"><div class="sc-bubble">今晚先改数学，再背单词。要我设提醒吗？</div></div>
+      </div>
+      <div class="shelf-use">
+        <p class="who"><b>谁用</b>想让 AI 长期帮自己办事的人（日程、资料、多步任务）</p>
+        <p class="how"><b>怎么用</b>设目标 → 装记忆/技能 → 它按规矩往下办，不只回一句</p>
+        <div class="shelf-steps"><span>1 定目标</span><span>2 装本事</span><span>3 它去办</span></div>
+      </div>
+      <span class="shelf-tag">豆包工作台 · 飞书 · Hermes</span>
     </button>
   </div>
-  <div class="say" id="shelfSay">点一下看它干什么。三格可以叠用，但打开时先认清是哪一格。</div>
+  <div class="say" id="shelfSay">点一格：看「谁用 / 怎么用」。三格可以叠，但你打开时先认清用途。</div>
   <aside class="notes">
     <h4>提问链</h4>
-    <ul><li>孩子说「我用 AI」时，追问：你打开的是聊天、写代码的环境，还是一个会办事的助手？</li>
-    <li>术语统一：叫「运行环境」，不叫「编程工具」——它是大模型干活的车间。</li>
-    <li>和国庆创想营错开：营地搭过 Agent 零件；这里先把市场上的东西分到货架上。</li></ul>
+    <ul><li>先问用途：上周你是「聊两句」、还是「改过文件」、还是「让它连续办事」？</li>
+    <li>术语：叫「运行环境」，不叫「编程工具」——车间里仍装着大模型。</li>
+    <li>下一页起逐格展开界面；这页只把人钉在用途上。</li></ul>
   </aside>
 </section>
 
@@ -1623,11 +1660,11 @@ $$('#shelves .shelf').forEach((s) => s.onclick = () => {
   $$('#shelves .shelf').forEach((x) => x.setAttribute('aria-pressed', x === s ? String(!(s.getAttribute('aria-pressed')==='true')) : 'false'));
   const on = [...$$('#shelves .shelf')].filter((x) => x.getAttribute('aria-pressed')==='true');
   const copy = {
-    model: '大模型：负责接话、写草稿、答问题。它是发动机。',
-    runtime: '运行环境：文件、终端、改项目。大模型在这里对着真实项目干活。',
-    agent: 'Personal Agent：有目标、记忆、技能，要把事办完——不只是回一句。',
+    model: '大模型 · 谁用：几乎人人。怎么用：打开聊天 → 说清楚 → 看回答。例：改作文、问概念。',
+    runtime: '运行环境 · 谁用：要交作品/做网页的人。怎么用：打开项目 → 指文件 → 让它改。例：Cursor 改 index.html。',
+    agent: 'Personal Agent · 谁用：要长期办事的人。怎么用：定目标 → 装记忆/技能 → 它去办。例：整理作业提醒。',
   };
-  $('#shelfSay').textContent = on.length ? (copy[on[0].dataset.s] || '') : '点一格货架。先认清你打开的是哪一种。';
+  $('#shelfSay').textContent = on.length ? (copy[on[0].dataset.s] || '') : '点一格：先看谁用、怎么用。';
 });
 
 
