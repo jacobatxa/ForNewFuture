@@ -2,182 +2,163 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>M1 速查卡 · 遇到什么看什么</title>
+<title>M1 一条线 · 课后速查</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:#05080F;color:#E8EEF8;font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
   .sheet{
-    width:1400px;min-height:1800px;margin:0 auto;padding:36px 40px 28px;
-    background:
-      radial-gradient(900px 420px at 100% 0%,rgba(61,217,255,.1),transparent 50%),
-      linear-gradient(180deg,#0B1220,#070B14);
+    width:1280px;margin:0 auto;padding:32px 36px 24px;
+    background:linear-gradient(180deg,#0C1424,#070B14);
   }
-  header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px;gap:20px}
   .kick{font:800 12px ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#3DD9FF}
-  h1{font-size:34px;line-height:1.15;margin-top:6px}
+  h1{font-size:32px;margin-top:6px;line-height:1.2}
   h1 em{font-style:normal;color:#F2B35E;font-weight:700}
-  header p{margin-top:8px;font-size:15px;color:#8B98B0;max-width:46em;line-height:1.5}
-  .meta{font:700 12px ui-monospace,Menlo,monospace;color:#8B98B0;border:1px solid #243247;border-radius:999px;padding:8px 14px;white-space:nowrap;background:rgba(14,22,38,.7)}
-  .index{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;
+  .thesis{
+    margin-top:12px;font-size:16px;line-height:1.55;color:#E8EEF8;
+    border-left:3px solid #F2B35E;padding:10px 14px;background:rgba(242,179,94,.08);border-radius:0 14px 14px 0;
   }
-  .index a,.index div{
-    text-decoration:none;color:#C8D4E8;border:1px solid #243247;border-radius:14px;
-    background:rgba(14,22,38,.85);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;
+  .thesis b{color:#F2B35E}
+  .path{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 18px;
   }
-  .index b{font:800 12px ui-monospace,Menlo,monospace;color:#04101C;background:#3DD9FF;border-radius:8px;padding:3px 6px;flex:none}
-  .index .w b{background:#F2B35E}
-  .index .g b{background:#3DFFB0}
-  .index span{display:block;font-size:13.5px;font-weight:800;color:#E8EEF8;line-height:1.3}
-  .index small{display:block;margin-top:3px;font-size:12px;font-weight:500;color:#8B98B0;line-height:1.4}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .card{
-    border:1px solid #243247;border-radius:18px;background:rgba(14,22,38,.9);
-    padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px;
+  .path div{
+    border:1px solid #243247;border-radius:14px;padding:12px 14px;background:rgba(14,22,38,.9);
   }
-  .card.wide{grid-column:1 / -1}
-  .card h2{font-size:18px;display:flex;align-items:center;gap:8px;line-height:1.3}
-  .card h2 i{
-    font:800 11px ui-monospace,Menlo,monospace;font-style:normal;color:#04101C;
-    background:#3DD9FF;border-radius:8px;padding:3px 7px;flex:none;
+  .path b{display:block;font:800 12px ui-monospace,Menlo,monospace;color:#3DD9FF;margin-bottom:4px}
+  .path span{font-size:14px;font-weight:800;line-height:1.35}
+  .path small{display:block;margin-top:4px;font-size:12.5px;font-weight:500;color:#8B98B0;line-height:1.4}
+  .block{
+    border:1px solid #243247;border-radius:18px;background:rgba(14,22,38,.92);
+    padding:16px 16px 14px;margin-bottom:12px;
   }
-  .card.warm h2 i{background:#F2B35E}
-  .card.ok h2 i{background:#3DFFB0}
-  .card.blue h2 i{background:#7AA2FF}
-  .when{font-size:13px;color:#AAB6CA;line-height:1.5;background:rgba(61,217,255,.06);border-radius:10px;padding:8px 10px}
-  .when b{color:#3DD9FF}
-  .rows{display:flex;flex-direction:column;gap:6px}
-  .row{display:grid;grid-template-columns:88px 1fr;gap:10px;align-items:start;padding:8px 10px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid #1E2A40}
-  .row strong{font-size:14px;color:#E8EEF8}
-  .row span{font-size:13.5px;color:#AAB6CA;line-height:1.45}
+  .block h2{font-size:20px;display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .block h2 i{
+    font:800 12px ui-monospace,Menlo,monospace;font-style:normal;color:#04101C;
+    background:#3DD9FF;border-radius:8px;padding:3px 8px;flex:none;
+  }
+  .block.b2 h2 i{background:#7AA2FF}
+  .block.b3 h2 i{background:#F2B35E}
+  .why{font-size:14px;color:#AAB6CA;line-height:1.5;margin-bottom:12px}
+  .why b{color:#E8EEF8}
+  .door{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;
+  }
+  .door div{border:1px solid #243247;border-radius:12px;padding:10px;background:rgba(0,0,0,.22)}
+  .door b{display:block;font-size:13px;color:#3DD9FF;margin-bottom:4px}
+  .door span{font-size:13px;color:#C8D4E8;line-height:1.4}
+  .map{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch}
+  .side{border:1px solid #243247;border-radius:14px;padding:12px;background:rgba(0,0,0,.2)}
+  .side h3{font-size:14px;margin-bottom:8px;color:#8B98B0;font-weight:700}
+  .side li{list-style:none;font-size:14px;padding:7px 0;border-bottom:1px solid #1E2A40;color:#E8EEF8}
+  .side li:last-child{border-bottom:0}
+  .side li span{color:#8B98B0;font-weight:500}
+  .mid{display:flex;align-items:center;justify-content:center;font:800 13px ui-monospace,Menlo,monospace;color:#F2B35E;writing-mode:horizontal-tb;text-align:center;min-width:72px}
+  .cols{display:grid;grid-template-columns:1.05fr .95fr;gap:10px}
+  .box{border:1px solid #243247;border-radius:14px;padding:12px;background:rgba(0,0,0,.2)}
+  .box h3{font-size:15px;margin-bottom:8px}
+  .box h3 small{display:block;font-size:12px;color:#8B98B0;font-weight:600;margin-top:2px}
+  .row{display:grid;grid-template-columns:72px 1fr;gap:8px;padding:6px 0;border-bottom:1px solid #1E2A40;font-size:13.5px;line-height:1.4}
+  .row:last-child{border-bottom:0}
+  .row b{color:#E8EEF8}
+  .row span{color:#AAB6CA}
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
   .step{border:1px solid #243247;border-radius:12px;padding:10px;background:rgba(0,0,0,.2)}
-  .step b{display:block;font-size:16px;color:#3DD9FF;margin-bottom:4px}
-  .step span{font-size:13px;color:#AAB6CA;line-height:1.4}
-  .shelf{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .box{border:1px solid #243247;border-radius:14px;padding:12px;background:rgba(0,0,0,.22)}
-  .box em{font:800 11px ui-monospace,Menlo,monospace;font-style:normal;color:#3DD9FF}
-  .box.s2 em{color:#7AA2FF}
-  .box.s3 em{color:#F2B35E}
-  .box h3{font-size:16px;margin:4px 0 6px}
-  .box p{font-size:13px;color:#AAB6CA;line-height:1.45}
-  .quote{font-size:14px;line-height:1.55;color:#E8EEF8;border-left:3px solid #F2B35E;padding:8px 12px;background:rgba(242,179,94,.07);border-radius:0 12px 12px 0}
-  .quote b{color:#F2B35E}
-  footer{margin-top:16px;display:flex;justify-content:space-between;font:600 11px ui-monospace,Menlo,monospace;color:#5E6B82}
+  .step b{display:block;color:#F2B35E;font-size:16px;margin-bottom:4px}
+  .step span{font-size:13px;color:#C8D4E8;line-height:1.4}
+  .sent{margin-top:10px;font-size:14px;line-height:1.55;color:#E8EEF8}
+  .sent b{color:#F2B35E}
+  footer{display:flex;justify-content:space-between;margin-top:8px;font:600 11px ui-monospace,Menlo,monospace;color:#5E6B82}
   footer b{color:#3DD9FF}
 </style>
 </head>
 <body>
 <div class="sheet">
-  <header>
-    <div>
-      <div class="kick">BILDEN EDU · M1 抽象 · 第一节</div>
-      <h1>遇到什么，看哪一块 <em>LOOKUP</em></h1>
-      <p>课后速查。先看上面六条「遇到…」，再翻到对应卡片。不靠连线，按问题找答案。</p>
+  <div class="kick">BILDEN EDU · M1 抽象 · 第一节 · 学生版</div>
+  <h1>这节课只有一条线 <em>ONE LINE</em></h1>
+  <p class="thesis">AI 不是凭空长出来的。它是把<b>人的功能</b>抽成零件，再装进机器。你要带走的，是同一套抽法。</p>
+
+  <div class="path">
+    <div><b>先看 01</b><span>设计从人身上来</span><small>为什么 AI 会有输入、记忆、想、输出、技能</small></div>
+    <div><b>再看 02</b><span>抽出来的东西叫什么</span><small>三格货架，以及提示词、记忆、Token、技能</small></div>
+    <div><b>最后看 03</b><span>你自己也会抽</span><small>四动作、四句式，拿一件具体的东西练</small></div>
+  </div>
+
+  <section class="block">
+    <h2><i>门口</i>先有个感性印象，再进正题</h2>
+    <p class="why">这不是单独一大块知识。只用来回答：它住哪、吃什么、长什么样、大脑是什么。看完就进入 01。</p>
+    <div class="door">
+      <div><b>住在哪</b><span>芯片和机房里，不住在某个固定外壳</span></div>
+      <div><b>吃什么</b><span>电喂身体，Token 喂脑子</span></div>
+      <div><b>长什么样</b><span>外壳随便换：手机、音箱、车、机器人</span></div>
+      <div><b>大脑</b><span>一大堆参数，不是一张会思考的图</span></div>
     </div>
-    <div class="meta">学生版 · 保存图片复习</div>
-  </header>
+  </section>
 
-  <div class="index">
-    <div><b>01</b><div><span>不知道怎么抽象</span><small>→ 看四动作</small></div></div>
-    <div class="w"><b>02</b><div><span>不知道怎么说出口</span><small>→ 看四句式</small></div></div>
-    <div class="g"><b>03</b><div><span>分不清自己打开的是哪种 AI</span><small>→ 看三格货架</small></div></div>
-    <div><b>04</b><div><span>听到零件名对不上</span><small>→ 看五个本事</small></div></div>
-    <div class="w"><b>05</b><div><span>听到大词懵了</span><small>→ 看大词对照</small></div></div>
-    <div class="g"><b>06</b><div><span>要自己拆一样东西</span><small>→ 看课后用法</small></div></div>
-  </div>
+  <section class="block">
+    <h2><i>01</i>AI 的设计，是对人的功能做抽象</h2>
+    <p class="why"><b>这一块回答：</b>科学家造 AI，是把人办事的步骤抽出来，舍掉血肉，留下能装进机器的功能，再给功能起名。</p>
+    <div class="map">
+      <div class="side">
+        <h3>人身上的本事</h3>
+        <ul>
+          <li>看 · 听 · 摸</li>
+          <li>还能想起什么</li>
+          <li>想下一步</li>
+          <li>说 · 做</li>
+          <li>临时多一样本事</li>
+        </ul>
+      </div>
+      <div class="mid">抽<br>→<br>装</div>
+      <div class="side">
+        <h3>机器上的零件</h3>
+        <ul>
+          <li>输入 <span>摄像头、键盘、麦、提示词</span></li>
+          <li>记忆 <span>参数，或关于你的记录</span></li>
+          <li>分析 <span>猜下一个最可能的词</span></li>
+          <li>输出 <span>字、声、图、动作</span></li>
+          <li>技能 <span>可装卸的 Skill</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <div class="grid">
-    <article class="card">
-      <h2><i>01</i>不知道怎么抽象</h2>
-      <div class="when">遇到：一堆具体东西，不知道抽成什么概念。</div>
-      <div class="steps">
-        <div class="step"><b>舍</b><span>丢掉颜色、大小这些差别</span></div>
-        <div class="step"><b>取</b><span>留下大家都有的那一点</span></div>
-        <div class="step"><b>命</b><span>给共同点起一个名字</span></div>
-        <div class="step"><b>验</b><span>拿边界例子试：算不算</span></div>
+  <section class="block b2">
+    <h2><i>02</i>抽完之后，市场上分成三格，零件各有名字</h2>
+    <p class="why"><b>这一块回答：</b>你打开的「AI」是哪一格；提示词、记忆、Token、技能分别卡在 01 的哪个零件上。先有 01，这些词才对得上。</p>
+    <div class="cols">
+      <div class="box">
+        <h3>三格 · 按用途认<small>谁在用，怎么用</small></h3>
+        <div class="row"><b>大模型</b><span>打开聊天 → 说清楚 → 看回答。豆包 / DeepSeek / ChatGPT</span></div>
+        <div class="row"><b>运行环境</b><span>打开项目 → 指文件 → 让它改。Cursor / Claude Code / Codex。别叫编程工具</span></div>
+        <div class="row"><b>个人助手</b><span>定目标 → 装记忆和技能 → 它去办。豆包工作台 / 飞书 / Hermes</span></div>
       </div>
-      <div class="quote">产物是<b>概念</b>，不是画。敢舍，才能用到别的东西上。</div>
-    </article>
+      <div class="box">
+        <h3>零件上的词<small>都回到 01 那五格</small></h3>
+        <div class="row"><b>提示词</b><span>就是输入。你说不清，它就猜</span></div>
+        <div class="row"><b>记忆</b><span>两层：模型里的参数；助手里关于你的记录</span></div>
+        <div class="row"><b>Token</b><span>读写用的小块，常按块计费</span></div>
+        <div class="row"><b>技能</b><span>可拔插。拔掉了，模型还会聊天</span></div>
+        <div class="row"><b>「想」</b><span>不是理解人生，是猜下一个词</span></div>
+      </div>
+    </div>
+  </section>
 
-    <article class="card warm">
-      <h2><i>02</i>不知道怎么说出口</h2>
-      <div class="when">遇到：心里有感觉，但说不成一句完整的话。</div>
-      <div class="rows">
-        <div class="row"><strong>归纳</strong><span>它们都有___，所以归为___</span></div>
-        <div class="row"><strong>命名</strong><span>我把___的共同点命名为___</span></div>
-        <div class="row"><strong>边界</strong><span>凡是___都属于___；只要___，就不算___</span></div>
-        <div class="row"><strong>反思</strong><span>我舍掉了___只留___；换个抽法会___</span></div>
-      </div>
-    </article>
-
-    <article class="card blue wide">
-      <h2><i>03</i>分不清自己打开的是哪种 AI</h2>
-      <div class="when">遇到：有人说「我用 AI」。先问<b>谁在用、怎么用</b>，别先记产品名。</div>
-      <div class="shelf">
-        <div class="box">
-          <em>01 大模型</em>
-          <h3>聊天窗</h3>
-          <p>谁：几乎人人。<br>怎么用：打开 → 说清楚 → 看回答。<br>例：豆包、DeepSeek、ChatGPT</p>
-        </div>
-        <div class="box s2">
-          <em>02 运行环境</em>
-          <h3>对着项目干活</h3>
-          <p>谁：要交作品、改网页。<br>怎么用：打开项目 → 指文件 → 让它改。<br>例：Cursor、Claude Code、Codex<br>别叫「编程工具」</p>
-        </div>
-        <div class="box s3">
-          <em>03 Personal Agent</em>
-          <h3>长期办事</h3>
-          <p>谁：要它连续帮你。<br>怎么用：定目标 → 装记忆/技能 → 它去办。<br>例：豆包工作台、飞书、Hermes</p>
-        </div>
-      </div>
-      <div class="quote">三格可以叠在一起：车间和助手里都装着大模型。打开时先认清你在用哪一格。</div>
-    </article>
-
-    <article class="card">
-      <h2><i>04</i>听到零件名对不上</h2>
-      <div class="when">遇到：输入、记忆、技能……不知道对应人的哪样本事。</div>
-      <div class="rows">
-        <div class="row"><strong>输入</strong><span>看、听、摸。你写的提示词从这里进来</span></div>
-        <div class="row"><strong>记忆</strong><span>还能想起什么。分两层：模型参数 / 关于你的记录</span></div>
-        <div class="row"><strong>分析</strong><span>「想」≈ 猜下一个最可能的词</span></div>
-        <div class="row"><strong>输出</strong><span>字、声音、图、动作，一块一块吐出来</span></div>
-        <div class="row"><strong>技能</strong><span>可装卸的本事包。拔掉它，模型还会聊天</span></div>
-      </div>
-    </article>
-
-    <article class="card warm">
-      <h2><i>05</i>听到大词懵了</h2>
-      <div class="when">遇到：提示词、Token、参数、算法、训练。放回人的本事里就不神秘。</div>
-      <div class="rows">
-        <div class="row"><strong>提示词</strong><span>= 输入。你对它说的话、布置的任务</span></div>
-        <div class="row"><strong>Token</strong><span>= 读写用的小块。常按块计费</span></div>
-        <div class="row"><strong>参数</strong><span>= 模型里的记忆。关网页还在</span></div>
-        <div class="row"><strong>算法·算力</strong><span>→ 分析。怎么算、用多少电和芯片去「想」</span></div>
-        <div class="row"><strong>训练</strong><span>→ 学。读海量文字，把本事写进参数</span></div>
-      </div>
-    </article>
-
-    <article class="card ok wide">
-      <h2><i>06</i>要自己拆一样东西</h2>
-      <div class="when">遇到：老师拆过猛禽，轮到你选自行车、书包、雨伞……</div>
-      <div class="steps">
-        <div class="step"><b>1 选</b><span>先选一样具体的</span></div>
-        <div class="step"><b>2 拆</b><span>列出看得见的零件</span></div>
-        <div class="step"><b>3 舍</b><span>丢掉跟「这一类」无关的差别</span></div>
-        <div class="step"><b>4 说</b><span>写命名句或边界句</span></div>
-      </div>
-      <div class="quote">命名句：我把「<b>___</b>」的共同点命名为「<b>___</b>」。<br>边界句：凡是___都属于___；只要___，就不算___。</div>
-      <div class="rows">
-        <div class="row"><strong>可用工具</strong><span>四句式 · 三格货架 · 提示词。下一节再真装一个 Skill。</span></div>
-      </div>
-    </article>
-  </div>
+  <section class="block b3">
+    <h2><i>03</i>你要学会同一套抽象，拿去解决问题</h2>
+    <p class="why"><b>这一块才是带走的本事。</b>01 和 02 是别人已经抽好的例子。这里换成你来抽：猛禽、自行车、书包，都可以。</p>
+    <div class="steps">
+      <div class="step"><b>舍</b><span>丢掉跟这一类无关的差别</span></div>
+      <div class="step"><b>取</b><span>留下共同的那一点</span></div>
+      <div class="step"><b>命</b><span>给共同点起名字</span></div>
+      <div class="step"><b>验</b><span>拿一个边界例子问：算不算</span></div>
+    </div>
+    <p class="sent">命名：我把「<b>___</b>」的共同点命名为「<b>___</b>」。<br>边界：凡是 ___ 都属于 ___；只要 ___，就不算 ___。</p>
+  </section>
 
   <footer>
     <span>彼灯教育 · AI 通识初阶</span>
-    <span>先查目录，再读卡片</span>
-    <span><b>M1</b> LOOKUP</span>
+    <span>顺序：从人抽象 → 类型和零件 → 自己会抽</span>
+    <span><b>M1</b> ONE LINE</span>
   </footer>
 </div>
 </body>
