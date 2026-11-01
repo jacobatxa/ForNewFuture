@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>M1 思维导图 · AI 通识初阶</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#05080F}
+  .board{
+    width:1600px;height:1000px;margin:0 auto;position:relative;overflow:hidden;
+    background:
+      radial-gradient(700px 420px at 50% 48%,rgba(61,217,255,.14),transparent 55%),
+      radial-gradient(900px 520px at 10% 90%,rgba(122,162,255,.1),transparent 50%),
+      linear-gradient(165deg,#0A1020,#060A12);
+  }
+  .board::before{
+    content:"";position:absolute;inset:0;opacity:.28;pointer-events:none;
+    background-image:radial-gradient(rgba(110,150,230,.35) 1px,transparent 1px);
+    background-size:28px 28px;
+  }
+  svg.map{position:absolute;inset:0;width:100%;height:100%}
+  .hub{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:168px;height:168px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#1A2A44,#0B1528 70%);
+    border:2px solid #3DD9FF;box-shadow:0 0 0 8px rgba(61,217,255,.08),0 0 40px rgba(61,217,255,.25);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;z-index:3;text-align:center;
+  }
+  .hub b{font:800 22px "PingFang SC",sans-serif;color:#E8EEF8;letter-spacing:.04em}
+  .hub span{font:700 11px ui-monospace,Menlo,monospace;color:#3DD9FF;letter-spacing:.16em}
+  .hub small{font:600 11px "PingFang SC",sans-serif;color:#8B98B0;margin-top:2px}
+  .branch{
+    position:absolute;z-index:2;min-width:150px;max-width:210px;
+    border:1px solid #2A3A55;border-radius:16px;padding:12px 12px 10px;
+    background:rgba(12,20,34,.92);backdrop-filter:blur(6px);
+    box-shadow:0 10px 28px rgba(0,0,0,.35);
+  }
+  .branch h3{
+    font:800 15px "PingFang SC",sans-serif;color:#E8EEF8;margin-bottom:8px;
+    display:flex;align-items:center;gap:7px;
+  }
+  .branch h3 i{
+    font:800 10px ui-monospace,Menlo,monospace;font-style:normal;
+    color:#04101C;background:#3DD9FF;border-radius:7px;padding:2px 6px;
+  }
+  .branch.warm h3 i{background:#F2B35E}
+  .branch.blue h3 i{background:#7AA2FF}
+  .branch.ok h3 i{background:#3DFFB0}
+  .branch.pink h3 i{background:#FF8EC8}
+  .branch.lilac h3 i{background:#B49CFF}
+  .branch ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+  .branch li{
+    font:600 12.5px/1.4 "PingFang SC",sans-serif;color:#AAB6CA;
+    padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid #243247;
+  }
+  .branch li b{color:#E8EEF8;font-weight:800}
+  .leaf{
+    position:absolute;z-index:2;font:700 12px "PingFang SC",sans-serif;color:#C8D4E8;
+    border:1px solid #2A3A55;background:rgba(10,18,32,.9);border-radius:999px;padding:6px 11px;
+    white-space:nowrap;box-shadow:0 6px 16px rgba(0,0,0,.25);
+  }
+  .foot{
+    position:absolute;left:28px;right:28px;bottom:16px;z-index:4;
+    display:flex;justify-content:space-between;align-items:center;
+    font:600 11px ui-monospace,Menlo,monospace;color:#5E6B82;
+  }
+  .foot b{color:#3DD9FF}
+  .titlebar{
+    position:absolute;left:28px;top:18px;z-index:4;
+    font:800 12px ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#3DD9FF;
+  }
+  .titlebar strong{display:block;margin-top:6px;font:800 26px "PingFang SC",sans-serif;color:#E8EEF8;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div class="board" id="board">
+  <div class="titlebar">BILDEN EDU · M1<strong>思维导图 · 课后速查</strong></div>
+
+  <svg class="map" viewBox="0 0 1600 1000" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3DD9FF"/><stop offset="1" stop-color="#7AA2FF"/></linearGradient>
+      <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#F2B35E"/><stop offset="1" stop-color="#3DD9FF"/></linearGradient>
+      <linearGradient id="g3" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#7AA2FF"/><stop offset="1" stop-color="#B49CFF"/></linearGradient>
+      <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3DFFB0"/><stop offset="1" stop-color="#3DD9FF"/></linearGradient>
+      <linearGradient id="g5" x1="1" y1="0" x2="0" y2="1"><stop stop-color="#FF8EC8"/><stop offset="1" stop-color="#7AA2FF"/></linearGradient>
+      <linearGradient id="g6" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#B49CFF"/><stop offset="1" stop-color="#F2B35E"/></linearGradient>
+    </defs>
+    <!-- spokes from center 800,500 -->
+    <path d="M800 500 C 620 430, 420 300, 260 230" stroke="url(#g1)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <path d="M800 500 C 700 360, 620 220, 560 120" stroke="url(#g2)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <path d="M800 500 C 920 360, 1020 220, 1120 130" stroke="url(#g3)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <path d="M800 500 C 980 450, 1180 390, 1340 340" stroke="url(#g4)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <path d="M800 500 C 960 600, 1160 700, 1320 780" stroke="url(#g5)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <path d="M800 500 C 640 620, 420 720, 250 800" stroke="url(#g6)" stroke-width="2.2" fill="none" opacity=".85"/>
+    <!-- tiny twigs -->
+    <path d="M300 250 C 220 210, 160 200, 110 190" stroke="#3DD9FF" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M300 250 C 220 280, 170 310, 120 340" stroke="#3DD9FF" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M580 150 C 520 90, 470 70, 420 55" stroke="#F2B35E" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M580 150 C 640 80, 690 55, 740 40" stroke="#F2B35E" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1140 160 C 1200 90, 1260 70, 1320 55" stroke="#7AA2FF" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1140 160 C 1220 200, 1280 230, 1360 250" stroke="#7AA2FF" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1340 380 C 1420 340, 1470 300, 1510 270" stroke="#3DFFB0" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1340 380 C 1430 420, 1480 460, 1520 500" stroke="#3DFFB0" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1310 790 C 1400 760, 1460 740, 1515 720" stroke="#FF8EC8" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M1310 790 C 1380 850, 1440 890, 1495 920" stroke="#FF8EC8" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M280 810 C 200 780, 150 760, 95 740" stroke="#B49CFF" stroke-width="1.4" fill="none" opacity=".45"/>
+    <path d="M280 810 C 220 880, 170 920, 120 950" stroke="#B49CFF" stroke-width="1.4" fill="none" opacity=".45"/>
+  </svg>
+
+  <div class="hub">
+    <span>M1</span>
+    <b>AI 通识</b>
+    <small>抽象 · 货架 · 零件</small>
+  </div>
+
+  <!-- 左上：抽象 -->
+  <div class="branch" style="left:72px;top:168px;max-width:230px">
+    <h3><i>01</i>抽象</h3>
+    <ul>
+      <li><b>舍</b> 丢掉差别</li>
+      <li><b>取</b> 留下共同</li>
+      <li><b>命</b> 给它起名</li>
+      <li><b>验</b> 试边界</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:48px;top:120px">产物是概念</div>
+  <div class="leaf" style="left:48px;top:390px">敢舍才能迁移</div>
+
+  <!-- 上：四句式 -->
+  <div class="branch warm" style="left:470px;top:48px;max-width:240px">
+    <h3><i>02</i>四句式</h3>
+    <ul>
+      <li><b>归纳</b> 都有→归为</li>
+      <li><b>命名</b> 共同点→名字</li>
+      <li><b>边界</b> 凡是 / 只要不算</li>
+      <li><b>反思</b> 舍了啥 · 换抽法</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:390px;top:28px">能说出口才算会</div>
+  <div class="leaf" style="left:720px;top:28px">猛禽示范拆解</div>
+
+  <!-- 右上：货架 -->
+  <div class="branch blue" style="left:1080px;top:55px;max-width:250px">
+    <h3><i>03</i>三格货架</h3>
+    <ul>
+      <li><b>大模型</b> 打开聊→说清楚→看回答</li>
+      <li><b>运行环境</b> 打开项目→指文件→让它改</li>
+      <li><b>Personal Agent</b> 定目标→装本事→它去办</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:1280px;top:28px">按用途认</div>
+  <div class="leaf" style="left:1330px;top:280px">谁用 / 怎么用</div>
+
+  <!-- 右：零件 -->
+  <div class="branch ok" style="left:1260px;top:300px;max-width:230px">
+    <h3><i>04</i>五个零件</h3>
+    <ul>
+      <li><b>输入</b> 提示词进来</li>
+      <li><b>记忆</b> 参数 / 关于你</li>
+      <li><b>分析</b> 猜下一个词</li>
+      <li><b>输出</b> 字声图动作</li>
+      <li><b>技能</b> 可装卸 Skill</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:1485px;top:250px">照着人抽</div>
+  <div class="leaf" style="left:1485px;top:520px">装回机器</div>
+
+  <!-- 右下：大词 -->
+  <div class="branch pink" style="left:1180px;top:690px;max-width:250px">
+    <h3><i>05</i>大词对照</h3>
+    <ul>
+      <li><b>提示词</b> = 输入</li>
+      <li><b>Token</b> = 读写的小块</li>
+      <li><b>参数</b> = 模型里的记忆</li>
+      <li><b>算法·算力</b> → 想</li>
+      <li><b>训练</b> → 学</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:1470px;top:700px">放回本事里</div>
+  <div class="leaf" style="left:1450px;top:920px">就不神秘了</div>
+
+  <!-- 左下：课后 -->
+  <div class="branch lilac" style="left:72px;top:700px;max-width:250px">
+    <h3><i>06</i>课后用法</h3>
+    <ul>
+      <li>选一物 · 拆零件</li>
+      <li>写命名句 / 边界句</li>
+      <li>工具：四句式 · 货架 · 提示词</li>
+      <li>下一节：真装 Skill</li>
+    </ul>
+  </div>
+  <div class="leaf" style="left:48px;top:660px">自行车 / 书包 / …</div>
+  <div class="leaf" style="left:48px;top:940px">发给家人讲一遍</div>
+
+  <div class="foot">
+    <span>彼灯教育 · AI 通识初阶</span>
+    <span>中心向外：抽象 → 说法 → 货架 → 零件 → 大词 → 练习</span>
+    <span><b>M1</b> MIND MAP</span>
+  </div>
+</div>
+</body>
+</html>
