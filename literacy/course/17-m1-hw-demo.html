@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作业示范 · 猛禽发动机</title>
+<style>
+  :root{
+    --bg:#060A13;--paper:#0F1726;--ink:#E7EEF9;--ink2:#AAB6CA;--muted:#6F7C93;
+    --line:#1E2A40;--edge:rgba(120,160,230,.16);--accent:#3DD9FF;--warm:#F2B35E;
+    --blue:#7AA2FF;--ok:#3EE08F;--font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  a{color:var(--accent)}
+  .page{width:min(1180px,100% - 32px);margin:28px auto 72px}
+  .stamp{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .kick{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent)}
+  h1{font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.2;margin-top:6px}
+  .tag{font:800 12px var(--mono);color:#04101C;background:var(--warm);border-radius:999px;padding:6px 12px;white-space:nowrap}
+  .lead{margin:14px 0 22px;font-size:16px;line-height:1.65;color:var(--ink2);max-width:46em}
+  .lead b{color:var(--ink)}
+  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+  .meta div{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:rgba(14,22,38,.92)}
+  .meta b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  .meta span{font-size:15px;font-weight:800;line-height:1.4}
+  .block{border:1px solid var(--line);border-radius:18px;background:linear-gradient(165deg,rgba(18,32,52,.92),rgba(8,14,26,.96));padding:18px 18px 16px;margin-bottom:14px}
+  .block h2{font-size:18px;font-weight:800;margin-bottom:6px}
+  .block h2 i{display:inline-block;font-style:normal;font-size:12px;font-weight:800;color:#04101C;background:var(--accent);border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+  .block.hand h2 i{background:var(--warm)}
+  .block.ai h2 i{background:var(--blue)}
+  .block.fix h2 i{background:var(--ok)}
+  .hint{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+  .five{display:grid;grid-template-columns:1.15fr .85fr;gap:10px}
+  .five .cell{border:1px dashed rgba(242,179,94,.35);border-radius:12px;padding:12px 14px;background:rgba(0,0,0,.22)}
+  .five .cell b{display:block;font-size:13px;color:var(--warm);margin-bottom:6px}
+  .five .cell p{font-size:15px;line-height:1.6;color:var(--ink)}
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .prompt{font:15px/1.65 var(--font);background:#0B1222;border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--ink)}
+  .prompt em{font-style:normal;color:var(--accent);font-family:var(--mono);font-size:12px;display:block;margin-bottom:8px}
+  .ai-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .open{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--edge);border-radius:999px;padding:7px 14px;color:var(--accent);text-decoration:none;font-size:13px;font-weight:800;background:rgba(61,217,255,.08)}
+  iframe{width:100%;height:min(78vh,820px);border:1px solid var(--line);border-radius:14px;background:#0b0b0b}
+  .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+  .flow div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.25)}
+  .flow b{display:block;color:var(--accent);font-size:13px;margin-bottom:4px}
+  .flow span{font-size:13.5px;color:var(--ink2);line-height:1.45}
+  .fix p{font-size:16px;line-height:1.65}
+  .note{margin-top:8px;font-size:14px;color:var(--ink2);line-height:1.55}
+  footer{margin-top:8px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  @media (max-width:860px){
+    .meta,.five{grid-template-columns:1fr}
+    iframe{height:70vh}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="stamp">
+    <div>
+      <div class="kick">彼灯教育 · AI 通识 · 第一节作业示范</div>
+      <h1>交上来，长这样</h1>
+    </div>
+    <span class="tag">示范卷 · 不是标准答案</span>
+  </div>
+  <p class="lead">老师先自己拆清楚，再让 AI 画一页能投屏讲的拆解图。你们回家也按这个顺序：<b>先写，再做，再挑错</b>。成品不必这么复杂，一张标了零件的图、一段口播，都算。</p>
+
+  <div class="meta">
+    <div><b>我选的东西</b><span>猛禽发动机</span></div>
+    <div><b>用的工具</b><span>能出图的 AI</span></div>
+    <div><b>成品形式</b><span>一页可拆的图</span></div>
+    <div><b>有没有代写句子</b><span>没有。下面是我写的。</span></div>
+  </div>
+
+  <section class="block hand">
+    <h2><i>1</i>我自己写的</h2>
+    <p class="hint">这一块不要让 AI 代写。用课堂上的办法：丢掉差别，留下共同点，起个名字，再试试边界。然后补上三句：它凭什么这样工作、长什么样、能干什么。</p>
+    <div class="five">
+      <div class="stack">
+        <div class="cell">
+          <b>丢掉 / 留下 / 起名</b>
+          <p>丢掉：是第几版、喷管什么颜色、装在哪一级火箭上。<br>留下：把推进剂加压、烧掉、从后面喷出去。<br>起名：我把这三步的共同点叫作「火箭发动机」。</p>
+        </div>
+        <div class="cell">
+          <b>试边界</b>
+          <p>只要自己能加压、燃烧、喷出燃气来产生推力，就算火箭发动机。<br>一旦只是长得像喷管、自己压不上去，就不算。飞机发动机要吃空气里的氧，也不算这一类。</p>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="cell">
+          <b>底层怎么工作</b>
+          <p>它不是「一个会喷火的铁罐子」。底层就三步，按顺序发生：泵先加压 → 燃烧室把燃料变成高温高压气体 → 喷管把压力换成速度。每一块零件只干其中一步。</p>
+        </div>
+        <div class="cell">
+          <b>长什么样</b>
+          <p>上面是泵、阀门和一圈管子，中间是燃烧室，下面是一只倒过来的钟形喷管。整台像倒立的喇叭，外面缠满管路。</p>
+        </div>
+        <div class="cell">
+          <b>能干什么</b>
+          <p>吃液氧和液甲烷，吐出高速燃气，把火箭往上推。喷管还能小幅摆动，用来转向。</p>
+        </div>
+      </div>
+    </div>
+    <div class="flow">
+      <div><b>1 加压</b><span>泵把液氧、液甲烷压到比燃烧室还高，不然喷不进去。</span></div>
+      <div><b>2 燃烧</b><span>两者在燃烧室里烧掉，变成又热又急的气体。</span></div>
+      <div><b>3 喷出</b><span>喷管把压力换成速度。气体往后走，火箭往前走。</span></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2><i>2</i>我交给 AI 的那句话</h2>
+    <p class="hint">原样交上来。老师要看的是：你有没有把自己刚写的拆法，说给它听。</p>
+    <p class="prompt"><em>提示词</em>请根据我上面的拆法，做一页能给同学讲的拆解图：把猛禽发动机的零件分开来看。点到哪一块，就写清「是什么、干什么」。深色背景，零件名用中文。不要写成说明书，要能投屏讲。</p>
+  </section>
+
+  <section class="block ai">
+    <div class="ai-head">
+      <h2><i>3</i>AI 做出的介绍</h2>
+      <a class="open" href="17-m1-hw-raptor.html" target="_blank" rel="noopener">单独打开这一页 ↗</a>
+    </div>
+    <p class="hint">下面这一页可以讲、可以演示。鼠标滑过零件，或用方向键，能一块一块拆开。点火按钮会喷火。你们交作业时，截一张图、录一段屏、交一个链接，都可以。</p>
+    <iframe src="17-m1-hw-raptor.html" title="猛禽发动机拆解图" loading="lazy"></iframe>
+  </section>
+
+  <section class="block fix">
+    <h2><i>4</i>我挑一处不对</h2>
+    <p>AI 把「下导管」写成「把液氧从贮箱引到泵」。可燃料那一侧也有类似的管子。同学容易以为只有氧这一路。讲的时候要补一句：<b>氧和甲烷各有一条加压的路。</b></p>
+    <p class="note">作业要的就是这一句。它画得再好看，你也得能指出一处它说漏了、说反了、或你不同意的地方。</p>
+  </section>
+
+  <footer>
+    <span>交三样：你写的句子 · AI 的成品 · 用的工具 + 一句不对的地方</span>
+    <span>选自行车、书包、雨伞都行</span>
+  </footer>
+</div>
+</body>
+</html>
