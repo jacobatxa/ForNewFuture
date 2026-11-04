@@ -3,180 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>M1 第二节 · 周日 2 小时线上动手 · 教师方案</title>
+<title>周日课 · 用 AI 学一个新玩意儿</title>
 <style>
-  :root{
-    --bg:#060A13;--paper:#0F1726;--ink:#E7EEF9;--ink2:#AAB6CA;--muted:#6F7C93;
-    --line:#1E2A40;--accent:#3DD9FF;--warm:#F2B35E;--ok:#3EE08F;--bad:#FF6B7A;--blue:#7AA2FF;
-    --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
-    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  }
+  :root{--bg:#070B12;--ink:#F3F6FB;--dim:#8B97AB;--gold:#E8B86A;--cyan:#5EE6FF;--font:"PingFang SC","Hiragino Sans GB",sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
-  a{color:var(--accent)}
-  .page{width:min(1100px,100% - 32px);margin:28px auto 80px}
-  .kick{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent)}
-  h1{font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.2;margin:8px 0 10px}
-  h2{font-size:20px;margin:0 0 10px}
-  h2 i{display:inline-block;font-style:normal;font-size:12px;font-weight:800;color:#04101C;background:var(--accent);border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
-  .lead{font-size:16px;line-height:1.65;color:var(--ink2);max-width:48em;margin-bottom:18px}
-  .lead b{color:var(--ink)}
-  .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-  .meta div,.card{border:1px solid var(--line);border-radius:16px;background:rgba(14,22,38,.92)}
-  .meta div{padding:12px 14px}
-  .meta b{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
-  .meta span{font-size:15px;font-weight:800;line-height:1.4}
-  .card{padding:16px 18px;margin-bottom:14px}
-  .goal,.yesno,.three,.talk{display:grid;gap:10px}
-  .goal,.yesno{grid-template-columns:1fr 1fr}
-  .three,.talk{grid-template-columns:repeat(3,1fr)}
-  .goal div,.yesno div,.three div,.talk div,.feishu div,.box{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(0,0,0,.22)}
-  .goal b,.talk b,.three b{display:block;color:var(--warm);margin-bottom:6px}
-  .yesno ul{list-style:none}
-  .yesno li{padding:7px 0;border-bottom:1px solid #1E2A40;font-size:14.5px;line-height:1.5;color:var(--ink2)}
-  .yesno li:last-child{border-bottom:0}
-  .yesno h3{font-size:13px;margin-bottom:6px}
-  .ok h3{color:var(--ok)} .no h3{color:var(--bad)}
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{border-bottom:1px solid var(--line);padding:9px 8px;vertical-align:top;line-height:1.5;text-align:left}
-  th{font-size:12px;color:var(--muted)}
-  td:first-child{font:800 12px var(--mono);color:var(--accent);white-space:nowrap;width:88px}
-  td b{color:var(--ink)}
-  .feishu{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
-  .feishu b{display:block;font-size:13px;color:var(--blue);margin-bottom:4px}
-  .feishu span,.three span,.talk p,.box p{font-size:13.5px;color:var(--ink2);line-height:1.5}
-  .tiny{font-size:13px;color:var(--muted);line-height:1.5;margin-top:8px}
-  pre{white-space:pre-wrap;font:13px/1.55 var(--mono);background:#0B1222;border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--ink);margin-top:10px}
-  footer{margin-top:8px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  @media (max-width:860px){
-    .meta,.goal,.yesno,.three,.talk,.feishu{grid-template-columns:1fr}
-    td:first-child{white-space:normal}
-  }
+  body{background:var(--bg);color:var(--ink);font-family:var(--font)}
+  .page{width:min(720px,100% - 40px);margin:0 auto;padding:48px 0 96px}
+  .kick{font-size:12px;letter-spacing:.18em;color:var(--cyan);font-weight:700}
+  h1{font-size:clamp(28px,5vw,40px);font-weight:900;line-height:1.2;margin:12px 0 16px}
+  .lead{font-size:17px;line-height:1.65;color:#D5DCE8;margin-bottom:40px}
+  .lead b{color:var(--gold)}
+  a{color:var(--cyan)}
+  .spine{border-left:2px solid rgba(94,230,255,.35);margin-left:18px;padding-left:32px}
+  .step{position:relative;padding-bottom:36px}
+  .n{position:absolute;left:-50px;top:0;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);color:var(--cyan);font-weight:900;display:flex;align-items:center;justify-content:center}
+  h2{font-size:20px;margin-bottom:8px}
+  p,li{font-size:16px;line-height:1.65;color:#D5DCE8}
+  ul{margin:8px 0 0 1.1em}
+  .t{font:800 13px ui-monospace,Menlo,monospace;color:var(--gold);display:block;margin-bottom:6px}
+  footer{margin-top:48px;font-size:13px;color:var(--dim)}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="kick">彼灯教育 · AI 通识初阶 · M1 抽象 · 第二节草案</div>
-  <h1>周日 2 小时：先讲你的东西，再用抽象去学新的</h1>
-  <p class="lead">作业已经布置出去：找一件身边的事物、物体、生物，也可以是想象里的东西。用 AI 做讲解，视频、图片、网页都行。周日每人讲 3 分钟。<b>课从这场介绍开始。</b>后半不教新思维，把第一节的四个动作拿来学一件还不熟的东西：丢掉、留下、起名、试边界，再补外形、功能、底层，最后才用技能做课件。</p>
+  <div class="kick">教师用 · M1 周日 2 小时</div>
+  <h1>如何用 AI 当助手，学一个新玩意儿</h1>
+  <p class="lead">学生只拿一个页面上课：<a href="17-m1-method.html">造句卡 + DeepSeek 两步</a>。案例只有拉链。<a href="17-m1-case-zipper.html">做完的样子</a>。工具就 DeepSeek，不要再铺别的软件。</p>
 
-  <div class="meta">
-    <div><b>节次</b><span>M1 第二节 · 线上动手</span></div>
-    <div><b>时长</b><span>120 分钟 · 飞书会议</span></div>
-    <div><b>人数</b><span>按 8–12 人排全员 3 分钟</span></div>
-    <div><b>状态</b><span>方案草案 · 先拍板再做学生课件</span></div>
+  <div class="spine">
+    <section class="step">
+      <div class="n">1</div>
+      <span class="t">0:00–0:45</span>
+      <h2>每人 3 分钟，介绍作业</h2>
+      <p>形式不限。你只听他有没有说出「丢掉 / 留下 / 名字 / 算不算」。没说，记下，后半用拉链补。</p>
+    </section>
+    <section class="step">
+      <div class="n">2</div>
+      <span class="t">0:45–0:50</span>
+      <h2>收口一句</h2>
+      <p>作业证明你会让 AI 做一个介绍。接下来学：怎么让 AI 帮你学一个还不懂的新玩意儿。</p>
+    </section>
+    <section class="step">
+      <div class="n">3</div>
+      <span class="t">0:50–0:58 · 休息</span>
+      <h2>会议不停</h2>
+    </section>
+    <section class="step">
+      <div class="n">4</div>
+      <span class="t">0:58–1:12</span>
+      <h2>投屏造句卡，全班填拉链</h2>
+      <p>就这一段，不讲四种句式。聊天区只收两句：命名句、边界句。对的样子就是卡上那版拉链。</p>
+    </section>
+    <section class="step">
+      <div class="n">5</div>
+      <span class="t">1:12–1:28</span>
+      <h2>你共享 DeepSeek，走技能一</h2>
+      <ul>
+        <li>复制技能一，新对话发出去</li>
+        <li>把拉链那段贴进去</li>
+        <li>让 DeepSeek 追问「纽扣算不算」</li>
+        <li>拿到学习卡，停</li>
+      </ul>
+    </section>
+    <section class="step">
+      <div class="n">6</div>
+      <span class="t">1:28–1:42</span>
+      <h2>新开对话，走技能二</h2>
+      <ul>
+        <li>复制技能二 + 学习卡</li>
+        <li>等它说「我要做一页拆开的拉链」，你点头</li>
+        <li>打开案例页，对照它做出来的像不像</li>
+      </ul>
+    </section>
+    <section class="step">
+      <div class="n">7</div>
+      <span class="t">1:42–1:56</span>
+      <h2>学生换自己的新玩意儿，从第 1 步走一遍</h2>
+      <p>作业的下一层：介绍过猫，就学猫耳。打不开 DeepSeek 的，口述，你代打。</p>
+    </section>
+    <section class="step">
+      <div class="n">8</div>
+      <span class="t">1:56–2:00</span>
+      <h2>抽两人念命名句</h2>
+      <p>家长问一句：命名句是你写的，还是 DeepSeek 写的？</p>
+    </section>
   </div>
-
-  <section class="card">
-    <h2><i>1</i>学完能做什么</h2>
-    <div class="goal">
-      <div><b>当场能看出来</b><p>能用 3 分钟讲清自己选的那件东西。后半能对一件还不熟的东西说出丢掉、留下、起名、试边界，并补上外形、功能、底层；再用技能做成一页课件，指出两处可能不对。</p></div>
-      <div><b>差一档的样子</b><p>只播一段 AI 视频，说不出命名句和边界句。或者一上来就让 AI 做课件，四个动作没走。</p></div>
-    </div>
-    <p class="tiny">办法就是第一节那套：<a href="17-m1-method.html">用抽象去学新东西</a>。技能：<a href="../skills/">四个动作 / 做成课件</a>。</p>
-  </section>
-
-  <section class="card">
-    <h2><i>2</i>3 分钟怎么讲</h2>
-    <p class="tiny" style="margin-bottom:10px">形式不限，但介绍时请带着第一节的拆法。老师听的是这三块，不是画面漂不漂亮。</p>
-    <div class="talk">
-      <div><b>0–30 秒 · 这是什么</b><p>名字。为什么选它。看得见的外形，一句话。</p></div>
-      <div><b>30 秒–2 分 · 你怎么拆的</b><p>它凭什么这样工作。算不算这一类。哪几句是你自己写的，不是 AI 代写的。</p></div>
-      <div><b>2–3 分 · 亮成品</b><p>播放或打开 AI 做的图、视频、网页。用了哪个工具。你哪里觉得它说得不对，或者还可以再问。</p></div>
-    </div>
-    <p class="tiny">超时切麦。没做完的，3 分钟里讲你拆到哪一步、卡在哪，也算一次介绍。</p>
-  </section>
-
-  <section class="card">
-    <h2><i>3</i>120 分钟怎么走</h2>
-    <p class="tiny" style="margin-bottom:10px">默认 10 人。8 人提前进入后半。超过 12 人：先在群里贴作品，抽 8 人讲满 3 分钟，其余 60 秒亮成品。</p>
-    <table>
-      <thead><tr><th>时间</th><th>孩子在干什么</th><th>飞书用什么</th></tr></thead>
-      <tbody>
-        <tr><td>0:00</td><td><b>进门 8 分钟。</b>投票：视频 / 图片 / 网页 / 还没做完。投屏计时器。每人报一个词：我介绍的是 ___。</td><td>投票 + 聊天区</td></tr>
-        <tr><td>0:08</td><td><b>介绍 3 分钟 × 人数。</b>按名单轮。老师只记两笔：用了哪类工具、有没有自己的拆法。不点评画面。</td><td>共享屏幕 + 计时 + 点名开麦</td></tr>
-        <tr><td>0:45</td><td><b>老师收口 5 分钟。</b>点出两种作业：先抽象再讲，和直接让 AI 做。后半把第一种接回四个动作。</td><td>共享屏幕</td></tr>
-        <tr><td>0:50</td><td><b>休息 8 分钟。</b>会议不停。</td><td>—</td></tr>
-        <tr><td>0:58</td><td><b>接回抽象 12 分钟。</b>投屏方法卡。全班用拉链走丢掉、留下、起名、试边界。聊天区只收命名句和边界句。</td><td>共享屏幕 + 聊天区</td></tr>
-        <tr><td>1:10</td><td><b>贴技能一 20 分钟。</b>选一个还不熟的新东西。把「四个动作」贴进自己的 AI。走完抽象，补外形、功能、底层，交出学习卡。</td><td>进度报：定了题目 / 问到第几步 / 卡齐了</td></tr>
-        <tr><td>1:30</td><td><b>贴技能二 18 分钟。</b>学习卡贴进「做成课件」。按打得开的工具出一页图、分镜或网页。必须带两处可能不对。</td><td>共享成品抽看</td></tr>
-        <tr><td>1:48</td><td><b>两人对照 + 三问。</b>抽两人亮学习卡和课件。再抽两人：你做了什么 / AI 做了什么 / 你质疑过什么。</td><td>点名开麦</td></tr>
-        <tr><td>1:58</td><td><b>散场。</b>家长问：后来新学了哪一块？方法卡发群。</td><td>—</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="card">
-    <h2><i>4</i>后半教的办法</h2>
-    <p class="tiny" style="margin-bottom:10px">完整卡片：<a href="17-m1-method.html">用抽象去学新东西</a>。四个动作原样来自第一节。</p>
-    <div class="three">
-      <div><b>丢掉 → 留下 → 起名 → 试边界</b><span>课堂上的抽象。起名和定边界的人是学生。AI 只许问、帮找。</span></div>
-      <div><b>外形 · 功能 · 底层</b><span>抽象出「类」之后，还要说清这一个长什么样、能干什么、凭什么这样。</span></div>
-      <div><b>然后才做课件</b><span>出图用豆包/即梦，出视频用可灵，出网页用 Cursor。工具跟在抽象后面，不单独开软件课。</span></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2><i>5</i>两份技能，不许混用</h2>
-    <p class="tiny">给学生的复制页：<a href="../skills/">literacy/skills</a>。豆包开两个新对话分别贴；Cursor 装两个 skill 文件夹。</p>
-    <div class="goal">
-      <div><b>技能一 · 四个动作</b><p>丢掉、留下、起名、试边界，再补外形、功能、底层。一次一个问题。交学习卡。禁止出图出视频。</p></div>
-      <div><b>技能二 · 做成课件</b><p>学习卡齐了才开工。出可点拆解、编号图或 6 镜分镜。必须列出两处可能不对。</p></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2><i>6</i>自学新东西怎么选</h2>
-    <div class="goal">
-      <div><b>好题目</b><p>作业的下一层。介绍过猫，就自学猫耳或猫瞳。介绍过雨伞，就自学防水布怎么不漏。想象中的东西，就自学它要遵守哪条真实世界的规矩。</p></div>
-      <div><b>不好的题目</b><p>再做一遍同一件东西的漂亮海报。换皮不换问题，不算自学。</p></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2><i>7</i>飞书上具体怎么动</h2>
-    <div class="feishu">
-      <div><b>投票</b><span>进门：视频 / 图片 / 网页 / 还没做完。</span></div>
-      <div><b>聊天区</b><span>介绍前报物件名。教办法时只收拉链的命名句、边界句。后半报新题目。</span></div>
-      <div><b>共享屏幕</b><span>介绍时孩子共享成品。后半投屏方法卡和技能复制页。</span></div>
-      <div><b>云文档</b><span>一人一行：作业物件、新题目、学习卡三句、课件链接。</span></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <h2><i>8</i>现场会卡的地方</h2>
-    <table>
-      <thead><tr><th>情况</th><th>怎么接</th></tr></thead>
-      <tbody>
-        <tr><td>超时还在播视频</td><td>到点切麦。问一句：哪一句是你自己的拆法？答得出就算讲完。</td></tr>
-        <tr><td>没做作业</td><td>3 分钟讲你选了什么、拆到哪、卡在哪。后半跟大家一起自学。</td></tr>
-        <tr><td>只播不讲</td><td>暂停。先让他说外形和功能，再准播。</td></tr>
-        <tr><td>一上来就要做视频</td><td>打回四个动作。问：命名句是哪一句？没有抽象，技能二拒绝开工。</td></tr>
-        <tr><td>打不开新工具</td><td>继续用原来那个 AI，只换贴上的技能。工具换不了，四个动作能换。</td></tr>
-        <tr><td>新题目仍是同一件东西</td><td>追问：你还不懂它的哪一块？那一块才是新题目。</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="card">
-    <h2><i>9</i>收口给家长的一句</h2>
-    <p>今天孩子介绍了自己选的一件东西，并用课堂上的抽象四个动作去学一件还不懂的新东西，再做成一页课件。</p>
-    <p class="tiny">今晚可以问他：你后来新学了哪一块？命名句是你写的，还是 AI 写的？</p>
-  </section>
-
-  <section class="card">
-    <h2><i>10</i>拍板后再做的东西</h2>
-    <ul style="margin:8px 0 0 1.2em;color:var(--ink2);line-height:1.7">
-      <li>投屏计时器 + 3 分钟结构</li>
-      <li>拉链全班走一遍（直接用方法卡）</li>
-      <li>8 分钟补课录屏：怎么贴两个技能</li>
-    </ul>
-  </section>
-
-  <footer>
-    <span>前半介绍作业。后半：丢掉、留下、起名、试边界，再做课件。</span>
-    <span>样例：<a href="17-m1-hw-demo.html">猛禽发动机</a> · <a href="17-m1-method.html">方法卡</a></span>
-  </footer>
+  <footer>学生入口永远是造句卡那一页。不要再发方法卡、速查、技能说明各一份。</footer>
 </div>
 </body>
 </html>

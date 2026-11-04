@@ -3,107 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>用抽象去学新东西</title>
+<title>用 AI 学一个新玩意儿</title>
 <style>
+  :root{
+    --bg:#070B12;--ink:#F3F6FB;--dim:#8B97AB;--gold:#E8B86A;--cyan:#5EE6FF;
+    --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:#05080F;color:#E8EEF8;font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif}
-  .sheet{width:1240px;margin:0 auto;padding:28px 36px 20px;background:linear-gradient(180deg,#0C1424,#070B14)}
-  .kick{font-size:13px;font-weight:700;color:#7AA2FF;letter-spacing:.04em}
-  h1{font-size:34px;margin-top:6px;line-height:1.25;font-weight:800}
-  .lead{margin-top:10px;font-size:17px;line-height:1.6;color:#E8EEF8;background:rgba(242,179,94,.1);border-radius:14px;padding:12px 16px}
-  .lead b{color:#F2B35E}
-  .path{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 10px}
-  .path div,.three div,.ex div,.jobs div,.pair .col{border:1px solid #243247;border-radius:14px;padding:12px;background:rgba(14,22,38,.92)}
-  .path i{display:block;font-style:normal;font-size:12px;color:#3DD9FF;font-weight:800;margin-bottom:4px}
-  .path b{display:block;font-size:22px;font-weight:800;margin-bottom:4px}
-  .path span,.three span,.ex span,.jobs span{font-size:14px;color:#C8D4E8;line-height:1.45}
-  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-  .three b,.ex b,.jobs b{display:block;font-size:14px;color:#F2B35E;margin-bottom:4px}
-  .card{border:1px solid #243247;border-radius:18px;background:rgba(14,22,38,.92);padding:16px;margin-bottom:12px}
-  .card h2{font-size:20px;font-weight:800;margin-bottom:6px}
-  .card h2 span{display:inline-block;font-size:13px;font-weight:800;color:#04101C;background:#3DD9FF;border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
-  .card.b2 h2 span{background:#7AA2FF}
-  .card.b3 h2 span{background:#F2B35E}
-  .note{font-size:15px;color:#AAB6CA;line-height:1.55;margin-bottom:10px}
-  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .pair h3{font-size:14px;color:#8B98B0;font-weight:700;margin-bottom:8px}
-  .pair li{list-style:none;padding:6px 0;border-bottom:1px solid #1E2A40;font-size:14px;color:#C8D4E8;line-height:1.5}
-  .pair li:last-child{border-bottom:0}
-  .pair li b{color:#E8EEF8}
-  .ex{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  .jobs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .say{margin-top:10px;font-size:15px;line-height:1.6}
-  .say b{color:#F2B35E}
-  footer{display:flex;justify-content:space-between;margin-top:4px;font-size:12px;color:#6F7C93}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  a{color:var(--cyan)}
+  .page{width:min(720px,100% - 40px);margin:0 auto;padding:48px 0 96px}
+  .kick{font-size:12px;letter-spacing:.18em;color:var(--cyan);font-weight:700}
+  h1{font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1.2;margin:12px 0 16px}
+  .lead{font-size:18px;line-height:1.65;color:#D5DCE8;margin-bottom:56px}
+  .lead b{color:var(--gold)}
+  .spine{border-left:2px solid rgba(94,230,255,.35);margin-left:18px;padding-left:32px}
+  .step{position:relative;padding-bottom:52px}
+  .step:last-child{padding-bottom:0}
+  .n{position:absolute;left:-50px;top:0;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);color:var(--cyan);font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center}
+  h2{font-size:22px;font-weight:800;margin-bottom:8px}
+  .hint{font-size:15px;color:var(--dim);line-height:1.55;margin-bottom:20px}
+  .say{font-size:22px;line-height:1.85;font-weight:600}
+  .say p{margin:0 0 14px}
+  .u{border-bottom:2px solid rgba(232,184,106,.7);padding:0 4px 2px;color:var(--gold);font-weight:700}
+  .eg{margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08)}
+  .eg .who{font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:800;margin-bottom:10px}
+  .eg p{font-size:18px;line-height:1.8;color:#F0E6D4}
+  .chat{background:#101826;border-radius:18px;padding:8px;margin-top:8px}
+  .bubble{padding:14px 16px;border-radius:14px;margin:8px;font-size:15px;line-height:1.6}
+  .me{background:#1A2740;color:#D7E3F5}
+  .bot{background:#14231C;color:#CDEED8}
+  .tag{font-size:11px;letter-spacing:.12em;font-weight:800;opacity:.55;display:block;margin-bottom:6px}
+  button,.copy{display:inline-block;margin-top:14px;border:0;border-radius:999px;padding:10px 16px;font:800 14px var(--font);background:var(--gold);color:#1A1206;cursor:pointer;text-decoration:none}
+  pre{display:none}
+  .next{font-size:15px;color:var(--dim);margin-top:14px}
+  footer{margin-top:64px;font-size:13px;color:var(--dim)}
 </style>
 </head>
 <body>
-<div class="sheet">
-  <div class="kick">彼灯教育 · AI 通识 · 接第一节的抽象</div>
-  <h1>用课堂上的四个动作，去学一件新东西</h1>
-  <p class="lead">第一节练过：丢掉差别，留下共同点，起名字，再试边界。产物是概念，不是画。<b>遇到还不熟的东西，还是这四个动作。</b>先抽象，再说清外形、功能、底层，最后才让 AI 做课件。</p>
+<div class="page">
+  <div class="kick">M1 动手课 · 只有这一条路</div>
+  <h1>如何用 AI 当助手，学一个新玩意儿</h1>
+  <p class="lead">先用课堂上的抽象，把新东西说清楚。填完这一段，再打开 DeepSeek，按 2、3 两步走。拉链是唯一示范，你自己换一件还不熟的东西。</p>
 
-  <div class="path">
-    <div><i>① 舍差异</i><b>丢掉</b><span>跟「这一类」无关的差别。颜色、品牌、大小，先扔。</span></div>
-    <div><i>② 取共同</i><b>留下</b><span>大家都有的那一点。少了它，这东西就不成。</span></div>
-    <div><i>③ 命概念</i><b>起名</b><span>给这个共同点一个名字。名字必须你起。</span></div>
-    <div><i>④ 验边界</i><b>试边界</b><span>拿一个很像的问：算不算。企鹅有翅膀，不算猛禽。</span></div>
+  <div class="spine">
+    <section class="step">
+      <div class="n">1</div>
+      <h2>先填这一段</h2>
+      <p class="hint">不要同时用好几套句式。就这一段。空着的词，必须你来填。</p>
+      <div class="say">
+        <p>我看见 <span class="u">外形，几块零件</span>。</p>
+        <p>我丢掉 <span class="u">只是样子的</span>，留下 <span class="u">少了就不成的</span>。</p>
+        <p>我把「<span class="u">留下来的共同点</span>」的共同点叫作「<span class="u">名字</span>」。</p>
+        <p>只要是 <span class="u">算的</span> 就算；一旦 <span class="u">不算的</span>，就不算。</p>
+        <p>它拿来 <span class="u">功能</span>。</p>
+        <p>底下是 <span class="u">第一步</span> → <span class="u">第二步</span> → <span class="u">第三步</span>。</p>
+      </div>
+      <div class="eg">
+        <div class="who">示范 · 拉链，已经填好</div>
+        <p>我看见两排齿、一个拉头、两边的布。<br>
+        我丢掉颜色和品牌，留下「拉头把两排齿咬合」。<br>
+        我把「拉头把两排齿咬合」的共同点叫作「拉链」。<br>
+        只要是靠拉头把两排齿咬合来开合的就算；一旦只是纽扣把两边扣上，就不算。<br>
+        它拿来把开口开上、再拉开。<br>
+        底下是拉头挤齿咬合 → 卡住 → 反方向拉开。</p>
+      </div>
+    </section>
+
+    <section class="step">
+      <div class="n">2</div>
+      <h2>打开 DeepSeek，贴技能一</h2>
+      <p class="hint">技能一只逼你把上面那段说完。它一次问一句。还没填完，不许它做图。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 第一句</span>先贴技能一，然后说：我想学拉链。我先写了我看见的零件……（把第 1 步填好的那段贴进去）</div>
+        <div class="bubble bot"><span class="tag">DeepSeek</span>名字必须你起。纽扣算不算拉链？你用「只要…就算；一旦…就不算」说一句。</div>
+      </div>
+      <button type="button" data-copy="s1">复制技能一</button>
+      <p class="next">走完以后，它会把你的那段话整理成一张学习卡。保留这张卡。</p>
+    </section>
+
+    <section class="step">
+      <div class="n">3</div>
+      <h2>新开一个对话，贴技能二</h2>
+      <p class="hint">技能二才做讲解页。把学习卡整张贴进去。做完必须标两处可能不对。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 新对话</span>先贴技能二，再贴学习卡。请按我的句子做一页能看懂的拉链讲解。</div>
+        <div class="bubble bot"><span class="tag">DeepSeek</span>先确认三行：做一页拆开的拉链，零件能编号，你的命名句写在页上。点头后给你 HTML / 出图提示词。</div>
+      </div>
+      <button type="button" data-copy="s2">复制技能二</button>
+      <p class="next">拉链做完的样子：<a href="17-m1-case-zipper.html">打开案例页</a>。你自己的新玩意儿，从第 1 步再走一遍。</p>
+    </section>
   </div>
 
-  <div class="three">
-    <div><b>外形</b><span>看得见的零件。长什么样，能分成几块。</span></div>
-    <div><b>功能</b><span>拿它来干什么。它能做成哪件事。</span></div>
-    <div><b>底层</b><span>凭什么能这样。底下按什么顺序发生。</span></div>
-  </div>
-
-  <section class="card">
-    <h2><span>句式</span>还是第一节那四句，换一件东西再说一遍</h2>
-    <p class="note">不会说这四句，就还没抽象完。AI 可以帮你找零件、查底层，不能替你写这四句。</p>
-    <div class="pair">
-      <div class="col">
-        <h3>四个动作，说出口</h3>
-        <ul>
-          <li><b>归纳</b>　它们都有___，所以归为___</li>
-          <li><b>命名</b>　我把___的共同点命名为___</li>
-          <li><b>边界</b>　凡是___都属于___；只要___，就不算___</li>
-          <li><b>反思</b>　我舍掉了___只留___；换个抽法会___</li>
-        </ul>
-      </div>
-      <div class="col">
-        <h3>学懂一件具体的，还要补三面</h3>
-        <ul>
-          <li><b>外形</b>　我看见的零件是___</li>
-          <li><b>功能</b>　它拿来___</li>
-          <li><b>底层</b>　它其实按 ___ → ___ → ___ 工作</li>
-        </ul>
-      </div>
-    </div>
-    <p class="say">抽象决定它<b>算哪一类</b>。外形、功能、底层决定你<b>有没有真懂这一个</b>。两类都齐了，才准做课件。</p>
-  </section>
-
-  <section class="card b2">
-    <h2><span>同一套</span>猛禽是示范，拉链是新东西</h2>
-    <div class="ex">
-      <div><b>丢掉</b><span>猛禽：羽毛颜色。拉链：布的花纹、品牌。</span></div>
-      <div><b>留下</b><span>猛禽：尖嘴、利爪、大翅膀。拉链：拉头把两排齿咬合。</span></div>
-      <div><b>起名</b><span>我把「尖嘴、利爪、大翅膀」的共同点叫作猛禽。我把「拉头咬合两排齿」的共同点叫作拉链。</span></div>
-      <div><b>试边界</b><span>企鹅有翅膀，不会这样捕猎，不算猛禽。纽扣能合上两边，没有齿和拉头，不算拉链。</span></div>
-    </div>
-    <p class="say">拉链如果还不懂，外形和底层可以问 AI。但名字和算不算，必须你说。说完再补功能、底层，才进入做课件。</p>
-  </section>
-
-  <section class="card b3">
-    <h2><span>两个技能</span>AI 先陪你抽象，再帮你做课件</h2>
-    <div class="jobs">
-      <div><b>技能一 · 四个动作</b><span>只陪你走丢掉、留下、起名、试边界，再补外形、功能、底层。一次只问一个问题。交学习卡。这时候不许出图、出视频。</span></div>
-      <div><b>技能二 · 做成课件</b><span>四句式和学习卡齐了才开工。按你的抽象做一页能看懂的讲解：能点的拆解、标了零件的图、或视频分镜。做完标两处可能不对。</span></div>
-    </div>
-  </section>
-
-  <footer>
-    <span>丢掉 → 留下 → 起名 → 试边界 → 外形 / 功能 / 底层 → 做课件</span>
-    <span>技能贴到豆包、ChatGPT 或 Cursor</span>
-  </footer>
+  <footer>丢掉 → 留下 → 起名 → 试边界，写进这一段里。DeepSeek 是助手，不是代写。</footer>
 </div>
+
+<pre id="s1">你在帮一个 10–15 岁的同学学一个新玩意儿。他只会这一段造句，不要再教别的句式。
+
+现在不要做课件，不要出图、出视频、出网页。一次只问一个空。
+
+他要填完这一段，每一空必须他自己说：
+我看见 ____。
+我丢掉 ____，留下 ____。
+我把「____」的共同点叫作「____」。
+只要是 ____ 就算；一旦 ____，就不算。
+它拿来 ____。
+底下是 ____ → ____ → ____。
+
+他说「我不知道」，你只问一个问题帮他找，不要替他填整段。
+他说「直接做讲解」，你告诉他还没填完，问下一个空。
+
+整段齐了，原样还给他，标题写「学习卡」。然后说：新开一个对话，贴「做成课件」，把学习卡贴进去。</pre>
+
+<pre id="s2">你在帮一个 10–15 岁的同学做一页讲解。必须先有他填完的学习卡：
+我看见 ____。
+我丢掉 ____，留下 ____。
+我把「____」的共同点叫作「____」。
+只要是 ____ 就算；一旦 ____，就不算。
+它拿来 ____。
+底下是 ____ → ____ → ____。
+
+缺任何一句就不要做，一次只问一个空。
+
+讲解页规则：
+- 一页只讲底下那三步怎么发生。
+- 画零件，不画方块箭头。零件编号，写清是什么、干什么。
+- 他的命名句、边界句必须写在页上。
+- 中文。做完列出两处可能不对。
+- 不要长文、不要 emoji。
+
+先用 3 行说你要做什么，等他点头。能写网页就给单文件 HTML；否则给出图提示词 + 一张零件编号说明。</pre>
+
+<script>
+document.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const t = document.getElementById(btn.getAttribute('data-copy')).textContent.trim();
+    await navigator.clipboard.writeText(t);
+    btn.textContent = '已复制';
+    setTimeout(() => btn.textContent = btn.getAttribute('data-copy') === 's1' ? '复制技能一' : '复制技能二', 1200);
+  });
+});
+</script>
 </body>
 </html>

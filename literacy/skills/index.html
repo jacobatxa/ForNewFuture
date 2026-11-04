@@ -3,49 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>四个动作 · 做成课件</title>
-<style>
-  :root{--bg:#060A13;--ink:#E7EEF9;--ink2:#AAB6CA;--line:#1E2A40;--accent:#3DD9FF;--warm:#F2B35E}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif;max-width:860px;margin:0 auto;padding:28px 20px 64px;line-height:1.6}
-  a{color:var(--accent)}
-  .kick{font-size:12px;font-weight:800;letter-spacing:.16em;color:var(--accent)}
-  h1{font-size:28px;margin:8px 0 10px}
-  .lead{color:var(--ink2);margin-bottom:18px}
-  .lead b{color:var(--ink)}
-  h2{font-size:18px;margin:18px 0 8px}
-  pre{white-space:pre-wrap;background:#0B1222;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font:13.5px/1.55 ui-monospace,Menlo,monospace;color:var(--ink)}
-  .how{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:12px 0;color:var(--ink2);font-size:14.5px}
-  .how b{color:var(--warm)}
-  button{margin-top:8px;border:0;border-radius:999px;padding:8px 14px;font:800 13px inherit;background:var(--warm);color:#04101C;cursor:pointer}
-</style>
+<meta http-equiv="refresh" content="0;url=../course/17-m1-method.html">
+<title>去造句卡</title>
 </head>
-<body>
-  <div class="kick">彼灯教育 · 给学生贴的两份技能</div>
-  <h1>先贴「四个动作」，走完再贴「做成课件」</h1>
-  <p class="lead">还是第一节那套抽象：丢掉、留下、起名、试边界。豆包、ChatGPT 把对应一段复制成新对话第一句。Cursor 把文件夹丢进 <b>.cursor/skills/</b>。<a href="../course/17-m1-method.html">方法卡片</a>。</p>
-
-  <div class="how"><b>豆包 / ChatGPT</b>　开新对话 → 粘贴技能一 → 说你要学的东西。学习卡出来了，再开新对话，粘贴技能二，把学习卡一起贴进去。</div>
-
-  <h2>技能一 · 四个动作</h2>
-  <pre id="a"></pre>
-  <button type="button" data-copy="a">复制技能一</button>
-
-  <h2>技能二 · 做成课件</h2>
-  <pre id="b"></pre>
-  <button type="button" data-copy="b">复制技能二</button>
-
-<script>
-fetch('chai-xue/paste.txt').then(r => r.text()).then(t => document.getElementById('a').textContent = t.trim());
-fetch('kejian/paste.txt').then(r => r.text()).then(t => document.getElementById('b').textContent = t.trim());
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const id = btn.getAttribute('data-copy');
-    await navigator.clipboard.writeText(document.getElementById(id).textContent);
-    btn.textContent = '已复制';
-    setTimeout(() => btn.textContent = id === 'a' ? '复制技能一' : '复制技能二', 1200);
-  });
-});
-</script>
+<body style="font-family:sans-serif;background:#070B12;color:#ddd;padding:40px">
+  <p>上课只用这一页：<a href="../course/17-m1-method.html" style="color:#5EE6FF">用 AI 学一个新玩意儿</a></p>
 </body>
 </html>
