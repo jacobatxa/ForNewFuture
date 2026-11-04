@@ -56,7 +56,7 @@
 <div class="page">
   <div class="kick">M1 动手课 · 只有这一条路</div>
   <h1>如何用 AI 当助手，学一个新玩意儿</h1>
-  <p class="lead">先用课堂上的抽象，把新东西说清楚。填完这一段，打开 <b>DeepSeek</b>。拉链是唯一示范：同一件东西，你会看见「随便问 / 只贴提示词 / 贴技能 / 再上传附件」差在哪。你自己换一件还不熟的东西，从第 1 步再走一遍。</p>
+  <p class="lead">先用课堂上的抽象，把新东西说清楚。填完这一段，打开 <b>DeepSeek</b>。示范只用拉链：随便问、贴提示词、贴技能、再传照片，你会看见差在哪。你自己换一件还不熟的东西，从第 1 步再走一遍。</p>
 
   <div class="spine">
     <section class="step">
@@ -91,7 +91,7 @@
       <ol class="how">
         <li>新开一个对话。</li>
         <li>要点附件：点输入框左边的回形针（有的版本是「+」），选照片或文件。芯片出现在输入框上方，再打字，一起发出去。</li>
-        <li>拉链课上传哪样：自己拍的拉链特写，或者老师发的 <code>SKILL.md</code>。</li>
+        <li>这节课传什么：自己拍的拉链特写，或者老师发的 <code>SKILL.md</code>。</li>
         <li>一次先传一张图。图要能看清齿和拉头，不要整件外套的远景。</li>
       </ol>
       <div class="bar">
@@ -106,8 +106,8 @@
 
     <section class="step">
       <div class="n">3</div>
-      <h2>同一句拉链，四种结果</h2>
-      <p class="hint">老师会按这个顺序投屏。你自己也可以四个对话各发一次，不要混在一个对话里。</p>
+      <h2>拉链怎么问，出来的就不一样</h2>
+      <p class="hint">老师按这个顺序投屏。你也可以开四个对话各试一次，不要挤在一个对话里。</p>
 
       <h3>甲 · 不用提示词</h3>
       <div class="chat">
@@ -133,7 +133,7 @@
 
       <h3>丁 · 技能一 + 上传拉链照片</h3>
       <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 芯片里有 拉链特写.jpg</span>同一段技能一，同一段造句。对照片里的零件问我。</div>
+        <div class="bubble me"><span class="tag">你 · 已上传 拉链特写.jpg</span>技能一和造句都用刚才那段。看着照片里的零件问我。</div>
         <div class="bubble bot"><span class="tag">DeepSeek</span>照片里拉头上还有一个拉片，齿是一块块金属的。你写了「两排齿、一个拉头、两边的布」。拉片丢掉还是留下？</div>
       </div>
       <p class="next">有照片，它问的是你这件拉链，不是百科插图。附件的用处在这里。</p>
@@ -174,45 +174,45 @@
 
     <section class="step">
       <div class="n">6</div>
-      <h2>GitHub 上现成的技能，还是拉链</h2>
-      <p class="hint">技能一、技能二是课上用的。世界上已经有人写好更猛的说明书，星很多，省的是整块时间。课上仍用 DeepSeek：打开仓库，点 <code>SKILL.md</code> → Raw → 另存，当附件上传；再贴下面那句。</p>
+      <h2>GitHub 上现成的技能，也拿拉链试</h2>
+      <p class="hint">技能一、技能二是课上用的。世界上已经有人写好更猛的说明书，星很多，省的是整块时间。课上仍用 DeepSeek：打开仓库，点 <code>SKILL.md</code> → Raw → 另存，当附件上传；再贴下面这段。</p>
       <p class="note">DeepSeek 网页跑不了技能里的脚本，所以 pptx 给不了真正的 .pptx 文件，live-panel 也出不了现成 mp4。课上看的是：有这份说明书，它还敢不敢写成一篇百科。</p>
 
       <h3>A · 提示词不会写时 <span class="star">15.4k ★</span></h3>
       <p class="next"><a href="https://github.com/nidhinjs/prompt-master" target="_blank" rel="noopener">nidhinjs/prompt-master</a> · 你说一句糊的，它写成能贴的提示词。自己改提示词常常改一晚；它几分钟给一条能用的。</p>
       <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 芯片里有 SKILL.md</span>目标工具是 DeepSeek。我想学拉链，但不知道怎么问。写成一条能贴的提示词。不要替我起名，不要写历史。</div>
+        <div class="bubble me"><span class="tag">你 · 已上传 SKILL.md</span>目标工具是 DeepSeek。我想学拉链，但不知道怎么问。写成一条能贴的提示词。不要替我起名，不要写历史。</div>
         <div class="bubble bot"><span class="tag">不用这个技能</span>给你一篇「如何向 AI 提问」的作文，十条建议。</div>
         <div class="bubble bot"><span class="tag">用了这个技能</span>只吐一条能复制的提示词，让你填零件、名字、算不算。课上我们不靠它——六行已经写死了。它证明：技能能把「怎么问」变成一条现成的话。</div>
       </div>
-      <button type="button" data-copy="g-prompt" data-label="复制 prompt-master 那句">复制 prompt-master 那句</button>
+      <button type="button" data-copy="g-prompt" data-label="复制 prompt-master 这段">复制 prompt-master 这段</button>
 
-      <h3>B · 一句话要能播的 PPT <span class="star">187k ★</span></h3>
+      <h3>B · 一句话做出能播的 PPT <span class="star">187k ★</span></h3>
       <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/pptx/SKILL.md" target="_blank" rel="noopener">anthropics/skills · pptx</a> · 官方技能仓库。自己做 5 页拉链 PPT 要一节课；有这份说明书，按页排画面，几分钟出结构。在 Cursor / Claude 里它能真的写出 .pptx。</p>
       <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 芯片里有 pptx/SKILL.md + 学习卡</span>按这份技能，用我的学习卡做 5 页拉链讲解。每页只放一个零件或一步。先列 5 个页标题等我点头。给不了 pptx 文件，就按页写：标题、画面上有什么、旁白一句。</div>
+        <div class="bubble me"><span class="tag">你 · 已上传 pptx/SKILL.md + 学习卡</span>按这份技能，用我的学习卡做 5 页拉链讲解。每页只放一个零件或一步。先列 5 个页标题等我点头。给不了 pptx 文件，就按页写：标题、画面上有什么、旁白一句。</div>
         <div class="bubble bot bad"><span class="tag">不传技能，只说做 PPT</span>给你一份「PPT 大纲」：封面、目录、历史、种类、小结。还是十页百科。</div>
         <div class="bubble bot"><span class="tag">传了 pptx 技能</span>第 1 页只画两排齿；第 2 页只画拉头槽；第 3 页咬合；第 4 页卡住；第 5 页边界句。每一页有画面，没有目录页。</div>
       </div>
-      <button type="button" data-copy="g-pptx" data-label="复制 pptx 那句">复制 pptx 那句</button>
+      <button type="button" data-copy="g-pptx" data-label="复制 pptx 这段">复制 pptx 这段</button>
 
       <h3>C · 教材 PDF 不用自己翻 <span class="star">187k ★</span></h3>
-      <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/pdf/SKILL.md" target="_blank" rel="noopener">anthropics/skills · pdf</a> · 同一仓库。20 页说明翻半小时；技能按页抽字，只留「底下怎么转」。</p>
+      <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/pdf/SKILL.md" target="_blank" rel="noopener">anthropics/skills · pdf</a> · 也在这个仓库。20 页说明翻半小时；技能按页抽字，只留「底下怎么转」。</p>
       <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 芯片里有 pdf/SKILL.md + 一篇拉链说明.pdf</span>按这份技能读 PDF。不要摘要全文。只抽出能填进「底下是 ____ → ____ → ____」的三步。写不清的标「原文没有」。</div>
+        <div class="bubble me"><span class="tag">你 · 已上传 pdf/SKILL.md + 一篇拉链说明.pdf</span>按这份技能读 PDF。不要摘要全文。只抽出能填进「底下是 ____ → ____ → ____」的三步。写不清的标「原文没有」。</div>
         <div class="bubble bot bad"><span class="tag">只传 PDF，不传技能</span>「该文档介绍了拉链的历史、分类与维护，主要内容如下……」</div>
         <div class="bubble bot"><span class="tag">传了 pdf 技能</span>第 4 页：拉头内槽把齿挤到一起 → 齿互相卡住 → 反向拉槽把齿分开。第 1–3 页是历史，丢掉。</div>
       </div>
-      <button type="button" data-copy="g-pdf" data-label="复制 pdf 那句">复制 pdf 那句</button>
+      <button type="button" data-copy="g-pdf" data-label="复制 pdf 这段">复制 pdf 这段</button>
 
       <h3>D · 讲解页不要长成 AI 默认脸 <span class="star">187k ★</span></h3>
       <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md" target="_blank" rel="noopener">anthropics/skills · frontend-design</a> · 默认真空页要改很久；这份技能逼它按「拉链是金属件」选颜色和字，不当成奶油底橙字模板。</p>
       <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 芯片里有 frontend-design/SKILL.md + 学习卡</span>按这份技能做一页拉链讲解。题材是金属件，不要奶油底、不要橙字、不要 01/02/03 装饰编号。零件编号必须对应齿、拉头、布边。</div>
+        <div class="bubble me"><span class="tag">你 · 已上传 frontend-design/SKILL.md + 学习卡</span>按这份技能做一页拉链讲解。题材是金属件，不要奶油底、不要橙字、不要 01/02/03 装饰编号。零件编号必须对应齿、拉头、布边。</div>
         <div class="bubble bot bad"><span class="tag">不传技能</span>米色背景、大标题里一个词换成斜体，底下三张圆角卡片。</div>
         <div class="bubble bot"><span class="tag">传了 frontend-design</span>深底、金属灰齿、拉头用你的金标注号。一页，没有卡片墙。</div>
       </div>
-      <button type="button" data-copy="g-front" data-label="复制 frontend-design 那句">复制 frontend-design 那句</button>
+      <button type="button" data-copy="g-front" data-label="复制 frontend-design 这段">复制 frontend-design 这段</button>
 
       <h3>E · 「底下三步」做成会动的图 <span class="star">839 ★</span></h3>
       <p class="next"><a href="https://github.com/ythx-101/live-panel-skill" target="_blank" rel="noopener">ythx-101/live-panel-skill</a> · 星比上面少，时间效果最猛：一份说明能把流程做成一直在跑的图或 mp4。自己录视频可能一晚上。DeepSeek 网页跑不了它的脚本，老师投屏仓库里的效果；有 Cursor 的回家把学习卡丢进去。</p>
@@ -221,9 +221,9 @@
         <div class="bubble bot"><span class="tag">不用这个技能</span>给你一张静止箭头图，或一段「可以想象拉头在动」的文字。</div>
         <div class="bubble bot"><span class="tag">用了这个技能</span>一页固定画面，齿在咬合，日志在滚，能导出 mp4。</div>
       </div>
-      <button type="button" data-copy="g-live" data-label="复制 live-panel 那句">复制 live-panel 那句</button>
+      <button type="button" data-copy="g-live" data-label="复制 live-panel 这段">复制 live-panel 这段</button>
 
-      <p class="next">课上必做：第 1 步填空 → 第 4 步技能一（能传照片就传）→ 第 5 步技能二。第 3 步四种结果跟老师看一遍。第 6 步 A–D 选一个，把 GitHub 的 <code>SKILL.md</code> 当附件丢进新对话。E 选看。</p>
+      <p class="next">课上必做：第 1 步填空 → 第 4 步技能一（能传照片就传）→ 第 5 步技能二。第 3 步四种问法跟老师看一遍。第 6 步 A–D 选一个，把 GitHub 的 <code>SKILL.md</code> 当附件丢进新对话。E 选看。</p>
       <p class="next">你自己的新玩意儿，从第 1 步再走一遍。不要另找一套句式。</p>
     </section>
   </div>
