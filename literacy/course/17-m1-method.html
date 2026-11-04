@@ -12,6 +12,7 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased}
   a{color:var(--cyan)}
+  code{font:800 13px ui-monospace,Menlo,monospace;color:var(--cyan)}
   .page{width:min(720px,100% - 40px);margin:0 auto;padding:48px 0 96px}
   .kick{font-size:12px;letter-spacing:.18em;color:var(--cyan);font-weight:700}
   h1{font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1.2;margin:12px 0 16px}
@@ -22,6 +23,7 @@
   .step:last-child{padding-bottom:0}
   .n{position:absolute;left:-50px;top:0;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);color:var(--cyan);font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center}
   h2{font-size:22px;font-weight:800;margin-bottom:8px}
+  h3{font-size:16px;font-weight:800;margin:22px 0 8px;color:var(--gold)}
   .hint{font-size:15px;color:var(--dim);line-height:1.55;margin-bottom:20px}
   .say{font-size:22px;line-height:1.85;font-weight:600}
   .say p{margin:0 0 14px}
@@ -33,24 +35,34 @@
   .bubble{padding:14px 16px;border-radius:14px;margin:8px;font-size:15px;line-height:1.6}
   .me{background:#1A2740;color:#D7E3F5}
   .bot{background:#14231C;color:#CDEED8}
+  .bot.bad{background:#2A1717;color:#F0C8C8}
   .tag{font-size:11px;letter-spacing:.12em;font-weight:800;opacity:.55;display:block;margin-bottom:6px}
-  button,.copy{display:inline-block;margin-top:14px;border:0;border-radius:999px;padding:10px 16px;font:800 14px var(--font);background:var(--gold);color:#1A1206;cursor:pointer;text-decoration:none}
+  button,.copy{display:inline-block;margin:14px 10px 0 0;border:0;border-radius:999px;padding:10px 16px;font:800 14px var(--font);background:var(--gold);color:#1A1206;cursor:pointer;text-decoration:none}
   pre{display:none}
-  .next{font-size:15px;color:var(--dim);margin-top:14px}
-  footer{margin-top:64px;font-size:13px;color:var(--dim)}
+  .next{font-size:15px;color:var(--dim);margin-top:14px;line-height:1.6}
+  footer{margin-top:64px;font-size:13px;color:var(--dim);line-height:1.6}
+  .bar{margin-top:12px;background:#0C121C;border:1px solid #243044;border-radius:16px;padding:12px 14px}
+  .bar .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .pin{width:32px;height:32px;border-radius:10px;border:1px solid #5EE6FF;color:var(--cyan);font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .file{background:#1A2740;border-radius:999px;padding:6px 12px;font-size:13px;color:#D7E3F5}
+  .type{flex:1;min-width:160px;color:#5A6A80;font-size:14px;border-bottom:1px solid #2A3A50;padding:6px 0}
+  ol.how{margin:8px 0 0 1.2em;color:#D5DCE8}
+  ol.how li{font-size:16px;line-height:1.65;margin:6px 0}
+  .note{font-size:14px;color:var(--dim);line-height:1.6;margin-top:10px}
+  .star{font:800 12px ui-monospace,Menlo,monospace;color:var(--cyan);letter-spacing:.04em}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="kick">M1 动手课 · 只有这一条路</div>
   <h1>如何用 AI 当助手，学一个新玩意儿</h1>
-  <p class="lead">先用课堂上的抽象，把新东西说清楚。填完这一段，再打开 DeepSeek，按 2、3 两步走。拉链是唯一示范，你自己换一件还不熟的东西。</p>
+  <p class="lead">先用课堂上的抽象，把新东西说清楚。填完这一段，打开 <b>DeepSeek</b>。拉链是唯一示范：同一件东西，你会看见「随便问 / 只贴提示词 / 贴技能 / 再上传附件」差在哪。你自己换一件还不熟的东西，从第 1 步再走一遍。</p>
 
   <div class="spine">
     <section class="step">
       <div class="n">1</div>
       <h2>先填这一段</h2>
-      <p class="hint">不要同时用好几套句式。就这一段。空着的词，必须你来填。</p>
+      <p class="hint">不要同时用好几套句式。就这一段。空着的词，必须你来填。填完，这段就是提示词。</p>
       <div class="say">
         <p>我看见 <span class="u">外形，几块零件</span>。</p>
         <p>我丢掉 <span class="u">只是样子的</span>，留下 <span class="u">少了就不成的</span>。</p>
@@ -60,7 +72,7 @@
         <p>底下是 <span class="u">第一步</span> → <span class="u">第二步</span> → <span class="u">第三步</span>。</p>
       </div>
       <div class="eg">
-        <div class="who">示范 · 拉链，已经填好</div>
+        <div class="who">示范 · 拉链，已经填好 · 这就是提示词</div>
         <p>我看见两排齿、一个拉头、两边的布。<br>
         我丢掉颜色和品牌，留下「拉头把两排齿咬合」。<br>
         我把「拉头把两排齿咬合」的共同点叫作「拉链」。<br>
@@ -68,35 +80,165 @@
         它拿来把开口开上、再拉开。<br>
         底下是拉头挤齿咬合 → 卡住 → 反方向拉开。</p>
       </div>
+      <button type="button" data-copy="prompt" data-label="复制这段提示词">复制这段提示词</button>
+      <p class="next">怎么写：空自己填，填完原样贴。不要写「请详细介绍拉链」「请你扮演老师」。名字和算不算必须是你的句子。</p>
     </section>
 
     <section class="step">
       <div class="n">2</div>
-      <h2>打开 DeepSeek，贴技能一</h2>
-      <p class="hint">技能一只逼你把上面那段说完。它一次问一句。还没填完，不许它做图。</p>
-      <div class="chat">
-        <div class="bubble me"><span class="tag">你 · 第一句</span>先贴技能一，然后说：我想学拉链。我先写了我看见的零件……（把第 1 步填好的那段贴进去）</div>
-        <div class="bubble bot"><span class="tag">DeepSeek</span>名字必须你起。纽扣算不算拉链？你用「只要…就算；一旦…就不算」说一句。</div>
+      <h2>打开 DeepSeek，看怎么贴、怎么传</h2>
+      <p class="hint">网址 chat.deepseek.com。字贴在输入框里。照片、PDF、技能文件点回形针传。</p>
+      <ol class="how">
+        <li>新开一个对话。</li>
+        <li>要点附件：点输入框左边的回形针（有的版本是「+」），选照片或文件。芯片出现在输入框上方，再打字，一起发出去。</li>
+        <li>拉链课上传哪样：自己拍的拉链特写，或者老师发的 <code>SKILL.md</code>。</li>
+        <li>一次先传一张图。图要能看清齿和拉头，不要整件外套的远景。</li>
+      </ol>
+      <div class="bar">
+        <div class="row">
+          <div class="pin" aria-hidden="true">📎</div>
+          <span class="file">拉链特写.jpg</span>
+          <span class="type">我想学拉链。先贴技能一……</span>
+        </div>
       </div>
-      <button type="button" data-copy="s1">复制技能一</button>
-      <p class="next">走完以后，它会把你的那段话整理成一张学习卡。保留这张卡。</p>
+      <p class="note">DeepSeek 能看见照片里的零件；PDF 当材料读；<code>SKILL.md</code> 当说明书读。先出现芯片，再点发送。只拖文件、不打字，它不知道你要它干什么。</p>
     </section>
 
     <section class="step">
       <div class="n">3</div>
+      <h2>同一句拉链，四种结果</h2>
+      <p class="hint">老师会按这个顺序投屏。你自己也可以四个对话各发一次，不要混在一个对话里。</p>
+
+      <h3>甲 · 不用提示词</h3>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你</span>介绍拉链</div>
+        <div class="bubble bot bad"><span class="tag">DeepSeek</span>拉链是一种常见开合件，19 世纪末发明，由链牙、拉头、布带组成，广泛用于服装、箱包。拉动拉头即可开合。使用时避免用力过猛……</div>
+      </div>
+      <p class="next">百科。没有你看见的零件，没有你起的名字，也没有纽扣算不算。</p>
+      <button type="button" data-copy="plain" data-label="复制「介绍拉链」">复制「介绍拉链」</button>
+
+      <h3>乙 · 用了提示词，不贴技能</h3>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你</span>（把第 1 步填好的那段贴进去）请根据上面帮我学拉链。</div>
+        <div class="bubble bot bad"><span class="tag">DeepSeek</span>你已经抓住本质了。我来帮你补充完整：拉链的历史、尼龙和金属的区别、拉头内部的 Y 形通道、保养方法……</div>
+      </div>
+      <p class="next">它开始替你讲课。六行还在，但被淹没。名字好像是你的，课已经不是你在学。</p>
+
+      <h3>丙 · 贴了技能一，不传附件</h3>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你</span>先贴技能一，再说：我想学拉链。我先写了我看见的零件……（把第 1 步贴进去）</div>
+        <div class="bubble bot"><span class="tag">DeepSeek</span>名字必须你起。纽扣算不算拉链？你用「只要…就算；一旦…就不算」说一句。</div>
+      </div>
+      <p class="next">技能是说明书：一次只问一个空，不许它做图，不许它替你起名。这才是助手，不是代写。</p>
+
+      <h3>丁 · 技能一 + 上传拉链照片</h3>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 芯片里有 拉链特写.jpg</span>同一段技能一，同一段造句。对照片里的零件问我。</div>
+        <div class="bubble bot"><span class="tag">DeepSeek</span>照片里拉头上还有一个拉片，齿是一块块金属的。你写了「两排齿、一个拉头、两边的布」。拉片丢掉还是留下？</div>
+      </div>
+      <p class="next">有照片，它问的是你这件拉链，不是百科插图。附件的用处在这里。</p>
+    </section>
+
+    <section class="step">
+      <div class="n">4</div>
+      <h2>打开 DeepSeek，贴技能一</h2>
+      <p class="hint">技能一只逼你把上面那段说完。它一次问一句。还没填完，不许它做图。有照片就一起传。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 第一句</span>先贴技能一，然后说：我想学拉链。我先写了我看见的零件……（把第 1 步填好的那段贴进去）</div>
+        <div class="bubble bot"><span class="tag">DeepSeek</span>名字必须你起。纽扣算不算拉链？你用「只要…就算；一旦…就不算」说一句。</div>
+      </div>
+      <button type="button" data-copy="s1" data-label="复制技能一">复制技能一</button>
+      <p class="next">走完以后，它会把你的那段话整理成一张学习卡。保留这张卡。</p>
+    </section>
+
+    <section class="step">
+      <div class="n">5</div>
       <h2>新开一个对话，贴技能二</h2>
-      <p class="hint">技能二才做讲解页。把学习卡整张贴进去。做完必须标两处可能不对。</p>
+      <p class="hint">技能二才做讲解页。把学习卡整张贴进去。先看「做个课件」和「贴了技能二」差在哪。</p>
+
+      <h3>不用技能 · 只说做个课件</h3>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你</span>根据学习卡做个拉链课件</div>
+        <div class="bubble bot bad"><span class="tag">DeepSeek</span>《拉链完全指南》第 1 页封面，第 2 页历史，第 3 页种类，第 4 页保养……一共十页，每页三条要点。</div>
+      </div>
+      <p class="next">它在做介绍，不是做你那一页。零件没有编号，命名句也不在画面上。</p>
+
+      <h3>用了技能二</h3>
       <div class="chat">
         <div class="bubble me"><span class="tag">你 · 新对话</span>先贴技能二，再贴学习卡。请按我的句子做一页能看懂的拉链讲解。</div>
         <div class="bubble bot"><span class="tag">DeepSeek</span>先确认三行：做一页拆开的拉链，零件能编号，你的命名句写在页上。点头后给你 HTML / 出图提示词。</div>
       </div>
-      <button type="button" data-copy="s2">复制技能二</button>
-      <p class="next">拉链做完的样子：<a href="17-m1-case-zipper.html">打开案例页</a>。你自己的新玩意儿，从第 1 步再走一遍。</p>
+      <button type="button" data-copy="s2" data-label="复制技能二">复制技能二</button>
+      <p class="next">拉链做完的样子：<a href="17-m1-case-zipper.html">打开案例页</a>。做完必须标两处可能不对。</p>
+    </section>
+
+    <section class="step">
+      <div class="n">6</div>
+      <h2>GitHub 上现成的技能，还是拉链</h2>
+      <p class="hint">技能一、技能二是课上用的。世界上已经有人写好更猛的说明书，星很多，省的是整块时间。课上仍用 DeepSeek：打开仓库，点 <code>SKILL.md</code> → Raw → 另存，当附件上传；再贴下面那句。</p>
+      <p class="note">DeepSeek 网页跑不了技能里的脚本，所以 pptx 给不了真正的 .pptx 文件，live-panel 也出不了现成 mp4。课上看的是：有这份说明书，它还敢不敢写成一篇百科。</p>
+
+      <h3>A · 提示词不会写时 <span class="star">15.4k ★</span></h3>
+      <p class="next"><a href="https://github.com/nidhinjs/prompt-master" target="_blank" rel="noopener">nidhinjs/prompt-master</a> · 你说一句糊的，它写成能贴的提示词。自己改提示词常常改一晚；它几分钟给一条能用的。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 芯片里有 SKILL.md</span>目标工具是 DeepSeek。我想学拉链，但不知道怎么问。写成一条能贴的提示词。不要替我起名，不要写历史。</div>
+        <div class="bubble bot"><span class="tag">不用这个技能</span>给你一篇「如何向 AI 提问」的作文，十条建议。</div>
+        <div class="bubble bot"><span class="tag">用了这个技能</span>只吐一条能复制的提示词，让你填零件、名字、算不算。课上我们不靠它——六行已经写死了。它证明：技能能把「怎么问」变成一条现成的话。</div>
+      </div>
+      <button type="button" data-copy="g-prompt" data-label="复制 prompt-master 那句">复制 prompt-master 那句</button>
+
+      <h3>B · 一句话要能播的 PPT <span class="star">187k ★</span></h3>
+      <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/pptx/SKILL.md" target="_blank" rel="noopener">anthropics/skills · pptx</a> · 官方技能仓库。自己做 5 页拉链 PPT 要一节课；有这份说明书，按页排画面，几分钟出结构。在 Cursor / Claude 里它能真的写出 .pptx。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 芯片里有 pptx/SKILL.md + 学习卡</span>按这份技能，用我的学习卡做 5 页拉链讲解。每页只放一个零件或一步。先列 5 个页标题等我点头。给不了 pptx 文件，就按页写：标题、画面上有什么、旁白一句。</div>
+        <div class="bubble bot bad"><span class="tag">不传技能，只说做 PPT</span>给你一份「PPT 大纲」：封面、目录、历史、种类、小结。还是十页百科。</div>
+        <div class="bubble bot"><span class="tag">传了 pptx 技能</span>第 1 页只画两排齿；第 2 页只画拉头槽；第 3 页咬合；第 4 页卡住；第 5 页边界句。每一页有画面，没有目录页。</div>
+      </div>
+      <button type="button" data-copy="g-pptx" data-label="复制 pptx 那句">复制 pptx 那句</button>
+
+      <h3>C · 教材 PDF 不用自己翻 <span class="star">187k ★</span></h3>
+      <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/pdf/SKILL.md" target="_blank" rel="noopener">anthropics/skills · pdf</a> · 同一仓库。20 页说明翻半小时；技能按页抽字，只留「底下怎么转」。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 芯片里有 pdf/SKILL.md + 一篇拉链说明.pdf</span>按这份技能读 PDF。不要摘要全文。只抽出能填进「底下是 ____ → ____ → ____」的三步。写不清的标「原文没有」。</div>
+        <div class="bubble bot bad"><span class="tag">只传 PDF，不传技能</span>「该文档介绍了拉链的历史、分类与维护，主要内容如下……」</div>
+        <div class="bubble bot"><span class="tag">传了 pdf 技能</span>第 4 页：拉头内槽把齿挤到一起 → 齿互相卡住 → 反向拉槽把齿分开。第 1–3 页是历史，丢掉。</div>
+      </div>
+      <button type="button" data-copy="g-pdf" data-label="复制 pdf 那句">复制 pdf 那句</button>
+
+      <h3>D · 讲解页不要长成 AI 默认脸 <span class="star">187k ★</span></h3>
+      <p class="next"><a href="https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md" target="_blank" rel="noopener">anthropics/skills · frontend-design</a> · 默认真空页要改很久；这份技能逼它按「拉链是金属件」选颜色和字，不当成奶油底橙字模板。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">你 · 芯片里有 frontend-design/SKILL.md + 学习卡</span>按这份技能做一页拉链讲解。题材是金属件，不要奶油底、不要橙字、不要 01/02/03 装饰编号。零件编号必须对应齿、拉头、布边。</div>
+        <div class="bubble bot bad"><span class="tag">不传技能</span>米色背景、大标题里一个词换成斜体，底下三张圆角卡片。</div>
+        <div class="bubble bot"><span class="tag">传了 frontend-design</span>深底、金属灰齿、拉头用你的金标注号。一页，没有卡片墙。</div>
+      </div>
+      <button type="button" data-copy="g-front" data-label="复制 frontend-design 那句">复制 frontend-design 那句</button>
+
+      <h3>E · 「底下三步」做成会动的图 <span class="star">839 ★</span></h3>
+      <p class="next"><a href="https://github.com/ythx-101/live-panel-skill" target="_blank" rel="noopener">ythx-101/live-panel-skill</a> · 星比上面少，时间效果最猛：一份说明能把流程做成一直在跑的图或 mp4。自己录视频可能一晚上。DeepSeek 网页跑不了它的脚本，老师投屏仓库里的效果；有 Cursor 的回家把学习卡丢进去。</p>
+      <div class="chat">
+        <div class="bubble me"><span class="tag">以后在 Cursor 里</span>用 live-panel，把拉链学习卡的「挤齿咬合 → 卡住 → 拉开」做成一页会动的图。齿咬合时计数 +1，拉开时复位。数字写「示意」，不要装成真数据。</div>
+        <div class="bubble bot"><span class="tag">不用这个技能</span>给你一张静止箭头图，或一段「可以想象拉头在动」的文字。</div>
+        <div class="bubble bot"><span class="tag">用了这个技能</span>一页固定画面，齿在咬合，日志在滚，能导出 mp4。</div>
+      </div>
+      <button type="button" data-copy="g-live" data-label="复制 live-panel 那句">复制 live-panel 那句</button>
+
+      <p class="next">课上必做：第 1 步填空 → 第 4 步技能一（能传照片就传）→ 第 5 步技能二。第 3 步四种结果跟老师看一遍。第 6 步 A–D 选一个，把 GitHub 的 <code>SKILL.md</code> 当附件丢进新对话。E 选看。</p>
+      <p class="next">你自己的新玩意儿，从第 1 步再走一遍。不要另找一套句式。</p>
     </section>
   </div>
 
-  <footer>丢掉 → 留下 → 起名 → 试边界，写进这一段里。DeepSeek 是助手，不是代写。</footer>
+  <footer>丢掉 → 留下 → 起名 → 试边界，写进这一段里。提示词就是填完的这段。技能是贴进去的说明书。附件是照片或 SKILL.md。DeepSeek 是助手，不是代写。</footer>
 </div>
+
+<pre id="prompt">我看见两排齿、一个拉头、两边的布。
+我丢掉颜色和品牌，留下「拉头把两排齿咬合」。
+我把「拉头把两排齿咬合」的共同点叫作「拉链」。
+只要是靠拉头把两排齿咬合来开合的就算；一旦只是纽扣把两边扣上，就不算。
+它拿来把开口开上、再拉开。
+底下是拉头挤齿咬合 → 卡住 → 反方向拉开。</pre>
+
+<pre id="plain">介绍拉链</pre>
 
 <pre id="s1">你在帮一个 10–15 岁的同学学一个新玩意儿。他只会这一段造句，不要再教别的句式。
 
@@ -134,13 +276,68 @@
 
 先用 3 行说你要做什么，等他点头。能写网页就给单文件 HTML；否则给出图提示词 + 一张零件编号说明。</pre>
 
+<pre id="g-prompt">目标工具是 DeepSeek。我想学拉链，但不知道怎么问。请按你读到的技能，写成一条能直接贴进 DeepSeek 的提示词。
+
+要求：
+- 只输出一条能复制的提示词，不要写教程
+- 提示词里要留下空，让我自己填：看见的零件、丢掉什么、留下什么、起的名字、算不算、拿来干什么、底下三步
+- 不要替我起名，不要写拉链历史</pre>
+
+<pre id="g-pptx">请严格按照你读到的 pptx 技能来做。
+
+材料是我的学习卡：
+我看见两排齿、一个拉头、两边的布。
+我丢掉颜色和品牌，留下「拉头把两排齿咬合」。
+我把「拉头把两排齿咬合」的共同点叫作「拉链」。
+只要是靠拉头把两排齿咬合来开合的就算；一旦只是纽扣把两边扣上，就不算。
+它拿来把开口开上、再拉开。
+底下是拉头挤齿咬合 → 卡住 → 反方向拉开。
+
+做 5 页拉链讲解。每页只放一个零件或一步。先列出 5 个页标题，等我点头再往下。
+
+你如果给不了 .pptx 文件：按页写「标题 / 画面上有什么 / 旁白一句」。不要封面、不要目录、不要历史页。</pre>
+
+<pre id="g-pdf">请严格按照你读到的 pdf 技能来读我上传的 PDF。
+
+不要摘要全文，不要写历史和保养。
+只抽出能填进这一句的内容：底下是 ____ → ____ → ____。
+写不清的地方标「原文没有」。
+如果 PDF 里有图，用文字说图上的零件叫什么、在干什么。</pre>
+
+<pre id="g-front">请严格按照你读到的 frontend-design 技能，做一页拉链讲解。
+
+学习卡：
+我看见两排齿、一个拉头、两边的布。
+我丢掉颜色和品牌，留下「拉头把两排齿咬合」。
+我把「拉头把两排齿咬合」的共同点叫作「拉链」。
+只要是靠拉头把两排齿咬合来开合的就算；一旦只是纽扣把两边扣上，就不算。
+它拿来把开口开上、再拉开。
+底下是拉头挤齿咬合 → 卡住 → 反方向拉开。
+
+题材是金属件。不要奶油底，不要橙字模板，不要 01/02/03 装饰编号。零件编号必须对应齿、拉头、布边。能写网页就给单文件 HTML。</pre>
+
+<pre id="g-live">用 live-panel 技能。把拉链学习卡里的「拉头挤齿咬合 → 卡住 → 反方向拉开」做成一页会动的图。
+
+三块：齿、拉头、布边。咬合时计数 +1，拉开时复位。数字旁写「示意」，不要装成真数据。
+先给一页固定布局，再导出能播的页面或 mp4。</pre>
+
 <script>
-document.querySelectorAll('button').forEach(btn => {
+document.querySelectorAll('[data-copy]').forEach(btn => {
   btn.addEventListener('click', async () => {
     const t = document.getElementById(btn.getAttribute('data-copy')).textContent.trim();
-    await navigator.clipboard.writeText(t);
+    const old = btn.getAttribute('data-label') || btn.textContent;
     btn.textContent = '已复制';
-    setTimeout(() => btn.textContent = btn.getAttribute('data-copy') === 's1' ? '复制技能一' : '复制技能二', 1200);
+    try {
+      await navigator.clipboard.writeText(t);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = t;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+    }
+    setTimeout(() => { btn.textContent = old; }, 1200);
   });
 });
 </script>

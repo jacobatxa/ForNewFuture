@@ -14,6 +14,7 @@
   .lead{font-size:17px;line-height:1.65;color:#D5DCE8;margin-bottom:40px}
   .lead b{color:var(--gold)}
   a{color:var(--cyan)}
+  code{font:800 13px ui-monospace,Menlo,monospace;color:var(--cyan)}
   .spine{border-left:2px solid rgba(94,230,255,.35);margin-left:18px;padding-left:32px}
   .step{position:relative;padding-bottom:36px}
   .n{position:absolute;left:-50px;top:0;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);color:var(--cyan);font-weight:900;display:flex;align-items:center;justify-content:center}
@@ -28,7 +29,7 @@
 <div class="page">
   <div class="kick">教师用 · M1 周日 2 小时</div>
   <h1>如何用 AI 当助手，学一个新玩意儿</h1>
-  <p class="lead">学生只拿一个页面上课：<a href="17-m1-method.html">造句卡 + DeepSeek 两步</a>。案例只有拉链。<a href="17-m1-case-zipper.html">做完的样子</a>。工具就 DeepSeek，不要再铺别的软件。</p>
+  <p class="lead">学生只拿一个页面上课：<a href="17-m1-method.html">造句卡 + 提示词/附件/技能对照 + DeepSeek</a>。案例只有拉链。<a href="17-m1-case-zipper.html">做完的样子</a>。工具就 DeepSeek。课前把拉链特写、技能一/二、GitHub 三个 <code>SKILL.md</code> 放进会议文件。</p>
 
   <div class="spine">
     <section class="step">
@@ -50,42 +51,64 @@
     </section>
     <section class="step">
       <div class="n">4</div>
-      <span class="t">0:58–1:12</span>
+      <span class="t">0:58–1:08</span>
       <h2>投屏造句卡，全班填拉链</h2>
-      <p>就这一段，不讲四种句式。聊天区只收两句：命名句、边界句。对的样子就是卡上那版拉链。</p>
+      <p>就这一段，不讲四种句式。聊天区只收两句：命名句、边界句。对的样子就是卡上那版拉链。说清：填完这段，就是提示词。</p>
     </section>
     <section class="step">
       <div class="n">5</div>
-      <span class="t">1:12–1:28</span>
-      <h2>你共享 DeepSeek，走技能一</h2>
+      <span class="t">1:08–1:16</span>
+      <h2>同一拉链，先看不用技能</h2>
       <ul>
-        <li>复制技能一，新对话发出去</li>
-        <li>把拉链那段贴进去</li>
-        <li>让 DeepSeek 追问「纽扣算不算」</li>
-        <li>拿到学习卡，停</li>
+        <li>新对话只发「介绍拉链」→ 百科</li>
+        <li>再新对话，只贴填好的六行 → 它替你讲完</li>
+        <li>指输入框左边回形针：照片、PDF、<code>SKILL.md</code> 都从这里传，芯片出来再发送</li>
       </ul>
     </section>
     <section class="step">
       <div class="n">6</div>
-      <span class="t">1:28–1:42</span>
+      <span class="t">1:16–1:28</span>
+      <h2>你共享 DeepSeek，走技能一 + 照片</h2>
+      <ul>
+        <li>复制技能一，新对话发出去</li>
+        <li>回形针上传拉链特写，再贴六行</li>
+        <li>让它追问「拉片丢掉还是留下」「纽扣算不算」</li>
+        <li>拿到学习卡，停</li>
+      </ul>
+    </section>
+    <section class="step">
+      <div class="n">7</div>
+      <span class="t">1:28–1:38</span>
       <h2>新开对话，走技能二</h2>
       <ul>
-        <li>复制技能二 + 学习卡</li>
+        <li>先发一次「根据学习卡做个课件」，看十页百科</li>
+        <li>再新对话：复制技能二 + 学习卡</li>
         <li>等它说「我要做一页拆开的拉链」，你点头</li>
         <li>打开案例页，对照它做出来的像不像</li>
       </ul>
     </section>
     <section class="step">
-      <div class="n">7</div>
-      <span class="t">1:42–1:56</span>
-      <h2>学生换自己的新玩意儿，从第 1 步走一遍</h2>
-      <p>作业的下一层：介绍过猫，就学猫耳。打不开 DeepSeek 的，口述，你代打。</p>
+      <div class="n">8</div>
+      <span class="t">1:38–1:48</span>
+      <h2>GitHub 高星技能，还是拉链</h2>
+      <ul>
+        <li>投屏 <a href="https://github.com/anthropics/skills">anthropics/skills</a>（约 187k 星），打开 pptx 的 SKILL.md</li>
+        <li>Raw 下载，当附件丢进 DeepSeek，贴学生页 B 那句</li>
+        <li>对照：不传技能只说「做 PPT」vs 传了技能按页排画面</li>
+        <li>有余力再走 pdf 或 frontend-design。live-panel 只投屏效果，说明 DeepSeek 网页跑不了脚本</li>
+      </ul>
     </section>
     <section class="step">
-      <div class="n">8</div>
-      <span class="t">1:56–2:00</span>
+      <div class="n">9</div>
+      <span class="t">1:48–1:58</span>
+      <h2>学生换自己的新玩意儿，从第 1 步走一遍</h2>
+      <p>能拍一张特写就传。打不开 DeepSeek 的，口述，你代打。作业的下一层：介绍过猫，就学猫耳。</p>
+    </section>
+    <section class="step">
+      <div class="n">10</div>
+      <span class="t">1:58–2:00</span>
       <h2>抽两人念命名句</h2>
-      <p>家长问一句：命名句是你写的，还是 DeepSeek 写的？</p>
+      <p>家长问一句：命名句是你写的，还是 DeepSeek 写的？附件传了没有？</p>
     </section>
   </div>
   <footer>学生入口永远是造句卡那一页。不要再发方法卡、速查、技能说明各一份。</footer>
