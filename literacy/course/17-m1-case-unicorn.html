@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>独角兽 · 案例页</title>
+<style>
+  :root{--bg:#0B0B0B;--ink:#E8E8E8;--dim:#8A8A8A;--gold:#E8B86A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB",sans-serif}
+  .wrap{width:min(720px,100% - 32px);margin:0 auto;padding:36px 0 72px}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);letter-spacing:.08em}
+  h1{font-size:28px;margin:10px 0 8px}
+  .spine{font-size:16px;line-height:1.7;color:#D8D8D8;margin-bottom:24px}
+  .spine b{color:var(--gold)}
+  svg{width:100%;height:auto;display:block}
+  .list{margin-top:18px}
+  .list div{padding:10px 0;border-top:1px solid #222;font-size:15px;line-height:1.55}
+  .list i{font-style:normal;color:var(--gold);font-weight:800;margin-right:8px}
+  .warn{margin-top:22px;font-size:14px;color:var(--dim);line-height:1.6}
+  a{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="meta"><span>Fig 1</span><span>独角兽 · 额头正中有一只角</span></div>
+  <h1>独角兽</h1>
+  <p class="spine">我把有「<b>额头正中有一只角</b>」的叫作「<b>独角兽</b>」。只要是额头有一只角的马就算；要是没角，或者是犀牛那种不是马的，就不算。</p>
+  <svg viewBox="0 0 720 340" aria-label="独角兽拆开">
+    <rect width="720" height="340" fill="#0B0B0B"/>
+    <!-- 2 马身 -->
+    <ellipse cx="330" cy="188" rx="128" ry="52" fill="#1A1A1A" stroke="#9A9A9A" stroke-width="1.6"/>
+    <!-- 脖子 -->
+    <path d="M430 168 L508 108 L538 128 L456 196 Z" fill="#1A1A1A" stroke="#9A9A9A" stroke-width="1.6"/>
+    <!-- 头 -->
+    <ellipse cx="552" cy="122" rx="42" ry="24" fill="#1A1A1A" stroke="#9A9A9A" stroke-width="1.6"/>
+    <ellipse cx="586" cy="128" rx="22" ry="12" fill="#1A1A1A" stroke="#9A9A9A" stroke-width="1.4"/>
+    <!-- 耳 -->
+    <path d="M536 102 L544 74 L560 100 Z" fill="#1A1A1A" stroke="#9A9A9A"/>
+    <!-- 眼 -->
+    <circle cx="568" cy="118" r="3.2" fill="#E8E8E8"/>
+    <!-- 1 角：额头正中 -->
+    <path d="M548 100 L572 22 L590 102 Z" fill="#2A2A2A" stroke="#E8B86A" stroke-width="1.8"/>
+    <path d="M572 30 L562 98 M572 42 L582 98" stroke="#E8B86A" stroke-width=".8" fill="none" opacity=".75"/>
+    <!-- 3 鬃毛 -->
+    <path d="M500 96 c-20-14-48-8-62 14 c-12 18-10 40 8 48" fill="none" stroke="#C8C8C8" stroke-width="2.4"/>
+    <path d="M492 108 c-22-4-40 16-38 36" fill="none" stroke="#8A8A8A" stroke-width="1.8"/>
+    <path d="M518 88 c-14-16-40-12-52 6" fill="none" stroke="#8A8A8A" stroke-width="1.8"/>
+    <!-- 腿 -->
+    <path d="M250 230 v62 M292 234 v58 M368 236 v56 M410 230 v62" stroke="#9A9A9A" stroke-width="7" stroke-linecap="round"/>
+    <!-- 尾 -->
+    <path d="M204 176 c-30 10-48 40-36 64" fill="none" stroke="#8A8A8A" stroke-width="2.2"/>
+    <text x="572" y="16" text-anchor="middle" fill="#E8B86A" font-size="14" font-family="sans-serif">1 角</text>
+    <text x="330" y="194" text-anchor="middle" fill="#E8E8E8" font-size="13" font-family="sans-serif">2 马身</text>
+    <text x="430" y="72" fill="#AAAAAA" font-size="13" font-family="sans-serif">3 鬃毛</text>
+  </svg>
+  <div class="list">
+    <div><i>1</i>角：长在额头正中，只要一只。少了这个，就不像独角兽。</div>
+    <div><i>2</i>马身：四条腿、脖子、头。是马，所以犀牛不算。</div>
+    <div><i>3</i>鬃毛：可以丢掉颜色。粉色、彩虹都只是好看的。</div>
+    <div><i>认它</i>先看成马 → 找额头那只角 → 有角才叫独角兽。</div>
+  </div>
+  <p class="warn">两处可能不对：有的故事里独角兽有翅膀，那更像飞马，按这页的算法就不算；角到底是螺旋还是直的，这页画的是示意。<br>这页是贴了技能二才长这样。只用「做个课件」，往往会做成十页百科。<br><a href="17-m1-method.html">回到造句卡</a></p>
+</div>
+</body>
+</html>
