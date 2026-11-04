@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>细胞 · 案例页</title>
+<style>
+  :root{--bg:#0B0B0B;--ink:#E8E8E8;--dim:#8A8A8A;--gold:#E8B86A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"PingFang SC","Hiragino Sans GB",sans-serif}
+  .wrap{width:min(720px,100% - 32px);margin:0 auto;padding:36px 0 72px}
+  .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);letter-spacing:.08em}
+  h1{font-size:28px;margin:10px 0 8px}
+  .spine{font-size:16px;line-height:1.7;color:#D8D8D8;margin-bottom:24px}
+  .spine b{color:var(--gold)}
+  svg{width:100%;height:auto;display:block}
+  .list{margin-top:18px}
+  .list div{padding:10px 0;border-top:1px solid #222;font-size:15px;line-height:1.55}
+  .list i{font-style:normal;color:var(--gold);font-weight:800;margin-right:8px}
+  .warn{margin-top:22px;font-size:14px;color:var(--dim);line-height:1.6}
+  a{color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="meta"><span>Fig 1</span><span>细胞 · 膜、质、核</span></div>
+  <h1>细胞</h1>
+  <p class="spine">它算「<b>组成身体的最小单位</b>」这一类。只要有膜、质、核这套结构的就算细胞；要是病毒那种没有细胞结构的，就不算。</p>
+  <svg viewBox="0 0 720 360" aria-label="细胞拆开">
+    <rect width="720" height="360" fill="#0B0B0B"/>
+    <!-- 2 细胞质 -->
+    <circle cx="360" cy="180" r="118" fill="#1A1A1A" stroke="#9A9A9A" stroke-width="1.6"/>
+    <!-- 1 细胞膜：外圈 -->
+    <circle cx="360" cy="180" r="118" fill="none" stroke="#E8B86A" stroke-width="3"/>
+    <!-- 3 细胞核 -->
+    <circle cx="360" cy="180" r="46" fill="#141414" stroke="#C8C8C8" stroke-width="1.6"/>
+    <!-- 感官：中间更深的点 -->
+    <circle cx="360" cy="180" r="12" fill="#2A2A2A" stroke="#888"/>
+    <text x="360" y="44" text-anchor="middle" fill="#E8B86A" font-size="14" font-family="sans-serif">1 膜</text>
+    <text x="248" y="120" fill="#E8E8E8" font-size="13" font-family="sans-serif">2 质</text>
+    <text x="360" y="186" text-anchor="middle" fill="#AAAAAA" font-size="13" font-family="sans-serif">3 核</text>
+  </svg>
+  <div class="list">
+    <div><i>1</i>膜：最外面那圈边。包住这一团。</div>
+    <div><i>2</i>质：圈里面、核外面那摊。看着像填满的。</div>
+    <div><i>3</i>核：中间更深的那一点。少了它，很多细胞就不完整。</div>
+    <div><i>能做什么</i>分裂变多。植物细胞还能自己做养分。</div>
+  </div>
+  <p class="warn">两处可能不对：这页画的是动物细胞的示意，植物细胞外面还有壁，里面常有叶绿体；细菌也是细胞，但没有成形的核，不能拿这页去套所有细胞。<br>这页是贴了技能二才长这样。只用「做个课件」，往往会做成十页百科。<br><a href="17-m1-method.html">回到造句卡</a></p>
+</div>
+</body>
+</html>
