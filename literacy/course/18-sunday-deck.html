@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8 日课 · 用 AI 学学校里的新词</title>
+<style>
+  :root{
+    --bg:#060A13;--ink:#F3F7FD;--dim:#8B97AB;--gold:#F2B35E;--cyan:#3DD9FF;--line:#243044;
+    --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--ink);font-family:var(--font)}
+  #bar{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,#3DD9FF,#F2B35E);z-index:5}
+  .slide{display:none;min-height:100%;padding:72px 7vw 88px}
+  .slide.active{display:flex;flex-direction:column;justify-content:center}
+  .k{font-size:12px;letter-spacing:.18em;font-weight:800;color:var(--cyan)}
+  h1{font-size:clamp(40px,6vw,72px);line-height:1.12;font-weight:900;margin:12px 0 16px}
+  h2{font-size:clamp(28px,4vw,44px);line-height:1.2;font-weight:900;margin:8px 0 18px}
+  .sub{font-size:20px;line-height:1.6;color:#D5DCE8;max-width:18em}
+  .sub b,.lead b{color:var(--gold)}
+  ol.big{list-style:none;display:flex;flex-direction:column;gap:16px;max-width:920px}
+  ol.big li{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start}
+  ol.big i{font-style:normal;width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-weight:900;font-size:26px;background:#122033;color:var(--cyan);border:1px solid #2A4060}
+  ol.big b{display:block;font-size:26px;margin-bottom:4px}
+  ol.big span{display:block;font-size:18px;line-height:1.5;color:#C9D3E4}
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1080px}
+  .card{background:#101826;border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px}
+  .card em{font-style:normal;font-size:12px;letter-spacing:.14em;font-weight:800;color:var(--gold)}
+  .card p{font-size:20px;line-height:1.55;margin-top:8px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1000px}
+  .bad{background:#2A1717}
+  .good{background:#12241C}
+  .bad em{color:#FF8A96}
+  .good em{color:#7DFFB8}
+  .say{margin-top:18px;font-size:18px;color:var(--dim);max-width:40em;line-height:1.55}
+  a{color:var(--cyan)}
+  svg.cell{width:min(280px,40vw);height:auto}
+  .row{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+  .nav{position:fixed;right:22px;bottom:18px;display:flex;gap:8px;align-items:center;z-index:6}
+  .nav button{border:1px solid #2A4060;background:#101826;color:var(--ink);border-radius:999px;padding:8px 14px;font:800 14px var(--font);cursor:pointer}
+  #pager{font:800 13px ui-monospace,Menlo,monospace;color:var(--dim)}
+  .notes{display:none}
+  #note{position:fixed;left:18px;bottom:16px;max-width:min(640px,70vw);background:#101826;border:1px solid #2A4060;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5;color:#D5DCE8;display:none;z-index:6}
+  #note.show{display:block}
+  @media (max-width:800px){
+    .trio,.two{grid-template-columns:1fr}
+    ol.big li{grid-template-columns:44px 1fr}
+    ol.big i{width:44px;height:44px;font-size:18px}
+  }
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<section class="slide">
+  <div class="k">11 月 8 日 · 线上</div>
+  <h1>用 AI 学一个<br>学校里的新词</h1>
+  <p class="sub">今天的例子是<b>细胞</b>。讲完，你换自己还不会的那个词。</p>
+  <p class="notes">先不讲方法。让他们知道今天三件事：讲作业、看细胞和猛禽、自己选工具做一页。方向键翻页，按 N 看这行口播。</p>
+</section>
+
+<section class="slide">
+  <div class="k">今天</div>
+  <h2>三件事</h2>
+  <ol class="big">
+    <li><i>1</i><div><b>你讲作业</b><span>按同一套规则讲。讲完，共享你用 AI 做的那一页。</span></div></li>
+    <li><i>2</i><div><b>我讲细胞，再讲猛禽</b><span>同一套三句。然后看工具怎么选、提示词怎么写、技能怎么用。</span></div></li>
+    <li><i>3</i><div><b>看别人在用 AI 干什么</b><span>奇幻乐园。不是作业，是开眼。</span></div></li>
+  </ol>
+  <p class="notes">作业大约 45 分钟。这一页停住，宣布规则后再翻到下一页，让它一直投着。</p>
+</section>
+
+<section class="slide">
+  <div class="k">讲作业 · 规则就这一张</div>
+  <h2>先说看见的，再说它会干什么，最后问算不算</h2>
+  <ol class="big">
+    <li><i>1</i><div><b>外形</b><span>我看见什么颜色、什么形状。听见的、闻见的也算。先别报名字。</span></div></li>
+    <li><i>2</i><div><b>行为和用处</b><span>它会做什么，别人拿它干什么。</span></div></li>
+    <li><i>3</i><div><b>归纳</b><span>它算哪一类？和同类差在哪？这个算不算？那个呢？</span></div></li>
+  </ol>
+  <p class="say">第三句必须是你自己说的。AI 可以画，不能替你回答「算不算」。</p>
+  <p class="notes">这是苏格拉底那一层，只用来收口。不要在第 1 句就问本质。每人大约 3 分钟。你听的是第三句，不是课件好不好看。</p>
+</section>
+
+<section class="slide">
+  <div class="k">讲作业 · 接着</div>
+  <h2>三句讲完，共享你的课件</h2>
+  <div class="trio">
+    <div class="card"><em>可以是</em><p>一页图、一个链接、一段屏幕录制。</p></div>
+    <div class="card"><em>打开时说</em><p>这页哪一句是我写的，哪一处可能是 AI 编的。</p></div>
+    <div class="card"><em>卡住了</em><p>先把三句说完。课件打不开，下一位，回头补。</p></div>
+  </div>
+  <p class="notes">学生共享时，这页可以留着，也可以切到他们的屏幕。你只追问：病毒算不算 / 这个算不算，是谁说的。</p>
+</section>
+
+<section class="slide">
+  <div class="k">我来讲 · 细胞</div>
+  <h2>三句，已经填好</h2>
+  <div class="trio">
+    <div class="card"><em>看见</em><p>显微镜下圆圆的一小团，中间有个更深的点，外面有一圈边。</p></div>
+    <div class="card"><em>能做什么</em><p>能分裂变多。植物细胞还能自己做养分。</p></div>
+    <div class="card"><em>算哪一类</em><p>组成身体的最小单位。只要有膜、质、核就算。病毒没有这套，不算。</p></div>
+  </div>
+  <p class="notes">问他们：细菌有没有成形的核，还算不算细胞？先让他们说，再翻页。细菌算细胞，但没有成形的核。不要自己先答。</p>
+</section>
+
+<section class="slide">
+  <div class="k">细胞 · 做完的一页</div>
+  <div class="row">
+    <svg class="cell" viewBox="0 0 360 360" aria-label="细胞">
+      <circle cx="180" cy="180" r="120" fill="#1A1A1A" stroke="#E8B86A" stroke-width="4"/>
+      <circle cx="180" cy="180" r="48" fill="#141414" stroke="#C8C8C8" stroke-width="2"/>
+      <circle cx="180" cy="180" r="12" fill="#333"/>
+      <text x="180" y="48" text-anchor="middle" fill="#E8B86A" font-size="16" font-family="sans-serif">1 膜</text>
+      <text x="70" y="120" fill="#eee" font-size="16" font-family="sans-serif">2 质</text>
+      <text x="180" y="186" text-anchor="middle" fill="#aaa" font-size="16" font-family="sans-serif">3 核</text>
+    </svg>
+    <div>
+      <h2>一页就够</h2>
+      <p class="sub">编号写在看见的那几块上。算不算写在旁边。不是十页百科。</p>
+      <p class="say"><a href="17-m1-case-cell.html" target="_blank">打开细胞案例页</a></p>
+    </div>
+  </div>
+  <p class="notes">这页画的是动物细胞示意。植物外面还有壁。点名：两处可能不对，就是做完必须写的。</p>
+</section>
+
+<section class="slide">
+  <div class="k">同一套三句 · 猛禽发动机</div>
+  <h2>换一个东西，不换说法</h2>
+  <div class="trio">
+    <div class="card"><em>看见</em><p>上面一圈管子，中间一个腔，下面一只倒过来的钟形喷管。</p></div>
+    <div class="card"><em>能做什么</em><p>把液氧和液甲烷加压、烧掉，从后面高速喷出去，把火箭往前推。</p></div>
+    <div class="card"><em>算哪一类</em><p>只要自己能加压、燃烧、喷出燃气，就算火箭发动机。飞机发动机要吃空气，不算。</p></div>
+  </div>
+  <p class="say"><a href="17-m1-hw-raptor.html" target="_blank">打开可拆的那一页</a> · 鼠标滑过零件，或按方向键。</p>
+  <p class="notes">猛禽是上一份作业的样子，用来证明三句不只适用于生物。点火若课堂网络不稳，就停在三句，不要卡在动画上。</p>
+</section>
+
+<section class="slide">
+  <div class="k">工具怎么选</div>
+  <h2>先定要交什么，再选工具</h2>
+  <div class="trio">
+    <div class="card"><em>要把一个词讲明白</em><p>用 DeepSeek 聊天。今天就用它。</p></div>
+    <div class="card"><em>要一页能投屏的图</em><p>用能画图、能写网页的。细胞这页就是。</p></div>
+    <div class="card"><em>要一段会动的</em><p>用可灵、即梦、Runway 这种。课上不要求。</p></div>
+  </div>
+  <p class="say">不要先打开最火的那个。最火的不一定能交你这三句。</p>
+  <p class="notes">点名乐园之前，先把「选工具」说成这一句。后面乐园里的一百个，是选工具的货架，不是现在都要会。</p>
+</section>
+
+<section class="slide">
+  <div class="k">提示词大法</div>
+  <h2>提示词就是填完的三句</h2>
+  <div class="two">
+    <div class="card bad"><em>这样问</em><p>介绍细胞</p><p class="say">它给你发现史、人名、十页提纲。</p></div>
+    <div class="card good"><em>这样问</em><p>把三句原样贴进去：我看见……它能……只要……就算；要是病毒……就不算。</p><p class="say">它得跟着你的句子走。</p></div>
+  </div>
+  <p class="say">不要写「请详细介绍」「请你扮演老师」。空是你填的。</p>
+  <p class="notes">可以现场开 DeepSeek 发一次「介绍细胞」，再发三句。时间紧就只指这两张卡。复制按钮在学生页。</p>
+</section>
+
+<section class="slide">
+  <div class="k">技能大法</div>
+  <h2>技能是先贴进去的说明书</h2>
+  <div class="trio">
+    <div class="card"><em>技能一</em><p>一次只问一个空。三句没说完，不许它做图，不许它替你起名。</p></div>
+    <div class="card"><em>技能二</em><p>才做一页。膜、质、核要编号。「算不算」要写在页上。</p></div>
+    <div class="card"><em>别人写好的</em><p>GitHub 上星很多的技能，比如做 PPT 的。把 SKILL.md 当文件传上去。</p></div>
+  </div>
+  <p class="say">不贴说明书，只说「做个课件」，它会做成十页百科。</p>
+  <p class="notes">学生页有复制。GitHub 的 pptx 约 18 万星，在 anthropics/skills。DeepSeek 网页跑不了里面的脚本，课上只看它还敢不敢写成百科。</p>
+</section>
+
+<section class="slide">
+  <div class="k">附件</div>
+  <h2>图和说明书，从回形针传</h2>
+  <ol class="big">
+    <li><i>1</i><div><b>点输入框左边的回形针</b><span>有的版本是「+」。</span></div></li>
+    <li><i>2</i><div><b>文件先出现，再打字</b><span>细胞图、课本一页、SKILL.md，都可以。</span></div></li>
+    <li><i>3</i><div><b>只丢文件、不打字</b><span>它不知道你要它干什么。</span></div></li>
+  </ol>
+  <p class="notes">有图时让它问「这些格子是一个细胞还是很多个」。这就是附件的用处。</p>
+</section>
+
+<section class="slide">
+  <div class="k">还要知道</div>
+  <h2>它会编</h2>
+  <p class="sub">细胞、猛禽都会编。做完写出<b>两处可能不对</b>，拿课本或你看见的图去对。</p>
+  <div class="two" style="margin-top:18px">
+    <div class="card"><em>细胞这页</em><p>画的是动物细胞。植物外面还有壁。细菌没有成形的核，也算细胞。</p></div>
+    <div class="card"><em>猛禽这页</em><p>喷管里的管子是示意，不是真图纸。颜色、第几版，都丢掉了。</p></div>
+  </div>
+  <p class="notes">这是我建议多讲的第一块。没有这一页，他们会把 AI 的页当成课本。</p>
+</section>
+
+<section class="slide">
+  <div class="k">还要知道</div>
+  <h2>三样不要交给它</h2>
+  <ol class="big">
+    <li><i>1</i><div><b>你的名字、学校、密码</b><span>聊天框不是日记本。</span></div></li>
+    <li><i>2</i><div><b>别人的脸和照片</b><span>没有对方答应，不传。</span></div></li>
+    <li><i>3</i><div><b>让它写完，你直接交</b><span>三句是你的。它只帮你做成能看的一页。</span></div></li>
+  </ol>
+  <p class="notes">这是建议多讲的第二块。到此停，不要再加模块，不然两小时装不下。</p>
+</section>
+
+<section class="slide">
+  <div class="k">留一个口子</div>
+  <h2>AI 奇幻乐园</h2>
+  <p class="sub">别人正在用 AI 画画、做视频、写歌、做网页。一百多种，能点开的就点开。</p>
+  <p class="say"><a href="../park/index.html" target="_blank">打开奇幻乐园</a></p>
+  <p class="say">现在只看，不要求会做。看完回来说：你想用哪一种，交一页什么。</p>
+  <p class="notes">投屏乐园，让他们点一个「打开就能试」，比如 Quick, Draw。控制在 8 分钟。不要在乐园里迷路。</p>
+</section>
+
+<section class="slide">
+  <div class="k">回家</div>
+  <h2>换一个学校里还不熟的词</h2>
+  <ol class="big">
+    <li><i>1</i><div><b>还是这三句</b><span>看见。能做什么。算哪一类，这个算不算。</span></div></li>
+    <li><i>2</i><div><b>做成一页</b><span>可以是图，可以是链接。</span></div></li>
+    <li><i>3</i><div><b>标两处可能不对</b><span>句子是你写的。</span></div></li>
+  </ol>
+  <p class="say"><a href="17-m1-method.html">学生页：三句、复制、怎么传附件</a></p>
+  <p class="notes">收课。抽一个人用自己的词说第三句。家长若在：这句话是孩子的还是 AI 的。</p>
+</section>
+
+<div class="nav">
+  <button type="button" id="prev">上一页</button>
+  <span id="pager"></span>
+  <button type="button" id="next">下一页</button>
+</div>
+<div id="note"></div>
+<script>
+const slides = [...document.querySelectorAll('.slide')];
+let cur = 0;
+const note = document.getElementById('note');
+function go(i){
+  cur = Math.max(0, Math.min(slides.length - 1, i));
+  slides.forEach((s, j) => s.classList.toggle('active', j === cur));
+  document.getElementById('bar').style.width = ((cur + 1) / slides.length * 100) + '%';
+  document.getElementById('pager').textContent = (cur + 1) + ' / ' + slides.length;
+  const n = slides[cur].querySelector('.notes');
+  note.textContent = n ? n.textContent : '';
+  note.classList.toggle('show', !!n && note.classList.contains('show'));
+  history.replaceState(null, '', '#' + (cur + 1));
+}
+document.getElementById('prev').onclick = () => go(cur - 1);
+document.getElementById('next').onclick = () => go(cur + 1);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(cur - 1);
+  else if (e.key === 'n' || e.key === 'N') note.classList.toggle('show');
+});
+let tx = null;
+document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', (e) => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 60) go(cur + (dx < 0 ? 1 : -1));
+  tx = null;
+});
+const hash = parseInt(location.hash.slice(1), 10);
+go(Number.isFinite(hash) ? hash - 1 : 0);
+</script>
+</body>
+</html>
