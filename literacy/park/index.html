@@ -31,24 +31,22 @@
   #count{font-weight:800;font-size:14px}
   main{padding:8px 4vw 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
   article{border:2px solid var(--ink);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;background:#fff;box-shadow:6px 6px 0 var(--ink)}
+  article:nth-child(5n+1){background:#FFE28A}
+  article:nth-child(5n+2){background:#FFB4D8}
+  article:nth-child(5n+3){background:#B8F5C8}
+  article:nth-child(5n+4){background:#C9D6FF}
+  article:nth-child(5n+5){background:#FFD0B0}
   article a.card{display:flex;flex-direction:column;flex:1;color:inherit;text-decoration:none;padding:0 0 14px}
-  .shot{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:2px solid var(--ink)}
-  .shot span{position:absolute;inset:0;display:grid;place-items:center;padding:16px;text-align:center;font-family:var(--display);font-size:clamp(22px,3vw,28px);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.15}
+  .shot{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:2px solid var(--ink);background:transparent}
+  .shot span{position:absolute;inset:0;display:grid;place-items:center;padding:18px;text-align:center;font-family:var(--display);font-size:clamp(24px,3.2vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.15}
   .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff}
+  article.has-shot .shot{background:#fff}
   article .pad{padding:12px 14px 0}
   article b{font-size:20px;line-height:1.25;letter-spacing:-.02em}
   article p{margin-top:6px;font-size:14px;line-height:1.45;color:#2A2038}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding:12px 14px 0}
   .tags i{font-style:normal;font-size:11px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:2px 7px;background:#fff}
   .go{margin:10px 14px 0;font-weight:800;font-size:14px}
-  article[data-cat="玩"] .shot{background:#7A4DFF}
-  article[data-cat="画"] .shot{background:#E85D4C}
-  article[data-cat="视"] .shot{background:#1F6BFF}
-  article[data-cat="声"] .shot{background:#0E8A6A}
-  article[data-cat="三维"] .shot{background:#C45A12}
-  article[data-cat="聊"] .shot{background:#5B3FA8}
-  article[data-cat="做"] .shot{background:#C43B73}
-  article[data-cat="库"] .shot{background:#243044}
   footer{padding:0 4vw 40px;font-size:13px;color:var(--dim);line-height:1.5}
 </style>
 </head>
@@ -101,7 +99,7 @@ function show(){
       : '';
     const label = img ? '' : esc(w[0]);
     return `
-    <article data-cat="${esc(w[2])}">
+    <article class="${img ? 'has-shot' : ''}" data-cat="${esc(w[2])}">
       <a class="card" href="${esc(w[4])}" target="_blank" rel="noopener">
         <div class="shot"><span>${label}</span>${face}</div>
         <div class="pad"><b>${esc(w[0])}</b><p>${esc(w[1])}。${esc(w[6])}</p></div>
