@@ -141,3 +141,15 @@ window.WORKS = [
 ["browser-use","让 AI 去点浏览器","库","看项目","https://github.com/browser-use/browser-use","GitHub","看它怎么操作网页"],
 ["Novel","AI 帮忙写下去的编辑器","做","看项目","https://novel.sh/","个人","开源写作界面"]
 ];
+
+window.SHOTS = {
+  'https://quickdraw.withgoogle.com/': 'shots/quickdraw.png',
+  'https://teachablemachine.withgoogle.com/': 'shots/teachable.png',
+  'https://www.autodraw.com/': 'shots/autodraw.png',
+  'https://emojiscavengerhunt.withgoogle.com/': 'shots/emoji.png',
+  'https://experiments.withgoogle.com/': 'shots/experiments.png',
+  'https://thispersondoesnotexist.com/': 'shots/thisperson.png',
+  'https://huggingface.co/spaces': 'shots/hf.png',
+  'https://excalidraw.com/': 'shots/excalidraw.png',
+  'https://www.remove.bg/': 'shots/removebg.png'
+};
