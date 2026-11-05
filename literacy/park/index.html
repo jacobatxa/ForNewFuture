@@ -29,18 +29,26 @@
   button.f.on{background:var(--ink);color:#fff}
   input{min-width:180px;cursor:text}
   #count{font-weight:800;font-size:14px}
-  main{padding:8px 4vw 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-  article{border:2px solid var(--ink);border-radius:22px;padding:16px 16px 14px;min-height:210px;display:flex;flex-direction:column;background:#fff;box-shadow:6px 6px 0 var(--ink)}
-  article:nth-child(5n+1){background:#FFE28A}
-  article:nth-child(5n+2){background:#FFB4D8}
-  article:nth-child(5n+3){background:#B8F5C8}
-  article:nth-child(5n+4){background:#C9D6FF}
-  article:nth-child(5n+5){background:#FFD0B0}
-  article b{font-size:22px;line-height:1.2;letter-spacing:-.02em}
-  article p{margin-top:8px;font-size:14px;line-height:1.45;color:#2A2038}
-  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:12px}
+  main{padding:8px 4vw 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  article{border:2px solid var(--ink);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;background:#fff;box-shadow:6px 6px 0 var(--ink)}
+  article a.card{display:flex;flex-direction:column;flex:1;color:inherit;text-decoration:none;padding:0 0 14px}
+  .shot{position:relative;aspect-ratio:16/10;background:#1A1028;overflow:hidden;border-bottom:2px solid var(--ink)}
+  .shot span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:42px;font-weight:800;color:#fff;letter-spacing:-.04em}
+  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff}
+  article .pad{padding:12px 14px 0}
+  article b{font-size:20px;line-height:1.25;letter-spacing:-.02em}
+  article p{margin-top:6px;font-size:14px;line-height:1.45;color:#2A2038}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding:12px 14px 0}
   .tags i{font-style:normal;font-size:11px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:2px 7px;background:#fff}
-  .go{margin-top:10px;font-weight:800;font-size:14px;text-decoration:none}
+  .go{margin:10px 14px 0;font-weight:800;font-size:14px}
+  article[data-cat="玩"] .shot{background:#7A4DFF}
+  article[data-cat="画"] .shot{background:#E85D4C}
+  article[data-cat="视"] .shot{background:#1F6BFF}
+  article[data-cat="声"] .shot{background:#0E8A6A}
+  article[data-cat="三维"] .shot{background:#C45A12}
+  article[data-cat="聊"] .shot{background:#5B3FA8}
+  article[data-cat="做"] .shot{background:#C43B73}
+  article[data-cat="库"] .shot{background:#243044}
   footer{padding:0 4vw 40px;font-size:13px;color:var(--dim);line-height:1.5}
 </style>
 </head>
@@ -64,25 +72,33 @@
   <span id="count"></span>
 </div>
 <main id="wall"></main>
-<footer>视频号上常见的可灵、即梦、海螺、Suno、豆包，这里链到它们的公开网站，不是视频号里的某一条。点开是别人的网站。</footer>
+<footer>图是各网站首页的缩略图，要稍等才出来；出不来就显示名字。视频号上常见的可灵、即梦、海螺、Suno、豆包，这里链到它们的公开网站。点开是别人的网站。</footer>
 <script src="works.js"></script>
 <script>
 const name = {玩:'小实验',画:'画画',视:'视频',声:'声音',三维:'三维',聊:'聊天',做:'做东西',库:'GitHub'};
 const wall = document.getElementById('wall');
 let key = '全部';
+function esc(s){return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function shot(url){
+  const m = String(url).match(/github\.com\/([^/?#]+)\/([^/?#]+)/);
+  if (m && m[1] !== 'features') return 'https://opengraph.githubassets.com/1/' + m[1] + '/' + m[2];
+  return 'https://image.thum.io/get/width/640/crop/400/noanimate/' + url;
+}
 function show(){
-  const q = document.getElementById('q').value.trim();
+  const q = document.getElementById('q').value.trim().toLowerCase();
   const list = window.WORKS.filter(w => {
     const hit = key === '全部' || w[2] === key || w[3] === key;
-    const text = (w[0] + w[1] + w[5] + w[6]).includes(q);
+    const text = (w[0] + w[1] + w[5] + w[6]).toLowerCase().includes(q);
     return hit && text;
-  });
+  }).sort((a, b) => (a[3] === '打开就能试' ? 0 : 1) - (b[3] === '打开就能试' ? 0 : 1));
   wall.innerHTML = list.map(w => `
-    <article>
-      <b>${w[0]}</b>
-      <p>${w[1]}。${w[6]}</p>
-      <div class="tags"><i>${name[w[2]] || w[2]}</i><i>${w[3]}</i><i>${w[5]}</i></div>
-      <a class="go" href="${w[4]}" target="_blank" rel="noopener">打开 →</a>
+    <article data-cat="${esc(w[2])}">
+      <a class="card" href="${esc(w[4])}" target="_blank" rel="noopener">
+        <div class="shot"><span>${esc(w[0].slice(0, 1))}</span><img alt="" loading="lazy" src="${esc(shot(w[4]))}" onerror="this.remove()"></div>
+        <div class="pad"><b>${esc(w[0])}</b><p>${esc(w[1])}。${esc(w[6])}</p></div>
+        <div class="tags"><i>${esc(name[w[2]] || w[2])}</i><i>${esc(w[3])}</i><i>${esc(w[5])}</i></div>
+        <div class="go">打开 →</div>
+      </a>
     </article>`).join('');
   document.getElementById('count').textContent = list.length + ' 个';
 }
