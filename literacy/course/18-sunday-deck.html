@@ -100,6 +100,10 @@
   .plate .cap{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;border-top:1px solid var(--rule-2);margin-top:12px;padding-top:10px;position:relative;z-index:2}
   .plate .cap .r{color:var(--red)}
   .plate-art{display:block;width:100%;height:auto;max-height:min(46vh,420px);margin:0 auto}
+  .plate-embed{display:block;width:100%;height:min(52vh,460px);border:0;background:#0b0b0b;border-radius:0}
+  .plate.has-embed{padding:0}
+  .plate.has-embed .cap{margin:0;padding:10px 12px;border-top:1px solid var(--rule-2)}
+  .plate.has-embed .legend{margin:0;padding:10px 12px;border-top:1px solid var(--rule-2)}
   .plate-art text{font-family:var(--mono);font-size:13px;letter-spacing:.05em}
 
   /* ---------- 细胞标本图 ---------- */
@@ -570,58 +574,17 @@
     <div class="vlabel">标本 02 · 猛禽发动机</div>
     <h2 class="t2 reveal">换个东西，<br>不换说法</h2>
     <div class="spec">
-      <div class="plate" data-plate="raptor">
-        <svg class="plate-art" viewBox="0 0 420 420" role="img" aria-label="火箭发动机示意：泵、燃烧腔、钟形喷管">
-          <g class="part" data-part="pump">
-            <path d="M140 54 H280" stroke="#1B4763" stroke-width="3"/>
-            <path d="M168 54 V76 M252 54 V76" stroke="#1B4763" stroke-width="2"/>
-            <circle cx="168" cy="91" r="15" fill="#F5F6F0" stroke="#1B4763" stroke-width="2.6"/>
-            <circle cx="252" cy="91" r="15" fill="#F5F6F0" stroke="#1B4763" stroke-width="2.6"/>
-            <path d="M168 106 V122 M252 106 V122" stroke="#1B4763" stroke-width="2"/>
-          </g>
-          <g class="part" data-part="chamber">
-            <rect x="156" y="118" width="108" height="52" rx="5" fill="#ECEEDF" stroke="#1B4763" stroke-width="2.8"/>
-            <path d="M170 132 H250 M170 146 H250" stroke="#1B4763" stroke-width="1" opacity=".45" stroke-dasharray="3 4"/>
-          </g>
-          <g class="part" data-part="nozzle">
-            <path d="M156 170 C150 240 116 300 70 352 L350 352 C304 300 270 240 264 170 Z" fill="#F5F6F0" stroke="#1B4763" stroke-width="3"/>
-            <path d="M168 186 C164 246 138 300 108 344" fill="none" stroke="#1B4763" stroke-width="1" opacity=".4"/>
-            <path d="M252 186 C256 246 282 300 312 344" fill="none" stroke="#1B4763" stroke-width="1" opacity=".4"/>
-          </g>
-          <g class="lab" data-lab="pump">
-            <path d="M116 96 L152 93" stroke="#1B4763" stroke-width="1.2"/>
-            <text x="112" y="100" text-anchor="end" fill="#1B4763">涡轮泵</text>
-          </g>
-          <g class="lab" data-lab="chamber">
-            <path d="M268 146 L284 144" stroke="#1B4763" stroke-width="1.2"/>
-            <text x="288" y="148" fill="#1B4763">主燃烧室</text>
-          </g>
-          <g class="lab" data-lab="nozzle">
-            <path d="M120 262 L96 260" stroke="#1B4763" stroke-width="1.2"/>
-            <text x="92" y="264" text-anchor="end" fill="#1B4763">喷管</text>
-          </g>
-          <g aria-hidden="true">
-            <path d="M170 362 V378 M210 362 V378 M250 362 V378" stroke="#3B6C88" stroke-width="1.4"/>
-            <path d="M166 376 L170 384 L174 376 Z" fill="#3B6C88"/>
-            <path d="M206 376 L210 384 L214 376 Z" fill="#3B6C88"/>
-            <path d="M246 376 L250 384 L254 376 Z" fill="#3B6C88"/>
-            <text x="210" y="404" text-anchor="middle" fill="#3B6C88">燃气往下喷 → 火箭往上走</text>
-          </g>
-        </svg>
-        <div class="legend">
-          <button type="button" data-key="pump" aria-pressed="false">涡轮泵</button>
-          <button type="button" data-key="chamber" aria-pressed="false">主燃烧室</button>
-          <button type="button" data-key="nozzle" aria-pressed="false">喷管</button>
-        </div>
-        <div class="cap"><span>示意 · 不是图纸</span><span class="r">细节去可拆那一页</span></div>
+      <div class="plate has-embed">
+        <iframe class="plate-embed" title="猛禽发动机可拆说明" src="17-m1-hw-raptor.html?embed=1" loading="lazy"></iframe>
+        <div class="cap"><span>anatomy 技能 · 可悬停拆解</span><span class="r">示意 · 不是真图纸</span></div>
       </div>
       <div>
         <div class="fills">
-          <div class="fill"><div class="lab">01 对「它」外在的描述</div><div class="txt">上面有氧泵、甲烷泵和一圈管路，中间是主燃烧室，下面一只钟形喷管。</div></div>
-          <div class="fill"><div class="lab">02 它能</div><div class="txt">把液氧和液甲烷加压，在燃烧室烧掉，从喷管高速喷出，把火箭往前推。</div></div>
+          <div class="fill"><div class="lab">01 对「它」外在的描述</div><div class="txt">上面有氧涡轮泵、甲烷涡轮泵和一圈管路，中间是主燃烧室，下面一只钟形喷管。</div></div>
+          <div class="fill"><div class="lab">02 它能</div><div class="txt">液氧、液甲烷先各自加压，在主燃烧室烧掉，从喷管高速喷出，把火箭往前推。</div></div>
           <div class="fill x"><div class="lab">03 它算不算</div><div class="txt">只要自己能加压、燃烧、喷出燃气，就算火箭发动机。飞机发动机要吃空气，不算。</div></div>
         </div>
-        <p style="margin-top:18px"><a class="lnk" href="17-m1-hw-raptor.html" target="_blank" rel="noopener">打开可拆的那一页</a></p>
+        <p class="aside" style="margin-top:14px">点左边编号：氧泵、预燃室、喷管各自干什么。全屏看<a class="lnk" href="17-m1-hw-raptor.html" target="_blank" rel="noopener">可拆那一页</a>。</p>
       </div>
     </div>
   </div>
