@@ -173,13 +173,24 @@ font:13px/1.4 "PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-ser
 .hw-banner a{color:#ffb46e;text-decoration:none;border-bottom:1px solid #ffb46e66}
 </style>
 <style id="embed-mode-css">
+html.embed-mode,html.embed-mode body{height:100%;margin:0;overflow:hidden}
 html.embed-mode .hw-banner{display:none!important}
-html.embed-mode body{margin:0}
-html.embed-mode main.iso-page{width:100%!important;max-width:none!important;margin:0!important;padding:8px!important;gap:10px!important;
-  grid-template-columns:minmax(0,1.15fr) minmax(240px,340px)!important;height:100vh;box-sizing:border-box}
-html.embed-mode main.iso-page > .iso-figure.rp{position:static!important;max-height:calc(100vh - 16px);overflow:hidden}
-html.embed-mode .tt-wrap{max-height:calc(100vh - 16px)!important;position:static!important}
-@media (max-width:1080px){html.embed-mode main.iso-page{display:block!important;height:auto;overflow:auto}}
+html.embed-mode main.iso-page{
+  display:block!important;width:100%!important;max-width:none!important;
+  margin:0!important;padding:0!important;height:100%!important;overflow:hidden!important
+}
+html.embed-mode main.iso-page > .iso-figure.rp{
+  position:relative!important;top:auto!important;margin:0!important;
+  height:100%!important;max-height:none!important;overflow:hidden!important
+}
+html.embed-mode .iso-plate{height:100%;padding:28px 12px 36px;box-sizing:border-box}
+html.embed-mode .iso-plate .iso-svg,html.embed-mode .iso-plate canvas,
+html.embed-mode .iso-plate [data-engine],html.embed-mode .rp-stage{
+  max-height:100%;
+}
+html.embed-mode .tt-wrap{display:none!important}
+html.embed-mode figcaption{display:none!important}
+html.embed-mode .iso-legend{display:none!important}
 </style><script>if(/(?:\?|&)embed=1(?:&|$)/.test(location.search))document.documentElement.classList.add("embed-mode");</script></head><body class="iso" data-theme="dark"><div class="hw-banner"><b>作业成品示范 · 猛禽发动机</b><span>用 anatomy 技能拆开讲。鼠标悬停可拆解，点编号看说明。</span><a href="18-sunday-deck.html#s9">← 回课件</a></div><main class="iso-page"><style>.rp {
   --rp-blend: screen;
   --rp-button-hover: #232323;

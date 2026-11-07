@@ -100,10 +100,16 @@
   .plate .cap{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;border-top:1px solid var(--rule-2);margin-top:12px;padding-top:10px;position:relative;z-index:2}
   .plate .cap .r{color:var(--red)}
   .plate-art{display:block;width:100%;height:auto;max-height:min(46vh,420px);margin:0 auto}
-  .plate-embed{display:block;width:100%;height:min(52vh,460px);border:0;background:#0b0b0b;border-radius:0}
-  .plate.has-embed{padding:0}
-  .plate.has-embed .cap{margin:0;padding:10px 12px;border-top:1px solid var(--rule-2)}
+  .plate-embed{display:block;width:100%;height:calc(100svh - 220px);min-height:420px;border:0;background:#0b0b0b;border-radius:0}
+  .plate.has-embed{padding:0;align-self:stretch}
+  .plate.has-embed .cap{margin:0;padding:8px 12px;border-top:1px solid var(--rule-2)}
   .plate.has-embed .legend{margin:0;padding:10px 12px;border-top:1px solid var(--rule-2)}
+  #s9 .wrap{display:flex;flex-direction:column;flex:1;min-height:0;height:100%}
+  #s9 .spec{flex:1;min-height:0;align-items:stretch;margin-top:clamp(10px,1.6vh,18px);gap:clamp(14px,2vw,22px)}
+  #s9.on{justify-content:flex-start}
+  @media (min-width:760px){
+    #s9 .spec{grid-template-columns:minmax(0,1.75fr) minmax(220px,.7fr)}
+  }
   .plate-art text{font-family:var(--mono);font-size:13px;letter-spacing:.05em}
 
   /* ---------- 细胞标本图 ---------- */
