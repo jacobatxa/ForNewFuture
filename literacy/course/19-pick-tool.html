@@ -3,260 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>做成什么，用哪个</title>
+<title>做什么，用什么工具</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;900&display=swap">
 <style>
   :root{
-    --paper:#ECEDE6;--paper-3:#F5F6F0;--ink:#14181A;--ink-2:#4C524D;--ink-3:#5F665F;
-    --rule:#C6CBB9;--blue:#1B4763;--red:#BB3A22;--red-w:#EFD8D1;--blue-w:#D5E3EC;
+    --paper:#ECEDE6;--ink:#14181A;--ink-2:#4C524D;--ink-3:#5F665F;
+    --blue:#1B4763;--red:#BB3A22;--red-w:#EFD8D1;--blue-w:#D5E3EC;
     --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",system-ui,sans-serif;
-    --mono:ui-monospace,"SF Mono",Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);background:
+  html,body{height:100%;overflow:hidden}
+  body{font-family:var(--sans);color:var(--ink);background:
     linear-gradient(rgba(27,71,99,.045) 1px,transparent 1px),
     linear-gradient(90deg,rgba(27,71,99,.045) 1px,transparent 1px),
-    var(--paper);
-    background-size:28px 28px;color:var(--ink);line-height:1.45}
-  a{color:inherit}
-  .page{max-width:920px;margin:0 auto;padding:28px 16px 64px}
-  .back{font-size:13px;font-weight:700;letter-spacing:.06em}
-  h1{font-size:clamp(36px,8vw,64px);line-height:.95;font-weight:900;letter-spacing:-.04em;margin:14px 0 8px}
-  .lead{font-size:16px;color:var(--ink-2);max-width:28em}
-  .path{margin:22px 0 8px;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:stretch}
-  .step{background:var(--paper-3);border:2px solid var(--ink);border-radius:16px;padding:12px 12px 14px}
-  .step b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--blue);font-weight:500}
-  .step strong{display:block;margin-top:4px;font-size:18px;letter-spacing:-.02em}
-  .step span{display:block;margin-top:4px;font-size:13px;color:var(--ink-2)}
-  .arrow{align-self:center;font-weight:900;color:var(--red)}
-  .bins{margin:18px 0 28px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .bin{border:2px solid var(--ink);border-radius:18px;padding:14px;background:#fff}
-  .bin h2{font-size:20px;letter-spacing:-.03em}
-  .bin p{margin-top:4px;font-size:13px;color:var(--ink-2)}
-  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-  .chips i{font-style:normal;font-size:12px;font-weight:700;border:1.5px solid var(--ink);border-radius:999px;padding:3px 8px;background:var(--paper)}
-  .bin.brain{background:var(--blue);color:#fff}
-  .bin.brain p{color:#D5E3EC}
-  .bin.brain .chips i{background:transparent;color:#fff;border-color:#fff}
-  .trap{margin-top:10px;font-size:13px;color:var(--ink-2)}
-  nav.jump{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 18px}
-  nav.jump a{text-decoration:none;font-weight:800;font-size:14px;border:2px solid var(--ink);border-radius:999px;padding:6px 12px;background:#fff}
-  nav.jump a:hover{background:var(--ink);color:#fff}
-  article.shot{scroll-margin-top:12px;border:2px solid var(--ink);border-radius:22px;background:#fff;padding:16px;margin:0 0 14px;box-shadow:6px 6px 0 var(--ink)}
-  .shot-h{display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-bottom:12px}
-  .shot-h h2{font-size:clamp(26px,5vw,34px);letter-spacing:-.04em;line-height:1}
-  .shot-h em{font-style:normal;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-3)}
-  .doors{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .door{border-radius:16px;padding:14px;min-height:168px;display:flex;flex-direction:column}
+    var(--paper);background-size:28px 28px}
+  a{color:inherit;text-decoration:none}
+  .page{height:100svh;display:flex;flex-direction:column;padding:14px 16px 12px;gap:10px}
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex:none}
+  h1{font-size:clamp(28px,4vw,44px);line-height:.95;font-weight:900;letter-spacing:-.04em}
+  .sub{font-size:13px;font-weight:700;color:var(--ink-2);text-align:right;line-height:1.45}
+  .sub b{color:var(--blue)}
+  .sub i{font-style:normal;color:var(--red)}
+  .board{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:10px}
+  article{border:2px solid var(--ink);border-radius:18px;background:#fff;box-shadow:4px 4px 0 var(--ink);padding:10px 10px 8px;display:flex;flex-direction:column;min-height:0;min-width:0}
+  .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
+  h2{font-size:clamp(18px,2vw,24px);letter-spacing:-.03em;line-height:1}
+  h2 span{display:block;margin-top:2px;font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:0}
+  .doors{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .door{border-radius:12px;padding:8px 8px 7px;display:flex;flex-direction:column;min-width:0;min-height:0}
   .door.easy{background:var(--blue-w)}
   .door.hard{background:var(--red-w)}
-  .tag{font-size:12px;font-weight:800;letter-spacing:.08em}
-  .door.easy .tag{color:var(--blue)}
-  .door.hard .tag{color:var(--red)}
-  .door h3{font-size:clamp(22px,4vw,28px);letter-spacing:-.03em;margin:6px 0 4px;line-height:1.1}
-  .door .what{font-size:14px;color:var(--ink-2);min-height:2.6em}
-  .meta{margin-top:auto;display:flex;flex-wrap:wrap;gap:6px;padding-top:10px}
-  .meta b{font-weight:700;font-size:12px;background:#fff;border-radius:999px;padding:4px 8px;border:1px solid var(--rule)}
-  .note{margin-top:10px;font-size:13px;color:var(--ink-2)}
-  footer{margin-top:8px;font-size:13px;color:var(--ink-3)}
-  @media (max-width:720px){
-    .path{grid-template-columns:1fr;gap:6px}
-    .arrow{transform:rotate(90deg);justify-self:center}
-    .bins,.doors{grid-template-columns:1fr}
-    .door{min-height:0}
-  }
-  @media print{
-    body{background:#fff}
-    article.shot{break-inside:avoid;box-shadow:none}
+  .tag{font-size:11px;font-weight:800}
+  .easy .tag{color:var(--blue)}
+  .hard .tag{color:var(--red)}
+  h3{font-size:clamp(16px,1.7vw,20px);letter-spacing:-.03em;margin:2px 0 2px;line-height:1.1}
+  .what{font-size:12px;color:var(--ink-2);line-height:1.35}
+  .meta{margin-top:auto;display:flex;flex-direction:column;gap:2px;padding-top:6px;font-size:11px;font-weight:700}
+  @media (max-width:860px){
+    .board{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr)}
+    h1{font-size:26px}
   }
 </style>
 </head>
 <body>
 <div class="page">
-  <a class="back" href="../index.html">← 回到课程</a>
-  <h1>做成什么，<br>用哪个</h1>
-  <p class="lead">先看你要做成的那一种东西。再进一扇门。门上三颗点：难不难、要不要钱、用手机还是电脑。</p>
-
-  <div class="path" aria-label="三步">
-    <div class="step"><b>01</b><strong>定成品</strong><span>只选下面一种</span></div>
-    <div class="arrow">→</div>
-    <div class="step"><b>02</b><strong>进一扇门</strong><span>更省事，或更能改</span></div>
-    <div class="arrow">→</div>
-    <div class="step"><b>03</b><strong>看三颗点</strong><span>难易 · 价格 · 设备</span></div>
+  <header>
+    <div>
+      <a href="../index.html">← 课程</a>
+      <h1>做什么，用什么工具</h1>
+    </div>
+    <p class="sub">先定要做的事。<br><b>蓝</b>更省事，<i>红</i>更能改。<br>难易 · 价格 · 设备</p>
+  </header>
+  <div class="board">
+    <article>
+      <div class="top"><h2>自学课件<span>一套能顺着学的</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>Kimi</h3><p class="what">先出提纲和分页。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>Gamma</h3><p class="what">做成能翻的一套。</p><div class="meta"><span>要改几轮</span><span>像样要付钱</span><span>电脑更合适</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>网页<span>只有一页</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>豆包</h3><p class="what">说出这一页，它给一版。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>v0</h3><p class="what">对着这一页改布局。</p><div class="meta"><span>要改几轮</span><span>免费额度够用</span><span>电脑</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>网站<span>多页，能打开访问</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>豆包</h3><p class="what">先把有哪几页说清。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>Bolt</h3><p class="what">做出能打开的网站。</p><div class="meta"><span>要改几轮</span><span>要付钱才像样</span><span>电脑</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>App<span>能反复打开，能记住</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>通义</h3><p class="what">先写清打开能做什么。</p><div class="meta"><span>要改几轮</span><span>免费额度够用</span><span>iPad 只能起稿</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>Cursor</h3><p class="what">做成能记住的东西。</p><div class="meta"><span>步骤多</span><span>要付钱才像样</span><span>电脑</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>音乐<span>一段能听完的</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>豆包</h3><p class="what">写歌词，先听一版。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>Suno</h3><p class="what">做成能听完的一首。</p><div class="meta"><span>要改几轮</span><span>像样要付钱</span><span>浏览器</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>视频<span>一段能播的镜头</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>即梦</h3><p class="what">一句话出一段。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>可灵</h3><p class="what">同一段里改动作。</p><div class="meta"><span>要改几轮</span><span>像样要付钱</span><span>手机或 iPad</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>作图<span>一张静图</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>豆包</h3><p class="what">先出一张。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>即梦</h3><p class="what">同一张上改主体和字。</p><div class="meta"><span>要改几轮</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+      </div>
+    </article>
+    <article>
+      <div class="top"><h2>论文研究<span>能点回来源</span></h2></div>
+      <div class="doors">
+        <div class="door easy"><div class="tag">更省事</div><h3>秘塔</h3><p class="what">先找能点开的来源。</p><div class="meta"><span>点几下</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+        <div class="door hard"><div class="tag">更能改</div><h3>Kimi</h3><p class="what">把论文丢进去对着问。</p><div class="meta"><span>要改几轮</span><span>免费额度够用</span><span>手机或 iPad</span></div></div>
+      </div>
+    </article>
   </div>
-
-  <div class="bins">
-    <div class="bin brain">
-      <h2>脑子</h2>
-      <p>大模型。你看不见它。它负责听懂、生成。</p>
-      <div class="chips"><i>DeepSeek-V3</i><i>通义千问</i><i>GLM</i><i>GPT</i><i>Claude</i><i>Flux</i></div>
-    </div>
-    <div class="bin">
-      <h2>工具</h2>
-      <p>你打开的那个。里面装着脑子，加上按钮和导出。</p>
-      <div class="chips"><i>豆包</i><i>Kimi</i><i>即梦</i><i>可灵</i><i>ChatGPT</i><i>Cursor</i></div>
-    </div>
-  </div>
-  <p class="trap">容易混：DeepSeek-V3 是脑子，chat.deepseek.com 是工具。GPT 是脑子，ChatGPT 是工具。Flux 是脑子，即梦出图是工具。</p>
-
-  <nav class="jump" aria-label="成品">
-    <a href="#slide">自学课件</a>
-    <a href="#page">网页</a>
-    <a href="#site">网站</a>
-    <a href="#app">App</a>
-    <a href="#music">音乐</a>
-    <a href="#video">视频</a>
-    <a href="#image">作图</a>
-    <a href="#paper">论文研究</a>
-  </nav>
-
-  <article class="shot" id="slide">
-    <div class="shot-h"><h2>自学课件</h2><em>一套能顺着学的</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>Kimi</h3>
-        <p class="what">先出提纲和分页。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>Gamma</h3>
-        <p class="what">做成能翻的一套。</p>
-        <div class="meta"><b>要改几轮</b><b>像样要付钱</b><b>电脑更合适</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="page">
-    <div class="shot-h"><h2>网页</h2><em>只有一页</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>豆包</h3>
-        <p class="what">说出这一页，它给一版。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>v0</h3>
-        <p class="what">对着这一页改布局。</p>
-        <div class="meta"><b>要改几轮</b><b>免费额度够用</b><b>电脑</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="site">
-    <div class="shot-h"><h2>做产品 · 网站</h2><em>多页，能打开访问</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>豆包</h3>
-        <p class="what">先把有哪几页说清。做成要换右边。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>Bolt</h3>
-        <p class="what">做出多页、能打开的网站。</p>
-        <div class="meta"><b>要改几轮</b><b>要付钱才像样</b><b>电脑</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="app">
-    <div class="shot-h"><h2>做产品 · App</h2><em>能反复打开，能记住</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>通义</h3>
-        <p class="what">先写清打开之后能做什么。iPad 只能起稿。</p>
-        <div class="meta"><b>要改几轮</b><b>免费额度够用</b><b>iPad 只能起稿</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>Cursor</h3>
-        <p class="what">做成能反复打开、能记住的东西。</p>
-        <div class="meta"><b>步骤多</b><b>要付钱才像样</b><b>电脑</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="music">
-    <div class="shot-h"><h2>音乐</h2><em>一段能听完的</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>豆包</h3>
-        <p class="what">写歌词和歌名，先听一版。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>Suno</h3>
-        <p class="what">做成能听完的一首。</p>
-        <div class="meta"><b>要改几轮</b><b>像样要付钱</b><b>浏览器</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="video">
-    <div class="shot-h"><h2>视频</h2><em>一段能播的镜头</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>即梦</h3>
-        <p class="what">一句话出一段。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>可灵</h3>
-        <p class="what">同一段里改动作和镜头。</p>
-        <div class="meta"><b>要改几轮</b><b>像样要付钱</b><b>手机或 iPad</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="image">
-    <div class="shot-h"><h2>作图</h2><em>一张静图</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>豆包</h3>
-        <p class="what">先出一张。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>即梦</h3>
-        <p class="what">同一张上改主体和字。</p>
-        <div class="meta"><b>要改几轮</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="shot" id="paper">
-    <div class="shot-h"><h2>论文研究</h2><em>能点回来源</em></div>
-    <div class="doors">
-      <div class="door easy">
-        <div class="tag">更省事</div>
-        <h3>秘塔</h3>
-        <p class="what">先找能点开的来源。</p>
-        <div class="meta"><b>点几下</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-      <div class="door hard">
-        <div class="tag">更能改</div>
-        <h3>Kimi</h3>
-        <p class="what">把论文丢进去对着问。</p>
-        <div class="meta"><b>要改几轮</b><b>免费额度够用</b><b>手机或 iPad</b></div>
-      </div>
-    </div>
-  </article>
-
-  <footer>蓝门更省事，红门更能改。价格不写金额。设备是一列，不把工具分成两派。</footer>
 </div>
 </body>
 </html>
