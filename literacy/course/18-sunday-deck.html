@@ -460,16 +460,16 @@
   [data-theme="dark"] .tools .tl-note{background:#1a1210}
   [data-theme="dark"] .tools .tl-note b{color:#E9A08F}
 
-  /* ═════ Prompt 四步 ═════ */
-  .pfour{margin-top:clamp(12px,1.9vh,18px);display:grid;grid-template-columns:repeat(4,1fr);gap:.5px;
+  /* ═════ Prompt 五步 ═════ */
+  .pfive{margin-top:clamp(12px,1.9vh,18px);display:grid;grid-template-columns:repeat(5,1fr);gap:.5px;
     background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.12);border-top:2px solid #BB3A22}
   .pf{background:#141414;padding:clamp(11px,1.6vh,16px) clamp(12px,1.4vw,16px);display:grid;gap:5px;align-content:start;
     transition:transform .18s ease, background .18s ease}
   .pf:hover{transform:translateY(-3px);background:#1c1c1c}
-  .pf .pfn{font-family:var(--mono);font-size:clamp(20px,2.4vw,30px);color:#BB3A22;line-height:1}
-  .pf b{font-size:clamp(12.5px,1.35vw,15px);color:#F4F2EA}
-  .pf span{font-size:clamp(10.8px,1.1vw,12.5px);line-height:1.5;color:var(--dark-dim)}
-  .pf em{font-style:normal;font-size:clamp(10.5px,1.06vw,12px);line-height:1.45;color:#8FA6B4;
+  .pf .pfn{font-family:var(--mono);font-size:clamp(18px,2vw,25px);color:#BB3A22;line-height:1}
+  .pf b{font-size:clamp(11.5px,1.18vw,13.5px);color:#F4F2EA;line-height:1.32}
+  .pf span{font-size:clamp(10px,1.02vw,11.8px);line-height:1.5;color:var(--dark-dim)}
+  .pf em{font-style:normal;font-size:clamp(9.8px,1vw,11.2px);line-height:1.45;color:#8FA6B4;
     border-top:1px solid rgba(255,255,255,.12);padding-top:6px}
   .ptips{margin-top:clamp(11px,1.7vh,16px);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);
     padding:clamp(10px,1.5vh,15px) clamp(13px,1.6vw,18px)}
@@ -588,7 +588,7 @@
   #s7 .cline{padding:4px 0}
 
   @media (max-width:1000px){
-    .tools,.pfour{grid-template-columns:repeat(2,1fr)}
+    .tools,.pfive{grid-template-columns:repeat(2,1fr)}
     .casegrid,.twocol{grid-template-columns:1fr}
     .syl3,.silog{grid-template-columns:1fr}
     .duel .dhead,.duel .drow{grid-template-columns:1fr}
@@ -619,7 +619,7 @@
     <div class="stripe">
       <div class="st"><b class="big">30<em>分钟</em></b><div><strong>你们讲</strong><span>每人用三句话讲自己挑的东西，讲完把那一页投出来。</span></div></div>
       <div class="st"><b class="big">35<em>分钟</em></b><div><strong>我演一遍</strong><span>细胞和猛禽，同一个说法换个东西。再讲清楚「算不算」该怎么算。</span></div></div>
-      <div class="st"><b class="big">40<em>分钟</em></b><div><strong>用 AI 的四个动作</strong><span>按用途挑工具、Prompt 四步、用与不用差多少、Skills 是什么。</span></div></div>
+      <div class="st"><b class="big">40<em>分钟</em></b><div><strong>用 AI 的四个动作</strong><span>按用途挑工具、Prompt 五步、用与不用差多少、Skills 是什么。</span></div></div>
       <div class="st"><b class="big">15<em>分钟</em></b><div><strong>看一眼别人在做什么</strong><span>AI 奇幻乐园、作业、下节课预告。</span></div></div>
     </div>
     <p class="aside">顺序不动：先你们说，再我说，最后才动工具。</p>
@@ -759,8 +759,8 @@
       <div class="tl"><i>做一张图</i><b>即梦 · 通义万相</b><span>一句话出图，改描述再出，挑一张。</span></div>
       <div class="tl"><i>做视频</i><b>即梦 · 可灵 · 剪映</b><span>先出画面，再配音，最后剪到一起。</span></div>
       <div class="tl"><i>做一首歌</i><b>海绵音乐 · Suno</b><span>先写好词，再挑曲风。Suno 需要翻墙。</span></div>
-      <div class="tl"><i>做网页、网站</i><b>秒哒 · 腾讯云 WorkBuddy</b><span>说一句「我要一个报名页」，直接给你一个能打开的网址。</span></div>
-      <div class="tl"><i>做 APP、小程序</i><b>秒哒 · CodeBuddy</b><span>手机上的、电脑上的都能做，比网页难一层。</span></div>
+      <div class="tl"><i>做讲义、做 PPT</i><b>豆包工作</b><span>把要点丢给它，它排成一页页的稿子。</span></div>
+      <div class="tl"><i>做网页、网站、APP</i><b>豆包工作 · WorkBuddy</b><span>说一句「我要一个报名页」，它给你一个能打开的网址；WorkBuddy 还能连上数据库。</span></div>
       <div class="tl tl-note"><i>记住</i><b>先定要交什么</b><span>别一上来就打开最火的那个，先想清楚要交什么。</span></div>
     </div>
   </div>
@@ -768,13 +768,14 @@
 
 <section class="slide" data-theme="dark" data-act="方法 · 01" id="s9">
   <div class="wrap">
-    <h2 class="t2 reveal">Prompt 四步法：<br>话说清楚了，它就答得准</h2>
-    <p class="lead">同一个 AI，问法不一样，答案差得很远。写得好的提示词，说穿了就是这四步。</p>
-    <div class="pfour">
+    <h2 class="t2 reveal">Prompt 五步法：<br>话说清楚了，它就答得准</h2>
+    <p class="lead">同一个 AI，问法不一样，答案差得很远。写得好的提示词，说穿了就是这五步。</p>
+    <div class="pfive">
       <div class="pf"><div class="pfn">01</div><b>给它一个身份</b><span>告诉它「你现在是谁」，它就会用那个人的口吻说话。</span><em>你是我的讲解员，不是百科全书。</em></div>
-      <div class="pf"><div class="pfn">02</div><b>一次只问一件事</b><span>别一口气问五件事，问完一个再问下一个。</span><em>我要学的是：潮汐。</em></div>
-      <div class="pf"><div class="pfn">03</div><b>给它一个样子</b><span>给一个例句、一个格式，比你形容十句都管用。</span><em>按这个格式答：①长什么样 ②能干什么 ③算哪一类</em></div>
-      <div class="pf"><div class="pfn">04</div><b>让它自己检查</b><span>要它标出没把握的地方，这一句能挡掉一半编造。</span><em>哪一句你没把握，标出来。</em></div>
+      <div class="pf"><div class="pfn">02</div><b>说清你的目的</b><span>你为什么要学它、学完拿去干什么。目的一说，它就不绕远路。</span><em>我要在课上讲给同学听，讲三分钟。</em></div>
+      <div class="pf"><div class="pfn">03</div><b>一次只问一件事</b><span>别一口气问五件事，问完一个再问下一个。</span><em>我要学的是：潮汐。</em></div>
+      <div class="pf"><div class="pfn">04</div><b>给它一个样子</b><span>给一个例句、一个格式，比你形容十句都管用。</span><em>按这个格式答：①长什么样 ②能干什么 ③算哪一类</em></div>
+      <div class="pf"><div class="pfn">05</div><b>让它自己检查</b><span>要它标出没把握的地方，这一句能挡掉一半编造。</span><em>哪一句你没把握，标出来。</em></div>
     </div>
     <div class="ptips">
       <b>三个进阶招</b>
@@ -787,24 +788,24 @@
 
 <section class="slide" data-theme="paper" data-act="方法 · 02" id="s10">
   <div class="wrap">
-    <h2 class="t2 reveal">同一个问题：<br>随便问，和按四步问</h2>
-    <p class="lead" style="margin-top:8px">下面三组是对照。左边是你平时随口会怎么问，右边是照四步法问。</p>
+    <h2 class="t2 reveal">同一个问题：<br>随便问，和按五步问</h2>
+    <p class="lead" style="margin-top:8px">下面三组是对照。左边是你平时随口会怎么问，右边是照五步法问。</p>
     <div class="duel">
-      <div class="dhead"><span>题目</span><span>随便问 → 你拿到什么</span><span>按四步问 → 你拿到什么</span></div>
+      <div class="dhead"><span>题目</span><span>随便问 → 你拿到什么</span><span>按五步问 → 你拿到什么</span></div>
       <div class="drow">
         <b>细胞</b>
         <p class="bad">「介绍一下细胞」<i>发现史、三位科学家、十页提纲</i></p>
-        <p class="ok">「你是我的讲解员。我要学的是细胞。先说它长什么样，不许报名字；再说它能干什么；最后给一条判据和一个不算的例子。」<i>一段描述、三句功能、一条判据、一个反例</i></p>
+        <p class="ok">「你是我的讲解员。我要讲给同学听，讲三分钟。我要学的是细胞。先说它长什么样，不许报名字；再说它能干什么；最后给一条判据和一个不算的例子。」<i>一段描述、三句功能、一条判据、一个反例</i></p>
       </div>
       <div class="drow">
         <b>潮汐</b>
         <p class="bad">「潮汐是什么」<i>一段百科定义，看完还是不会判断</i></p>
-        <p class="ok">「我要学的是潮汐。先说它一天里怎么涨落；再说是什么在拉着它；最后告诉我，地震掀起的海浪为什么不算潮汐。」<i>机制、判据、反例，三样都有</i></p>
+        <p class="ok">「我要自己弄明白，别再被网上的说法绕住。我要学的是潮汐。先说它一天里怎么涨落；再说是什么在拉着它；最后告诉我，地震掀起的海浪为什么不算潮汐。」<i>机制、判据、反例，三样都有</i></p>
       </div>
       <div class="drow">
         <b>静夜思</b>
         <p class="bad">「分析静夜思」<i>一长段赏析，全是形容词</i></p>
-        <p class="ok">「我要学的是静夜思。先说它读起来什么样（几句、几个字、看到什么）；再说它让人想干什么；最后说它算什么诗，并举一首写月亮但不算思乡的。」<i>结构、情感、分类标准</i></p>
+        <p class="ok">「我要在班上朗读，还要讲两句。我要学的是静夜思。先说它读起来什么样（几句、几个字、看到什么）；再说它让人想干什么；最后说它算什么诗，并举一首写月亮但不算思乡的。」<i>结构、情感、分类标准</i></p>
       </div>
     </div>
     <p class="verdict">左边它在替你想，右边它按你的顺序想。<b>差的不是 AI，是问法。</b></p>
@@ -887,7 +888,7 @@
 <section class="slide" data-theme="dark" data-act="方法 · 06" id="s14">
   <div class="wrap door">
     <h2 class="t2 reveal">现在轮到你：<br>五分钟，只做一件事</h2>
-    <p class="lead">打开 DeepSeek，按四步法写一段话，只换第二步：填一个你还没搞懂、但真想知道的东西。</p>
+    <p class="lead">打开 DeepSeek，按五步法写一段话，只改第 02 步和第 03 步：说清你拿它干什么，再填你还没搞懂的那个东西。</p>
     <p class="after" style="margin-top:clamp(14px,2.4vh,22px)">发出去之后只做一件事：<b>看它第一句有没有偷偷把名字说出来。</b>说了就回它一句「重来，这一句不许报名字」。</p>
     <p class="aside" style="margin-top:clamp(12px,2vh,20px);opacity:.72">五分钟后我们回来看两三个人的结果，只看第一句。</p>
   </div>
@@ -961,7 +962,7 @@
         <div class="home">
           <div class="r"><div class="n">01</div><div><b>不许再挑能拿在手上的</b><span>得是概念、诗，或者一条公式。</span></div></div>
           <div class="r"><div class="n">02</div><div><b>三句话，加一个反例</b><span>第三句要有判据，还要有一个不算的。</span></div></div>
-          <div class="r"><div class="n">03</div><div><b>用四步法问，别随口问</b><span>让它先问你、先想再答、标出没把握的。</span></div></div>
+          <div class="r"><div class="n">03</div><div><b>用五步法问，别随口问</b><span>让它先问你、先想再答、标出没把握的。</span></div></div>
           <div class="r"><div class="n">04</div><div><b>标两处「可能不对」</b><span>写清你怀疑哪句，打算拿什么去核对。</span></div></div>
         </div>
       </div>
@@ -972,7 +973,7 @@
         <p><b>复杂工程长什么样</b>一个人的活，怎么变成一百个人一起干还不乱。</p>
       </div>
     </div>
-    <p style="margin-top:clamp(14px,2.4vh,22px)"><a class="lnk" style="border-color:#8FA6B4;color:#C9D3DA" href="17-m1-method.html" target="_blank" rel="noopener">学生页：三句话、Prompt 四步、怎么传附件</a></p>
+    <p style="margin-top:clamp(14px,2.4vh,22px)"><a class="lnk" style="border-color:#8FA6B4;color:#C9D3DA" href="17-m1-method.html" target="_blank" rel="noopener">学生页：三句话、Prompt 五步、怎么传附件</a></p>
   </div>
 </section>
 
