@@ -48,6 +48,15 @@
   .tags i{font-style:normal;font-size:11px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:2px 7px;background:#fff}
   .go{margin:10px 14px 0;font-weight:800;font-size:14px}
   footer{padding:0 4vw 40px;font-size:13px;color:var(--dim);line-height:1.5}
+
+  .feat{padding:6px 4vw 14px}
+  .feat a{display:grid;gap:4px;border:2px solid var(--ink);border-radius:22px;background:#FFE28A;
+    box-shadow:6px 6px 0 var(--ink);padding:16px 18px;text-decoration:none;
+    transition:transform .16s ease, box-shadow .16s ease}
+  .feat a:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink)}
+  .feat b{font-family:var(--display);font-size:clamp(20px,2.6vw,26px);letter-spacing:-.03em}
+  .feat span{font-size:14px;line-height:1.5;color:#2A2038}
+  .feat i{font-style:normal;font-weight:800;font-size:13.5px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -55,6 +64,14 @@
   <a class="back" href="../index.html">← 回到课程</a>
   <h1>AI 奇幻乐园<span>别人正在用 AI 干什么。能点的就点开。课上先看标着「打开就能试」的。要登录的，回家用。句子还是你自己写。</span></h1>
 </header>
+
+<div class="feat">
+  <a href="agents/">
+    <b>自学智能体</b>
+    <span>同学们自己写的自学助手 — 复制一段话，粘到豆包或 DeepSeek 就能用</span>
+    <i>进去看看 →</i>
+  </a>
+</div>
 <div class="bar">
   <button class="f on" type="button" data-k="全部">全部</button>
   <button class="f" type="button" data-k="打开就能试">打开就能试</button>
