@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自学智能体 · AI 奇幻乐园</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1028;--paper:#FFF6EA;--dim:#5C5168;
+    --font:"PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif;
+    --display:"Syne","PingFang SC",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:
+    radial-gradient(900px 420px at 6% -10%, #FFB4D8 0, transparent 55%),
+    radial-gradient(820px 460px at 100% 0, #B8F5C8 0, transparent 50%),
+    radial-gradient(700px 520px at 60% 108%, #C9D6FF 0, transparent 46%),
+    var(--paper);
+    color:var(--ink);font-family:var(--font);min-height:100%}
+  a{color:inherit}
+  header{padding:26px 4vw 6px}
+  .back{font-size:13px;font-weight:700;letter-spacing:.08em;text-decoration:none}
+  h1{font-family:var(--display);font-size:clamp(38px,6.4vw,74px);line-height:.94;letter-spacing:-.04em;margin:10px 0 12px}
+  h1 span{display:block;font-family:var(--font);font-size:clamp(15px,1.9vw,19px);font-weight:700;letter-spacing:0;line-height:1.5;max-width:38em;margin-top:12px}
+
+  .bar{position:sticky;top:0;z-index:5;display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    padding:12px 4vw;background:rgba(255,246,234,.92);backdrop-filter:blur(8px)}
+  button.f,input{border:2px solid var(--ink);background:#fff;border-radius:999px;padding:8px 14px;
+    font:700 14px var(--font);cursor:pointer}
+  button.f.on{background:var(--ink);color:#fff}
+  input{min-width:170px;cursor:text}
+  #count{font-weight:800;font-size:14px}
+
+  main{padding:8px 4vw 20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  article{border:2px solid var(--ink);border-radius:22px;display:flex;flex-direction:column;
+    background:#fff;box-shadow:6px 6px 0 var(--ink);overflow:hidden;
+    transition:transform .16s ease, box-shadow .16s ease}
+  article:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 var(--ink)}
+  article:nth-child(5n+1){background:#FFE28A}
+  article:nth-child(5n+2){background:#FFB4D8}
+  article:nth-child(5n+3){background:#B8F5C8}
+  article:nth-child(5n+4){background:#C9D6FF}
+  article:nth-child(5n+5){background:#FFD0B0}
+  .head{padding:16px 16px 0}
+  .head b{font-size:21px;line-height:1.2;letter-spacing:-.02em;display:block}
+  .head p{margin-top:7px;font-size:14px;line-height:1.5;color:#2A2038}
+  .meta{display:flex;flex-wrap:wrap;gap:6px;padding:12px 16px 0}
+  .meta i{font-style:normal;font-size:11px;font-weight:800;border:1.5px solid var(--ink);
+    border-radius:999px;padding:2px 8px;background:#fff}
+  .prompt{margin:12px 16px 0;border:1.5px dashed var(--ink);border-radius:14px;background:rgba(255,255,255,.72);
+    padding:10px 12px;font-size:12.5px;line-height:1.55;color:#2A2038;max-height:5.6em;overflow:hidden;position:relative}
+  .prompt::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.6em;
+    background:linear-gradient(transparent, rgba(255,255,255,.95))}
+  .acts{display:flex;gap:8px;padding:12px 16px 16px;margin-top:auto}
+  .acts button{flex:1;border:2px solid var(--ink);border-radius:999px;background:#fff;
+    font:800 13.5px var(--font);padding:9px 10px;cursor:pointer;transition:background .14s ease,color .14s ease}
+  .acts button:hover{background:var(--ink);color:#fff}
+  .acts button.done{background:var(--ink);color:#fff}
+
+  /* ── 自己做一份 ── */
+  .maker{margin:26px 4vw 0;border:2px solid var(--ink);border-radius:24px;background:#fff;
+    box-shadow:8px 8px 0 var(--ink);padding:20px 20px 22px}
+  .maker h2{font-family:var(--display);font-size:clamp(24px,3.4vw,34px);letter-spacing:-.03em;margin-bottom:6px}
+  .maker .lead{font-size:14px;line-height:1.55;color:var(--dim);margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .grid label{display:grid;gap:5px;font-size:12.5px;font-weight:800;letter-spacing:.02em}
+  .grid input,.grid textarea{border:2px solid var(--ink);border-radius:12px;padding:9px 11px;
+    font:400 14px var(--font);background:#FFFDF8;width:100%}
+  .grid textarea{min-height:66px;resize:vertical}
+  .full{grid-column:1/-1}
+  .maker .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
+  .maker button{border:2px solid var(--ink);border-radius:999px;background:var(--ink);color:#fff;
+    font:800 14px var(--font);padding:11px 20px;cursor:pointer}
+  .maker button.ghost{background:#fff;color:var(--ink)}
+  .out{margin-top:16px;border:1.5px dashed var(--ink);border-radius:14px;background:#FFFDF8;
+    padding:14px 16px;font-size:13px;line-height:1.65;white-space:pre-wrap;min-height:96px;color:#2A2038}
+  .steps{margin-top:14px;font-size:13px;line-height:1.7;color:var(--dim)}
+  .steps b{color:var(--ink)}
+  footer{padding:26px 4vw 48px;font-size:12.5px;color:var(--dim);line-height:1.6}
+  @media (max-width:560px){ .acts{flex-direction:column} }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="back" href="../">← 回到奇幻乐园</a>
+  <h1>自学智能体<span>同学们自己写的自学助手。点「复制提示词」，粘到豆包或 DeepSeek 里就能用。<b>每个助手就是一段话</b>——它替你按顺序提问，你负责想和写。</span></h1>
+</header>
+
+<div class="bar">
+  <button class="f on" type="button" data-k="全部">全部</button>
+  <button class="f" type="button" data-k="语文">语文</button>
+  <button class="f" type="button" data-k="数学">数学</button>
+  <button class="f" type="button" data-k="英语">英语</button>
+  <button class="f" type="button" data-k="科学">科学</button>
+  <button class="f" type="button" data-k="通识">通识</button>
+  <input id="q" placeholder="搜名字或科目" aria-label="搜索">
+  <span id="count"></span>
+</div>
+
+<main id="wall"></main>
+
+<section class="maker">
+  <h2>做一份你自己的</h2>
+  <p class="lead">填下面五个空，下面会自动生成一段提示词。复制它，粘到豆包或 DeepSeek 里试一遍；好用了就发给老师，老师会加到上面的列表里，全班都能用。</p>
+  <div class="grid">
+    <label>① 给它什么身份
+      <input id="m-role" placeholder="例：你是一位耐心的英语陪练，专教小学五六年级">
+    </label>
+    <label>② 你要它帮你达到什么目的
+      <input id="m-goal" placeholder="例：帮我记牢 20 个新单词，还能自己造句">
+    </label>
+    <label>③ 它一次只做一件事
+      <input id="m-task" placeholder="例：每次只考我一个单词，答完再下一个">
+    </label>
+    <label>④ 你要它按什么格式回答
+      <input id="m-format" placeholder="例：先给词，再给例句，最后给一道填空">
+    </label>
+    <label class="full">⑤ 让它自己检查
+      <textarea id="m-check" placeholder="例：你不确定的地方标出来；我答错了先别说答案，给我一个提示"></textarea>
+    </label>
+    <label>助手叫什么名字
+      <input id="m-name" placeholder="例：小明英语单词陪练">
+    </label>
+    <label>写给谁用（年级）
+      <input id="m-grade" placeholder="例：五到六年级">
+    </label>
+    <label>科目
+      <input id="m-subject" placeholder="语文 / 数学 / 英语 / 科学 / 通识">
+    </label>
+    <label>你的名字（可以写昵称）
+      <input id="m-author" placeholder="例：小明">
+    </label>
+  </div>
+  <div class="row">
+    <button type="button" id="gen">生成提示词</button>
+    <button type="button" class="ghost" id="copygen">复制这段话</button>
+  </div>
+  <div class="out" id="out">填完上面五个空，点「生成提示词」。</div>
+  <div class="steps">
+    <b>怎么交给老师：</b>把生成的这段话，连同「名字 / 年级 / 科目 / 你的名字」一起发给老师。老师会试一遍，通过后加到上面的列表里。<br>
+    <b>三条规矩：</b>不写自己的真名和学校；不写别人的事；助手只能帮你提问、提示、检查，<b>答案要你自己想</b>。
+  </div>
+</section>
+
+<footer>每个助手都是一段公开的提示词，谁都能复制。这里没有登录、不存你的东西。用好之后记得自己再改两句——<b>别人的助手是起点，不是答案。</b></footer>
+
+<script src="agents.js"></script>
+<script>
+(function(){
+  const wall = document.getElementById('wall');
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  let key = '全部';
+
+  function openAI(which){
+    const url = which === 'db' ? 'https://www.doubao.com/chat/' : 'https://chat.deepseek.com/';
+    window.open(url, '_blank', 'noopener');
+  }
+
+  function show(){
+    const q = document.getElementById('q').value.trim().toLowerCase();
+    const list = (window.AGENTS || []).filter(a => {
+      const hit = key === '全部' || a.subject === key;
+      const text = (a.name + a.desc + a.grade + a.subject + a.author).toLowerCase();
+      return hit && text.includes(q);
+    });
+    wall.innerHTML = list.map((a, i) => `
+      <article>
+        <div class="head">
+          <b>${esc(a.name)}</b>
+          <p>${esc(a.desc)}</p>
+        </div>
+        <div class="meta">
+          <i>${esc(a.subject)}</i><i>${esc(a.grade)}</i><i>${esc(a.author)}</i>
+        </div>
+        <div class="prompt" title="${esc(a.prompt)}">${esc(a.prompt)}</div>
+        <div class="acts">
+          <button type="button" data-copy="${i}">复制提示词</button>
+          <button type="button" data-open="db">用豆包打开</button>
+          <button type="button" data-open="ds">用 DeepSeek</button>
+        </div>
+      </article>`).join('');
+    document.getElementById('count').textContent = list.length + ' 个助手';
+
+    wall.querySelectorAll('[data-copy]').forEach(btn => {
+      btn.onclick = async () => {
+        const a = list[Number(btn.dataset.copy)];
+        const text = a.prompt + '\n\n（来自 AI 奇幻乐园 · 自学智能体 · 作者：' + a.author + '）';
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (e) {
+          const ta = document.createElement('textarea');
+          ta.value = text; document.body.appendChild(ta); ta.select();
+          document.execCommand('copy'); ta.remove();
+        }
+        btn.textContent = '已复制 ✓';
+        btn.classList.add('done');
+        setTimeout(() => { btn.textContent = '复制提示词'; btn.classList.remove('done'); }, 1800);
+      };
+    });
+    wall.querySelectorAll('[data-open]').forEach(btn => {
+      btn.onclick = () => openAI(btn.dataset.open);
+    });
+  }
+
+  document.querySelectorAll('.f').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.f').forEach(x => x.classList.remove('on'));
+    b.classList.add('on'); key = b.dataset.k; show();
+  });
+  document.getElementById('q').oninput = show;
+
+  /* ── 生成器 ── */
+  const g = id => document.getElementById(id).value.trim();
+  function build(){
+    const role = g('m-role') || '你是一位耐心的讲解员';
+    const goal = g('m-goal') || '帮我把这件事弄懂';
+    const task = g('m-task') || '每次只做一件事，做完等我回答再进行下一步';
+    const fmt  = g('m-format') || '先给要点，再给一个例子，最后给我一道小题';
+    const chk  = g('m-check') || '你不确定的地方要标出来；我答错了先别给答案，给我一个提示';
+    const name = g('m-name') || '我的自学助手';
+    return '【' + name + '】\n\n' +
+      '1. 你的身份：' + role + '。\n' +
+      '2. 我要达到的目的：' + goal + '。\n' +
+      '3. 你的做法：' + task + '。\n' +
+      '4. 回答格式：' + fmt + '。\n' +
+      '5. 规矩：' + chk + '。用我听得懂的话说；我不知道的词先解释再用；不要一次给我一大段。\n\n' +
+      '现在开始：先问我一个问题，确认我到底卡在哪里。';
+  }
+  const out = document.getElementById('out');
+  document.getElementById('gen').onclick = () => { out.textContent = build(); };
+  document.getElementById('copygen').onclick = async () => {
+    const text = out.textContent;
+    if (!text || text.indexOf('【') !== 0) { out.textContent = build(); }
+    try { await navigator.clipboard.writeText(build()); }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = build();
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    }
+    const b = document.getElementById('copygen');
+    b.textContent = '已复制 ✓'; setTimeout(() => b.textContent = '复制这段话', 1600);
+  };
+
+  show();
+})();
+</script>
+</body>
+</html>
