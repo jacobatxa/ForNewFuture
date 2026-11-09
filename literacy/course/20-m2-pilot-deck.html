@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M2 先导 · 用逻辑学提高对 AI 的掌控</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ECEDE6'/><circle cx='16' cy='16' r='10' fill='none' stroke='%231B4763' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-size='19' font-family='Georgia,serif' fill='%231B4763'>?</text></svg>">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap">
+<style>
+  /* ---------- M2 专用 ---------- */
+  .leveltag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+  .scene{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px);max-width:680px}
+  .scene .sl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .scene .quote{margin-top:10px}
+  .poll{margin-top:clamp(18px,2.6vh,26px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.5vw,16px);max-width:680px}
+  .pvote{border:1px solid var(--rule);background:#fff;padding:clamp(12px,1.8vw,18px) 10px;text-align:center}
+  .pvote b{display:block;font-size:clamp(20px,2.4vw,28px);font-weight:900;letter-spacing:.04em}
+  .pvote span{display:block;margin-top:4px;font-size:clamp(11px,1.2vw,13px);color:var(--ink-3)}
+  .sent{margin-top:clamp(18px,2.6vh,28px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(16px,2.4vw,26px);max-width:980px}
+  .sent .sk{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--red);text-transform:uppercase}
+  .sent p{margin-top:12px;font-size:clamp(19px,2.6vw,32px);line-height:1.55;font-weight:700;letter-spacing:-.01em}
+  .sent p em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 2px}
+  .toolgrid{margin-top:clamp(18px,2.6vh,28px);display:grid;grid-template-columns:1fr;gap:clamp(12px,1.8vh,18px)}
+  .tool{border-top:2px solid var(--ink);padding-top:10px}
+  .tool .tk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--blue)}
+  .tool h3{margin:4px 0 6px;font-size:clamp(17px,2vw,23px);font-weight:900;letter-spacing:-.01em}
+  .tool p{font-size:clamp(13px,1.45vw,16px);color:var(--ink-2);line-height:1.7}
+  @media(min-width:760px){.toolgrid{grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,32px)}}
+  .toolsum{margin-top:clamp(16px,2.2vh,24px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(12px,1.8vw,20px);font-size:clamp(15px,1.7vw,19px);font-weight:700}
+  .toolsum em{font-style:normal;color:var(--red)}
+  .mapwrap{margin-top:clamp(12px,1.8vh,20px);border:1px solid var(--rule);background:#fff;padding:clamp(8px,1vw,14px)}
+  .mapwrap svg{display:block;width:100%;height:auto}
+  .trail{display:flex;align-items:center;margin-bottom:clamp(12px,1.8vh,18px)}
+  .trail span{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:#fff}
+  .trail span.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .trail i{flex:0 0 clamp(10px,1.6vw,22px);height:1px;background:var(--rule)}
+  .cheat{margin-top:clamp(14px,2vh,22px);border:1px solid var(--ink);background:#fff}
+  .cheat .ch{display:grid;grid-template-columns:clamp(64px,9vw,110px) 1fr;gap:clamp(10px,1.6vw,20px);padding:clamp(10px,1.4vw,16px) clamp(12px,2vw,22px);border-bottom:1px solid var(--rule)}
+  .cheat .ch:last-child{border-bottom:none}
+  .cheat .cn{font-weight:900;font-size:clamp(14px,1.6vw,18px);color:var(--blue);align-self:start;padding-top:2px}
+  .cheat .cn i{display:block;font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-3);font-weight:400;margin-bottom:2px}
+  .cheat .cb{font-size:clamp(12px,1.35vw,15px);line-height:1.65}
+  .cheat .cb b{color:var(--red)}
+  .cheat .cb .cs{display:block;color:var(--ink-2);margin-top:2px}
+  .duo{margin-top:clamp(20px,3vh,30px);display:grid;grid-template-columns:1fr;gap:clamp(16px,2.4vh,22px)}
+  .duo .col{border-top:2px solid var(--ink);padding-top:12px}
+  .duo .col .hl{margin:0 0 8px;font-size:clamp(17px,1.9vw,22px);font-weight:700}
+  .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:4px;font-weight:400}
+  .duo .col p{font-size:clamp(14px,1.5vw,17px);line-height:1.75;color:var(--ink-2)}
+  @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}}
+  
+  :root{
+    --paper:#ECEDE6;--paper-2:#E2E4D7;--paper-3:#F5F6F0;
+    --ink:#14181A;--ink-2:#4C524D;--ink-3:#5F665F;
+    --rule:#C6CBB9;--rule-2:#D9DCCF;
+    --blue:#1B4763;--blue-2:#3B6C88;
+    --red:#BB3A22;--red-w:#EFD8D1;
+    --dark:#0E171D;--dark-2:#16242E;--dark-rule:#2B3B46;--dark-dim:#8391A0;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{font-family:var(--sans);font-weight:400;line-height:1.7;color:var(--ink);background:var(--paper);overflow-x:hidden}
+
+  /* ---------- 纸面 ---------- */
+  .slide{display:none;height:100svh;overflow:hidden;padding:clamp(28px,4.2vh,56px) clamp(20px,6vw,84px) clamp(46px,6vh,80px)}
+  .slide.on{display:flex;flex-direction:column;justify-content:flex-start}
+  .slide[data-theme="paper"]{
+    background-color:var(--paper);
+    background-image:linear-gradient(rgba(27,71,99,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(27,71,99,.045) 1px,transparent 1px);
+    background-size:34px 34px;
+  }
+  .slide[data-theme="dark"]{
+    background-color:var(--dark);color:var(--paper);
+    background-image:linear-gradient(rgba(236,237,230,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(236,237,230,.035) 1px,transparent 1px);
+    background-size:34px 34px;
+  }
+  .wrap{width:100%;max-width:1280px;margin:auto;position:relative}
+  .slide .note{display:none}
+
+  /* ---------- 字 -------------*/
+  .t1{font-size:clamp(46px,11.5vw,164px);line-height:.97;font-weight:900;letter-spacing:-.035em}
+  .t2{font-size:clamp(25px,4.2vw,48px);line-height:1.12;font-weight:900;letter-spacing:-.025em}
+  .lead{font-size:clamp(15px,1.7vw,20px);line-height:1.6;color:var(--ink-2);max-width:26em}
+  .small{font-size:clamp(14px,1.35vw,16px);line-height:1.75;color:var(--ink-2)}
+  .u-red{border-bottom:3px solid var(--red);padding-bottom:.02em}
+
+  /* ---------- 封面 ---------- */
+  .cover-meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;color:var(--dark-dim);font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  .cover-meta i{width:26px;height:1px;background:currentColor;display:inline-block;opacity:.6}
+  .cover-sub{margin-top:clamp(22px,3.4vh,40px);font-size:clamp(15px,1.9vw,21px);line-height:1.85;color:#C3CCD3;max-width:23em}
+  .rail{margin-top:clamp(36px,7vh,72px);display:grid;grid-template-columns:1fr;gap:0;max-width:640px;border-top:1px solid var(--dark-rule)}
+  .rail div{display:flex;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px solid var(--dark-rule)}
+  .rail b{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--dark-dim);letter-spacing:.14em;min-width:26px}
+  .rail p{font-size:clamp(15px,1.55vw,18px);color:var(--paper);display:flex;align-items:baseline;gap:10px;flex:1}
+  .rail .gap{flex:1;height:.85em;border-bottom:1px solid #4A6274;transform-origin:left;animation:draw .9s var(--ease) both}
+  .rail div:nth-child(1) .gap{animation-delay:.55s}
+  .rail div:nth-child(2) .gap{animation-delay:.75s}
+  .rail div:nth-child(3) .gap{animation-delay:.95s}
+  .rail div:nth-child(1){animation:rise .7s var(--ease) both .45s}
+  .rail div:nth-child(2){animation:rise .7s var(--ease) both .62s}
+  .rail div:nth-child(3){animation:rise .7s var(--ease) both .79s}
+  .rail div:nth-child(3) .gap{border-bottom:1px solid var(--red)}
+
+  /* ---------- 议程 ---------- */
+  .agenda{margin-top:clamp(26px,4vh,44px);border-top:1px solid var(--rule)}
+  .agenda a{display:grid;grid-template-columns:auto 1fr;gap:6px clamp(16px,3vw,40px);align-items:baseline;padding:clamp(16px,2.4vh,24px) 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .25s}
+  .agenda a:hover{background:rgba(27,71,99,.045)}
+  .agenda .n{font-family:var(--mono);font-size:clamp(34px,4.6vw,56px);line-height:1;color:var(--blue);letter-spacing:-.02em;font-feature-settings:'tnum'}
+  .agenda .n em{display:block;font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-style:normal;margin-top:8px}
+  .agenda .txt b{display:block;font-size:clamp(19px,2.4vw,28px);font-weight:700;letter-spacing:-.015em;line-height:1.35}
+  .agenda .txt span{display:block;font-size:clamp(14px,1.5vw,17px);color:var(--ink-2);line-height:1.7;margin-top:4px;max-width:30em}
+
+  /* ---------- 三句横轨 ---------- */
+  .spine{margin-top:clamp(24px,4vh,44px);display:grid;grid-template-columns:1fr;border-top:2px solid var(--ink)}
+  .spine .st{padding:clamp(18px,2.6vh,26px) 0 22px;border-bottom:1px solid var(--rule);position:relative}
+  .spine .st:last-child{border-bottom:none}
+  .st .num{font-family:var(--mono);font-size:clamp(26px,3vw,38px);color:var(--blue);line-height:1;letter-spacing:-.02em}
+  .st .fr{display:flex;align-items:baseline;gap:10px;margin-top:14px;font-size:clamp(24px,3.4vw,40px);font-weight:900;letter-spacing:-.02em;line-height:1.2;flex-wrap:wrap}
+  .st .fr .gap{flex:1;min-width:60px;height:.8em;border-bottom:2px solid var(--ink-3);align-self:flex-end}
+  .st .why{margin-top:12px;font-size:clamp(14px,1.5vw,17px);color:var(--ink-2);line-height:1.7;max-width:26em}
+  .st.human{background:linear-gradient(90deg,var(--red-w),transparent);padding-left:clamp(12px,2vw,24px);margin-left:calc(-1 * clamp(12px,2vw,24px))}
+  .st.human .num{color:var(--red)}
+  .st.human .fr .gap{border-bottom:2px solid var(--red)}
+  .case{margin-top:clamp(14px,2.4vh,22px);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+  .steps{display:grid;gap:clamp(9px,1.4vh,13px)}
+  .step{display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--rule);padding-top:10px}
+  .step .sn{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .step b{font-size:clamp(14px,1.5vw,17px);color:var(--ink);font-weight:700}
+  .step p{font-size:clamp(13px,1.35vw,15.5px);line-height:1.6;color:var(--ink-2);margin-top:3px}
+  .case-side{border-left:1px solid var(--rule);padding-left:clamp(16px,2.4vw,28px)}
+  .quote{font-size:clamp(20px,2.4vw,28px);font-weight:700;line-height:1.45;color:var(--red)}
+  .case-side .aside{margin-top:14px}
+  @media(max-width:900px){.case{grid-template-columns:1fr}.case-side{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:14px}}
+  .verdict{margin-top:clamp(14px,2.2vh,22px);padding:11px 0 0;border-top:1px solid var(--red);font-size:clamp(15px,1.7vw,20px);line-height:1.6;max-width:34em;color:var(--ink)}
+  .verdict b{color:var(--red)}
+
+  /* ---------- 三行边注 ---------- */
+  .marg{margin-top:clamp(26px,4vh,42px);border-top:1px solid var(--rule);max-width:1000px}
+  .marg .r{display:grid;grid-template-columns:1fr;gap:6px;padding:clamp(16px,2.6vh,26px) 0;border-bottom:1px solid var(--rule)}
+  .marg .lab{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue)}
+  .marg .val{font-size:clamp(17px,2vw,23px);line-height:1.65;max-width:25em}
+
+  /* ---------- 标本页 ---------- */
+  .vlabel{position:absolute;left:clamp(-64px,-5vw,-20px);top:0;writing-mode:vertical-rl;font-family:var(--mono);font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--blue);opacity:.8}
+  .spec{margin-top:clamp(20px,3vh,34px);display:grid;grid-template-columns:1fr;gap:clamp(22px,3.4vh,32px);align-items:center}
+  .plate{position:relative;background:var(--paper-3);border:1px solid var(--rule);padding:clamp(16px,2.2vw,30px)}
+  .plate::before{content:"";position:absolute;inset:6px;border:1px solid var(--rule-2);pointer-events:none}
+  .plate .cap{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;border-top:1px solid var(--rule-2);margin-top:12px;padding-top:10px;position:relative;z-index:2}
+  .plate .cap .r{color:var(--red)}
+  .plate-art{display:block;width:100%;height:auto;max-height:min(46vh,420px);margin:0 auto}
+  .plate-art text{font-family:var(--mono);font-size:13px;letter-spacing:.05em}
+
+  /* ---------- 细胞标本图 ---------- */
+  .plate3d{position:relative;width:min(34vh,290px);margin:0 auto;cursor:pointer;outline-offset:4px}
+  .cellimg{display:block;width:100%;height:auto;border-radius:10px}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--paper-3);border:1.5px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(20,40,60,.3);pointer-events:none}
+  .dot.d1{left:76%;top:21%}
+  .dot.d2{left:26%;top:47%}
+  .dot.d3{left:49%;top:44%;border-color:var(--red);color:var(--red)}
+  .dot.d4{left:49%;top:71%}
+  .celltags{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+  #cellPlate.open .celltags{opacity:1;transform:translateY(0)}
+  .celltags .ct{border-top:1px solid var(--rule);padding-top:6px}
+  .celltags .ct b{display:flex;align-items:baseline;gap:6px;font-size:11.5px;font-weight:700;color:var(--ink);letter-spacing:.03em}
+  .celltags .ct b i{flex:none;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;font-style:normal;font-size:10px;display:inline-flex;align-items:center;justify-content:center}
+  .celltags .ct:nth-child(2) b{color:var(--red)}
+  .celltags .ct:nth-child(2) b i{background:var(--red)}
+  .celltags .ct span{display:block;font-size:10.5px;line-height:1.55;color:var(--ink-2);margin-top:3px}
+  .caprow3d{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;position:relative;z-index:2}
+  .ptgl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--paper);background:var(--blue);border:1px solid var(--blue);padding:8px 16px;cursor:pointer;transition:background .25s,color .25s}
+  .ptgl:hover{background:transparent;color:var(--blue)}
+  .ptgl[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  .hint{font-size:11px;color:var(--ink-3)}
+  .part{cursor:pointer;transition:opacity .25s,filter .25s}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;position:relative;z-index:2}
+  .legend button{appearance:none;border:1px solid var(--rule);background:transparent;color:var(--blue);font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:10px 14px;min-height:44px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .legend button[aria-pressed="true"]{background:var(--blue);color:var(--paper-3);border-color:var(--blue)}
+  .legend button:hover{border-color:var(--blue)}
+  .fills{border-top:2px solid var(--ink)}
+  .fill{padding:clamp(13px,1.9vh,19px) 0;border-bottom:1px solid var(--rule)}
+  .fill .lab{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--blue)}
+  .fill .txt{margin-top:6px;font-size:clamp(16px,1.75vw,20px);line-height:1.7}
+  .fill.x{border-bottom:2px solid var(--red)}
+  .fill.x .lab{color:var(--red)}
+  .aside{margin-top:clamp(11px,1.6vh,16px);display:flex;gap:12px;align-items:baseline;font-size:clamp(14px,1.5vw,16px);line-height:1.6;max-width:34em}
+  .aside::before{content:"";flex:0 0 22px;height:2px;background:var(--red);transform:translateY(-.35em)}
+  .lnk{display:inline-block;border-bottom:2px solid var(--blue);color:var(--blue);text-decoration:none;font-family:var(--mono);font-size:clamp(12px,1.2vw,14px);letter-spacing:.06em;padding:6px 0 3px;transition:border-color .2s,color .2s}
+  .lnk:hover{border-color:var(--red);color:var(--red)}
+  .slide[data-theme="dark"] .lead{color:#BEC7CE}
+
+  /* ---------- 对比：十页 / 一页 ---------- */
+
+  /* ---------- 工具映射 ---------- */
+  .map{margin-top:clamp(24px,3.6vh,38px);border-top:2px solid var(--ink);max-width:1080px}
+  .map .row{display:grid;grid-template-columns:1fr;gap:4px;padding:clamp(15px,2.2vh,22px) 0;border-bottom:1px solid var(--rule)}
+  .map .need{font-size:clamp(15px,1.55vw,18px);color:var(--ink-3);font-family:var(--mono);letter-spacing:.05em}
+  .map .tool{font-size:clamp(19px,2.4vw,29px);font-weight:700;letter-spacing:-.015em;line-height:1.4}
+  .map .why{font-size:clamp(14px,1.45vw,16px);color:var(--ink-2);line-height:1.7;margin-top:2px}
+
+
+  /* ---------- 说明书 ---------- */
+  .manual{margin-top:clamp(22px,3.2vh,34px);border:1px solid var(--rule);background:var(--paper-3);max-width:860px}
+  .manual .m{padding:clamp(15px,2.2vh,22px) clamp(16px,2.2vw,26px);border-bottom:1px dashed var(--rule)}
+  .manual .m:last-child{border-bottom:none}
+  .manual .m .lab{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--blue)}
+  .manual .m p{margin-top:8px;font-size:clamp(16px,1.8vw,20px);line-height:1.7;max-width:30em}
+
+  /* ---------- 步骤 ---------- */
+  .steps{margin-top:clamp(22px,3.2vh,34px);max-width:900px;border-top:2px solid var(--ink)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(15px,2.2vh,22px) 0;border-bottom:1px solid var(--rule);align-items:start}
+  .step .n{font-family:var(--mono);font-size:clamp(20px,2.4vw,28px);line-height:1;color:var(--blue)}
+  .step b{display:block;font-size:clamp(17px,2vw,23px);font-weight:700;letter-spacing:-.01em;line-height:1.4}
+  .step span{display:block;margin-top:4px;font-size:clamp(14px,1.5vw,17px);color:var(--ink-2);line-height:1.7}
+
+  /* ---------- 批注页 ---------- */
+  .mark{margin-top:clamp(22px,3.2vh,34px);display:grid;grid-template-columns:1fr;gap:clamp(20px,3vh,30px);align-items:start}
+  .fac{position:relative;background:var(--paper-3);border:1px solid var(--ink);padding:clamp(14px,2vw,20px);max-width:430px}
+  .fac .ft{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:8px}
+  .fac .h4{font-size:clamp(17px,1.8vw,20px);font-weight:700;margin:12px 0 10px}
+  .fac .pic{border:1px solid var(--rule-2);background:var(--paper);padding:6px;margin-bottom:12px}
+  .fac .pic svg{display:block;width:100%;height:auto}
+  .fac .bl{position:relative;height:9px;background:var(--rule-2);margin:10px 0;border-radius:1px}
+  .fac .bl.w2{width:92%}
+  .fac .bl.w3{width:78%}
+  .fac .bl.hit{opacity:0;transition:opacity .3s var(--ease)}
+  .revealed .fac .bl.hit{opacity:1;background:linear-gradient(transparent 30%,var(--red-w) 30%,var(--red-w) 88%,transparent 88%)}
+  .hl{display:flex;align-items:center;gap:10px;margin:12px 0 10px}
+  .hl .h4{margin:0}
+  .picwrap{position:relative}
+  .fb{width:24px;height:24px;border:2px solid var(--red);border-radius:50%;color:var(--red);font-family:var(--mono);font-size:12px;line-height:1;display:inline-grid;place-items:center;flex:0 0 24px;opacity:0;transform:scale(.55);transition:opacity .3s var(--ease),transform .35s var(--ease)}
+  .fb.im{position:absolute;top:-10px;right:-10px;background:var(--paper-3);z-index:2}
+  .revealed .fb{opacity:1;transform:scale(1)}
+  .caprow{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);margin:0}
+  .mknote{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .mknote b{font-family:var(--mono);color:var(--red);font-size:13px;flex:0 0 20px}
+  .mknote p{font-size:clamp(15px,1.6vw,18px);line-height:1.7;color:transparent;transition:color .35s var(--ease) .1s}
+  .revealed .mknote p{color:var(--ink)}
+  .reveal-btn{appearance:none;border:1px solid var(--red);background:transparent;color:var(--red);font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding:12px 18px;min-height:44px;cursor:pointer;transition:background .2s,color .2s;margin-top:14px}
+  .reveal-btn:hover{background:var(--red);color:var(--paper-3)}
+
+  /* ---------- 边界页 ---------- */
+  .ban{margin-top:clamp(24px,3.6vh,38px);border-top:1px solid var(--dark-rule)}
+  .ban .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(16px,2.4vh,24px) 0;border-bottom:1px solid var(--dark-rule);align-items:baseline}
+  .ban .x{width:20px;height:20px;flex:0 0 20px;stroke:var(--red);stroke-width:2.6;transform:translateY(3px)}
+  .ban b{display:block;font-size:clamp(19px,2.4vw,30px);font-weight:700;letter-spacing:-.015em;line-height:1.4}
+  .ban span{display:block;margin-top:6px;font-size:clamp(14px,1.5vw,17px);color:#A9B4BE;line-height:1.7;max-width:26em}
+
+  /* ---------- 出口页 ---------- */
+  .door{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .door .t2{max-width:14em}
+  .door .lead{text-align:center;margin:clamp(16px,2.4vh,24px) auto 0}
+  .door .big{display:inline-flex;align-items:center;justify-content:center;gap:14px;border:1px solid #45606F;padding:18px 32px;min-height:58px;color:var(--paper);text-decoration:none;font-size:clamp(16px,1.8vw,20px);font-weight:700;letter-spacing:.02em;margin-top:clamp(28px,4vh,40px);transition:background .25s var(--ease),color .25s,border-color .25s}
+  .door .big:hover{background:var(--paper);color:var(--dark);border-color:var(--paper)}
+  .door .after{margin-top:clamp(20px,3vh,28px);font-size:clamp(14px,1.5vw,17px);color:#A9B4BE;max-width:26em;line-height:1.7}
+
+  /* ---------- 收课 ---------- */
+  .home{margin-top:clamp(24px,3.6vh,36px);border-top:2px solid var(--red);max-width:900px}
+  .home .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(14px,2vh,20px) 0;border-bottom:1px solid var(--dark-rule);align-items:baseline}
+  .home .n{font-family:var(--mono);font-size:clamp(13px,1.2vw,15px);color:var(--red);letter-spacing:.1em}
+  .home b{display:block;font-size:clamp(17px,2vw,24px);font-weight:700;line-height:1.45}
+  .home span{display:block;margin-top:3px;font-size:clamp(14px,1.45vw,16px);color:#A9B4BE;line-height:1.7}
+
+  /* ---------- 苏格拉底标本框 ---------- */
+  .socrwrap{margin-top:clamp(12px,1.8vh,18px);display:grid;grid-template-columns:1fr;gap:clamp(16px,2.4vw,32px);align-items:start}
+  .socrfig{margin:0 auto 0 0;border:1px solid var(--rule);background:var(--paper-3);padding:10px;max-width:280px}
+  .socrfig img{display:block;width:100%;height:auto}
+  .socrfig figcaption{margin-top:10px;padding-top:8px;border-top:1px solid var(--rule-2);font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink-3);line-height:1.8}
+  .socrwrap .syl{margin-top:0}
+  .socrwrap .syl-row .form{font-size:clamp(15px,1.7vw,20px)}
+  @media (min-width:900px){
+    .socrwrap{grid-template-columns:178px minmax(0,1fr)}
+    .socrfig{max-width:none}
+  }
+
+  /* ---------- 三段论公式与例子 ---------- */
+  .formula{margin-top:0;border-top:2px solid var(--ink)}
+  .frow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:clamp(10px,2vw,20px);padding:clamp(9px,1.5vh,14px) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .frow b{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--blue);font-weight:400}
+  .frow p{font-size:clamp(16px,1.8vw,21px);line-height:1.55}
+  .frow em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 4px}
+  .frow.concl{background:linear-gradient(90deg,var(--red-w),transparent);padding-left:12px;margin-left:-12px;border-bottom:2px solid var(--red)}
+  .frow.concl b{color:var(--red)}
+  .eg{margin-top:clamp(12px,1.8vh,18px);border-top:1px solid var(--rule);padding-top:clamp(10px,1.4vh,14px);display:grid;gap:7px}
+  .egrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;font-size:clamp(13px,1.4vw,15px);line-height:1.65}
+  .egrow i{font-style:normal;color:var(--ink-3)}
+  .egrow .et{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--blue);border:1px solid var(--rule);padding:2px 8px}
+  .egrow .out{color:var(--red);font-weight:700}
+  .eglabel{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--ink-3);margin:-4px 0 6px}
+
+  /* ---------- 三段论 ---------- */
+  .skel{margin-top:12px;display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--red);line-height:1.9}
+  .skel b{font-weight:400;color:var(--red);opacity:.55}
+  .syl{margin-top:clamp(14px,2vh,20px);border-top:2px solid var(--ink);max-width:1080px}
+  .syl-row{display:grid;grid-template-columns:1fr;gap:5px;padding:clamp(9px,1.4vh,14px) 0;border-bottom:1px solid var(--rule)}
+  .syl-row .k{font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--blue);display:flex;gap:10px;align-items:baseline}
+  .syl-row .k s{text-decoration:none;font-size:10px;letter-spacing:.1em;color:var(--ink-3)}
+  .syl-row .form{font-size:clamp(17px,2.05vw,26px);line-height:1.6;font-weight:700;letter-spacing:-.01em}
+  .syl-row .form em{font-style:normal;color:var(--red);border-bottom:2px solid var(--red);padding-bottom:1px}
+  .syl-row .ex{font-size:clamp(13px,1.4vw,16px);color:var(--ink-3);line-height:1.7;max-width:34em}
+  .syl-row.concl{background:linear-gradient(90deg,var(--red-w),transparent);border-bottom:2px solid var(--red);padding-left:14px;margin-left:-14px}
+  .syl-row.concl .k{color:var(--red)}
+
+  /* ---------- 林奈 ---------- */
+  .linnwrap{margin-top:clamp(20px,3vh,32px);display:grid;grid-template-columns:1fr;gap:clamp(22px,3vh,30px);align-items:start}
+  .linn{border-top:2px solid var(--ink);padding-top:10px}
+  .lv{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:baseline;border-bottom:1px solid var(--rule);padding:9px 0;width:calc(var(--w) * 1%)}
+  .lv b{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:.1em;color:var(--blue)}
+  .lv span{font-size:clamp(14px,1.5vw,17px);line-height:1.4}
+  .lv:last-child{border-bottom:2px solid var(--red)}
+  .lv:last-child b{color:var(--red)}
+  .binom{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px)}
+  .binom .lat{font-family:var(--mono);font-style:italic;font-size:clamp(18px,2.3vw,26px);letter-spacing:.01em}
+  .binom .split{display:flex;gap:14px;margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:10px}
+  .binom p{margin-top:10px;font-size:clamp(13px,1.45vw,16px);line-height:1.75;color:var(--ink-2)}
+
+  /* ---------- 提示词卡 ---------- */
+  .pcard{margin-top:clamp(14px,2vh,20px);border:1px solid var(--rule);background:var(--paper-3);max-width:1080px}
+  .prow{display:grid;grid-template-columns:44px minmax(0,1fr);gap:clamp(10px,1.8vw,20px);padding:clamp(8px,1.2vh,12px) clamp(13px,2vw,24px);border-bottom:1px dashed var(--rule)}
+  .prow:last-child{border-bottom:none}
+  .prow .pn{font-family:var(--mono);font-size:clamp(12px,1.25vw,14px);color:var(--blue);letter-spacing:.06em}
+  .prow .pk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .prow p{margin-top:5px;font-size:clamp(14px,1.65vw,19px);line-height:1.65;max-width:36em}
+  .prow p em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 2px}
+  .prow.hi{background:linear-gradient(90deg,var(--red-w),transparent)}
+  .prow.hi .pn,.prow.hi .pk{color:var(--red)}
+
+  /* ---------- 四张卡 ---------- */
+  .chips{margin-top:clamp(14px,2vh,20px);display:grid;grid-template-columns:1fr;gap:12px}
+  .chip{border-top:2px solid var(--ink);padding-top:12px}
+  .chip .ct{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+  .chip .c2{margin-top:8px;font-size:clamp(14px,1.55vw,17px);line-height:1.6;color:var(--ink-2)}
+  .chip .c2 b{font-weight:700;color:var(--ink)}
+  .chip .c3{margin-top:8px;font-size:clamp(13px,1.35vw,15px);line-height:1.75;color:var(--ink-2)}
+  .now{margin-top:clamp(24px,3.6vh,36px);border-top:2px solid var(--red);padding-top:14px;max-width:900px}
+  .now .lab{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--red);text-transform:uppercase}
+  .now p{margin-top:8px;font-size:clamp(15px,1.8vw,21px);line-height:1.65;max-width:30em}
+
+  /* ---------- 动效 ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes clipIn{from{clip-path:inset(0 100% 0 0);opacity:.35}to{clip-path:inset(0 0 0 0);opacity:1}}
+  @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .slide.on .t1.reveal{animation:clipIn 1.05s var(--ease) both}
+  .slide.on .t2.reveal{animation:rise .6s var(--ease) both .06s}
+
+  /* ---------- 顶栏 / 底栏 ---------- */
+  #bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--red);z-index:60;transition:width .35s var(--ease)}
+  .chrome{position:fixed;left:0;right:0;bottom:0;z-index:50;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(14px,4vw,40px);border-top:1px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+  .chrome[data-theme="dark"]{background:var(--dark);border-color:var(--dark-rule);color:#7E8B94}
+  .chrome .act{display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;white-space:nowrap}
+  .chrome .act i{width:22px;height:1px;background:currentColor;opacity:.5;flex:0 0 22px}
+  .chrome .ctrl{display:flex;align-items:center;gap:2px}
+  .chrome button{appearance:none;border:none;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;padding:0 12px;min-height:44px;min-width:40px;cursor:pointer;transition:color .2s}
+  .chrome button:hover{color:var(--red)}
+  .chrome .cnt{font-feature-settings:'tnum';color:var(--ink-2);padding:0 10px}
+  .chrome[data-theme="dark"] .cnt{color:var(--paper)}
+  #note{position:fixed;left:0;right:0;bottom:54px;z-index:45;display:none;background:var(--paper-3);border-top:1px solid var(--rule);padding:14px clamp(14px,4vw,40px);font-size:14px;line-height:1.75;color:var(--ink-2);max-height:38vh;overflow:auto}
+  #note.on{display:block}
+  #note .nlab{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--red);margin-right:10px}
+  #note .nbody{max-width:44em;display:inline}
+
+  /* ---------- 响应式 ---------- */
+  @media (min-width:760px){
+    .cover-sub{max-width:26em}
+    .marg .r{grid-template-columns:170px minmax(0,1fr);gap:clamp(16px,3vw,40px);align-items:baseline}
+    .agenda a{grid-template-columns:auto 1fr}
+    .spine{grid-template-columns:repeat(3,1fr);border-bottom:none}
+    .spine .st{padding:clamp(14px,2vh,20px) clamp(14px,2vw,26px) 18px 0;border-bottom:none;border-right:1px solid var(--rule)}
+    .spine .st:last-child{border-right:none}
+    .st .fr{font-size:clamp(22px,2.6vw,32px)}
+    .spec{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+    .map .row{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(16px,3vw,40px);align-items:baseline}
+    .map .why{grid-column:2}
+    .mark{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,56px)}
+    .syl-row{grid-template-columns:112px minmax(0,1fr);gap:6px clamp(16px,2.4vw,32px);align-items:baseline}
+    .syl-row .ex{grid-column:2}
+    .linnwrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(26px,4vw,56px)}
+    .chips{grid-template-columns:repeat(2,1fr);gap:16px clamp(18px,2.6vw,32px)}
+    .pcard{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+    .prow:nth-child(1){border-right:1px dashed var(--rule)}
+    .prow:nth-child(3){grid-column:1 / -1}
+    .prow:nth-child(4){border-right:1px dashed var(--rule);border-bottom:none}
+    .prow:nth-child(5){border-bottom:none}
+    .prow p{max-width:30em}
+  }
+  @media (min-width:1100px){
+    .chips{grid-template-columns:repeat(4,1fr)}
+    .t1{font-size:clamp(90px,11vw,164px)}
+  }
+  @media (max-width:759px){
+    .vlabel{display:none}
+    .st.human{margin-left:0;padding-left:14px}
+    #note{max-height:44vh}
+    .chrome .act{font-size:10px;letter-spacing:.1em}
+  }
+  @media (max-width:430px){
+    .chrome .act{display:none}
+    .chrome button{padding:0 8px;letter-spacing:.06em}
+    .chrome .cnt{padding:0 6px;font-size:10px}
+  }
+  @media (prefers-reduced-motion:reduce){.plate3d *{transition:none!important}
+    .slide.on .t1.reveal,.slide.on .t2.reveal,.rail div,.rail .gap{animation:none!important}
+    .mknote p,.badge{transition:none!important}
+    #bar{transition:none}
+  }
+  @media print{
+    body{background:#fff}
+    #bar,.chrome,#note{display:none!important}
+    .slide{display:block!important;height:auto!important;overflow:visible!important;min-height:0;page-break-after:always;padding:18mm}
+    .slide:last-of-type{page-break-after:auto}
+    .slide[data-theme="paper"]{background:#fff}
+    .slide[data-theme="dark"]{background:#0E171D;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .slide.on .t1.reveal,.slide.on .t2.reveal{animation:none}
+    .rail div,.rail .gap{animation:none}
+    .mknote p{color:var(--ink)!important}
+  }
+
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<!-- ============ 01 封面 ============ -->
+<section class="slide" data-theme="dark" data-act="开场" id="s1">
+  <div class="wrap">
+    <div class="cover-meta"><span>AI 通识初阶 · M2 先导</span><i></i><span>线上 1h</span><i></i><span>学会判断</span></div>
+    <h1 class="t1 reveal">用逻辑学，<br>提高你对 AI 的掌控</h1>
+    <p class="cover-sub">M1 你学会了用 AI 自学；M2 开始用 AI 解决真问题。可 AI 有个脾气：你问什么，它答什么——问题本身不对，它照样答得头头是道。所以动手之前，先练眼力：分清一句话值不值得信，一个问题是不是真问题。</p>
+    <div class="rail">
+      <div><b>01</b><p>M1 · 会自学<span class="gap"></span></p></div>
+      <div><b>02</b><p>M2 先导 · 会判断<span class="gap"></span></p></div>
+      <div><b>03</b><p>M2 主课 · 会解决问题<span class="gap"></span></p></div>
+    </div>
+  </div>
+  <div class="note">欢迎回来。上一课学了用 AI 自学；今天这节课，先不上手干活，先练眼力——看穿一句话，认出一个真问题。眼力练好了，AI 在你手里才是工具；练不好，它带着你跑错方向。</div>
+</section>
+
+<!-- ============ 02 M1 回顾 ============ -->
+<section class="slide" data-theme="paper" data-act="M1 回顾" id="s2">
+  <div class="wrap">
+    <span class="vlabel">M1 回顾</span>
+    <h2 class="t2 reveal">上节课，你攒下了四件工具</h2>
+    <div class="toolgrid">
+      <div class="tool"><span class="tk">工具 01</span><h3>抽象思维</h3><p>找共性、辨差异、学分类——把一堆乱糟糟的东西，理出章法。</p></div>
+      <div class="tool"><span class="tk">工具 02</span><h3>三段论</h3><p>大前提、小前提、结论——苏格拉底那一问一答，辨真伪的老手艺。</p></div>
+      <div class="tool"><span class="tk">工具 03</span><h3>Prompt 五步大法</h3><p>把脑子里的想法，说成 AI 听得懂的话——你会写结构化的提示词了。</p></div>
+      <div class="tool"><span class="tk">工具 04</span><h3>初识 Skills</h3><p>给 AI 装上新本事——它不光会聊天，还能干专门的活儿。</p></div>
+    </div>
+    <div class="toolsum">四件合起来，一件事：<em>你已经会用 AI 开展自学了。</em></div>
+  </div>
+  <div class="note">快速回顾，别恋战。四件工具各提一句，找一两个孩子说说用得最顺的是哪件。落点放在最后那句：会自学了——下一步，是拿真问题去练手。而拿真问题之前，得先认得出真问题。这就引到下一页。</div>
+</section>
+
+<!-- ============ 03 差距演示 ============ -->
+<section class="slide" data-theme="paper" data-act="差距演示" id="s3">
+  <div class="wrap">
+    <span class="vlabel">差距演示</span>
+    <h2 class="t2 reveal">你觉得：真的，假的？</h2>
+    <div class="scene">
+      <div class="sl">你在班级群里看到</div>
+      <div class="quote">「听说小升初不用考体育了，群里都在转。」</div>
+    </div>
+    <div class="poll">
+      <div class="pvote"><b>真</b><span>看起来像真的</span></div>
+      <div class="pvote"><b>假</b><span>一听就可疑</span></div>
+      <div class="pvote"><b>说不好</b><span>想再看看</span></div>
+    </div>
+    <div class="verdict">先别查资料。<b>你凭什么这么觉得？</b>——把理由说出来。</div>
+  </div>
+  <div class="note">这页全交给学生。让他们表态：真、假、说不好，开麦说或打在评论区。关键是追问：你凭什么这么觉得？多数人的理由是「群里都在转」「感觉像真的」。把这几个理由记下来——一会儿玩完游戏回头看，这些理由本身，恰恰就是今天要拆的东西。</div>
+</section>
+
+<!-- ============ 04 概念 ============ -->
+<section class="slide" data-theme="paper" data-act="概念引入" id="s4">
+  <div class="wrap">
+    <span class="vlabel">概念引入</span>
+    <h2 class="t2 reveal">逻辑谬误：理由配不上结论</h2>
+    <div class="marg">
+      <div class="r"><span class="lab">先说清楚</span><span class="val">它不是说人家结论错了。结论对不对，是另一回事。</span></div>
+      <div class="r"><span class="lab">它说的是</span><span class="val">拿出来的理由，配不上想让你信的那句话。</span></div>
+      <div class="r"><span class="lab">拆一句话</span><span class="val">就问三件事：<b>说了什么</b>／<b>凭什么</b>／<b>对得上吗</b>。</span></div>
+    </div>
+    <div class="sent">
+      <span class="sk">核心句式 · 全课通用</span>
+      <p>他说<em>＿</em>，凭的是<em>＿</em>，——<em>＿</em>，不算凭据。</p>
+    </div>
+  </div>
+  <div class="note">给工具，快讲。逻辑谬误不等于说错话——结论可能对，理由配不上，照样是谬误。拆任何一句话就问三件事：说了什么、凭什么、对得上吗。然后亮出今天的万能句式，读一遍。告诉他们：接下来游戏里每一关，都要用这句话说一遍才算过关。</div>
+</section>
+
+<!-- ============ 05 闯关地图 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关地图" id="s5">
+  <div class="wrap">
+    <span class="vlabel">闯关游戏</span>
+    <h2 class="t2 reveal">小满的一天 · 六句话闯关</h2>
+    <div class="mapwrap">
+      <svg viewBox="0 0 960 500" role="img" aria-label="小满一天闯关地图：从家到学校再回家，六个节点">
+        <!-- 路径 -->
+        <path d="M 100 430 C 320 400 520 260 690 155 C 720 175 800 195 840 220 C 800 250 700 265 640 280 C 560 300 480 315 420 330 C 360 345 290 355 240 370 C 200 385 160 350 130 300 C 115 275 105 320 100 385" fill="none" stroke="#1B4763" stroke-width="2" stroke-dasharray="7 7" stroke-linecap="round"/>
+        <!-- 家 -->
+        <g stroke="#1B4763" stroke-width="2" fill="none">
+          <path d="M 62 445 v -22 h 30 v 22"/>
+          <path d="M 56 423 l 21 -16 l 21 16"/>
+          <path d="M 70 445 v -12 h 8 v 12"/>
+        </g>
+        <text x="77" y="470" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">家</text>
+        <!-- 学校 -->
+        <g stroke="#1B4763" stroke-width="2" fill="none">
+          <rect x="812" y="52" width="86" height="58"/>
+          <path d="M 812 72 h 86 M 812 92 h 86"/>
+          <path d="M 838 52 v -18"/>
+          <path d="M 838 34 l 20 6 l -20 6"/>
+        </g>
+        <text x="855" y="128" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">学校</text>
+        <!-- 小满小人（起点） -->
+        <g stroke="#1B4763" stroke-width="2" fill="none" stroke-linecap="round">
+          <circle cx="122" cy="448" r="7"/>
+          <path d="M 122 455 v 14 M 122 459 l -7 5 M 122 459 l 7 5 M 122 469 l -5 9 M 122 469 l 5 9"/>
+        </g>
+        <text x="122" y="492" text-anchor="middle" font-size="11" fill="#BB3A22" font-weight="700">小满</text>
+        <!-- 节点 -->
+        <g font-size="12" font-weight="700" fill="#1B4763" text-anchor="middle">
+          <circle cx="700" cy="150" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="700" y="155">1</text>
+          <circle cx="840" cy="220" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="840" y="225">2</text>
+          <circle cx="640" cy="280" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="640" y="285">3</text>
+          <circle cx="420" cy="330" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="420" y="335">4</text>
+          <circle cx="240" cy="370" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="240" y="375">5</text>
+          <circle cx="130" cy="300" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="130" y="305">6</text>
+        </g>
+        <!-- 节点标签 -->
+        <g font-size="11.5" fill="#4C524D" text-anchor="middle">
+          <text x="700" y="122">早读 · 教室</text>
+          <text x="840" y="252">课间 · 走廊</text>
+          <text x="640" y="312">午休 · 食堂</text>
+          <text x="420" y="362">放学 · 公交</text>
+          <text x="240" y="402">晚上 · 客厅</text>
+          <text x="130" y="272">睡前 · 床上</text>
+        </g>
+      </svg>
+    </div>
+    <div class="aside">小满从家到学校、再回家，一天里碰上六句话。每句话听起来都挺有道理——你的任务：指出毛病在哪，并用句式说一遍。</div>
+  </div>
+  <div class="note">介绍游戏规则。小满的一天，六个场景，六句话。老师点节点，翻页即到。规则说清楚：不是猜对错，是找毛病——指出毛病在哪，再用「他说＿，凭的是＿——＿，不算凭据」完整说一遍，这一关才算过。从节点 1 开始。</div>
+</section>
+
+<!-- ============ 06 闯关01 凭人多 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·01" id="s6">
+  <div class="wrap">
+    <span class="vlabel">闯关 01</span>
+    <div class="trail"><span class="on">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <h2 class="t2 reveal">早读 · 教室</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满听见</b><p>同桌凑过来：「下周一要月考，隔壁班都传疯了，你还不复习？」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>同桌凭什么</b><p>「隔壁班都在传」。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>传的人再多，也变不成真的。</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「隔壁班都传疯了」</div>
+        <div class="aside">谁来用句式说一遍？</div>
+        <div class="verdict">大家都传，<b>不算凭据</b>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">第一关最简单，热身。先让孩子讨论：你信不信？为什么？多半又有人说「大家都这么说」。cue 一位同学用句式说完整：「他说下周一要月考，凭的是隔壁班都在传——大家都在传，不算凭据。」补一句：假消息传一百遍也变不成真的。</div>
+</section>
+
+<!-- ============ 07 闯关02 凭身份 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·02" id="s7">
+  <div class="wrap">
+    <span class="vlabel">闯关 02</span>
+    <div class="trail"><span>01</span><i></i><span class="on">02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <h2 class="t2 reveal">课间 · 走廊</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满看见</b><p>走廊海报栏贴着学习机广告：「清北学霸都在用，成绩自然往上走。」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>广告凭什么</b><p>「清北学霸」这个名头。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>名头再响，也没回答：你用了，到底有没有用？</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「清北学霸都在用」</div>
+        <div class="aside">谁来用句式说一遍？</div>
+        <div class="verdict">名头响，<b>不算凭据</b>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">第二关，凭身份。先讨论：学霸真在用，能说明这机器好吗？可以点一下：也许它真有用——但「学霸在用」四个字本身说明不了任何事。要证明有用，得拿出「用了之后成绩真的上去了」的证据。广告最爱借名头，见一次问一次。</div>
+</section>
+
+<!-- ============ 08 闯关03 凭个例 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·03" id="s8">
+  <div class="wrap">
+    <span class="vlabel">闯关 03</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span class="on">03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <h2 class="t2 reveal">午休 · 食堂</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满听到</b><p>排队的同学说：「我表姐用这个刷题法，三个月提了 40 分，你也试试！」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>同学凭什么</b><p>表姐一个人的经历。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>她一个人的事，证明不了放你身上也灵。</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「我表姐提了 40 分」</div>
+        <div class="aside">谁来用句式说一遍？</div>
+        <div class="verdict">一个例子，<b>不算凭据</b>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">第三关，凭个例。这关好讨论：表姐提分可能是真的！但注意，从「她行」跳到「你也行」，中间差着一截。追问：如果一百个人用了，只有三个人提分呢？一个人的故事，只能说它发生过，说不了它是规律。</div>
+</section>
+
+<!-- ============ 09 闯关04 凭情绪 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·04" id="s9">
+  <div class="wrap">
+    <span class="vlabel">闯关 04</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span class="on">04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <h2 class="t2 reveal">放学 · 公交</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满刷到</b><p>公众号文章弹出来：「小升初再不规划，你的孩子就真的废了！」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>它凭什么</b><p>什么都没凭，就靠吓人。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>越吓人，越要停下来问一句：证据呢？</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「不规划，孩子就废了」</div>
+        <div class="aside">谁来用句式说一遍？</div>
+        <div class="verdict">吓人，<b>不算凭据</b>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">第四关，凭情绪。营销号最会吓人，家长群重灾区。讨论点：为什么吓人的话特别容易信？因为它让你来不及多想。给孩子一条铁律：谁越让你慌，你越要停下来问一句——证据呢？</div>
+</section>
+
+<!-- ============ 10 闯关05 先后当因果 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·05" id="s10">
+  <div class="wrap">
+    <span class="vlabel">闯关 05</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span class="on">05</span><i></i><span>06</span></div>
+    <h2 class="t2 reveal">晚上 · 客厅</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满听到</b><p>妈妈说：「你看，就是因为昨天打游戏，今天才考砸的。」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>妈妈凭什么</b><p>打游戏在前，考砸在后。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>先发生的事，不一定就是原因。昨天没打游戏，今天可能照样考砸。</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「打游戏在前，考砸在后」</div>
+        <div class="aside">这一关有反转——先别急着顶嘴</div>
+        <div class="verdict">先后，<b>不等于因果</b>。</div>
+      </div>
+    </div>
+    <div class="aside">停一下：妈妈这句话，道理上站不住；可她真正在说的，是「我担心你」。这一关过了，但话别急着说出口。</div>
+  </div>
+  <div class="note">第五关，最难也最有味道。先讲道理：先发生不等于原因，考砸可能是因为题难、没睡够、知识点本来就没掌握。但这里踩一脚刹车：妈妈不是来跟你讲逻辑的，她在担心你。所以这一关的通关答案有两个——道理上，先后不等于因果；做法上，听懂她，别当场驳倒她。</div>
+</section>
+
+<!-- ============ 11 闯关06 偷换概念 ============ -->
+<section class="slide" data-theme="paper" data-act="闯关·06" id="s11">
+  <div class="wrap">
+    <span class="vlabel">闯关 06</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span class="on">06</span></div>
+    <h2 class="t2 reveal">睡前 · 床上</h2>
+    <div class="case">
+      <div class="steps">
+        <div class="step"><span class="sn">1</span><div><b>小满看到</b><p>新闻推送的标题：「专家称：刷题根本没用！」</p></div></div>
+        <div class="step"><span class="sn">2</span><div><b>点进去一看</b><p>专家原话是「刷题不能代替理解」。</p></div></div>
+        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>原话被换成了另一个意思。</p></div></div>
+      </div>
+      <div class="case-side">
+        <div class="quote">「没用」≠「不能代替理解」</div>
+        <div class="aside">谁来用句式说一遍？</div>
+        <div class="verdict">他驳的，<b>不是你说的那句</b>。</div>
+      </div>
+    </div>
+  </div>
+  <div class="note">第六关，偷换概念，最隐蔽。标题把一句温和的话换成一句刺激的话，「不能代替理解」变成「根本没用」。识别办法就一条：点进去，看他说的到底是不是原来那句话。话题被人换了，你就别跟着跑。通关，回地图收全六关。</div>
+</section>
+
+<!-- ============ 12 谬误大全 ============ -->
+<section class="slide" data-theme="paper" data-act="谬误大全" id="s12">
+  <div class="wrap">
+    <span class="vlabel">谬误大全</span>
+    <h2 class="t2 reveal">逻辑谬误速查卡</h2>
+    <div class="cheat">
+      <div class="ch"><div class="cn"><i>01</i>凭人多</div><div class="cb"><b>大家都传，不算凭据。</b><span class="cs">造句：他说下周一要月考，凭的是隔壁班都在传——大家都在传，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>02</i>凭身份</div><div class="cb"><b>名头响，不算凭据。</b><span class="cs">造句：他说学习机管用，凭的是清北学霸都在用——名头响，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>03</i>凭个例</div><div class="cb"><b>一个例子，不算凭据。</b><span class="cs">造句：他说刷题法管用，凭的是他表姐提了 40 分——一个人的事，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>04</i>凭情绪</div><div class="cb"><b>吓人，不算凭据。</b><span class="cs">造句：他说不规划孩子就废了，凭的是把孩子吓住——吓人，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>05</i>先后当因果</div><div class="cb"><b>先后，不等于因果。</b><span class="cs">造句：他说考砸怪打游戏，凭的是游戏在前——先后，不等于因果。</span></div></div>
+      <div class="ch"><div class="cn"><i>06</i>偷换概念</div><div class="cb"><b>他驳的，不是你说的那句。</b><span class="cs">造句：他说专家骂刷题没用，凭的是换过的标题——换了话，不算原话。</span></div></div>
+    </div>
+    <div class="sent">
+      <span class="sk">一个公式，六种用法 · 建议截屏保存</span>
+      <p>他说<em>＿</em>，凭的是<em>＿</em>，——<em>＿</em>，不算凭据。</p>
+    </div>
+  </div>
+  <div class="note">收全六关，压成一张卡。每种谬误一行：名字、点破的话、一个造句示范。让孩子现在就截屏存进相册——这就是今天这节课的「装备」。提醒：不用背名词，背这一句话就够。C 计划式的收法：知识落在生活里，不在名词上。</div>
+</section>
+
+<!-- ============ 13 选题检验 ============ -->
+<section class="slide" data-theme="paper" data-act="选题检验" id="s13">
+  <div class="wrap">
+    <span class="vlabel">衔接 M1 作业</span>
+    <h2 class="t2 reveal">你的选题，是真问题吗</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><b>谁在什么时候卡住了？</b><span>得有具体的人、具体的时刻。「大家都会遇到」不算。</span></div></div>
+      <div class="step"><span class="n">2</span><div><b>有证据吗？</b><span>不是「我觉得挺难」，是有人真的在那儿卡住过。</span></div></div>
+      <div class="step"><span class="n">3</span><div><b>不解决，疼吗？</b><span>这问题放着不管，真有人吃亏、真有人难受。疼，才值得做。</span></div></div>
+    </div>
+    <div class="duo">
+      <div class="col">
+        <div class="hl"><i>三道全过</i>真问题</div>
+        <p>下节课直接开工，把它做成你的第一个 Demo。</p>
+      </div>
+      <div class="col warm">
+        <div class="hl"><i>卡在某一道</i>需要再分析</div>
+        <p>不着急换题。回那道题去，把具体的人、具体的时刻、具体的证据找出来——找齐了，它可能就是真问题。</p>
+      </div>
+    </div>
+  </div>
+  <div class="note">现场环节。请两三个孩子报 M1 选题，全班一起过三道检验：谁卡住了、证据呢、不解决疼吗。结论只有两种：三道全过是真问题，下节课开工；卡在某道就现场分析——别轻易换题，把那一道补齐。这页是背景板，主角是讨论。</div>
+</section>
+
+<!-- ============ 14 下节课 ============ -->
+<section class="slide" data-theme="paper" data-act="下节课" id="s14">
+  <div class="wrap">
+    <span class="vlabel">课前必做</span>
+    <h2 class="t2 reveal">下节课，动手做 Demo</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><b>装好 WorkBuddy（或豆包）</b><span>电脑或平板上装一个，别用手机凑合——下节课要动手写东西。</span></div></div>
+      <div class="step"><span class="n">2</span><div><b>登录好账号，确认能对话</b><span>发一句「你好」试一下，收到回复就算过关。</span></div></div>
+      <div class="step"><span class="n">3</span><div><b>带上你的选题和三句话</b><span>选题是什么、谁卡住了、证据是什么——下节课开场就要用。</span></div></div>
+    </div>
+    <div class="aside">装不上没关系，开课前十分钟留给大家一起装。</div>
+  </div>
+  <div class="note">布置下节课。三件事：装 WorkBuddy 或豆包（电脑或平板，下节课要写提示词、跑 Skills）、确认能对话、带上选题三句话。重点强调第一件——没装好，下节课只能干看。语气放松，装不上开课前一起弄。</div>
+</section>
+
+<!-- ============ 15 收课 ============ -->
+<section class="slide" data-theme="dark" data-act="收课" id="s15">
+  <div class="wrap door">
+    <div class="cover-meta"><span>M2 先导 · 完</span></div>
+    <h2 class="t2 reveal" style="margin-top:clamp(24px,4vh,44px)">先看清问题，<br>再动手造答案</h2>
+    <p class="lead">今天练了眼力：一句话值不值得信，一个问题是不是真的。下节课，把你的真问题带过来——我们开工。</p>
+    <div class="home">
+      <div class="r"><span class="n">01</span><div><b>一个公式</b><span>他说＿，凭的是＿，——＿，不算凭据。</span></div></div>
+      <div class="r"><span class="n">02</span><div><b>六种谬误</b><span>凑数的理由认得出，各有各的破法。</span></div></div>
+      <div class="r"><span class="n">03</span><div><b>课前一件事</b><span>装好 WorkBuddy 或豆包。</span></div></div>
+    </div>
+  </div>
+  <div class="note">收尾。一句话：先看清，再动手。提醒最后一件事——装好 WorkBuddy 或豆包，下节课开工。下课。</div>
+</section>
+
+<div class="chrome" data-theme="paper" id="chrome">
+  <div class="act"><i></i><span id="actName">开场</span></div>
+  <div class="ctrl">
+    <button type="button" id="prevBtn" aria-label="上一页">上一页</button>
+    <span class="cnt" id="cnt">01 / 15</span>
+    <button type="button" id="nextBtn" aria-label="下一页">下一页</button>
+    <button type="button" id="noteBtn" aria-pressed="false">口播 N</button>
+  </div>
+</div>
+<div id="note"><span class="nlab">口播</span><span class="nbody" id="noteBody"></span></div>
+
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var bar = document.getElementById('bar');
+  var chrome = document.getElementById('chrome');
+  var actName = document.getElementById('actName');
+  var cnt = document.getElementById('cnt');
+  var note = document.getElementById('note');
+  var noteBody = document.getElementById('noteBody');
+  var noteBtn = document.getElementById('noteBtn');
+  var cur = 0;
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+  function go(i){
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function(s, j){ s.classList.toggle('on', j === cur); });
+    var s = slides[cur];
+    bar.style.width = ((cur + 1) / slides.length * 100) + '%';
+    cnt.textContent = pad(cur + 1) + ' / ' + pad(slides.length);
+    actName.textContent = s.getAttribute('data-act') || '';
+    var theme = s.getAttribute('data-theme') || 'paper';
+    chrome.setAttribute('data-theme', theme);
+    var n = s.querySelector('.note');
+    noteBody.textContent = n ? n.textContent : '';
+    if (!n){ setNotes(false); }
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (err) {}
+    window.scrollTo(0, 0);
+  }
+
+  function setNotes(on){
+    note.classList.toggle('on', !!on);
+    noteBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(cur - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(cur + 1); });
+  noteBtn.addEventListener('click', function(){ setNotes(!note.classList.contains('on')); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Enter'){
+      if (e.key === ' ') e.preventDefault();
+      go(cur + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      go(cur - 1);
+    } else if (e.key === 'n' || e.key === 'N'){
+      setNotes(!note.classList.contains('on'));
+    } else if (e.key === 'Home'){ go(0); }
+    else if (e.key === 'End'){ go(slides.length - 1); }
+  });
+
+  var tx = null, ty = null;
+  document.addEventListener('touchstart', function(e){
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+  }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    var dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4){ go(cur + (dx < 0 ? 1 : -1)); }
+    tx = null; ty = null;
+  }, {passive: true});
+
+  /* 标本零件：点一下亮，再点一下灭 */
+  function initPlate(plate){
+    var active = {};
+    var parts = Array.prototype.slice.call(plate.querySelectorAll('.part'));
+    var labs = Array.prototype.slice.call(plate.querySelectorAll('.lab'));
+    var btns = Array.prototype.slice.call(plate.querySelectorAll('.legend button'));
+
+    function render(){
+      var any = Object.keys(active).some(function(k){ return active[k]; });
+      parts.forEach(function(g){
+        var on = !!active[g.getAttribute('data-part')];
+        g.style.opacity = (!any || on) ? '1' : '.2';
+      });
+      labs.forEach(function(g){
+        var on = !!active[g.getAttribute('data-lab')];
+        var col = on ? '#BB3A22' : '#1B4763';
+        var t = g.querySelector('text'); var p = g.querySelector('path');
+        if (t) t.setAttribute('fill', col);
+        if (p) p.setAttribute('stroke', col);
+      });
+      btns.forEach(function(b){
+        b.setAttribute('aria-pressed', active[b.getAttribute('data-key')] ? 'true' : 'false');
+      });
+    }
+
+    function toggle(k){
+      if (!k) return;
+      active[k] = !active[k];
+      render();
+    }
+
+    parts.forEach(function(g){
+      g.addEventListener('click', function(){ toggle(g.getAttribute('data-part')); });
+    });
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ toggle(b.getAttribute('data-key')); });
+    });
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-plate]')).forEach(initPlate);
+
+  /* 批注揭晓 */
+  var markRoot = document.getElementById('markRoot');
+  var revealBtn = document.getElementById('revealBtn');
+  if (markRoot && revealBtn){
+    revealBtn.addEventListener('click', function(){
+      var on = markRoot.classList.toggle('revealed');
+      revealBtn.textContent = on ? '收起批注' : '揭晓批注 · 3 处';
+    });
+  }
+
+  /* 细胞拆解开关 */
+  (function(){
+    var c=document.getElementById('cellPlate'),img=document.getElementById('cell3d'),b=document.getElementById('cellTgl');
+    if(!c||!b) return;
+    function flip(){var o=c.classList.toggle('open');b.setAttribute('aria-pressed',o?'true':'false');b.textContent=o?'合上标注':'点开标注';}
+    img.addEventListener('click',flip);
+    img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+    b.addEventListener('click',flip);
+  })();
+
+  function indexFromHash(){
+    var h = (location.hash || '').replace('#', '');
+    var m = h.match(/^s(\d+)$/);
+    if (m) return parseInt(m[1], 10) - 1;
+    var n = parseInt(h, 10);
+    return isFinite(n) ? n - 1 : 0;
+  }
+  window.addEventListener('hashchange', function(){ go(indexFromHash()); });
+  go(indexFromHash());
+})();
+
+</script>
+</body>
+</html>
