@@ -8,47 +8,94 @@
 <link rel="preconnect" href="https://miaoda.feishu.cn">
 <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap">
 <style>
-  /* ---------- M2 专用 ---------- */
+  /* ---------- M2 游戏化专用 ---------- */
   .leveltag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
   .scene{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px);max-width:680px}
   .scene .sl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
   .scene .quote{margin-top:10px}
-  .poll{margin-top:clamp(18px,2.6vh,26px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.5vw,16px);max-width:680px}
-  .pvote{border:1px solid var(--rule);background:#fff;padding:clamp(12px,1.8vw,18px) 10px;text-align:center}
+  .startbtn{margin-top:clamp(20px,3vh,32px);display:inline-block;border:1.5px solid rgba(255,255,255,.75);background:transparent;color:#fff;font:inherit;font-size:clamp(15px,1.7vw,18px);font-weight:700;letter-spacing:.12em;padding:13px 34px;cursor:pointer;transition:background .25s,color .25s}
+  .startbtn:hover{background:#fff;color:var(--ink)}
+  .poll{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.5vw,16px);max-width:720px}
+  .pvote{border:1.5px solid var(--rule);background:#fff;padding:clamp(12px,1.8vw,18px) 10px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
   .pvote b{display:block;font-size:clamp(20px,2.4vw,28px);font-weight:900;letter-spacing:.04em}
   .pvote span{display:block;margin-top:4px;font-size:clamp(11px,1.2vw,13px);color:var(--ink-3)}
-  .sent{margin-top:clamp(18px,2.6vh,28px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(16px,2.4vw,26px);max-width:980px}
+  .pvote.picked{border-color:var(--red);background:rgba(187,58,34,.07);transform:translateY(-2px)}
+  .sent{margin-top:clamp(14px,2vh,22px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2.2vw,22px);max-width:980px}
   .sent .sk{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--red);text-transform:uppercase}
-  .sent p{margin-top:12px;font-size:clamp(19px,2.6vw,32px);line-height:1.55;font-weight:700;letter-spacing:-.01em}
+  .sent p{margin-top:10px;font-size:clamp(18px,2.4vw,29px);line-height:1.5;font-weight:700;letter-spacing:-.01em}
   .sent p em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 2px}
-  .toolgrid{margin-top:clamp(18px,2.6vh,28px);display:grid;grid-template-columns:1fr;gap:clamp(12px,1.8vh,18px)}
-  .tool{border-top:2px solid var(--ink);padding-top:10px}
+  .toolgrid{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:1fr;gap:clamp(10px,1.6vh,16px)}
+  .tool{border-top:2px solid var(--ink);padding-top:9px}
   .tool .tk{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--blue)}
-  .tool h3{margin:4px 0 6px;font-size:clamp(17px,2vw,23px);font-weight:900;letter-spacing:-.01em}
-  .tool p{font-size:clamp(13px,1.45vw,16px);color:var(--ink-2);line-height:1.7}
-  @media(min-width:760px){.toolgrid{grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,32px)}}
-  .toolsum{margin-top:clamp(16px,2.2vh,24px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(12px,1.8vw,20px);font-size:clamp(15px,1.7vw,19px);font-weight:700}
+  .tool h3{margin:3px 0 4px;font-size:clamp(16px,1.9vw,22px);font-weight:900;letter-spacing:-.01em}
+  .tool p{font-size:clamp(12.5px,1.4vw,15.5px);color:var(--ink-2);line-height:1.65}
+  @media(min-width:760px){.toolgrid{grid-template-columns:1fr 1fr;gap:clamp(16px,2.6vw,28px)}}
+  .toolsum{margin-top:clamp(14px,2vh,20px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(11px,1.7vw,18px);font-size:clamp(15px,1.7vw,19px);font-weight:700}
   .toolsum em{font-style:normal;color:var(--red)}
-  .mapwrap{margin-top:clamp(12px,1.8vh,20px);border:1px solid var(--rule);background:#fff;padding:clamp(8px,1vw,14px)}
+  /* 地图 */
+  .mapwrap{position:relative;margin-top:clamp(8px,1.4vh,14px);border:1px solid var(--rule);background:#fff;padding:clamp(8px,1vw,14px)}
   .mapwrap svg{display:block;width:100%;height:auto}
-  .trail{display:flex;align-items:center;margin-bottom:clamp(12px,1.8vh,18px)}
-  .trail span{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:#fff}
+  .route{animation:dash 1.4s linear infinite}
+  @keyframes dash{to{stroke-dashoffset:-28}}
+  .mapnode{cursor:pointer;outline:none}
+  .mapnode .nd{transition:fill .25s,stroke .25s}
+  .mapnode .nt{font-weight:700;pointer-events:none;user-select:none}
+  .mapnode:hover .nd{stroke-width:3.5}
+  .mapnode.done .nd{fill:#1B4763}
+  .mapnode.done .nt{fill:#fff}
+  .mapnode.current .nd{stroke:#BB3A22;stroke-width:3}
+  .pulse{fill:none;stroke:#BB3A22;stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+  .mapnode.current .pulse{animation:pulse 1.6s ease-out infinite}
+  @keyframes pulse{0%{opacity:.7;transform:scale(.8)}70%{opacity:0;transform:scale(1.5)}100%{opacity:0}}
+  #xiaoman{transition:transform .7s cubic-bezier(.22,1,.36,1)}
+  .mapreset{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3);background:#fff;border:1px solid var(--rule);padding:5px 10px;cursor:pointer}
+  .mapreset:hover{color:var(--red);border-color:var(--red)}
+  /* 关卡 */
+  .trail{display:flex;align-items:center;margin-bottom:clamp(8px,1.4vh,14px)}
+  .trail span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .25s}
   .trail span.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
-  .trail i{flex:0 0 clamp(10px,1.6vw,22px);height:1px;background:var(--rule)}
-  .cheat{margin-top:clamp(14px,2vh,22px);border:1px solid var(--ink);background:#fff}
-  .cheat .ch{display:grid;grid-template-columns:clamp(64px,9vw,110px) 1fr;gap:clamp(10px,1.6vw,20px);padding:clamp(10px,1.4vw,16px) clamp(12px,2vw,22px);border-bottom:1px solid var(--rule)}
+  .trail span.done{background:var(--blue);border-color:var(--blue);color:#fff}
+  .trail i{flex:0 0 clamp(8px,1.4vw,18px);height:1px;background:var(--rule)}
+  .stage{display:flex;align-items:flex-start;gap:clamp(12px,1.8vw,20px);margin-bottom:clamp(10px,1.6vh,16px)}
+  .hero{flex:0 0 clamp(76px,11vw,108px);border:1.5px solid var(--blue);border-radius:50%;background:#fff;padding:8px}
+  .hero svg{display:block;width:100%;height:auto}
+  .hero .hn{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--blue);margin-top:5px}
+  .bubble{position:relative;flex:1;border:1.5px solid var(--ink);background:#fff;padding:clamp(12px,1.7vw,18px) clamp(14px,2vw,22px);font-size:clamp(14px,1.65vw,18px);line-height:1.65;font-weight:700}
+  .bubble::before{content:"";position:absolute;left:-14px;top:20px;border:7px solid transparent;border-right-color:var(--ink)}
+  .bubble small{display:block;margin-top:6px;font-weight:400;color:var(--ink-3);font-size:clamp(11px,1.25vw,13px)}
+  .quiz .q{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--red);text-transform:uppercase;margin:0 0 8px}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--rule);background:#fff;color:var(--ink);font:inherit;font-size:clamp(12.5px,1.45vw,16px);line-height:1.5;padding:clamp(9px,1.3vw,13px) clamp(12px,1.6vw,18px);margin-bottom:8px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+  .opt:hover:not(:disabled){border-color:var(--blue);background:var(--paper-3);transform:translateX(3px)}
+  .opt:disabled{cursor:default;opacity:.55}
+  .opt.right{opacity:1;border-color:var(--red);background:rgba(187,58,34,.08);font-weight:700}
+  .opt.wrong{border-color:var(--red);animation:shake .42s}
+  @keyframes shake{0,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+  .reveal{display:none}
+  .reveal.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
+  @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .rc{border-top:2px solid var(--blue);padding-top:7px}
+  .rc b{display:block;font-size:clamp(11px,1.2vw,13px);color:var(--blue);margin-bottom:3px}
+  .rc span{font-size:clamp(11.5px,1.3vw,14px);line-height:1.55;color:var(--ink-2)}
+  .rverdict{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--red);background:rgba(187,58,34,.06);padding:10px clamp(14px,2vw,20px)}
+  .rverdict b{color:var(--red);font-size:clamp(13px,1.5vw,16px)}
+  .rverdict .go{flex:0 0 auto;border:none;background:var(--ink);color:#fff;font:inherit;font-weight:700;font-size:clamp(12px,1.35vw,15px);padding:9px 20px;cursor:pointer;letter-spacing:.08em}
+  .rverdict .go:hover{background:var(--red)}
+  /* 速查卡 */
+  .cheat{margin-top:clamp(10px,1.6vh,16px);border:1px solid var(--ink);background:#fff}
+  .cheat .ch{display:grid;grid-template-columns:clamp(70px,10vw,120px) 1fr;gap:clamp(10px,1.6vw,18px);padding:clamp(8px,1.2vw,13px) clamp(12px,2vw,20px);border-bottom:1px solid var(--rule)}
   .cheat .ch:last-child{border-bottom:none}
-  .cheat .cn{font-weight:900;font-size:clamp(14px,1.6vw,18px);color:var(--blue);align-self:start;padding-top:2px}
+  .cheat .cn{font-weight:900;font-size:clamp(13px,1.5vw,17px);color:var(--blue);align-self:start;padding-top:2px}
   .cheat .cn i{display:block;font-style:normal;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-3);font-weight:400;margin-bottom:2px}
-  .cheat .cb{font-size:clamp(12px,1.35vw,15px);line-height:1.65}
+  .cheat .cb{font-size:clamp(11.5px,1.3vw,14.5px);line-height:1.6}
   .cheat .cb b{color:var(--red)}
-  .cheat .cb .cs{display:block;color:var(--ink-2);margin-top:2px}
-  .duo{margin-top:clamp(20px,3vh,30px);display:grid;grid-template-columns:1fr;gap:clamp(16px,2.4vh,22px)}
-  .duo .col{border-top:2px solid var(--ink);padding-top:12px}
-  .duo .col .hl{margin:0 0 8px;font-size:clamp(17px,1.9vw,22px);font-weight:700}
-  .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:4px;font-weight:400}
-  .duo .col p{font-size:clamp(14px,1.5vw,17px);line-height:1.75;color:var(--ink-2)}
-  @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}}
+  .cheat .cb .cs{display:block;color:var(--ink-2);margin-top:1px}
+  .duo{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:1fr;gap:clamp(14px,2vh,20px)}
+  .duo .col{border-top:2px solid var(--ink);padding-top:10px}
+  .duo .col .hl{margin:0 0 6px;font-size:clamp(16px,1.8vw,21px);font-weight:700}
+  .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:3px;font-weight:400}
+  .duo .col p{font-size:clamp(13px,1.45vw,16px);line-height:1.7;color:var(--ink-2)}
+  @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(22px,3.6vw,44px)}}
+  @media (prefers-reduced-motion: reduce){.route,.pulse{animation:none}#xiaoman,.opt,.pvote{transition:none}.reveal.show{animation:none}.opt.wrong{animation:none}}
   
   :root{
     --paper:#ECEDE6;--paper-2:#E2E4D7;--paper-3:#F5F6F0;
@@ -429,13 +476,9 @@
     <div class="cover-meta"><span>AI 通识初阶 · M2 先导</span><i></i><span>线上 1h</span><i></i><span>学会判断</span></div>
     <h1 class="t1 reveal">用逻辑学，<br>提高你对 AI 的掌控</h1>
     <p class="cover-sub">M1 你学会了用 AI 自学；M2 开始用 AI 解决真问题。可 AI 有个脾气：你问什么，它答什么——问题本身不对，它照样答得头头是道。所以动手之前，先练眼力：分清一句话值不值得信，一个问题是不是真问题。</p>
-    <div class="rail">
-      <div><b>01</b><p>M1 · 会自学<span class="gap"></span></p></div>
-      <div><b>02</b><p>M2 先导 · 会判断<span class="gap"></span></p></div>
-      <div><b>03</b><p>M2 主课 · 会解决问题<span class="gap"></span></p></div>
-    </div>
+    <button type="button" class="startbtn" data-goto="s2">进入课堂 →</button>
   </div>
-  <div class="note">欢迎回来。上一课学了用 AI 自学；今天这节课，先不上手干活，先练眼力——看穿一句话，认出一个真问题。眼力练好了，AI 在你手里才是工具；练不好，它带着你跑错方向。</div>
+  <div class="note">欢迎回来。今天这节课先不上手干活，先练眼力——看穿一句话，认出一个真问题。眼力练好了，AI 在你手里才是工具；练不好，它带着你跑错方向。点「进入课堂」开始。</div>
 </section>
 
 <!-- ============ 02 M1 回顾 ============ -->
@@ -451,7 +494,7 @@
     </div>
     <div class="toolsum">四件合起来，一件事：<em>你已经会用 AI 开展自学了。</em></div>
   </div>
-  <div class="note">快速回顾，别恋战。四件工具各提一句，找一两个孩子说说用得最顺的是哪件。落点放在最后那句：会自学了——下一步，是拿真问题去练手。而拿真问题之前，得先认得出真问题。这就引到下一页。</div>
+  <div class="note">快速回顾，别恋战。四件工具各提一句，找一两个孩子说说用得最顺的是哪件。落点放在最后那句：会自学了——下一步，是拿真问题去练手。而拿真问题之前，得先认得出真问题。</div>
 </section>
 
 <!-- ============ 03 差距演示 ============ -->
@@ -464,13 +507,13 @@
       <div class="quote">「听说小升初不用考体育了，群里都在转。」</div>
     </div>
     <div class="poll">
-      <div class="pvote"><b>真</b><span>看起来像真的</span></div>
-      <div class="pvote"><b>假</b><span>一听就可疑</span></div>
-      <div class="pvote"><b>说不好</b><span>想再看看</span></div>
+      <div class="pvote" role="button" tabindex="0"><b>真</b><span>看起来像真的</span></div>
+      <div class="pvote" role="button" tabindex="0"><b>假</b><span>一听就可疑</span></div>
+      <div class="pvote" role="button" tabindex="0"><b>说不好</b><span>想再看看</span></div>
     </div>
-    <div class="verdict">先别查资料。<b>你凭什么这么觉得？</b>——把理由说出来。</div>
+    <div class="verdict">先别查资料。<b>你凭什么这么觉得？</b>——把理由说出来，记在心里。</div>
   </div>
-  <div class="note">这页全交给学生。让他们表态：真、假、说不好，开麦说或打在评论区。关键是追问：你凭什么这么觉得？多数人的理由是「群里都在转」「感觉像真的」。把这几个理由记下来——一会儿玩完游戏回头看，这些理由本身，恰恰就是今天要拆的东西。</div>
+  <div class="note">这页全交给学生。让他们点选或开麦表态：真、假、说不好。关键是追问：你凭什么这么觉得？多数人的理由是「群里都在转」「感觉像真的」。把这几个理由记下来——玩完游戏回头看，这些理由本身，恰恰就是今天要拆的东西。</div>
 </section>
 
 <!-- ============ 04 概念 ============ -->
@@ -495,188 +538,243 @@
 <section class="slide" data-theme="paper" data-act="闯关地图" id="s5">
   <div class="wrap">
     <span class="vlabel">闯关游戏</span>
-    <h2 class="t2 reveal">小满的一天 · 六句话闯关</h2>
+    <h2 class="t2 reveal">动物王国 · 六句话闯关</h2>
     <div class="mapwrap">
-      <svg viewBox="0 0 960 500" role="img" aria-label="小满一天闯关地图：从家到学校再回家，六个节点">
-        <!-- 路径 -->
-        <path d="M 100 430 C 320 400 520 260 690 155 C 720 175 800 195 840 220 C 800 250 700 265 640 280 C 560 300 480 315 420 330 C 360 345 290 355 240 370 C 200 385 160 350 130 300 C 115 275 105 320 100 385" fill="none" stroke="#1B4763" stroke-width="2" stroke-dasharray="7 7" stroke-linecap="round"/>
-        <!-- 家 -->
+      <svg viewBox="0 0 960 500" role="img" aria-label="动物王国闯关地图：六个地点">
+        <path class="route" d="M 100 430 C 320 400 520 260 690 155 C 720 175 800 195 840 220 C 800 250 700 265 640 280 C 560 300 480 315 420 330 C 360 345 290 355 240 370 C 200 385 160 350 130 300 C 115 275 105 320 100 385" fill="none" stroke="#1B4763" stroke-width="2" stroke-dasharray="7 7" stroke-linecap="round"/>
+        <!-- 魔法书（起点） -->
         <g stroke="#1B4763" stroke-width="2" fill="none">
-          <path d="M 62 445 v -22 h 30 v 22"/>
-          <path d="M 56 423 l 21 -16 l 21 16"/>
-          <path d="M 70 445 v -12 h 8 v 12"/>
+          <path d="M 60 420 h 34 v 34 h -34 z"/>
+          <path d="M 77 420 v 34 M 66 430 h 8 M 66 438 h 8 M 80 430 h 8 M 80 438 h 8"/>
         </g>
-        <text x="77" y="470" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">家</text>
-        <!-- 学校 -->
+        <text x="77" y="472" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">旧书</text>
+        <!-- 城堡（终点） -->
         <g stroke="#1B4763" stroke-width="2" fill="none">
-          <rect x="812" y="52" width="86" height="58"/>
-          <path d="M 812 72 h 86 M 812 92 h 86"/>
-          <path d="M 838 52 v -18"/>
-          <path d="M 838 34 l 20 6 l -20 6"/>
+          <path d="M 818 110 v -26 h 10 v 12 h 10 v -12 h 10 v 26"/>
+          <rect x="814" y="110" width="88" height="40"/>
+          <path d="M 850 150 v -14 h 16 v 14"/>
         </g>
-        <text x="855" y="128" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">学校</text>
-        <!-- 小满小人（起点） -->
-        <g stroke="#1B4763" stroke-width="2" fill="none" stroke-linecap="round">
+        <text x="858" y="168" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">回家的门</text>
+        <!-- 小满 -->
+        <g id="xiaoman" stroke="#BB3A22" stroke-width="2" fill="none" stroke-linecap="round">
           <circle cx="122" cy="448" r="7"/>
           <path d="M 122 455 v 14 M 122 459 l -7 5 M 122 459 l 7 5 M 122 469 l -5 9 M 122 469 l 5 9"/>
         </g>
-        <text x="122" y="492" text-anchor="middle" font-size="11" fill="#BB3A22" font-weight="700">小满</text>
+        <text id="xiaomanlbl" x="122" y="492" text-anchor="middle" font-size="11" fill="#BB3A22" font-weight="700">小满</text>
         <!-- 节点 -->
-        <g font-size="12" font-weight="700" fill="#1B4763" text-anchor="middle">
-          <circle cx="700" cy="150" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="700" y="155">1</text>
-          <circle cx="840" cy="220" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="840" y="225">2</text>
-          <circle cx="640" cy="280" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="640" y="285">3</text>
-          <circle cx="420" cy="330" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="420" y="335">4</text>
-          <circle cx="240" cy="370" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="240" y="375">5</text>
-          <circle cx="130" cy="300" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text x="130" y="305">6</text>
+        <g class="mapnode" data-level="1" role="button" tabindex="0" aria-label="第一关 兔子谷">
+          <circle class="pulse" cx="700" cy="150" r="17"/><circle class="nd" cx="700" cy="150" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="700" y="155" text-anchor="middle" font-size="13" fill="#1B4763">1</text>
         </g>
-        <!-- 节点标签 -->
+        <g class="mapnode" data-level="2" role="button" tabindex="0" aria-label="第二关 狮子崖">
+          <circle class="pulse" cx="840" cy="220" r="17"/><circle class="nd" cx="840" cy="220" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="840" y="225" text-anchor="middle" font-size="13" fill="#1B4763">2</text>
+        </g>
+        <g class="mapnode" data-level="3" role="button" tabindex="0" aria-label="第三关 狐狸坡">
+          <circle class="pulse" cx="640" cy="280" r="17"/><circle class="nd" cx="640" cy="280" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="640" y="285" text-anchor="middle" font-size="13" fill="#1B4763">3</text>
+        </g>
+        <g class="mapnode" data-level="4" role="button" tabindex="0" aria-label="第四关 乌龟潭">
+          <circle class="pulse" cx="420" cy="330" r="17"/><circle class="nd" cx="420" cy="330" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="420" y="335" text-anchor="middle" font-size="13" fill="#1B4763">4</text>
+        </g>
+        <g class="mapnode" data-level="5" role="button" tabindex="0" aria-label="第五关 公鸡岭">
+          <circle class="pulse" cx="240" cy="370" r="17"/><circle class="nd" cx="240" cy="370" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="240" y="375" text-anchor="middle" font-size="13" fill="#1B4763">5</text>
+        </g>
+        <g class="mapnode" data-level="6" role="button" tabindex="0" aria-label="第六关 老虎洞">
+          <circle class="pulse" cx="130" cy="300" r="17"/><circle class="nd" cx="130" cy="300" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="130" y="305" text-anchor="middle" font-size="13" fill="#1B4763">6</text>
+        </g>
         <g font-size="11.5" fill="#4C524D" text-anchor="middle">
-          <text x="700" y="122">早读 · 教室</text>
-          <text x="840" y="252">课间 · 走廊</text>
-          <text x="640" y="312">午休 · 食堂</text>
-          <text x="420" y="362">放学 · 公交</text>
-          <text x="240" y="402">晚上 · 客厅</text>
-          <text x="130" y="272">睡前 · 床上</text>
+          <text x="700" y="122">兔子谷</text>
+          <text x="840" y="252">狮子崖</text>
+          <text x="640" y="312">狐狸坡</text>
+          <text x="420" y="362">乌龟潭</text>
+          <text x="240" y="402">公鸡岭</text>
+          <text x="130" y="272">老虎洞</text>
         </g>
       </svg>
+      <button type="button" class="mapreset" id="mapReset">重置进度</button>
     </div>
-    <div class="aside">小满从家到学校、再回家，一天里碰上六句话。每句话听起来都挺有道理——你的任务：指出毛病在哪，并用句式说一遍。</div>
+    <div class="aside">小满翻开一本旧书，掉进了动物王国。六个地点，六个动物，每句话听起来都挺有道理——点节点进关，找出毛病、选对答案，门才会一扇扇打开。</div>
   </div>
-  <div class="note">介绍游戏规则。小满的一天，六个场景，六句话。老师点节点，翻页即到。规则说清楚：不是猜对错，是找毛病——指出毛病在哪，再用「他说＿，凭的是＿——＿，不算凭据」完整说一遍，这一关才算过。从节点 1 开始。</div>
+  <div class="note">介绍规则：地图上六个节点，点开即进关。每关先听动物说话，全班讨论，再选「毛病出在哪」。选错会被弹回来，选对才揭晓分析、点亮节点。节点可以随便点，方便老师跳关；左下角能重置进度。</div>
 </section>
 
-<!-- ============ 06 闯关01 凭人多 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·01" id="s6">
+<!-- ============ 06 闯关01 兔子谷 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·01" data-level="1" id="s6">
   <div class="wrap">
-    <span class="vlabel">闯关 01</span>
+    <span class="vlabel">闯关 01 · 兔子谷</span>
     <div class="trail"><span class="on">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
-    <h2 class="t2 reveal">早读 · 教室</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满听见</b><p>同桌凑过来：「下周一要月考，隔壁班都传疯了，你还不复习？」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>同桌凭什么</b><p>「隔壁班都在传」。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>传的人再多，也变不成真的。</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 20 C 20 8 24 4 28 10 C 30 14 30 18 30 20"/><path d="M40 20 C 44 8 40 4 36 10 C 34 14 34 18 34 20"/>
+          <circle cx="32" cy="38" r="17"/><circle cx="26" cy="36" r="1.8" fill="#1B4763"/><circle cx="38" cy="36" r="1.8" fill="#1B4763"/><path d="M29 43 q3 3 6 0"/>
+        </svg>
+        <div class="hn">兔子</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「隔壁班都传疯了」</div>
-        <div class="aside">谁来用句式说一遍？</div>
-        <div class="verdict">大家都传，<b>不算凭据</b>。</div>
-      </div>
+      <div class="bubble">「不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！」<small>—— 兔子谷里，兔子们成群结队往山上跑</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">跑的兔子再多，也变不成「天要塌」的证据</button>
+      <button type="button" class="opt">兔子胆子小，所以它说的话全是错的</button>
+      <button type="button" class="opt">山那么高，跑上去也躲不住</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>天要塌了。</span></div>
+      <div class="rc"><b>它凭什么</b><span>大家都在往山上跑。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>多少只兔子在跑，跟天塌不塌，是两码事。</span></div>
+      <div class="rverdict"><b>大家都跑，不算凭据。<br>句式：他说天要塌了，凭的是大家都在跑——大家都跑，不算凭据。</b><button type="button" class="go" data-goto="s7">下一关 →</button></div>
     </div>
   </div>
-  <div class="note">第一关最简单，热身。先让孩子讨论：你信不信？为什么？多半又有人说「大家都这么说」。cue 一位同学用句式说完整：「他说下周一要月考，凭的是隔壁班都在传——大家都在传，不算凭据。」补一句：假消息传一百遍也变不成真的。</div>
+  <div class="note">第一关热身。先讨论：你跟着跑吗？为什么？让孩子选。错误选项正好引出两个常见误区——不能因为兔子胆小就说它全错（那是攻击说话的人），也别被无关细节带跑。选对后带全班读一遍句式。</div>
 </section>
 
-<!-- ============ 07 闯关02 凭身份 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·02" id="s7">
+<!-- ============ 07 闯关02 狮子崖 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·02" data-level="2" id="s7">
   <div class="wrap">
-    <span class="vlabel">闯关 02</span>
+    <span class="vlabel">闯关 02 · 狮子崖</span>
     <div class="trail"><span>01</span><i></i><span class="on">02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
-    <h2 class="t2 reveal">课间 · 走廊</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满看见</b><p>走廊海报栏贴着学习机广告：「清北学霸都在用，成绩自然往上走。」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>广告凭什么</b><p>「清北学霸」这个名头。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>名头再响，也没回答：你用了，到底有没有用？</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="32" cy="34" r="20" stroke-dasharray="3 4"/><circle cx="32" cy="34" r="12"/><circle cx="28" cy="32" r="1.6" fill="#1B4763"/><circle cx="36" cy="32" r="1.6" fill="#1B4763"/><path d="M29 38 q3 2.5 6 0"/>
+        </svg>
+        <div class="hn">狮王</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「清北学霸都在用」</div>
-        <div class="aside">谁来用句式说一遍？</div>
-        <div class="verdict">名头响，<b>不算凭据</b>。</div>
-      </div>
+      <div class="bubble">「我是百兽之王。这株草药我说它能治病，它就一定能治病。」<small>—— 狮子崖上，狮王举着一株草药</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">百兽之王的名头，证明不了草药灵不灵</button>
+      <button type="button" class="opt">它是国王，国王说的话大家都得听</button>
+      <button type="button" class="opt">能治病的草药，味道一定很苦</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>这株草药能治病。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我是百兽之王。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>名头是名头，药效是药效，两码事。</span></div>
+      <div class="rverdict"><b>名头响，不算凭据。<br>句式：他说草药灵，凭的是自己是百兽之王——名头响，不算凭据。</b><button type="button" class="go" data-goto="s8">下一关 →</button></div>
     </div>
   </div>
-  <div class="note">第二关，凭身份。先讨论：学霸真在用，能说明这机器好吗？可以点一下：也许它真有用——但「学霸在用」四个字本身说明不了任何事。要证明有用，得拿出「用了之后成绩真的上去了」的证据。广告最爱借名头，见一次问一次。</div>
+  <div class="note">第二关，凭身份。可以点一下：也许草药真灵——但「我是国王」四个字证明不了。要证明灵，得有谁吃了、病好了的证据。广告里的「专家推荐」「学霸同款」，和狮王是一个毛病。</div>
 </section>
 
-<!-- ============ 08 闯关03 凭个例 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·03" id="s8">
+<!-- ============ 08 闯关03 狐狸坡 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·03" data-level="3" id="s8">
   <div class="wrap">
-    <span class="vlabel">闯关 03</span>
+    <span class="vlabel">闯关 03 · 狐狸坡</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span class="on">03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
-    <h2 class="t2 reveal">午休 · 食堂</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满听到</b><p>排队的同学说：「我表姐用这个刷题法，三个月提了 40 分，你也试试！」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>同学凭什么</b><p>表姐一个人的经历。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>她一个人的事，证明不了放你身上也灵。</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 16 L24 30 L16 26 Z"/><path d="M44 16 L40 30 L48 26 Z"/><path d="M20 22 C 18 40 24 50 32 50 C 40 50 46 40 44 22 C 40 16 24 16 20 22 Z"/><circle cx="28" cy="32" r="1.7" fill="#1B4763"/><circle cx="36" cy="32" r="1.7" fill="#1B4763"/><path d="M32 38 v 5 M32 43 l -4 3 M32 43 l 4 3"/>
+        </svg>
+        <div class="hn">狐狸</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「我表姐提了 40 分」</div>
-        <div class="aside">谁来用句式说一遍？</div>
-        <div class="verdict">一个例子，<b>不算凭据</b>。</div>
-      </div>
+      <div class="bubble">「大灰狼就在山后面！再不躲起来，咱们全完了！」<small>—— 狐狸坡上，狐狸扯着嗓子喊</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">越吓人，越要问一句：狼在哪？证据呢？</button>
+      <button type="button" class="opt">狐狸最狡猾，它的话一句都不能信</button>
+      <button type="button" class="opt">跑得越快，就越安全</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>大灰狼来了，不躲就全完了。</span></div>
+      <div class="rc"><b>它凭什么</b><span>什么都没凭，就靠吓人。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>害怕会让人来不及多想，但害怕不是证据。</span></div>
+      <div class="rverdict"><b>吓人，不算凭据。<br>句式：他说狼来了，凭的是把大家吓住——吓人，不算凭据。</b><button type="button" class="go" data-goto="s9">下一关 →</button></div>
     </div>
   </div>
-  <div class="note">第三关，凭个例。这关好讨论：表姐提分可能是真的！但注意，从「她行」跳到「你也行」，中间差着一截。追问：如果一百个人用了，只有三个人提分呢？一个人的故事，只能说它发生过，说不了它是规律。</div>
+  <div class="note">第三关，凭情绪。讨论：为什么吓人的话特别容易信？因为它让你慌。给一条铁律：谁越让你慌，你越要停下来问证据呢。注意错误选项——不能因为狐狸平时狡猾就判定它这句必假，那又是因人废言。</div>
 </section>
 
-<!-- ============ 09 闯关04 凭情绪 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·04" id="s9">
+<!-- ============ 09 闯关04 乌龟潭 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·04" data-level="4" id="s9">
   <div class="wrap">
-    <span class="vlabel">闯关 04</span>
+    <span class="vlabel">闯关 04 · 乌龟潭</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span class="on">04</span><i></i><span>05</span><i></i><span>06</span></div>
-    <h2 class="t2 reveal">放学 · 公交</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满刷到</b><p>公众号文章弹出来：「小升初再不规划，你的孩子就真的废了！」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>它凭什么</b><p>什么都没凭，就靠吓人。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>越吓人，越要停下来问一句：证据呢？</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 38 C 14 24 24 18 34 20 C 46 22 50 32 46 40 Z"/><path d="M26 22 v 16 M36 21 v 18 M20 30 h 26"/><circle cx="50" cy="34" r="5"/><circle cx="51.5" cy="33" r="1" fill="#1B4763"/><path d="M16 42 l -3 6 M26 42 v 7 M38 42 v 7 M46 42 l 3 6"/>
+        </svg>
+        <div class="hn">乌龟</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「不规划，孩子就废了」</div>
-        <div class="aside">谁来用句式说一遍？</div>
-        <div class="verdict">吓人，<b>不算凭据</b>。</div>
-      </div>
+      <div class="bubble">「我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。」<small>—— 乌龟潭边，老乌龟捧着一把浆果</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">它爷爷一个人的事，证明不了谁吃都灵</button>
+      <button type="button" class="opt">乌龟本来就长寿，所以它在撒谎</button>
+      <button type="button" class="opt">浆果是红色的，红色食物都养生</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>谁天天吃，都能长命百岁。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我爷爷吃了，活了一百岁。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>一个人的故事，只能说发生过，说不了是规律。</span></div>
+      <div class="rverdict"><b>一个例子，不算凭据。<br>句式：他说谁吃都长寿，凭的是他爷爷活了一百岁——一个例子，不算凭据。</b><button type="button" class="go" data-goto="s10">下一关 →</button></div>
     </div>
   </div>
-  <div class="note">第四关，凭情绪。营销号最会吓人，家长群重灾区。讨论点：为什么吓人的话特别容易信？因为它让你来不及多想。给孩子一条铁律：谁越让你慌，你越要停下来问一句——证据呢？</div>
+  <div class="note">第四关，凭个例。乌龟爷爷活到一百岁可能是真的！但从「它爷爷行」跳到「谁都行」，中间差一截。追问：如果一百只动物吃了，只有三只长寿呢？生活里「我邻居用了特管用」也是这个毛病。</div>
 </section>
 
-<!-- ============ 10 闯关05 先后当因果 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·05" id="s10">
+<!-- ============ 10 闯关05 公鸡岭 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·05" data-level="5" id="s10">
   <div class="wrap">
-    <span class="vlabel">闯关 05</span>
+    <span class="vlabel">闯关 05 · 公鸡岭</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span class="on">05</span><i></i><span>06</span></div>
-    <h2 class="t2 reveal">晚上 · 客厅</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满听到</b><p>妈妈说：「你看，就是因为昨天打游戏，今天才考砸的。」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>妈妈凭什么</b><p>打游戏在前，考砸在后。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>先发生的事，不一定就是原因。昨天没打游戏，今天可能照样考砸。</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 18 l 4 -8 4 6 4 -6 3 8 Z" fill="#BB3A22" stroke="#BB3A22"/><circle cx="34" cy="32" r="15"/><path d="M47 30 l 8 -2 l -7 7 Z"/><circle cx="38" cy="30" r="1.7" fill="#1B4763"/><path d="M28 40 q 4 -4 8 0"/><path d="M26 47 l -3 8 M38 47 l 3 8"/>
+        </svg>
+        <div class="hn">公鸡</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「打游戏在前，考砸在后」</div>
-        <div class="aside">这一关有反转——先别急着顶嘴</div>
-        <div class="verdict">先后，<b>不等于因果</b>。</div>
-      </div>
+      <div class="bubble">「看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！」<small>—— 公鸡岭上，公鸡挺着胸脯</small></div>
     </div>
-    <div class="aside">停一下：妈妈这句话，道理上站不住；可她真正在说的，是「我担心你」。这一关过了，但话别急着说出口。</div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">打鸣在前、日出在后，不等于太阳是它叫出来的</button>
+      <button type="button" class="opt">公鸡起得早，它说的话肯定有道理</button>
+      <button type="button" class="opt">它叫得太小声，太阳听不见</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>太阳是我叫出来的。</span></div>
+      <div class="rc"><b>它凭什么</b><span>每次我先打鸣，太阳后出来。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>挨着发生的两件事，不一定有因果关系。</span></div>
+      <div class="rverdict"><b>先后，不等于因果。<br>句式：他说太阳是它叫出来的，凭的是打鸣在前——先后，不等于因果。</b><button type="button" class="go" data-goto="s11">下一关 →</button></div>
+    </div>
   </div>
-  <div class="note">第五关，最难也最有味道。先讲道理：先发生不等于原因，考砸可能是因为题难、没睡够、知识点本来就没掌握。但这里踩一脚刹车：妈妈不是来跟你讲逻辑的，她在担心你。所以这一关的通关答案有两个——道理上，先后不等于因果；做法上，听懂她，别当场驳倒她。</div>
+  <div class="note">第五关，经典中的经典。打鸣和日出天天挨着发生，可把公鸡关起来太阳照样升起。生活版：「我戴了幸运笔考好了」「喝完姜汤感冒好了」——先发生的不一定是原因。这关讨论可以多给两分钟。</div>
 </section>
 
-<!-- ============ 11 闯关06 偷换概念 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关·06" id="s11">
+<!-- ============ 11 闯关06 老虎洞 ============ -->
+<section class="slide level" data-theme="paper" data-act="闯关·06" data-level="6" id="s11">
   <div class="wrap">
-    <span class="vlabel">闯关 06</span>
+    <span class="vlabel">闯关 06 · 老虎洞</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span class="on">06</span></div>
-    <h2 class="t2 reveal">睡前 · 床上</h2>
-    <div class="case">
-      <div class="steps">
-        <div class="step"><span class="sn">1</span><div><b>小满看到</b><p>新闻推送的标题：「专家称：刷题根本没用！」</p></div></div>
-        <div class="step"><span class="sn">2</span><div><b>点进去一看</b><p>专家原话是「刷题不能代替理解」。</p></div></div>
-        <div class="step"><span class="sn">3</span><div><b>毛病在哪</b><p>原话被换成了另一个意思。</p></div></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 18 l -4 -8 10 4 Z M44 18 l 4 -8 -10 4 Z"/><circle cx="32" cy="36" r="17"/><path d="M25 30 h 5 M34 30 h 5"/><path d="M27 30 v 8 h 10 v -8 M32 30 v 8"/><circle cx="27" cy="38" r="1.5" fill="#1B4763"/><circle cx="37" cy="38" r="1.5" fill="#1B4763"/><path d="M28 44 q4 3 8 0"/>
+        </svg>
+        <div class="hn">狐狸与老虎</div>
       </div>
-      <div class="case-side">
-        <div class="quote">「没用」≠「不能代替理解」</div>
-        <div class="aside">谁来用句式说一遍？</div>
-        <div class="verdict">他驳的，<b>不是你说的那句</b>。</div>
-      </div>
+      <div class="bubble">狐狸走在老虎前面，小动物们吓得四散奔逃。狐狸回头对老虎说：「瞧见没？它们都怕我，才跑的。」<small>—— 老虎洞前，狐假虎威</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">动物们怕的是老虎，狐狸把意思换成了「怕它」</button>
+      <button type="button" class="opt">狐狸跑得比老虎快，所以动物们怕它</button>
+      <button type="button" class="opt">小动物们的胆子太小了</button>
+    </div>
+    <div class="reveal">
+      <div class="rc"><b>它说了什么</b><span>动物们是怕我才跑的。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我一走过去，它们就四散奔逃。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>它们怕的明明是身后的老虎——话被偷换了。</span></div>
+      <div class="rverdict"><b>他说的，不是那回事。<br>句式：他说动物们怕它，凭的是动物们奔逃——它们怕的是老虎，不是狐狸。</b><button type="button" class="go" data-goto="s12">通关 · 看速查卡 →</button></div>
     </div>
   </div>
-  <div class="note">第六关，偷换概念，最隐蔽。标题把一句温和的话换成一句刺激的话，「不能代替理解」变成「根本没用」。识别办法就一条：点进去，看他说的到底是不是原来那句话。话题被人换了，你就别跟着跑。通关，回地图收全六关。</div>
+  <div class="note">最后一关，偷换概念，用孩子们熟悉的狐假虎威。狐狸没撒谎说动物没跑——跑是真的，但「为什么跑」被它换了意思。识别办法：盯住原来的词，看它有没有被悄悄换掉。六关全通，进速查卡截屏。</div>
 </section>
 
 <!-- ============ 12 谬误大全 ============ -->
@@ -685,19 +783,19 @@
     <span class="vlabel">谬误大全</span>
     <h2 class="t2 reveal">逻辑谬误速查卡</h2>
     <div class="cheat">
-      <div class="ch"><div class="cn"><i>01</i>凭人多</div><div class="cb"><b>大家都传，不算凭据。</b><span class="cs">造句：他说下周一要月考，凭的是隔壁班都在传——大家都在传，不算凭据。</span></div></div>
-      <div class="ch"><div class="cn"><i>02</i>凭身份</div><div class="cb"><b>名头响，不算凭据。</b><span class="cs">造句：他说学习机管用，凭的是清北学霸都在用——名头响，不算凭据。</span></div></div>
-      <div class="ch"><div class="cn"><i>03</i>凭个例</div><div class="cb"><b>一个例子，不算凭据。</b><span class="cs">造句：他说刷题法管用，凭的是他表姐提了 40 分——一个人的事，不算凭据。</span></div></div>
-      <div class="ch"><div class="cn"><i>04</i>凭情绪</div><div class="cb"><b>吓人，不算凭据。</b><span class="cs">造句：他说不规划孩子就废了，凭的是把孩子吓住——吓人，不算凭据。</span></div></div>
-      <div class="ch"><div class="cn"><i>05</i>先后当因果</div><div class="cb"><b>先后，不等于因果。</b><span class="cs">造句：他说考砸怪打游戏，凭的是游戏在前——先后，不等于因果。</span></div></div>
-      <div class="ch"><div class="cn"><i>06</i>偷换概念</div><div class="cb"><b>他驳的，不是你说的那句。</b><span class="cs">造句：他说专家骂刷题没用，凭的是换过的标题——换了话，不算原话。</span></div></div>
+      <div class="ch"><div class="cn"><i>01</i>凭人多</div><div class="cb"><b>大家都跑，不算凭据。</b><span class="cs">造句：他说天要塌了，凭的是大家都在跑——大家都跑，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>02</i>凭身份</div><div class="cb"><b>名头响，不算凭据。</b><span class="cs">造句：他说草药灵，凭的是自己是百兽之王——名头响，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>03</i>凭情绪</div><div class="cb"><b>吓人，不算凭据。</b><span class="cs">造句：他说狼来了，凭的是把大家吓住——吓人，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>04</i>凭个例</div><div class="cb"><b>一个例子，不算凭据。</b><span class="cs">造句：他说谁吃都长寿，凭的是他爷爷活了一百岁——一个例子，不算凭据。</span></div></div>
+      <div class="ch"><div class="cn"><i>05</i>先后当因果</div><div class="cb"><b>先后，不等于因果。</b><span class="cs">造句：他说太阳是它叫出来的，凭的是打鸣在前——先后，不等于因果。</span></div></div>
+      <div class="ch"><div class="cn"><i>06</i>偷换概念</div><div class="cb"><b>他说的，不是那回事。</b><span class="cs">造句：他说动物们怕它，凭的是动物们奔逃——它们怕的是老虎，不是狐狸。</span></div></div>
     </div>
     <div class="sent">
       <span class="sk">一个公式，六种用法 · 建议截屏保存</span>
       <p>他说<em>＿</em>，凭的是<em>＿</em>，——<em>＿</em>，不算凭据。</p>
     </div>
   </div>
-  <div class="note">收全六关，压成一张卡。每种谬误一行：名字、点破的话、一个造句示范。让孩子现在就截屏存进相册——这就是今天这节课的「装备」。提醒：不用背名词，背这一句话就够。C 计划式的收法：知识落在生活里，不在名词上。</div>
+  <div class="note">收全六关，压成一张卡。每种谬误一行：名字、点破的话、动物王国版造句。让孩子现在截屏存进相册。提醒：不用背名词，把这一句话带走就够。再点一句：群里的传言、广告里的话，毛病和动物们一模一样。</div>
 </section>
 
 <!-- ============ 13 选题检验 ============ -->
@@ -721,7 +819,7 @@
       </div>
     </div>
   </div>
-  <div class="note">现场环节。请两三个孩子报 M1 选题，全班一起过三道检验：谁卡住了、证据呢、不解决疼吗。结论只有两种：三道全过是真问题，下节课开工；卡在某道就现场分析——别轻易换题，把那一道补齐。这页是背景板，主角是讨论。</div>
+  <div class="note">现场环节。请两三个孩子报 M1 选题，全班一起过三道检验。结论只有两种：三道全过是真问题，下节课开工；卡在某道就现场分析，别轻易换题，把那一道补齐。这页是背景板，主角是讨论。</div>
 </section>
 
 <!-- ============ 14 下节课 ============ -->
@@ -747,7 +845,7 @@
     <p class="lead">今天练了眼力：一句话值不值得信，一个问题是不是真的。下节课，把你的真问题带过来——我们开工。</p>
     <div class="home">
       <div class="r"><span class="n">01</span><div><b>一个公式</b><span>他说＿，凭的是＿，——＿，不算凭据。</span></div></div>
-      <div class="r"><span class="n">02</span><div><b>六种谬误</b><span>凑数的理由认得出，各有各的破法。</span></div></div>
+      <div class="r"><span class="n">02</span><div><b>六种谬误</b><span>动物王国里认得出，生活里也认得出。</span></div></div>
       <div class="r"><span class="n">03</span><div><b>课前一件事</b><span>装好 WorkBuddy 或豆包。</span></div></div>
     </div>
   </div>
@@ -902,6 +1000,90 @@
   go(indexFromHash());
 })();
 
+</script>
+<script>
+(function(){
+  var KEY = 'm2logic-animal-v1';
+  var N = 6;
+  var POS = [[700,150],[840,220],[640,280],[420,330],[240,370],[130,300]];
+  var END = [836,78];
+  var cleared = [];
+  try { cleared = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+  while (cleared.length < N) cleared.push(false);
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(cleared)); } catch (e) {} }
+  function firstOpen(){ for (var i=0;i<N;i++){ if(!cleared[i]) return i; } return N-1; }
+
+  var xm = document.getElementById('xiaoman');
+  var xml = document.getElementById('xiaomanlbl');
+
+  function render(){
+    var cur = firstOpen();
+    var allDone = cleared.every(Boolean);
+    document.querySelectorAll('.mapnode').forEach(function(g){
+      var lv = +g.dataset.level - 1;
+      g.classList.toggle('done', !!cleared[lv]);
+      g.classList.toggle('current', !allDone && lv === cur);
+      var t = g.querySelector('.nt');
+      t.textContent = cleared[lv] ? '✓' : String(lv+1);
+    });
+    document.querySelectorAll('.level').forEach(function(sec){
+      var lv = +sec.dataset.level - 1;
+      var spans = sec.querySelectorAll('.trail span');
+      spans.forEach(function(sp, j){
+        sp.classList.toggle('done', !!cleared[j]);
+      });
+      var box = sec.querySelector('.reveal');
+      if (cleared[lv]){
+        box.classList.add('show');
+        sec.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; if(b.dataset.correct) b.classList.add('right'); });
+      }
+    });
+    if (xm){
+      var p = allDone ? END : POS[cur];
+      xm.setAttribute('transform', 'translate(' + (p[0]-122) + ',' + (p[1]-455) + ')');
+      if (xml) xml.setAttribute('x', p[0]);
+      if (allDone && xml) xml.textContent = '到家';
+    }
+  }
+
+  document.querySelectorAll('.level').forEach(function(sec){
+    var lv = +sec.dataset.level - 1;
+    sec.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (cleared[lv]) return;
+        if (btn.dataset.correct){
+          cleared[lv] = true; save(); render();
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(function(){ btn.classList.remove('wrong'); }, 480);
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll('.mapnode').forEach(function(g){
+    function jump(){ location.hash = '#s' + (5 + (+g.dataset.level)); }
+    g.addEventListener('click', jump);
+    g.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); jump(); } });
+  });
+
+  var rst = document.getElementById('mapReset');
+  if (rst) rst.addEventListener('click', function(){
+    cleared = [false,false,false,false,false,false]; save(); render();
+  });
+
+  document.querySelectorAll('.pvote').forEach(function(v){
+    function pick(){ v.classList.toggle('picked'); }
+    v.addEventListener('click', pick);
+    v.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); pick(); } });
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){ location.hash = '#' + b.dataset.goto; });
+  });
+
+  render();
+})();
 </script>
 </body>
 </html>
