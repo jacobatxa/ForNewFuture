@@ -13,6 +13,7 @@
   .scene{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px);max-width:680px}
   .scene .sl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
   .scene .quote{margin-top:10px}
+  #s1 .t1{font-size:clamp(40px,8.2vw,122px)}
   .startbtn{margin-top:clamp(20px,3vh,32px);display:inline-block;border:1.5px solid rgba(255,255,255,.75);background:transparent;color:#fff;font:inherit;font-size:clamp(15px,1.7vw,18px);font-weight:700;letter-spacing:.12em;padding:13px 34px;cursor:pointer;transition:background .25s,color .25s}
   .startbtn:hover{background:#fff;color:var(--ink)}
   .poll{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.5vw,16px);max-width:720px}
@@ -70,8 +71,8 @@
   .opt.right{opacity:1;border-color:var(--red);background:rgba(187,58,34,.08);font-weight:700}
   .opt.wrong{border-color:var(--red);animation:shake .42s}
   @keyframes shake{0,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
-  .reveal{display:none}
-  .reveal.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
+  .unbox{display:none}
+  .unbox.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
   @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   .rc{border-top:2px solid var(--blue);padding-top:7px}
   .rc b{display:block;font-size:clamp(11px,1.2vw,13px);color:var(--blue);margin-bottom:3px}
@@ -95,7 +96,7 @@
   .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:3px;font-weight:400}
   .duo .col p{font-size:clamp(13px,1.45vw,16px);line-height:1.7;color:var(--ink-2)}
   @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(22px,3.6vw,44px)}}
-  @media (prefers-reduced-motion: reduce){.route,.pulse{animation:none}#xiaoman,.opt,.pvote{transition:none}.reveal.show{animation:none}.opt.wrong{animation:none}}
+  @media (prefers-reduced-motion: reduce){.route,.pulse{animation:none}#xiaoman,.opt,.pvote{transition:none}.unbox.show{animation:none}.opt.wrong{animation:none}}
   
   :root{
     --paper:#ECEDE6;--paper-2:#E2E4D7;--paper-3:#F5F6F0;
@@ -617,7 +618,7 @@
       <button type="button" class="opt">兔子胆子小，所以它说的话全是错的</button>
       <button type="button" class="opt">山那么高，跑上去也躲不住</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>天要塌了。</span></div>
       <div class="rc"><b>它凭什么</b><span>大家都在往山上跑。</span></div>
       <div class="rc"><b>毛病在哪</b><span>多少只兔子在跑，跟天塌不塌，是两码事。</span></div>
@@ -647,7 +648,7 @@
       <button type="button" class="opt">它是国王，国王说的话大家都得听</button>
       <button type="button" class="opt">能治病的草药，味道一定很苦</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>这株草药能治病。</span></div>
       <div class="rc"><b>它凭什么</b><span>我是百兽之王。</span></div>
       <div class="rc"><b>毛病在哪</b><span>名头是名头，药效是药效，两码事。</span></div>
@@ -677,7 +678,7 @@
       <button type="button" class="opt">狐狸最狡猾，它的话一句都不能信</button>
       <button type="button" class="opt">跑得越快，就越安全</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>大灰狼来了，不躲就全完了。</span></div>
       <div class="rc"><b>它凭什么</b><span>什么都没凭，就靠吓人。</span></div>
       <div class="rc"><b>毛病在哪</b><span>害怕会让人来不及多想，但害怕不是证据。</span></div>
@@ -707,7 +708,7 @@
       <button type="button" class="opt">乌龟本来就长寿，所以它在撒谎</button>
       <button type="button" class="opt">浆果是红色的，红色食物都养生</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>谁天天吃，都能长命百岁。</span></div>
       <div class="rc"><b>它凭什么</b><span>我爷爷吃了，活了一百岁。</span></div>
       <div class="rc"><b>毛病在哪</b><span>一个人的故事，只能说发生过，说不了是规律。</span></div>
@@ -737,7 +738,7 @@
       <button type="button" class="opt">公鸡起得早，它说的话肯定有道理</button>
       <button type="button" class="opt">它叫得太小声，太阳听不见</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>太阳是我叫出来的。</span></div>
       <div class="rc"><b>它凭什么</b><span>每次我先打鸣，太阳后出来。</span></div>
       <div class="rc"><b>毛病在哪</b><span>挨着发生的两件事，不一定有因果关系。</span></div>
@@ -767,7 +768,7 @@
       <button type="button" class="opt">狐狸跑得比老虎快，所以动物们怕它</button>
       <button type="button" class="opt">小动物们的胆子太小了</button>
     </div>
-    <div class="reveal">
+    <div class="unbox">
       <div class="rc"><b>它说了什么</b><span>动物们是怕我才跑的。</span></div>
       <div class="rc"><b>它凭什么</b><span>我一走过去，它们就四散奔逃。</span></div>
       <div class="rc"><b>毛病在哪</b><span>它们怕的明明是身后的老虎——话被偷换了。</span></div>
@@ -1032,7 +1033,7 @@
       spans.forEach(function(sp, j){
         sp.classList.toggle('done', !!cleared[j]);
       });
-      var box = sec.querySelector('.reveal');
+      var box = sec.querySelector('.unbox');
       if (cleared[lv]){
         box.classList.add('show');
         sec.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; if(b.dataset.correct) b.classList.add('right'); });
