@@ -111,6 +111,16 @@
   .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:3px;font-weight:400}
   .duo .col p{font-size:clamp(13px,1.45vw,16px);line-height:1.7;color:var(--ink-2)}
   @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(22px,3.6vw,44px)}}
+  /* 选题样例墙 / 选题门诊 */
+  .pickgrid{margin-top:clamp(14px,2.2vh,22px);display:grid;grid-template-columns:1fr;gap:clamp(10px,1.6vh,16px)}
+  .pick{border-top:2px solid var(--ink);padding-top:8px}
+  .pick .pk{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .pick b{display:block;margin:2px 0 3px;font-size:clamp(14px,1.6vw,19px);font-weight:900;letter-spacing:-.01em}
+  .pick p{font-size:clamp(11.5px,1.3vw,14.5px);line-height:1.6;color:var(--ink-2)}
+  .pick p em{font-style:normal;color:var(--red)}
+  .pick.bad{border-top-color:var(--rule)}
+  .pick.bad b{color:var(--ink-3);text-decoration:line-through solid rgba(187,58,34,.55) 2px}
+  @media(min-width:760px){.pickgrid{grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,1.8vw,26px)}}
   @media (prefers-reduced-motion: reduce){.route,.pulse{animation:none}#xiaoman,.opt,.pvote{transition:none}.unbox.show{animation:none}.opt.wrong{animation:none}}
   
   :root{
@@ -860,7 +870,40 @@
       </div>
     </div>
   </div>
-  <div class="note">现场环节。请两三个孩子报 M1 选题，全班一起过三道检验。先带一遍上面的正反例——「疼吗」问的是真有人吃亏，不是身上的疼。结论放宽：三道全过是真问题，直接开工；过两道、剩一道说得出怎么补的，也算——换题的成本比补题高得多。这页是背景板，主角是讨论。</div>
+  <div class="note">现场环节。请两三个孩子报 M1 选题，全班一起过三道检验。先带一遍上面的正反例——「疼吗」问的是真有人吃亏，不是身上的疼。结论放宽：三道全过是真问题，直接开工；过两道、剩一道说得出怎么补的，也算——换题的成本比补题高得多。孩子报得空泛时，翻下一页样例墙对照「证据长什么样」；卡住的孩子看再下一页门诊。这页是背景板，主角是讨论。</div>
+</section>
+
+<!-- ============ 13b 选题样例墙 ============ -->
+<section class="slide" data-theme="paper" data-act="选题样例" id="s13b">
+  <div class="wrap">
+    <span class="vlabel">选题样例</span>
+    <h2 class="t2 reveal">别人怎么过三关</h2>
+    <div class="pickgrid">
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>背单词总忘</b><p>听写 20 次错 13 次，重默到很晚。<em>AI：挑出老错的词，每天出 10 题闯关。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>作业磨蹭到 10 点</b><p>记了一周时间账：7 点坐下，8 点还没动笔。<em>AI：把作业拆成 15 分钟小块，配番茄钟。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>书包总漏东西</b><p>一学期忘带 30 多次，爸妈跑了 30 多趟。<em>AI：说「明天周三」，按课表开书包清单。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>跳绳考试不及格</b><p>成绩单：1 分钟 90 个，及格线 120。<em>AI：排 4 周训练表，每天练什么、几组。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>作文错别字扣分</b><p>85 分里一半扣在错字，「的地得」回回错。<em>AI：统计高频错字，出体检报告＋练习。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>短视频停不下来</b><p>屏幕时间截图：说好 20 分钟，日均 1.5 小时。<em>AI：设计戒刷计划，和家长签使用约定。</em></p></div>
+    </div>
+    <div class="aside">这六个都过了三问：有具体的人，有拿得出手的证据，放着不管真难受。挑一个你也有过的，把它说成三句话。</div>
+  </div>
+  <div class="note">样例墙，配合上一页的现场选题环节投屏。六个样例覆盖学习、生活、体育、家庭，共同点是「证据就在手边」——听写本、时间账、成绩单、截图，都是孩子自己能掏出来的。用法：孩子报完选题后，对照墙上看「证据长什么样」；不必逐个讲，挑两三个对路的点一下即可。注意别让孩子照抄题目——照抄的题没有自己的证据，过不了三问。</div>
+</section>
+
+<!-- ============ 13c 选题门诊 ============ -->
+<section class="slide" data-theme="paper" data-act="选题门诊" id="s13c">
+  <div class="wrap">
+    <span class="vlabel">选题门诊</span>
+    <h2 class="t2 reveal">废题，也能救活</h2>
+    <div class="pickgrid">
+      <div class="pick bad"><span class="pk">废题 A</span><b>小学生都不会管理时间</b><p>卡在哪：「都」字没凭据——没说谁、没时刻、没证据。<em>救活：缩成「我，每天 7 点开始写，8 点还没动笔，记了一周时间账」。</em></p></div>
+      <div class="pick bad"><span class="pk">废题 B</span><b>我想让 AI 帮我写作业</b><p>卡在哪：这不是问题，是想省事——卡住的不是人，是「写不完」。<em>救活：换成样例 2——作业磨蹭，有时间账。</em></p></div>
+      <div class="pick bad"><span class="pk">废题 C</span><b>世界上为什么有战争</b><p>卡在哪：题太大，说不清谁在什么时候卡住——但不是坏题，只是没缩小。<em>救活：「弟弟总问我战争是什么，我不知道怎么讲」——三问立刻全过。</em></p></div>
+    </div>
+    <div class="aside">卡住别换题——缩一缩、换到具体的人身上，可能就是真问题。</div>
+  </div>
+  <div class="note">选题门诊。三个废题各给一条救法：A 是「都」字没凭据，正好用今天的句式问它；B 是「想要」不是「问题」，换成真卡住的地方；C 最有教学价值——好题和废题只差一步「缩小」，讲透这一条，孩子就不容易轻易换题。时间紧可跳过本页，或只讲 A 和 C。</div>
 </section>
 
 <!-- ============ 14 下节课 ============ -->
