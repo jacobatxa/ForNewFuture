@@ -3,85 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache">
 <title>森林迷宫</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --night:#10241c;--moss:#1c4634;--leaf:#2f6b45;--lantern:#f2c14e;
-    --cream:#f6efe2;--ink:#1a241c;--bark:#6b4a2e;--miss:#e07a5f;
+    --moss:#163528;--leaf:#245a3c;--canopy:#0d2419;--lantern:#ffc857;
+    --paper:#fff6e8;--ink:#1c2a22;--bark:#7a5130;--miss:#d8573a;--ok:#2f8f5b;
     --display:"ZCOOL KuaiLe","PingFang SC",sans-serif;
     --sans:"Noto Sans SC","PingFang SC",sans-serif;
+    --v:3;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden}
-  body{font-family:var(--sans);color:#3a2a1a;background:
-    radial-gradient(900px 420px at 0 100%, #d5ebc4 0, transparent 55%),
-    radial-gradient(700px 380px at 100% 0, #f6d7a2 0, transparent 50%),
-    #f6efe2}
+  body{
+    font-family:var(--sans);color:var(--paper);
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 110%, rgba(255,200,87,.18), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% -10%, rgba(90,140,80,.35), transparent 50%),
+      linear-gradient(165deg, #0d2419 0%, #163528 45%, #1a3d2c 100%);
+  }
   button,a{font:inherit;color:inherit}
-  .app{height:100svh;display:grid;grid-template-rows:auto 1fr;padding:14px 16px 16px;gap:12px}
-  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  header a{text-decoration:none;font-size:13px;opacity:.75}
-  h1{font-family:var(--display);font-size:clamp(28px,4vw,40px);letter-spacing:.04em;font-weight:400}
-  .where{font-size:14px;color:var(--lantern)}
-  .world{min-height:0;display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:14px}
-  .woods{position:relative;border-radius:22px;background:#e7f3d4;overflow:hidden;border:2px solid #3a2a1a}
-  .woods .trail{position:absolute;left:46%;top:8%;bottom:8%;width:10px;border-radius:999px;background:#c4a36a}
-  .kid{position:absolute;left:8%;width:84%;bottom:4%;transition:bottom .6s cubic-bezier(.22,1,.36,1);animation:bob 1.8s ease-in-out infinite}
-  @keyframes bob{50%{transform:translateY(-6px)}}
-  .kid.back{animation:none;transform:translateX(-14px)}
-  .clearing{min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(246,239,226,.06);border:1px solid rgba(246,239,226,.14);border-radius:22px;padding:14px 16px}
-  .who{display:flex;gap:14px;align-items:center;min-height:0}
-  .face{width:132px;height:132px;flex:none;background:#f6efe2;border-radius:22px;border:2px solid #3a2a1a;overflow:hidden}
-  .face img{width:100%;height:100%;object-fit:cover;object-position:center top}
-  .say{flex:1;background:var(--cream);color:var(--ink);border-radius:18px 18px 18px 6px;padding:12px 14px}
-  .say b{display:block;font-family:var(--display);font-size:13px;color:var(--bark);font-weight:400;margin-bottom:4px}
-  .say p{font-size:clamp(16px,2vw,20px);line-height:1.45;font-weight:700}
-  .say small{display:block;margin-top:6px;font-size:12px;font-weight:500;color:#6d6256}
-  .ask{font-size:14px;color:var(--lantern)}
-  .forks{display:grid;grid-template-columns:1fr;gap:8px;min-height:0}
-  .fork{text-align:left;background:#fffaf2;color:#3a2a1a;border:2px solid #3a2a1a;border-radius:14px;padding:10px 12px;cursor:pointer;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;transition:transform .18s cubic-bezier(.22,1,.36,1)}
-  .fork.in{animation:rise .35s cubic-bezier(.22,1,.36,1) both}
-  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  .fork i{font-style:normal;font-family:var(--display);font-size:15px;color:var(--lantern)}
-  .fork span{font-size:15px;line-height:1.4}
-  .fork:hover{transform:translateY(-3px);background:#fff}
-  .fork.bad{animation:shake .4s;border-color:var(--miss);background:rgba(224,122,95,.15)}
-  .fork.good{border-color:#8fd0a4;background:rgba(143,208,164,.16)}
+  .app{height:100svh;display:grid;grid-template-rows:auto 1fr;padding:12px 14px 14px;gap:10px}
+  header{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  header .brand{flex:1;min-width:140px;display:flex;align-items:baseline;gap:10px}
+  header a{text-decoration:none;font-size:13px;opacity:.7}
+  header a:hover{opacity:1;color:var(--lantern)}
+  h1{font-family:var(--display);font-size:clamp(26px,3.6vw,36px);letter-spacing:.04em;font-weight:400}
+  .tag{font-size:11px;letter-spacing:.08em;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:3px 8px;font-weight:900}
+  .where{font-size:14px;color:var(--lantern);font-weight:700}
+  .lamps{display:flex;gap:6px;align-items:center;margin-left:auto}
+  .lamps i{width:11px;height:11px;border-radius:50%;background:#0a1a12;border:1px solid #4a6b52;display:block}
+  .lamps i.on{background:var(--lantern);box-shadow:0 0 10px var(--lantern);border-color:var(--lantern)}
+  .mute{border:1px solid rgba(255,246,232,.28);background:transparent;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
+  .mute:hover{border-color:var(--lantern);color:var(--lantern)}
+
+  .world{min-height:0;display:grid;grid-template-columns:minmax(220px,32%) 1fr;gap:14px}
+  .woods{
+    position:relative;border-radius:28px;overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(20,50,35,.3), transparent 40%),
+      radial-gradient(ellipse at 50% 100%, #3d6b3a 0%, #1a3a28 55%, #0f2418 100%);
+    border:2px solid rgba(255,200,87,.25);
+    box-shadow:inset 0 -40px 60px rgba(0,0,0,.25);
+  }
+  .woods::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+    background:
+      radial-gradient(circle at 18% 22%, #2f6b45 0 28px, transparent 29px),
+      radial-gradient(circle at 78% 18%, #245a3c 0 36px, transparent 37px),
+      radial-gradient(circle at 12% 48%, #1f4a34 0 24px, transparent 25px),
+      radial-gradient(circle at 88% 42%, #2a5e40 0 30px, transparent 31px),
+      radial-gradient(circle at 22% 72%, #1c4634 0 34px, transparent 35px),
+      radial-gradient(circle at 80% 70%, #245a3c 0 26px, transparent 27px);
+  }
+  .woods .canopy{
+    position:absolute;left:0;right:0;top:0;height:28%;
+    background:linear-gradient(180deg, rgba(8,22,14,.75), transparent);
+    pointer-events:none;
+  }
+  .trail{
+    position:absolute;left:50%;top:10%;bottom:6%;width:42px;transform:translateX(-50%);
+    background:linear-gradient(180deg,#8b6a3d,#6a4e2c 40%,#5a4024);
+    border-radius:22px;opacity:.85;
+    box-shadow:inset 3px 0 0 rgba(255,255,255,.08), inset -3px 0 0 rgba(0,0,0,.15);
+  }
+  .trail::after{
+    content:"";position:absolute;inset:8% 30%;
+    background:repeating-linear-gradient(180deg, transparent 0 18px, rgba(0,0,0,.12) 18px 22px);
+  }
+  .kid{
+    position:absolute;left:50%;width:72%;max-width:200px;bottom:4%;
+    transform:translateX(-50%);
+    transition:bottom .65s cubic-bezier(.22,1,.36,1);
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.35));
+    animation:bob 2s ease-in-out infinite;
+    z-index:2;
+  }
+  @keyframes bob{50%{transform:translateX(-50%) translateY(-7px)}}
+  .kid.back{animation:none;transform:translateX(calc(-50% - 14px))}
+
+  .clearing{
+    min-height:0;display:grid;grid-template-rows:auto auto 1fr auto;
+    gap:12px;background:rgba(255,246,232,.96);color:var(--ink);
+    border-radius:28px;padding:16px 18px 14px;
+    border:2px solid rgba(255,200,87,.35);
+    box-shadow:0 18px 40px rgba(0,0,0,.28);
+  }
+  .who{display:flex;gap:16px;align-items:stretch;min-height:0}
+  .face{
+    width:clamp(140px,18vw,200px);aspect-ratio:1;flex:none;
+    background:
+      radial-gradient(circle at 50% 40%, #fff 0%, #f3e4c8 70%);
+    border-radius:28px;border:3px solid #1c2a22;overflow:hidden;
+    display:grid;place-items:center;
+    transition:transform .18s cubic-bezier(.22,1,.36,1);
+  }
+  .face.pop{transform:scale(1.08) rotate(-2deg)}
+  .face img{width:108%;height:108%;object-fit:contain;object-position:center 60%}
+  .say{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .say b{display:block;font-family:var(--display);font-size:18px;color:var(--bark);font-weight:400;margin-bottom:6px}
+  .say p{font-size:clamp(17px,2.1vw,22px);line-height:1.45;font-weight:900;min-height:3.1em}
+  .say small{display:block;margin-top:8px;font-size:13px;font-weight:500;color:#6d6256}
+  .ask{font-size:15px;color:#8a5a1e;font-weight:700}
+
+  .forks{display:grid;grid-template-columns:1fr;gap:9px;min-height:0;align-content:start}
+  .fork{
+    text-align:left;background:#fff;color:var(--ink);
+    border:2.5px solid #1c2a22;border-radius:16px;padding:12px 14px;cursor:pointer;
+    display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;
+    transition:transform .18s cubic-bezier(.22,1,.36,1), background .15s, border-color .15s;
+  }
+  .fork.in{animation:rise .38s cubic-bezier(.22,1,.36,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .fork i{
+    font-style:normal;font-family:var(--display);font-size:15px;font-weight:400;
+    color:#1c2a22;background:#ffe7a8;border-radius:12px;padding:8px 6px;text-align:center;
+  }
+  .fork span{font-size:15px;line-height:1.4;font-weight:700}
+  .fork:hover{transform:translateY(-3px);background:#fffaf0;border-color:var(--bark)}
+  .fork.bad{animation:shake .4s;border-color:var(--miss);background:#ffe8e2}
+  .fork.good{border-color:var(--ok);background:#e6f6ec}
   .fork:disabled{cursor:default}
   @keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
-  .missline{min-height:1.3em;font-size:14px;color:var(--miss);font-weight:700}
-  .reveal{display:none;background:var(--cream);color:var(--ink);border-radius:16px;padding:12px 14px;gap:8px}
+
+  .missline{min-height:1.3em;font-size:14px;color:var(--miss);font-weight:900}
+  .reveal{display:none;background:#1c2a22;color:var(--paper);border-radius:18px;padding:14px 16px;gap:10px}
   .reveal.on{display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:end}
-  .reveal div b{display:block;font-size:12px;color:var(--bark);margin-bottom:3px}
+  .reveal div b{display:block;font-size:12px;color:var(--lantern);margin-bottom:4px;font-weight:700}
   .reveal div span{font-size:14px;line-height:1.4;font-weight:700}
-  .go{border:none;background:#1c4634;color:#f6efe2;border-radius:999px;padding:12px 16px;cursor:pointer;font-weight:700;white-space:nowrap}
-  .go:hover{background:#2f6b45}
-  .gate{position:absolute;inset:0;display:grid;place-items:center;background:rgba(16,36,28,.55);border-radius:22px}
-  .card{width:min(520px,92%);background:var(--cream);color:var(--ink);border-radius:24px;padding:28px 26px}
-  .card h2{font-family:var(--display);font-size:40px;font-weight:400}
-  .card p{margin:10px 0 18px;font-size:16px;line-height:1.55}
-  .card button,.card a.back{display:inline-block;background:#1c4634;color:#f6efe2;text-decoration:none;border:none;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:700}
-  .lamps{display:flex;gap:6px;align-items:center}
-  .lamps i{width:10px;height:10px;border-radius:50%;background:#1a3328;border:1px solid #6b4a2e;display:block}
-  .lamps i.on{background:var(--lantern);box-shadow:0 0 8px var(--lantern)}
-  .mute{border:1px solid rgba(246,239,226,.35);background:transparent;border-radius:999px;padding:6px 10px;cursor:pointer;font-size:13px}
-  .fork:focus-visible,.go:focus-visible,#gateBtn:focus-visible,.mute:focus-visible{outline:2px solid var(--lantern);outline-offset:3px}
-  .face{transition:transform .18s cubic-bezier(.22,1,.36,1)}
-  .face.pop{transform:scale(1.12)}
-  #walker{transition:transform .55s cubic-bezier(.22,1,.36,1)}
+  .go{border:none;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:900;white-space:nowrap}
+  .go:hover{filter:brightness(1.06)}
+
+  .gate{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,22,14,.72);border-radius:28px;z-index:5;backdrop-filter:blur(3px)}
+  .card{width:min(520px,92%);background:var(--paper);color:var(--ink);border-radius:28px;padding:30px 28px;border:3px solid #1c2a22;box-shadow:0 24px 50px rgba(0,0,0,.35)}
+  .card h2{font-family:var(--display);font-size:clamp(34px,5vw,44px);font-weight:400}
+  .card p{margin:12px 0 20px;font-size:16px;line-height:1.55;font-weight:500}
+  .card button{display:inline-block;background:#163528;color:var(--paper);border:none;border-radius:999px;padding:14px 22px;cursor:pointer;font-weight:900;font-size:16px}
+  .card button:hover{background:#245a3c}
+
+  .fork:focus-visible,.go:focus-visible,#gateBtn:focus-visible,.mute:focus-visible{outline:3px solid var(--lantern);outline-offset:3px}
   .clearing.hit{animation:shake .28s}
-  .say p{min-height:2.8em}
+
   @media (prefers-reduced-motion:reduce){
-    .face,.fork,#walker{transition:none!important}
+    .face,.fork,.kid{transition:none!important;animation:none!important}
     .clearing.hit,.fork.bad{animation:none!important}
   }
-  @media (max-width:800px){
+  @media (max-width:860px){
     html,body{overflow:auto}
     .app{height:auto;min-height:100svh}
-    .world{grid-template-columns:1fr;grid-template-rows:140px 1fr}
+    .world{grid-template-columns:1fr;grid-template-rows:160px 1fr}
+    .kid{width:44%;max-width:140px}
+    .who{flex-direction:column;align-items:center;text-align:center}
+    .face{width:160px}
     .reveal.on{grid-template-columns:1fr}
   }
 </style>
@@ -89,18 +165,22 @@
 <body>
 <div class="app">
   <header>
-      <a href="20-m2-pilot-deck.html#4" target="_top">← 回到课</a>
-    <h1>森林迷宫</h1>
-    <div class="lamps" id="lamps" aria-label="走过的路口"></div>
+    <a href="20-m2-pilot-deck.html#4" target="_top">← 回到课</a>
+    <div class="brand">
+      <h1>森林迷宫</h1>
+      <span class="tag">新地图</span>
+    </div>
     <div class="where" id="where">林口</div>
-    <button type="button" class="mute" id="mute">声音开</button>
+    <div class="lamps" id="lamps" aria-label="走过的路口"></div>
+    <button type="button" class="mute" id="mute" aria-pressed="false">声音开</button>
   </header>
   <div class="world">
-    <div class="woods">
+    <div class="woods" aria-hidden="true">
+      <div class="canopy"></div>
       <div class="trail"></div>
-      <img class="kid" id="kid" src="assets/maze/xiaoman.jpg" alt="小满">
+      <img class="kid" id="kid" src="assets/maze/xiaoman.png?v=3" alt="小满提着灯笼走在林间小路">
     </div>
-    <div class="clearing">
+    <div class="clearing" style="position:relative">
       <div class="who">
         <div class="face" id="face"></div>
         <div class="say">
@@ -116,7 +196,7 @@
       <div class="gate" id="gate">
         <div class="card">
           <h2 id="gateTitle">森林迷宫</h2>
-          <p id="gateText">小满走进森林。六个路口，六只动物都在说话。只有分辨出那句话的毛病，雾才会散，路才会通。</p>
+          <p id="gateText">小满提着灯笼走进森林。六个路口，六只动物都在说话。只有分辨出那句话的毛病，雾才会散，路才会通。</p>
           <button type="button" id="gateBtn">走进森林</button>
         </div>
       </div>
@@ -125,42 +205,42 @@
 </div>
 <script>
 var LEVELS = [
-  {place:"兔子谷", img:"assets/maze/rabbit.jpg", name:"兔子", scene:"兔子谷里，兔子们成群结队往山上跑",
+  {place:"兔子谷", img:"assets/maze/rabbit.png?v=3", name:"兔子", scene:"兔子谷里，兔子们成群结队往山上跑",
    line:"不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！",
    choices:["跑的兔子再多，也变不成「天要塌」的证据","兔子胆子小，所以它说的话全是错的","山那么高，跑上去也躲不住"],
    said:"天要塌了。", why:"大家都在往山上跑。", flaw:"多少只兔子在跑，跟天塌不塌，是两码事。",
    punch:"大家都跑，不能当凭据。",
    sent:"他说天要塌了，理由是大家都在跑。但大家都跑，不能当凭据。",
    side:["攻击说话的人可不算本事——兔子胆小，不等于它这句是假话。","离题了。山高不高，跟天塌不塌没关系。"]},
-  {place:"狮子崖", img:"assets/maze/lion.jpg", name:"狮王", scene:"狮子崖上，狮王举着一株草药",
+  {place:"狮子崖", img:"assets/maze/lion.png?v=3", name:"狮王", scene:"狮子崖上，狮王举着一株草药",
    line:"我是百兽之王。这株草药我说它能治病，它就一定能治病。",
    choices:["百兽之王的名头，证明不了草药灵不灵","它是国王，国王说的话大家都得听","能治病的草药，味道一定很苦"],
    said:"这株草药能治病。", why:"我是百兽之王。", flaw:"名头是名头，药效是药效，两码事。",
    punch:"名头响，不能当凭据。",
    sent:"他说草药灵，理由是自己是百兽之王。但名头响，不能当凭据。",
    side:["「听」和「真」是两回事——大家听国王的，不代表国王说得对。","跑题了。苦不苦，跟药效没关系。"]},
-  {place:"狐狸坡", img:"assets/maze/fox.jpg", name:"狐狸", scene:"狐狸坡上，狐狸扯着嗓子喊",
+  {place:"狐狸坡", img:"assets/maze/fox.png?v=3", name:"狐狸", scene:"狐狸坡上，狐狸扯着嗓子喊",
    line:"大灰狼就在山后面！再不躲起来，咱们全完了！",
    choices:["越吓人，越要问一句：狼在哪？证据呢？","狐狸最狡猾，它的话一句都不能信","跑得越快，就越安全"],
    said:"大灰狼来了，不躲就全完了。", why:"什么都没凭，就靠吓人。", flaw:"害怕会让人来不及多想，但害怕不是证据。",
    punch:"吓人，不能当凭据。",
    sent:"他说狼来了，理由是把大家吓住。但吓人，不能当凭据。",
    side:["又是攻击说话的人——狐狸平时狡猾，不等于这句是假话。","这是被吓着了跟着跑，还没问一句：证据呢？"]},
-  {place:"乌龟潭", img:"assets/maze/turtle.jpg", name:"乌龟", scene:"乌龟潭边，老乌龟捧着一把浆果",
+  {place:"乌龟潭", img:"assets/maze/turtle.png?v=3", name:"乌龟", scene:"乌龟潭边，老乌龟捧着一把浆果",
    line:"我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。",
    choices:["它爷爷一个人的事，证明不了谁吃都灵","乌龟本来就长寿，所以它在撒谎","浆果是红色的，红色食物都养生"],
    said:"谁天天吃，都能长命百岁。", why:"我爷爷吃了，活了一百岁。", flaw:"一个人的故事，只能说发生过，说不了是规律。",
    punch:"一个例子，不能当凭据。",
    sent:"他说谁吃都长寿，理由是他爷爷活了一百岁。但一个例子，不能当凭据。",
    side:["攻击说话的人——乌龟长寿是真的，可它这句话照样站不住。","颜色不是规律——这跟「凭个例」是同一个毛病。"]},
-  {place:"公鸡岭", img:"assets/maze/rooster.jpg", name:"公鸡", scene:"公鸡岭上，公鸡挺着胸脯",
+  {place:"公鸡岭", img:"assets/maze/rooster.png?v=3", name:"公鸡", scene:"公鸡岭上，公鸡挺着胸脯",
    line:"看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！",
    choices:["打鸣在前、日出在后，不等于太阳是它叫出来的","公鸡起得早，它说的话肯定有道理","它叫得太小声，太阳听不见"],
    said:"太阳是我叫出来的。", why:"每次我先打鸣，太阳后出来。", flaw:"挨着发生的两件事，不一定有因果关系。",
    punch:"先后，不等于因果。",
    sent:"他说太阳是它叫出来的，理由是打鸣在前。但先后，不等于因果。",
    side:["攻击说话的人——起得早是好事，跟这句话对不对没关系。","顺着它的话往下编，越编越远了。"]},
-  {place:"老虎洞", img:"assets/maze/tiger.jpg", name:"狐狸", scene:"老虎洞前，狐假虎威",
+  {place:"老虎洞", img:"assets/maze/tiger.png?v=3", name:"狐狸", scene:"老虎洞前，狐假虎威",
    line:"瞧见没？它们都怕我，才跑的。",
    said:"动物们是怕我才跑的。", why:"我一走过去，它们就四散奔逃。", flaw:"它们怕的明明是身后的老虎。话被偷换了。",
    punch:"他说的，不是那回事。",
