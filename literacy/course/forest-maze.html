@@ -16,33 +16,38 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%;overflow:hidden}
-  body{font-family:var(--sans);color:var(--cream);background:
-    radial-gradient(900px 420px at 10% 100%, #245c3e 0, transparent 55%),
-    radial-gradient(700px 380px at 100% 0, #163828 0, transparent 50%),
-    var(--night)}
+  body{font-family:var(--sans);color:#3a2a1a;background:
+    radial-gradient(900px 420px at 0 100%, #d5ebc4 0, transparent 55%),
+    radial-gradient(700px 380px at 100% 0, #f6d7a2 0, transparent 50%),
+    #f6efe2}
   button,a{font:inherit;color:inherit}
   .app{height:100svh;display:grid;grid-template-rows:auto 1fr;padding:14px 16px 16px;gap:12px}
   header{display:flex;align-items:center;justify-content:space-between;gap:12px}
   header a{text-decoration:none;font-size:13px;opacity:.75}
   h1{font-family:var(--display);font-size:clamp(28px,4vw,40px);letter-spacing:.04em;font-weight:400}
   .where{font-size:14px;color:var(--lantern)}
-  .world{min-height:0;display:grid;grid-template-columns:220px 1fr;gap:14px}
-  .woods{position:relative;border-radius:22px;background:linear-gradient(#163528,#0c1c14);overflow:hidden;border:1px solid rgba(242,193,78,.25)}
-  .woods svg{width:100%;height:100%;display:block}
+  .world{min-height:0;display:grid;grid-template-columns:minmax(200px,280px) 1fr;gap:14px}
+  .woods{position:relative;border-radius:22px;background:#e7f3d4;overflow:hidden;border:2px solid #3a2a1a}
+  .woods .trail{position:absolute;left:46%;top:8%;bottom:8%;width:10px;border-radius:999px;background:#c4a36a}
+  .kid{position:absolute;left:8%;width:84%;bottom:4%;transition:bottom .6s cubic-bezier(.22,1,.36,1);animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  .kid.back{animation:none;transform:translateX(-14px)}
   .clearing{min-height:0;display:flex;flex-direction:column;gap:10px;background:rgba(246,239,226,.06);border:1px solid rgba(246,239,226,.14);border-radius:22px;padding:14px 16px}
   .who{display:flex;gap:14px;align-items:center;min-height:0}
-  .face{width:92px;height:92px;flex:none;background:var(--cream);border-radius:50%;display:grid;place-items:center}
-  .face svg{width:74px;height:74px}
+  .face{width:132px;height:132px;flex:none;background:#f6efe2;border-radius:22px;border:2px solid #3a2a1a;overflow:hidden}
+  .face img{width:100%;height:100%;object-fit:cover;object-position:center top}
   .say{flex:1;background:var(--cream);color:var(--ink);border-radius:18px 18px 18px 6px;padding:12px 14px}
   .say b{display:block;font-family:var(--display);font-size:13px;color:var(--bark);font-weight:400;margin-bottom:4px}
   .say p{font-size:clamp(16px,2vw,20px);line-height:1.45;font-weight:700}
   .say small{display:block;margin-top:6px;font-size:12px;font-weight:500;color:#6d6256}
   .ask{font-size:14px;color:var(--lantern)}
   .forks{display:grid;grid-template-columns:1fr;gap:8px;min-height:0}
-  .fork{text-align:left;background:transparent;border:1.5px solid rgba(246,239,226,.35);border-radius:14px;padding:10px 12px;cursor:pointer;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center}
+  .fork{text-align:left;background:#fffaf2;color:#3a2a1a;border:2px solid #3a2a1a;border-radius:14px;padding:10px 12px;cursor:pointer;display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:center;transition:transform .18s cubic-bezier(.22,1,.36,1)}
+  .fork.in{animation:rise .35s cubic-bezier(.22,1,.36,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   .fork i{font-style:normal;font-family:var(--display);font-size:15px;color:var(--lantern)}
   .fork span{font-size:15px;line-height:1.4}
-  .fork:hover{background:rgba(242,193,78,.12);border-color:var(--lantern)}
+  .fork:hover{transform:translateY(-3px);background:#fff}
   .fork.bad{animation:shake .4s;border-color:var(--miss);background:rgba(224,122,95,.15)}
   .fork.good{border-color:#8fd0a4;background:rgba(143,208,164,.16)}
   .fork:disabled{cursor:default}
@@ -91,22 +96,9 @@
     <button type="button" class="mute" id="mute">声音开</button>
   </header>
   <div class="world">
-    <div class="woods" aria-hidden="true">
-      <svg viewBox="0 0 220 640" id="woods">
-        <g fill="#245c3e">
-          <circle cx="28" cy="40" r="26"/><circle cx="190" cy="70" r="30"/>
-          <circle cx="24" cy="180" r="22"/><circle cx="196" cy="210" r="24"/>
-          <circle cx="30" cy="340" r="26"/><circle cx="188" cy="390" r="28"/>
-          <circle cx="26" cy="520" r="24"/><circle cx="194" cy="560" r="26"/>
-        </g>
-        <path d="M110 40 V600" stroke="#6b4a2e" stroke-width="18" stroke-linecap="round"/>
-        <path id="lit" d="M110 600 V600" stroke="#f2c14e" stroke-width="8" stroke-linecap="round"/>
-        <g id="gates"></g>
-        <g id="walker" stroke="#f2c14e" fill="none" stroke-width="2.4" stroke-linecap="round">
-          <circle cx="110" cy="590" r="7" fill="#f6efe2"/>
-          <path d="M110 597 v12 M110 603 l-6 5 M110 603 l6 5 M110 609 l-5 8 M110 609 l5 8"/>
-        </g>
-      </svg>
+    <div class="woods">
+      <div class="trail"></div>
+      <img class="kid" id="kid" src="assets/maze/xiaoman.jpg" alt="小满">
     </div>
     <div class="clearing">
       <div class="who">
@@ -133,49 +125,43 @@
 </div>
 <script>
 var LEVELS = [
-  {place:"兔子谷", name:"兔子", scene:"兔子谷里，兔子们成群结队往山上跑",
+  {place:"兔子谷", img:"assets/maze/rabbit.jpg", name:"兔子", scene:"兔子谷里，兔子们成群结队往山上跑",
    line:"不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！",
-   face:'<svg viewBox="0 0 64 64"><ellipse cx="32" cy="40" rx="16" ry="14" fill="#f4d7c4"/><path d="M24 28 C18 8 28 6 30 24" fill="#f4d7c4"/><path d="M40 28 C46 8 36 6 34 24" fill="#f4d7c4"/><circle cx="26" cy="38" r="2" fill="#1a241c"/><circle cx="38" cy="38" r="2" fill="#1a241c"/><path d="M29 44 q3 3 6 0" fill="none" stroke="#1a241c" stroke-width="1.6"/></svg>',
    choices:["跑的兔子再多，也变不成「天要塌」的证据","兔子胆子小，所以它说的话全是错的","山那么高，跑上去也躲不住"],
    said:"天要塌了。", why:"大家都在往山上跑。", flaw:"多少只兔子在跑，跟天塌不塌，是两码事。",
    punch:"大家都跑，不能当凭据。",
    sent:"他说天要塌了，理由是大家都在跑。但大家都跑，不能当凭据。",
    side:["攻击说话的人可不算本事——兔子胆小，不等于它这句是假话。","离题了。山高不高，跟天塌不塌没关系。"]},
-  {place:"狮子崖", name:"狮王", scene:"狮子崖上，狮王举着一株草药",
+  {place:"狮子崖", img:"assets/maze/lion.jpg", name:"狮王", scene:"狮子崖上，狮王举着一株草药",
    line:"我是百兽之王。这株草药我说它能治病，它就一定能治病。",
-   face:'<svg viewBox="0 0 64 64"><circle cx="32" cy="34" r="18" fill="#e2b15a"/><circle cx="32" cy="34" r="11" fill="#f2c14e"/><circle cx="28" cy="33" r="1.6" fill="#1a241c"/><circle cx="36" cy="33" r="1.6" fill="#1a241c"/><path d="M29 38 q3 2 6 0" fill="none" stroke="#1a241c" stroke-width="1.6"/></svg>',
    choices:["百兽之王的名头，证明不了草药灵不灵","它是国王，国王说的话大家都得听","能治病的草药，味道一定很苦"],
    said:"这株草药能治病。", why:"我是百兽之王。", flaw:"名头是名头，药效是药效，两码事。",
    punch:"名头响，不能当凭据。",
    sent:"他说草药灵，理由是自己是百兽之王。但名头响，不能当凭据。",
    side:["「听」和「真」是两回事——大家听国王的，不代表国王说得对。","跑题了。苦不苦，跟药效没关系。"]},
-  {place:"狐狸坡", name:"狐狸", scene:"狐狸坡上，狐狸扯着嗓子喊",
+  {place:"狐狸坡", img:"assets/maze/fox.jpg", name:"狐狸", scene:"狐狸坡上，狐狸扯着嗓子喊",
    line:"大灰狼就在山后面！再不躲起来，咱们全完了！",
-   face:'<svg viewBox="0 0 64 64"><path d="M18 18 L26 32 L14 28 Z" fill="#e07a4a"/><path d="M46 18 L38 32 L50 28 Z" fill="#e07a4a"/><path d="M20 26 C18 46 26 52 32 52 C38 52 46 46 44 26 Z" fill="#f0a06a"/><circle cx="28" cy="34" r="1.7" fill="#1a241c"/><circle cx="36" cy="34" r="1.7" fill="#1a241c"/><path d="M32 40 v4" stroke="#1a241c" stroke-width="1.4"/></svg>',
    choices:["越吓人，越要问一句：狼在哪？证据呢？","狐狸最狡猾，它的话一句都不能信","跑得越快，就越安全"],
    said:"大灰狼来了，不躲就全完了。", why:"什么都没凭，就靠吓人。", flaw:"害怕会让人来不及多想，但害怕不是证据。",
    punch:"吓人，不能当凭据。",
    sent:"他说狼来了，理由是把大家吓住。但吓人，不能当凭据。",
    side:["又是攻击说话的人——狐狸平时狡猾，不等于这句是假话。","这是被吓着了跟着跑，还没问一句：证据呢？"]},
-  {place:"乌龟潭", name:"乌龟", scene:"乌龟潭边，老乌龟捧着一把浆果",
+  {place:"乌龟潭", img:"assets/maze/turtle.jpg", name:"乌龟", scene:"乌龟潭边，老乌龟捧着一把浆果",
    line:"我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。",
-   face:'<svg viewBox="0 0 64 64"><path d="M16 36 C16 24 28 18 36 22 C48 26 50 38 42 44 Z" fill="#6f8f4e"/><circle cx="48" cy="34" r="6" fill="#8fbf6a"/><circle cx="50" cy="33" r="1.2" fill="#1a241c"/></svg>',
    choices:["它爷爷一个人的事，证明不了谁吃都灵","乌龟本来就长寿，所以它在撒谎","浆果是红色的，红色食物都养生"],
    said:"谁天天吃，都能长命百岁。", why:"我爷爷吃了，活了一百岁。", flaw:"一个人的故事，只能说发生过，说不了是规律。",
    punch:"一个例子，不能当凭据。",
    sent:"他说谁吃都长寿，理由是他爷爷活了一百岁。但一个例子，不能当凭据。",
    side:["攻击说话的人——乌龟长寿是真的，可它这句话照样站不住。","颜色不是规律——这跟「凭个例」是同一个毛病。"]},
-  {place:"公鸡岭", name:"公鸡", scene:"公鸡岭上，公鸡挺着胸脯",
+  {place:"公鸡岭", img:"assets/maze/rooster.jpg", name:"公鸡", scene:"公鸡岭上，公鸡挺着胸脯",
    line:"看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！",
-   face:'<svg viewBox="0 0 64 64"><path d="M24 16 l4 -8 4 7 4 -7 4 8 Z" fill="#e07a5f"/><circle cx="34" cy="32" r="14" fill="#f2d2a2"/><path d="M46 30 l8 -2 -7 6 Z" fill="#e2b15a"/><circle cx="38" cy="30" r="1.6" fill="#1a241c"/></svg>',
    choices:["打鸣在前、日出在后，不等于太阳是它叫出来的","公鸡起得早，它说的话肯定有道理","它叫得太小声，太阳听不见"],
    said:"太阳是我叫出来的。", why:"每次我先打鸣，太阳后出来。", flaw:"挨着发生的两件事，不一定有因果关系。",
    punch:"先后，不等于因果。",
    sent:"他说太阳是它叫出来的，理由是打鸣在前。但先后，不等于因果。",
    side:["攻击说话的人——起得早是好事，跟这句话对不对没关系。","顺着它的话往下编，越编越远了。"]},
-  {place:"老虎洞", name:"狐狸", scene:"老虎洞前，狐假虎威",
+  {place:"老虎洞", img:"assets/maze/tiger.jpg", name:"狐狸", scene:"老虎洞前，狐假虎威",
    line:"瞧见没？它们都怕我，才跑的。",
-   face:'<svg viewBox="0 0 64 64"><path d="M16 22 l-4 -8 10 5 Z" fill="#e2b15a"/><path d="M48 22 l4 -8 -10 5 Z" fill="#e2b15a"/><circle cx="32" cy="36" r="14" fill="#f0a06a"/><path d="M24 32 h6 M34 32 h6" stroke="#c4503a" stroke-width="2"/><circle cx="28" cy="36" r="1.4" fill="#1a241c"/><circle cx="40" cy="36" r="1.4" fill="#1a241c"/></svg>',
    said:"动物们是怕我才跑的。", why:"我一走过去，它们就四散奔逃。", flaw:"它们怕的明明是身后的老虎。话被偷换了。",
    punch:"他说的，不是那回事。",
    sent:"他说动物们怕它，理由是动物们奔逃。但它们怕的是老虎，不是狐狸。",
@@ -185,26 +171,14 @@ var LEVELS = [
 var SIDES = ["左边的路","中间的路","右边的路"];
 var phase = "intro";
 var lineTimer = null;
-var lit = document.getElementById("lit");
-var walker = document.getElementById("walker");
-var gates = document.getElementById("gates");
-var ys = [560,470,380,290,200,110,40];
+var kid = document.getElementById("kid");
+var stops = [4, 16, 30, 44, 58, 72, 84];
 var ac = null;
 var muted = sessionStorage.getItem("maze-mute") === "1";
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function drawGates(){
-  gates.innerHTML = ys.slice(0,6).map(function(y,i){
-    return '<circle data-i="'+i+'" cx="110" cy="'+y+'" r="8" fill="#1a3328" stroke="#6b4a2e" stroke-width="3"/>';
-  }).join("");
-}
 function paintPath(n){
-  var y = ys[Math.min(n,6)];
-  lit.setAttribute("d", "M110 600 V"+y);
-  walker.setAttribute("transform", "translate(0,"+(y-590)+")");
-  Array.prototype.forEach.call(gates.querySelectorAll("circle"), function(c,i){
-    c.setAttribute("fill", i < n ? "#f2c14e" : "#1a3328");
-  });
+  if (kid) kid.style.bottom = stops[Math.min(n, 6)] + "%";
   var lamps = document.getElementById("lamps");
   lamps.innerHTML = "";
   for (var i = 0; i < 6; i++){
@@ -298,7 +272,7 @@ function renderLevel(i){
   document.getElementById("where").textContent = (i+1)+" / 6 · "+L.place;
   document.getElementById("name").textContent = L.name;
   document.getElementById("scene").textContent = L.scene;
-  document.getElementById("face").innerHTML = L.face;
+  document.getElementById("face").innerHTML = '<img alt="'+L.name+'" src="'+L.img+'">';
   document.getElementById("face").classList.remove("pop");
   document.getElementById("ask").textContent = "听完它说的话，再选一条路。空格可以快进。";
   document.getElementById("miss").textContent = "";
@@ -317,7 +291,8 @@ function showChoices(i){
   order.forEach(function(src, k){
     var b = document.createElement("button");
     b.type = "button";
-    b.className = "fork";
+    b.className = "fork in";
+    b.style.animationDelay = (k * 70) + "ms";
     b.dataset.src = String(src);
     b.innerHTML = "<i>"+SIDES[k]+"</i><span>"+L.choices[src]+"</span>";
     b.onclick = function(){ pick(i, src, b); };
@@ -333,13 +308,17 @@ function pick(i, src, btn){
   if (src !== 0){
     phase = "locked";
     btn.classList.add("bad");
-    if (!reduceMotion) document.querySelector(".clearing").classList.add("hit");
+    if (!reduceMotion){
+      document.querySelector(".clearing").classList.add("hit");
+      kid.classList.add("back");
+    }
     var note = (L.side && L.side[src - 1]) ? L.side[src - 1] : "这条路走不通。再听一遍它说的话。";
     document.getElementById("miss").textContent = note;
     sfxBad();
     setTimeout(function(){
       btn.classList.remove("bad");
       document.querySelector(".clearing").classList.remove("hit");
+      kid.classList.remove("back");
       phase = "choose";
     }, 420);
     return;
@@ -406,7 +385,6 @@ document.addEventListener("keydown", function(e){
 });
 document.getElementById("line").addEventListener("click", function(){ if (phase === "line") skipLine(); });
 document.getElementById("mute").addEventListener("click", function(){ setMute(!muted); });
-drawGates();
 paintPath(0);
 setMute(muted);
 document.getElementById("gateBtn").focus();
