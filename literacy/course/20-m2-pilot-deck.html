@@ -60,6 +60,12 @@
   .mapplace{fill:#d5e6da;font-size:12px}
   .mapreset{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#d5e6da;background:#0c1c14;border:1px solid #3d6b4e;padding:5px 10px;cursor:pointer}
   .mapreset:hover{color:#f2c14e;border-color:#f2c14e}
+  .slide.forest-play{padding:0!important}
+  .slide.forest-play.on{display:block}
+  .maze-frame{display:block;width:100%;height:100svh;border:0;background:#10241c}
+  body:has(.forest-play.on) #bar,
+  body:has(.forest-play.on) .chrome,
+  body:has(.forest-play.on) #note{display:none!important}
   /* 关卡 */
   .trail{display:flex;align-items:center;margin-bottom:clamp(8px,1.4vh,14px)}
   .trail span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .25s}
@@ -125,6 +131,7 @@
   /* ---------- 纸面 ---------- */
   .slide{display:none;height:100svh;overflow:hidden;padding:clamp(28px,4.2vh,56px) clamp(20px,6vw,84px) clamp(46px,6vh,80px)}
   .slide.on{display:flex;flex-direction:column;justify-content:flex-start}
+  .slide.forest-play.on{display:block;padding:0}
   .slide[data-theme="paper"]{
     background-color:var(--paper);
     background-image:linear-gradient(rgba(27,71,99,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(27,71,99,.045) 1px,transparent 1px);
@@ -545,7 +552,11 @@
 </section>
 
 <!-- ============ 05 闯关地图 ============ -->
-<section class="slide" data-theme="paper" data-act="闯关地图" id="s5">
+<section class="slide forest-play" data-theme="dark" data-act="森林迷宫" id="s5">
+  <iframe class="maze-frame" src="forest-maze.html" title="森林迷宫"></iframe>
+  <div class="note">游戏在单独一页里。六个路口听动物说话，选对路才往前。通关后回到速查卡。旧的六页闯关还在文件里，不进翻页。</div>
+</section>
+<section class="slide" data-theme="paper" data-act="闯关地图-旧" id="s5b" hidden>
   <div class="wrap">
     <span class="vlabel">闯关游戏</span>
     <h2 class="t2 reveal">森林迷宫</h2>
@@ -603,7 +614,7 @@
 </section>
 
 <!-- ============ 06 闯关01 兔子谷 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·01" data-level="1" id="s6">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·01" data-level="1" id="s6">
   <div class="wrap">
     <span class="vlabel">闯关 01 · 兔子谷</span>
     <div class="trail"><span class="on">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
@@ -634,7 +645,7 @@
 </section>
 
 <!-- ============ 07 闯关02 狮子崖 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·02" data-level="2" id="s7">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·02" data-level="2" id="s7">
   <div class="wrap">
     <span class="vlabel">闯关 02 · 狮子崖</span>
     <div class="trail"><span>01</span><i></i><span class="on">02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
@@ -664,7 +675,7 @@
 </section>
 
 <!-- ============ 08 闯关03 狐狸坡 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·03" data-level="3" id="s8">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·03" data-level="3" id="s8">
   <div class="wrap">
     <span class="vlabel">闯关 03 · 狐狸坡</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span class="on">03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
@@ -694,7 +705,7 @@
 </section>
 
 <!-- ============ 09 闯关04 乌龟潭 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·04" data-level="4" id="s9">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·04" data-level="4" id="s9">
   <div class="wrap">
     <span class="vlabel">闯关 04 · 乌龟潭</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span class="on">04</span><i></i><span>05</span><i></i><span>06</span></div>
@@ -724,7 +735,7 @@
 </section>
 
 <!-- ============ 10 闯关05 公鸡岭 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·05" data-level="5" id="s10">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·05" data-level="5" id="s10">
   <div class="wrap">
     <span class="vlabel">闯关 05 · 公鸡岭</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span class="on">05</span><i></i><span>06</span></div>
@@ -754,7 +765,7 @@
 </section>
 
 <!-- ============ 11 闯关06 老虎洞 ============ -->
-<section class="slide level" data-theme="paper" data-act="闯关·06" data-level="6" id="s11">
+<section class="slide level" hidden data-theme="paper" data-act="闯关·06" data-level="6" id="s11">
   <div class="wrap">
     <span class="vlabel">闯关 06 · 老虎洞</span>
     <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span class="on">06</span></div>
@@ -872,7 +883,7 @@
 <script>
 
 (function(){
-  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide:not([hidden])'));
   var bar = document.getElementById('bar');
   var chrome = document.getElementById('chrome');
   var actName = document.getElementById('actName');
