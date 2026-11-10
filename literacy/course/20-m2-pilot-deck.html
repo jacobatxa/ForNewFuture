@@ -33,24 +33,33 @@
   @media(min-width:760px){.toolgrid{grid-template-columns:1fr 1fr;gap:clamp(16px,2.6vw,28px)}}
   .toolsum{margin-top:clamp(14px,2vh,20px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(11px,1.7vw,18px);font-size:clamp(15px,1.7vw,19px);font-weight:700}
   .toolsum em{font-style:normal;color:var(--red)}
-  /* 地图 */
-  .mapwrap{position:relative;margin-top:clamp(8px,1.4vh,14px);border:1px solid var(--rule);background:#fff;padding:clamp(8px,1vw,14px)}
+  /* 森林迷宫 */
+  .mapwrap{position:relative;margin-top:clamp(8px,1.4vh,14px);border:2px solid #0c1c14;background:#10281c;border-radius:18px;padding:clamp(8px,1vw,14px);overflow:hidden}
+  .mapwrap.out{box-shadow:inset 0 0 80px rgba(232,214,140,.28)}
   .mapwrap svg{display:block;width:100%;height:auto}
-  .route{animation:dash 1.4s linear infinite}
-  @keyframes dash{to{stroke-dashoffset:-28}}
+  .canopy{fill:#163528}
+  .tree{fill:#1f4a32;stroke:#0e2418;stroke-width:2}
+  .tree.far{fill:#173d2a;opacity:.85}
+  .leg{fill:none;stroke:#1a3324;stroke-width:16;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+  .leg.open{stroke:#c4a36a;opacity:1;filter:drop-shadow(0 0 4px rgba(232,196,120,.45))}
   .mapnode{cursor:pointer;outline:none}
-  .mapnode .nd{transition:fill .25s,stroke .25s}
+  .mapnode .nd{transition:fill .35s,stroke .35s}
   .mapnode .nt{font-weight:700;pointer-events:none;user-select:none}
-  .mapnode:hover .nd{stroke-width:3.5}
-  .mapnode.done .nd{fill:#1B4763}
-  .mapnode.done .nt{fill:#fff}
-  .mapnode.current .nd{stroke:#BB3A22;stroke-width:3}
-  .pulse{fill:none;stroke:#BB3A22;stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+  .mapnode .fog{fill:#0c1c14;opacity:.78;pointer-events:none;transition:opacity .55s}
+  .mapnode.done .fog{opacity:0}
+  .mapnode.current .fog{opacity:.2}
+  .mapnode:hover .nd{stroke-width:4}
+  .mapnode.done .nd{fill:#2f6b45}
+  .mapnode.done .nt{fill:#f4f7f2}
+  .mapnode.current .nd{stroke:#f2c14e;stroke-width:3.5}
+  .pulse{fill:none;stroke:#f2c14e;stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
   .mapnode.current .pulse{animation:pulse 1.6s ease-out infinite}
-  @keyframes pulse{0%{opacity:.7;transform:scale(.8)}70%{opacity:0;transform:scale(1.5)}100%{opacity:0}}
-  #xiaoman{transition:transform .7s cubic-bezier(.22,1,.36,1)}
-  .mapreset{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--ink-3);background:#fff;border:1px solid var(--rule);padding:5px 10px;cursor:pointer}
-  .mapreset:hover{color:var(--red);border-color:var(--red)}
+  @keyframes pulse{0%{opacity:.85;transform:scale(.75)}70%{opacity:0;transform:scale(1.7)}100%{opacity:0}}
+  #xiaoman{transition:transform .8s cubic-bezier(.22,1,.36,1)}
+  .maplbl{fill:#e7f2ea;font-size:13px;font-weight:700}
+  .mapplace{fill:#d5e6da;font-size:12px}
+  .mapreset{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:#d5e6da;background:#0c1c14;border:1px solid #3d6b4e;padding:5px 10px;cursor:pointer}
+  .mapreset:hover{color:#f2c14e;border-color:#f2c14e}
   /* 关卡 */
   .trail{display:flex;align-items:center;margin-bottom:clamp(8px,1.4vh,14px)}
   .trail span{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .25s}
@@ -71,6 +80,24 @@
   .opt.right{opacity:1;border-color:var(--red);background:rgba(187,58,34,.08);font-weight:700}
   .opt.wrong{border-color:var(--red);animation:shake .42s}
   @keyframes shake{0,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+  .deadend{display:none;margin:0 0 8px;font-size:13px;font-weight:700;color:#f2c14e}
+  .slide.level.miss .deadend{display:block;animation:shake .42s}
+  .slide.level[data-theme="paper"]{background-color:#10281c;background-image:radial-gradient(420px 220px at 12% 100%,rgba(90,150,80,.28),transparent 60%),radial-gradient(380px 180px at 90% 0,rgba(8,20,14,.55),transparent 55%);color:#f3f7f1}
+  .slide.level .vlabel{color:#b7d7c0}
+  .slide.level .trail span{background:transparent;color:#d5e6da;border-color:rgba(255,255,255,.28)}
+  .slide.level .trail i{background:rgba(255,255,255,.25)}
+  .slide.level .hero{background:#f7f3e8;border-color:#e7c27a;box-shadow:0 8px 0 rgba(0,0,0,.25)}
+  .slide.level .bubble{background:#f7f3e8;color:#142018;border-color:#e7c27a;border-radius:16px}
+  .slide.level .bubble small{color:#5c5148}
+  .slide.level .quiz .q{color:#f2c14e;letter-spacing:.08em}
+  .slide.level .opt{background:rgba(255,255,255,.06);color:#f4f7f2;border-color:rgba(255,255,255,.28);border-radius:12px}
+  .slide.level .opt:hover:not(:disabled){background:rgba(242,193,78,.16);border-color:#f2c14e;color:#fff}
+  .slide.level .opt.right{background:#e7f6ec;color:#143024;border-color:#8fd0a4}
+  .slide.level.opened .wrap{animation:clearing .7s ease}
+  .slide.level .unbox.show{background:#f7f3e8;color:#142018;border-radius:14px;padding:12px 12px 8px}
+  @keyframes clearing{0%{filter:brightness(.7)}40%{filter:brightness(1.15)}100%{filter:none}}
+  .slide.level .rc b{color:#1B4763}
+  .slide.level .rc span{color:#2a2038}
   .unbox{display:none}
   .unbox.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
   @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -539,60 +566,56 @@
 <section class="slide" data-theme="paper" data-act="闯关地图" id="s5">
   <div class="wrap">
     <span class="vlabel">闯关游戏</span>
-    <h2 class="t2 reveal">动物王国 · 六句话闯关</h2>
-    <div class="mapwrap">
-      <svg viewBox="0 0 960 500" role="img" aria-label="动物王国闯关地图：六个地点">
-        <path class="route" d="M 100 430 C 320 400 520 260 690 155 C 720 175 800 195 840 220 C 800 250 700 265 640 280 C 560 300 480 315 420 330 C 360 345 290 355 240 370 C 200 385 160 350 130 300 C 115 275 105 320 100 385" fill="none" stroke="#1B4763" stroke-width="2" stroke-dasharray="7 7" stroke-linecap="round"/>
-        <!-- 魔法书（起点） -->
-        <g stroke="#1B4763" stroke-width="2" fill="none">
-          <path d="M 60 420 h 34 v 34 h -34 z"/>
-          <path d="M 77 420 v 34 M 66 430 h 8 M 66 438 h 8 M 80 430 h 8 M 80 438 h 8"/>
-        </g>
-        <text x="77" y="472" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">旧书</text>
-        <!-- 城堡（终点） -->
-        <g stroke="#1B4763" stroke-width="2" fill="none">
-          <path d="M 818 110 v -26 h 10 v 12 h 10 v -12 h 10 v 26"/>
-          <rect x="814" y="110" width="88" height="40"/>
-          <path d="M 850 150 v -14 h 16 v 14"/>
-        </g>
-        <text x="858" y="168" text-anchor="middle" font-size="13" fill="#14181A" font-weight="700">回家的门</text>
-        <!-- 小满 -->
-        <g id="xiaoman" stroke="#BB3A22" stroke-width="2" fill="none" stroke-linecap="round">
-          <circle cx="122" cy="448" r="7"/>
+    <h2 class="t2 reveal">森林迷宫</h2>
+    <div class="mapwrap" id="forestMap">
+      <svg viewBox="0 0 960 460" role="img" aria-label="森林迷宫：六个路口，分辨动物说的话才能走出去">
+        <rect class="canopy" x="0" y="0" width="960" height="460"/>
+        <g class="tree far"><circle cx="40" cy="80" r="34"/><circle cx="180" cy="50" r="28"/><circle cx="420" cy="40" r="36"/><circle cx="700" cy="48" r="30"/><circle cx="930" cy="90" r="32"/><circle cx="90" cy="200" r="26"/><circle cx="300" cy="140" r="24"/><circle cx="560" cy="120" r="28"/><circle cx="48" cy="340" r="30"/><circle cx="250" cy="420" r="26"/><circle cx="480" cy="430" r="32"/><circle cx="720" cy="420" r="28"/><circle cx="940" cy="360" r="26"/></g>
+        <path class="leg open" data-leg="0" d="M 70 400 C 120 380 160 360 200 340"/>
+        <path class="leg" data-leg="1" d="M 200 340 C 260 300 310 270 360 250"/>
+        <path class="leg" data-leg="2" d="M 360 250 C 420 270 470 310 520 330"/>
+        <path class="leg" data-leg="3" d="M 520 330 C 580 300 620 250 660 220"/>
+        <path class="leg" data-leg="4" d="M 660 220 C 700 240 740 280 780 300"/>
+        <path class="leg" data-leg="5" d="M 780 300 C 810 250 830 200 860 160"/>
+        <path class="leg" data-leg="6" d="M 860 160 C 880 120 900 90 910 70"/>
+        <g class="tree"><circle cx="140" cy="300" r="22"/><circle cx="280" cy="360" r="20"/><circle cx="430" cy="210" r="24"/><circle cx="590" cy="360" r="22"/><circle cx="730" cy="180" r="20"/><circle cx="820" cy="250" r="18"/></g>
+        <text class="maplbl" x="70" y="430" text-anchor="middle">林口</text>
+        <text class="maplbl" x="910" y="52" text-anchor="middle">林外</text>
+        <g id="xiaoman" stroke="#f2c14e" stroke-width="2.4" fill="none" stroke-linecap="round">
+          <circle cx="122" cy="448" r="7" fill="#f7f3e8"/>
           <path d="M 122 455 v 14 M 122 459 l -7 5 M 122 459 l 7 5 M 122 469 l -5 9 M 122 469 l 5 9"/>
         </g>
-        <text id="xiaomanlbl" x="122" y="492" text-anchor="middle" font-size="11" fill="#BB3A22" font-weight="700">小满</text>
-        <!-- 节点 -->
+        <text id="xiaomanlbl" x="122" y="430" text-anchor="middle" font-size="12" fill="#f2c14e" font-weight="700">小满</text>
         <g class="mapnode" data-level="1" role="button" tabindex="0" aria-label="第一关 兔子谷">
-          <circle class="pulse" cx="700" cy="150" r="17"/><circle class="nd" cx="700" cy="150" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="700" y="155" text-anchor="middle" font-size="13" fill="#1B4763">1</text>
+          <circle class="fog" cx="200" cy="340" r="28"/><circle class="pulse" cx="200" cy="340" r="16"/><circle class="nd" cx="200" cy="340" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="200" y="345" text-anchor="middle" font-size="13" fill="#143024">1</text>
         </g>
         <g class="mapnode" data-level="2" role="button" tabindex="0" aria-label="第二关 狮子崖">
-          <circle class="pulse" cx="840" cy="220" r="17"/><circle class="nd" cx="840" cy="220" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="840" y="225" text-anchor="middle" font-size="13" fill="#1B4763">2</text>
+          <circle class="fog" cx="360" cy="250" r="28"/><circle class="pulse" cx="360" cy="250" r="16"/><circle class="nd" cx="360" cy="250" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="360" y="255" text-anchor="middle" font-size="13" fill="#143024">2</text>
         </g>
         <g class="mapnode" data-level="3" role="button" tabindex="0" aria-label="第三关 狐狸坡">
-          <circle class="pulse" cx="640" cy="280" r="17"/><circle class="nd" cx="640" cy="280" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="640" y="285" text-anchor="middle" font-size="13" fill="#1B4763">3</text>
+          <circle class="fog" cx="520" cy="330" r="28"/><circle class="pulse" cx="520" cy="330" r="16"/><circle class="nd" cx="520" cy="330" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="520" y="335" text-anchor="middle" font-size="13" fill="#143024">3</text>
         </g>
         <g class="mapnode" data-level="4" role="button" tabindex="0" aria-label="第四关 乌龟潭">
-          <circle class="pulse" cx="420" cy="330" r="17"/><circle class="nd" cx="420" cy="330" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="420" y="335" text-anchor="middle" font-size="13" fill="#1B4763">4</text>
+          <circle class="fog" cx="660" cy="220" r="28"/><circle class="pulse" cx="660" cy="220" r="16"/><circle class="nd" cx="660" cy="220" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="660" y="225" text-anchor="middle" font-size="13" fill="#143024">4</text>
         </g>
         <g class="mapnode" data-level="5" role="button" tabindex="0" aria-label="第五关 公鸡岭">
-          <circle class="pulse" cx="240" cy="370" r="17"/><circle class="nd" cx="240" cy="370" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="240" y="375" text-anchor="middle" font-size="13" fill="#1B4763">5</text>
+          <circle class="fog" cx="780" cy="300" r="28"/><circle class="pulse" cx="780" cy="300" r="16"/><circle class="nd" cx="780" cy="300" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="780" y="305" text-anchor="middle" font-size="13" fill="#143024">5</text>
         </g>
         <g class="mapnode" data-level="6" role="button" tabindex="0" aria-label="第六关 老虎洞">
-          <circle class="pulse" cx="130" cy="300" r="17"/><circle class="nd" cx="130" cy="300" r="17" fill="#fff" stroke="#1B4763" stroke-width="2"/><text class="nt" x="130" y="305" text-anchor="middle" font-size="13" fill="#1B4763">6</text>
+          <circle class="fog" cx="860" cy="160" r="28"/><circle class="pulse" cx="860" cy="160" r="16"/><circle class="nd" cx="860" cy="160" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="860" y="165" text-anchor="middle" font-size="13" fill="#143024">6</text>
         </g>
-        <g font-size="11.5" fill="#4C524D" text-anchor="middle">
-          <text x="700" y="122">兔子谷</text>
-          <text x="840" y="252">狮子崖</text>
-          <text x="640" y="312">狐狸坡</text>
-          <text x="420" y="362">乌龟潭</text>
-          <text x="240" y="402">公鸡岭</text>
-          <text x="130" y="272">老虎洞</text>
+        <g class="mapplace" text-anchor="middle">
+          <text x="200" y="318">兔子谷</text>
+          <text x="360" y="228">狮子崖</text>
+          <text x="520" y="362">狐狸坡</text>
+          <text x="660" y="198">乌龟潭</text>
+          <text x="780" y="332">公鸡岭</text>
+          <text x="860" y="138">老虎洞</text>
         </g>
       </svg>
       <button type="button" class="mapreset" id="mapReset">重置进度</button>
     </div>
-    <div class="aside">小满翻开一本旧书，掉进了动物王国。六个地点，六个动物，每句话听起来都挺有道理——点节点进关，找出毛病、选对答案，门才会一扇扇打开。</div>
+    <div class="aside">小满走进森林迷宫。六个路口，六只动物都在说话。只有分辨出那句话的毛病，雾才会散，路才会通，才能走出森林。</div>
   </div>
   <div class="note">介绍规则：地图上六个节点，点开即进关。每关先听动物说话，全班讨论，再选「毛病出在哪」。选错会被弹回来，选对才揭晓分析、点亮节点。节点可以随便点，方便老师跳关；左下角能重置进度。</div>
 </section>
@@ -613,7 +636,8 @@
       <div class="bubble">「不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！」<small>—— 兔子谷里，兔子们成群结队往山上跑</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">跑的兔子再多，也变不成「天要塌」的证据</button>
       <button type="button" class="opt">兔子胆子小，所以它说的话全是错的</button>
       <button type="button" class="opt">山那么高，跑上去也躲不住</button>
@@ -643,7 +667,8 @@
       <div class="bubble">「我是百兽之王。这株草药我说它能治病，它就一定能治病。」<small>—— 狮子崖上，狮王举着一株草药</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">百兽之王的名头，证明不了草药灵不灵</button>
       <button type="button" class="opt">它是国王，国王说的话大家都得听</button>
       <button type="button" class="opt">能治病的草药，味道一定很苦</button>
@@ -673,7 +698,8 @@
       <div class="bubble">「大灰狼就在山后面！再不躲起来，咱们全完了！」<small>—— 狐狸坡上，狐狸扯着嗓子喊</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">越吓人，越要问一句：狼在哪？证据呢？</button>
       <button type="button" class="opt">狐狸最狡猾，它的话一句都不能信</button>
       <button type="button" class="opt">跑得越快，就越安全</button>
@@ -703,7 +729,8 @@
       <div class="bubble">「我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。」<small>—— 乌龟潭边，老乌龟捧着一把浆果</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">它爷爷一个人的事，证明不了谁吃都灵</button>
       <button type="button" class="opt">乌龟本来就长寿，所以它在撒谎</button>
       <button type="button" class="opt">浆果是红色的，红色食物都养生</button>
@@ -733,7 +760,8 @@
       <div class="bubble">「看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！」<small>—— 公鸡岭上，公鸡挺着胸脯</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">打鸣在前、日出在后，不等于太阳是它叫出来的</button>
       <button type="button" class="opt">公鸡起得早，它说的话肯定有道理</button>
       <button type="button" class="opt">它叫得太小声，太阳听不见</button>
@@ -763,7 +791,8 @@
       <div class="bubble">狐狸走在老虎前面，小动物们吓得四散奔逃。狐狸回头对老虎说：「瞧见没？它们都怕我，才跑的。」<small>—— 老虎洞前，狐假虎威</small></div>
     </div>
     <div class="quiz">
-      <p class="q">它这句话，毛病出在哪？</p>
+      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
+      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
       <button type="button" class="opt" data-correct="1">动物们怕的是老虎，狐狸把意思换成了「怕它」</button>
       <button type="button" class="opt">狐狸跑得比老虎快，所以动物们怕它</button>
       <button type="button" class="opt">小动物们的胆子太小了</button>
@@ -1006,8 +1035,9 @@
 (function(){
   var KEY = 'm2logic-animal-v1';
   var N = 6;
-  var POS = [[700,150],[840,220],[640,280],[420,330],[240,370],[130,300]];
-  var END = [836,78];
+  var START = [90,400];
+  var POS = [[200,340],[360,250],[520,330],[660,220],[780,300],[860,160]];
+  var END = [910,70];
   var cleared = [];
   try { cleared = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
   while (cleared.length < N) cleared.push(false);
@@ -1039,11 +1069,20 @@
         sec.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; if(b.dataset.correct) b.classList.add('right'); });
       }
     });
+    document.querySelectorAll('.leg').forEach(function(p){
+      var n = +p.dataset.leg;
+      p.classList.toggle('open', n === 0 || !!cleared[n - 1]);
+    });
+    var fmap = document.getElementById('forestMap');
+    if (fmap) fmap.classList.toggle('out', allDone);
     if (xm){
-      var p = allDone ? END : POS[cur];
+      var p = allDone ? END : (cur === 0 ? START : POS[cur - 1]);
       xm.setAttribute('transform', 'translate(' + (p[0]-122) + ',' + (p[1]-455) + ')');
-      if (xml) xml.setAttribute('x', p[0]);
-      if (allDone && xml) xml.textContent = '到家';
+      if (xml){
+        xml.setAttribute('x', p[0]);
+        xml.setAttribute('y', p[1] - 36);
+        xml.textContent = allDone ? '走出森林' : '小满';
+      }
     }
   }
 
@@ -1053,8 +1092,11 @@
       btn.addEventListener('click', function(){
         if (cleared[lv]) return;
         if (btn.dataset.correct){
+          sec.classList.remove('miss');
+          sec.classList.add('opened');
           cleared[lv] = true; save(); render();
         } else {
+          sec.classList.add('miss');
           btn.classList.add('wrong');
           setTimeout(function(){ btn.classList.remove('wrong'); }, 480);
         }
