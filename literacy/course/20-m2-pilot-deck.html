@@ -80,24 +80,6 @@
   .opt.right{opacity:1;border-color:var(--red);background:rgba(187,58,34,.08);font-weight:700}
   .opt.wrong{border-color:var(--red);animation:shake .42s}
   @keyframes shake{0,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
-  .deadend{display:none;margin:0 0 8px;font-size:13px;font-weight:700;color:#f2c14e}
-  .slide.level.miss .deadend{display:block;animation:shake .42s}
-  .slide.level[data-theme="paper"]{background-color:#10281c;background-image:radial-gradient(420px 220px at 12% 100%,rgba(90,150,80,.28),transparent 60%),radial-gradient(380px 180px at 90% 0,rgba(8,20,14,.55),transparent 55%);color:#f3f7f1}
-  .slide.level .vlabel{color:#b7d7c0}
-  .slide.level .trail span{background:transparent;color:#d5e6da;border-color:rgba(255,255,255,.28)}
-  .slide.level .trail i{background:rgba(255,255,255,.25)}
-  .slide.level .hero{background:#f7f3e8;border-color:#e7c27a;box-shadow:0 8px 0 rgba(0,0,0,.25)}
-  .slide.level .bubble{background:#f7f3e8;color:#142018;border-color:#e7c27a;border-radius:16px}
-  .slide.level .bubble small{color:#5c5148}
-  .slide.level .quiz .q{color:#f2c14e;letter-spacing:.08em}
-  .slide.level .opt{background:rgba(255,255,255,.06);color:#f4f7f2;border-color:rgba(255,255,255,.28);border-radius:12px}
-  .slide.level .opt:hover:not(:disabled){background:rgba(242,193,78,.16);border-color:#f2c14e;color:#fff}
-  .slide.level .opt.right{background:#e7f6ec;color:#143024;border-color:#8fd0a4}
-  .slide.level.opened .wrap{animation:clearing .7s ease}
-  .slide.level .unbox.show{background:#f7f3e8;color:#142018;border-radius:14px;padding:12px 12px 8px}
-  @keyframes clearing{0%{filter:brightness(.7)}40%{filter:brightness(1.15)}100%{filter:none}}
-  .slide.level .rc b{color:#1B4763}
-  .slide.level .rc span{color:#2a2038}
   .unbox{display:none}
   .unbox.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
   @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -636,8 +618,7 @@
       <div class="bubble">「不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！」<small>—— 兔子谷里，兔子们成群结队往山上跑</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">跑的兔子再多，也变不成「天要塌」的证据</button>
       <button type="button" class="opt">兔子胆子小，所以它说的话全是错的</button>
       <button type="button" class="opt">山那么高，跑上去也躲不住</button>
@@ -667,8 +648,7 @@
       <div class="bubble">「我是百兽之王。这株草药我说它能治病，它就一定能治病。」<small>—— 狮子崖上，狮王举着一株草药</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">百兽之王的名头，证明不了草药灵不灵</button>
       <button type="button" class="opt">它是国王，国王说的话大家都得听</button>
       <button type="button" class="opt">能治病的草药，味道一定很苦</button>
@@ -698,8 +678,7 @@
       <div class="bubble">「大灰狼就在山后面！再不躲起来，咱们全完了！」<small>—— 狐狸坡上，狐狸扯着嗓子喊</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">越吓人，越要问一句：狼在哪？证据呢？</button>
       <button type="button" class="opt">狐狸最狡猾，它的话一句都不能信</button>
       <button type="button" class="opt">跑得越快，就越安全</button>
@@ -729,8 +708,7 @@
       <div class="bubble">「我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。」<small>—— 乌龟潭边，老乌龟捧着一把浆果</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">它爷爷一个人的事，证明不了谁吃都灵</button>
       <button type="button" class="opt">乌龟本来就长寿，所以它在撒谎</button>
       <button type="button" class="opt">浆果是红色的，红色食物都养生</button>
@@ -760,8 +738,7 @@
       <div class="bubble">「看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！」<small>—— 公鸡岭上，公鸡挺着胸脯</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">打鸣在前、日出在后，不等于太阳是它叫出来的</button>
       <button type="button" class="opt">公鸡起得早，它说的话肯定有道理</button>
       <button type="button" class="opt">它叫得太小声，太阳听不见</button>
@@ -791,8 +768,7 @@
       <div class="bubble">狐狸走在老虎前面，小动物们吓得四散奔逃。狐狸回头对老虎说：「瞧见没？它们都怕我，才跑的。」<small>—— 老虎洞前，狐假虎威</small></div>
     </div>
     <div class="quiz">
-      <p class="q">三条路，只有一条走得通。它这句话，毛病出在哪？</p>
-      <p class="deadend">这条路走不通。再听一遍它说的话。</p>
+      <p class="q">它这句话，毛病出在哪？</p>
       <button type="button" class="opt" data-correct="1">动物们怕的是老虎，狐狸把意思换成了「怕它」</button>
       <button type="button" class="opt">狐狸跑得比老虎快，所以动物们怕它</button>
       <button type="button" class="opt">小动物们的胆子太小了</button>
@@ -1092,11 +1068,8 @@
       btn.addEventListener('click', function(){
         if (cleared[lv]) return;
         if (btn.dataset.correct){
-          sec.classList.remove('miss');
-          sec.classList.add('opened');
           cleared[lv] = true; save(); render();
         } else {
-          sec.classList.add('miss');
           btn.classList.add('wrong');
           setTimeout(function(){ btn.classList.remove('wrong'); }, 480);
         }
