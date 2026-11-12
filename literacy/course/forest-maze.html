@@ -30,15 +30,15 @@
   .app{height:100svh;display:grid;grid-template-rows:auto 1fr;padding:12px 14px 14px;gap:10px}
   header{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   header .brand{flex:1;min-width:140px;display:flex;align-items:baseline;gap:10px}
-  header a{text-decoration:none;font-size:13px;opacity:.7}
+  header a{text-decoration:none;font-size:15px;opacity:.7}
   header a:hover{opacity:1;color:var(--lantern)}
   h1{font-family:var(--display);font-size:clamp(26px,3.6vw,36px);letter-spacing:.04em;font-weight:400}
-  .tag{font-size:11px;letter-spacing:.08em;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:3px 8px;font-weight:900}
-  .where{font-size:14px;color:var(--lantern);font-weight:700}
+  .tag{font-size:13px;letter-spacing:.08em;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:3px 8px;font-weight:900}
+  .where{font-size:16px;color:var(--lantern);font-weight:700}
   .lamps{display:flex;gap:6px;align-items:center;margin-left:auto}
   .lamps i{width:11px;height:11px;border-radius:50%;background:#0a1a12;border:1px solid #4a6b52;display:block}
   .lamps i.on{background:var(--lantern);box-shadow:0 0 10px var(--lantern);border-color:var(--lantern)}
-  .mute{border:1px solid rgba(255,246,232,.28);background:transparent;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
+  .mute{border:1px solid rgba(255,246,232,.28);background:transparent;border-radius:999px;padding:6px 12px;cursor:pointer;font-size:15px}
   .mute:hover{border-color:var(--lantern);color:var(--lantern)}
 
   .world{min-height:0;display:grid;grid-template-columns:minmax(240px,34%) 1fr;gap:14px}
@@ -163,11 +163,11 @@
     z-index:3;
   }
   @keyframes bob{50%{transform:translateX(-50%) translateY(-6px)}}
-  .kid.back{animation:none;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45)) brightness(.85);transform:translateX(calc(-50% - 12px))}
+  .kid.back{animation:none;filter:drop-shadow(0 10px 14px rgba(0,0,0,.45)) brightness(.85);transform:translateX(-50%) translateY(7px) scale(.97)}
 
   .clearing{
     min-height:0;display:grid;grid-template-rows:auto auto 1fr auto;
-    gap:12px;background:rgba(255,246,232,.96);color:var(--ink);
+    gap:12px;overflow-y:auto;overscroll-behavior:contain;background:rgba(255,246,232,.96);color:var(--ink);
     border-radius:28px;padding:16px 18px 14px;
     border:2px solid rgba(255,200,87,.35);
     box-shadow:0 18px 40px rgba(0,0,0,.28);
@@ -184,44 +184,45 @@
   .face.pop{transform:scale(1.08) rotate(-2deg)}
   .face img{width:108%;height:108%;object-fit:contain;object-position:center 60%}
   .say{flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
-  .say b{display:block;font-family:var(--display);font-size:18px;color:var(--bark);font-weight:400;margin-bottom:6px}
-  .say p{font-size:clamp(17px,2.1vw,22px);line-height:1.45;font-weight:900;min-height:3.1em}
-  .say small{display:block;margin-top:8px;font-size:13px;font-weight:500;color:#6d6256}
-  .ask{font-size:15px;color:#8a5a1e;font-weight:700}
+  .say b{display:block;font-family:var(--display);font-size:21px;color:var(--bark);font-weight:400;margin-bottom:6px}
+  .say p{font-size:clamp(20px,2.5vw,27px);line-height:1.45;font-weight:900;min-height:3.1em}
+  .say small{display:block;margin-top:8px;font-size:15px;font-weight:500;color:#6d6256}
+  .ask{font-size:17px;color:#8a5a1e;font-weight:700}
 
   .forks{display:grid;grid-template-columns:1fr;gap:9px;min-height:0;align-content:start}
   .fork{
     text-align:left;background:#fff;color:var(--ink);
-    border:2.5px solid #1c2a22;border-radius:16px;padding:12px 14px;cursor:pointer;
-    display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;
+    border:2.5px solid #1c2a22;border-radius:16px;padding:13px 16px;cursor:pointer;
+    display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:center;
     transition:transform .18s cubic-bezier(.22,1,.36,1), background .15s, border-color .15s;
   }
   .fork.in{animation:rise .38s cubic-bezier(.22,1,.36,1) both}
   @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
   .fork i{
-    font-style:normal;font-family:var(--display);font-size:15px;font-weight:400;
-    color:#1c2a22;background:#ffe7a8;border-radius:12px;padding:8px 6px;text-align:center;
+    font-style:normal;font-family:var(--display);font-size:17px;font-weight:400;
+    color:#1c2a22;background:#ffe7a8;border-radius:999px;width:32px;height:32px;
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
   }
-  .fork span{font-size:15px;line-height:1.4;font-weight:700}
+  .fork span{font-size:18px;line-height:1.4;font-weight:700}
   .fork:hover{transform:translateY(-3px);background:#fffaf0;border-color:var(--bark)}
   .fork.bad{animation:shake .4s;border-color:var(--miss);background:#ffe8e2}
   .fork.good{border-color:var(--ok);background:#e6f6ec}
   .fork:disabled{cursor:default}
   @keyframes shake{20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
 
-  .missline{min-height:1.3em;font-size:14px;color:var(--miss);font-weight:900}
+  .missline{min-height:1.3em;font-size:16px;color:var(--miss);font-weight:900}
   .reveal{display:none;background:#1c2a22;color:var(--paper);border-radius:18px;padding:14px 16px;gap:10px}
   .reveal.on{display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:end}
-  .reveal div b{display:block;font-size:12px;color:var(--lantern);margin-bottom:4px;font-weight:700}
-  .reveal div span{font-size:14px;line-height:1.4;font-weight:700}
-  .go{border:none;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:900;white-space:nowrap}
+  .reveal div b{display:block;font-size:14px;color:var(--lantern);margin-bottom:4px;font-weight:700}
+  .reveal div span{font-size:16px;line-height:1.4;font-weight:700}
+  .go{border:none;background:var(--lantern);color:#1c2a22;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:900;font-size:17px;white-space:nowrap}
   .go:hover{filter:brightness(1.06)}
 
   .gate{position:absolute;inset:0;display:grid;place-items:center;background:rgba(8,22,14,.72);border-radius:28px;z-index:5;backdrop-filter:blur(3px)}
   .card{width:min(520px,92%);background:var(--paper);color:var(--ink);border-radius:28px;padding:30px 28px;border:3px solid #1c2a22;box-shadow:0 24px 50px rgba(0,0,0,.35)}
   .card h2{font-family:var(--display);font-size:clamp(34px,5vw,44px);font-weight:400}
-  .card p{margin:12px 0 20px;font-size:16px;line-height:1.55;font-weight:500}
-  .card button{display:inline-block;background:#163528;color:var(--paper);border:none;border-radius:999px;padding:14px 22px;cursor:pointer;font-weight:900;font-size:16px}
+  .card p{margin:12px 0 20px;font-size:18px;line-height:1.55;font-weight:500}
+  .card button{display:inline-block;background:#163528;color:var(--paper);border:none;border-radius:999px;padding:14px 22px;cursor:pointer;font-weight:900;font-size:18px}
   .card button:hover{background:#245a3c}
 
   .fork:focus-visible,.go:focus-visible,#gateBtn:focus-visible,.mute:focus-visible{outline:3px solid var(--lantern);outline-offset:3px}
@@ -376,7 +377,7 @@ var LEVELS = [
    side:["还是没看「怕」的对象——怕的是老虎，跟跑得快没关系。","怪观众胆小，不检查话本身——这毛病和它犯的一样。"],
    choices:["动物们怕的是老虎，狐狸把意思换成了「怕它」","狐狸跑得比老虎快，所以动物们怕它","小动物们的胆子太小了"]}
 ];
-var SIDES = ["左边的路","中间的路","右边的路"];
+var SIDES = ["①","②","③"];
 var phase = "intro";
 var lineTimer = null;
 var kid = document.getElementById("kid");
@@ -388,8 +389,22 @@ var stops = [
 ];
 var stoneY = [14,26,38,50,60,70];
 var ac = null;
-var muted = sessionStorage.getItem("maze-mute") === "1";
+/* 预览面板 / 沙箱 iframe 里 sessionStorage 可能直接抛异常，
+   一旦抛异常整段脚本会中断，游戏就"卡住"了。这里全部包起来。 */
+var store = {
+  get: function(k){ try { return window.sessionStorage ? sessionStorage.getItem(k) : null; } catch(e){ return null; } },
+  set: function(k,v){ try { if (window.sessionStorage) sessionStorage.setItem(k,v); } catch(e){} },
+  del: function(k){ try { if (window.sessionStorage) sessionStorage.removeItem(k); } catch(e){} }
+};
+var muted = store.get("maze-mute") === "1";
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var lockAt = 0;
+function lockPhase(){ phase = "locked"; lockAt = Date.now(); }
+/* 兜底：任何异常让 locked 状态超时，就自动恢复到可操作状态 */
+setInterval(function(){
+  if (phase !== "locked" || Date.now() - lockAt < 1500) return;
+  phase = document.getElementById("nextGo") ? "reveal" : "choose";
+}, 400);
 
 function paintPath(n){
   var step = stops[Math.min(n, 6)];
@@ -461,7 +476,7 @@ function sfxOk(){ tone(523, 0.09, "sine"); setTimeout(function(){ tone(784, 0.14
 function sfxBad(){ tone(196, 0.12, "triangle"); }
 function setMute(on){
   muted = on;
-  sessionStorage.setItem("maze-mute", on ? "1" : "0");
+  store.set("maze-mute", on ? "1" : "0");
   document.getElementById("mute").textContent = on ? "声音关" : "声音开";
   document.getElementById("mute").setAttribute("aria-pressed", on ? "true" : "false");
 }
@@ -516,7 +531,7 @@ function renderLevel(i){
   document.getElementById("scene").textContent = L.scene;
   document.getElementById("face").innerHTML = '<img alt="'+L.name+'" src="'+L.img+'">';
   document.getElementById("face").classList.remove("pop");
-  document.getElementById("ask").textContent = "听完它说的话，再选一条路。空格可以快进。";
+  document.getElementById("ask").textContent = "听完它说的话，再挑一个说法。空格可以快进。";
   document.getElementById("miss").textContent = "";
   document.getElementById("reveal").className = "reveal";
   document.getElementById("reveal").innerHTML = "";
@@ -529,7 +544,7 @@ function showChoices(i){
   var order = orderFor(i);
   var box = document.getElementById("forks");
   box.innerHTML = "";
-  document.getElementById("ask").textContent = "三条路，只有一条走得通。";
+  document.getElementById("ask").textContent = "三个说法，只有一个站得住。";
   order.forEach(function(src, k){
     var b = document.createElement("button");
     b.type = "button";
@@ -548,13 +563,13 @@ function pick(i, src, btn){
   if (phase !== "choose") return;
   var L = LEVELS[i];
   if (src !== 0){
-    phase = "locked";
+    lockPhase();
     btn.classList.add("bad");
     if (!reduceMotion){
       document.querySelector(".clearing").classList.add("hit");
       kid.classList.add("back");
     }
-    var note = (L.side && L.side[src - 1]) ? L.side[src - 1] : "这条路走不通。再听一遍它说的话。";
+    var note = (L.side && L.side[src - 1]) ? L.side[src - 1] : "这个说法站不住。再听它说一遍。";
     document.getElementById("miss").textContent = note;
     sfxBad();
     setTimeout(function(){
@@ -565,7 +580,7 @@ function pick(i, src, btn){
     }, 420);
     return;
   }
-  phase = "locked";
+  lockPhase();
   Array.prototype.forEach.call(document.querySelectorAll(".fork"), function(b){ b.disabled = true; });
   btn.classList.add("good");
   document.getElementById("face").classList.add("pop");
@@ -573,7 +588,7 @@ function pick(i, src, btn){
   document.getElementById("ask").textContent = "雾散了。一起读：" + L.sent;
   sfxOk();
   paintPath(i+1);
-  sessionStorage.setItem("maze-at", String(i+1));
+  store.set("maze-at", String(i+1));
   var box = document.getElementById("reveal");
   box.className = "reveal on";
   var next = i === LEVELS.length-1 ? "走出森林" : "继续往前";
@@ -585,7 +600,8 @@ function pick(i, src, btn){
   phase = "reveal";
   var go = document.getElementById("nextGo");
   go.onclick = function(){ advance(i); };
-  go.focus();
+  try { box.scrollIntoView({block:"nearest", behavior:"smooth"}); } catch(e){}
+  try { go.focus({preventScroll:true}); } catch(e){ go.focus(); }
 }
 function advance(i){
   if (phase !== "reveal" && phase !== "outro") return;
@@ -593,8 +609,8 @@ function advance(i){
     phase = "outro";
     paintPath(6);
     document.getElementById("where").textContent = "林外";
-    showGate("走出森林了", "六句话都听清了。大家都跑、名头响、吓人、一个例子、先后，都不能当凭据。最后一句，狐狸把怕老虎换成了怕它。记住那个公式：他说什么，理由是什么。但什么，不能当凭据。", "回课上看速查卡", function(){
-      sessionStorage.removeItem("maze-at");
+    showGate("走出森林了", "六句话都听清了。大家都跑、名头响、吓人、一个例子、先后，都不能当凭据。最后一句，狐狸把怕老虎换成了怕它。记住那个公式：他说什么，理由是什么。但什么，不能当凭据。", "回课上看六张卡片", function(){
+      store.del("maze-at");
       var dest = "20-m2-pilot-deck.html#6";
       if (window.top && window.top !== window) window.top.location.href = dest;
       else location.href = dest;
@@ -606,11 +622,16 @@ function advance(i){
 document.addEventListener("keydown", function(e){
   if (e.metaKey || e.ctrlKey || e.altKey) return;
   if (e.key === "m" || e.key === "M"){ setMute(!muted); return; }
+  if ((phase === "intro" || phase === "outro") && (e.key === " " || e.key === "Enter")){
+    e.preventDefault();
+    document.getElementById("gateBtn").click();
+    return;
+  }
   if (phase === "line" && (e.key === " " || e.key === "Enter")){ e.preventDefault(); skipLine(); return; }
   if (phase === "reveal" && (e.key === "Enter" || e.key === " ")){
+    e.preventDefault();
     var go = document.getElementById("nextGo");
-    if (go && document.activeElement === go) return;
-    if (go){ e.preventDefault(); go.click(); }
+    if (go) go.click();
     return;
   }
   if (phase !== "choose") return;
@@ -631,7 +652,7 @@ paintPath(0);
 spawnMotes();
 setMute(muted);
 document.getElementById("gateBtn").focus();
-var saved = +sessionStorage.getItem("maze-at") || 0;
+var saved = +store.get("maze-at") || 0;
 document.getElementById("gateBtn").onclick = function(){
   hideGate();
   renderLevel(saved > 0 && saved < 6 ? saved : 0);
