@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M2 课件 · 页面风格备选</title>
+<style>
+  :root{
+    --bg:#F3F4F7;--card:#FFFFFF;--ink:#18202E;--ink2:#5B6577;--ink3:#8B95A6;
+    --line:#E3E7EE;--accent:#3B49D6;--accent2:#F0533B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .top{max-width:1360px;margin:0 auto;padding:44px 28px 0}
+  .kicker{font-size:13px;letter-spacing:.2em;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(30px,4vw,48px);line-height:1.2;letter-spacing:-.03em;margin-top:10px;font-weight:900}
+  .intro{margin-top:14px;font-size:17px;color:var(--ink2);max-width:44em}
+  .intro b{color:var(--ink)}
+  .notice{margin-top:18px;display:inline-flex;align-items:center;gap:10px;background:#FFF3E9;border:1px solid #FFDCC2;color:#8A4A16;padding:10px 16px;border-radius:12px;font-size:15px}
+  .toolbar{position:sticky;top:0;z-index:20;margin-top:28px;padding:14px 0;background:rgba(243,244,247,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .toolbar .in{max-width:1360px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .toolbar .lb{font-size:14px;color:var(--ink2);font-weight:700;margin-right:4px}
+  .toolbar button{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink2);font:inherit;font-size:14px;font-weight:700;padding:8px 15px;border-radius:999px;cursor:pointer;transition:.2s}
+  .toolbar button:hover{border-color:var(--accent);color:var(--accent)}
+  .toolbar button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .banner{max-width:1360px;margin:18px auto 0;padding:0 28px}
+  .banner .b{display:none;background:#EDEBFF;border:1px solid #D6D1FF;color:#2E2A8C;padding:12px 18px;border-radius:12px;font-size:15px;font-weight:700}
+  .banner .b.show{display:block}
+  .grid{max-width:1360px;margin:22px auto 0;padding:0 28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+  .opt{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 8px 28px rgba(24,36,60,.06);display:flex;flex-direction:column}
+  .opt.picked{outline:3px solid var(--accent);outline-offset:2px}
+  .opt.base{background:#FAFAF8;border-style:dashed}
+  .hd{display:flex;align-items:flex-start;gap:14px;padding:20px 22px 14px}
+  .no{flex:0 0 40px;height:40px;border-radius:12px;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:900;font-size:17px}
+  .base .no{background:#B8B4A6}
+  .hd h2{font-size:21px;font-weight:900;letter-spacing:-.02em;line-height:1.3}
+  .hd p{margin-top:5px;font-size:14px;color:var(--ink2);line-height:1.55}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;padding:0 22px 12px}
+  .tag{font-size:12px;font-weight:700;color:var(--ink2);background:#F1F3F8;border-radius:6px;padding:4px 9px}
+  .sw{display:flex;gap:5px;padding:0 22px 14px}
+  .sw i{width:24px;height:24px;border-radius:7px;display:block;border:1px solid rgba(0,0,0,.07)}
+  .pv{position:relative;margin:0 22px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pv iframe{position:absolute;left:0;top:0;width:1240px;height:780px;border:0;transform-origin:0 0;pointer-events:none;background:#fff}
+  .pv a.hit{position:absolute;inset:0;display:block;background:transparent;z-index:2}
+  .pv a.hit span{position:absolute;right:10px;bottom:10px;background:rgba(16,22,34,.86);color:#fff;font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;opacity:0;transition:.2s}
+  .pv:hover a.hit span{opacity:1}
+  .ft{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 22px 20px;flex-wrap:wrap}
+  .ft a{font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+  .ft a:hover{text-decoration:underline}
+  .ft button{appearance:none;border:1px solid var(--ink);background:var(--ink);color:#fff;font:inherit;font-size:14px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;transition:.2s}
+  .ft button:hover{background:var(--accent);border-color:var(--accent)}
+  .ft .ro{color:var(--ink3);font-size:13px}
+  .cmp{max-width:1360px;margin:38px auto 0;padding:0 28px 60px}
+  .cmp h3{font-size:22px;font-weight:900;margin-bottom:14px}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#F7F8FB;font-weight:900;color:var(--ink2);white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  td:first-child{font-weight:900;white-space:nowrap}
+  .tip{margin-top:18px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:16px 20px;font-size:15px;color:var(--ink2)}
+  .tip b{color:var(--ink)}
+  @media(max-width:1000px){.grid{grid-template-columns:1fr}}
+  @media(max-width:600px){.top,.toolbar .in,.banner,.grid,.cmp{padding-left:16px;padding-right:16px}.hd,.tags,.sw,.ft{padding-left:16px;padding-right:16px}.pv{margin:0 16px}table{font-size:13px}th,td{padding:10px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="kicker">M2 先导课件 · 视觉方案</div>
+  <h1>同一份课件，六种完全不同的观感</h1>
+  <p class="intro">现在这版是米色纸面 + 细线框 + 竖排小标签，确实像一张老报纸。下面六套皮肤<b>只换视觉，不改一个字、不改交互</b>，都用课件里真实的页面渲染。点顶部按钮可以切换对比的页面，点预览图能打开完整课件翻页。</p>
+  <div class="notice">正式课件已经换成 <b>1 号「清爽课堂」</b> 并发布上线。下面这几套留着在线对比，想换哪套说一声就行。</div>
+</div>
+
+<div class="toolbar">
+  <div class="in">
+    <span class="lb">用这一页来比：</span>
+    <button data-slide="s1">封面</button>
+    <button data-slide="s3" class="on">谣言页</button>
+    <button data-slide="s4">概念页</button>
+    <button data-slide="s12">三位先哲</button>
+    <button data-slide="s12c1">六张卡片 · 01</button>
+    <button data-slide="s12b">回到生活</button>
+    <button data-slide="s15">收课</button>
+  </div>
+</div>
+
+<div class="banner"><div class="b" id="pickmsg"></div></div>
+
+<div class="grid" id="grid">
+
+  <article class="opt base">
+    <div class="hd"><div class="no">00</div><div><h2>现在这版 · 报纸风</h2><p>改版前那版：米色纸面、细线框、竖排标签、深蓝配砖红。留档作对照。</p></div></div>
+    <div class="tags"><span class="tag">对照用</span><span class="tag">纸质编辑感</span></div>
+    <div class="sw"><i style="background:#ECEDE6"></i><i style="background:#14181A"></i><i style="background:#1B4763"></i><i style="background:#BB3A22"></i></div>
+    <div class="pv"><iframe data-file="m2-style-0-newspaper.html" src="m2-style-0-newspaper.html#s3" loading="lazy"></iframe><a class="hit" href="m2-style-0-newspaper.html#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-0-newspaper.html#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><span class="ro">改版前的样子 · 留档</span></div>
+  </article>
+
+  <article class="opt" data-id="1" data-name="清爽课堂">
+    <div class="hd"><div class="no">1</div><div><h2>清爽课堂 · 现代教学白板</h2><p>白底、圆角卡片、柔和投影、靛蓝+珊瑚色。去掉所有细线和竖排标签，换成小药丸标签和彩色短条。最稳、最耐看。</p></div></div>
+    <div class="tags"><span class="tag">推荐</span><span class="tag">投影清楚</span><span class="tag">不幼稚也不老气</span></div>
+    <div class="sw"><i style="background:#F5F7FC"></i><i style="background:#FFFFFF"></i><i style="background:#4F46E5"></i><i style="background:#F0533B"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=clean" src="m2-style-preview.html?skin=clean#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=clean#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=clean#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+  <article class="opt" data-id="2" data-name="深色实验室">
+    <div class="hd"><div class="no">2</div><div><h2>深色实验室 · AI 科技感</h2><p>深夜蓝底 + 青绿荧光 + 琥珀重点，半透明卡片和柔光。和「AI」这个主题最贴，但整节课都深色，长时间看会累。</p></div></div>
+    <div class="tags"><span class="tag">科技感</span><span class="tag">氛围强</span><span class="tag">需检查投影亮度</span></div>
+    <div class="sw"><i style="background:#0A1220"></i><i style="background:#101D31"></i><i style="background:#5EEAD4"></i><i style="background:#FBBF24"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=lab" src="m2-style-preview.html?skin=lab#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=lab#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=lab#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+  <article class="opt" data-id="3" data-name="手帐涂鸦">
+    <div class="hd"><div class="no">3</div><div><h2>手帐涂鸦 · 儿童亲和</h2><p>暖黄点阵纸、歪一点的手绘框、马克笔荧光、胶带标签、圆体字。孩子一看就放松，最适合低年级；内容多时略显热闹。</p></div></div>
+    <div class="tags"><span class="tag">最亲近孩子</span><span class="tag">轻松</span><span class="tag">偏活泼</span></div>
+    <div class="sw"><i style="background:#FFF8E9"></i><i style="background:#FFFDF6"></i><i style="background:#FFE28A"></i><i style="background:#E0562B"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=note" src="m2-style-preview.html?skin=note#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=note#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=note#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+  <article class="opt" data-id="4" data-name="大色块杂志">
+    <div class="hd"><div class="no">4</div><div><h2>大色块杂志 · 有记忆点</h2><p>钴蓝、柠檬黄、砖红三色平涂，顶部三色条，粗黑标题和硬边阴影。完全不是报纸了，冲击力最强；也最容易抢走内容的注意力。</p></div></div>
+    <div class="tags"><span class="tag">最不像报纸</span><span class="tag">海报感</span><span class="tag">个性强</span></div>
+    <div class="sw"><i style="background:#F3F1E9"></i><i style="background:#1D3BE0"></i><i style="background:#FFE14D"></i><i style="background:#EE4B2B"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=blocks" src="m2-style-preview.html?skin=blocks#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=blocks#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=blocks#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+  <article class="opt" data-id="5" data-name="闯关界面">
+    <div class="hd"><div class="no">5</div><div><h2>闯关界面 · 和游戏连成一套</h2><p>深紫底、荧光绿关卡编号、厚圆角卡片和硬阴影，像游戏里的任务面板。翻到森林迷宫那一页时风格最连贯。</p></div></div>
+    <div class="tags"><span class="tag">和游戏最搭</span><span class="tag">孩子有代入感</span><span class="tag">偏游戏化</span></div>
+    <div class="sw"><i style="background:#17122B"></i><i style="background:#241C46"></i><i style="background:#C6F24E"></i><i style="background:#FF7A59"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=quest" src="m2-style-preview.html?skin=quest#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=quest#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=quest#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+  <article class="opt" data-id="6" data-name="极简大字">
+    <div class="hd"><div class="no">6</div><div><h2>极简大字 · 投影最清楚</h2><p>纯白、纯黑、只有一个橙红重点；字号再放大，留白更多，没有阴影和装饰。教室里最后一排也看得清，但气氛偏冷静。</p></div></div>
+    <div class="tags"><span class="tag">可读性第一</span><span class="tag">克制</span><span class="tag">偏成人</span></div>
+    <div class="sw"><i style="background:#FFFFFF"></i><i style="background:#111111"></i><i style="background:#F6F6F6"></i><i style="background:#FF3B1F"></i></div>
+    <div class="pv"><iframe data-file="m2-style-preview.html?skin=swiss" src="m2-style-preview.html?skin=swiss#s3" loading="lazy"></iframe><a class="hit" href="m2-style-preview.html?skin=swiss#s3" target="_blank" rel="noopener"><span>打开这一版 ↗</span></a></div>
+    <div class="ft"><a href="m2-style-preview.html?skin=swiss#s3" target="_blank" rel="noopener">打开完整课件 ↗</a><button>就选这个</button></div>
+  </article>
+
+</div>
+
+<div class="cmp">
+  <h3>怎么挑</h3>
+  <table>
+    <tr><th>编号</th><th>一眼感觉</th><th>最适合</th><th>要注意</th></tr>
+    <tr><td>1 清爽课堂</td><td>现代、干净、专业</td><td>正式上课、家长旁听、长期沿用</td><td>个性不算最强，但最不容易出错</td></tr>
+    <tr><td>2 深色实验室</td><td>酷、有 AI 味</td><td>线上课、录屏、屏幕观看</td><td>教室投影仪可能发灰；整节课深色易疲劳</td></tr>
+    <tr><td>3 手帐涂鸦</td><td>松弛、亲切、像笔记本</td><td>三到五年级、小班、想降低距离感</td><td>内容密集的卡片页会显得花</td></tr>
+    <tr><td>4 大色块杂志</td><td>响亮、有海报感</td><td>公开课、展示、想让人记住</td><td>颜色会抢内容；打印费墨</td></tr>
+    <tr><td>5 闯关界面</td><td>游戏任务面板</td><td>游戏环节占比高、想让课件和迷宫像一套</td><td>讲严肃概念时底色偏跳</td></tr>
+    <tr><td>6 极简大字</td><td>安静、清楚、有设计感</td><td>大教室、投影差、需要大字</td><td>对孩子来说略冷，气氛要靠老师带</td></tr>
+  </table>
+  <div class="tip"><b>我的建议：</b>已经按 <b>1 清爽课堂</b> 改版上线 —— 它把「报纸感」的来源（米色纸、细线框、竖排小字、等宽标签）全部换掉，同时保留了大字号和高对比，孩子不觉得幼稚，投影也稳。如果你更想让孩子一进门就兴奋，可以选 <b>5 闯关界面</b>，再让森林迷宫那一页跟它自然接上；<b>3 手帐涂鸦</b> 适合更低龄的班。也可以混：主体用 1，封面和收课用 4 的大色块。</div>
+</div>
+
+<script>
+(function(){
+  var W = 1240, H = 780;
+  var frames = Array.prototype.slice.call(document.querySelectorAll('.pv iframe'));
+  var hits = Array.prototype.slice.call(document.querySelectorAll('.pv a.hit'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('.ft a'));
+  var slide = 's3';
+
+  function fit(){
+    frames.forEach(function(f){
+      var box = f.parentElement;
+      var s = box.clientWidth / W;
+      box.style.height = Math.round(H * s) + 'px';
+      f.style.transform = 'scale(' + s + ')';
+    });
+  }
+  function sync(){
+    frames.forEach(function(f){ f.src = f.getAttribute('data-file') + '#' + slide; });
+    hits.forEach(function(a){ a.href = a.closest('.pv').querySelector('iframe').getAttribute('data-file') + '#' + slide; });
+    links.forEach(function(a){ a.href = a.closest('.opt').querySelector('iframe').getAttribute('data-file') + '#' + slide; });
+  }
+  document.querySelectorAll('.toolbar button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.toolbar button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      slide = b.getAttribute('data-slide');
+      sync();
+    });
+  });
+  var msg = document.getElementById('pickmsg');
+  document.querySelectorAll('.ft button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var card = b.closest('.opt');
+      document.querySelectorAll('.opt').forEach(function(x){ x.classList.remove('picked'); });
+      card.classList.add('picked');
+      var id = card.getAttribute('data-id'), name = card.getAttribute('data-name');
+      try { localStorage.setItem('m2-skin-choice', id); } catch(e){}
+      msg.textContent = '已标记：' + id + ' ' + name + '。回我一句「用 ' + id + ' 号」，我就把这套皮肤套进正式课件并发布到 GitHub Pages。也可以说要混搭。';
+      msg.classList.add('show');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+  window.addEventListener('resize', fit);
+  fit();
+  setTimeout(fit, 400);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M2 先导 · 用逻辑学提高对 AI 的掌控</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23ECEDE6'/><circle cx='16' cy='16' r='10' fill='none' stroke='%231B4763' stroke-width='2'/><text x='16' y='22' text-anchor='middle' font-size='19' font-family='Georgia,serif' fill='%231B4763'>?</text></svg>">
+<link rel="preconnect" href="https://miaoda.feishu.cn">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap">
+<style>
+  /* ---------- M2 游戏化专用 ---------- */
+  .leveltag{font-family:var(--mono);font-size:14px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+  .scene{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px);max-width:680px}
+  .scene .sl{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .scene .quote{margin-top:10px}
+  #s1 .t1{font-size:clamp(43px,8.86vw,132px)}
+  .startbtn{margin-top:clamp(20px,3vh,32px);display:inline-block;border:1.5px solid rgba(255,255,255,.75);background:transparent;color:#fff;font:inherit;font-size:clamp(19px,2.14vw,23px);font-weight:700;letter-spacing:.12em;padding:13px 34px;cursor:pointer;transition:background .25s,color .25s}
+  .startbtn:hover{background:#fff;color:var(--ink)}
+  .rumors{margin-top:clamp(12px,2vh,20px);display:grid;grid-template-columns:1fr;gap:clamp(8px,1.2vh,12px);max-width:900px}
+  .rumor{border:1px solid var(--rule);background:#fff;padding:clamp(10px,1.5vw,16px) clamp(12px,1.7vw,20px)}
+  .rumor .src{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--red)}
+  .rumor p{margin-top:6px;font-size:clamp(17px,2.03vw,24px);font-weight:700;line-height:1.45;letter-spacing:-.01em}
+  @media(min-width:760px){.rumors{grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,14px)}}
+  .sent{margin-top:clamp(14px,2vh,22px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2.2vw,22px);max-width:980px}
+  .sent .sk{font-family:var(--mono);font-size:14px;letter-spacing:.18em;color:var(--red);text-transform:uppercase}
+  .sent p{margin-top:10px;font-size:clamp(21px,2.78vw,34px);line-height:1.5;font-weight:700;letter-spacing:-.01em}
+  .sent p em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 2px}
+  .toolgrid{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:1fr;gap:clamp(10px,1.6vh,16px)}
+  .tool{border-top:2px solid var(--ink);padding-top:9px}
+  .tool .tk{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--blue)}
+  .tool h3{margin:3px 0 4px;font-size:clamp(19px,2.2vw,26px);font-weight:900;letter-spacing:-.01em}
+  .tool p{font-size:clamp(16px,1.76vw,20px);color:var(--ink-2);line-height:1.65}
+  @media(min-width:760px){.toolgrid{grid-template-columns:1fr 1fr;gap:clamp(16px,2.6vw,28px)}}
+  .toolsum{margin-top:clamp(14px,2vh,20px);border:1px solid var(--rule);background:var(--paper-3);padding:clamp(11px,1.7vw,18px);font-size:clamp(19px,2.14vw,24px);font-weight:700}
+  .toolsum em{font-style:normal;color:var(--red)}
+  /* 森林迷宫 */
+  .mapwrap{position:relative;margin-top:clamp(8px,1.4vh,14px);border:2px solid #0c1c14;background:#10281c;border-radius:18px;padding:clamp(8px,1vw,14px);overflow:hidden}
+  .mapwrap.out{box-shadow:inset 0 0 80px rgba(232,214,140,.28)}
+  .mapwrap svg{display:block;width:100%;height:auto}
+  .canopy{fill:#163528}
+  .tree{fill:#1f4a32;stroke:#0e2418;stroke-width:2}
+  .tree.far{fill:#173d2a;opacity:.85}
+  .leg{fill:none;stroke:#1a3324;stroke-width:16;stroke-linecap:round;stroke-linejoin:round;opacity:.55}
+  .leg.open{stroke:#c4a36a;opacity:1;filter:drop-shadow(0 0 4px rgba(232,196,120,.45))}
+  .mapnode{cursor:pointer;outline:none}
+  .mapnode .nd{transition:fill .35s,stroke .35s}
+  .mapnode .nt{font-weight:700;pointer-events:none;user-select:none}
+  .mapnode .fog{fill:#0c1c14;opacity:.78;pointer-events:none;transition:opacity .55s}
+  .mapnode.done .fog{opacity:0}
+  .mapnode.current .fog{opacity:.2}
+  .mapnode:hover .nd{stroke-width:4}
+  .mapnode.done .nd{fill:#2f6b45}
+  .mapnode.done .nt{fill:#f4f7f2}
+  .mapnode.current .nd{stroke:#f2c14e;stroke-width:3.5}
+  .pulse{fill:none;stroke:#f2c14e;stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+  .mapnode.current .pulse{animation:pulse 1.6s ease-out infinite}
+  @keyframes pulse{0%{opacity:.85;transform:scale(.75)}70%{opacity:0;transform:scale(1.7)}100%{opacity:0}}
+  #xiaoman{transition:transform .8s cubic-bezier(.22,1,.36,1)}
+  .maplbl{fill:#e7f2ea;font-size:16px;font-weight:700}
+  .mapplace{fill:#d5e6da;font-size:15px}
+  .mapreset{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:#d5e6da;background:#0c1c14;border:1px solid #3d6b4e;padding:5px 10px;cursor:pointer}
+  .mapreset:hover{color:#f2c14e;border-color:#f2c14e}
+  .slide.forest-play{padding:0!important}
+  .slide.forest-play.on{display:block}
+  .maze-frame{display:block;width:100%;height:100svh;border:0;background:#0d2419}
+  /* 关卡 */
+  .trail{display:flex;align-items:center;margin-bottom:clamp(8px,1.4vh,14px)}
+  .trail span{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--rule);border-radius:999px;min-width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:#fff;transition:all .25s}
+  .trail span.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+  .trail span.done{background:var(--blue);border-color:var(--blue);color:#fff}
+  .trail i{flex:0 0 clamp(8px,1.4vw,18px);height:1px;background:var(--rule)}
+  .stage{display:flex;align-items:flex-start;gap:clamp(12px,1.8vw,20px);margin-bottom:clamp(10px,1.6vh,16px)}
+  .hero{flex:0 0 clamp(76px,11vw,108px);border:1.5px solid var(--blue);border-radius:50%;background:#fff;padding:8px}
+  .hero svg{display:block;width:100%;height:auto}
+  .hero .hn{text-align:center;font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--blue);margin-top:5px}
+  .bubble{position:relative;flex:1;border:1.5px solid var(--ink);background:#fff;padding:clamp(12px,1.7vw,18px) clamp(14px,2vw,22px);font-size:clamp(18px,2.08vw,23px);line-height:1.65;font-weight:700}
+  .bubble::before{content:"";position:absolute;left:-14px;top:20px;border:7px solid transparent;border-right-color:var(--ink)}
+  .bubble small{display:block;margin-top:6px;font-weight:400;color:var(--ink-3);font-size:clamp(14px,1.57vw,16px)}
+  .quiz .q{font-family:var(--mono);font-size:14px;letter-spacing:.16em;color:var(--red);text-transform:uppercase;margin:0 0 8px}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid var(--rule);background:#fff;color:var(--ink);font:inherit;font-size:clamp(16px,1.83vw,20px);line-height:1.5;padding:clamp(9px,1.3vw,13px) clamp(12px,1.6vw,18px);margin-bottom:8px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+  .opt:hover:not(:disabled){border-color:var(--blue);background:var(--paper-3);transform:translateX(3px)}
+  .opt:disabled{cursor:default;opacity:.55}
+  .opt.right{opacity:1;border-color:var(--red);background:rgba(187,58,34,.08);font-weight:700}
+  .opt.wrong{border-color:var(--red);animation:shake .42s}
+  @keyframes shake{0,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+  .unbox{display:none}
+  .unbox.show{display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(8px,1.2vw,14px);margin-top:clamp(8px,1.3vh,12px);animation:pop .4s cubic-bezier(.22,1,.36,1)}
+  @keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .rc{border-top:2px solid var(--blue);padding-top:7px}
+  .rc b{display:block;font-size:clamp(14px,1.51vw,16px);color:var(--blue);margin-bottom:3px}
+  .rc span{font-size:clamp(14px,1.64vw,18px);line-height:1.55;color:var(--ink-2)}
+  .rverdict{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--red);background:rgba(187,58,34,.06);padding:10px clamp(14px,2vw,20px)}
+  .rverdict b{color:var(--red);font-size:clamp(16px,1.89vw,20px)}
+  .rverdict .go{flex:0 0 auto;border:none;background:var(--ink);color:#fff;font:inherit;font-weight:700;font-size:clamp(15px,1.7vw,19px);padding:9px 20px;cursor:pointer;letter-spacing:.08em}
+  .rverdict .go:hover{background:var(--red)}
+  /* 速查卡 */
+  .cheat{margin-top:clamp(10px,1.6vh,16px);border:1px solid var(--ink);background:#fff}
+  .cheat .ch{display:grid;grid-template-columns:clamp(70px,10vw,120px) 1fr;gap:clamp(10px,1.6vw,18px);padding:clamp(8px,1.2vw,13px) clamp(12px,2vw,20px);border-bottom:1px solid var(--rule)}
+  .cheat .ch:last-child{border-bottom:none}
+  .cheat .cn{font-weight:900;font-size:clamp(16px,1.89vw,21px);color:var(--blue);align-self:start;padding-top:2px}
+  .cheat .cn i{display:block;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-3);font-weight:400;margin-bottom:2px}
+  .cheat .cb{font-size:clamp(14px,1.64vw,18px);line-height:1.6}
+  .cheat .cb b{color:var(--red)}
+  .cheat .cb .cs{display:block;color:var(--ink-2);margin-top:1px}
+  .duo{margin-top:clamp(16px,2.4vh,24px);display:grid;grid-template-columns:1fr;gap:clamp(14px,2vh,20px)}
+  .duo .col{border-top:2px solid var(--ink);padding-top:10px}
+  .duo .col .hl{margin:0 0 6px;font-size:clamp(19px,2.09vw,24px);font-weight:700}
+  .duo .col .hl i{font-style:normal;font-family:var(--mono);font-size:13px;letter-spacing:.14em;display:block;color:var(--blue);margin-bottom:3px;font-weight:400}
+  .duo .col p{font-size:clamp(16px,1.83vw,20px);line-height:1.7;color:var(--ink-2)}
+  @media(min-width:760px){.duo{grid-template-columns:1fr 1fr;gap:clamp(22px,3.6vw,44px)}}
+  /* 选题样例墙 / 选题门诊 */
+  .pickgrid{margin-top:clamp(14px,2.2vh,22px);display:grid;grid-template-columns:1fr;gap:clamp(10px,1.6vh,16px)}
+  .pick{border-top:2px solid var(--ink);padding-top:8px}
+  .pick .pk{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .pick b{display:block;margin:2px 0 3px;font-size:clamp(18px,2.02vw,24px);font-weight:900;letter-spacing:-.01em}
+  .pick p{font-size:clamp(14px,1.64vw,18px);line-height:1.6;color:var(--ink-2)}
+  .pick p em{font-style:normal;color:var(--red)}
+  .pick.bad{border-top-color:var(--rule)}
+  .pick.bad b{color:var(--ink-3);text-decoration:line-through solid rgba(187,58,34,.55) 2px}
+  @media(min-width:760px){.pickgrid{grid-template-columns:1fr 1fr 1fr;gap:clamp(12px,1.8vw,26px)}}
+  @media (prefers-reduced-motion: reduce){.route,.pulse{animation:none}#xiaoman,.opt{transition:none}.unbox.show{animation:none}.opt.wrong{animation:none}}
+  
+  :root{
+    --paper:#ECEDE6;--paper-2:#E2E4D7;--paper-3:#F5F6F0;
+    --ink:#14181A;--ink-2:#4C524D;--ink-3:#5F665F;
+    --rule:#C6CBB9;--rule-2:#D9DCCF;
+    --blue:#1B4763;--blue-2:#3B6C88;
+    --red:#BB3A22;--red-w:#EFD8D1;
+    --dark:#0E171D;--dark-2:#16242E;--dark-rule:#2B3B46;--dark-dim:#8391A0;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --ease:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{font-family:var(--sans);font-weight:400;line-height:1.7;color:var(--ink);background:var(--paper);overflow-x:hidden}
+
+  /* ---------- 纸面 ---------- */
+  .slide{display:none;height:100svh;overflow-x:hidden;overflow-y:auto;padding:clamp(28px,4.2vh,56px) clamp(20px,6vw,84px) clamp(46px,6vh,80px)}
+  .slide.on{display:flex;flex-direction:column;justify-content:flex-start}
+  .slide.forest-play.on{display:block;padding:0;overflow:hidden}
+  .slide[data-theme="paper"]{
+    background-color:var(--paper);
+    background-image:linear-gradient(rgba(27,71,99,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(27,71,99,.045) 1px,transparent 1px);
+    background-size:34px 34px;
+  }
+  .slide[data-theme="dark"]{
+    background-color:var(--dark);color:var(--paper);
+    background-image:linear-gradient(rgba(236,237,230,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(236,237,230,.035) 1px,transparent 1px);
+    background-size:34px 34px;
+  }
+  .wrap{width:100%;max-width:1280px;margin:auto;position:relative}
+
+  /* ---------- 字 -------------*/
+  .t1{font-size:clamp(50px,12.42vw,177px);line-height:.97;font-weight:900;letter-spacing:-.035em}
+  .t2{font-size:clamp(27px,4.54vw,52px);line-height:1.12;font-weight:900;letter-spacing:-.025em}
+  .lead{font-size:clamp(17px,1.97vw,23px);line-height:1.6;color:var(--ink-2);max-width:26em}
+  .small{font-size:clamp(18px,1.7vw,20px);line-height:1.75;color:var(--ink-2)}
+  .u-red{border-bottom:3px solid var(--red);padding-bottom:.02em}
+
+  /* ---------- 封面 ---------- */
+  .cover-meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;color:var(--dark-dim);font-family:var(--mono);font-size:14px;letter-spacing:.18em;text-transform:uppercase}
+  .cover-meta i{width:26px;height:1px;background:currentColor;display:inline-block;opacity:.6}
+  .cover-sub{margin-top:clamp(22px,3.4vh,40px);font-size:clamp(17px,2.2vw,24px);line-height:1.85;color:#C3CCD3;max-width:23em}
+  .rail{margin-top:clamp(36px,7vh,72px);display:grid;grid-template-columns:1fr;gap:0;max-width:640px;border-top:1px solid var(--dark-rule)}
+  .rail div{display:flex;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px solid var(--dark-rule)}
+  .rail b{font-family:var(--mono);font-size:14px;font-weight:400;color:var(--dark-dim);letter-spacing:.14em;min-width:26px}
+  .rail p{font-size:clamp(19px,1.95vw,23px);color:var(--paper);display:flex;align-items:baseline;gap:10px;flex:1}
+  .rail .gap{flex:1;height:.85em;border-bottom:1px solid #4A6274;transform-origin:left;animation:draw .9s var(--ease) both}
+  .rail div:nth-child(1) .gap{animation-delay:.55s}
+  .rail div:nth-child(2) .gap{animation-delay:.75s}
+  .rail div:nth-child(3) .gap{animation-delay:.95s}
+  .rail div:nth-child(1){animation:rise .7s var(--ease) both .45s}
+  .rail div:nth-child(2){animation:rise .7s var(--ease) both .62s}
+  .rail div:nth-child(3){animation:rise .7s var(--ease) both .79s}
+  .rail div:nth-child(3) .gap{border-bottom:1px solid var(--red)}
+
+  /* ---------- 议程 ---------- */
+  .agenda{margin-top:clamp(26px,4vh,44px);border-top:1px solid var(--rule)}
+  .agenda a{display:grid;grid-template-columns:auto 1fr;gap:6px clamp(16px,3vw,40px);align-items:baseline;padding:clamp(16px,2.4vh,24px) 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;transition:background .25s}
+  .agenda a:hover{background:rgba(27,71,99,.045)}
+  .agenda .n{font-family:var(--mono);font-size:clamp(37px,4.97vw,60px);line-height:1;color:var(--blue);letter-spacing:-.02em;font-feature-settings:'tnum'}
+  .agenda .n em{display:block;font-size:14px;letter-spacing:.14em;color:var(--ink-3);font-style:normal;margin-top:8px}
+  .agenda .txt b{display:block;font-size:clamp(22px,2.78vw,32px);font-weight:700;letter-spacing:-.015em;line-height:1.35}
+  .agenda .txt span{display:block;font-size:clamp(18px,1.89vw,21px);color:var(--ink-2);line-height:1.7;margin-top:4px;max-width:30em}
+
+  /* ---------- 三句横轨 ---------- */
+  .spine{margin-top:clamp(24px,4vh,44px);display:grid;grid-template-columns:1fr;border-top:2px solid var(--ink)}
+  .spine .st{padding:clamp(18px,2.6vh,26px) 0 22px;border-bottom:1px solid var(--rule);position:relative}
+  .spine .st:last-child{border-bottom:none}
+  .st .num{font-family:var(--mono);font-size:clamp(30px,3.48vw,44px);color:var(--blue);line-height:1;letter-spacing:-.02em}
+  .st .fr{display:flex;align-items:baseline;gap:10px;margin-top:14px;font-size:clamp(26px,3.67vw,43px);font-weight:900;letter-spacing:-.02em;line-height:1.2;flex-wrap:wrap}
+  .st .fr .gap{flex:1;min-width:60px;height:.8em;border-bottom:2px solid var(--ink-3);align-self:flex-end}
+  .st .why{margin-top:12px;font-size:clamp(18px,1.89vw,21px);color:var(--ink-2);line-height:1.7;max-width:26em}
+  .st.human{background:linear-gradient(90deg,var(--red-w),transparent);padding-left:clamp(12px,2vw,24px);margin-left:calc(-1 * clamp(12px,2vw,24px))}
+  .st.human .num{color:var(--red)}
+  .st.human .fr .gap{border-bottom:2px solid var(--red)}
+  .case{margin-top:clamp(14px,2.4vh,22px);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+  .steps{display:grid;gap:clamp(9px,1.4vh,13px)}
+  .step{display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--rule);padding-top:10px}
+  .step .sn{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .step b{font-size:clamp(18px,1.89vw,21px);color:var(--ink);font-weight:700}
+  .step p{font-size:clamp(16px,1.7vw,20px);line-height:1.6;color:var(--ink-2);margin-top:3px}
+  .case-side{border-left:1px solid var(--rule);padding-left:clamp(16px,2.4vw,28px)}
+  .quote{font-size:clamp(23px,2.78vw,32px);font-weight:700;line-height:1.45;color:var(--red)}
+  .case-side .aside{margin-top:14px}
+  @media(max-width:900px){.case{grid-template-columns:1fr}.case-side{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:14px}}
+  .verdict{margin-top:clamp(14px,2.2vh,22px);padding:11px 0 0;border-top:1px solid var(--red);font-size:clamp(17px,1.97vw,23px);line-height:1.6;max-width:34em;color:var(--ink)}
+  .verdict b{color:var(--red)}
+
+  /* ---------- 三行边注 ---------- */
+  .marg{margin-top:clamp(26px,4vh,42px);border-top:1px solid var(--rule);max-width:1000px}
+  .marg .r{display:grid;grid-template-columns:1fr;gap:6px;padding:clamp(16px,2.6vh,26px) 0;border-bottom:1px solid var(--rule)}
+  .marg .lab{font-family:var(--mono);font-size:15px;letter-spacing:.16em;color:var(--blue)}
+  .marg .val{font-size:clamp(20px,2.32vw,27px);line-height:1.65;max-width:25em}
+  .tr2{margin-top:clamp(14px,2.2vh,22px);display:grid;grid-template-columns:1fr;gap:clamp(12px,2vh,18px);max-width:860px}
+  .tr2 .c{border-top:2px solid var(--ink);padding-top:9px}
+  .tr2 .c.bad{border-top-color:var(--red)}
+  .tr2 .k{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--blue)}
+  .tr2 .c.bad .k{color:var(--red)}
+  .tr2 b{display:block;margin-top:3px;font-size:clamp(22px,2.78vw,32px);font-weight:900;letter-spacing:-.01em}
+  .tr2 p{margin-top:4px;font-size:clamp(16px,1.83vw,20px);line-height:1.55;color:var(--ink-2)}
+  @media(min-width:760px){.tr2{grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,34px)}}
+
+  /* ---------- 标本页 ---------- */
+  .vlabel{position:absolute;left:clamp(-64px,-5vw,-20px);top:0;writing-mode:vertical-rl;font-family:var(--mono);font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--blue);opacity:.8}
+  .spec{margin-top:clamp(20px,3vh,34px);display:grid;grid-template-columns:1fr;gap:clamp(22px,3.4vh,32px);align-items:center}
+  .plate{position:relative;background:var(--paper-3);border:1px solid var(--rule);padding:clamp(16px,2.2vw,30px)}
+  .plate::before{content:"";position:absolute;inset:6px;border:1px solid var(--rule-2);pointer-events:none}
+  .plate .cap{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;border-top:1px solid var(--rule-2);margin-top:12px;padding-top:10px;position:relative;z-index:2}
+  .plate .cap .r{color:var(--red)}
+  .plate-art{display:block;width:100%;height:auto;max-height:min(46vh,420px);margin:0 auto}
+  .plate-art text{font-family:var(--mono);font-size:16px;letter-spacing:.05em}
+
+  /* ---------- 细胞标本图 ---------- */
+  .plate3d{position:relative;width:min(34vh,290px);margin:0 auto;cursor:pointer;outline-offset:4px}
+  .cellimg{display:block;width:100%;height:auto;border-radius:10px}
+  .dot{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--paper-3);border:1.5px solid var(--blue);color:var(--blue);font-family:var(--mono);font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(20,40,60,.3);pointer-events:none}
+  .dot.d1{left:76%;top:21%}
+  .dot.d2{left:26%;top:47%}
+  .dot.d3{left:49%;top:44%;border-color:var(--red);color:var(--red)}
+  .dot.d4{left:49%;top:71%}
+  .celltags{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;opacity:0;transform:translateY(6px);transition:opacity .45s,transform .45s}
+  #cellPlate.open .celltags{opacity:1;transform:translateY(0)}
+  .celltags .ct{border-top:1px solid var(--rule);padding-top:6px}
+  .celltags .ct b{display:flex;align-items:baseline;gap:6px;font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.03em}
+  .celltags .ct b i{flex:none;width:16px;height:16px;border-radius:50%;background:var(--blue);color:#fff;font-style:normal;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+  .celltags .ct:nth-child(2) b{color:var(--red)}
+  .celltags .ct:nth-child(2) b i{background:var(--red)}
+  .celltags .ct span{display:block;font-size:13px;line-height:1.55;color:var(--ink-2);margin-top:3px}
+  .caprow3d{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;position:relative;z-index:2}
+  .ptgl{font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--paper);background:var(--blue);border:1px solid var(--blue);padding:8px 16px;cursor:pointer;transition:background .25s,color .25s}
+  .ptgl:hover{background:transparent;color:var(--blue)}
+  .ptgl[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:#fff}
+  .hint{font-size:14px;color:var(--ink-3)}
+  .part{cursor:pointer;transition:opacity .25s,filter .25s}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;position:relative;z-index:2}
+  .legend button{appearance:none;border:1px solid var(--rule);background:transparent;color:var(--blue);font-family:var(--mono);font-size:15px;letter-spacing:.08em;padding:10px 14px;min-height:44px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .legend button[aria-pressed="true"]{background:var(--blue);color:var(--paper-3);border-color:var(--blue)}
+  .legend button:hover{border-color:var(--blue)}
+  .fills{border-top:2px solid var(--ink)}
+  .fill{padding:clamp(13px,1.9vh,19px) 0;border-bottom:1px solid var(--rule)}
+  .fill .lab{font-family:var(--mono);font-size:15px;letter-spacing:.14em;color:var(--blue)}
+  .fill .txt{margin-top:6px;font-size:clamp(19px,2.03vw,23px);line-height:1.7}
+  .fill.x{border-bottom:2px solid var(--red)}
+  .fill.x .lab{color:var(--red)}
+  .aside{margin-top:clamp(11px,1.6vh,16px);display:flex;gap:12px;align-items:baseline;font-size:clamp(18px,1.89vw,20px);line-height:1.6;max-width:34em}
+  .aside::before{content:"";flex:0 0 22px;height:2px;background:var(--red);transform:translateY(-.35em)}
+  .lnk{display:inline-block;border-bottom:2px solid var(--blue);color:var(--blue);text-decoration:none;font-family:var(--mono);font-size:clamp(15px,1.51vw,18px);letter-spacing:.06em;padding:6px 0 3px;transition:border-color .2s,color .2s}
+  .lnk:hover{border-color:var(--red);color:var(--red)}
+  .slide[data-theme="dark"] .lead{color:#BEC7CE}
+
+  /* ---------- 对比：十页 / 一页 ---------- */
+
+  /* ---------- 工具映射 ---------- */
+  .map{margin-top:clamp(24px,3.6vh,38px);border-top:2px solid var(--ink);max-width:1080px}
+  .map .row{display:grid;grid-template-columns:1fr;gap:4px;padding:clamp(15px,2.2vh,22px) 0;border-bottom:1px solid var(--rule)}
+  .map .need{font-size:clamp(19px,1.95vw,23px);color:var(--ink-3);font-family:var(--mono);letter-spacing:.05em}
+  .map .tool{font-size:clamp(22px,2.78vw,34px);font-weight:700;letter-spacing:-.015em;line-height:1.4}
+  .map .why{font-size:clamp(18px,1.83vw,20px);color:var(--ink-2);line-height:1.7;margin-top:2px}
+
+
+  /* ---------- 说明书 ---------- */
+  .manual{margin-top:clamp(22px,3.2vh,34px);border:1px solid var(--rule);background:var(--paper-3);max-width:860px}
+  .manual .m{padding:clamp(15px,2.2vh,22px) clamp(16px,2.2vw,26px);border-bottom:1px dashed var(--rule)}
+  .manual .m:last-child{border-bottom:none}
+  .manual .m .lab{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--blue)}
+  .manual .m p{margin-top:8px;font-size:clamp(19px,2.09vw,23px);line-height:1.7;max-width:30em}
+
+  /* ---------- 步骤 ---------- */
+  .steps{margin-top:clamp(22px,3.2vh,34px);max-width:900px;border-top:2px solid var(--ink)}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(15px,2.2vh,22px) 0;border-bottom:1px solid var(--rule);align-items:start}
+  .step .n{font-family:var(--mono);font-size:clamp(23px,2.78vw,32px);line-height:1;color:var(--blue)}
+  .step b{display:block;font-size:clamp(20px,2.32vw,27px);font-weight:700;letter-spacing:-.01em;line-height:1.4}
+  .step span{display:block;margin-top:4px;font-size:clamp(18px,1.89vw,21px);color:var(--ink-2);line-height:1.7}
+
+  /* ---------- 批注页 ---------- */
+  .mark{margin-top:clamp(22px,3.2vh,34px);display:grid;grid-template-columns:1fr;gap:clamp(20px,3vh,30px);align-items:start}
+  .fac{position:relative;background:var(--paper-3);border:1px solid var(--ink);padding:clamp(14px,2vw,20px);max-width:430px}
+  .fac .ft{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:8px}
+  .fac .h4{font-size:clamp(20px,2.09vw,23px);font-weight:700;margin:12px 0 10px}
+  .fac .pic{border:1px solid var(--rule-2);background:var(--paper);padding:6px;margin-bottom:12px}
+  .fac .pic svg{display:block;width:100%;height:auto}
+  .fac .bl{position:relative;height:9px;background:var(--rule-2);margin:10px 0;border-radius:1px}
+  .fac .bl.w2{width:92%}
+  .fac .bl.w3{width:78%}
+  .fac .bl.hit{opacity:0;transition:opacity .3s var(--ease)}
+  .revealed .fac .bl.hit{opacity:1;background:linear-gradient(transparent 30%,var(--red-w) 30%,var(--red-w) 88%,transparent 88%)}
+  .hl{display:flex;align-items:center;gap:10px;margin:12px 0 10px}
+  .hl .h4{margin:0}
+  .picwrap{position:relative}
+  .fb{width:24px;height:24px;border:2px solid var(--red);border-radius:50%;color:var(--red);font-family:var(--mono);font-size:15px;line-height:1;display:inline-grid;place-items:center;flex:0 0 24px;opacity:0;transform:scale(.55);transition:opacity .3s var(--ease),transform .35s var(--ease)}
+  .fb.im{position:absolute;top:-10px;right:-10px;background:var(--paper-3);z-index:2}
+  .revealed .fb{opacity:1;transform:scale(1)}
+  .caprow{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--ink-3);margin:0}
+  .mknote{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .mknote b{font-family:var(--mono);color:var(--red);font-size:16px;flex:0 0 20px}
+  .mknote p{font-size:clamp(19px,2.02vw,23px);line-height:1.7;color:transparent;transition:color .35s var(--ease) .1s}
+  .revealed .mknote p{color:var(--ink)}
+  .reveal-btn{appearance:none;border:1px solid var(--red);background:transparent;color:var(--red);font-family:var(--mono);font-size:15px;letter-spacing:.1em;padding:12px 18px;min-height:44px;cursor:pointer;transition:background .2s,color .2s;margin-top:14px}
+  .reveal-btn:hover{background:var(--red);color:var(--paper-3)}
+
+  /* ---------- 边界页 ---------- */
+  .ban{margin-top:clamp(24px,3.6vh,38px);border-top:1px solid var(--dark-rule)}
+  .ban .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(16px,2.4vh,24px) 0;border-bottom:1px solid var(--dark-rule);align-items:baseline}
+  .ban .x{width:20px;height:20px;flex:0 0 20px;stroke:var(--red);stroke-width:2.6;transform:translateY(3px)}
+  .ban b{display:block;font-size:clamp(22px,2.78vw,35px);font-weight:700;letter-spacing:-.015em;line-height:1.4}
+  .ban span{display:block;margin-top:6px;font-size:clamp(18px,1.89vw,21px);color:#A9B4BE;line-height:1.7;max-width:26em}
+
+  /* ---------- 出口页 ---------- */
+  .door{text-align:center;display:flex;flex-direction:column;align-items:center}
+  .door .t2{max-width:14em}
+  .door .lead{text-align:center;margin:clamp(16px,2.4vh,24px) auto 0}
+  .door .big{display:inline-flex;align-items:center;justify-content:center;gap:14px;border:1px solid #45606F;padding:18px 32px;min-height:58px;color:var(--paper);text-decoration:none;font-size:clamp(19px,2.09vw,23px);font-weight:700;letter-spacing:.02em;margin-top:clamp(28px,4vh,40px);transition:background .25s var(--ease),color .25s,border-color .25s}
+  .door .big:hover{background:var(--paper);color:var(--dark);border-color:var(--paper)}
+  .door .after{margin-top:clamp(20px,3vh,28px);font-size:clamp(18px,1.89vw,21px);color:#A9B4BE;max-width:26em;line-height:1.7}
+
+  /* ---------- 收课 ---------- */
+  .home{margin-top:clamp(24px,3.6vh,36px);border-top:2px solid var(--red);max-width:900px}
+  .home .r{display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);padding:clamp(14px,2vh,20px) 0;border-bottom:1px solid var(--dark-rule);align-items:baseline}
+  .home .n{font-family:var(--mono);font-size:clamp(16px,1.51vw,19px);color:var(--red);letter-spacing:.1em}
+  .home b{display:block;font-size:clamp(20px,2.32vw,28px);font-weight:700;line-height:1.45}
+  .home span{display:block;margin-top:3px;font-size:clamp(18px,1.83vw,20px);color:#A9B4BE;line-height:1.7}
+
+  /* ---------- 苏格拉底标本框 ---------- */
+  .socrwrap{margin-top:clamp(12px,1.8vh,18px);display:grid;grid-template-columns:1fr;gap:clamp(16px,2.4vw,32px);align-items:start}
+  .socrfig{margin:0 auto 0 0;border:1px solid var(--rule);background:var(--paper-3);padding:10px;max-width:280px}
+  .socrfig img{display:block;width:100%;height:auto}
+  .socrfig figcaption{margin-top:10px;padding-top:8px;border-top:1px solid var(--rule-2);font-family:var(--mono);font-size:13px;letter-spacing:.08em;color:var(--ink-3);line-height:1.8}
+  .socrwrap .syl{margin-top:0}
+  .socrwrap .syl-row .form{font-size:clamp(17px,1.97vw,23px)}
+  @media (min-width:900px){
+    .socrwrap{grid-template-columns:178px minmax(0,1fr)}
+    .socrfig{max-width:none}
+  }
+
+  /* ---------- 三段论公式与例子 ---------- */
+  .formula{margin-top:0;border-top:2px solid var(--ink)}
+  .frow{display:grid;grid-template-columns:84px minmax(0,1fr);gap:clamp(10px,2vw,20px);padding:clamp(9px,1.5vh,14px) 0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .frow b{font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--blue);font-weight:400}
+  .frow p{font-size:clamp(19px,2.09vw,24px);line-height:1.55}
+  .frow em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 4px}
+  .frow.concl{background:linear-gradient(90deg,var(--red-w),transparent);padding-left:12px;margin-left:-12px;border-bottom:2px solid var(--red)}
+  .frow.concl b{color:var(--red)}
+  .eg{margin-top:clamp(12px,1.8vh,18px);border-top:1px solid var(--rule);padding-top:clamp(10px,1.4vh,14px);display:grid;gap:7px}
+  .egrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;font-size:clamp(16px,1.76vw,19px);line-height:1.65}
+  .egrow i{font-style:normal;color:var(--ink-3)}
+  .egrow .et{font-family:var(--mono);font-size:13px;letter-spacing:.1em;color:var(--blue);border:1px solid var(--rule);padding:2px 8px}
+  .egrow .out{color:var(--red);font-weight:700}
+  .eglabel{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--ink-3);margin:-4px 0 6px}
+
+  /* ---------- 三段论 ---------- */
+  .skel{margin-top:12px;display:flex;flex-wrap:wrap;gap:4px 14px;font-family:var(--mono);font-size:14px;letter-spacing:.04em;color:var(--red);line-height:1.9}
+  .skel b{font-weight:400;color:var(--red);opacity:.55}
+  .syl{margin-top:clamp(14px,2vh,20px);border-top:2px solid var(--ink);max-width:1080px}
+  .syl-row{display:grid;grid-template-columns:1fr;gap:5px;padding:clamp(9px,1.4vh,14px) 0;border-bottom:1px solid var(--rule)}
+  .syl-row .k{font-family:var(--mono);font-size:15px;letter-spacing:.16em;color:var(--blue);display:flex;gap:10px;align-items:baseline}
+  .syl-row .k s{text-decoration:none;font-size:13px;letter-spacing:.1em;color:var(--ink-3)}
+  .syl-row .form{font-size:clamp(20px,2.38vw,30px);line-height:1.6;font-weight:700;letter-spacing:-.01em}
+  .syl-row .form em{font-style:normal;color:var(--red);border-bottom:2px solid var(--red);padding-bottom:1px}
+  .syl-row .ex{font-size:clamp(16px,1.76vw,20px);color:var(--ink-3);line-height:1.7;max-width:34em}
+  .syl-row.concl{background:linear-gradient(90deg,var(--red-w),transparent);border-bottom:2px solid var(--red);padding-left:14px;margin-left:-14px}
+  .syl-row.concl .k{color:var(--red)}
+
+  /* ---------- 林奈 ---------- */
+  .linnwrap{margin-top:clamp(20px,3vh,32px);display:grid;grid-template-columns:1fr;gap:clamp(22px,3vh,30px);align-items:start}
+  .linn{border-top:2px solid var(--ink);padding-top:10px}
+  .lv{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;align-items:baseline;border-bottom:1px solid var(--rule);padding:9px 0;width:calc(var(--w) * 1%)}
+  .lv b{font-family:var(--mono);font-size:15px;font-weight:400;letter-spacing:.1em;color:var(--blue)}
+  .lv span{font-size:clamp(18px,1.89vw,21px);line-height:1.4}
+  .lv:last-child{border-bottom:2px solid var(--red)}
+  .lv:last-child b{color:var(--red)}
+  .binom{border:1px solid var(--rule);background:var(--paper-3);padding:clamp(14px,2vw,22px)}
+  .binom .lat{font-family:var(--mono);font-style:italic;font-size:clamp(21px,2.67vw,30px);letter-spacing:.01em}
+  .binom .split{display:flex;gap:14px;margin-top:10px;font-family:var(--mono);font-size:13px;letter-spacing:.12em;color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:10px}
+  .binom p{margin-top:10px;font-size:clamp(16px,1.83vw,20px);line-height:1.75;color:var(--ink-2)}
+
+  /* ---------- 提示词卡 ---------- */
+  .pcard{margin-top:clamp(14px,2vh,20px);border:1px solid var(--rule);background:var(--paper-3);max-width:1080px}
+  .prow{display:grid;grid-template-columns:44px minmax(0,1fr);gap:clamp(10px,1.8vw,20px);padding:clamp(8px,1.2vh,12px) clamp(13px,2vw,24px);border-bottom:1px dashed var(--rule)}
+  .prow:last-child{border-bottom:none}
+  .prow .pn{font-family:var(--mono);font-size:clamp(15px,1.57vw,18px);color:var(--blue);letter-spacing:.06em}
+  .prow .pk{font-family:var(--mono);font-size:13px;letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase}
+  .prow p{margin-top:5px;font-size:clamp(18px,2.08vw,24px);line-height:1.65;max-width:36em}
+  .prow p em{font-style:normal;color:var(--red);border-bottom:2px dashed var(--red);padding:0 2px}
+  .prow.hi{background:linear-gradient(90deg,var(--red-w),transparent)}
+  .prow.hi .pn,.prow.hi .pk{color:var(--red)}
+
+  /* ---------- 四张卡 ---------- */
+  .chips{margin-top:clamp(14px,2vh,20px);display:grid;grid-template-columns:1fr;gap:12px}
+  .chip{border-top:2px solid var(--ink);padding-top:12px}
+  .chip .ct{font-family:var(--mono);font-size:14px;letter-spacing:.18em;color:var(--blue);text-transform:uppercase}
+  .chip .c2{margin-top:8px;font-size:clamp(18px,1.95vw,21px);line-height:1.6;color:var(--ink-2)}
+  .chip .c2 b{font-weight:700;color:var(--ink)}
+  .chip .c3{margin-top:8px;font-size:clamp(16px,1.7vw,19px);line-height:1.75;color:var(--ink-2)}
+  .now{margin-top:clamp(24px,3.6vh,36px);border-top:2px solid var(--red);padding-top:14px;max-width:900px}
+  .now .lab{font-family:var(--mono);font-size:14px;letter-spacing:.18em;color:var(--red);text-transform:uppercase}
+  .now p{margin-top:8px;font-size:clamp(17px,2.09vw,24px);line-height:1.65;max-width:30em}
+
+  /* ---------- 动效 ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes clipIn{from{clip-path:inset(0 100% 0 0);opacity:.35}to{clip-path:inset(0 0 0 0);opacity:1}}
+  @keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .slide.on .t1.reveal{animation:clipIn 1.05s var(--ease) both}
+  .slide.on .t2.reveal{animation:rise .6s var(--ease) both .06s}
+
+  /* ---------- 顶栏 / 底栏 ---------- */
+  #bar{position:fixed;left:0;top:0;height:3px;width:0;background:var(--red);z-index:60;transition:width .35s var(--ease)}
+  .chrome{position:fixed;left:0;right:0;bottom:0;z-index:50;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(14px,4vw,40px);border-top:1px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--ink-3);text-transform:uppercase}
+  .chrome[data-theme="dark"]{background:var(--dark);border-color:var(--dark-rule);color:#7E8B94}
+  .chrome .act{display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;white-space:nowrap}
+  .chrome .act i{width:22px;height:1px;background:currentColor;opacity:.5;flex:0 0 22px}
+  .chrome .ctrl{display:flex;align-items:center;gap:2px}
+  .chrome button{appearance:none;border:none;background:transparent;color:inherit;font:inherit;letter-spacing:inherit;text-transform:inherit;padding:0 12px;min-height:44px;min-width:40px;cursor:pointer;transition:color .2s}
+  .chrome button:hover{color:var(--red)}
+  .chrome .cnt{font-feature-settings:'tnum';color:var(--ink-2);padding:0 10px}
+  .chrome[data-theme="dark"] .cnt{color:var(--paper)}
+
+  /* ---------- 响应式 ---------- */
+  @media (min-width:760px){
+    .cover-sub{max-width:26em}
+    .marg .r{grid-template-columns:170px minmax(0,1fr);gap:clamp(16px,3vw,40px);align-items:baseline}
+    .agenda a{grid-template-columns:auto 1fr}
+    .spine{grid-template-columns:repeat(3,1fr);border-bottom:none}
+    .spine .st{padding:clamp(14px,2vh,20px) clamp(14px,2vw,26px) 18px 0;border-bottom:none;border-right:1px solid var(--rule)}
+    .spine .st:last-child{border-right:none}
+    .st .fr{font-size:clamp(26px,3.02vw,37px)}
+    .spec{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+    .map .row{grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(16px,3vw,40px);align-items:baseline}
+    .map .why{grid-column:2}
+    .mark{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,56px)}
+    .syl-row{grid-template-columns:112px minmax(0,1fr);gap:6px clamp(16px,2.4vw,32px);align-items:baseline}
+    .syl-row .ex{grid-column:2}
+    .linnwrap{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(26px,4vw,56px)}
+    .chips{grid-template-columns:repeat(2,1fr);gap:16px clamp(18px,2.6vw,32px)}
+    .pcard{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+    .prow:nth-child(1){border-right:1px dashed var(--rule)}
+    .prow:nth-child(3){grid-column:1 / -1}
+    .prow:nth-child(4){border-right:1px dashed var(--rule);border-bottom:none}
+    .prow:nth-child(5){border-bottom:none}
+    .prow p{max-width:30em}
+  }
+  @media (min-width:1100px){
+    .chips{grid-template-columns:repeat(4,1fr)}
+    .t1{font-size:clamp(97px,11.88vw,177px)}
+  }
+  @media (max-width:759px){
+    .vlabel{display:none}
+    .st.human{margin-left:0;padding-left:14px}
+    .chrome .act{font-size:13px;letter-spacing:.1em}
+  }
+  @media (max-width:430px){
+    .chrome .act{display:none}
+    .chrome button{padding:0 8px;letter-spacing:.06em}
+    .chrome .cnt{padding:0 6px;font-size:13px}
+  }
+  @media (prefers-reduced-motion:reduce){.plate3d *{transition:none!important}
+    .slide.on .t1.reveal,.slide.on .t2.reveal,.rail div,.rail .gap{animation:none!important}
+    .mknote p,.badge{transition:none!important}
+    #bar{transition:none}
+  }
+  @media print{
+    body{background:#fff}
+    #bar,.chrome{display:none!important}
+    .slide{display:block!important;height:auto!important;overflow:visible!important;min-height:0;page-break-after:always;padding:18mm}
+    .slide:last-of-type{page-break-after:auto}
+    .slide[data-theme="paper"]{background:#fff}
+    .slide[data-theme="dark"]{background:#0E171D;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .slide.on .t1.reveal,.slide.on .t2.reveal{animation:none}
+    .rail div,.rail .gap{animation:none}
+    .mknote p{color:var(--ink)!important}
+  }
+
+
+  /* ---------- 先哲页 ---------- */
+  .lineage{margin-top:clamp(14px,2.2vh,26px);display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:clamp(8px,1.2vw,16px);align-items:stretch}
+  .person{border-top:3px solid var(--ink);background:#fff;padding:clamp(12px,1.6vw,20px)}
+  .person.hi{border-top-color:var(--red)}
+  .py{display:block;font-family:var(--mono);font-size:14px;letter-spacing:.08em;color:var(--ink-3)}
+  .person b{display:block;margin-top:4px;font-size:clamp(23px,2.5vw,33px);font-weight:900;letter-spacing:-.01em}
+  .person p{margin-top:7px;font-size:clamp(16px,1.7vw,21px);line-height:1.6;color:var(--ink-2)}
+  .arrow{align-self:center;text-align:center;font-size:28px;font-weight:900;color:var(--blue)}
+  .arrow small{display:block;font-family:var(--mono);font-size:13px;font-weight:400;letter-spacing:.1em;color:var(--ink-3)}
+  .linfact{margin-top:clamp(12px,1.8vh,20px);border:2px solid var(--red);background:rgba(187,58,34,.06);padding:clamp(10px,1.5vw,18px);font-size:clamp(19px,2vw,25px);line-height:1.55;font-weight:700}
+  .linfact b{color:var(--red)}
+  .linbridge{margin-top:10px;font-size:clamp(16px,1.8vw,22px);line-height:1.65;color:var(--ink-2)}
+  @media(max-width:820px){.lineage{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+  /* ---------- 六张谬误卡片 ---------- */
+  .fcsci{display:inline-block;margin-left:16px;padding-left:14px;border-left:2px solid var(--rule);font-family:var(--mono);font-size:16px;letter-spacing:.06em;color:var(--blue);font-weight:400;vertical-align:middle}
+  .fcard{margin-top:clamp(12px,1.8vh,20px);display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(14px,2vw,28px);border:2px solid var(--ink);background:#fff;padding:clamp(14px,2vw,24px)}
+  .fcleft{border-right:1px solid var(--rule);padding-right:clamp(12px,1.8vw,24px)}
+  .fcno{display:block;font-family:var(--mono);font-size:clamp(42px,5vw,70px);line-height:1;font-weight:900;color:var(--red)}
+  .fcq{margin-top:8px;font-size:clamp(19px,2.1vw,27px);line-height:1.5;font-weight:900}
+  .fcq small{display:block;margin-top:8px;font-family:var(--mono);font-size:14px;font-weight:400;letter-spacing:.1em;color:var(--ink-3)}
+  .fcpunch{margin-top:clamp(10px,1.6vh,18px);border-top:2px solid var(--red);padding-top:10px;font-size:clamp(20px,2.1vw,27px);font-weight:900;color:var(--red);line-height:1.4}
+  .fcright{display:grid;gap:clamp(8px,1.2vh,14px);align-content:start}
+  .fcrow b{display:block;margin-bottom:3px;font-family:var(--mono);font-size:14px;letter-spacing:.12em;color:var(--blue)}
+  .fcrow p{font-size:clamp(17px,1.9vw,23px);line-height:1.6}
+  .fcsent{margin-top:clamp(10px,1.5vh,16px);border-left:5px solid var(--red);background:var(--paper-3);padding:clamp(10px,1.4vw,16px) clamp(14px,2vw,22px);font-size:clamp(18px,2vw,25px);font-weight:700;line-height:1.5}
+  .fcback{margin-top:10px;font-size:clamp(16px,1.8vw,21px);line-height:1.6;color:var(--ink-2)}
+  .fcback b{color:var(--red)}
+  .fcdl{display:inline-block;margin-top:10px;font-size:18px}
+  @media(max-width:820px){.fcard{grid-template-columns:1fr}.fcleft{border-right:none;border-bottom:1px solid var(--rule);padding-right:0;padding-bottom:12px}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+
+<!-- ============ 01 封面 ============ -->
+<section class="slide" data-theme="dark" data-act="开场" id="s1">
+  <div class="wrap">
+    <div class="cover-meta"><span>AI 通识初阶 · M2 先导</span><i></i><span>线上 1h</span><i></i><span>学会判断</span></div>
+    <h1 class="t1 reveal">用逻辑学，<br>提高你对 AI 的掌控</h1>
+    <p class="cover-sub">上节课，我们学会了用 AI 自己学新东西。这节课开始，要用 AI 解决身边真有人卡住的问题。可动手之前得先看清楚：学校里、家里、网上传的那些话，哪些值得信？哪个问题真的有人为难？看清了，再拉上 AI 一起做。</p>
+    <button type="button" class="startbtn" data-goto="s2">进入课堂 →</button>
+  </div>
+</section>
+
+<!-- ============ 02 M1 回顾 ============ -->
+<section class="slide" data-theme="paper" data-act="M1 回顾" id="s2">
+  <div class="wrap">
+    <span class="vlabel">M1 回顾</span>
+    <h2 class="t2 reveal">上节课，我们学了四样新本领</h2>
+    <div class="toolgrid">
+      <div class="tool"><span class="tk">第一样</span><h3>抽象思维</h3><p>把一堆东西按相同和不同分组，找出规律。</p></div>
+      <div class="tool"><span class="tk">第二样</span><h3>三段论</h3><p>先说一条大家都认的规律，再说眼前这件事，最后得出一个结论。</p></div>
+      <div class="tool"><span class="tk">第三样</span><h3>Prompt 五步大法</h3><p>把想让 AI 干的事说清楚，写成一条有头有尾的要求。</p></div>
+      <div class="tool"><span class="tk">第四样</span><h3>初识 Skills</h3><p>给 AI 加一个新功能，让它不只会聊天，还能干专门的活。</p></div>
+    </div>
+    <div class="toolsum">四样加起来，就是：<em>你已经能自己用 AI 学新东西了。</em></div>
+  </div>
+</section>
+
+<!-- ============ 03 差距演示 ============ -->
+<section class="slide" data-theme="paper" data-act="差距演示" id="s3">
+  <div class="wrap">
+    <span class="vlabel">差距演示</span>
+    <h2 class="t2 reveal">这四条，你信几条？</h2>
+    <div class="rumors">
+      <div class="rumor"><span class="src">班级群 · 转了 47 次</span><p>「听说小升初不用考体育了。」</p></div>
+      <div class="rumor"><span class="src">隔壁班同学说的</span><p>「这次期末全年级统一换卷子，特别难。」</p></div>
+      <div class="rumor"><span class="src">网上看到的</span><p>「小学生作业不能超过 20 分钟，超了老师要被罚。」</p></div>
+      <div class="rumor"><span class="src">短视频里讲的</span><p>「晚上 9 点以后睡觉的孩子，长大都不聪明。」</p></div>
+    </div>
+    <div class="verdict"><b>先别查。</b>信哪条、不信哪条——把「凭什么」说出来。</div>
+  </div>
+</section>
+
+<!-- ============ 04 概念 ============ -->
+<section class="slide" data-theme="paper" data-act="概念引入" id="s4">
+  <div class="wrap">
+    <span class="vlabel">概念引入</span>
+    <h2 class="t2 reveal">理由，撑得住那句话吗？</h2>
+    <div class="tr2">
+      <div class="c">
+        <span class="k">理由撑得住</span>
+        <b>可以信</b>
+        <p>哪怕你心里不赞成，也得承认他讲得有道理。</p>
+      </div>
+      <div class="c bad">
+        <span class="k">理由撑不住</span>
+        <b>不能当凭据</b>
+        <p>哪怕结论碰巧是对的——对，也是蒙对的。</p>
+      </div>
+    </div>
+    <div class="marg">
+      <div class="r"><span class="lab">先说个词</span><span class="val"><b>凭据</b>，就是能拿去核对的东西——一个查得到的数，一个你能自己去问的人。拿不出来，就不能当凭据。</span></div>
+      <div class="r"><span class="lab">怎么拆</span><span class="val">三问：<b>他说的啥</b>／<b>他凭啥</b>／<b>这两样对得上吗</b>。</span></div>
+    </div>
+    <div class="sent">
+      <span class="sk">今天要记住的这一句</span>
+      <p>他说<em>＿</em>，理由是<em>＿</em>。但<em>＿</em>，不能当凭据。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 闯关地图 ============ -->
+<section class="slide forest-play" data-theme="dark" data-act="森林迷宫" id="s5">
+  <iframe class="maze-frame" src="forest-maze.html?v=5" title="森林迷宫"></iframe>
+</section>
+<section class="slide" data-theme="paper" data-act="闯关地图-旧" id="s5b" hidden>
+  <div class="wrap">
+    <span class="vlabel">闯关游戏</span>
+    <h2 class="t2 reveal">森林迷宫</h2>
+    <div class="mapwrap" id="forestMap">
+      <svg viewBox="0 0 960 460" role="img" aria-label="森林迷宫：六个路口，分辨动物说的话才能走出去">
+        <rect class="canopy" x="0" y="0" width="960" height="460"/>
+        <g class="tree far"><circle cx="40" cy="80" r="34"/><circle cx="180" cy="50" r="28"/><circle cx="420" cy="40" r="36"/><circle cx="700" cy="48" r="30"/><circle cx="930" cy="90" r="32"/><circle cx="90" cy="200" r="26"/><circle cx="300" cy="140" r="24"/><circle cx="560" cy="120" r="28"/><circle cx="48" cy="340" r="30"/><circle cx="250" cy="420" r="26"/><circle cx="480" cy="430" r="32"/><circle cx="720" cy="420" r="28"/><circle cx="940" cy="360" r="26"/></g>
+        <path class="leg open" data-leg="0" d="M 70 400 C 120 380 160 360 200 340"/>
+        <path class="leg" data-leg="1" d="M 200 340 C 260 300 310 270 360 250"/>
+        <path class="leg" data-leg="2" d="M 360 250 C 420 270 470 310 520 330"/>
+        <path class="leg" data-leg="3" d="M 520 330 C 580 300 620 250 660 220"/>
+        <path class="leg" data-leg="4" d="M 660 220 C 700 240 740 280 780 300"/>
+        <path class="leg" data-leg="5" d="M 780 300 C 810 250 830 200 860 160"/>
+        <path class="leg" data-leg="6" d="M 860 160 C 880 120 900 90 910 70"/>
+        <g class="tree"><circle cx="140" cy="300" r="22"/><circle cx="280" cy="360" r="20"/><circle cx="430" cy="210" r="24"/><circle cx="590" cy="360" r="22"/><circle cx="730" cy="180" r="20"/><circle cx="820" cy="250" r="18"/></g>
+        <text class="maplbl" x="70" y="430" text-anchor="middle">林口</text>
+        <text class="maplbl" x="910" y="52" text-anchor="middle">林外</text>
+        <g id="xiaoman" stroke="#f2c14e" stroke-width="2.4" fill="none" stroke-linecap="round">
+          <circle cx="122" cy="448" r="7" fill="#f7f3e8"/>
+          <path d="M 122 455 v 14 M 122 459 l -7 5 M 122 459 l 7 5 M 122 469 l -5 9 M 122 469 l 5 9"/>
+        </g>
+        <text id="xiaomanlbl" x="122" y="430" text-anchor="middle" font-size="12" fill="#f2c14e" font-weight="700">小满</text>
+        <g class="mapnode" data-level="1" role="button" tabindex="0" aria-label="第一关 兔子谷">
+          <circle class="fog" cx="200" cy="340" r="28"/><circle class="pulse" cx="200" cy="340" r="16"/><circle class="nd" cx="200" cy="340" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="200" y="345" text-anchor="middle" font-size="13" fill="#143024">1</text>
+        </g>
+        <g class="mapnode" data-level="2" role="button" tabindex="0" aria-label="第二关 狮子崖">
+          <circle class="fog" cx="360" cy="250" r="28"/><circle class="pulse" cx="360" cy="250" r="16"/><circle class="nd" cx="360" cy="250" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="360" y="255" text-anchor="middle" font-size="13" fill="#143024">2</text>
+        </g>
+        <g class="mapnode" data-level="3" role="button" tabindex="0" aria-label="第三关 狐狸坡">
+          <circle class="fog" cx="520" cy="330" r="28"/><circle class="pulse" cx="520" cy="330" r="16"/><circle class="nd" cx="520" cy="330" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="520" y="335" text-anchor="middle" font-size="13" fill="#143024">3</text>
+        </g>
+        <g class="mapnode" data-level="4" role="button" tabindex="0" aria-label="第四关 乌龟潭">
+          <circle class="fog" cx="660" cy="220" r="28"/><circle class="pulse" cx="660" cy="220" r="16"/><circle class="nd" cx="660" cy="220" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="660" y="225" text-anchor="middle" font-size="13" fill="#143024">4</text>
+        </g>
+        <g class="mapnode" data-level="5" role="button" tabindex="0" aria-label="第五关 公鸡岭">
+          <circle class="fog" cx="780" cy="300" r="28"/><circle class="pulse" cx="780" cy="300" r="16"/><circle class="nd" cx="780" cy="300" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="780" y="305" text-anchor="middle" font-size="13" fill="#143024">5</text>
+        </g>
+        <g class="mapnode" data-level="6" role="button" tabindex="0" aria-label="第六关 老虎洞">
+          <circle class="fog" cx="860" cy="160" r="28"/><circle class="pulse" cx="860" cy="160" r="16"/><circle class="nd" cx="860" cy="160" r="16" fill="#f4f7f2" stroke="#e7c27a" stroke-width="2"/><text class="nt" x="860" y="165" text-anchor="middle" font-size="13" fill="#143024">6</text>
+        </g>
+        <g class="mapplace" text-anchor="middle">
+          <text x="200" y="318">兔子谷</text>
+          <text x="360" y="228">狮子崖</text>
+          <text x="520" y="362">狐狸坡</text>
+          <text x="660" y="198">乌龟潭</text>
+          <text x="780" y="332">公鸡岭</text>
+          <text x="860" y="138">老虎洞</text>
+        </g>
+      </svg>
+      <button type="button" class="mapreset" id="mapReset">重置进度</button>
+    </div>
+    <div class="aside">小满走进森林迷宫。六个路口，六只动物都在说话。只有分辨出那句话的毛病，雾才会散，路才会通，才能走出森林。</div>
+  </div>
+</section>
+
+<!-- ============ 06 闯关01 兔子谷 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·01" data-level="1" id="s6">
+  <div class="wrap">
+    <span class="vlabel">闯关 01 · 兔子谷</span>
+    <div class="trail"><span class="on">01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 20 C 20 8 24 4 28 10 C 30 14 30 18 30 20"/><path d="M40 20 C 44 8 40 4 36 10 C 34 14 34 18 34 20"/>
+          <circle cx="32" cy="38" r="17"/><circle cx="26" cy="36" r="1.8" fill="#1B4763"/><circle cx="38" cy="36" r="1.8" fill="#1B4763"/><path d="M29 43 q3 3 6 0"/>
+        </svg>
+        <div class="hn">兔子</div>
+      </div>
+      <div class="bubble">「不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！」<small>—— 兔子谷里，兔子们成群结队往山上跑</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">跑的兔子再多，也变不成「天要塌」的证据</button>
+      <button type="button" class="opt">兔子胆子小，所以它说的话全是错的</button>
+      <button type="button" class="opt">山那么高，跑上去也躲不住</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>天要塌了。</span></div>
+      <div class="rc"><b>它凭什么</b><span>大家都在往山上跑。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>多少只兔子在跑，跟天塌不塌，是两码事。</span></div>
+      <div class="rverdict"><b>大家都跑，不能当凭据。<br>句式：他说天要塌了，理由是大家都在跑。但大家都跑，不能当凭据。</b><button type="button" class="go" data-goto="s7">下一关 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 闯关02 狮子崖 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·02" data-level="2" id="s7">
+  <div class="wrap">
+    <span class="vlabel">闯关 02 · 狮子崖</span>
+    <div class="trail"><span>01</span><i></i><span class="on">02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="32" cy="34" r="20" stroke-dasharray="3 4"/><circle cx="32" cy="34" r="12"/><circle cx="28" cy="32" r="1.6" fill="#1B4763"/><circle cx="36" cy="32" r="1.6" fill="#1B4763"/><path d="M29 38 q3 2.5 6 0"/>
+        </svg>
+        <div class="hn">狮王</div>
+      </div>
+      <div class="bubble">「我是百兽之王。这株草药我说它能治病，它就一定能治病。」<small>—— 狮子崖上，狮王举着一株草药</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">百兽之王的名头，证明不了草药灵不灵</button>
+      <button type="button" class="opt">它是国王，国王说的话大家都得听</button>
+      <button type="button" class="opt">能治病的草药，味道一定很苦</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>这株草药能治病。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我是百兽之王。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>名头是名头，药效是药效，两码事。</span></div>
+      <div class="rverdict"><b>名头响，不能当凭据。<br>句式：他说草药灵，理由是自己是百兽之王。但名头响，不能当凭据。</b><button type="button" class="go" data-goto="s8">下一关 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 闯关03 狐狸坡 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·03" data-level="3" id="s8">
+  <div class="wrap">
+    <span class="vlabel">闯关 03 · 狐狸坡</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span class="on">03</span><i></i><span>04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 16 L24 30 L16 26 Z"/><path d="M44 16 L40 30 L48 26 Z"/><path d="M20 22 C 18 40 24 50 32 50 C 40 50 46 40 44 22 C 40 16 24 16 20 22 Z"/><circle cx="28" cy="32" r="1.7" fill="#1B4763"/><circle cx="36" cy="32" r="1.7" fill="#1B4763"/><path d="M32 38 v 5 M32 43 l -4 3 M32 43 l 4 3"/>
+        </svg>
+        <div class="hn">狐狸</div>
+      </div>
+      <div class="bubble">「大灰狼就在山后面！再不躲起来，咱们全完了！」<small>—— 狐狸坡上，狐狸扯着嗓子喊</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">越吓人，越要问一句：狼在哪？证据呢？</button>
+      <button type="button" class="opt">狐狸最狡猾，它的话一句都不能信</button>
+      <button type="button" class="opt">跑得越快，就越安全</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>大灰狼来了，不躲就全完了。</span></div>
+      <div class="rc"><b>它凭什么</b><span>什么都没凭，就靠吓人。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>害怕会让人来不及多想，但害怕不是证据。</span></div>
+      <div class="rverdict"><b>吓人，不能当凭据。<br>句式：他说狼来了，理由是把大家吓住。但吓人，不能当凭据。</b><button type="button" class="go" data-goto="s9">下一关 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 闯关04 乌龟潭 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·04" data-level="4" id="s9">
+  <div class="wrap">
+    <span class="vlabel">闯关 04 · 乌龟潭</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span class="on">04</span><i></i><span>05</span><i></i><span>06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 38 C 14 24 24 18 34 20 C 46 22 50 32 46 40 Z"/><path d="M26 22 v 16 M36 21 v 18 M20 30 h 26"/><circle cx="50" cy="34" r="5"/><circle cx="51.5" cy="33" r="1" fill="#1B4763"/><path d="M16 42 l -3 6 M26 42 v 7 M38 42 v 7 M46 42 l 3 6"/>
+        </svg>
+        <div class="hn">乌龟</div>
+      </div>
+      <div class="bubble">「我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。」<small>—— 乌龟潭边，老乌龟捧着一把浆果</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">它爷爷一个人的事，证明不了谁吃都灵</button>
+      <button type="button" class="opt">乌龟本来就长寿，所以它在撒谎</button>
+      <button type="button" class="opt">浆果是红色的，红色食物都养生</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>谁天天吃，都能长命百岁。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我爷爷吃了，活了一百岁。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>一个人的故事，只能说发生过，说不了是规律。</span></div>
+      <div class="rverdict"><b>一个例子，不能当凭据。<br>句式：他说谁吃都长寿，理由是他爷爷活了一百岁。但一个例子，不能当凭据。</b><button type="button" class="go" data-goto="s10">下一关 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 闯关05 公鸡岭 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·05" data-level="5" id="s10">
+  <div class="wrap">
+    <span class="vlabel">闯关 05 · 公鸡岭</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span class="on">05</span><i></i><span>06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M24 18 l 4 -8 4 6 4 -6 3 8 Z" fill="#BB3A22" stroke="#BB3A22"/><circle cx="34" cy="32" r="15"/><path d="M47 30 l 8 -2 l -7 7 Z"/><circle cx="38" cy="30" r="1.7" fill="#1B4763"/><path d="M28 40 q 4 -4 8 0"/><path d="M26 47 l -3 8 M38 47 l 3 8"/>
+        </svg>
+        <div class="hn">公鸡</div>
+      </div>
+      <div class="bubble">「看见没？我每天一打鸣，太阳就出来。没我叫，天根本亮不了！」<small>—— 公鸡岭上，公鸡挺着胸脯</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">打鸣在前、日出在后，不等于太阳是它叫出来的</button>
+      <button type="button" class="opt">公鸡起得早，它说的话肯定有道理</button>
+      <button type="button" class="opt">它叫得太小声，太阳听不见</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>太阳是我叫出来的。</span></div>
+      <div class="rc"><b>它凭什么</b><span>每次我先打鸣，太阳后出来。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>挨着发生的两件事，不一定有因果关系。</span></div>
+      <div class="rverdict"><b>先后，不等于因果。<br>句式：他说太阳是它叫出来的，理由是打鸣在前。但先后，不等于因果。</b><button type="button" class="go" data-goto="s11">下一关 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 闯关06 老虎洞 ============ -->
+<section class="slide level" hidden data-theme="paper" data-act="闯关·06" data-level="6" id="s11">
+  <div class="wrap">
+    <span class="vlabel">闯关 06 · 老虎洞</span>
+    <div class="trail"><span>01</span><i></i><span>02</span><i></i><span>03</span><i></i><span>04</span><i></i><span>05</span><i></i><span class="on">06</span></div>
+    <div class="stage">
+      <div class="hero">
+        <svg viewBox="0 0 64 64" fill="none" stroke="#1B4763" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 18 l -4 -8 10 4 Z M44 18 l 4 -8 -10 4 Z"/><circle cx="32" cy="36" r="17"/><path d="M25 30 h 5 M34 30 h 5"/><path d="M27 30 v 8 h 10 v -8 M32 30 v 8"/><circle cx="27" cy="38" r="1.5" fill="#1B4763"/><circle cx="37" cy="38" r="1.5" fill="#1B4763"/><path d="M28 44 q4 3 8 0"/>
+        </svg>
+        <div class="hn">狐狸与老虎</div>
+      </div>
+      <div class="bubble">狐狸走在老虎前面，小动物们吓得四散奔逃。狐狸回头对老虎说：「瞧见没？它们都怕我，才跑的。」<small>—— 老虎洞前，狐假虎威</small></div>
+    </div>
+    <div class="quiz">
+      <p class="q">它这句话，毛病出在哪？</p>
+      <button type="button" class="opt" data-correct="1">动物们怕的是老虎，狐狸把意思换成了「怕它」</button>
+      <button type="button" class="opt">狐狸跑得比老虎快，所以动物们怕它</button>
+      <button type="button" class="opt">小动物们的胆子太小了</button>
+    </div>
+    <div class="unbox">
+      <div class="rc"><b>它说了什么</b><span>动物们是怕我才跑的。</span></div>
+      <div class="rc"><b>它凭什么</b><span>我一走过去，它们就四散奔逃。</span></div>
+      <div class="rc"><b>毛病在哪</b><span>它们怕的明明是身后的老虎——话被偷换了。</span></div>
+      <div class="rverdict"><b>他说的，不是那回事。<br>句式：他说动物们怕它，理由是动物们奔逃。但它们怕的是老虎，不是狐狸。</b><button type="button" class="go" data-goto="s12">通关 · 看速查卡 →</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 两位老先生 + 六张卡片 ============ -->
+<section class="slide" data-theme="paper" data-act="两位老先生" id="s12">
+  <div class="wrap">
+    <span class="vlabel">先认识三个人</span>
+    <h2 class="t2 reveal">两千多年前，就有人在问「凭什么」</h2>
+    <div class="lineage">
+      <div class="person"><span class="py">约前 470 — 前 399</span><b>苏格拉底</b><p>在雅典街头拉住人一层层地问：「你这么说，理由是什么？」常常问到对方发现自己其实说不清。他自己没写书。</p></div>
+      <div class="arrow">→<small>学生</small></div>
+      <div class="person"><span class="py">约前 427 — 前 347</span><b>柏拉图</b><p>苏格拉底的学生。把老师那些对话记了下来，后来办了一所学园。</p></div>
+      <div class="arrow">→<small>学生</small></div>
+      <div class="person hi"><span class="py">前 384 — 前 322</span><b>亚里士多德</b><p>柏拉图的学生，在学园待了约二十年。他把「听着挺有道理、其实站不住的话」一条条收起来分类，写进《工具论》的《辩谬篇》，一口气列了 13 种。</p></div>
+    </div>
+    <div class="linfact">所以，<b>苏格拉底是亚里士多德的师祖</b>——老师的老师。两人没见过面：苏格拉底去世时，亚里士多德还没出生。</div>
+    <div class="linbridge">《辩谬篇》里的「以偏概全」「非因误为因」「语义双关」，就是后面三张卡片要讲的事。刚才在森林里你们已经自己抓出了六种毛病，接下来把它们一张张说清楚。</div>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 1 张卡片" id="s12c1">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 01 / 06</span>
+    <h2 class="t2 reveal">凭人多<span class="fcsci">学名：诉诸大众 · 从众</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">01</span>
+        <div class="fcq">「不好啦！天要塌下来了！你没看见吗，大家都在往山上跑！」<small>兔子谷 · 兔子</small></div>
+        <div class="fcpunch">大家都跑，不能当凭据。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>跑的兔子再多，说明的也只是「很多兔子在跑」，跟天塌不塌没关系。人多不等于有理——也可能只是大家都被吓着了。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>学校：「全班都在传这次要换卷子」；家里：家长群转的「90% 的孩子都在补」；网上：「大家都在买」——听着热闹，还是没回答「凭什么」。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>有没有人真的量过、查过？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说天要塌了，理由是大家都在跑。但大家都跑，不能当凭据。</div>
+    <a class="lnk fcdl" href="assets/m2-card-01.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 2 张卡片" id="s12c2">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 02 / 06</span>
+    <h2 class="t2 reveal">凭身份<span class="fcsci">学名：诉诸权威</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">02</span>
+        <div class="fcq">「我是百兽之王。这株草药我说它能治病，它就一定能治病。」<small>狮子崖 · 狮王</small></div>
+        <div class="fcpunch">名头响，不能当凭据。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>名头大，不等于懂这一行。狮王管得了森林，管不了药效。而且它是「国王」，靠的是权力，不是懂药。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>家里：「专家说孩子都得这么学」；广告里：「名校教授推荐」；学校里：「老师都这么说」——没说是哪位专家、哪份研究，就还只是一顶帽子。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>说这话的人，是研究这一行的吗？出处在哪？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说草药灵，理由是自己是百兽之王。但名头响，不能当凭据。</div>
+    <a class="lnk fcdl" href="assets/m2-card-02.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 3 张卡片" id="s12c3">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 03 / 06</span>
+    <h2 class="t2 reveal">凭情绪<span class="fcsci">学名：诉诸恐惧</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">03</span>
+        <div class="fcq">「大灰狼就在山后面！再不躲起来，咱们全完了！」<small>狐狸坡 · 狐狸</small></div>
+        <div class="fcpunch">吓人，不能当凭据。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>把人吓住，是为了让人来不及问「证据呢」。害怕是一种感觉，不是一件事真的发生过的证据。越吓人，越要慢一点。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>广告：「再不报名就晚了」；家长群：「不用这个方法，孩子就跟不上」；短视频：「错过今天再也没有」——先让你慌，再让你信。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>狼在哪儿？谁亲眼看见了？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说狼来了，理由是把大家吓住。但吓人，不能当凭据。</div>
+    <a class="lnk fcdl" href="assets/m2-card-03.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 4 张卡片" id="s12c4">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 04 / 06</span>
+    <h2 class="t2 reveal">凭个例<span class="fcsci">学名：以偏概全 · 轻率概括</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">04</span>
+        <div class="fcq">「我爷爷吃这种浆果活了一百岁！你天天吃，也能长命百岁。」<small>乌龟潭 · 老乌龟</small></div>
+        <div class="fcpunch">一个例子，不能当凭据。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>一个故事只能说明「发生过一次」，推不出「谁都这样」。要变成规律，得看很多个，还得看没吃的人活了多久。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>家里：「我认识一个孩子，用了就考上了」；学校：「我们班某某就是这么做的」——一个例子，很可能只是碰巧。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>还有别的例子吗？有没有反例？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说谁吃都长寿，理由是他爷爷活了一百岁。但一个例子，不能当凭据。</div>
+    <a class="lnk fcdl" href="assets/m2-card-04.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 5 张卡片" id="s12c5">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 05 / 06</span>
+    <h2 class="t2 reveal">先后当因果<span class="fcsci">学名：后此谬误 · 假性因果</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">05</span>
+        <div class="fcq">「我每天一打鸣，太阳就出来。没我叫，天根本亮不了！」<small>公鸡岭 · 公鸡</small></div>
+        <div class="fcpunch">先后，不等于因果。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>A 在 B 前面发生，不等于 A 让 B 发生。也可能两件事都跟着第三件事走——天本来就要亮，公鸡只是先醒了。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>家里：「自从换了这个台灯，成绩就上去了」；学校：「换了同桌之后我就考好了」——同时变的东西太多，不能只挑一件当原因。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>不这样做会怎样？还有别的解释吗？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说太阳是它叫出来的，理由是打鸣在前。但先后，不等于因果。</div>
+    <a class="lnk fcdl" href="assets/m2-card-05.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<section class="slide" data-theme="paper" data-act="第 6 张卡片" id="s12c6">
+  <div class="wrap">
+    <span class="vlabel">六张卡片 · 06 / 06</span>
+    <h2 class="t2 reveal">偷换概念<span class="fcsci">学名：偷换概念 · 转移对象</span></h2>
+    <div class="fcard">
+      <div class="fcleft">
+        <span class="fcno">06</span>
+        <div class="fcq">「瞧见没？它们都怕我，才跑的。」（其实身后跟着一只老虎）<small>老虎洞 · 狐狸</small></div>
+        <div class="fcpunch">他说的，不是那回事。</div>
+      </div>
+      <div class="fcright">
+        <div class="fcrow"><b>毛病在哪</b><p>动物确实在跑，可「怕谁」被偷偷换了对象——怕的是老虎，不是狐狸。盯住那个词，看它前后指的还是不是同一个东西。</p></div>
+        <div class="fcrow"><b>学校 · 家里 · 社会上</b><p>广告：「大家都说这个好」→「所以质量有保证」；学校：「大家都说他不合群」→「所以他做的都不对」——词没换，意思换了；后半句还换了对象。</p></div>
+        <div class="fcrow"><b>该问一句</b><p>这句话里那个词，前后的意思一样吗？</p></div>
+      </div>
+    </div>
+    <div class="fcsent">他说动物们怕它，理由是动物们奔逃。但它们怕的是老虎，不是狐狸。</div>
+    <div class="fcback">反过来：什么样的算凭据？得是<b>能被别人查的</b>——自己亲眼看到的、能查到的数字、能再做一遍的实验、几个不是互相抄的说法。</div>
+    <a class="lnk fcdl" href="assets/m2-card-06.png" download target="_blank" rel="noopener">下载这张卡片 · 点这里存图 →</a>
+  </div>
+</section>
+
+<!-- ============ 12b 回到生活 ============ -->
+<section class="slide" data-theme="paper" data-act="回到生活" id="s12b">
+  <div class="wrap">
+    <span class="vlabel">出了森林，用在哪儿</span>
+    <h2 class="t2 reveal">这套本事，用在这些地方</h2>
+    <div class="pickgrid">
+      <div class="pick"><span class="pk">学校</span><b>「全班都在传，这次要换卷子」</b><p>谁先说的？通知在哪儿？别因为传的人多就当真。</p></div>
+      <div class="pick"><span class="pk">家里</span><b>「专家说，孩子都得这么学」</b><p>哪位专家、哪份研究？说不出来，就只是一顶帽子。</p></div>
+      <div class="pick"><span class="pk">社会上</span><b>「再不报名就晚了」「大家都在买」</b><p>越吓人、越热闹，越要慢一步问一句：证据呢？</p></div>
+    </div>
+    <div class="aside">这些话不是从 AI 里冒出来的，是每天在学校、家里、网上真会碰到的。把它们看清楚，才知道哪个问题真有人卡住、值得动手去做。</div>
+    <div class="linfact">看清楚了，才轮到 AI：<b>它不替你判断，它陪你把真问题做出来。</b>查资料、找例子、列步骤、做出第一个作品，都能拉它一起干。</div>
+  </div>
+</section>
+
+<!-- ============ 13 选题检验 ============ -->
+<section class="slide" data-theme="paper" data-act="选题检验" id="s13">
+  <div class="wrap">
+    <span class="vlabel">找题目</span>
+    <h2 class="t2 reveal">你选的题目，真的有人卡住过吗</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><b>谁在什么时候卡住了？</b><span>得有具体的人、具体的时刻。「大家都会遇到」不算。</span></div></div>
+      <div class="step"><span class="n">2</span><div><b>有证据吗？</b><span>不是「我觉得挺难」，是有人真的在那儿卡住过。</span></div></div>
+      <div class="step"><span class="n">3</span><div><b>不解决，会怎样？</b><span>放着不管，真有人吃亏、真有人难受，才值得做。</span></div></div>
+    </div>
+    <div class="aside">对照一下——「小学生都不会管理时间」：没有人、没有时刻、没有证据。改成「我们班午休 30 分钟，一半人不知道先写作业还是先睡，最后两样都没做好」：有人、有时刻、有具体后果。后面这种，才能拿去做。</div>
+    <div class="duo">
+      <div class="col">
+        <div class="hl"><i>三问都答得上</i>这个题目能用</div>
+        <p>下节课就用它做第一个作品。</p>
+      </div>
+      <div class="col warm">
+        <div class="hl"><i>有一问答不上</i>再想想</div>
+        <p>别急着换题。三问里答得上两问，剩下那问知道去哪儿找，也能用。回去把人、时间、证据找齐。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13b 选题样例墙 ============ -->
+<section class="slide" data-theme="paper" data-act="选题样例" id="s13b">
+  <div class="wrap">
+    <span class="vlabel">选题样例</span>
+    <h2 class="t2 reveal">六个能用的题目</h2>
+    <div class="pickgrid">
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>背单词总忘</b><p>听写 20 次错 13 次，重默到很晚。<em>AI：挑出老错的词，每天出 10 题闯关。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>作业磨蹭到 10 点</b><p>记了一周时间账：7 点坐下，8 点还没动笔。<em>AI：把作业拆成 15 分钟一小块，配个计时器。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>书包总漏东西</b><p>一学期忘带 30 多次，爸妈跑了 30 多趟。<em>AI：说「明天周三」，按课表开书包清单。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>跳绳考试不及格</b><p>成绩单：1 分钟 90 个，及格线 120。<em>AI：排 4 周训练表，每天练什么、几组。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>作文错别字扣分</b><p>85 分里一半扣在错字，「的地得」回回错。<em>AI：找出最常写错的字，出几道练习。</em></p></div>
+      <div class="pick"><span class="pk">谁卡住了 · 我</span><b>短视频停不下来</b><p>屏幕时间截图：说好 20 分钟，日均 1.5 小时。<em>AI：定一个每天看多久的计划，和家长一起签字。</em></p></div>
+    </div>
+    <div class="aside">这六个都答得上三问：谁卡住了、什么时候、有什么证据。找一个你也遇到过的，照样子说三句话——别照抄。</div>
+  </div>
+</section>
+
+<!-- ============ 13c 选题门诊 ============ -->
+<section class="slide" data-theme="paper" data-act="选题门诊" id="s13c">
+  <div class="wrap">
+    <span class="vlabel">选题门诊</span>
+    <h2 class="t2 reveal">不好的题目，改一改就能用</h2>
+    <div class="pickgrid">
+      <div class="pick bad"><span class="pk">废题 A</span><b>小学生都不会管理时间</b><p>卡在哪：「都」字没凭据——没说谁、没时刻、没证据。<em>改成：「我，每天 7 点开始写，8 点还没动笔，记了一周时间账」。</em></p></div>
+      <div class="pick bad"><span class="pk">废题 B</span><b>我想让 AI 帮我写作业</b><p>卡在哪：这不是卡住人的问题，是想偷懒。真正卡住的是：作业写不完。<em>改成：作业磨蹭，记了一周时间账。</em></p></div>
+      <div class="pick bad"><span class="pk">废题 C</span><b>世界上为什么有战争</b><p>卡在哪：题目太大，说不清谁在什么时候卡住。题目不坏，就是得缩小。<em>改成：「弟弟总问我战争是什么，我不知道怎么讲」——三问就都答得上了。</em></p></div>
+    </div>
+    <div class="aside">答不上来别急着换题。把题目缩小、落到具体的人身上，可能就能用了。</div>
+  </div>
+</section>
+
+<!-- ============ 14 下节课 ============ -->
+<section class="slide" data-theme="paper" data-act="下节课" id="s14">
+  <div class="wrap">
+    <span class="vlabel">这周要做</span>
+    <h2 class="t2 reveal">下节课，动手做出来</h2>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><b>装好 WorkBuddy（或豆包）</b><span>电脑或平板上装一个，别用手机凑合——下节课要动手写东西。</span></div></div>
+      <div class="step"><span class="n">2</span><div><b>登录好账号，确认能对话</b><span>发一句「你好」试一下，收到回复就算过关。</span></div></div>
+      <div class="step"><span class="n">3</span><div><b>带上你的选题和三句话</b><span>选题是什么、谁卡住了、证据是什么——下节课开场就要用。</span></div></div>
+    </div>
+    <div class="aside">装不上没关系，开课前十分钟留给大家一起装。</div>
+  </div>
+</section>
+
+<!-- ============ 15 收课 ============ -->
+<section class="slide" data-theme="dark" data-act="收课" id="s15">
+  <div class="wrap door">
+    <div class="cover-meta"><span>M2 先导 · 完</span></div>
+    <h2 class="t2 reveal" style="margin-top:clamp(24px,4vh,44px)">先看清问题，<br>再动手做</h2>
+    <p class="lead">今天练了两件事：看出一句话的理由够不够，找到一个真的有人卡住的问题。下节课带上你的题目，我们开始做。</p>
+    <div class="home">
+      <div class="r"><span class="n">01</span><div><b>一个公式</b><span>他说＿，理由是＿。但＿，不能当凭据。</span></div></div>
+      <div class="r"><span class="n">02</span><div><b>六种毛病</b><span>故事里认得出，学校家里也认得出。</span></div></div>
+      <div class="r"><span class="n">03</span><div><b>一个动作</b><span>下次看到一条消息，先问它凭什么。</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="chrome" data-theme="paper" id="chrome">
+  <div class="act"><i></i><span id="actName">开场</span></div>
+  <div class="ctrl">
+    <button type="button" id="prevBtn" aria-label="上一页">上一页</button>
+    <span class="cnt" id="cnt">01 / 15</span>
+    <button type="button" id="nextBtn" aria-label="下一页">下一页</button>
+  </div>
+</div>
+
+<script>
+
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide:not([hidden])'));
+  var bar = document.getElementById('bar');
+  var chrome = document.getElementById('chrome');
+  var actName = document.getElementById('actName');
+  var cnt = document.getElementById('cnt');
+  var cur = 0;
+
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+  function go(i){
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function(s, j){ s.classList.toggle('on', j === cur); });
+    var s = slides[cur];
+    bar.style.width = ((cur + 1) / slides.length * 100) + '%';
+    cnt.textContent = pad(cur + 1) + ' / ' + pad(slides.length);
+    actName.textContent = s.getAttribute('data-act') || '';
+    var theme = s.getAttribute('data-theme') || 'paper';
+    chrome.setAttribute('data-theme', theme);
+    try { history.replaceState(null, '', '#' + (cur + 1)); } catch (err) {}
+    window.scrollTo(0, 0);
+    var frame = s.querySelector('iframe.maze-frame');
+    if (frame){ try { setTimeout(function(){ frame.contentWindow.focus(); }, 80); } catch (err) {} }
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', function(){ go(cur - 1); });
+  document.getElementById('nextBtn').addEventListener('click', function(){ go(cur + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    /* 游戏页里所有按键交给 iframe，父页面不再翻页 */
+    if (slides[cur] && slides[cur].classList.contains('forest-play')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ' || e.key === 'Enter'){
+      if (e.key === ' ') e.preventDefault();
+      go(cur + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      go(cur - 1);
+    } else if (e.key === 'Home'){ go(0); }
+    else if (e.key === 'End'){ go(slides.length - 1); }
+  });
+
+  var tx = null, ty = null;
+  document.addEventListener('touchstart', function(e){
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+  }, {passive: true});
+  document.addEventListener('touchend', function(e){
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    var dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4){ go(cur + (dx < 0 ? 1 : -1)); }
+    tx = null; ty = null;
+  }, {passive: true});
+
+  /* 标本零件：点一下亮，再点一下灭 */
+  function initPlate(plate){
+    var active = {};
+    var parts = Array.prototype.slice.call(plate.querySelectorAll('.part'));
+    var labs = Array.prototype.slice.call(plate.querySelectorAll('.lab'));
+    var btns = Array.prototype.slice.call(plate.querySelectorAll('.legend button'));
+
+    function render(){
+      var any = Object.keys(active).some(function(k){ return active[k]; });
+      parts.forEach(function(g){
+        var on = !!active[g.getAttribute('data-part')];
+        g.style.opacity = (!any || on) ? '1' : '.2';
+      });
+      labs.forEach(function(g){
+        var on = !!active[g.getAttribute('data-lab')];
+        var col = on ? '#BB3A22' : '#1B4763';
+        var t = g.querySelector('text'); var p = g.querySelector('path');
+        if (t) t.setAttribute('fill', col);
+        if (p) p.setAttribute('stroke', col);
+      });
+      btns.forEach(function(b){
+        b.setAttribute('aria-pressed', active[b.getAttribute('data-key')] ? 'true' : 'false');
+      });
+    }
+
+    function toggle(k){
+      if (!k) return;
+      active[k] = !active[k];
+      render();
+    }
+
+    parts.forEach(function(g){
+      g.addEventListener('click', function(){ toggle(g.getAttribute('data-part')); });
+    });
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){ toggle(b.getAttribute('data-key')); });
+    });
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-plate]')).forEach(initPlate);
+
+  /* 细胞拆解开关 */
+  (function(){
+    var c=document.getElementById('cellPlate'),img=document.getElementById('cell3d'),b=document.getElementById('cellTgl');
+    if(!c||!b) return;
+    function flip(){var o=c.classList.toggle('open');b.setAttribute('aria-pressed',o?'true':'false');b.textContent=o?'合上标注':'点开标注';}
+    img.addEventListener('click',flip);
+    img.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();}});
+    b.addEventListener('click',flip);
+  })();
+
+  function indexFromHash(){
+    var h = (location.hash || '').replace('#', '');
+    if (!h) return 0;
+    for (var i = 0; i < slides.length; i++){ if (slides[i].id === h) return i; }
+    var m = h.match(/^s(\d+)$/);
+    if (m) return parseInt(m[1], 10) - 1;
+    var n = parseInt(h, 10);
+    return isFinite(n) ? n - 1 : 0;
+  }
+  window.addEventListener('hashchange', function(){ go(indexFromHash()); });
+  go(indexFromHash());
+})();
+
+</script>
+<script>
+(function(){
+  var KEY = 'm2logic-animal-v1';
+  var N = 6;
+  var START = [90,400];
+  var POS = [[200,340],[360,250],[520,330],[660,220],[780,300],[860,160]];
+  var END = [910,70];
+  var cleared = [];
+  try { cleared = JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) {}
+  while (cleared.length < N) cleared.push(false);
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(cleared)); } catch (e) {} }
+  function firstOpen(){ for (var i=0;i<N;i++){ if(!cleared[i]) return i; } return N-1; }
+
+  var xm = document.getElementById('xiaoman');
+  var xml = document.getElementById('xiaomanlbl');
+
+  function render(){
+    var cur = firstOpen();
+    var allDone = cleared.every(Boolean);
+    document.querySelectorAll('.mapnode').forEach(function(g){
+      var lv = +g.dataset.level - 1;
+      g.classList.toggle('done', !!cleared[lv]);
+      g.classList.toggle('current', !allDone && lv === cur);
+      var t = g.querySelector('.nt');
+      t.textContent = cleared[lv] ? '✓' : String(lv+1);
+    });
+    document.querySelectorAll('.level').forEach(function(sec){
+      var lv = +sec.dataset.level - 1;
+      var spans = sec.querySelectorAll('.trail span');
+      spans.forEach(function(sp, j){
+        sp.classList.toggle('done', !!cleared[j]);
+      });
+      var box = sec.querySelector('.unbox');
+      if (cleared[lv]){
+        box.classList.add('show');
+        sec.querySelectorAll('.opt').forEach(function(b){ b.disabled = true; if(b.dataset.correct) b.classList.add('right'); });
+      }
+    });
+    document.querySelectorAll('.leg').forEach(function(p){
+      var n = +p.dataset.leg;
+      p.classList.toggle('open', n === 0 || !!cleared[n - 1]);
+    });
+    var fmap = document.getElementById('forestMap');
+    if (fmap) fmap.classList.toggle('out', allDone);
+    if (xm){
+      var p = allDone ? END : (cur === 0 ? START : POS[cur - 1]);
+      xm.setAttribute('transform', 'translate(' + (p[0]-122) + ',' + (p[1]-455) + ')');
+      if (xml){
+        xml.setAttribute('x', p[0]);
+        xml.setAttribute('y', p[1] - 36);
+        xml.textContent = allDone ? '走出森林' : '小满';
+      }
+    }
+  }
+
+  document.querySelectorAll('.level').forEach(function(sec){
+    var lv = +sec.dataset.level - 1;
+    sec.querySelectorAll('.opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if (cleared[lv]) return;
+        if (btn.dataset.correct){
+          cleared[lv] = true; save(); render();
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(function(){ btn.classList.remove('wrong'); }, 480);
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll('.mapnode').forEach(function(g){
+    function jump(){ location.hash = '#s' + (5 + (+g.dataset.level)); }
+    g.addEventListener('click', jump);
+    g.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); jump(); } });
+  });
+
+  var rst = document.getElementById('mapReset');
+  if (rst) rst.addEventListener('click', function(){
+    cleared = [false,false,false,false,false,false]; save(); render();
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){ location.hash = '#' + b.dataset.goto; });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

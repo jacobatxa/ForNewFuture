@@ -521,9 +521,393 @@
   .fcback b{color:var(--red)}
   .fcdl{display:inline-block;margin-top:10px;font-size:18px}
   @media(max-width:820px){.fcard{grid-template-columns:1fr}.fcleft{border-right:none;border-bottom:1px solid var(--rule);padding-right:0;padding-bottom:12px}}
+
+/* ===== 视觉改版：清爽课堂（皮肤包内联，无外部依赖） ===== */
+/* ============================================================
+   M2 课件 · 六套候选皮肤
+   用法：<body data-skin="clean" data-tone="light"> + 引入本文件
+   只覆盖视觉，不动结构、文字、交互和脚本
+   ============================================================ */
+
+/* ---------- 0. 通用：拆掉"报纸感" ---------- */
+body[data-skin] .slide[data-theme="paper"],
+body[data-skin] .slide[data-theme="dark"]{
+  background-image:var(--slide-bg,none)!important;
+  background-size:auto!important;
+  background-repeat:no-repeat!important;
+}
+body[data-skin] .slide[data-theme="paper"]{background-color:var(--paper)!important;color:var(--ink)!important}
+body[data-skin] .slide[data-theme="dark"]{background-color:var(--coverbg,var(--dark))!important;color:var(--ink)!important}
+body[data-skin]{background:var(--paper)!important}
+
+body[data-skin] .vlabel{
+  position:static!important;writing-mode:horizontal-tb!important;
+  display:inline-block!important;margin-bottom:14px!important;
+  padding:6px 14px!important;border-radius:999px!important;
+  font-family:var(--mono)!important;font-size:13px!important;
+  letter-spacing:.06em!important;text-transform:none!important;
+  opacity:1!important;
+}
+body[data-skin] .plate::before{display:none!important}
+body[data-skin] .plate .cap{border-top:0!important;margin-top:16px!important}
+body[data-skin] .manual .m,
+body[data-skin] .prow,
+body[data-skin] .cheat .ch{border-bottom-style:solid!important}
+body[data-skin] .fcleft{border-right:1px solid var(--rule)!important}
+
+/* 所有卡片统一换成"面"而不是"线框" */
+body[data-skin] .rumor,
+body[data-skin] .fcard,
+body[data-skin] .person,
+body[data-skin] .cheat,
+body[data-skin] .bubble,
+body[data-skin] .opt,
+body[data-skin] .fac,
+body[data-skin] .binom,
+body[data-skin] .pcard,
+body[data-skin] .manual,
+body[data-skin] .plate,
+body[data-skin] .sent,
+body[data-skin] .toolsum,
+body[data-skin] .fcsent,
+body[data-skin] .linfact,
+body[data-skin] .rverdict,
+body[data-skin] .socrfig,
+body[data-skin] .scene{
+  background:var(--surf)!important;
+  border:var(--stroke)!important;
+  border-radius:var(--r)!important;
+  box-shadow:var(--sh)!important;
+  color:var(--ink)!important;
+}
+body[data-skin] .fcsent,
+body[data-skin] .toolsum,
+body[data-skin] .sent,
+body[data-skin] .scene{background:var(--surf2)!important}
+body[data-skin] .fcsent{border-left:6px solid var(--red)!important}
+body[data-skin] .linfact{border:3px solid var(--red)!important;background:var(--red-w)!important}
+body[data-skin] .rverdict{border:2px solid var(--red)!important;background:var(--red-w)!important}
+body[data-skin] .opt.right{border-color:var(--red)!important;background:var(--red-w)!important}
+body[data-skin] .opt:hover:not(:disabled){border-color:var(--blue)!important;background:var(--surf2)!important}
+body[data-skin] .person.hi{border-top:3px solid var(--red)!important}
+body[data-skin] .trail span{
+  border-radius:999px!important;background:var(--surf)!important;
+  color:var(--ink-2)!important;border:var(--stroke)!important;
+}
+body[data-skin] .ptgl{color:#fff!important}
+body[data-skin] .rverdict .go{background:var(--blue)!important;color:var(--btn-ink,#fff)!important}
+body[data-skin] .bubble::before{border-right-color:var(--blue)!important}
+body[data-skin] .chrome{
+  background:var(--surf)!important;border-top:var(--stroke)!important;
+  color:var(--ink-3)!important;
+}
+body[data-skin] .chrome[data-theme="dark"]{background:var(--surf)!important;border-color:var(--rule)!important;color:var(--ink-3)!important}
+body[data-skin] .chrome .cnt{color:var(--ink)!important}
+body[data-skin] .chrome button:hover{color:var(--red)!important}
+body[data-skin] #bar{background:var(--red)!important}
+body[data-skin] .sent p em,
+body[data-skin] .frow em,
+body[data-skin] .syl-row .form em{border-bottom-color:var(--red)!important}
+
+/* 浅色皮肤：把原本深色的封面/收课页翻成浅色 */
+body[data-tone="light"] .slide[data-theme="dark"]{background:var(--coverbg,#FFFFFF)!important;color:var(--ink)!important}
+body[data-tone="light"] .cover-meta{color:var(--ink-3)!important}
+body[data-tone="light"] .cover-sub{color:var(--ink-2)!important}
+body[data-tone="light"] .rail div{border-bottom-color:var(--rule)!important}
+body[data-tone="light"] .rail .gap{border-bottom-color:var(--rule)!important}
+body[data-tone="light"] .rail p{color:var(--ink)!important}
+body[data-tone="light"] .startbtn{border-color:var(--ink)!important;color:var(--ink)!important}
+body[data-tone="light"] .startbtn:hover{background:var(--blue)!important;border-color:var(--blue)!important;color:#fff!important}
+body[data-tone="light"] .door .big{border-color:var(--rule)!important;color:var(--ink)!important}
+body[data-tone="light"] .door .big:hover{background:var(--ink)!important;border-color:var(--ink)!important;color:#fff!important}
+body[data-tone="light"] .door .after,
+body[data-tone="light"] .home span,
+body[data-tone="light"] .ban span{color:var(--ink-2)!important}
+body[data-tone="light"] .home .r,
+body[data-tone="light"] .ban .r{border-bottom-color:var(--rule)!important}
+body[data-tone="light"] .slide[data-theme="dark"] .lead{color:var(--ink-2)!important}
+
+/* 深色皮肤：修掉几处写死的深色文字 */
+body[data-tone="dark"] .rail p,
+body[data-tone="dark"] .door .big,
+body[data-tone="dark"] .ptgl{color:var(--ink)!important}
+body[data-tone="dark"] .cover-meta{color:#8FA8BF!important}
+body[data-tone="dark"] .cover-sub{color:#B6C8DA!important}
+body[data-tone="dark"] .rail div{border-bottom-color:var(--dark-rule)!important}
+body[data-tone="dark"] .home span,
+body[data-tone="dark"] .ban span,
+body[data-tone="dark"] .door .after{color:#AABBD0!important}
+body[data-tone="dark"] .slide[data-theme="dark"] .lead{color:#B6C8DA!important}
+
+/* 预览用的返回条 */
+.skin-back{
+  position:fixed;right:14px;top:12px;z-index:90;
+  font:600 13px/1 "Noto Sans SC",system-ui,sans-serif;
+  padding:9px 14px;border-radius:999px;text-decoration:none;
+  background:rgba(20,24,32,.82);color:#fff;
+  box-shadow:0 4px 16px rgba(0,0,0,.22);letter-spacing:.04em;
+}
+.skin-back:hover{background:#111;color:#fff}
+
+/* ============================================================
+   1. 清爽课堂 · 现代教学白板
+   ============================================================ */
+body[data-skin="clean"]{
+  --paper:#F5F7FC;--paper-2:#EAEFF8;--paper-3:#EFF3FB;
+  --ink:#172142;--ink-2:#4E5C7C;--ink-3:#7A89A8;
+  --rule:#DFE6F3;--rule-2:#EBF0F8;
+  --blue:#4F46E5;--red:#F0533B;--red-w:#FFE9E4;
+  --dark:#101A38;--dark-2:#1B2950;--dark-rule:#2C3C68;--dark-dim:#91A1C6;
+  --surf:#FFFFFF;--surf2:#F0F4FC;--stroke:1px solid #E3EAF7;
+  --r:18px;--sh:0 10px 28px rgba(24,45,94,.09);--btn-ink:#fff;
+  --coverbg:#FFFFFF;
+  --slide-bg:radial-gradient(1000px 560px at 88% -12%,rgba(79,70,229,.11),transparent 62%),radial-gradient(760px 480px at -8% 108%,rgba(240,83,59,.08),transparent 60%);
+  --mono:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+body[data-skin="clean"] .vlabel{background:#EDEBFF!important;color:var(--blue)!important;border:1px solid #DCD8FF!important}
+body[data-skin="clean"] .wrap>.t2::after{content:"";display:block;width:64px;height:8px;border-radius:99px;background:var(--red);margin-top:16px}
+body[data-skin="clean"] .t2{letter-spacing:-.02em}
+body[data-skin="clean"] .rumor{padding-top:18px!important}
+body[data-skin="clean"] .rumor::before{content:"";display:block;width:34px;height:5px;border-radius:99px;background:var(--blue);margin-bottom:10px}
+body[data-skin="clean"] .rumor:nth-child(even)::before{background:var(--red)}
+body[data-skin="clean"] .rumor .src{display:inline-block;background:var(--red-w);color:var(--red);padding:3px 10px;border-radius:99px;font-weight:700;letter-spacing:0}
+body[data-skin="clean"] .fcno{color:var(--blue)}
+body[data-skin="clean"] .fcpunch{border-top:0!important;border-left:6px solid var(--red)!important;padding-left:14px!important}
+body[data-skin="clean"] .startbtn{border-radius:999px!important;padding:14px 34px!important;border-width:2px!important}
+body[data-skin="clean"] .tool,
+body[data-skin="clean"] .chip,
+body[data-skin="clean"] .pick,
+body[data-skin="clean"] .tr2 .c,
+body[data-skin="clean"] .rc{border-top-width:3px!important;border-top-color:var(--blue)!important}
+body[data-skin="clean"] .tr2 .c.bad{border-top-color:var(--red)!important}
+body[data-skin="clean"] .fcard{border-top:6px solid var(--blue)!important}
+
+/* ============================================================
+   2. 深色实验室 · AI 科技感
+   ============================================================ */
+body[data-skin="lab"]{
+  --paper:#0A1220;--paper-2:#0F1B2D;--paper-3:#101D31;
+  --ink:#EAF3FF;--ink-2:#AFC3DC;--ink-3:#7C93B2;
+  --rule:#243751;--rule-2:#1C2C44;
+  --blue:#5EEAD4;--red:#FBBF24;--red-w:rgba(251,191,36,.11);
+  --dark:#0A1220;--dark-2:#0F1B2D;--dark-rule:#243751;--dark-dim:#7C93B2;
+  --surf:rgba(255,255,255,.045);--surf2:rgba(255,255,255,.075);
+  --stroke:1px solid rgba(126,190,235,.22);
+  --r:16px;--sh:0 14px 40px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.05);
+  --btn-ink:#07131E;--coverbg:#0A1220;
+  --slide-bg:radial-gradient(900px 520px at 80% -10%,rgba(45,212,191,.15),transparent 62%),radial-gradient(720px 480px at -6% 110%,rgba(99,102,241,.17),transparent 60%);
+}
+body[data-skin="lab"] .t1{color:#F2F8FF;text-shadow:0 0 42px rgba(94,234,212,.28)}
+body[data-skin="lab"] .t2{color:#F2F8FF}
+body[data-skin="lab"] .wrap>.t2::after{content:"";display:block;width:78px;height:4px;border-radius:99px;background:var(--blue);box-shadow:0 0 14px rgba(94,234,212,.7);margin-top:16px}
+body[data-skin="lab"] .vlabel{color:var(--blue)!important;border:1px solid rgba(94,234,212,.4)!important;background:rgba(94,234,212,.08)!important}
+body[data-skin="lab"] .fcno{color:var(--blue);text-shadow:0 0 24px rgba(94,234,212,.4)}
+body[data-skin="lab"] .fcpunch{color:var(--red);border-top-color:var(--red)!important}
+body[data-skin="lab"] .fcsci{color:var(--blue)}
+body[data-skin="lab"] .startbtn{border-color:var(--blue)!important;color:var(--blue)!important;border-radius:999px!important}
+body[data-skin="lab"] .startbtn:hover{background:var(--blue)!important;color:#07131E!important}
+body[data-skin="lab"] .rumor .src{color:var(--red)}
+body[data-skin="lab"] .fcard{border-top:2px solid rgba(94,234,212,.55)!important}
+body[data-skin="lab"] .chrome button:hover{color:var(--blue)!important}
+body[data-skin="lab"] .opt:hover:not(:disabled){border-color:var(--blue)!important}
+body[data-skin="lab"] .u-red{border-bottom-color:var(--blue)!important}
+
+/* ============================================================
+   3. 手帐涂鸦 · 儿童亲和
+   ============================================================ */
+body[data-skin="note"]{
+  --paper:#FFF8E9;--paper-2:#F7ECD3;--paper-3:#FFF2D9;
+  --ink:#312B24;--ink-2:#6A5B4A;--ink-3:#8B795F;
+  --rule:#E4D3B3;--rule-2:#EFE1C6;
+  --blue:#2F6DA8;--red:#E0562B;--red-w:#FFE6D2;
+  --dark:#3A3025;--dark-2:#4A3D2E;--dark-rule:#D8C4A1;--dark-dim:#8B795F;
+  --surf:#FFFDF6;--surf2:#FFF3DC;--stroke:2.5px solid #312B24;
+  --r:0px;--sh:4px 5px 0 rgba(49,43,36,.9);--btn-ink:#fff;
+  --coverbg:#FFFDF6;
+  --slide-bg:radial-gradient(circle at 1px 1px,rgba(120,100,70,.15) 1.2px,transparent 0) 0 0/22px 22px;
+  --mono:"Yuanti SC","YouYuan","幼圆","Noto Sans SC",system-ui,sans-serif;
+  --sans:"Yuanti SC","YouYuan","幼圆","Noto Sans SC","PingFang SC",system-ui,sans-serif;
+}
+body[data-skin="note"] .rumor,
+body[data-skin="note"] .fcard,
+body[data-skin="note"] .person,
+body[data-skin="note"] .sent,
+body[data-skin="note"] .toolsum,
+body[data-skin="note"] .fcsent,
+body[data-skin="note"] .linfact,
+body[data-skin="note"] .cheat,
+body[data-skin="note"] .pcard,
+body[data-skin="note"] .manual,
+body[data-skin="note"] .plate,
+body[data-skin="note"] .bubble,
+body[data-skin="note"] .opt,
+body[data-skin="note"] .fac,
+body[data-skin="note"] .binom,
+body[data-skin="note"] .socrfig{
+  border-radius:18px 24px 16px 22px / 22px 16px 24px 18px!important;
+}
+body[data-skin="note"] .rumor:nth-child(1){transform:rotate(-.8deg)}
+body[data-skin="note"] .rumor:nth-child(2){transform:rotate(.6deg)}
+body[data-skin="note"] .rumor:nth-child(3){transform:rotate(.7deg)}
+body[data-skin="note"] .rumor:nth-child(4){transform:rotate(-.6deg)}
+body[data-skin="note"] .vlabel{
+  display:block!important;width:max-content;
+  background:#FFE28A!important;color:#312B24!important;
+  border:2px dashed #312B24!important;transform:rotate(-2deg);
+  border-radius:6px!important;
+}
+body[data-skin="note"] .wrap>.t2{
+  display:inline-block;background:linear-gradient(transparent 56%,#FFE28A 56%,#FFE28A 92%,transparent 92%);
+  padding:0 10px 4px;letter-spacing:0;
+}
+body[data-skin="note"] .t1{letter-spacing:0}
+body[data-skin="note"] .rumor .src{color:var(--red);font-weight:700}
+body[data-skin="note"] .fcno{color:var(--red)}
+body[data-skin="note"] .startbtn{
+  border:2.5px dashed #312B24!important;background:#FFE28A!important;
+  color:#312B24!important;border-radius:16px!important;transform:rotate(-1deg);
+  box-shadow:3px 4px 0 #312B24!important;
+}
+body[data-skin="note"] .startbtn:hover{background:#FFD25C!important;color:#312B24!important}
+body[data-skin="note"] .u-red{border-bottom:4px wavy var(--red)!important}
+body[data-skin="note"] .fcsent{border-left:7px solid var(--red)!important}
+body[data-skin="note"] .fcq{letter-spacing:0}
+
+/* ============================================================
+   4. 大色块杂志 · 有记忆点
+   ============================================================ */
+body[data-skin="blocks"]{
+  --paper:#F3F1E9;--paper-2:#E9E6DC;--paper-3:#FFF4C9;
+  --ink:#141414;--ink-2:#4A4A4A;--ink-3:#767676;
+  --rule:#D5D1C4;--rule-2:#E3E0D5;
+  --blue:#1D3BE0;--red:#EE4B2B;--red-w:#FFE0D6;
+  --dark:#141414;--dark-2:#232323;--dark-rule:#3A3A3A;--dark-dim:#8C8C8C;
+  --surf:#FFFFFF;--surf2:#FFE14D;--stroke:0px solid transparent;
+  --r:0px;--sh:10px 10px 0 #1D3BE0;--btn-ink:#fff;
+  --coverbg:#1D3BE0;
+  --slide-bg:none;
+  --mono:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+body[data-skin="blocks"] .slide[data-theme="paper"]::before,
+body[data-skin="blocks"] .slide[data-theme="dark"]::before{
+  content:"";position:fixed;left:0;top:0;width:100%;height:12px;z-index:40;
+  background:linear-gradient(90deg,#1D3BE0 0 58%,#EE4B2B 58% 80%,#FFE14D 80% 100%);
+}
+body[data-skin="blocks"] .vlabel{background:#141414!important;color:#fff!important;border-radius:0!important;padding:7px 14px!important}
+body[data-skin="blocks"] .wrap>.t2::before{content:"";display:inline-block;width:20px;height:20px;background:var(--red);margin-right:14px;vertical-align:.06em}
+body[data-skin="blocks"] .wrap>.t2{letter-spacing:-.035em}
+body[data-skin="blocks"] .rumor{background:#FFE14D!important;border:0!important;border-left:14px solid #1D3BE0!important;padding-left:20px!important;box-shadow:8px 8px 0 #141414!important}
+body[data-skin="blocks"] .rumor:nth-child(2n){background:#DDE5FF!important;border-left-color:#EE4B2B!important}
+body[data-skin="blocks"] .rumor .src{color:#141414;font-weight:900;letter-spacing:.02em}
+body[data-skin="blocks"] .sent{background:#FFE14D!important;border-bottom:10px solid #141414!important}
+body[data-skin="blocks"] .fcard{box-shadow:12px 12px 0 #1D3BE0!important;border-top:16px solid #1D3BE0!important}
+body[data-skin="blocks"] .fcno{color:var(--red);font-size:clamp(50px,6vw,84px)}
+body[data-skin="blocks"] .person{box-shadow:8px 8px 0 #141414!important;border-top:8px solid #141414!important}
+body[data-skin="blocks"] .person.hi{border-top-color:var(--red)!important}
+body[data-skin="blocks"] .linfact{border:0!important;border-left:14px solid var(--red)!important;box-shadow:8px 8px 0 var(--red)!important}
+body[data-skin="blocks"] .slide[data-theme="dark"]{background:#1D3BE0!important;color:#fff!important}
+body[data-skin="blocks"] .t1{color:#fff}
+body[data-skin="blocks"] .cover-meta,
+body[data-skin="blocks"] .cover-sub,
+body[data-skin="blocks"] .door .after,
+body[data-skin="blocks"] .home span,
+body[data-skin="blocks"] .ban span{color:rgba(255,255,255,.86)!important}
+body[data-skin="blocks"] .rail p{color:#fff!important}
+body[data-skin="blocks"] .rail div{border-bottom-color:rgba(255,255,255,.35)!important}
+body[data-skin="blocks"] .rail .gap{border-bottom-color:rgba(255,255,255,.35)!important}
+body[data-skin="blocks"] .startbtn{background:#FFE14D!important;border:0!important;color:#141414!important;box-shadow:6px 6px 0 #141414!important}
+body[data-skin="blocks"] .startbtn:hover{background:#fff!important;color:#141414!important}
+body[data-skin="blocks"] .door .big{color:#fff!important;border-color:rgba(255,255,255,.6)!important}
+
+/* ============================================================
+   5. 闯关界面 · 和森林迷宫连成一套
+   ============================================================ */
+body[data-skin="quest"]{
+  --paper:#17122B;--paper-2:#211942;--paper-3:#241C46;
+  --ink:#F3EEFF;--ink-2:#C6B9E8;--ink-3:#9A8BC4;
+  --rule:#3B2F68;--rule-2:#312657;
+  --blue:#C6F24E;--red:#FF7A59;--red-w:rgba(255,122,89,.14);
+  --dark:#17122B;--dark-2:#211942;--dark-rule:#3B2F68;--dark-dim:#9A8BC4;
+  --surf:#241C46;--surf2:#2C2255;--stroke:2px solid #4B3C82;
+  --r:22px;--sh:0 7px 0 #0D0920,0 16px 34px rgba(0,0,0,.34);
+  --btn-ink:#17122B;--coverbg:#17122B;
+  --slide-bg:radial-gradient(820px 460px at 86% -8%,rgba(167,139,250,.22),transparent 60%),radial-gradient(700px 440px at -6% 108%,rgba(198,242,78,.10),transparent 60%);
+  --mono:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+}
+body[data-skin="quest"] .vlabel{background:var(--blue)!important;color:#17122B!important;border:0!important;font-weight:900;padding:8px 16px!important}
+body[data-skin="quest"] .wrap>.t2{letter-spacing:-.02em}
+body[data-skin="quest"] .rumors{counter-reset:rumor}
+body[data-skin="quest"] .rumor{padding-left:64px!important;position:relative}
+body[data-skin="quest"] .rumor::before{
+  counter-increment:rumor;content:counter(rumor,decimal-leading-zero);
+  position:absolute;left:16px;top:16px;width:36px;height:36px;border-radius:12px;
+  background:var(--blue);color:#17122B;font-weight:900;font-size:17px;
+  display:flex;align-items:center;justify-content:center;
+}
+body[data-skin="quest"] .rumor .src{color:var(--red)}
+body[data-skin="quest"] .fcno{color:var(--blue);text-shadow:0 0 26px rgba(198,242,78,.45)}
+body[data-skin="quest"] .fcpunch{color:var(--red);border-top-color:var(--red)!important}
+body[data-skin="quest"] .fcard{border-top:5px solid var(--blue)!important}
+body[data-skin="quest"] .startbtn{
+  background:var(--blue)!important;border:0!important;color:#17122B!important;
+  border-radius:999px!important;box-shadow:0 6px 0 #7FA62E!important;padding:16px 38px!important;
+}
+body[data-skin="quest"] .startbtn:hover{background:#D9FF72!important;color:#17122B!important}
+body[data-skin="quest"] .opt{border-radius:14px!important}
+body[data-skin="quest"] .t1{text-shadow:0 0 40px rgba(167,139,250,.35)}
+body[data-skin="quest"] .chrome{border-top:2px solid #4B3C82!important}
+
+/* ============================================================
+   6. 极简大字 · 投影最清楚
+   ============================================================ */
+body[data-skin="swiss"]{
+  --paper:#FFFFFF;--paper-2:#F4F4F4;--paper-3:#F6F6F6;
+  --ink:#111111;--ink-2:#4A4A4A;--ink-3:#777777;
+  --rule:#D9D9D9;--rule-2:#EBEBEB;
+  --blue:#111111;--red:#FF3B1F;--red-w:#FFF0ED;
+  --dark:#111111;--dark-2:#1B1B1B;--dark-rule:#333333;--dark-dim:#888888;
+  --surf:#FFFFFF;--surf2:#F6F6F6;--stroke:0px solid transparent;
+  --r:0px;--sh:none;--btn-ink:#fff;
+  --coverbg:#FFFFFF;--slide-bg:none;
+}
+body[data-skin="swiss"] .slide{padding-top:clamp(40px,7vh,84px)!important}
+body[data-skin="swiss"] .vlabel{color:#111!important;border:0!important;border-left:5px solid var(--red)!important;border-radius:0!important;padding:2px 0 2px 12px!important;background:transparent!important}
+body[data-skin="swiss"] .wrap>.t2{font-size:clamp(34px,5.2vw,64px);line-height:1.1;letter-spacing:-.04em;padding-bottom:20px;border-bottom:4px solid #111}
+body[data-skin="swiss"] .t1{letter-spacing:-.045em}
+body[data-skin="swiss"] .rumor,
+body[data-skin="swiss"] .fcard,
+body[data-skin="swiss"] .person,
+body[data-skin="swiss"] .sent,
+body[data-skin="swiss"] .toolsum,
+body[data-skin="swiss"] .fcsent,
+body[data-skin="swiss"] .linfact{border-top:3px solid #111!important}
+body[data-skin="swiss"] .rumor .src{color:var(--red);font-weight:900}
+body[data-skin="swiss"] .rumor p{font-size:clamp(20px,2.3vw,28px)}
+body[data-skin="swiss"] .fcno{color:var(--red)}
+body[data-skin="swiss"] .fcpunch{color:var(--red);border-top:0!important}
+body[data-skin="swiss"] .sent{background:transparent!important;border-bottom:5px solid var(--red)!important}
+body[data-skin="swiss"] .fcsent{background:transparent!important;border-left:6px solid var(--red)!important}
+body[data-skin="swiss"] .startbtn{border:3px solid #111!important;border-radius:0!important}
+body[data-skin="swiss"] .startbtn:hover{background:var(--red)!important;border-color:var(--red)!important}
+body[data-skin="swiss"] .tool,
+body[data-skin="swiss"] .chip,
+body[data-skin="swiss"] .pick,
+body[data-skin="swiss"] .tr2 .c,
+body[data-skin="swiss"] .rc{border-top-width:3px!important;border-top-color:#111!important}
+body[data-skin="swiss"] .tr2 .c.bad{border-top-color:var(--red)!important}
+
+/* ---------- 小屏：预览 iframe 里的导航不抢戏 ---------- */
+@media (max-width:760px){
+  body[data-skin="note"] .rumor{transform:none}
+  body[data-skin="blocks"] .slide[data-theme="paper"]::before{height:8px}
+}
+
 </style>
 </head>
-<body>
+<body data-skin="clean" data-tone="light">
 <div id="bar"></div>
 
 <!-- ============ 01 封面 ============ -->
