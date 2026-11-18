@@ -1620,6 +1620,13 @@
   }
   .cover-card { position: relative; overflow: hidden; transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
   .cover-card:hover { transform: translateY(-3px); border-color: var(--line-strong); background: var(--bg-card-hover); }
+
+.ic-def{display:flex;align-items:center;gap:16px;width:100%;max-width:1340px;text-align:left;padding:12px 20px;border-radius:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.35);}
+.ic-def-k{flex:0 0 auto;font-size:13px;font-weight:800;letter-spacing:.04em;color:#04121a;background:var(--cyan);padding:4px 10px;border-radius:99px;white-space:nowrap;}
+.ic-def-body{display:flex;flex-direction:column;gap:2px;}
+.ic-def-zh{font-size:19px;font-weight:700;color:#fff;line-height:1.4;margin:0;}
+.ic-def-zh b{color:var(--cyan);}
+.ic-def-en{font-size:12px;color:var(--muted);line-height:1.4;margin:0;}
 </style>
 </head>
 <body>
@@ -1670,6 +1677,13 @@
       <div class="ic-quote">
         <p class="ic-quote-main">环境变了，还能想办法<span class="cover-grad">把事办成</span>。</p>
         <span class="ic-quote-src">DeepMind 联合创始人 Shane Legg 对智能的定义（简化版）</span>
+      </div>
+      <div class="ic-def">
+        <span class="ic-def-k">原文定义</span>
+        <div class="ic-def-body">
+          <p class="ic-def-zh">智能，衡量的是一个主体在<b>广泛多样的环境</b>中<b>实现目标</b>的能力。</p>
+          <p class="ic-def-en">Intelligence measures an agent’s ability to achieve goals in a wide range of environments. — Shane Legg &amp; Marcus Hutter, Universal Intelligence, 2007</p>
+        </div>
       </div>
       <div class="ic-pair">
         <div class="ic-case no">
