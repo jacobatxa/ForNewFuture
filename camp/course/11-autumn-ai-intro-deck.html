@@ -309,6 +309,127 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
   .term-top{font-size:11px;padding:8px 12px}.term-dots i{width:9px;height:9px}
   .pdetail{min-height:0;padding:10px 13px}
 }
+
+/* ===== 返工版新增组件：图形卡片 / 定义页 / 词地图 / 双聊窗 / 概念地图 ===== */
+.ico{width:clamp(44px,5.2vw,58px);height:auto;display:block}
+.aicheck{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(9px,1.3vw,14px)}
+.aicard{font-family:inherit;cursor:pointer;background:#fff;border:1.8px solid var(--ink);border-radius:16px;
+  box-shadow:3px 4px 0 var(--shadow);padding:11px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;
+  transition:transform .15s var(--ease),background .2s}
+.aicard:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.aicard .nm{font-weight:900;font-size:clamp(12.5px,1.4vw,14.5px)}
+.aicard .verdict{font-size:11px;font-weight:900;border-radius:999px;padding:1px 9px;border:1.2px solid var(--line);
+  background:var(--paper);color:var(--ink2);opacity:.55;white-space:nowrap}
+.aicard .why{font-size:clamp(10.5px,1.15vw,12px);color:var(--ink2);font-weight:700;line-height:1.45;text-align:left;
+  max-height:0;overflow:hidden;transition:max-height .3s var(--ease)}
+.aicard.revealed.is-ai{border-color:var(--green);background:var(--green-soft)}
+.aicard.revealed.is-ai .verdict{opacity:1;background:#fff;color:var(--green);border-color:var(--green)}
+.aicard.revealed.no-ai{border-color:var(--red);background:var(--red-soft)}
+.aicard.revealed.no-ai .verdict{opacity:1;background:#fff;color:var(--red);border-color:var(--red)}
+.aicard.revealed .why{max-height:76px}
+.aicard-rule{display:flex;align-items:center;gap:12px;justify-content:center;text-align:center}
+.aicard-rule .bigquote{font-size:clamp(14px,1.7vw,17px)}
+
+.defbox{background:#fff;border:1.8px solid var(--ink);border-radius:18px;box-shadow:5px 6px 0 var(--shadow);padding:clamp(14px,1.8vw,20px)}
+.def-en{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(11.5px,1.3vw,13px);color:var(--ink2);
+  line-height:1.55;border-left:4px solid var(--yellow);padding-left:11px}
+.def-en b{color:var(--ink)}
+.def-zh{font-size:clamp(16px,2vw,21px);font-weight:900;margin-top:9px;line-height:1.5}
+.def-src{font-size:11px;color:var(--ink2);margin-top:5px;font-weight:700}
+.def-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.def-ex{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(8px,1.2vw,13px)}
+.excard{background:#fff;border:1.6px solid var(--ink);border-radius:14px;box-shadow:2px 3px 0 var(--shadow);padding:10px 12px}
+.excard .goal{font-weight:900;font-size:clamp(12.5px,1.4vw,14.5px);display:flex;gap:6px;align-items:center}
+.excard .goal .gt{background:var(--yellow);border:1.2px solid var(--yellow-deep);border-radius:7px;padding:0 7px;font-size:10.5px}
+.envrow{display:flex;gap:6px;margin-top:6px;font-size:clamp(11px,1.25vw,12.5px);line-height:1.5}
+.envrow .et{flex:none;font-weight:900;border-radius:6px;padding:0 6px;height:18px;line-height:18px;font-size:10px}
+.envrow .et.a{background:var(--green-soft);border:1px solid var(--green);color:var(--green)}
+.envrow .et.b{background:var(--red-soft);border:1px solid var(--red);color:var(--red)}
+
+.cards7{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(9px,1.3vw,14px)}
+.objcard{font-family:inherit;cursor:pointer;background:#fff;border:1.8px solid var(--ink);border-radius:16px;
+  box-shadow:3px 4px 0 var(--shadow);padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:transform .15s var(--ease),background .2s}
+.objcard:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.objcard .nm{font-weight:900;font-size:clamp(12px,1.35vw,14px)}
+.objcard .abs{display:flex;gap:4px;margin-top:1px}
+.objcard .ab{width:19px;height:19px;border-radius:6px;border:1.3px solid var(--ink);background:#fff;
+  display:grid;place-items:center;font-size:9px;font-weight:900;color:var(--ink);opacity:.22;transition:.2s}
+.objcard.on .ab.lit{opacity:1;background:var(--yellow)}
+.objcard .why{font-size:clamp(10px,1.1vw,11.5px);color:var(--ink2);font-weight:700;line-height:1.4;text-align:left;
+  max-height:0;overflow:hidden;transition:max-height .3s var(--ease)}
+.objcard.on{border-color:var(--yellow-deep);background:var(--yellow-soft)}
+.objcard.on .why{max-height:64px}
+.objcard.concl{background:var(--yellow-soft);border-style:dashed;justify-content:center;cursor:default;box-shadow:none}
+.objcard.concl p{font-weight:900;font-size:clamp(11.5px,1.3vw,13.5px);line-height:1.5;text-align:center}
+.objcard.concl span{font-weight:700;font-size:10.5px;color:var(--ink2);text-align:center;line-height:1.45}
+
+.wmap{position:relative;background:#fff;border:1.8px solid var(--ink);border-radius:18px;box-shadow:5px 6px 0 var(--shadow);
+  height:clamp(250px,38vh,330px);overflow:hidden}
+.wmap svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.wpt{position:absolute;transform:translate(-50%,-50%);font-family:inherit;cursor:pointer;background:#fff;
+  border:1.5px solid var(--ink);border-radius:999px;padding:3px 10px;font-weight:900;font-size:clamp(11px,1.25vw,13px);
+  box-shadow:2px 2px 0 var(--shadow);transition:.15s;white-space:nowrap}
+.wpt:hover{background:var(--yellow-soft)}
+.wpt.sel{background:var(--yellow);border-color:var(--yellow-deep);box-shadow:0 0 0 3px rgba(244,192,58,.35)}
+.wpt.cls-a{background:#FDF2D4}.wpt.cls-b{background:#EAF3EA}.wpt.cls-c{background:#F7EDEA}.wpt.cls-d{background:#E9EFF8}
+.wpt.cls-a.sel,.wpt.cls-b.sel,.wpt.cls-c.sel,.wpt.cls-d.sel{background:var(--yellow)}
+.wmdist{position:absolute;transform:translate(-50%,-130%);background:var(--ink);color:var(--yellow);font-weight:900;
+  font-size:11.5px;border-radius:999px;padding:2px 9px;white-space:nowrap;pointer-events:none}
+.wmpanel{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;text-align:center}
+.wmpanel .wmstate{background:var(--yellow-soft);border:1.5px dashed var(--yellow-deep);border-radius:12px;
+  padding:7px 14px;font-weight:700;font-size:clamp(12.5px,1.45vw,14.5px)}
+.wmhint{font-weight:900;color:var(--ink2);font-size:clamp(11.5px,1.3vw,13px)}
+
+.chatdup{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,16px)}
+.chatwin{background:#fff;border:1.8px solid var(--ink);border-radius:16px;box-shadow:4px 5px 0 var(--shadow);
+  overflow:hidden;display:flex;flex-direction:column;min-height:0}
+.chatbar{display:flex;align-items:center;gap:7px;padding:7px 12px;border-bottom:1.4px solid var(--line);
+  background:var(--paper);font-size:11.5px;font-weight:900}
+.chatbar .st{margin-left:auto;font-size:10.5px;color:var(--ink2);font-weight:700}
+.chatbar .dotc{width:9px;height:9px;border-radius:50%;border:1.2px solid var(--ink)}
+.chatbody{padding:10px 12px;display:flex;flex-direction:column;gap:7px;flex:1}
+.bub{border-radius:11px;padding:7px 10px;font-size:clamp(10.5px,1.2vw,12.5px);line-height:1.5;border:1.3px solid var(--line);max-width:94%}
+.bub.me{align-self:flex-end;background:var(--yellow-soft);border-color:var(--yellow-deep);font-weight:700}
+.bub.ai{align-self:flex-start;background:var(--paper)}
+.bub.ai .an{font-size:9.5px;color:var(--ink2);font-weight:900;margin-bottom:2px}
+.bub.ai .vd{color:var(--red);font-weight:900}
+.bub.ai .gd{color:var(--green);font-weight:900}
+.bub ul{margin:3px 0 0 14px}
+.chatcmp{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,16px)}
+.cmprow{display:flex;gap:7px;align-items:flex-start;font-size:clamp(11px,1.25vw,12.5px);line-height:1.45}
+.cmprow b{flex:none;font-size:10px;border-radius:6px;padding:1px 6px}
+.cmprow b.r{background:var(--red-soft);color:var(--red);border:1px solid var(--red)}
+.cmprow b.g{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+
+.aiworld{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,1.4vw,15px)}
+.zone{font-family:inherit;text-align:left;cursor:pointer;border:1.8px solid var(--ink);border-radius:16px;
+  padding:11px 13px;box-shadow:3px 4px 0 var(--shadow);display:flex;flex-direction:column;gap:6px;transition:.15s}
+.zone:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.zone.z-brain{background:var(--yellow-soft)}.zone.z-tool{background:var(--indigo-soft)}
+.zone.z-method{background:var(--green-soft)}.zone.z-agent{background:var(--red-soft)}
+.zone .zh{display:flex;align-items:center;gap:8px;font-weight:900;font-size:clamp(13px,1.5vw,15.5px)}
+.zone .zh small{font-weight:700;font-size:10.5px;color:var(--ink2)}
+.zone .terms{display:flex;flex-wrap:wrap;gap:5px}
+.zone .tc{font-size:clamp(10px,1.15vw,11.5px);border:1.2px solid var(--ink2);border-radius:999px;padding:1px 8px;
+  background:#fff;font-weight:700}
+.zone.on{box-shadow:0 0 0 3px var(--yellow-deep),3px 4px 0 var(--shadow)}
+.aiworld-tip{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:9px 14px;font-weight:700;
+  font-size:clamp(12px,1.4vw,14px);line-height:1.55;min-height:44px;display:flex;align-items:center}
+@media(max-width:760px){
+  .aicheck{grid-template-columns:repeat(4,1fr)}.cards7{grid-template-columns:repeat(4,1fr)}
+  .def-ex{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .aicheck{grid-template-columns:repeat(2,1fr)}.cards7{grid-template-columns:repeat(2,1fr)}
+  .objcard .ab{width:16px;height:16px;font-size:8px}
+  .def-ex{grid-template-columns:1fr}.def-en{font-size:10.5px}.def-zh{font-size:15.5px}
+  .wmap{height:290px}
+  .chatdup,.chatcmp{grid-template-columns:1fr}
+  .bub{font-size:11px;padding:6px 9px}
+  .aiworld{grid-template-columns:1fr}
+  .zone{padding:9px 11px}
+}
 </style>
 </head>
 <body>
@@ -333,7 +454,7 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
   <button class="island" style="left:67.7%;top:63%" data-go="15" aria-label="04 给 AI 装手艺">
     <span class="num">04</span><span class="nm">给 AI 装手艺</span><span class="sub">做出你的 Agent</span>
   </button>
-  <button class="island" style="left:86.5%;top:49%" data-go="20" aria-label="05 人和 AI 分工">
+  <button class="island" style="left:86.5%;top:49%" data-go="21" aria-label="05 人和 AI 分工">
     <span class="num">05</span><span class="nm">人和 AI 分工</span><span class="sub">边界、安全与好问题</span>
   </button>
   <div class="map-hint">点岛屿可直接跳转</div>
@@ -343,7 +464,7 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
     <button data-go="7"><b>02</b>大模型与上下文</button>
     <button data-go="11"><b>03</b>和 AI 说话</button>
     <button data-go="15"><b>04</b>给 AI 装手艺</button>
-    <button data-go="20"><b>05</b>人和 AI 分工</button>
+    <button data-go="21"><b>05</b>人和 AI 分工</button>
   </div>
   <div class="map-foot">
     <span>① AI 是什么 15′</span><span>② 大模型与上下文 25′</span><span>③ 怎么和 AI 说话 30′</span><span>④ 给 AI 装手艺 30′</span><span>⑤ 人和 AI 分工 12′</span><span>120 分钟 · 线上</span>
@@ -367,56 +488,49 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
 </section>
 
 <section class="slide" data-act="模块一 · AI 是什么">
-  <span class="kicker reveal"><span class="no">01</span>AI 是什么 · 约 15 分钟</span>
-  <h1 class="t1 reveal">先拆掉三个误会：<span class="hl">AI 到底不是什么</span></h1>
+  <span class="kicker reveal"><span class="no">01</span>AI 是什么 · 先判断，再下定义</span>
+  <h1 class="t1 reveal">这 8 个东西，<span class="hl">哪些是 AI</span>？</h1>
+  <p class="lead reveal d1">先别急着答。点开每一张，看它的判断理由——你会发现，标准不是“像不像人”。</p>
   <div class="stage">
-    <div class="grid3">
-      <div class="card reveal d1">
-        <span class="tag r">误会一</span>
-        <h2 class="t2" style="margin-top:8px">它不是机器人</h2>
-        <p>机器人是<b>身体</b>——会动的金属和马达；AI 是住在里面的<b>程序</b>。没有身体的对话框里，照样是 AI 在回答。</p>
-      </div>
-      <div class="card reveal d2">
-        <span class="tag r">误会二</span>
-        <h2 class="t2" style="margin-top:8px">它不是人脑</h2>
-        <p>它不吃饭、不休息，没有心情和想法。它只是用数学方式<b>模仿</b>人用语言做事的过程，并不会真正“活着”。</p>
-      </div>
-      <div class="card reveal d3">
-        <span class="tag r">误会三</span>
-        <h2 class="t2" style="margin-top:8px">它不是搜索网站</h2>
-        <p>搜索是去网上<b>找已经存在的网页</b>，把链接递给你；AI 是当场一个字一个字，给你<b>写</b>出一段新的回答。</p>
-      </div>
-    </div>
-    <div class="card flat reveal d4" style="background:var(--yellow-soft);border-style:dashed;text-align:center">
-      <span class="bigquote">一句话：AI 是运行在电脑里，<span class="hl">能听懂你的话、再生成文字和图片的程序</span>。</span>
+    <div class="aicheck reveal d2" id="aiCheck"></div>
+    <div class="aicard-rule reveal d3">
+      <span class="bigquote">真正的分界线：<span class="hl">有没有从大量例子里学会处理没见过的情况</span>。</span>
     </div>
   </div>
 </section>
 
 <section class="slide" data-act="模块一 · AI 是什么">
-  <span class="kicker reveal"><span class="no">01</span>AI 是什么 · 约 15 分钟</span>
-  <h1 class="t1 reveal">什么才算“聪明”？<span class="hl">会随机应变</span>才算</h1>
+  <span class="kicker reveal"><span class="no">01</span>AI 是什么 · 什么叫智能</span>
+  <h1 class="t1 reveal">“智能”到底怎么定义？<span class="hl">先看原文</span></h1>
   <div class="stage">
-    <div class="card flat reveal d1" style="background:var(--yellow-soft);border-style:dashed;text-align:center">
-      <span class="bigquote">智能的一个简单判据：环境变了，还能想办法<span class="hl">把事办成</span>。</span>
-    </div>
-    <div class="vs reveal d2">
-      <div class="card" style="border-color:var(--red)">
-        <span class="tag r">只会按规则 · 喷淋器</span>
-        <p style="margin-top:8px;font-size:clamp(15px,1.8vw,18px)">到点就喷水。<br>下雨了？<b>照样喷</b>。</p>
-      </div>
-      <div class="mid">→</div>
-      <div class="card" style="border-color:var(--green)">
-        <span class="tag g">会随机应变 · 金毛犬</span>
-        <p style="margin-top:8px;font-size:clamp(15px,1.8vw,18px)">这扇门关了，<br>它会<b>绕到另一扇门</b>找到你。</p>
+    <div class="defbox reveal d1">
+      <p class="def-en"><b>Intelligence measures an agent's ability to achieve goals in a wide range of environments.</b><br>— Shane Legg &amp; Marcus Hutter, <i>Universal Intelligence</i>, 2007</p>
+      <p class="def-zh">智能，衡量的是一个主体在<b>广泛多样的环境</b>中<b>实现目标</b>的能力。</p>
+      <p class="def-src">说人话版：换个没见过的场面，还能把目标达成。</p>
+      <div class="def-tags">
+        <span class="tag">主体 agent ＝ 谁在做事</span>
+        <span class="tag">目标 goals ＝ 要达成什么</span>
+        <span class="tag">广泛多样的环境 ＝ 场面换着来</span>
       </div>
     </div>
-    <div class="reveal d3">
-      <p class="lead" style="text-align:center;margin-bottom:10px">把“聪明”拆开，是五项本领——下一页我们拿它给 7 个东西打分。</p>
-      <div class="chiplist">
-        <span class="chip">01 感知</span><span class="chip">02 理解</span><span class="chip">03 判断</span><span class="chip">04 行动</span><span class="chip key">05 学习 · 最关键</span>
+    <div class="def-ex reveal d2">
+      <div class="excard">
+        <p class="goal"><span class="gt">目标</span>找到 3 楼教室</p>
+        <div class="envrow"><span class="et a">A</span><span>开学第一天，指示牌清楚：跟着走就行，不需要动脑。</span></div>
+        <div class="envrow"><span class="et b">B</span><span>换校区、牌子没装、一扇门还锁了：问人、看地图、绕路——这才要智能。</span></div>
+      </div>
+      <div class="excard">
+        <p class="goal"><span class="gt">目标</span>把水壶找回来</p>
+        <div class="envrow"><span class="et a">A</span><span>它就放在你桌上：直接拿走。</span></div>
+        <div class="envrow"><span class="et b">B</span><span>被收进公用水杯架、还盖了件外套：挨个问、翻一翻、顺着线索找。</span></div>
+      </div>
+      <div class="excard">
+        <p class="goal"><span class="gt">目标</span>上学不迟到</p>
+        <div class="envrow"><span class="et a">A</span><span>晴天、路线熟：按老路走。</span></div>
+        <div class="envrow"><span class="et b">B</span><span>暴雨、地铁停运：换公交、提前半小时出门。</span></div>
       </div>
     </div>
+    <div class="teach reveal d3"><b>所以</b>智能不是“知道得多”，是目标不变、场面变了还能想办法。注意：今天的 AI 只在<b>语言、图像</b>这类场面里强——让它去你家找水壶，它立刻不行。下一页用五项本领给它打分。</div>
   </div>
 </section>
 
@@ -426,10 +540,9 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
   <div class="stage">
     <div class="ability-key reveal d1">
       <span><b>① 感知</b></span><span><b>② 理解</b></span><span><b>③ 判断</b></span><span><b>④ 行动</b></span><span><b>⑤ 学习</b></span>
-      <span style="border-style:dashed">点每行亮灯揭晓</span>
+      <span style="border-style:dashed">点卡片，看它亮几格</span>
     </div>
-    <div class="intel reveal d2" id="intelBoard"></div>
-    <div class="teach reveal d3"><b>结论</b>五格全亮的只有金毛犬。今天的 AI 已经很强，但离真正的智能还有一段路——这也是为什么判断要留在人手里。</div>
+    <div class="cards7 reveal d2" id="objBoard"></div>
   </div>
 </section>
 
@@ -490,17 +603,16 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
 </section>
 
 <section class="slide" data-act="模块二 · 大模型与上下文">
-  <span class="kicker reveal"><span class="no">02</span>大模型与上下文 · 约 25 分钟</span>
-  <h1 class="t1 reveal">在 AI 的地图上，<span class="hl">意思像的词住得近</span></h1>
-  <p class="lead reveal d1">每个词先变成一串数字坐标；意思越像、数字越接近，在地图上就住得越近。点下面三组，自己找规律。</p>
+  <span class="kicker reveal"><span class="no">02</span>互动 · 词的地图</span>
+  <h1 class="t1 reveal">在 AI 眼里，词是<span class="hl">地图上的点</span></h1>
+  <p class="lead reveal d1">点两个词，看它们离多远。距离越近，AI 越认为它们“意思像、常一起出现”。</p>
   <div class="stage">
-    <div class="wmbtns reveal d2">
-      <button class="wmbtn" data-wm="0">猫 vs 狗 vs 卡车<span>猫狗是邻居，卡车住得远</span></button>
-      <button class="wmbtn" data-wm="1">开心 vs 难过<span>意思相反，却住得很近</span></button>
-      <button class="wmbtn" data-wm="2">老师 · 同学 · 作业<span>常在同一句话里出现</span></button>
+    <div class="wmap reveal d2" id="wmap"></div>
+    <div class="wmpanel reveal d3">
+      <span class="wmhint">先猜一个：开心和难过，离得近还是远？</span>
+      <span class="wmstate" id="wmState">点第一个词开始</span>
     </div>
-    <div class="wmout reveal d3" id="wmOut">先点上面任意一张卡，这里会出现 AI 眼里的“地图规律”。</div>
-    <div class="teach reveal d4"><b>关键</b>它不是认识“猫”这个字，而是记住了猫总和谁站在一起——这就是大模型理解语言的底子（词向量 Embedding）。</div>
+    <div class="teach reveal d4"><b>原理</b>每个词先被压成一串数字坐标（词向量 Embedding）；AI 靠<b>算距离</b>判断关系，不是靠查字典。所以“反义词”也可能住得很近——因为它们同属“情绪”。</div>
   </div>
 </section>
 
@@ -531,51 +643,68 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
 
 <section class="slide" data-act="模块二 · 大模型与上下文">
   <span class="kicker reveal"><span class="no">02</span>现场实验 · 测谎终端</span>
-  <h1 class="t1 reveal">它说的话，<span class="hl-r">你信不信</span>？</h1>
+  <h1 class="t1 reveal">这段话，<span class="hl-r">哪里不对</span>？</h1>
+  <p class="lead reveal d1">AI 说得又流畅又具体。别急着信，逐句审。</p>
   <div class="stage">
     <div class="term reveal d1">
       <div class="term-top">
         <div class="term-dots"><i></i><i></i><i></i></div>
         <span>FACT-CHECK TERMINAL · 现场测谎</span>
-        <span class="term-status" id="termStatus">等待选择</span>
+        <span class="term-status" id="termStatus">等待判断</span>
       </div>
       <div class="term-body">
         <div class="term-claim">
-          <span class="claim-label">AI 助手给出了一条回答：</span>
-          <p class="claim-text">“你们学校正门口，正好有 <b>17 棵香樟树</b>。”</p>
+          <span class="claim-label">AI 助手给出的赏析：</span>
+          <p class="claim-text" style="font-size:clamp(14px,1.75vw,18px)">“《静夜思》是唐代李白写的。诗里的「床」，就是睡觉的床——李白躺在床上，看见月光照进来，想起了故乡。”</p>
         </div>
         <div class="tbtns" id="termBtns">
-          <button class="tbtn" data-v="wrong">直接相信</button>
-          <button class="tbtn" data-v="mid">毫不相信</button>
-          <button class="tbtn" data-v="best">亲自查验</button>
+          <button class="tbtn" data-v="wrong">信这段话</button>
+          <button class="tbtn" data-v="mid">有点可疑</button>
+          <button class="tbtn" data-v="best">去查证</button>
         </div>
-        <div class="tscreen" id="termScreen"><span class="ph">先举手投个票，再点按钮揭晓——它到底是怎么知道的？</span></div>
+        <div class="tscreen" id="termScreen"><span class="ph">先投个票：这段话里，哪一句最可能有问题？</span></div>
       </div>
     </div>
     <div class="card flat reveal d2" style="background:var(--yellow-soft);border-style:dashed">
-      <b>术语：<span class="term" style="color:var(--red)">幻觉（Hallucination）</span></b>——不知道答案时也说得很流畅，一本正经地编。核对句式：它说 ＿＿＿＿，我去 ＿＿＿＿ 核对（课本 / 官网 / 问老师）。
+      <b>术语：<span class="term" style="color:var(--red)">幻觉（Hallucination）</span></b>——不知道或不确定时，也能说得流畅笃定。核对句式：它说 ＿＿＿＿，我去 ＿＿＿＿ 核对（课本注释 / 语文老师 / 权威版本）。
     </div>
   </div>
 </section>
 
 <section class="slide" data-act="模块三 · 怎么和 AI 说话">
   <span class="kicker reveal"><span class="no">03</span>怎么和 AI 说话 · 约 30 分钟</span>
-  <h1 class="t1 reveal">同一个问题，<span class="hl">两种问法</span>，拿到两种东西</h1>
+  <h1 class="t1 reveal">同一个需求，<span class="hl">两种问法</span>，两个世界</h1>
+  <p class="lead reveal d1">左边是大多数人问的，右边是按五步问的。看完你就明白差距在哪。</p>
   <div class="stage">
-    <div class="vs reveal d1">
-      <div class="card" style="border-color:var(--red)">
-        <span class="tag r">随口问</span>
-        <p class="bigquote" style="margin:8px 0">「介绍一下细胞」</p>
-        <p>发现史、三位科学家、十页提纲……信息堆成山，<b>看完还是不会判断、不会讲</b>。</p>
+    <div class="chatdup reveal d1">
+      <div class="chatwin">
+        <div class="chatbar"><span class="dotc" style="background:var(--red)"></span>随口一问<span class="st">30 秒</span></div>
+        <div class="chatbody">
+          <div class="bub me">帮我写一份班级读书角方案。</div>
+          <div class="bub ai"><span class="an">AI</span>读书角是培养学生阅读兴趣的重要阵地。建议开展丰富多彩的阅读活动，营造浓厚的阅读氛围，让每位同学都能在书香中成长，让阅读成为伴随一生的好习惯……<br><span class="vd">✗ 全是正确的废话，没有一个字和你们班有关</span></div>
+        </div>
       </div>
-      <div class="mid">→</div>
-      <div class="card" style="border-color:var(--green)">
-        <span class="tag g">想清楚再问</span>
-        <p class="bigquote" style="margin:8px 0;font-size:clamp(14px,1.7vw,18px)">「你是我的讲解员。我要讲给同学听，三分钟。先说它长什么样，<b>不许报名字</b>；再说能干什么；最后给一条判据和一个不算的例子。」</p>
-        <p>一段描述、三句功能、一条判据、一个反例——<b>拿来就能投屏</b>。</p>
+      <div class="chatwin">
+        <div class="chatbar"><span class="dotc" style="background:var(--green)"></span>按五步问<span class="st">2 分钟</span></div>
+        <div class="chatbody">
+          <div class="bub me">班里办读书角，每人一个月至少读完一本。40 人、有空书架、没经费、贴通知没人理。先问我几个问题。</div>
+          <div class="bub ai"><span class="an">AI</span>先确认三件事：书架能放多少本？大家爱看哪类？能不能每周挤一个午休 20 分钟？</div>
+          <div class="bub ai"><span class="an">AI</span>给你 3 种完全不同的办法：<ul><li>旧书交换角：零成本、书源自带，难在登记。</li><li>午休共读 20 分钟：不用买书、能成习惯，难在有人盯。</li><li>书架认领制：责任到层、书不易丢，难在做借阅卡。</li></ul><span class="gd">✓ 每条明天就能试，还能继续追问</span></div>
+        </div>
       </div>
     </div>
-    <p class="lead reveal d2" style="text-align:center">同一个 AI，回答质量的差距，其实是<b>你提问水平</b>的差距。下面把这套问法拆成五步。</p>
+    <div class="chatcmp reveal d2">
+      <div>
+        <div class="cmprow"><b class="r">左</b><span>空话连篇，看完还是不知道从哪下手</span></div>
+        <div class="cmprow"><b class="r">左</b><span>它不认识你们班：40 人、没经费、没人理，它全不知道</span></div>
+        <div class="cmprow"><b class="r">左</b><span>一次给完，你没得选</span></div>
+      </div>
+      <div>
+        <div class="cmprow"><b class="g">右</b><span>三个能落地的办法，还标了难处</span></div>
+        <div class="cmprow"><b class="g">右</b><span>它按你的真实条件想办法</span></div>
+        <div class="cmprow"><b class="g">右</b><span>先问再答，选择权在你手上</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -650,6 +779,34 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
       </div>
     </div>
     <div class="teach reveal d4"><b>老师动作</b>计时 5 分钟；结束抽 2–3 位同学投屏，只看第一句有没有报名字，不评判其他内容。</div>
+  </div>
+</section>
+
+<section class="slide" data-act="模块四 · 给 AI 装手艺">
+  <span class="kicker reveal"><span class="no">04</span>给 AI 装手艺 · 先看全局</span>
+  <h1 class="t1 reveal">AI 世界的地图：<span class="hl">先搞清楚谁是谁</span></h1>
+  <p class="lead reveal d1">今晚会冒出一堆名词。别背，先归类——听到任何一个，先问：它属于哪一块？</p>
+  <div class="stage">
+    <div class="aiworld reveal d2" id="zoneBoard">
+      <button class="zone z-brain" data-zone="brain">
+        <span class="zh"><svg class="ico" viewBox="0 0 64 64" style="width:30px"><circle cx="32" cy="32" r="17" fill="#fff" stroke="#211C16" stroke-width="2"/><path d="M32 15 v34M32 24 q-8 -2 -10 6M32 34 q9 -2 10 7M22 40 q6 4 10 2" fill="none" stroke="#211C16" stroke-width="1.6"/></svg>大脑区 <small>负责“想”</small></span>
+        <span class="terms"><span class="tc">大模型 LLM</span><span class="tc">Token</span><span class="tc">上下文 Context</span><span class="tc">词向量 Embedding</span><span class="tc">幻觉</span></span>
+      </button>
+      <button class="zone z-tool" data-zone="tool">
+        <span class="zh"><svg class="ico" viewBox="0 0 64 64" style="width:30px"><circle cx="32" cy="32" r="13" fill="#fff" stroke="#211C16" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#211C16"/><path d="M32 8 v7M32 49 v7M8 32 h7M49 32 h7M15 15 l5 5M44 44 l5 5M49 15 l-5 5M20 44 l-5 5" stroke="#211C16" stroke-width="2"/></svg>手脚区 <small>负责“做”</small></span>
+        <span class="terms"><span class="tc">联网搜索</span><span class="tc">代码执行</span><span class="tc">读写文件</span><span class="tc">生成图片</span><span class="tc">发消息</span></span>
+      </button>
+      <button class="zone z-method" data-zone="method">
+        <span class="zh"><svg class="ico" viewBox="0 0 64 64" style="width:30px"><path d="M10 12 h18 v40 h-18zM28 12 h26 v40 h-26z" fill="#fff" stroke="#211C16" stroke-width="2"/><path d="M16 22 h8M16 30 h8M16 38 h8M36 22 h10M36 30 h10M36 38 h6" stroke="#211C16" stroke-width="1.6"/></svg>方法区 <small>人怎么用</small></span>
+        <span class="terms"><span class="tc">Prompt 提示词</span><span class="tc">五步法</span><span class="tc">Skills 装手艺</span><span class="tc">检查与核对</span></span>
+      </button>
+      <button class="zone z-agent" data-zone="agent">
+        <span class="zh"><svg class="ico" viewBox="0 0 64 64" style="width:30px"><rect x="12" y="20" width="40" height="30" rx="9" fill="#fff" stroke="#211C16" stroke-width="2"/><circle cx="24" cy="33" r="3" fill="#211C16"/><circle cx="40" cy="33" r="3" fill="#211C16"/><path d="M25 42 q7 5 14 0M32 20 v-7" fill="none" stroke="#211C16" stroke-width="2"/><circle cx="32" cy="10" r="3" fill="#F4C03A" stroke="#211C16" stroke-width="1.6"/></svg>管家区 <small>装成能干活的</small></span>
+        <span class="terms"><span class="tc">目标 Goal</span><span class="tc">记忆 Memory</span><span class="tc">工具 Tool</span><span class="tc">规矩 Spec</span><span class="tc">＝ Agent</span></span>
+      </button>
+    </div>
+    <div class="aiworld-tip reveal d3" id="zoneTip">点任意一块，看它到底管什么。</div>
+    <div class="teach reveal d4" style="margin-top:2px"><b>一句话记住</b>大脑管“想”，手脚管“做”，方法管“怎么问”，管家把前三样装进一个能交付结果的助手。</div>
   </div>
 </section>
 
@@ -924,7 +1081,7 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
   <div class="act"><button class="home" id="homeBtn" title="返回知识地图">🗺 地图</button><span class="acttxt" id="actName">AI 知识地图</span></div>
   <div class="nav">
     <button class="nb" id="prevBtn">上一页</button>
-    <span id="cnt">01 / 26</span>
+    <span id="cnt">01 / 27</span>
     <button class="nb" id="nextBtn">下一页</button>
   </div>
 </div>
@@ -994,57 +1151,140 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
     });
   });
 
-  /* 互动1：七物五本领打分（数据驱动，点击亮灯+展开 why） */
-  var intelData=[
-    {n:'金毛犬',s:[1,1,1,1,1],w:'五项本领全有，还会一直学习——今天唯一的“五格全亮”。'},
-    {n:'配送无人车',s:[1,0,1,1,0],w:'会看路、会送货，但地图一改、遇到突发就容易“懵”。'},
-    {n:'AI 助手',s:[0,1,1,0,0],w:'懂很多知识、会判断，但没有身体不能行动，也不认识现实里的你。'},
-    {n:'门禁闸机',s:[1,0,1,1,0],w:'只会“认脸—放行”这一件事，换个任务就不行。'},
-    {n:'玻璃门',s:[0,0,0,0,0],w:'不会看、不会想、自己也不会动，全靠人推。'},
-    {n:'喷淋器',s:[0,0,0,1,0],w:'到点就喷水，是人提前写好的规则，下雨照样喷。'},
-    {n:'温度计',s:[0,0,0,0,0],w:'只显示数字，并不懂“冷”和“热”是什么意思。'}
+  /* p3：这些是 AI 吗——8 张判定卡 */
+  var aiItems=[
+    {n:'计算器',ai:0,w:'只按固定规则算，1+1 永远是 2，不会从例子里学。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="12" y="8" width="40" height="48" rx="7" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><rect x="18" y="14" width="28" height="10" rx="3" fill="#fff" stroke="#211C16" stroke-width="1.6"/><circle cx="20" cy="34" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/><circle cx="32" cy="34" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/><circle cx="44" cy="34" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/><circle cx="20" cy="46" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/><circle cx="32" cy="46" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/><circle cx="44" cy="46" r="3.3" fill="#fff" stroke="#211C16" stroke-width="1.4"/></svg>'},
+    {n:'人脸解锁',ai:1,w:'学过成千上万张脸；换光线、戴眼镜也认得出——能处理没见过的输入。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="20" y="6" width="24" height="52" rx="6" fill="#E7EEF8" stroke="#211C16" stroke-width="2"/><circle cx="32" cy="27" r="10" fill="#fff" stroke="#211C16" stroke-width="1.8"/><circle cx="28.5" cy="25" r="1.5" fill="#211C16"/><circle cx="35.5" cy="25" r="1.5" fill="#211C16"/><path d="M27 31 q5 4 10 0" fill="none" stroke="#211C16" stroke-width="1.6"/><rect x="28" y="43" width="8" height="7" rx="2" fill="#F4C03A" stroke="#211C16" stroke-width="1.5"/></svg>'},
+    {n:'扫地机器人',ai:1,w:'会感知、会判断、会行动，遇到没见过的障碍会绕。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><ellipse cx="32" cy="40" rx="21" ry="9" fill="#E7EEF8" stroke="#211C16" stroke-width="2"/><path d="M13 38 Q32 22 51 38" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><circle cx="32" cy="27" r="3" fill="#211C16"/><circle cx="15" cy="45" r="4" fill="#fff" stroke="#211C16" stroke-width="1.6"/><circle cx="49" cy="45" r="4" fill="#fff" stroke="#211C16" stroke-width="1.6"/></svg>'},
+    {n:'语音助手',ai:1,w:'听得懂你说的话，再现场生成回答，不是查固定答案。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="22" y="14" width="20" height="34" rx="10" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><ellipse cx="32" cy="14" rx="10" ry="3.5" fill="#fff" stroke="#211C16" stroke-width="1.8"/><path d="M48 22 q6 10 0 20" fill="none" stroke="#211C16" stroke-width="2"/><path d="M54 17 q9 15 0 30" fill="none" stroke="#211C16" stroke-width="1.5" opacity=".6"/></svg>'},
+    {n:'感应门',ai:0,w:'红外线一挡就开，规则写死；人再多、再急，它也不会变通。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="8" y="10" width="20" height="44" rx="3" fill="#EAF3EA" stroke="#211C16" stroke-width="2"/><rect x="36" y="10" width="20" height="44" rx="3" fill="#EAF3EA" stroke="#211C16" stroke-width="2"/><path d="M20 34 h24" stroke="#211C16" stroke-width="1.6" stroke-dasharray="4 4"/><path d="M30 30 l4 4 -4 4" fill="none" stroke="#211C16" stroke-width="1.6"/></svg>'},
+    {n:'红绿灯',ai:0,w:'定时切换，堵车再严重也照常变灯——不会根据路况调整。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="22" y="6" width="20" height="52" rx="7" fill="#F7EDEA" stroke="#211C16" stroke-width="2"/><circle cx="32" cy="17" r="4.6" fill="#C95F4B" stroke="#211C16" stroke-width="1.3"/><circle cx="32" cy="32" r="4.6" fill="#F4C03A" stroke="#211C16" stroke-width="1.3"/><circle cx="32" cy="47" r="4.6" fill="#4E8A5F" stroke="#211C16" stroke-width="1.3"/></svg>'},
+    {n:'短视频推荐',ai:1,w:'从你每次停留、点赞里学，越推越准——典型的学习型系统。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="14" y="6" width="36" height="52" rx="6" fill="#F9E9E5" stroke="#211C16" stroke-width="2"/><path d="M26 22 l12 7 -12 7 z" fill="#F4C03A" stroke="#211C16" stroke-width="1.5"/><path d="M22 46 l8 -8 5 4 9 -11" fill="none" stroke="#4E8A5F" stroke-width="2"/><path d="M44 31 l0 -8 m-3 3 l3 -3 3 3" fill="none" stroke="#4E8A5F" stroke-width="1.6"/></svg>'},
+    {n:'电梯按钮',ai:0,w:'按几楼去几层，纯开关逻辑；它不知道你是谁、也不学习。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="10" y="8" width="44" height="48" rx="6" fill="#E9EFF8" stroke="#211C16" stroke-width="2"/><path d="M32 8 v48" stroke="#211C16" stroke-width="1.4"/><path d="M22 32 v-14 m-4 6 l4 -6 4 6" fill="none" stroke="#211C16" stroke-width="2"/><path d="M42 32 v14 m-4 -6 l4 6 4 -6" fill="none" stroke="#211C16" stroke-width="2"/></svg>'}
   ];
-  var intelBoard=document.getElementById('intelBoard');
-  if(intelBoard){
-    intelData.forEach(function(d){
-      var row=document.createElement('button');
-      row.type='button';row.className='irow';
-      var dots=d.s.map(function(v,i){return '<span class="dot dim">'+(i+1)+'</span>';}).join('');
-      row.innerHTML='<span class="nm">'+d.n+'</span><span class="dots">'+dots+'</span><span class="iwhy">'+d.w+'</span>';
-      row.addEventListener('click',function(){
-        var on=row.classList.contains('on');
-        row.classList.toggle('on',!on);
-        row.querySelectorAll('.dot').forEach(function(dot,i){
-          var lit=(!on)&&d.s[i]===1;
-          dot.classList.toggle('lit',lit);
-          dot.classList.toggle('dim',!lit);
-        });
+  var aiCheck=document.getElementById('aiCheck');
+  if(aiCheck){
+    aiItems.forEach(function(d){
+      var b=document.createElement('button');
+      b.type='button';b.className='aicard';
+      b.innerHTML=d.svg+'<span class="nm">'+d.n+'</span><span class="verdict">'+(d.ai?'是 AI':'不是 AI')+'</span><span class="why">'+d.w+'</span>';
+      b.addEventListener('click',function(){
+        var on=b.classList.contains('revealed');
+        b.classList.toggle('revealed',!on);
+        b.classList.toggle('is-ai',!on&&d.ai===1);
+        b.classList.toggle('no-ai',!on&&d.ai===0);
       });
-      intelBoard.appendChild(row);
+      aiCheck.appendChild(b);
     });
   }
 
-  /* 互动2：词向量邻居，三组点按揭晓 */
-  var wmTexts=[
-    '猫和狗都是动物，坐标挨在一起、是邻居；卡车是交通工具，在地图上住得远远的。',
-    '开心、难过意思相反，却都是“情绪”，坐标反而很近——它看的是“属于哪一类”。',
-    '老师、同学、作业常出现在同一句话里，坐标也靠得近，AI 由此知道它们互相关联。'
+  /* p5：七物五本领——图形卡片 */
+  var objData=[
+    {n:'金毛犬',s:[1,1,1,1,1],w:'五项全有，还会一直学习。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><ellipse cx="17" cy="30" rx="5" ry="9" fill="#E0A92E" stroke="#211C16" stroke-width="1.8"/><ellipse cx="47" cy="30" rx="5" ry="9" fill="#E0A92E" stroke="#211C16" stroke-width="1.8"/><circle cx="32" cy="34" r="15" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><circle cx="26" cy="30" r="2" fill="#211C16"/><circle cx="38" cy="30" r="2" fill="#211C16"/><circle cx="32" cy="38" r="3" fill="#211C16"/><path d="M28 44 q4 4 8 0" fill="none" stroke="#211C16" stroke-width="1.6"/></svg>'},
+    {n:'配送无人车',s:[1,0,1,1,0],w:'会看路会送货，地图一改、遇到突发就懵。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="8" y="26" width="30" height="16" rx="3" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><path d="M38 30 h8 l6 7 v5 h-14 z" fill="#F4C03A" stroke="#211C16" stroke-width="2"/><rect x="14" y="17" width="12" height="9" rx="2" fill="#fff" stroke="#211C16" stroke-width="1.5"/><circle cx="18" cy="46" r="5" fill="#fff" stroke="#211C16" stroke-width="1.8"/><circle cx="44" cy="46" r="5" fill="#fff" stroke="#211C16" stroke-width="1.8"/></svg>'},
+    {n:'AI 助手',s:[0,1,1,0,0],w:'懂很多知识，但没有身体，也不认识现实里的你。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="10" y="12" width="44" height="30" rx="9" fill="#E7EEF8" stroke="#211C16" stroke-width="2"/><path d="M22 42 l-2 8 8 -8" fill="#E7EEF8" stroke="#211C16" stroke-width="2"/><circle cx="24" cy="25" r="2.2" fill="#211C16"/><circle cx="40" cy="25" r="2.2" fill="#211C16"/><path d="M24 32 q8 6 16 0" fill="none" stroke="#211C16" stroke-width="1.7"/></svg>'},
+    {n:'门禁闸机',s:[1,0,1,1,0],w:'只会“认脸—放行”这一件事，换个任务就不行。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="10" y="10" width="11" height="44" rx="3" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><rect x="21" y="18" width="26" height="5" rx="2" fill="#F4C03A" stroke="#211C16" stroke-width="1.5"/><rect x="48" y="14" width="10" height="13" rx="2" fill="#fff" stroke="#211C16" stroke-width="1.5"/><circle cx="53" cy="19" r="1.3" fill="#211C16"/><path d="M50 24 q3 2 6 0" fill="none" stroke="#211C16" stroke-width="1.2"/></svg>'},
+    {n:'玻璃门',s:[0,0,0,0,0],w:'不会看、不会想、自己也不会动，全靠人推。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="8" y="8" width="21" height="48" rx="3" fill="#EAF3EA" stroke="#211C16" stroke-width="2"/><rect x="35" y="8" width="21" height="48" rx="3" fill="#EAF3EA" stroke="#211C16" stroke-width="2"/><path d="M25 32 v7M39 32 v7" stroke="#211C16" stroke-width="2"/></svg>'},
+    {n:'喷淋器',s:[0,0,0,1,0],w:'到点就喷水，是人提前写好的规则，下雨照样喷。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><path d="M32 8 v9" stroke="#211C16" stroke-width="2"/><path d="M20 17 h24 l-5 11 h-14 z" fill="#FCEBC0" stroke="#211C16" stroke-width="2"/><path d="M25 36 v6M32 38 v9M39 36 v6" stroke="#35568D" stroke-width="2"/></svg>'},
+    {n:'温度计',s:[0,0,0,0,0],w:'只显示数字，并不懂“冷”和“热”是什么意思。',
+     svg:'<svg class="ico" viewBox="0 0 64 64"><rect x="27" y="6" width="10" height="38" rx="5" fill="#fff" stroke="#211C16" stroke-width="2"/><rect x="30" y="24" width="4" height="20" fill="#C95F4B"/><circle cx="32" cy="49" r="7" fill="#C95F4B" stroke="#211C16" stroke-width="2"/><path d="M38 16 h4M38 22 h4M38 28 h4" stroke="#211C16" stroke-width="1.3"/></svg>'}
   ];
-  var wmOut=document.getElementById('wmOut');
-  var wmBtns=document.querySelectorAll('.wmbtn');
-  wmBtns.forEach(function(b){
-    b.addEventListener('click',function(){
-      wmBtns.forEach(function(x){x.classList.remove('on');});
-      b.classList.add('on');
-      if(wmOut)wmOut.textContent=wmTexts[+b.getAttribute('data-wm')];
+  var objBoard=document.getElementById('objBoard');
+  if(objBoard){
+    var abLabels=['感','理','判','行','学'];
+    objData.forEach(function(d){
+      var b=document.createElement('button');
+      b.type='button';b.className='objcard';
+      var abs2=d.s.map(function(v,i){return '<span class="ab" data-lit="'+v+'">'+abLabels[i]+'</span>';}).join('');
+      b.innerHTML=d.svg+'<span class="nm">'+d.n+'</span><span class="abs">'+abs2+'</span><span class="why">'+d.w+'</span>';
+      b.addEventListener('click',function(){
+        var on=b.classList.contains('on');
+        b.classList.toggle('on',!on);
+        b.querySelectorAll('.ab').forEach(function(x){x.classList.toggle('lit',!on&&x.getAttribute('data-lit')==='1');});
+      });
+      objBoard.appendChild(b);
     });
-  });
+    var concl=document.createElement('div');
+    concl.className='objcard concl';
+    concl.innerHTML='<p>五项全亮<br>只有金毛犬</p><span>AI 很会接话，但感知、行动、学习都弱</span>';
+    objBoard.appendChild(concl);
+  }
+
+  /* p8：词地图——点两点连线测距 */
+  var WORDS=[
+    {n:'猫',x:20,y:30,c:'a'},{n:'狗',x:27,y:34,c:'a'},{n:'兔子',x:22,y:22,c:'a'},
+    {n:'苹果',x:74,y:24,c:'b'},{n:'香蕉',x:80,y:30,c:'b'},
+    {n:'开心',x:45,y:40,c:'c'},{n:'难过',x:52,y:44,c:'c'},{n:'生气',x:46,y:50,c:'c'},
+    {n:'老师',x:67,y:63,c:'d'},{n:'同学',x:61,y:72,c:'d'},{n:'作业',x:72,y:71,c:'d'},
+    {n:'卡车',x:22,y:70,c:'b'},{n:'汽车',x:27,y:77,c:'b'}
+  ];
+  var wmap=document.getElementById('wmap'), wmState=document.getElementById('wmState');
+  if(wmap){
+    var svgNS='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(svgNS,'svg');
+    svg.setAttribute('viewBox','0 0 100 100');
+    svg.setAttribute('preserveAspectRatio','none');
+    wmap.appendChild(svg);
+    var selPt=null,lineEl=null,distEl=null;
+    WORDS.forEach(function(wd){
+      var b=document.createElement('button');
+      b.type='button';b.className='wpt cls-'+wd.c;b.textContent=wd.n;
+      b.style.left=wd.x+'%';b.style.top=wd.y+'%';
+      b.addEventListener('click',function(){
+        if(!selPt){
+          selPt=wd;b.classList.add('sel');
+          if(wmState)wmState.textContent='已选「'+wd.n+'」，再点一个词算距离';
+          return;
+        }
+        if(selPt===wd){
+          selPt=null;b.classList.remove('sel');
+          if(wmState)wmState.textContent='已取消，重新点两个词';
+          return;
+        }
+        var d=Math.sqrt(Math.pow(selPt.x-wd.x,2)+Math.pow(selPt.y-wd.y,2));
+        b.classList.add('sel');
+        if(lineEl)lineEl.remove();
+        if(distEl)distEl.remove();
+        lineEl=document.createElementNS(svgNS,'line');
+        lineEl.setAttribute('x1',selPt.x);lineEl.setAttribute('y1',selPt.y);
+        lineEl.setAttribute('x2',wd.x);lineEl.setAttribute('y2',wd.y);
+        lineEl.setAttribute('stroke','#E0A92E');lineEl.setAttribute('stroke-width','2');
+        lineEl.setAttribute('stroke-dasharray','4 3');
+        lineEl.setAttribute('vector-effect','non-scaling-stroke');
+        svg.appendChild(lineEl);
+        distEl=document.createElement('span');
+        distEl.className='wmdist';
+        distEl.style.left=((selPt.x+wd.x)/2)+'%';
+        distEl.style.top=((selPt.y+wd.y)/2)+'%';
+        distEl.textContent=d.toFixed(1);
+        wmap.appendChild(distEl);
+        var verdict=d<12?'很近——同一类，常一起出现':(d<25?'中等——有关系，但不是同一类':'很远——基本不相关');
+        if(wmState)wmState.textContent=selPt.n+' ↔ '+wd.n+'：距离 '+d.toFixed(1)+'｜'+verdict;
+        selPt=null;
+      });
+      wmap.appendChild(b);
+    });
+  }
 
   /* 互动3：测谎终端，三选一反馈 */
   var termCfg={
-    wrong:{st:'误信幻觉',cls:'alert',msg:'[踩坑啦] 它连你们学校大门朝哪开都不知道，这句话是按概率顺口编的——越自信的假话越危险。'},
-    mid:{st:'直觉敏锐',cls:'mid',msg:'[敏锐直觉] 大模型没有物理眼睛，不可能知道门口有几棵树。但只怀疑还不够，还得知道怎么去验证。'},
-    best:{st:'满分答案',cls:'good',msg:'[满分答案] “亲自查验”是对付幻觉最好的办法。人负责求真批判，AI 负责打下手。'}
+    wrong:{st:'误把争议当定论',cls:'alert',msg:'[踩坑] 作者、朝代都没错，坑在最后一句：「床」指什么，学界并没有唯一答案——有“睡觉的床”，也有“井栏”“胡床（一种坐具）”等解释。AI 把一种流行说法讲成了定论。越笃定的细节，越要查。'},
+    mid:{st:'有警觉',cls:'mid',msg:'[起疑了] 方向对了，但光怀疑不够。这首诗你学过，正好去查课本注释、问语文老师，看不同版本怎么讲，再回来看这段赏析。'},
+    best:{st:'满分答案',cls:'good',msg:'[满分] 这段话大部分没错，错在把一个有争议的细节说成了唯一答案。查完你会记住：AI 的“确定”不等于“正确”。'}
   };
   var termScreen=document.getElementById('termScreen'),termStatus=document.getElementById('termStatus');
   var termBtns=document.querySelectorAll('#termBtns .tbtn');
@@ -1097,6 +1337,23 @@ h2.t2{font-size:clamp(20px,2.6vw,28px);font-weight:900;line-height:1.3;margin-bo
   partBtns.forEach(function(b){
     b.addEventListener('click',function(){showPart(b.getAttribute('data-part'));});
   });
+  /* p15：AI 世界概念地图 */
+  var zoneTxt={
+    brain:'大脑区＝大模型本身。它负责“想”：把你的话切成 Token、装进上下文、算下一个最可能的词。它很会接话，却不知道自己说的是真是假——幻觉就从这儿来。',
+    tool:'手脚区＝工具。没有工具，它只能嘴上说“好的”；接上搜索、代码、文件、图片，它才能真正把事办成。',
+    method:'方法区＝人怎么用它。Prompt 决定它答得好不好；Skills 把一套流程固化下来；核对，则是人必须保留的动作。',
+    agent:'管家区＝Agent。目标＋记忆＋工具＋规矩，四样装在一起，它才能自己一步步把任务做完，而不只是聊天。'
+  };
+  var zoneBoard=document.getElementById('zoneBoard'), zoneTip=document.getElementById('zoneTip');
+  var zoneBtns=document.querySelectorAll('#zoneBoard .zone');
+  zoneBtns.forEach(function(z){
+    z.addEventListener('click',function(){
+      zoneBtns.forEach(function(x){x.classList.remove('on');});
+      z.classList.add('on');
+      if(zoneTip)zoneTip.textContent=zoneTxt[z.getAttribute('data-zone')];
+    });
+  });
+
   showPart('goal');
 })();
 </script>
