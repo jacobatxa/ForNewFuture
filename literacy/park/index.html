@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI 奇幻乐园</title>
-<meta name="description" content="AI 奇幻乐园：给 10–15 岁学生的 AI 工具地图。每条都标了「打开就能试 / 要登录 / 需海外网络 / 看项目」，先点能试的。">
+<meta name="description" content="AI 奇幻乐园：给 10–15 岁学生的 AI 工具地图。每条卡片右上角标了它自己的门槛：免登录可试、要登录、需海外网络、看项目。">
 <meta property="og:title" content="AI 奇幻乐园">
 <meta property="og:description" content="别人正在用 AI 干什么。160 多个入口，标清哪一档能直接点开。">
 <meta property="og:type" content="website">
@@ -42,6 +42,11 @@
   .shot span{position:absolute;inset:0;display:grid;place-items:center;padding:18px;text-align:center;font-family:var(--display);font-size:clamp(24px,3.2vw,32px);font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.15}
   .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff}
   article.has-shot .shot{background:#fff}
+  .gate{position:absolute;top:10px;right:10px;z-index:2;font-style:normal;font-size:11.5px;font-weight:800;border:1.5px solid var(--ink);border-radius:999px;padding:3px 9px;background:#fff;box-shadow:2px 2px 0 rgba(26,16,40,.22);white-space:nowrap}
+  .gate.g-open{background:#B8F5C8}
+  .gate.g-login{background:#FFE28A}
+  .gate.g-abroad{background:#D9D2F0}
+  .gate.g-project{background:#EFE7DA}
   article .pad{padding:12px 14px 0}
   article b{font-size:20px;line-height:1.25;letter-spacing:-.02em}
   article p{margin-top:6px;font-size:14px;line-height:1.45;color:#2A2038}
@@ -80,6 +85,7 @@
     article p{font-size:12.5px}
     .tags{padding:9px 10px 0;gap:5px}
     .tags i{font-size:10px;padding:1px 6px}
+    .gate{font-size:10px;padding:2px 7px;top:8px;right:8px}
     .go{margin:8px 10px 0;font-size:13px}
     .feat{padding:4px 5vw 12px}
   }
@@ -88,7 +94,7 @@
 <body>
 <header>
   <a class="back" href="../index.html">← 回到课程</a>
-  <h1>AI 奇幻乐园<span>别人正在用 AI 干什么。能点的就点开。课上先看标着「打开就能试」的。要登录的，回家用。句子还是你自己写。</span></h1>
+  <h1>AI 奇幻乐园<span>别人正在用 AI 干什么。能点的就点开。每条卡片右上角都标了这一条自己的门槛：免登录可试、要登录、需海外网络、看项目。课上先挑能试的。句子还是你自己写。</span></h1>
 </header>
 
 <div class="feat">
@@ -100,10 +106,6 @@
 </div>
 <div class="bar" role="toolbar" aria-label="筛选">
   <button class="f on" type="button" data-k="全部" aria-pressed="true">全部</button>
-  <button class="f" type="button" data-k="打开就能试">打开就能试</button>
-  <button class="f" type="button" data-k="要登录">要登录</button>
-  <button class="f" type="button" data-k="需海外网络">需海外网络</button>
-  <button class="f" type="button" data-k="看项目">看项目</button>
   <button class="f" type="button" data-k="玩">小实验</button>
   <button class="f" type="button" data-k="画">画画</button>
   <button class="f" type="button" data-k="视">视频</button>
@@ -115,9 +117,9 @@
   <input id="q" placeholder="搜名字、用途或备注" aria-label="搜索">
   <span id="count"></span>
 </div>
-<div class="legend">四档：<b>打开就能试</b>（免登录）｜<b>要登录</b>｜<b>需海外网络</b>（国内普通宽带打不开）｜<b>看项目</b>（先看，别急着用）。</div>
+<div class="legend">卡片右上角的角标是这一条自己的门槛，不是分类：<b>免登录可试</b>｜<b>要登录</b>｜<b>需海外网络</b>｜<b>看项目</b>。</div>
 <main id="wall"></main>
-<footer>2026-11-19 逐条点开核验；「需海外网络」的条目别再当成能点的。「打开就能试」用本地图，其余是色块加名字，不截登录墙。点开是别人的网站。</footer>
+<footer>2026-11-19 逐条点开核验。门槛看卡片右上角；「需海外网络」的别再当成能点的。免登录可试的用本地图，其余是色块加名字，不截登录墙。点开是别人的网站。</footer>
 <script src="works.js"></script>
 <script>
 const name = {玩:'小实验',画:'画画',视:'视频',声:'声音',三维:'三维',聊:'聊天',做:'做东西',库:'资源库'};
@@ -126,6 +128,7 @@ const shots = window.SHOTS || {};
 const PALETTE = ['#FFE28A','#FFB4D8','#B8F5C8','#C9D6FF','#FFD0B0'];
 const gateRank = {'打开就能试':0,'要登录':1,'需海外网络':2,'看项目':3};
 const gateClass = {'打开就能试':'g-open','要登录':'g-login','需海外网络':'g-abroad','看项目':'g-project'};
+const gateLabel = {'打开就能试':'免登录可试','要登录':'要登录','需海外网络':'需海外网络','看项目':'看项目'};
 let key = '全部';
 function esc(s){return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function colorFor(s){let h=0;for(const c of String(s))h=(h*31+c.charCodeAt(0))%997;return PALETTE[h%5];}
@@ -152,15 +155,15 @@ function show(){
     return `
     <article class="${img ? 'has-shot' : ''}" data-cat="${esc(w[2])}" style="background:${colorFor(w[0])}">
       <a class="card" href="${esc(w[4])}" target="_blank" rel="noopener">
-        <div class="shot"><span>${label}</span>${face}</div>
+        <div class="shot"><span>${label}</span>${face}<em class="gate ${gateClass[w[3]] || ''}">${esc(gateLabel[w[3]] || w[3])}</em></div>
         <div class="pad"><b>${esc(w[0])}</b><p>${esc(w[1])}${note}</p></div>
-        <div class="tags"><i>${esc(name[w[2]] || w[2])}</i><i class="${gateClass[w[3]] || ''}">${esc(w[3])}</i><i>${esc(w[5])}</i></div>
+        <div class="tags"><i>${esc(name[w[2]] || w[2])}</i><i>${esc(w[5])}</i></div>
         <div class="go">打开 →</div>
       </a>
     </article>`;
   }).join('');
   const openCount = list.filter(w => w[3] === '打开就能试').length;
-  document.getElementById('count').textContent = `${list.length} 个${key === '全部' && q === '' ? '，可直试 ' + openCount : ''}`;
+  document.getElementById('count').textContent = `${list.length} 个${key === '全部' && q === '' ? '，其中 ' + openCount + ' 个免登录可试' : ''}`;
 }
 document.querySelectorAll('.f').forEach(b => b.onclick = () => {
   document.querySelectorAll('.f').forEach(x => { x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
