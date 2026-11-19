@@ -3,263 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI 课程库 · 教材管理入口</title>
+<title>AI 课程库 · 教材目录</title>
 <style>
   :root{
-    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
-    --ink:#FAFAFA; --muted:#9A9A9A; --faint:#5E5E5E;
-    --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.16);
-    --amber:#F4C03A; --amber-dim:rgba(244,192,58,.14);
-    --green:#5FA97A; --blue:#6E93C9; --red:#C96F5C;
+    --bg:#0B0B0A; --surface:#121211; --surface-2:#171715;
+    --ink:#FAF9F6; --muted:#95928C; --faint:#615E58;
+    --line:rgba(255,255,255,.085); --line-strong:rgba(255,255,255,.15);
+    --amber:#E9A93B; --green:#6FAF86;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{color-scheme:dark}
   body{background:var(--bg);color:var(--ink);
     font-family:"Geist","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
+    line-height:1.6;-webkit-font-smoothing:antialiased;}
   a{color:inherit;text-decoration:none}
   .mono{font-family:"Geist Mono","SF Mono","Menlo",monospace}
 
-  .top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;
-    padding:14px 28px;border-bottom:1px solid var(--line);
-    background:rgba(10,10,10,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
-  .logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
+  .top{display:flex;align-items:center;justify-content:space-between;
+    padding:15px 30px;border-bottom:1px solid var(--line);}
+  .logo{font-size:15.5px;font-weight:600;letter-spacing:-.01em}
   .logo span{color:var(--muted);font-weight:500;margin-left:8px}
-  .top-meta{font-size:12.5px;color:var(--muted)}
+  .top-meta{font-size:12.5px;color:var(--faint)}
 
-  .shell{max-width:1020px;margin:0 auto;padding:48px 28px 100px}
-  .hero{margin-bottom:30px}
-  .eyebrow{font-size:12.5px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
-  h1{font-size:clamp(36px,5.2vw,52px);font-weight:600;letter-spacing:-.03em;line-height:1.08}
-  .hero-sub{margin-top:12px;font-size:15.5px;color:var(--muted);max-width:44em}
+  .layout{max-width:1120px;margin:0 auto;padding:44px 30px 100px;
+    display:grid;grid-template-columns:196px minmax(0,1fr);gap:52px;align-items:start}
 
-  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 8px}
-  .stat{border:1px solid var(--line);border-radius:12px;padding:11px 16px;min-width:112px}
-  .stat b{display:block;font-size:25px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
-  .stat span{font-size:12px;color:var(--muted);letter-spacing:.04em}
-  .stat.warn b{color:#E9BD6E}
+  .side{position:sticky;top:28px}
+  .side-title{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  .side a{display:flex;align-items:center;gap:9px;padding:8px 0;font-size:14.5px;color:var(--muted)}
+  .side a:hover{color:var(--ink)}
+  .side .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex:0 0 auto}
+  .side .dot.mix{background:var(--amber)}
+  .side .cnt{margin-left:auto;font-size:11.5px;color:var(--faint)}
 
-  .toolbar{position:sticky;top:57px;z-index:20;background:rgba(10,10,10,.92);
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    padding:14px 0 12px;margin:18px 0 6px;border-bottom:1px solid var(--line)}
-  .search{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-  .search input{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;
-    color:var(--ink);font-size:15px;padding:11px 14px;outline:none;font-family:inherit}
-  .search input:focus{border-color:var(--line-strong)}
-  .search input::placeholder{color:var(--faint)}
-  .chips{display:flex;flex-wrap:wrap;gap:7px}
-  .chip{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:500;
-    color:var(--muted);background:transparent;cursor:pointer;font-family:inherit}
-  .chip:hover{color:var(--ink);border-color:var(--line-strong)}
-  .chip.on{color:var(--ink);border-color:var(--line-strong);background:rgba(255,255,255,.08)}
+  .hero{margin-bottom:38px}
+  .eyebrow{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:clamp(34px,4.6vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1.1}
+  .hero-sub{margin-top:12px;font-size:15.5px;color:var(--muted);max-width:min(42em,100%)}
 
-  .label{font-size:12px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin:32px 0 10px}
-  .group{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface);margin-bottom:22px}
-  .group-head{padding:22px 24px 16px}
-  .group-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:5px}
-  .group-title h2{font-size:21.5px;font-weight:600;letter-spacing:-.02em}
-  .group-title .en{font-size:12px;color:var(--faint);letter-spacing:.06em}
-  .group-desc{font-size:14px;color:var(--muted);max-width:46em;margin-bottom:9px}
-  .tags{display:flex;flex-wrap:wrap;gap:6px}
-  .tag{font-size:11.5px;font-weight:500;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:999px}
-  .tag.on{color:var(--ink);border-color:var(--line-strong);background:rgba(255,255,255,.04)}
-  .tag.warn{color:#E9BD6E;border-color:rgba(244,192,58,.35);background:rgba(244,192,58,.08)}
-  .tag.ok{color:#8CC9A1;border-color:rgba(95,169,122,.4);background:rgba(95,169,122,.1)}
+  .prog{margin-bottom:44px;scroll-margin-top:24px}
+  .prog-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .prog-head h2{font-size:23px;font-weight:600;letter-spacing:-.015em}
+  .prog-head .en{font-size:12px;color:var(--faint);letter-spacing:.05em}
+  .prog-desc{font-size:14.5px;color:var(--muted);margin:2px 0 16px;max-width:46em}
 
-  .rows{border-top:1px solid var(--line)}
-  .row{display:grid;grid-template-columns:66px minmax(0,1fr) auto auto;gap:14px;align-items:center;
-    padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015)}
-  .row:last-child{border-bottom:0}
-  .row:not(.todo):hover{background:rgba(255,255,255,.05)}
-  .row.todo{opacity:.9}
-  .kind{font-size:11px;font-weight:600;letter-spacing:.04em;text-align:center;padding:4px 0;border-radius:7px;
-    color:var(--muted);border:1px solid var(--line)}
-  .kind.deck{color:#F7D77E;border-color:rgba(244,192,58,.4);background:var(--amber-dim)}
-  .kind.interaction{color:#9DBBE8;border-color:rgba(110,147,201,.4);background:rgba(110,147,201,.12)}
-  .kind.syllabus{color:#8CC9A1;border-color:rgba(95,169,122,.35);background:rgba(95,169,122,.1)}
-  .kind.todo{color:#E9BD6E;border-color:rgba(244,192,58,.4);border-style:dashed;background:transparent}
-  .row-name{display:flex;flex-direction:column;gap:2px;min-width:0}
-  .nm{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .nm b{font-size:16px;font-weight:600;letter-spacing:-.01em}
-  .pill{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:999px;letter-spacing:.03em}
-  .pill.ready{color:#8CC9A1;background:rgba(95,169,122,.12)}
-  .pill.pilot{color:#E9BD6E;background:rgba(244,192,58,.12)}
-  .pill.todo{color:#E9BD6E;background:rgba(244,192,58,.16)}
-  .pill.archived{color:var(--faint);background:rgba(255,255,255,.05)}
-  .row-name span{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .row-meta{font-size:12.5px;color:var(--faint);text-align:right;white-space:nowrap;line-height:1.5}
-  .row-go{display:flex;gap:8px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:9px;
-    font-size:13px;font-weight:600;border:1px solid var(--line-strong);background:rgba(255,255,255,.05);white-space:nowrap}
-  .btn:hover{background:rgba(255,255,255,.12)}
-  .btn.primary{background:var(--amber);color:#181206;border-color:var(--amber)}
-  .btn.primary:hover{background:#F9CE5C}
-  .btn.ghost{border-color:var(--line);background:transparent;color:var(--muted);font-weight:500}
-  .btn.ghost:hover{color:var(--ink)}
+  .tree{border-left:1px solid var(--line-strong);margin-left:5px;padding-left:22px}
+  .node{position:relative}
+  .node::before{content:"";position:absolute;left:-22px;top:50%;width:14px;height:1px;background:var(--line-strong)}
 
-  .empty{display:none;padding:40px 20px;text-align:center;color:var(--faint);font-size:14px}
-  .empty.on{display:block}
-  .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
+  .grp{margin:16px 0 6px;display:flex;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--faint)}
+  .grp::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .item{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:9px;min-height:40px}
+  .item:hover{background:rgba(255,255,255,.045)}
+  .st{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .st.active{background:var(--green)}
+  .st.wip{background:transparent;border:1.5px solid var(--amber);box-sizing:border-box}
+  .nm{font-size:15.5px;font-weight:550;letter-spacing:-.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .wip .nm{color:var(--muted);font-weight:500}
+  .note{font-size:13px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1 1 0;min-width:0;padding-left:2px}
+  .meta{font-size:12px;color:var(--faint);white-space:nowrap;flex:0 0 auto}
+  .go{font-size:12.5px;color:var(--muted);white-space:nowrap;flex:0 0 auto;padding-left:6px}
+  .go:hover{color:var(--ink)}
+  .wip-tag{font-size:11px;color:var(--amber);border:1px dashed rgba(233,169,59,.45);border-radius:999px;
+    padding:1px 8px;flex:0 0 auto}
+
+  .foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
   .foot a{color:var(--muted);border-bottom:1px solid var(--line)}
   .foot a:hover{color:var(--ink)}
 
-  @media (max-width:720px){
-    .shell{padding:34px 16px 80px}
-    .top{padding:12px 16px}
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr;gap:30px;padding:34px 18px 80px}
+    .side{position:static;display:none}
+    .tree{padding-left:18px}
+    .node::before{left:-18px;width:10px}
+    .item{flex-wrap:wrap;gap:6px 10px;padding:10px 8px}
+    .note{display:none}
+    .meta{order:2;margin-left:19px}
+    .top{padding:13px 18px}
     .logo span{display:none}
-    .top-meta{display:none}
-    .toolbar{top:49px}
-    .row{grid-template-columns:54px minmax(0,1fr);grid-auto-rows:auto;gap:8px 12px}
-    .row-meta{display:none}
-    .row-go{grid-column:1/-1;justify-content:flex-start}
-    .kind{font-size:10px}
-    .nm b{font-size:15px}
   }
 </style>
 </head>
 <body>
 
 <header class="top">
-  <div class="logo">AI 课程库<span>教材管理入口</span></div>
-  <div class="top-meta mono">数据更新 2026-11-19</div>
+  <div class="logo">AI 课程库<span>教材目录</span></div>
+  <div class="top-meta mono">2026-11-19</div>
 </header>
 
-<main class="shell">
-  <header class="hero">
-    <p class="eyebrow mono">Course Library · 数据驱动</p>
-    <h1>全部课程，一处管理。</h1>
-    <p class="hero-sub">清单来自仓库内 courses.json——加课件只加一行数据。下面的搜索和筛选直接可用。</p>
-  </header>
+<div class="layout">
+  <aside class="side">
+    <div class="side-title mono">目录</div>
+    <a href="#camp"><span class="dot"></span>创想营<span class="cnt">4</span></a>
+<a href="#wulingshan"><span class="dot mix"></span>武陵山 · 超级 AI 营<span class="cnt">5</span></a>
+<a href="#literacy"><span class="dot mix"></span>AI 通识初阶<span class="cnt">17</span></a>
+<a href="#salon"><span class="dot"></span>演讲 · 沙龙<span class="cnt">4</span></a>
+<a href="#framework"><span class="dot"></span>框架与工具<span class="cnt">6</span></a>
+  </aside>
 
-  <div class="stats" id="stats"></div>
-
-  <div class="toolbar">
-    <div class="search">
-      <input id="q" type="search" placeholder="搜课件、互动、课纲…（如：猛禽、M1、海报）" aria-label="搜索">
+  <main>
+    <header class="hero">
+      <p class="eyebrow mono">Course Library</p>
+      <h1>教材目录</h1>
+      <p class="hero-sub">每套课的课件、互动、课纲与物料，按体系排成一棵树。绿点＝可使用，空圈＝制作中。</p>
+    </header>
+    <section class="prog" id="camp">
+      <div class="prog-head"><h2>创想营</h2><span class="en">AI Innovation Camp</span></div>
+      <p class="prog-desc">辨智能 → 探黑盒 → 会提问 → 造 Agent。一套课换场地只换宣传，不换课件。</p>
+      <div class="tree"><div class="grp mono">课件</div><a class="node item" href="camp/course/11-autumn-ai-intro-deck.html"><span class="st active"></span><span class="nm">秋假营第 2 夜 · AI 导论 + 工具通识</span><span class="note">最新主课件 · 大模型 / Prompt / Agent / 分工 · 线上 120 分钟</span><span class="meta">27 页 · 2026-11-18</span><span class="go">打开 ↗</span></a><a class="node item" href="camp/course/09-ai-camp-deck.html"><span class="st active"></span><span class="nm">国庆创想营 · AI 创想营：把好奇变成能力</span><span class="note">营地完整课 · 第 3 页含权威智能定义（Legg &amp; Hutter 2007）</span><span class="meta">32 页 · 2026-11</span><span class="go">打开 ↗</span></a><div class="grp mono">物料</div><a class="node item" href="camp/promo/2026-11-baicao/"><span class="st active"></span><span class="nm">百草湖乡 · 招生长图</span><span class="note">换场宣传页 · 含场地与日程长图</span><span class="meta">2026-11</span><span class="go">打开 ↗</span></a><a class="node item" href="camp/students/"><span class="st active"></span><span class="nm">学生档案 · 评价与作业</span><span class="note">名册、产出、评价记录</span><span class="meta"></span><span class="go">打开 ↗</span></a></div>
+    </section>
+<section class="prog" id="wulingshan">
+      <div class="prog-head"><h2>武陵山 · 超级 AI 营</h2><span class="en">Wulingshan Camp</span></div>
+      <p class="prog-desc">山里五日。先看自然里的智慧，再看人和机器。全离线可放。</p>
+      <div class="tree"><div class="grp mono">课件</div><a class="node item" href="wulingshan/course/day1-v2.html"><span class="st active"></span><span class="nm">Day 1 · 自然里的智慧</span><span class="note">新版 v2 · 含实拍素材与两天流程</span><span class="meta">v2</span><span class="go">打开 ↗</span></a><div class="node item wip"><span class="st wip"></span><span class="nm">Day 2–5 · 待做</span><span class="note">五日后四天的课程尚未开做</span><span class="meta"></span><span class="wip-tag">制作中</span></div><div class="grp mono">课纲</div><a class="node item" href="wulingshan/course/index.html"><span class="st active"></span><span class="nm">五日课程目录</span><span class="note">每天一节的总览与衔接</span><span class="meta"></span><span class="go">打开 ↗</span></a><div class="grp mono">物料</div><a class="node item" href="wulingshan/promo/poster-long.html"><span class="st active"></span><span class="nm">五日营长图</span><span class="note">招生长图 · 场地实拍版</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="wulingshan/students/"><span class="st active"></span><span class="nm">学生档案 · 按天收</span><span class="note">评价与作业记录</span><span class="meta"></span><span class="go">打开 ↗</span></a></div>
+    </section>
+<section class="prog" id="literacy">
+      <div class="prog-head"><h2>AI 通识初阶</h2><span class="en">AI Literacy · Principle</span></div>
+      <p class="prog-desc">周末 18 小时，六个模块，以思维方法为内核。和营地课是两套教材，不混用。</p>
+      <div class="tree"><div class="grp mono">课件</div><a class="node item" href="literacy/course/18-sunday-deck.html"><span class="st active"></span><span class="nm">M1 · 完整课（周日场）</span><span class="note">六模块第一课 · 已完成</span><span class="meta">18 页</span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-online-hour1.html"><span class="st active"></span><span class="nm">M1 · 第一节（线上 1 小时）</span><span class="note">线上版 · 含猛禽发动机互动演示</span><span class="meta">22 页</span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/20-m2-pilot-deck.html"><span class="st active"></span><span class="nm">M2 · 试点课</span><span class="note">第二模块试讲版 · 试点中</span><span class="meta">18 页</span><span class="go">打开 ↗</span></a><div class="node item wip"><span class="st wip"></span><span class="nm">M3–M6 · 待做</span><span class="note">第二模块之后的四个模块尚未开做</span><span class="meta"></span><span class="wip-tag">制作中</span></div><div class="grp mono">互动</div><a class="node item" href="literacy/course/17-m1-hw-raptor.html"><span class="st active"></span><span class="nm">猛禽发动机 · 拆解演示</span><span class="note">可旋转、可拆件的结构课</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-method.html"><span class="st active"></span><span class="nm">方法卡 · 看图学方法</span><span class="note">把方法显性化的图解页</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-mindmap.html"><span class="st active"></span><span class="nm">思维导图</span><span class="note">全课概念关系图</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-cheatsheet.html"><span class="st active"></span><span class="nm">速查卡</span><span class="note">课后带走的一页纸</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-lookup.html"><span class="st active"></span><span class="nm">速查手册</span><span class="note">术语与口径查询页</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/17-m1-hw-demo.html"><span class="st active"></span><span class="nm">作业示范</span><span class="note">往期学生作业的示范拆解</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/forest-maze.html"><span class="st active"></span><span class="nm">森林迷宫</span><span class="note">动物角色分组游戏页</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/park/index.html"><span class="st active"></span><span class="nm">AI 公园 · 互动实验集合</span><span class="note">一组可直接用的 AI 体验入口</span><span class="meta"></span><span class="go">打开 ↗</span></a><div class="grp mono">课纲</div><a class="node item" href="literacy/course/11-ai-weekend-syllabus.html"><span class="st active"></span><span class="nm">周末课大纲</span><span class="note">18 小时六模块排期</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/12-mod01-computer-net.html"><span class="st active"></span><span class="nm">模块 01 · 计算机网络</span><span class="note">第一模块的知识底稿</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/course/13-six-module-architecture.html"><span class="st active"></span><span class="nm">六模块架构</span><span class="note">模块间能力递进对照表</span><span class="meta"></span><span class="go">打开 ↗</span></a><div class="grp mono">物料</div><a class="node item" href="literacy/promo/"><span class="st active"></span><span class="nm">通识宣传页</span><span class="note">给新家长的长图式介绍</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="literacy/students/"><span class="st active"></span><span class="nm">学生档案 · M1–M6</span><span class="note">评价与作业记录</span><span class="meta"></span><span class="go">打开 ↗</span></a></div>
+    </section>
+<section class="prog" id="salon">
+      <div class="prog-head"><h2>演讲 · 沙龙</h2><span class="en">Talks &amp; Salon</span></div>
+      <p class="prog-desc">面向家长与同行的宣讲材料，与课堂课件分开维护。</p>
+      <div class="tree"><div class="grp mono">课件</div><a class="node item" href="salon/05-演讲版-AI教育变革.html"><span class="st active"></span><span class="nm">演讲版 · AI 教育变革</span><span class="note">大会演讲用</span><span class="meta">11 页</span><span class="go">打开 ↗</span></a><a class="node item" href="salon/07-沙龙宣讲-家长场.html"><span class="st active"></span><span class="nm">沙龙宣讲 · 家长场</span><span class="note">面向家长的长篇宣讲版</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="salon/parents-ai-talk.html"><span class="st active"></span><span class="nm">家长场 · AI 漫谈</span><span class="note">轻量版家长沟通</span><span class="meta">15 页</span><span class="go">打开 ↗</span></a><div class="grp mono">物料</div><a class="node item" href="salon/08-沙龙海报-家长场.html"><span class="st active"></span><span class="nm">沙龙海报 · 家长场</span><span class="note">报名海报</span><span class="meta"></span><span class="go">打开 ↗</span></a></div>
+    </section>
+<section class="prog" id="framework">
+      <div class="prog-head"><h2>框架与工具</h2><span class="en">Framework &amp; Tools</span></div>
+      <p class="prog-desc">课程设计的方法底稿，以及做课件时用的辅助页。</p>
+      <div class="tree"><div class="grp mono">文档</div><a class="node item" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/00-课程设计大纲.md" target="_blank" rel="noopener"><span class="st active"></span><span class="nm">课程设计大纲</span><span class="note">体系设计第一性原理与结构</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/01-教育框架.md" target="_blank" rel="noopener"><span class="st active"></span><span class="nm">教育框架</span><span class="note">能力递进与教学机制</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/02-教学大纲.md" target="_blank" rel="noopener"><span class="st active"></span><span class="nm">教学大纲</span><span class="note">18 小时逐节展开</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/04-框架版骨架.md" target="_blank" rel="noopener"><span class="st active"></span><span class="nm">框架版骨架</span><span class="note">课程骨架模板</span><span class="meta"></span><span class="go">打开 ↗</span></a><div class="grp mono">工具</div><a class="node item" href="tools/14-名册换血.html"><span class="st active"></span><span class="nm">名册换血</span><span class="note">批量整理名册的小工具页</span><span class="meta"></span><span class="go">打开 ↗</span></a><a class="node item" href="tools/m1-figures/deck.template.html"><span class="st active"></span><span class="nm">M1 图文模板</span><span class="note">做新页时的排版模板</span><span class="meta"></span><span class="go">打开 ↗</span></a></div>
+    </section>
+    <div class="foot">
+      <span>BILDEN EDU · 2026-11-19</span>
+      <span><a href="https://github.com/jacobatxa/ForNewFuture">GitHub 仓库</a> · 数据源 courses.json</span>
     </div>
-    <div class="chips" id="kindChips"></div>
-    <div class="chips" id="statusChips" style="margin-top:7px"></div>
-  </div>
+  </main>
+</div>
 
-  <div id="content"></div>
-  <div class="empty" id="empty">没有匹配的条目，换个关键词或清除筛选。</div>
-
-  <div class="foot">
-    <span>BILDEN EDU · 课程库 · 2026-11-19</span>
-    <span><a href="https://github.com/jacobatxa/ForNewFuture">GitHub 仓库</a> · 数据源 courses.json</span>
-  </div>
-</main>
-
-<script>
-const DATA = {"updated": "2026-11-19", "programs": [{"id": "camp", "order": 1, "name": "创想营", "en": "AI Innovation Camp", "desc": "辨智能 → 探黑盒 → 会提问 → 造 Agent。一套课换场地只换宣传，不换课件。", "status": "ready", "tags": ["10–15 岁", "营地课"]}, {"id": "wulingshan", "order": 2, "name": "武陵山 · 超级 AI 营", "en": "Wulingshan Camp", "desc": "山里五日。先看自然里的智慧，再看人和机器。全离线可放。", "status": "pilot", "tags": ["10–12 岁", "五日营"]}, {"id": "literacy", "order": 3, "name": "AI 通识初阶", "en": "AI Literacy · Principle", "desc": "周末 18 小时，六个模块，以思维方法为内核。和营地课是两套教材，不混用。", "status": "pilot", "tags": ["10–15 岁", "18 小时"]}, {"id": "salon", "order": 4, "name": "演讲 · 沙龙", "en": "Talks & Salon", "desc": "面向家长与同行的宣讲材料，与课堂课件分开维护。", "status": "ready", "tags": ["家长场", "演讲版"]}, {"id": "framework", "order": 5, "name": "框架与工具", "en": "Framework & Tools", "desc": "课程设计的方法底稿，以及做课件时用的辅助页。", "status": "ready", "tags": ["文档", "工具"]}], "items": [{"id": "camp-autumn-deck", "program": "camp", "title": "秋假营第 2 夜 · AI 导论 + 工具通识", "kind": "deck", "status": "ready", "pages": 27, "size": "3.2 MB", "notes": "最新主课件 · 大模型 / Prompt / Agent / 分工 · 线上 120 分钟", "updated": "2026-11-18", "path": "camp/course/11-autumn-ai-intro-deck.html", "source": "camp/course/11-autumn-ai-intro-deck.html", "primary": true}, {"id": "camp-guqing-deck", "program": "camp", "title": "国庆创想营 · AI 创想营：把好奇变成能力", "kind": "deck", "status": "ready", "pages": 32, "size": "152 KB", "notes": "营地完整课 · 第 3 页含权威智能定义（Legg & Hutter 2007）", "updated": "2026-11", "path": "camp/course/09-ai-camp-deck.html", "source": "camp/course/09-ai-camp-deck.html", "primary": true}, {"id": "camp-promo-baicao", "program": "camp", "title": "百草湖乡 · 招生长图", "kind": "material", "status": "ready", "notes": "换场宣传页 · 含场地与日程长图", "updated": "2026-11", "path": "camp/promo/2026-11-baicao/", "primary": false}, {"id": "camp-students", "program": "camp", "title": "学生档案 · 评价与作业", "kind": "material", "status": "ready", "notes": "名册、产出、评价记录", "updated": "", "path": "camp/students/", "primary": false}, {"id": "wl-day1", "program": "wulingshan", "title": "Day 1 · 自然里的智慧", "kind": "deck", "status": "ready", "notes": "新版 v2 · 含实拍素材与两天流程", "updated": "v2", "path": "wulingshan/course/day1-v2.html", "source": "wulingshan/course/day1-v2.html", "primary": true}, {"id": "wl-catalog", "program": "wulingshan", "title": "五日课程目录", "kind": "syllabus", "status": "ready", "notes": "每天一节的总览与衔接", "updated": "", "path": "wulingshan/course/index.html", "primary": false}, {"id": "wl-day1-old", "program": "wulingshan", "title": "Day 1 · 旧版", "kind": "deck", "status": "archived", "notes": "已被 v2 替代，留作对照", "updated": "v1", "path": "wulingshan/course/day1.html", "primary": false}, {"id": "wl-poster", "program": "wulingshan", "title": "五日营长图", "kind": "material", "status": "ready", "notes": "招生长图 · 场地实拍版", "updated": "", "path": "wulingshan/promo/poster-long.html", "primary": false}, {"id": "wl-students", "program": "wulingshan", "title": "学生档案 · 按天收", "kind": "material", "status": "ready", "notes": "评价与作业记录", "updated": "", "path": "wulingshan/students/", "primary": false}, {"id": "lit-m1-sunday", "program": "literacy", "title": "M1 · 完整课（周日场）", "kind": "deck", "status": "ready", "pages": 18, "size": "332 KB", "notes": "六模块第一课 · 已完成", "updated": "", "path": "literacy/course/18-sunday-deck.html", "source": "literacy/course/18-sunday-deck.html", "primary": true}, {"id": "lit-m1-hour1", "program": "literacy", "title": "M1 · 第一节（线上 1 小时）", "kind": "deck", "status": "ready", "pages": 22, "size": "1.7 MB", "notes": "线上版 · 含猛禽发动机互动演示", "updated": "", "path": "literacy/course/17-m1-online-hour1.html", "source": "literacy/course/17-m1-online-hour1.html", "primary": true}, {"id": "lit-m2-pilot", "program": "literacy", "title": "M2 · 试点课", "kind": "deck", "status": "pilot", "pages": 18, "size": "468 KB", "notes": "第二模块试讲版 · 试点中", "updated": "", "path": "literacy/course/20-m2-pilot-deck.html", "source": "literacy/course/20-m2-pilot-deck.html", "primary": true}, {"id": "lit-raptor", "program": "literacy", "title": "猛禽发动机 · 拆解演示", "kind": "interaction", "status": "ready", "size": "1.6 MB", "notes": "可旋转、可拆件的结构课", "updated": "", "path": "literacy/course/17-m1-hw-raptor.html", "primary": false}, {"id": "lit-method", "program": "literacy", "title": "方法卡 · 看图学方法", "kind": "interaction", "status": "ready", "notes": "把方法显性化的图解页", "updated": "", "path": "literacy/course/17-m1-method.html", "primary": false}, {"id": "lit-mindmap", "program": "literacy", "title": "思维导图", "kind": "interaction", "status": "ready", "notes": "全课概念关系图", "updated": "", "path": "literacy/course/17-m1-mindmap.html", "primary": false}, {"id": "lit-cheatsheet", "program": "literacy", "title": "速查卡", "kind": "interaction", "status": "ready", "notes": "课后带走的一页纸", "updated": "", "path": "literacy/course/17-m1-cheatsheet.html", "primary": false}, {"id": "lit-lookup", "program": "literacy", "title": "速查手册", "kind": "interaction", "status": "ready", "notes": "术语与口径查询页", "updated": "", "path": "literacy/course/17-m1-lookup.html", "primary": false}, {"id": "lit-hwdemo", "program": "literacy", "title": "作业示范", "kind": "interaction", "status": "ready", "notes": "往期学生作业的示范拆解", "updated": "", "path": "literacy/course/17-m1-hw-demo.html", "primary": false}, {"id": "lit-forest", "program": "literacy", "title": "森林迷宫", "kind": "interaction", "status": "ready", "notes": "动物角色分组游戏页", "updated": "", "path": "literacy/course/forest-maze.html", "primary": false}, {"id": "lit-park", "program": "literacy", "title": "AI 公园 · 互动实验集合", "kind": "interaction", "status": "ready", "notes": "一组可直接用的 AI 体验入口", "updated": "", "path": "literacy/park/index.html", "primary": false}, {"id": "lit-syllabus", "program": "literacy", "title": "周末课大纲", "kind": "syllabus", "status": "ready", "notes": "18 小时六模块排期", "updated": "", "path": "literacy/course/11-ai-weekend-syllabus.html", "primary": false}, {"id": "lit-mod01", "program": "literacy", "title": "模块 01 · 计算机网络", "kind": "syllabus", "status": "ready", "notes": "第一模块的知识底稿", "updated": "", "path": "literacy/course/12-mod01-computer-net.html", "primary": false}, {"id": "lit-arch", "program": "literacy", "title": "六模块架构", "kind": "syllabus", "status": "ready", "notes": "模块间能力递进对照表", "updated": "", "path": "literacy/course/13-six-module-architecture.html", "primary": false}, {"id": "lit-mod3-6", "program": "literacy", "title": "M3–M6 · 待做", "kind": "deck", "status": "todo", "notes": "第二模块之后的四个模块尚未开做", "updated": "", "path": "", "primary": false}, {"id": "lit-promo", "program": "literacy", "title": "通识宣传页", "kind": "material", "status": "ready", "notes": "给新家长的长图式介绍", "updated": "", "path": "literacy/promo/", "primary": false}, {"id": "lit-students", "program": "literacy", "title": "学生档案 · M1–M6", "kind": "material", "status": "ready", "notes": "评价与作业记录", "updated": "", "path": "literacy/students/", "primary": false}, {"id": "salon-talk", "program": "salon", "title": "演讲版 · AI 教育变革", "kind": "deck", "status": "ready", "pages": 11, "notes": "大会演讲用", "updated": "", "path": "salon/05-演讲版-AI教育变革.html", "source": "salon/05-演讲版-AI教育变革.html", "primary": true}, {"id": "salon-parents", "program": "salon", "title": "沙龙宣讲 · 家长场", "kind": "deck", "status": "ready", "notes": "面向家长的长篇宣讲版", "updated": "", "path": "salon/07-沙龙宣讲-家长场.html", "source": "salon/07-沙龙宣讲-家长场.html", "primary": true}, {"id": "salon-talk2", "program": "salon", "title": "家长场 · AI 漫谈", "kind": "deck", "status": "ready", "pages": 15, "notes": "轻量版家长沟通", "updated": "", "path": "salon/parents-ai-talk.html", "source": "salon/parents-ai-talk.html", "primary": true}, {"id": "salon-poster", "program": "salon", "title": "沙龙海报 · 家长场", "kind": "material", "status": "ready", "notes": "报名海报", "updated": "", "path": "salon/08-沙龙海报-家长场.html", "primary": false}, {"id": "wl-day2-5", "program": "wulingshan", "title": "Day 2–5 · 待做", "kind": "deck", "status": "todo", "notes": "五日后四天的课程尚未开做", "updated": "", "path": "", "primary": false}, {"id": "fw-outline", "program": "framework", "title": "课程设计大纲", "kind": "doc", "status": "ready", "notes": "体系设计第一性原理与结构", "updated": "", "path": "https://github.com/jacobatxa/ForNewFuture/blob/main/framework/00-课程设计大纲.md", "primary": false}, {"id": "fw-edu", "program": "framework", "title": "教育框架", "kind": "doc", "status": "ready", "notes": "能力递进与教学机制", "updated": "", "path": "https://github.com/jacobatxa/ForNewFuture/blob/main/framework/01-教育框架.md", "primary": false}, {"id": "fw-syllabus", "program": "framework", "title": "教学大纲", "kind": "doc", "status": "ready", "notes": "18 小时逐节展开", "updated": "", "path": "https://github.com/jacobatxa/ForNewFuture/blob/main/framework/02-教学大纲.md", "primary": false}, {"id": "fw-skeleton", "program": "framework", "title": "框架版骨架", "kind": "doc", "status": "ready", "notes": "课程骨架模板", "updated": "", "path": "https://github.com/jacobatxa/ForNewFuture/blob/main/framework/04-框架版骨架.md", "primary": false}, {"id": "tool-roster", "program": "framework", "title": "名册换血", "kind": "tool", "status": "ready", "notes": "批量整理名册的小工具页", "updated": "", "path": "tools/14-名册换血.html", "primary": false}, {"id": "tool-template", "program": "framework", "title": "M1 图文模板", "kind": "tool", "status": "ready", "notes": "做新页时的排版模板", "updated": "", "path": "tools/m1-figures/deck.template.html", "primary": false}]};
-
-const KIND_LABEL = {deck:'课件', interaction:'互动', syllabus:'课纲', material:'物料', doc:'文档', tool:'工具'};
-const STATUS_LABEL = {ready:'可用', pilot:'试点', todo:'待做', archived:'归档'};
-const KIND_FILTERS = [['all','全部类型'],['deck','只看课件'],['interaction','只看互动'],['syllabus','只看课纲'],['material','只看物料'],['doc','文档与工具']];
-const STATUS_FILTERS = [['all','全部状态'],['ready','可用'],['pilot','试点'],['todo','待做'],['archived','归档']];
-const KIND_ORDER = {deck:0, interaction:1, syllabus:2, material:3, doc:4, tool:5};
-
-const state = {q:'', kind:'all', status:'all'};
-
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-function renderStats(){
-  const courses = DATA.programs.filter(p=>p.id!=='framework').length;
-  const decks = DATA.items.filter(i=>i.kind==='deck'&&i.status!=='todo'&&i.status!=='archived').length;
-  const inter = DATA.items.filter(i=>i.kind==='interaction').length;
-  const todo = DATA.items.filter(i=>i.status==='todo').length;
-  document.getElementById('stats').innerHTML =
-    `<div class="stat"><b>${courses}</b><span>套课程</span></div>`
-   +`<div class="stat"><b>${decks}</b><span>份可用课件</span></div>`
-   +`<div class="stat"><b>${inter}</b><span>个互动</span></div>`
-   +`<div class="stat warn"><b>${todo}</b><span>项待做</span></div>`;
-}
-
-function chips(list, cur, sel){
-  return list.map(([k,label])=>`<button class="chip${k===cur?' on':''}" data-sel="${sel}" data-val="${k}">${label}</button>`).join('');
-}
-function renderChips(){
-  document.getElementById('kindChips').innerHTML = chips(KIND_FILTERS, state.kind, 'kind');
-  document.getElementById('statusChips').innerHTML = chips(STATUS_FILTERS, state.status, 'status');
-  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
-    state[c.dataset.sel]=c.dataset.val; renderChips(); render();
-  });
-}
-
-function match(it, prog){
-  if(state.kind!=='all'){
-    if(state.kind==='doc'){ if(!(it.kind==='doc'||it.kind==='tool')) return false; }
-    else if(it.kind!==state.kind) return false;
-  }
-  if(state.status!=='all'&&it.status!==state.status) return false;
-  if(state.q){
-    const hay = (it.title+' '+(it.notes||'')+' '+(prog?prog.name:'')).toLowerCase();
-    if(!hay.includes(state.q.toLowerCase())) return false;
-  }
-  return true;
-}
-
-function row(it){
-  const kind = it.status==='todo' ? 'todo' : it.kind;
-  const klabel = it.status==='todo' ? '待做' : (KIND_LABEL[it.kind]||it.kind);
-  const status = STATUS_LABEL[it.status] ? `<span class="pill ${it.status}">${STATUS_LABEL[it.status]}</span>` : '';
-  const meta = [
-    it.pages ? it.pages+' 页' : '',
-    it.size || '',
-    it.updated || ''
-  ].filter(Boolean).join(' · ');
-  let go='';
-  if(it.path){
-    const isExt = it.path.startsWith('http');
-    go = `<a class="btn primary" href="${esc(it.path)}"${isExt?' target="_blank" rel="noopener"':''}>打开</a>`;
-    if(it.source){
-      go += `<a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/${esc(it.source)}" target="_blank" rel="noopener">源文件</a>`;
-    }
-  }
-  return `<div class="row${it.status==='todo'?' todo':''}">
-    <span class="kind ${kind}">${klabel}</span>
-    <span class="row-name">
-      <span class="nm"><b>${esc(it.title)}</b>${status}</span>
-      <span>${esc(it.notes||'')}</span>
-    </span>
-    <span class="row-meta">${esc(meta)}</span>
-    <span class="row-go">${go}</span>
-  </div>`;
-}
-
-function render(){
-  const wrap = [];
-  let any = false;
-  const progs = [...DATA.programs].sort((a,b)=>(a.order||0)-(b.order||0));
-  for(const p of progs){
-    const items = DATA.items.filter(it=>it.program===p.id&&match(it,p))
-      .sort((a,b)=>{
-        const pa=(a.primary?0:1), pb=(b.primary?0:1);
-        if(pa!==pb) return pa-pb;
-        const ka=KIND_ORDER[a.kind]??9, kb=KIND_ORDER[b.kind]??9;
-        if(a.status==='todo'&&b.status!=='todo') return 1;
-        if(b.status==='todo'&&a.status!=='todo') return -1;
-        return ka-kb;
-      });
-    if(!items.length) continue;
-    any = true;
-    const tags = (p.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('');
-    wrap.push(`<section class="group">
-      <div class="group-head">
-        <div class="group-title"><h2>${esc(p.name)}</h2><span class="en">${esc(p.en||'')}</span></div>
-        <p class="group-desc">${esc(p.desc||'')}</p>
-        <div class="tags">${tags}</div>
-      </div>
-      <div class="rows">${items.map(row).join('')}</div>
-    </section>`);
-  }
-  document.getElementById('content').innerHTML = wrap.join('');
-  document.getElementById('empty').className = 'empty'+(any?'':' on');
-}
-
-document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value.trim();render();});
-renderStats(); renderChips(); render();
-</script>
 </body>
 </html>
