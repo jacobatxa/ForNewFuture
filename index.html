@@ -2,290 +2,404 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>AI 课程库</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI 课程库 · 全部教材入口</title>
 <style>
   :root{
-    --bg:#0A0A0A;
-    --surface:#111111;
-    --surface-2:#161616;
-    --ink:#FAFAFA;
-    --muted:#8A8A8A;
-    --faint:#525252;
-    --line:rgba(255,255,255,.08);
-    --line-strong:rgba(255,255,255,.14);
+    --bg:#0A0A0A; --surface:#111111; --surface-2:#161616;
+    --ink:#FAFAFA; --muted:#9A9A9A; --faint:#5E5E5E;
+    --line:rgba(255,255,255,.09); --line-strong:rgba(255,255,255,.16);
+    --amber:#F4C03A; --amber-dim:rgba(244,192,58,.14);
+    --green:#5FA97A; --blue:#6E93C9; --red:#C96F5C;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{color-scheme:dark}
-  body{
-    background:var(--bg);color:var(--ink);
+  body{background:var(--bg);color:var(--ink);
     font-family:"Geist","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
-    line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
-  }
+    line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;}
   a{color:inherit;text-decoration:none}
   .mono{font-family:"Geist Mono","SF Mono","Menlo",monospace}
 
-  .top{
-    position:sticky;top:0;z-index:20;
-    display:flex;align-items:center;justify-content:space-between;
-    padding:16px 28px;border-bottom:1px solid var(--line);
-    background:rgba(10,10,10,.82);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-  }
+  .top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 28px;border-bottom:1px solid var(--line);
+    background:rgba(10,10,10,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
   .logo{font-size:15px;font-weight:600;letter-spacing:-.02em}
   .logo span{color:var(--muted);font-weight:500;margin-left:8px}
-  .top-meta{font-size:12px;color:var(--muted)}
+  .top-meta{font-size:12.5px;color:var(--muted)}
 
-  .shell{max-width:920px;margin:0 auto;padding:56px 28px 96px}
-  .hero{margin-bottom:48px}
-  .eyebrow{
-    font-size:12px;font-weight:500;color:var(--muted);
-    letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;
-  }
-  h1{
-    font-size:clamp(36px,6vw,56px);
-    font-weight:600;letter-spacing:-.04em;line-height:1.05;
-  }
+  .shell{max-width:1000px;margin:0 auto;padding:52px 28px 100px}
+  .hero{margin-bottom:34px}
+  .eyebrow{font-size:12.5px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px}
+  h1{font-size:clamp(38px,5.5vw,54px);font-weight:600;letter-spacing:-.03em;line-height:1.06}
+  .hero-sub{margin-top:14px;font-size:16px;color:var(--muted);max-width:40em}
 
-  .label{
-    font-size:12px;font-weight:500;color:var(--faint);
-    letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px;
-  }
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 44px}
+  .stat{border:1px solid var(--line);border-radius:12px;padding:12px 18px;min-width:120px}
+  .stat b{display:block;font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.2}
+  .stat span{font-size:12px;color:var(--muted);letter-spacing:.04em}
 
-  .list{
-    border:1px solid var(--line);border-radius:16px;
-    overflow:hidden;background:var(--surface);
-  }
-  .course{
-    padding:26px 24px;
-    border-top:1px solid var(--line);
-  }
+  .label{font-size:12px;font-weight:500;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;margin:40px 0 12px}
+
+  .list{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+  .course{display:block;padding:24px;border-top:1px solid var(--line)}
   .course:first-child{border-top:0}
-  .course:hover{background:var(--surface-2)}
-  .course-head{margin-bottom:18px}
-  .course-title{
-    font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px;
-  }
-  .course-desc{font-size:14px;color:var(--muted);max-width:44em;margin-bottom:10px}
+  .course-head{margin-bottom:16px}
+  .course-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .course-title h2{font-size:22px;font-weight:600;letter-spacing:-.02em}
+  .course-title .en{font-size:12px;color:var(--faint);letter-spacing:.06em}
+  .course-desc{font-size:14.5px;color:var(--muted);max-width:46em;margin-bottom:10px}
   .tags{display:flex;flex-wrap:wrap;gap:6px}
-  .tag{
-    font-size:11px;font-weight:500;color:var(--muted);
-    border:1px solid var(--line);padding:3px 8px;border-radius:999px;
-  }
-  .tag.on{
-    color:var(--ink);border-color:var(--line-strong);
-    background:rgba(255,255,255,.04);
-  }
+  .tag{font-size:11.5px;font-weight:500;color:var(--muted);border:1px solid var(--line);padding:3px 9px;border-radius:999px}
+  .tag.on{color:var(--ink);border-color:var(--line-strong);background:rgba(255,255,255,.04)}
+  .tag.warn{color:#E9BD6E;border-color:rgba(244,192,58,.35);background:rgba(244,192,58,.08)}
+  .tag.ok{color:#8CC9A1;border-color:rgba(95,169,122,.4);background:rgba(95,169,122,.1)}
+  .tag.arch{color:var(--faint);border-style:dashed}
 
-  .actions{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:10px;
-  }
-  a.slot{
-    display:flex;flex-direction:column;gap:4px;
-    padding:14px 16px;border-radius:12px;
-    border:1px solid var(--line);
-    background:rgba(255,255,255,.02);
-    transition:border-color .15s, background .15s;
-    min-height:78px;
-  }
-  a.slot:hover{
-    border-color:var(--line-strong);
-    background:rgba(255,255,255,.05);
-  }
-  a.slot.primary{
-    background:var(--ink);border-color:var(--ink);color:#0A0A0A;
-  }
-  a.slot.primary:hover{background:#E8E8E8;border-color:#E8E8E8}
-  a.slot .kind{
-    font-size:11px;font-weight:600;letter-spacing:.06em;
-    text-transform:uppercase;opacity:.65;
-  }
-  a.slot.primary .kind{color:rgba(10,10,10,.55)}
-  a.slot .name{font-size:15px;font-weight:600;letter-spacing:-.01em}
-  a.slot .note{font-size:12px;color:var(--faint);margin-top:2px}
-  a.slot.primary .note{color:rgba(10,10,10,.5)}
-
-  .section{margin-top:48px}
-  .row{
-    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
-    padding:22px 24px;border-top:1px solid var(--line);
-  }
+  .rows{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .row{display:grid;grid-template-columns:64px minmax(0,1fr) auto auto;gap:14px;align-items:center;
+    padding:13px 16px;border-top:1px solid var(--line);background:rgba(255,255,255,.015)}
   .row:first-child{border-top:0}
-  .row:hover{background:var(--surface-2)}
-  .row-title{font-size:18px;font-weight:600;margin-bottom:4px}
-  .row-desc{font-size:14px;color:var(--muted)}
-  .btn{
-    display:inline-flex;align-items:center;height:36px;padding:0 14px;
-    border-radius:999px;font-size:13px;font-weight:600;
-    border:1px solid var(--line);color:var(--muted);
-  }
-  .btn:hover{color:var(--ink);border-color:var(--line-strong)}
-  .links{display:flex;gap:12px;justify-content:flex-end;margin-top:8px}
-  .links a{font-size:12px;color:var(--faint)}
-  .links a:hover{color:var(--muted)}
+  .row:hover{background:rgba(255,255,255,.05)}
+  .kind{font-size:11px;font-weight:600;letter-spacing:.04em;text-align:center;padding:4px 0;border-radius:7px;
+    color:var(--muted);border:1px solid var(--line)}
+  .kind.main{color:#F7D77E;border-color:rgba(244,192,58,.4);background:var(--amber-dim)}
+  .kind.play{color:#9DBBE8;border-color:rgba(110,147,201,.4);background:rgba(110,147,201,.12)}
+  .kind.plan{color:#8CC9A1;border-color:rgba(95,169,122,.35);background:rgba(95,169,122,.1)}
+  .kind.mat{color:var(--muted)}
+  .row-name{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .row-name b{font-size:16px;font-weight:600;letter-spacing:-.01em}
+  .row-name span{font-size:13px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row-meta{font-size:12.5px;color:var(--faint);text-align:right;white-space:nowrap}
+  .row-go{display:flex;gap:8px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:7px 14px;border-radius:9px;
+    font-size:13px;font-weight:600;border:1px solid var(--line-strong);background:rgba(255,255,255,.05);white-space:nowrap}
+  .btn:hover{background:rgba(255,255,255,.12)}
+  .btn.primary{background:var(--amber);color:#181206;border-color:var(--amber)}
+  .btn.primary:hover{background:#F9CE5C}
+  .btn.ghost{border-color:var(--line);background:transparent;color:var(--muted);font-weight:500}
+  .btn.ghost:hover{color:var(--ink)}
 
-  .foot{
-    margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    font-size:12px;color:var(--faint);
-  }
-  .foot a{color:var(--muted)}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--faint)}
+  .foot a{color:var(--muted);border-bottom:1px solid var(--line)}
   .foot a:hover{color:var(--ink)}
 
-  @media(max-width:720px){
-    .top{padding:14px 18px}
-    .shell{padding:36px 18px 72px}
-    .actions{grid-template-columns:1fr}
-    .row{grid-template-columns:1fr}
-    .links{justify-content:flex-start}
+  @media (max-width:720px){
+    .shell{padding:36px 16px 80px}
+    .top{padding:12px 16px}
+    .logo span{display:none}
+    .top-meta{display:none}
+    .row{grid-template-columns:52px minmax(0,1fr);grid-template-rows:auto auto;gap:8px 12px}
+    .row-meta{display:none}
+    .row-go{grid-column:1/-1;justify-content:flex-start}
+    .kind{font-size:10px}
+    .row-name b{font-size:15px}
   }
 </style>
 </head>
 <body>
-  <header class="top">
-    <div class="logo">AI 课程库</div>
-    <div class="top-meta mono">Bilden · teachers</div>
+
+<header class="top">
+  <div class="logo">AI 课程库<span>全部教材 · 一处进入</span></div>
+  <div class="top-meta mono">BILDEN EDU · teachers</div>
+</header>
+
+<main class="shell">
+  <header class="hero">
+    <p class="eyebrow mono">Course Library · 2026</p>
+    <h1>全部课程，都在这里。</h1>
+    <p class="hero-sub">每套课的主课件、配套互动、课纲与物料，按体系收在一处。点「打开」直接上课，点「源文件」改课件。</p>
   </header>
 
-  <main class="shell">
-    <header class="hero">
-      <p class="eyebrow mono">Bilden Edu</p>
-      <h1>AI 课程库</h1>
-    </header>
+  <div class="stats">
+    <div class="stat"><b>4</b><span>套课程</span></div>
+    <div class="stat"><b>9</b><span>份主课件</span></div>
+    <div class="stat"><b>8</b><span>个互动</span></div>
+    <div class="stat"><b>7</b><span>份物料与档案</span></div>
+  </div>
 
-    <p class="label mono">Courses</p>
-    <div class="list">
+  <p class="label mono">01 · 营地课程</p>
+  <div class="list">
 
-      <section class="course">
-        <div class="course-head">
-          <h2 class="course-title">创想营</h2>
-          <p class="course-desc">辨智能 → 探黑盒 → 会提问 → 造 Agent。换场地只换宣传，不换课件。</p>
-          <div class="tags">
-            <span class="tag on">课件齐</span>
-            <span class="tag">10–15</span>
-            <span class="tag">国庆那一套</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a class="slot primary" href="camp/course/09-ai-camp-deck.html">
-            <span class="kind">课件</span>
-            <span class="name">打开课件</span>
-            <span class="note">空格翻页 · F 全屏</span>
-          </a>
-          <a class="slot" href="camp/promo/2026-11-baicao/">
-            <span class="kind">宣传</span>
-            <span class="name">百草湖长图</span>
-            <span class="note">2026.11</span>
-          </a>
-          <a class="slot" href="camp/students/">
-            <span class="kind">学生档案</span>
-            <span class="name">评价与作业</span>
-            <span class="note">名册 · 产出</span>
-          </a>
-        </div>
-      </section>
-
-      <section class="course">
-        <div class="course-head">
-          <h2 class="course-title">AI 通识初阶</h2>
-          <p class="course-desc">周末 18 小时，六个模块。和创想营是两套教材，不要重播营地页。</p>
-          <div class="tags">
-            <span class="tag on">M1</span>
-            <span class="tag">10–15</span>
-            <span class="tag">M2–M6 待做</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a class="slot primary" href="literacy/course/17-m1-online-hour1.html">
-            <span class="kind">课件</span>
-            <span class="name">打开 M1</span>
-            <span class="note">第一节 · 线上 1 小时</span>
-          </a>
-          <a class="slot" href="literacy/promo/">
-            <span class="kind">宣传</span>
-            <span class="name">通识宣传长图</span>
-            <span class="note">给新家长</span>
-          </a>
-          <a class="slot" href="literacy/students/">
-            <span class="kind">学生档案</span>
-            <span class="name">评价与作业</span>
-            <span class="note">M1–M6</span>
-          </a>
-        </div>
-      </section>
-
-      <section class="course">
-        <div class="course-head">
-          <h2 class="course-title">武陵山 · 超级AI营</h2>
-          <p class="course-desc">山里五日。先看自然里的智慧，再看人和机器。断网也能放。</p>
-          <div class="tags">
-            <span class="tag on">Day 1</span>
-            <span class="tag">10–12</span>
-            <span class="tag">Day 2–5 待做</span>
-          </div>
-        </div>
-        <div class="actions">
-          <a class="slot primary" href="wulingshan/course/day1.html">
-            <span class="kind">课件</span>
-            <span class="name">打开 Day 1</span>
-            <span class="note">五日目录另开</span>
-          </a>
-          <a class="slot" href="wulingshan/promo/poster-long.html">
-            <span class="kind">宣传</span>
-            <span class="name">五日营长图</span>
-            <span class="note">武陵山</span>
-          </a>
-          <a class="slot" href="wulingshan/students/">
-            <span class="kind">学生档案</span>
-            <span class="name">评价与作业</span>
-            <span class="note">按天收</span>
-          </a>
-        </div>
-      </section>
-
-    </div>
-
-    <p class="label mono" style="margin-top:36px">Also open</p>
-    <div class="list" style="margin-bottom:0">
-      <div class="course" style="padding:18px 24px">
-        <div class="tags" style="gap:14px">
-          <a href="literacy/course/11-ai-weekend-syllabus.html" style="color:var(--muted);font-size:13px;font-weight:600">通识大纲</a>
-          <a href="literacy/course/13-six-module-architecture.html" style="color:var(--muted);font-size:13px;font-weight:600">通识对照表</a>
-          <a href="wulingshan/course/" style="color:var(--muted);font-size:13px;font-weight:600">武陵山五日目录</a>
-        </div>
+    <section class="course">
+      <div class="course-head">
+        <div class="course-title"><h2>创想营</h2><span class="en">AI Innovation Camp</span></div>
+        <p class="course-desc">辨智能 → 探黑盒 → 会提问 → 造 Agent。一套课换场地只换宣传，不换课件。</p>
+        <div class="tags"><span class="tag ok">已交付</span><span class="tag">10–15 岁</span><span class="tag">2 份主课件</span></div>
       </div>
-    </div>
-
-    <section class="section">
-      <p class="label mono">Org</p>
-      <div class="list">
-        <article class="row">
-          <div>
-            <h2 class="row-title">家长场沙龙</h2>
-            <p class="row-desc">对外讲，不是某一门课的课件。</p>
-          </div>
-          <div>
-            <a class="btn" href="salon/07-沙龙宣讲-家长场.html">打开宣讲</a>
-            <div class="links">
-              <a href="salon/08-沙龙海报-家长场.html">海报</a>
-              <a href="salon/05-演讲版-AI教育变革.html">演讲版</a>
-              <a href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/01-%E6%95%99%E8%82%B2%E6%A1%86%E6%9E%B6.md">教育框架</a>
-            </div>
-          </div>
-        </article>
+      <div class="rows">
+        <a class="row" href="camp/course/11-autumn-ai-intro-deck.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>秋假营第 2 夜 · AI 导论 + 工具通识</b><span>最新主课件 · 27 页 · 大模型 / Prompt / Agent / 分工</span></span>
+          <span class="row-meta">2026.11 · 线上 120 分钟</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/camp/course/11-autumn-ai-intro-deck.html">源文件</a></span>
+        </a>
+        <a class="row" href="camp/course/09-ai-camp-deck.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>国庆创想营 · AI 创想营：把好奇变成能力</b><span>营地完整课 · 32 页 · 含智能定义原文（Legg &amp; Hutter 2007）</span></span>
+          <span class="row-meta">2026.10 · 六日营</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/camp/course/09-ai-camp-deck.html">源文件</a></span>
+        </a>
+        <a class="row" href="camp/promo/2026-11-baicao/">
+          <span class="kind mat">物料</span>
+          <span class="row-name"><b>百草湖乡 · 招生长图</b><span>换场宣传页 · 含场地与日程长图</span></span>
+          <span class="row-meta">2026.11</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="camp/students/">
+          <span class="kind mat">档案</span>
+          <span class="row-name"><b>学生档案 · 评价与作业</b><span>名册、产出、评价记录</span></span>
+          <span class="row-meta">按营维护</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
       </div>
     </section>
 
-    <footer class="foot">
-      <span>仓库公开 · 学生档案里不要写身份证和手机号</span>
-      <a class="mono" href="https://github.com/jacobatxa/ForNewFuture">github.com/jacobatxa/ForNewFuture</a>
-    </footer>
-  </main>
+    <section class="course">
+      <div class="course-head">
+        <div class="course-title"><h2>武陵山 · 超级 AI 营</h2><span class="en">Wulingshan Camp</span></div>
+        <p class="course-desc">山里五日。先看自然里的智慧，再看人和机器。全离线可放。</p>
+        <div class="tags"><span class="tag ok">Day 1 可用</span><span class="tag">10–12 岁</span><span class="tag warn">Day 2–5 待做</span></div>
+      </div>
+      <div class="rows">
+        <a class="row" href="wulingshan/course/day1-v2.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>Day 1 · 自然里的智慧</b><span>新版 · 含实拍素材与两天流程</span></span>
+          <span class="row-meta">v2 在教</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/wulingshan/course/day1-v2.html">源文件</a></span>
+        </a>
+        <a class="row" href="wulingshan/course/index.html">
+          <span class="kind plan">目录</span>
+          <span class="row-name"><b>五日课程目录</b><span>每天一节的总览与衔接</span></span>
+          <span class="row-meta">五日</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="wulingshan/course/day1.html">
+          <span class="kind mat">归档</span>
+          <span class="row-name"><b>Day 1 · 旧版</b><span>已被 v2 替代，留作对照</span></span>
+          <span class="row-meta">v1</span>
+          <span class="row-go"><span class="btn ghost">打开</span></span>
+        </a>
+        <a class="row" href="wulingshan/promo/poster-long.html">
+          <span class="kind mat">物料</span>
+          <span class="row-name"><b>五日营长图</b><span>招生长图 · 场地实拍版</span></span>
+          <span class="row-meta">宣传</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="wulingshan/students/">
+          <span class="kind mat">档案</span>
+          <span class="row-name"><b>学生档案 · 按天收</b><span>评价与作业记录</span></span>
+          <span class="row-meta">按天维护</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="label mono">02 · 通识课（AI 通识初阶 Principle）</p>
+  <div class="list">
+    <section class="course">
+      <div class="course-head">
+        <div class="course-title"><h2>AI 通识初阶</h2><span class="en">AI Literacy · Principle</span></div>
+        <p class="course-desc">周末 18 小时，六个模块，以思维方法为内核。和营地课是两套教材，不混用。</p>
+        <div class="tags"><span class="tag ok">M1 完成</span><span class="tag on">M2 试点</span><span class="tag warn">M3–M6 待做</span></div>
+      </div>
+
+      <p class="label mono" style="margin:14px 0 8px">主课件</p>
+      <div class="rows">
+        <a class="row" href="literacy/course/18-sunday-deck.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>M1 · 完整课（周日场）</b><span>18 页 · 六模块第一课</span></span>
+          <span class="row-meta">已完成</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/literacy/course/18-sunday-deck.html">源文件</a></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-online-hour1.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>M1 · 第一节（线上 1 小时）</b><span>22 页 · 含猛禽发动机互动演示</span></span>
+          <span class="row-meta">线上版</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/literacy/course/17-m1-online-hour1.html">源文件</a></span>
+        </a>
+        <a class="row" href="literacy/course/20-m2-pilot-deck.html">
+          <span class="kind main">课件</span>
+          <span class="row-name"><b>M2 · 试点课</b><span>18 页 · 第二模块试讲版</span></span>
+          <span class="row-meta">试点中</span>
+          <span class="row-go"><span class="btn primary">打开</span><a class="btn ghost" href="https://github.com/jacobatxa/ForNewFuture/blob/main/literacy/course/20-m2-pilot-deck.html">源文件</a></span>
+        </a>
+      </div>
+
+      <p class="label mono" style="margin:18px 0 8px">配套互动（上课随取）</p>
+      <div class="rows">
+        <a class="row" href="literacy/course/17-m1-hw-raptor.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>猛禽发动机 · 拆解演示</b><span>可旋转、可拆件的 3D 结构课</span></span>
+          <span class="row-meta">1.6 MB</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-method.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>方法卡 · 看图学方法</b><span>把方法显性化的图解页</span></span>
+          <span class="row-meta">图解</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-mindmap.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>思维导图</b><span>全课概念关系图</span></span>
+          <span class="row-meta">概念图</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-cheatsheet.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>速查卡</b><span>课后带走的一页纸</span></span>
+          <span class="row-meta">速查</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-lookup.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>速查手册</b><span>术语与口径查询页</span></span>
+          <span class="row-meta">手册</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/17-m1-hw-demo.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>作业示范</b><span>往期学生作业的示范拆解</span></span>
+          <span class="row-meta">示范</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/forest-maze.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>森林迷宫</b><span>动物角色分组游戏页</span></span>
+          <span class="row-meta">课堂游戏</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/park/index.html">
+          <span class="kind play">互动</span>
+          <span class="row-name"><b>AI 公园 · 互动实验集合</b><span>一组可直接用的 AI 体验入口</span></span>
+          <span class="row-meta">集合页</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+      </div>
+
+      <p class="label mono" style="margin:18px 0 8px">课纲与物料</p>
+      <div class="rows">
+        <a class="row" href="literacy/course/11-ai-weekend-syllabus.html">
+          <span class="kind plan">课纲</span>
+          <span class="row-name"><b>周末课大纲</b><span>18 小时六模块排期</span></span>
+          <span class="row-meta">6 模块</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/12-mod01-computer-net.html">
+          <span class="kind plan">课纲</span>
+          <span class="row-name"><b>模块 01 · 计算机网络</b><span>第一模块的知识底稿</span></span>
+          <span class="row-meta">底稿</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/course/13-six-module-architecture.html">
+          <span class="kind plan">课纲</span>
+          <span class="row-name"><b>六模块架构</b><span>模块间能力递进对照表</span></span>
+          <span class="row-meta">架构</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/promo/">
+          <span class="kind mat">物料</span>
+          <span class="row-name"><b>通识宣传页</b><span>给新家长的长图式介绍</span></span>
+          <span class="row-meta">宣传</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="literacy/students/">
+          <span class="kind mat">档案</span>
+          <span class="row-name"><b>学生档案 · M1–M6</b><span>评价与作业记录</span></span>
+          <span class="row-meta">按模块</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <p class="label mono">03 · 演讲与家长场</p>
+  <div class="list">
+    <section class="course">
+      <div class="course-head">
+        <div class="course-title"><h2>演讲 · 沙龙</h2><span class="en">Talks &amp; Salon</span></div>
+        <p class="course-desc">面向家长与同行的宣讲材料，与课堂课件分开维护。</p>
+        <div class="tags"><span class="tag ok">可用</span><span class="tag">家长场</span><span class="tag">演讲版</span></div>
+      </div>
+      <div class="rows">
+        <a class="row" href="salon/05-演讲版-AI教育变革.html">
+          <span class="kind main">演讲</span>
+          <span class="row-name"><b>演讲版 · AI 教育变革</b><span>11 页 · 大会演讲用</span></span>
+          <span class="row-meta">11 页</span>
+          <span class="row-go"><span class="btn primary">打开</span></span>
+        </a>
+        <a class="row" href="salon/07-沙龙宣讲-家长场.html">
+          <span class="kind main">演讲</span>
+          <span class="row-name"><b>沙龙宣讲 · 家长场</b><span>面向家长的长篇宣讲版</span></span>
+          <span class="row-meta">家长场</span>
+          <span class="row-go"><span class="btn primary">打开</span></span>
+        </a>
+        <a class="row" href="salon/parents-ai-talk.html">
+          <span class="kind main">演讲</span>
+          <span class="row-name"><b>家长场 · AI 漫谈</b><span>15 页 · 轻量版家长沟通</span></span>
+          <span class="row-meta">15 页</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="salon/08-沙龙海报-家长场.html">
+          <span class="kind mat">物料</span>
+          <span class="row-name"><b>沙龙海报 · 家长场</b><span>报名海报</span></span>
+          <span class="row-meta">海报</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <p class="label mono">04 · 框架与工具</p>
+  <div class="list">
+    <section class="course">
+      <div class="course-head">
+        <div class="course-title"><h2>框架文档与制作工具</h2><span class="en">Framework &amp; Tools</span></div>
+        <p class="course-desc">课程设计的方法底稿，以及做课件时用的辅助页。</p>
+      </div>
+      <div class="rows">
+        <a class="row" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/00-课程设计大纲.md">
+          <span class="kind plan">文档</span>
+          <span class="row-name"><b>课程设计大纲</b><span>体系设计第一性原理与结构</span></span>
+          <span class="row-meta">即点即看</span>
+          <span class="row-go"><span class="btn ghost">源文件</span></span>
+        </a>
+        <a class="row" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/01-教育框架.md">
+          <span class="kind plan">文档</span>
+          <span class="row-name"><b>教育框架</b><span>能力递进与教学机制</span></span>
+          <span class="row-meta">即点即看</span>
+          <span class="row-go"><span class="btn ghost">源文件</span></span>
+        </a>
+        <a class="row" href="https://github.com/jacobatxa/ForNewFuture/blob/main/framework/02-教学大纲.md">
+          <span class="kind plan">文档</span>
+          <span class="row-name"><b>教学大纲</b><span>18 小时逐节展开</span></span>
+          <span class="row-meta">即点即看</span>
+          <span class="row-go"><span class="btn ghost">源文件</span></span>
+        </a>
+        <a class="row" href="tools/14-名册换血.html">
+          <span class="kind mat">工具</span>
+          <span class="row-name"><b>名册换血</b><span>批量整理名册的小工具页</span></span>
+          <span class="row-meta">工具</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+        <a class="row" href="tools/m1-figures/deck.template.html">
+          <span class="kind mat">工具</span>
+          <span class="row-name"><b>M1 图文模板</b><span>做新页时的排版模板</span></span>
+          <span class="row-meta">模板</span>
+          <span class="row-go"><span class="btn">打开</span></span>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <span>BILDEN EDU · 课程库 · 2026-11</span>
+    <span><a href="https://github.com/jacobatxa/ForNewFuture">GitHub 仓库</a> · 所有课件为单文件 HTML，断网可放</span>
+  </div>
+</main>
+
 </body>
 </html>
