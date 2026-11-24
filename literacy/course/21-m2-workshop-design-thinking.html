@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-canvas-width="1600" data-canvas-height="1200"
+      style="width:1600px;height:1200px;">
+<head>
+<meta charset="UTF-8">
+<title>设计思维互动探案练习册</title>
+<style>
+  @font-face {
+    font-family:"Source Han Sans SC VF";
+    src:url("https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/infinite-canvas/fonts/v1/source-han-sans-sc-vf/source-han-sans-sc-vf.otf") format("opentype");
+    font-weight:250 900; font-style:normal; font-display:swap;
+  }
+  @font-face { font-family:"Montserrat"; src:url("https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/infinite-canvas/fonts/v1/montserrat/montserrat-semi-bold.ttf") format("truetype"); font-weight:600; font-style:normal; font-display:swap; }
+  @font-face { font-family:"Montserrat"; src:url("https://lf-flow-web-cdn.doubao.com/obj/flow-doubao/doubao/infinite-canvas/fonts/v1/montserrat/montserrat-extra-bold.ttf") format("truetype"); font-weight:800; font-style:normal; font-display:swap; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{width:1600px;height:1200px;}
+  body{font-family:"Source Han Sans SC VF","PingFang SC","Microsoft YaHei",sans-serif;color:#332A1F;-webkit-font-smoothing:antialiased;}
+  .mont{font-family:"Montserrat",sans-serif;}
+  button{font-family:inherit;cursor:pointer;}
+  input,textarea{font-family:inherit;}
+
+  .canvas{
+    position:relative;width:1600px;height:1200px;padding:24px 34px 0;overflow:hidden;
+    background-color:#F3EAD6;
+    background-image:
+      radial-gradient(circle at 6% 0%,rgba(210,118,43,.10),transparent 30%),
+      radial-gradient(circle at 97% 6%,rgba(46,94,170,.09),transparent 32%),
+      radial-gradient(rgba(51,42,31,.055) 1.1px,transparent 1.6px);
+    background-size:auto,auto,25px 25px;
+  }
+
+  /* ============ 顶部 ============ */
+  header{display:flex;align-items:center;justify-content:space-between;height:80px;}
+  .htag{display:inline-block;background:#332A1F;color:#FFFDF6;font-family:"Montserrat",sans-serif;font-weight:800;font-size:13.5px;letter-spacing:2px;padding:6px 13px;border-radius:6px;transform:rotate(-1deg);}
+  h1{font-size:29px;font-weight:900;margin-top:7px;letter-spacing:.5px;}
+  h1 .u{background:linear-gradient(transparent 60%,rgba(232,181,60,.75) 60%);padding:0 2px;}
+  .progress{display:flex;gap:9px;}
+  .pdot{width:56px;height:56px;border-radius:50%;border:2.5px solid #332A1F;background:#FFFDF6;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;transition:transform .2s;}
+  .pdot .pn{font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;line-height:1;}
+  .pdot .pc{font-size:12px;font-weight:700;margin-top:3px;}
+  .pdot.locked{opacity:.4;}
+  .pdot.current{background:#332A1F;color:#FFFDF6;transform:scale(1.08);}
+  .pdot.done{background:var(--c);color:#fff;border-color:#332A1F;}
+  .pdot.done::after{content:"✓";position:absolute;right:-5px;top:-7px;width:22px;height:22px;border-radius:50%;background:#3E8E5A;color:#fff;font-size:14px;font-weight:900;display:flex;align-items:center;justify-content:center;border:2px solid #332A1F;}
+
+  .body-row{display:flex;gap:18px;margin-top:14px;height:1034px;}
+
+  /* ============ 侧栏 ============ */
+  .sidebar{width:262px;display:flex;flex-direction:column;gap:12px;}
+  .side-card{background:#FFFDF6;border:2px solid #332A1F;border-radius:14px;box-shadow:4px 4px 0 rgba(51,42,31,.85);padding:15px 16px;}
+  .side-card .sl{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12.5px;letter-spacing:1.5px;color:#8A7A60;}
+  .case-preview{margin-top:7px;font-size:15px;line-height:1.5;font-weight:500;min-height:44px;}
+  .case-preview .empty{color:#A99B82;font-weight:400;}
+  .nav-btn{
+    display:flex;align-items:center;gap:11px;width:100%;text-align:left;
+    background:#FFFDF6;border:2px solid #332A1F;border-radius:12px;box-shadow:3px 3px 0 rgba(51,42,31,.85);
+    padding:10px 13px;transition:transform .12s,box-shadow .12s;position:relative;
+  }
+  .nav-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(51,42,31,.85);}
+  .nav-btn.current{background:#332A1F;color:#FFFDF6;}
+  .nav-btn .nn{font-family:"Montserrat",sans-serif;font-weight:800;font-size:18px;width:30px;height:30px;border-radius:50%;border:2px solid var(--c);color:var(--c);display:flex;align-items:center;justify-content:center;flex:none;}
+  .nav-btn.current .nn{background:#FFFDF6;}
+  .nav-btn .nt{flex:1;}
+  .nav-btn .nt .e{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12.5px;letter-spacing:.8px;color:var(--c);}
+  .nav-btn.current .nt .e{color:#FFD479;}
+  .nav-btn .nt .z{font-size:16.5px;font-weight:900;line-height:1.2;}
+  .nav-btn .lk{font-size:17px;color:#A99B82;}
+  .nav-btn.done .nt::after{content:"✓";position:absolute;right:11px;top:9px;color:#3E8E5A;font-weight:900;font-size:17px;}
+  .nav-btn.current.done .nt::after{color:#7BE0A8;}
+  .reset-btn{
+    margin-top:auto;width:100%;background:transparent;border:2px dashed #8A7A60;color:#6B5D49;border-radius:10px;
+    padding:11px;font-size:15px;font-weight:700;
+  }
+  .reset-btn:hover{background:rgba(51,42,31,.06);}
+
+  /* ============ 舞台 ============ */
+  .stage{flex:1;background:#FFFDF6;border:2px solid #332A1F;border-radius:16px;box-shadow:5px 5px 0 rgba(51,42,31,.85);position:relative;overflow:hidden;}
+  .view{display:none;height:100%;padding:24px 28px 20px;flex-direction:column;}
+  .view.active{display:flex;}
+  .v-head{display:flex;align-items:center;gap:14px;}
+  .v-seal{width:54px;height:54px;border-radius:50%;border:2.6px solid var(--c);color:var(--c);font-family:"Montserrat",sans-serif;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;transform:rotate(-7deg);flex:none;}
+  .v-head .en{font-family:"Montserrat",sans-serif;font-weight:800;font-size:17px;color:var(--c);letter-spacing:1px;}
+  .v-head h2{font-size:27px;font-weight:900;line-height:1.1;}
+  .v-head .role{margin-left:auto;font-size:15px;font-weight:700;color:#FFFDF6;background:#332A1F;border-radius:7px;padding:5px 13px;}
+
+  .story{margin-top:14px;background:#F7EFDD;border:1.8px solid #332A1F;border-radius:11px;padding:11px 16px;display:flex;gap:13px;align-items:flex-start;}
+  .story .ic{flex:none;width:34px;height:34px;border-radius:50%;background:#332A1F;color:#FFFDF6;display:flex;align-items:center;justify-content:center;font-weight:900;}
+  .story p{font-size:16px;line-height:1.55;}
+  .story b{font-weight:900;}
+
+  .dual{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:14px;}
+  .box{border:2px solid #332A1F;border-radius:12px;padding:13px 16px 15px;background:#FFFEFA;}
+  .box.demo{background:#F3F7FF;border-color:#2E5EAA;}
+  .box h3{font-size:16px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+  .box h3 .tag{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;letter-spacing:1.2px;border-radius:6px;padding:3px 8px;}
+  .demo h3 .tag{background:#2E5EAA;color:#fff;}
+  .practice h3 .tag{background:#D2762B;color:#fff;}
+  .reveal-btn{border:1.8px dashed #2E5EAA;background:#fff;color:#2E5EAA;border-radius:8px;font-size:14.5px;font-weight:700;padding:7px 12px;width:100%;}
+  .demo-body{display:none;margin-top:10px;font-size:15.5px;line-height:1.6;background:#fff;border-radius:9px;padding:11px 13px;border:1.5px solid #C9D8F2;}
+  .demo-body.open{display:block;}
+  .demo-placeholder{flex:1;margin-top:12px;border:1.5px dashed #9DB8E4;border-radius:10px;background:rgba(255,255,255,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;color:#5E78A8;font-size:15.5px;font-weight:700;letter-spacing:.5px;}
+  .demo-body.open ~ .demo-placeholder{display:none;}
+  .demo-body .hl{background:#FFF0C9;font-weight:700;padding:0 3px;border-radius:3px;}
+
+  .field{margin-bottom:10px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{display:block;font-size:14px;font-weight:700;color:#6B5D49;margin-bottom:4px;}
+  .field input,.field textarea{
+    width:100%;border:1.8px solid #B9A98C;border-radius:8px;background:#fff;padding:9px 11px;font-size:16px;color:#332A1F;outline:none;line-height:1.4;
+  }
+  .field textarea{resize:none;height:52px;}
+  .field input:focus,.field textarea:focus{border-color:#D2762B;box-shadow:0 0 0 3px rgba(210,118,43,.18);}
+  .live{margin-top:11px;background:#332A1F;color:#F3EAD6;border-radius:9px;padding:10px 13px;font-size:15.5px;line-height:1.55;min-height:48px;}
+  .live .lab{font-family:"Montserrat",sans-serif;font-weight:800;font-size:11.5px;letter-spacing:1.4px;color:#FFD479;display:block;margin-bottom:4px;}
+  .live .ph{color:#A99B82;}
+  .live b{color:#FFE9A8;font-weight:700;}
+
+  /* 任务区 */
+  .task{margin-top:14px;border:2px solid var(--c);border-radius:12px;background:var(--soft);padding:13px 16px 15px;}
+  .task .tt{font-size:16px;font-weight:900;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .task .tt .no{font-family:"Montserrat",sans-serif;font-weight:800;font-size:13px;background:var(--c);color:#fff;border-radius:6px;padding:3px 9px;}
+  .chips{display:flex;flex-wrap:wrap;gap:9px;}
+  .chip{
+    border:2px solid #332A1F;border-radius:10px;background:#fff;padding:9px 13px;font-size:15px;font-weight:700;
+    box-shadow:2px 2px 0 rgba(51,42,31,.85);display:flex;align-items:center;gap:8px;transition:transform .1s;
+  }
+  .chip:active{transform:translate(1px,1px);box-shadow:1px 1px 0 rgba(51,42,31,.85);}
+  .chip .state{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;border:1.8px solid #332A1F;border-radius:6px;padding:2px 7px;background:#F3EAD6;}
+  .chip.fact{background:#E6F3EB;} .chip.fact .state{background:#3E8E5A;color:#fff;border-color:#332A1F;}
+  .chip.guess{background:#FBE9E7;} .chip.guess .state{background:#C4453D;color:#fff;border-color:#332A1F;}
+  .chip.wrong{animation:shake .4s;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .quiz-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .quiz{text-align:left;border:2px solid #332A1F;border-radius:10px;background:#fff;padding:11px 14px;font-size:15.5px;line-height:1.45;font-weight:500;box-shadow:2px 2px 0 rgba(51,42,31,.85);}
+  .quiz.correct{background:#E6F3EB;border-color:#3E8E5A;}
+  .quiz.badpick{background:#FBE9E7;border-color:#C4453D;}
+  .tf-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1.5px dashed #CBBBA0;}
+  .tf-row:last-child{border-bottom:none;}
+  .tf-row .q{flex:1;font-size:15.5px;line-height:1.4;}
+  .tf-btn{border:2px solid #332A1F;border-radius:8px;background:#fff;font-size:14.5px;font-weight:900;padding:6px 13px;box-shadow:2px 2px 0 rgba(51,42,31,.85);}
+  .tf-btn.right{background:#3E8E5A;color:#fff;}
+  .tf-btn.wrong{background:#C4453D;color:#fff;}
+  .tf-mark{font-weight:900;font-size:15px;width:26px;}
+  .task-note{margin-top:10px;font-size:14.5px;line-height:1.5;border-radius:8px;padding:8px 12px;display:none;}
+  .task-note.show{display:block;}
+  .task-note.ok{background:#E6F3EB;color:#256C43;border:1.5px solid #3E8E5A;}
+  .task-note.no{background:#FBE9E7;color:#9E332D;border:1.5px solid #C4453D;}
+  .inspire-btn{border:2px solid #332A1F;border-radius:9px;background:#7A5C99;color:#fff;font-size:15px;font-weight:900;padding:9px 16px;box-shadow:3px 3px 0 rgba(51,42,31,.85);}
+  .inspire-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(51,42,31,.85);}
+  .inspire-wall{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;min-height:38px;}
+  .inspire-card{background:#F1EBFE;border:2px solid #7A5C99;border-radius:8px;font-size:14px;font-weight:700;padding:7px 11px;transform:rotate(-1deg);}
+  .mat-list{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;}
+  .mat{border:2px solid #332A1F;border-radius:10px;background:#fff;padding:9px 11px;font-size:14.5px;line-height:1.3;display:flex;flex-direction:column;gap:4px;}
+  .mat.picked{background:#FEF1E3;border-color:#D2762B;}
+  .mat .top{display:flex;align-items:center;gap:7px;font-weight:900;}
+  .mat .boxchk{width:17px;height:17px;border:2px solid #332A1F;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;flex:none;}
+  .mat.picked .boxchk{background:#D2762B;}
+  .mat .price{font-family:"Montserrat",sans-serif;font-weight:800;font-size:13.5px;color:#D2762B;}
+  .mat .time{font-size:12.5px;color:#8A7A60;}
+  .cost-bar{margin-top:11px;display:flex;align-items:center;gap:14px;font-size:16px;font-weight:900;}
+  .cost-bar .num{font-family:"Montserrat",sans-serif;font-size:22px;}
+
+  /* 底部操作 */
+  .v-foot{margin-top:auto;display:flex;align-items:center;gap:13px;padding-top:14px;}
+  .btn{border:2px solid #332A1F;border-radius:11px;font-size:16px;font-weight:900;padding:12px 24px;box-shadow:3px 3px 0 rgba(51,42,31,.85);}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(51,42,31,.85);}
+  .btn-ghost{background:#FFFDF6;color:#332A1F;}
+  .btn-primary{background:var(--c,#332A1F);color:#fff;}
+  .btn-stamp{background:#C4453D;color:#fff;margin-left:auto;position:relative;}
+  .btn-stamp:disabled{background:#B7A98E;cursor:not-allowed;box-shadow:3px 3px 0 rgba(51,42,31,.6);}
+  .hint{font-size:14px;color:#8A7A60;}
+  .stamp-flash{
+    position:absolute;right:-14px;top:-46px;width:108px;height:108px;border-radius:50%;border:4px double #C4453D;color:#C4453D;
+    display:none;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:18px;line-height:1.25;transform:rotate(14deg) scale(2.2);opacity:0;z-index:9;
+    background:rgba(255,253,246,.92);
+  }
+  .stamp-flash.go{display:flex;animation:stamp .9s ease forwards;}
+  @keyframes stamp{0%{transform:rotate(14deg) scale(2.2);opacity:0}35%{transform:rotate(14deg) scale(1);opacity:1}100%{transform:rotate(14deg) scale(1);opacity:1;}}
+
+  /* 开场 / 结案 */
+  .intro{display:flex;gap:22px;height:100%;}
+  .intro-left{flex:1.05;display:flex;flex-direction:column;}
+  .intro-right{flex:.95;background:#F7EFDD;border:2px solid #332A1F;border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;position:relative;}
+  .intro-right::before{content:"";position:absolute;width:96px;height:26px;background:rgba(210,118,43,.45);border:1px dashed rgba(51,42,31,.25);top:-12px;left:42px;transform:rotate(-3deg);}
+  .big-h{font-size:24px;font-weight:900;margin:14px 0 10px;}
+  .storyline{font-size:16.5px;line-height:1.75;}
+  .storyline li{list-style:none;position:relative;padding-left:26px;margin-bottom:12px;}
+  .storyline li::before{content:attr(data-n);position:absolute;left:0;top:1px;width:19px;height:19px;border-radius:50%;background:#332A1F;color:#FFD479;font-family:"Montserrat",sans-serif;font-weight:800;font-size:12.5px;display:flex;align-items:center;justify-content:center;}
+  .case-input{width:100%;flex:1;border:2.2px solid #332A1F;border-radius:11px;background:#fff;padding:13px 15px;font-size:17px;line-height:1.5;outline:none;min-height:92px;resize:none;}
+  .case-input:focus{border-color:#D2762B;box-shadow:0 0 0 3px rgba(210,118,43,.18);}
+  .start-row{margin-top:auto;display:flex;justify-content:flex-end;}
+  .summary-list{display:flex;flex-direction:column;gap:10px;overflow:hidden;}
+  .sum-item{border:1.8px solid #332A1F;border-radius:10px;background:#fff;padding:10px 14px;font-size:15px;line-height:1.5;}
+  .sum-item .sk{font-family:"Montserrat",sans-serif;font-weight:800;font-size:12px;color:#fff;border-radius:5px;padding:2px 8px;margin-right:8px;}
+  .sum-item .miss{color:#C4453D;font-weight:700;}
+  .ending{background:#332A1F;color:#F3EAD6;border-radius:12px;padding:14px 17px;font-size:15.5px;line-height:1.6;margin-top:12px;}
+  .ending b{color:#FFD479;}
+  .rules3{display:flex;gap:10px;margin-top:12px;}
+  .rules3 div{flex:1;border:2px solid #332A1F;border-radius:10px;background:#fff;padding:10px 12px;font-size:14px;line-height:1.45;text-align:center;font-weight:700;box-shadow:2px 2px 0 rgba(51,42,31,.85);display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .rules3 svg{width:30px;height:30px;}
+
+  /* ===== 卡通插画体系 ===== */
+  .svg-defs{position:absolute;width:0;height:0;overflow:hidden;}
+  .vico{width:68px;height:68px;flex:none;background:#fff;border:2.6px solid var(--c);border-radius:50%;padding:10px;box-shadow:3px 3px 0 rgba(51,42,31,.85);}
+  .vico svg{width:100%;height:100%;display:block;}
+  .intro-hero{display:flex;align-items:center;gap:16px;background:#fff;border:2px solid #332A1F;border-radius:14px;padding:11px 18px;box-shadow:4px 4px 0 rgba(51,42,31,.85);margin:8px 0 6px;transform:rotate(-.6deg);}
+  .intro-hero .hero-svg{width:98px;height:98px;flex:none;transform:rotate(-4deg);}
+  .intro-hero .ht{font-size:15.5px;line-height:1.6;font-weight:700;}
+  .intro-hero .ht b{font-weight:900;font-size:16.5px;}
+  .ic.avatar{background:#FFE9A8;padding:0;overflow:hidden;}
+  .ic.avatar svg{width:31px;height:31px;display:block;}
+  .case-ico{display:inline-flex;vertical-align:-3px;margin-right:6px;}
+  .case-ico svg{width:19px;height:19px;}
+  .ending-avatar{float:left;width:52px;height:52px;margin:2px 14px 4px 0;flex:none;}
+  .inspire-btn .btn-ico{width:19px;height:19px;vertical-align:-4px;margin-right:5px;}
+  .tape{position:absolute;width:92px;height:27px;background:rgba(232,181,60,.55);border:1px dashed rgba(51,42,31,.25);transform:rotate(-4deg);top:-13px;left:34px;z-index:5;}
+  .tape.t2{left:auto;right:40px;transform:rotate(5deg);background:rgba(46,94,170,.28);}
+</style>
+</head>
+<body style="width:1600px;height:1200px;">
+<main class="canvas" data-canvas-root style="width:1600px;height:1200px;">
+
+  <!-- ===== 卡通 SVG 图库（内联 symbol，各处 use 引用） ===== -->
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- 侦探小 D -->
+    <symbol id="i-detective" viewBox="0 0 120 120">
+      <g fill="none" stroke="#332A1F" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 52 Q60 40 96 52 Q60 61 24 52 Z" fill="#8A5A33"/>
+        <path d="M40 51 Q40 26 60 26 Q80 26 80 51 Z" fill="#B5713C"/>
+        <path d="M60 27 L60 50 M48 28 L48 47 M72 28 L72 47" stroke-width="2.4"/>
+        <circle cx="39" cy="70" r="4" fill="#FFE3C2"/>
+        <circle cx="81" cy="70" r="4" fill="#FFE3C2"/>
+        <circle cx="60" cy="70" r="22" fill="#FFE3C2"/>
+        <circle cx="52" cy="68" r="2.6" fill="#332A1F" stroke="none"/>
+        <circle cx="68" cy="68" r="2.6" fill="#332A1F" stroke="none"/>
+        <path d="M52 78 Q60 83 68 78" stroke-width="2.8"/>
+        <path d="M34 108 Q40 92 60 92 Q80 92 86 108 Z" fill="#2E5EAA"/>
+        <circle cx="90" cy="97" r="9.5" fill="#EAF2FF"/>
+        <line x1="97" y1="104" x2="106" y2="113" stroke-width="4.5"/>
+      </g>
+    </symbol>
+    <!-- 委托人小林 -->
+    <symbol id="i-xiaolin" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 31 Q15 12 32 11 Q49 12 47 31 Q45 21 32 21 Q19 21 17 31 Z" fill="#332A1F" stroke-width="2.2"/>
+        <circle cx="17.5" cy="35" r="3.4" fill="#FFE3C2"/>
+        <circle cx="46.5" cy="35" r="3.4" fill="#FFE3C2"/>
+        <circle cx="32" cy="35" r="17" fill="#FFE3C2"/>
+        <circle cx="25" cy="35" r="5.6" fill="#FFFDF6"/>
+        <circle cx="39" cy="35" r="5.6" fill="#FFFDF6"/>
+        <line x1="30.6" y1="35" x2="33.4" y2="35" stroke-width="2.2"/>
+        <circle cx="25" cy="35" r="1.7" fill="#332A1F" stroke="none"/>
+        <circle cx="39" cy="35" r="1.7" fill="#332A1F" stroke="none"/>
+        <circle cx="20.5" cy="41" r="2.2" fill="#F0A58C" stroke="none" opacity=".7"/>
+        <circle cx="43.5" cy="41" r="2.2" fill="#F0A58C" stroke="none" opacity=".7"/>
+        <path d="M28 43 Q32 46.5 36 43" stroke-width="2.3"/>
+        <path d="M19 60 Q24 49 32 49 Q40 49 45 60 Z" fill="#DCE7F8"/>
+        <path d="M27 51 L32 47.5 L37 51" stroke-width="2.2"/>
+      </g>
+    </symbol>
+    <!-- 共情：放大镜与脚印 -->
+    <symbol id="i-search" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="25" cy="25" r="13" fill="#E9F0FB"/>
+        <line x1="34.5" y1="34.5" x2="47" y2="47" stroke-width="5"/>
+      </g>
+      <g fill="#2E5EAA" stroke="none">
+        <ellipse cx="17" cy="52" rx="5.4" ry="7.2"/>
+        <circle cx="11.4" cy="45" r="1.8"/><circle cx="15" cy="43.4" r="1.8"/><circle cx="18.6" cy="43.4" r="1.8"/><circle cx="22.2" cy="45" r="1.8"/>
+        <ellipse cx="43" cy="56" rx="4.4" ry="6" opacity=".7"/>
+        <circle cx="38.6" cy="50.4" r="1.5" opacity=".7"/><circle cx="41.6" cy="49.2" r="1.5" opacity=".7"/><circle cx="44.8" cy="49.4" r="1.5" opacity=".7"/><circle cx="47.4" cy="50.8" r="1.5" opacity=".7"/>
+      </g>
+    </symbol>
+    <!-- 定义：准星靶心 -->
+    <symbol id="i-target" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="22" fill="#E2F3F1"/>
+        <circle cx="32" cy="32" r="14"/>
+        <circle cx="32" cy="32" r="7" fill="#16837E" stroke="#16837E"/>
+        <circle cx="32" cy="32" r="2.4" fill="#FFFDF6" stroke="none"/>
+        <line x1="32" y1="4" x2="32" y2="11" stroke="#16837E" stroke-width="3.4"/><line x1="32" y1="53" x2="32" y2="60" stroke="#16837E" stroke-width="3.4"/>
+        <line x1="4" y1="32" x2="11" y2="32" stroke="#16837E" stroke-width="3.4"/><line x1="53" y1="32" x2="60" y2="32" stroke="#16837E" stroke-width="3.4"/>
+      </g>
+    </symbol>
+    <!-- 构思：灯泡 -->
+    <symbol id="i-bulb" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="32" y1="4" x2="32" y2="10" stroke-width="3.2"/><line x1="12" y1="14" x2="16.5" y2="18.5" stroke-width="3.2"/><line x1="52" y1="14" x2="47.5" y2="18.5" stroke-width="3.2"/>
+        <line x1="7" y1="30" x2="13" y2="30" stroke-width="3.2"/><line x1="57" y1="30" x2="51" y2="30" stroke-width="3.2"/>
+        <circle cx="32" cy="29" r="15" fill="#F1EBFE"/>
+        <path d="M27 30 Q32 23 37 30" stroke-width="2.2"/>
+        <path d="M26.5 41 L37.5 41 L35 49 L29 49 Z" fill="#7A5C99"/>
+        <line x1="29" y1="44" x2="35" y2="44" stroke="#FFFDF6" stroke-width="1.8"/>
+      </g>
+    </symbol>
+    <!-- 原型：锤子与纸盒 -->
+    <symbol id="i-tools" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="rotate(-38 30 26)">
+          <rect x="18" y="9" width="25" height="11" rx="3" fill="#D2762B"/>
+          <rect x="27.5" y="18" width="6" height="26" rx="3" fill="#8A5A33" stroke="none"/>
+        </g>
+        <path d="M34 42 L39 37 L57 37 L52 42 Z" fill="#F6D9B8"/>
+        <path d="M34 42 L52 42 L52 56 L34 56 Z" fill="#FEF1E3"/>
+        <path d="M52 42 L57 37 L57 51 L52 56 Z" fill="#E8C49B"/>
+      </g>
+    </symbol>
+    <!-- 测试：对话气泡 -->
+    <symbol id="i-chat" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="7" y="12" width="50" height="31" rx="10" fill="#E6F3EB"/>
+        <path d="M23 43 L18 55 L33 43" fill="#E6F3EB"/>
+      </g>
+      <g fill="#3E8E5A" stroke="none">
+        <circle cx="22" cy="27.5" r="3.2"/><circle cx="32" cy="27.5" r="3.2"/><circle cx="42" cy="27.5" r="3.2"/>
+      </g>
+    </symbol>
+    <!-- 结案：奖杯 -->
+    <symbol id="i-trophy" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11 L42 11 Q42 29 32 33 Q22 29 22 11 Z" fill="#C4453D"/>
+        <path d="M22 15 Q12 15 14 25 Q16 30 22 28"/>
+        <path d="M42 15 Q52 15 50 25 Q48 30 42 28"/>
+        <path d="M32 33 L32 40" stroke-width="3"/>
+        <rect x="24" y="40" width="16" height="5.5" rx="1.5" fill="#C4453D"/>
+        <rect x="19" y="47" width="26" height="6.5" rx="2" fill="#C4453D"/>
+        <path d="M32 15 L33.8 19.6 L38.6 19.6 L34.7 22.5 L36.2 27.2 L32 24.3 L27.8 27.2 L29.3 22.5 L25.4 19.6 L30.2 19.6 Z" fill="#FFE9A8" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- 小灯泡（按钮用，跟随 currentColor） -->
+    <symbol id="i-bulb-sm" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="2.5" x2="12" y2="5"/><line x1="4.5" y1="6" x2="6.3" y2="7.8"/><line x1="19.5" y1="6" x2="17.7" y2="7.8"/>
+        <circle cx="12" cy="11" r="6"/>
+        <path d="M9.8 16.4 L14.2 16.4 L13.3 19 L10.7 19 Z" fill="currentColor" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- 眼睛（以人为本/观察） -->
+    <symbol id="i-eye" viewBox="0 0 64 64">
+      <g fill="none" stroke="#332A1F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 32 Q32 11 57 32 Q32 53 7 32 Z" fill="#FFFDF6"/>
+        <circle cx="32" cy="32" r="8.5" fill="#2E5EAA" stroke="#2E5EAA"/>
+        <circle cx="35" cy="29" r="2.4" fill="#FFFDF6" stroke="none"/>
+      </g>
+    </symbol>
+    <!-- 拼图（动手思考） -->
+    <symbol id="i-puzzle" viewBox="0 0 64 64">
+      <path d="M14 17 H25 a5.5 5.5 0 0 1 11 0 H50 V28 a5.5 5.5 0 0 1 0 11 V47 H36 a5.5 5.5 0 0 1-11 0 H14 V39 a5.5 5.5 0 0 1 0-11 Z"
+            fill="#D2762B" stroke="#332A1F" stroke-width="2.6" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 循环箭头（拥抱反复） -->
+    <symbol id="i-loop" viewBox="0 0 64 64">
+      <g fill="none" stroke="#3E8E5A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M50 21 A19 19 0 0 0 14.5 29"/>
+        <path d="M50 21 L41.5 20 M50 21 L49 29.5"/>
+        <path d="M14 43 A19 19 0 0 0 49.5 35"/>
+        <path d="M14 43 L22.5 44 M14 43 L15 34.5"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <header>
+    <div>
+      <span class="htag">CASE FILE No.001 · 互动练习册</span>
+      <h1>产品侦探<span class="u">闯关实录</span>：跟着小林破案，写下你自己的案卷</h1>
+    </div>
+    <div class="progress" id="progress"></div>
+  </header>
+
+  <div class="body-row">
+    <!-- 侧栏 -->
+    <aside class="sidebar">
+      <div class="side-card">
+        <div class="sl">MY CASE · 我立的案</div>
+        <div class="case-preview" id="casePreview"><span class="empty">还没立案——先在开场写下你身边的一个麻烦。</span></div>
+      </div>
+      <div id="navWrap" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <button class="reset-btn" id="resetBtn">↺ 重新立案（清空全部记录）</button>
+    </aside>
+
+    <!-- 舞台 -->
+    <section class="stage" id="stage">
+      <span class="tape"></span><span class="tape t2"></span>
+
+      <!-- s0 开场 -->
+      <div class="view active" data-view="0">
+        <div class="intro">
+          <div class="intro-left">
+            <div class="v-seal" style="--c:#332A1F;">00</div>
+            <div class="intro-hero">
+              <svg class="hero-svg"><use href="#i-detective"/></svg>
+              <div class="ht">嗨，我是产品侦探小 D。<br>今天的装备不是放大镜，而是 <b>一双会观察的眼睛、一张肯追问的嘴、一双不怕返工的手</b>。<br>跟我一起，把一个真实麻烦办成产品设计案。</div>
+            </div>
+            <div class="big-h">先看委托人小林的案子</div>
+            <ul class="storyline">
+              <li data-n="1">初二（3）班的小林，<b>水杯又一次把练习册泡湿了</b>。他的第一反应是「换个杯子」——但这真的是问题本身吗？</li>
+              <li data-n="2">你将作为产品侦探，和他一起走完 <b>Empathize → Test 五个关卡</b>，每关先看小林怎么做，再用同一句式，办你自己的案。</li>
+              <li data-n="3">每关都有一个小任务和一枚通关章，<b>完成练习才能盖章</b>；卡住了可以随时折回任意一关重查——这正是设计思维的迭代。</li>
+            </ul>
+            <div class="rules3">
+              <div><svg><use href="#i-eye"/></svg>先查案<br>后断案</div><div><svg><use href="#i-puzzle"/></svg>做出证物<br>再说话</div><div><svg><use href="#i-loop"/></svg>错线索<br>也是线索</div>
+            </div>
+          </div>
+          <div class="intro-right">
+            <div class="sl mont" style="font-weight:800;font-size:12.5px;letter-spacing:1.5px;color:#8A7A60;">FILE A CASE · 现在轮到你立案</div>
+            <div class="big-h" style="margin-top:10px;">写下你身边的一个真实麻烦</div>
+            <textarea class="case-input" id="caseInput" placeholder="例：每到下雨天，教室门口的雨伞乱成一堆，伞水淌了一地，还总拿错伞。&#10;提示：写你真正观察到的场景，不要急着写解决方案。"></textarea>
+            <div style="font-size:14px;color:#8A7A60;margin-top:9px;line-height:1.5;">这份案卷会自动保存在本机，后面五关的句子都围绕它来写。</div>
+            <div class="start-row">
+              <button class="btn btn-primary" style="--c:#C4453D;" data-go="1">开始探案 →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- s1 共情 -->
+      <div class="view" data-view="1" style="--c:#2E5EAA;--soft:#E9F0FB;">
+        <div class="v-head"><div class="v-seal">01</div><span class="vico"><svg><use href="#i-search"/></svg></span><div><div class="en mont">EMPATHIZE</div><h2>共情 · 现场勘查</h2></div><span class="role">任务：分清事实与猜测</span></div>
+        <div class="story"><span class="ic avatar"><svg><use href="#i-xiaolin"/></svg></span><p><b>本案进展：</b>小侦探没有急着买新杯子，而是跟着小林过了一天，记下他喝水、塞书包的每个动作——先拿到<b>事实</b>，再谈判断。</p></div>
+        <div class="dual">
+          <div class="box demo">
+            <h3>跟着小林学 <span class="tag mont">DEMO</span></h3>
+            <button class="reveal-btn">▸ 点击查看：小林这一关怎么做</button>
+            <div class="demo-body">他在笔记本上写：<span class="hl">我观察到小林在「课间换教室」时，「把杯子横着塞进侧袋」，杯口正对着书本；我好奇为什么他不把杯子立着放？</span>——注意，全程只写看到的，不写「他真邋遢」这类猜测。</div>
+          </div>
+          <div class="box practice">
+            <h3>轮到你办自己的案 <span class="tag mont">YOU</span></h3>
+            <div class="field"><label>谁（用户）</label><input data-live="s1" data-k="who" placeholder="例：走读的同学们"></div>
+            <div class="field"><label>在什么场景</label><input data-live="s1" data-k="scene" placeholder="例：下雨天进教室的时候"></div>
+            <div class="field"><label>我看到的动作 / 现象</label><input data-live="s1" data-k="act" placeholder="例：把湿伞靠在墙根，伞滑到地上"></div>
+            <div class="field" style="margin-bottom:0;"><label>我好奇为什么</label><input data-live="s1" data-k="why" placeholder="例：为什么没有地方让伞立住？"></div>
+            <div class="live"><span class="lab">SCRIPT · 照着说的句子</span><span id="live-s1"></span></div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="tt"><span class="no mont">TASK</span>小测验：点每张卡片，判定它是「事实」还是「猜测」，再点核对</div>
+          <div class="chips" id="factChips"></div>
+          <div style="margin-top:11px;display:flex;align-items:center;gap:12px;">
+            <button class="btn btn-ghost" id="factCheck" style="padding:9px 18px;font-size:15px;">核对判定</button>
+            <span class="task-note" id="factNote"></span>
+          </div>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="0">← 案卷</button>
+          <span class="hint">填完四个空并判定全对，即可盖章</span>
+          <button class="btn btn-stamp" data-stamp="1"><span class="stamp-flash">通关<br>SEAL 01</span>盖上通关章 →</button>
+        </div>
+      </div>
+
+      <!-- s2 定义 -->
+      <div class="view" data-view="2" style="--c:#16837E;--soft:#E2F3F1;">
+        <div class="v-head"><div class="v-seal">02</div><span class="vico"><svg><use href="#i-target"/></svg></span><div><div class="en mont">DEFINE</div><h2>定义 · 锁定真问题</h2></div><span class="role">任务：写出 POV 问题陈述</span></div>
+        <div class="story"><span class="ic avatar"><svg><use href="#i-xiaolin"/></svg></span><p><b>本案进展：</b>线索拼起来了：杯盖不是自己松的，是被侧袋里的书本一路顶开。要解决的不是「买杯子」，而是「挤压下杯盖松动」。</p></div>
+        <div class="dual">
+          <div class="box demo">
+            <h3>跟着小林学 <span class="tag mont">DEMO</span></h3>
+            <button class="reveal-btn">▸ 点击查看：合格的问题陈述长什么样</button>
+            <div class="demo-body"><span class="hl">用户（走读生小林）需要（杯盖在书本挤压下保持锁紧），因为（书本挤压会顶开杯盖、泡湿书本）。</span><br>HMW，我们可以怎样让杯盖在侧袋里不被顶开？——句子里没有出现任何具体方案。</div>
+          </div>
+          <div class="box practice">
+            <h3>轮到你办自己的案 <span class="tag mont">YOU</span></h3>
+            <div class="field"><label>用户</label><input data-live="s2" data-k="u" placeholder="例：带伞上学的同学"></div>
+            <div class="field"><label>他真正需要什么（不是某个产品）</label><input data-live="s2" data-k="need" placeholder="例：一个让湿伞短暂立住、不淌水的位置"></div>
+            <div class="field"><label>因为</label><input data-live="s2" data-k="because" placeholder="例：伞靠不住墙，地上也没法积水"></div>
+            <div class="field" style="margin-bottom:0;"><label>HMW：我们可以怎样……</label><input data-live="s2" data-k="hmw" placeholder="例：我们可以怎样让伞在门口自己站稳？"></div>
+            <div class="live"><span class="lab">SCRIPT · POV 句式</span><span id="live-s2"></span></div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="tt"><span class="no mont">TASK</span>选出合格的问题陈述（POV），点一下看反馈</div>
+          <div class="quiz-list" id="povQuiz"></div>
+          <span class="task-note" id="povNote"></span>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="1">← 上一关</button>
+          <span class="hint">填完四个空并选对 POV</span>
+          <button class="btn btn-stamp" data-stamp="2"><span class="stamp-flash">通关<br>SEAL 02</span>盖上通关章 →</button>
+        </div>
+      </div>
+
+      <!-- s3 构思 -->
+      <div class="view" data-view="3" style="--c:#7A5C99;--soft:#F1EBFE;">
+        <div class="v-head"><div class="v-seal">03</div><span class="vico"><svg><use href="#i-bulb"/></svg></span><div><div class="en mont">IDEATE</div><h2>构思 · 线索风暴</h2></div><span class="role">任务：先求数量，再做判断</span></div>
+        <div class="story"><span class="ic avatar"><svg><use href="#i-xiaolin"/></svg></span><p><b>本案进展：</b>侦探们贴了一墙点子：硬托、绑带、吸盘杯套……越怪越要留下。这一轮只有一个纪律——<b>谁都不许说「不可能」</b>。</p></div>
+        <div class="dual">
+          <div class="box demo">
+            <h3>跟着小林学 <span class="tag mont">DEMO</span></h3>
+            <button class="reveal-btn">▸ 点击查看：风暴是怎么刮起来的</button>
+            <div class="demo-body">有人说「给侧袋加个硬托」，下一个人接住：<span class="hl">「Yes, and……对，而且还可以让硬托带个绑带，连水杯一起固定。」</span>先攒够 20 个，再用贴纸投票选出主攻线索。</div>
+            <div style="margin-top:11px;"><button class="inspire-btn" id="inspireBtn"><svg class="btn-ico"><use href="#i-bulb-sm"/></svg>抽一张灵感提示卡</button><div class="inspire-wall" id="inspireWall"></div></div>
+          </div>
+          <div class="box practice">
+            <h3>轮到你办自己的案 <span class="tag mont">YOU</span></h3>
+            <div class="field"><label>点子 1（用 Yes, and 开头）</label><input data-live="s3" data-k="i1" placeholder="Yes, and……可以在门口放一排伞架"></div>
+            <div class="field"><label>点子 2</label><input data-live="s3" data-k="i2" placeholder="Yes, and……还可以给伞套个一次性水袋"></div>
+            <div class="field" style="margin-bottom:0;"><label>点子 3（越怪越好）</label><input data-live="s3" data-k="i3" placeholder="Yes, and……干脆让雨伞自己长脚站住"></div>
+            <div class="live"><span class="lab">SCRIPT · 接句式</span><span id="live-s3"></span></div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="tt"><span class="no mont">TASK</span>头脑风暴纪律判断：这些话合规吗？（✓ 合规 / ✗ 违规）</div>
+          <div id="ruleRows"></div>
+          <span class="task-note" id="ruleNote"></span>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="2">← 上一关</button>
+          <span class="hint">写满 3 个点子并判断全对</span>
+          <button class="btn btn-stamp" data-stamp="3"><span class="stamp-flash">通关<br>SEAL 03</span>盖上通关章 →</button>
+        </div>
+      </div>
+
+      <!-- s4 原型 -->
+      <div class="view" data-view="4" style="--c:#D2762B;--soft:#FEF1E3;">
+        <div class="v-head"><div class="v-seal">04</div><span class="vico"><svg><use href="#i-tools"/></svg></span><div><div class="en mont">PROTOTYPE</div><h2>原型 · 做出证物</h2></div><span class="role">任务：用最低成本验证一个假设</span></div>
+        <div class="story"><span class="ic avatar"><svg><use href="#i-xiaolin"/></svg></span><p><b>本案进展：</b>不开模、不等工厂。卡纸、海绵、橡皮筋，20 分钟拼出一个能塞进侧袋的硬托——<b>它丑没关系，能验证假设就行</b>。</p></div>
+        <div class="dual">
+          <div class="box demo">
+            <h3>跟着小林学 <span class="tag mont">DEMO</span></h3>
+            <button class="reveal-btn">▸ 点击查看：原型任务单怎么写</button>
+            <div class="demo-body"><span class="hl">这一版只验证一个假设：侧袋加硬托，杯盖就不会被顶开。最便宜的做法：用废卡纸折一个硬托，0 元、20 分钟。</span>至于好不好看、能不能量产，那是以后的事。</div>
+          </div>
+          <div class="box practice">
+            <h3>轮到你办自己的案 <span class="tag mont">YOU</span></h3>
+            <div class="field"><label>这一版只验证一个假设</label><input data-live="s4" data-k="hyp" placeholder="例：伞尖卡在格子里，伞就能自己站住"></div>
+            <div class="field" style="margin-bottom:0;"><label>最便宜的做法</label><input data-live="s4" data-k="way" placeholder="例：用废纸箱隔出几个伞位，今天就能试"></div>
+            <div class="live"><span class="lab">SCRIPT · 原型假设句</span><span id="live-s4"></span></div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="tt"><span class="no mont">TASK</span>勾选你的原型材料：目标「总成本 ≤ 10 元、当天能做完」</div>
+          <div class="mat-list" id="matList"></div>
+          <div class="cost-bar">
+            <span>预计总成本：<span class="num" id="costNum">0</span> 元</span>
+            <span class="task-note ok" id="costOk" style="display:none;margin:0;">达标：便宜、当天能试——这是原型，不是成品。</span>
+            <span class="task-note no" id="costNo" style="display:none;margin:0;">太贵或太慢：原型要当天就能上手，去掉重型方案。</span>
+          </div>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="3">← 上一关</button>
+          <span class="hint">填完两个空并凑出达标方案</span>
+          <button class="btn btn-stamp" data-stamp="4"><span class="stamp-flash">通关<br>SEAL 04</span>盖上通关章 →</button>
+        </div>
+      </div>
+
+      <!-- s5 测试 -->
+      <div class="view" data-view="5" style="--c:#3E8E5A;--soft:#E6F3EB;">
+        <div class="v-head"><div class="v-seal">05</div><span class="vico"><svg><use href="#i-chat"/></svg></span><div><div class="en mont">TEST</div><h2>测试 · 用户验证</h2></div><span class="role">任务：只观察、只追问，不诱导</span></div>
+        <div class="story"><span class="ic avatar"><svg><use href="#i-xiaolin"/></svg></span><p><b>本案进展：</b>硬托交给小林用一周。他取杯子时卡了一下——小侦探没有辩解，只把这个停顿记下来，它就是下一版要改的线索。</p></div>
+        <div class="dual">
+          <div class="box demo">
+            <h3>跟着小林学 <span class="tag mont">DEMO</span></h3>
+            <button class="reveal-btn">▸ 点击查看：测试时该怎么说话</button>
+            <div class="demo-body">全程让用户自己操作，小侦探只问开放式问题：<span class="hl">「刚才这里发生了什么？哪一步让你停顿了？」</span>绝不说「你是不是挺喜欢的？」——那是在逼用户配合你。</div>
+          </div>
+          <div class="box practice">
+            <h3>轮到你办自己的案 <span class="tag mont">YOU</span></h3>
+            <div class="field"><label>我观察到他在哪一步停顿 / 皱眉</label><input data-live="s5" data-k="pause" placeholder="例：伞格太窄，长伞插进去会歪"></div>
+            <div class="field" style="margin-bottom:0;"><label>我想追问的一句话</label><input data-live="s5" data-k="ask" placeholder="例：刚才插伞的时候，你在犹豫什么？"></div>
+            <div class="live"><span class="lab">SCRIPT · 只问不辩</span><span id="live-s5"></span></div>
+          </div>
+        </div>
+        <div class="task">
+          <div class="tt"><span class="no mont">TASK</span>辨别好提问与诱导提问（✓ 好问题 / ✗ 诱导）</div>
+          <div id="askRows"></div>
+          <span class="task-note" id="askNote"></span>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="4">← 上一关</button>
+          <span class="hint">填完两个空并辨别全对</span>
+          <button class="btn btn-stamp" data-stamp="5"><span class="stamp-flash">通关<br>SEAL 05</span>盖上通关章 →</button>
+        </div>
+      </div>
+
+      <!-- s6 结案 -->
+      <div class="view" data-view="6" style="--c:#C4453D;">
+        <div class="v-head"><div class="v-seal">★</div><span class="vico"><svg><use href="#i-trophy"/></svg></span><div><div class="en mont">CASE CLOSED</div><h2>我的第一份产品设计案卷</h2></div><span class="role">五关通关 · 可随时折回修订</span></div>
+        <div class="summary-list" id="summaryList" style="margin-top:16px;"></div>
+        <div class="ending">
+          <svg class="ending-avatar"><use href="#i-xiaolin"/></svg>
+          <b>小林案的结局：</b>硬托防住了漏水，却在取杯时卡手——侦探折回第 4 关把托口改成斜角，再测一轮才通过。<b>没有一稿过，只有一圈圈逼近真相</b>：你也可以点左侧任意一关，带着新线索重查自己的案卷。
+        </div>
+        <div class="rules3">
+          <div><svg><use href="#i-eye"/></svg>以人为本<br><span class="mont" style="font-size:12px;color:#8A7A60;">HUMAN-CENTERED</span></div>
+          <div><svg><use href="#i-puzzle"/></svg>动手思考<br><span class="mont" style="font-size:12px;color:#8A7A60;">LEARNING BY DOING</span></div>
+          <div><svg><use href="#i-loop"/></svg>拥抱反复<br><span class="mont" style="font-size:12px;color:#8A7A60;">ITERATE</span></div>
+        </div>
+        <div class="v-foot">
+          <button class="btn btn-ghost" data-go="5">← 回到第 5 关</button>
+          <span class="hint">案卷已保存在本机，关闭后再打开仍在</span>
+          <button class="btn btn-primary" style="--c:#332A1F;margin-left:auto;" id="restartBtn">↺ 重新立案</button>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <div data-canvas-bottom-safe-area="20" style="height:20px;"></div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY="dt_detective_case_v1";
+  var COLS=["#2E5EAA","#16837E","#7A5C99","#D2762B","#3E8E5A"];
+  var NAVS=[
+    {n:0,z:"开场立案",e:"BRIEF",c:"#332A1F"},
+    {n:1,z:"共情 · 现场勘查",e:"EMPATHIZE",c:COLS[0]},
+    {n:2,z:"定义 · 锁定问题",e:"DEFINE",c:COLS[1]},
+    {n:3,z:"构思 · 线索风暴",e:"IDEATE",c:COLS[2]},
+    {n:4,z:"原型 · 做出证物",e:"PROTOTYPE",c:COLS[3]},
+    {n:5,z:"测试 · 用户验证",e:"TEST",c:COLS[4]},
+    {n:6,z:"结案卷宗",e:"CLOSED",c:"#C4453D"}
+  ];
+  var state={step:0,caseText:"",done:[false,false,false,false,false,false],
+    s1:{},s2:{},s3:{},s4:{mats:[]},s5:{},
+    fact:{},pov:null,rules:{},asks:{},inspires:[]};
+  try{var saved=JSON.parse(localStorage.getItem(STORE_KEY));if(saved&&typeof saved==="object"){state=Object.assign(state,saved);state.done=state.done||[false,false,false,false,false,false];}}catch(e){}
+
+  function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}}
+  function $(s,root){return (root||document).querySelector(s);}
+  function $all(s,root){return Array.prototype.slice.call((root||document).querySelectorAll(s));}
+
+  /* ---------- 导航与进度 ---------- */
+  function buildNav(){
+    var nw=$("#navWrap"),pw=$("#progress"),nh="",ph="";
+    NAVS.forEach(function(it){
+      nh+='<button class="nav-btn" data-go="'+it.n+'" style="--c:'+it.c+'"><span class="nn">'+(it.n===0?"00":it.n===6?"★":(it.n<10?"0"+it.n:it.n))+'</span><span class="nt"><span class="e">'+it.e+'</span><div class="z">'+it.z+'</div></span></button>';
+    });
+    nw.innerHTML=nh;
+    NAVS.forEach(function(it,i){
+      if(i===0)return;
+      ph+='<div class="pdot" data-pgo="'+it.n+'" style="--c:'+it.c+'"><span class="pn">'+(it.n===6?"★":it.n)+'</span><span class="pc">'+it.z.split(" ")[0]+'</span></div>';
+    });
+    pw.innerHTML=ph;
+  }
+  function unlocked(n){
+    if(n===0)return true;
+    if(n<=5)return state.caseText.trim().length>0;
+    return state.done.slice(1,6).every(Boolean);
+  }
+  function go(n){
+    if(!unlocked(n)){shake($(".side-card"));return;}
+    state.step=n;save();render();
+    try{location.hash="s"+n;}catch(e){}
+  }
+  function shake(el){if(!el)return;el.style.animation="none";void el.offsetWidth;el.style.animation="shake .4s";}
+
+  function render(){
+    $all(".view").forEach(function(v){v.classList.toggle("active",Number(v.dataset.view)===state.step);});
+    $all(".nav-btn").forEach(function(b){
+      var n=Number(b.dataset.go);
+      b.classList.toggle("current",n===state.step);
+      b.classList.toggle("done",n>0&&n<=5&&state.done[n]);
+      b.style.opacity=unlocked(n)?"1":".45";
+    });
+    $all(".pdot").forEach(function(p){
+      var n=Number(p.dataset.pgo);
+      p.className="pdot"+(n===state.step?" current":"")+((n<=5&&state.done[n])||(n===6&&state.done.slice(1,6).every(Boolean))?" done":"")+(!unlocked(n)?" locked":"");
+      p.style.setProperty("--c",NAVS[n].c);
+    });
+    renderCasePreview();
+    if(state.step===6)renderSummary();
+  }
+  function renderCasePreview(){
+    var el=$("#casePreview");
+    if(state.caseText.trim())el.textContent=state.caseText;
+    else el.innerHTML='<span class="empty">还没立案——先在开场写下你身边的一个麻烦。</span>';
+  }
+
+  /* ---------- 实时拼句 ---------- */
+  var LIVE={
+    s1:function(d){return sentence(["我观察到",v(d.who,"【谁】"),"在",v(d.scene,"【什么场景】"),"，",v(d.act,"【做了什么 / 出现什么】"),"；我好奇为什么",v(d.why,"【___】"),"？"]);},
+    s2:function(d){return sentence(["用户",v(d.u,"【用户】"),"需要",v(d.need,"【需要什么】"),"，因为",v(d.because,"【原因】"),"。HMW，我们可以怎样",v(d.hmw,"【帮他做什么】"),"？"]);},
+    s3:function(d){return sentence([v(d.i1,"【点子1】")," / ",v(d.i2,"【点子2】")," / ",v(d.i3,"【点子3】")]);},
+    s4:function(d){return sentence(["这一版只验证一个假设：",v(d.hyp,"【假设】"),"。最便宜的做法：",v(d.way,"【做法】"),"。"]);},
+    s5:function(d){return sentence(["我观察到他在",v(d.pause,"【哪一步停顿】"),"停顿了；我想追问：",v(d.ask,"【我的问题】"),"？"]);}
+  };
+  function v(x,ph){return x&&x.trim()?'<b>'+escapeHtml(x.trim())+'</b>':'<span class="ph">'+ph+'</span>';}
+  function sentence(arr){return arr.join("");}
+  function escapeHtml(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function bindLive(){
+    $all("[data-live]").forEach(function(inp){
+      var group=inp.dataset.live,k=inp.dataset.k;
+      if(state[group]&&state[group][k])inp.value=state[group][k];
+      inp.addEventListener("input",function(){
+        state[group][k]=inp.value;save();
+        $("#live-"+group).innerHTML=LIVE[group](state[group]);
+      });
+    });
+    Object.keys(LIVE).forEach(function(g){$("#live-"+g).innerHTML=LIVE[g](state[g]||{});});
+  }
+
+  /* ---------- s1 事实/猜测 ---------- */
+  var FACTS=[
+    {t:"他把杯子横着塞进侧袋",a:"fact"},
+    {t:"杯口朝向书本那一侧",a:"fact"},
+    {t:"练习册第 12 页是湿的",a:"fact"},
+    {t:"他这个人就是邋遢",a:"guess"},
+    {t:"他每天要换三间教室",a:"fact"},
+    {t:"这杯子质量肯定不行",a:"guess"}
+  ];
+  function renderFact(){
+    $("#factChips").innerHTML=FACTS.map(function(f,i){
+      var cur=state.fact[i];
+      return '<button class="chip '+(cur||"")+'" data-fi="'+i+'"><span class="state">'+(cur==="fact"?"事实":cur==="guess"?"猜测":"点我判定")+'</span>'+f.t+'</button>';
+    }).join("");
+    $all("[data-fi]").forEach(function(c){
+      c.addEventListener("click",function(){
+        var i=Number(c.dataset.fi),now=state.fact[i];
+        state.fact[i]=now==="fact"?"guess":now==="guess"?null:"fact";save();renderFact();
+      });
+    });
+  }
+  $("#factCheck").addEventListener("click",function(){
+    var answered=FACTS.every(function(_,i){return state.fact[i];});
+    var note=$("#factNote");
+    if(!answered){note.className="task-note no show";note.textContent="还有卡片没判定，每张都要点一下。";return;}
+    var ok=FACTS.every(function(f,i){return state.fact[i]===f.a;});
+    if(ok){note.className="task-note ok show";note.textContent="全对：能被看到、被证实的是事实；对人的评价、对原因的想当然，只是猜测。";}
+    else{
+      note.className="task-note no show";note.textContent="有判定错了（红框卡片）：记住，带「肯定、就是」的评价多半是猜测。";
+      $all("[data-fi]").forEach(function(c){var i=Number(c.dataset.fi);if(state.fact[i]!==FACTS[i].a){shake(c);c.classList.add("wrong");}});
+    }
+  });
+
+  /* ---------- s2 POV 选择 ---------- */
+  var POVS=[
+    {t:"小林需要一个新杯子。",ok:false,why:"这是一个具体方案，不是需求——换杯子不一定解决挤压问题。"},
+    {t:"小林太不小心，应该改正自己的习惯。",ok:false,why:"这是指责用户，设计思维从用户的处境出发，而不是责怪用户。"},
+    {t:"走读生需要让杯盖在书本挤压下不松动，因为挤压会顶开杯盖、泡湿书本。",ok:true,why:"合格：具体的人 + 可满足的需要 + 原因，且没有预设方案。"},
+    {t:"杯子为什么会漏水呢？",ok:false,why:"太宽泛，无法直接行动；POV 要收窄到一个明确的人和场景。"}
+  ];
+  function renderPov(){
+    $("#povQuiz").innerHTML=POVS.map(function(p,i){
+      var cls=state.pov===i?(p.ok?"correct":"badpick"):"";
+      return '<button class="quiz '+cls+'" data-pi="'+i+'">'+p.t+'</button>';
+    }).join("");
+    $all("[data-pi]").forEach(function(b){
+      b.addEventListener("click",function(){
+        state.pov=Number(b.dataset.pi);save();renderPov();
+        var p=POVS[state.pov],note=$("#povNote");
+        note.className="task-note "+(p.ok?"ok show":"no show");note.textContent=p.why;
+      });
+    });
+  }
+
+  /* ---------- s3 灵感卡 + 规则判断 ---------- */
+  var INSPIRES=["反过来想：如果让杯子固定不动呢？","加一样东西：绑带、吸盘、硬壳……","偷师别的产品：奶茶杯托怎么固定？","把缺点变特点：让侧袋本身变成杯架？","极端假设：完全不花钱能怎么解决？","换个用户：如果是一年级学弟用呢？","组合两个点子，看看会发生什么","画一张夸张到可笑的图，再往回收"];
+  $("#inspireBtn").addEventListener("click",function(){
+    var pool=INSPIRES.filter(function(x){return state.inspires.indexOf(x)<0;});
+    if(!pool.length){return;}
+    state.inspires.push(pool[Math.floor(Math.random()*pool.length)]);save();renderInspires();
+  });
+  function renderInspires(){
+    $("#inspireWall").innerHTML=state.inspires.map(function(x){return '<span class="inspire-card">'+escapeHtml(x)+'</span>';}).join("");
+  }
+  var RULES=[
+    {t:"「这个想法太蠢了，直接划掉。」",ok:false},
+    {t:"「先不评论，能写多少写多少。」",ok:true},
+    {t:"「在别人的点子上再加一笔。」",ok:true}
+  ];
+  function renderRules(){
+    $("#ruleRows").innerHTML=RULES.map(function(r,i){
+      var cur=state.rules[i];
+      return '<div class="tf-row"><span class="q">'+r.t+'</span><button class="tf-btn '+(cur===true?"right":"")+'" data-ri="'+i+'" data-v="1">✓ 合规</button><button class="tf-btn '+(cur===false?"wrong":"")+'" data-ri="'+i+'" data-v="0">✗ 违规</button><span class="tf-mark" id="rm'+i+'"></span></div>';
+    }).join("");
+    $all("[data-ri]").forEach(function(b){
+      b.addEventListener("click",function(){
+        var i=Number(b.dataset.ri),val=b.dataset.v==="1";
+        state.rules[i]=val;save();renderRules();
+        var mark=$("#rm"+i);mark.textContent=val===RULES[i].ok?"✔":"✘";mark.style.color=val===RULES[i].ok?"#3E8E5A":"#C4453D";
+        var answered=RULES.every(function(_,j){return state.rules[j]!==undefined;});
+        var note=$("#ruleNote");
+        if(answered){
+          var ok=RULES.every(function(r,j){return state.rules[j]===r.ok;});
+          note.className="task-note "+(ok?"ok show":"no show");
+          note.textContent=ok?"全对：风暴阶段只生产、不审判，判断留到聚焦时再做。":"有判断错误，再想想风暴阶段为什么不许否定。";
+        }
+      });
+    });
+  }
+
+  /* ---------- s4 材料 ---------- */
+  var MATS=[
+    {t:"废卡纸",p:0,time:"当天"},{t:"硬纸板",p:0,time:"当天"},{t:"橡皮筋",p:0.5,time:"当天"},
+    {t:"海绵块",p:1,time:"当天"},{t:"胶带",p:1,time:"当天"},{t:"魔术贴",p:2,time:"当天"},
+    {t:"3D 打印",p:50,time:"要等几天"},{t:"开模定制",p:500,time:"要等几周"}
+  ];
+  function renderMats(){
+    $("#matList").innerHTML=MATS.map(function(m,i){
+      var on=state.s4.mats.indexOf(i)>=0;
+      return '<button class="mat '+(on?"picked":"")+'" data-mi="'+i+'"><span class="top"><span class="boxchk">'+(on?"✓":"")+'</span>'+m.t+'</span><span class="price">¥ '+m.p.toFixed(1)+'</span><span class="time">'+m.time+'</span></button>';
+    }).join("");
+    $all("[data-mi]").forEach(function(b){
+      b.addEventListener("click",function(){
+        var i=Number(b.dataset.mi),arr=state.s4.mats,at=arr.indexOf(i);
+        if(at>=0)arr.splice(at,1);else arr.push(i);
+        save();renderMats();updateCost();
+      });
+    });
+    updateCost();
+  }
+  function updateCost(){
+    var total=state.s4.mats.reduce(function(s,i){return s+MATS[i].p;},0);
+    $("#costNum").textContent=total.toFixed(1);
+    var heavy=state.s4.mats.some(function(i){return MATS[i].p>=50;});
+    var ok=state.s4.mats.length>0&&total<=10&&!heavy;
+    $("#costOk").style.display=ok?"inline-block":"none";
+    $("#costNo").style.display=state.s4.mats.length===0?"none":ok?"none":"inline-block";
+  }
+
+  /* ---------- s5 提问辨别 ---------- */
+  var ASKS=[
+    {t:"你是不是觉得它特别好用？",ok:false},
+    {t:"刚才这里发生了什么？",ok:true},
+    {t:"你会给我打满分吧？",ok:false},
+    {t:"哪一步让你犹豫了？",ok:true}
+  ];
+  function renderAsks(){
+    $("#askRows").innerHTML=ASKS.map(function(a,i){
+      var cur=state.asks[i];
+      return '<div class="tf-row"><span class="q">'+a.t+'</span><button class="tf-btn '+(cur===true?"right":"")+'" data-ai="'+i+'" data-v="1">✓ 好问题</button><button class="tf-btn '+(cur===false?"wrong":"")+'" data-ai="'+i+'" data-v="0">✗ 诱导</button><span class="tf-mark" id="am'+i+'"></span></div>';
+    }).join("");
+    $all("[data-ai]").forEach(function(b){
+      b.addEventListener("click",function(){
+        var i=Number(b.dataset.ai),val=b.dataset.v==="1";
+        state.asks[i]=val;save();renderAsks();
+        var mark=$("#am"+i);mark.textContent=val===ASKS[i].ok?"✔":"✘";mark.style.color=val===ASKS[i].ok?"#3E8E5A":"#C4453D";
+        var answered=ASKS.every(function(_,j){return state.asks[j]!==undefined;});
+        var note=$("#askNote");
+        if(answered){
+          var ok=ASKS.every(function(a,j){return state.asks[j]===a.ok;});
+          note.className="task-note "+(ok?"ok show":"no show");
+          note.textContent=ok?"全对：好问题让人描述事实，诱导提问只会换来你想听的答案。":"有辨别错误：带「是不是、对吧、满分」的问句，通常都在诱导。";
+        }
+      });
+    });
+  }
+
+  /* ---------- 通关条件 ---------- */
+  function filled(g,keys){return keys.every(function(k){return state[g][k]&&state[g][k].trim();});}
+  function canPass(n){
+    if(n===0)return state.caseText.trim().length>0;
+    if(n===1)return filled("s1",["who","scene","act","why"])&&FACTS.every(function(f,i){return state.fact[i]===f.a;});
+    if(n===2)return filled("s2",["u","need","because","hmw"])&&state.pov!==null&&POVS[state.pov].ok;
+    if(n===3)return filled("s3",["i1","i2","i3"])&&RULES.every(function(r,i){return state.rules[i]===r.ok;});
+    if(n===4){var heavy=state.s4.mats.some(function(i){return MATS[i].p>=50;});var total=state.s4.mats.reduce(function(s,i){return s+MATS[i].p;},0);
+      return filled("s4",["hyp","way"])&&state.s4.mats.length>0&&total<=10&&!heavy;}
+    if(n===5)return filled("s5",["pause","ask"])&&ASKS.every(function(a,i){return state.asks[i]===a.ok;});
+    return false;
+  }
+
+  /* ---------- 结案汇总 ---------- */
+  function renderSummary(){
+    var rows=[
+      ["01","#2E5EAA",LIVE.s1(state.s1||{})],
+      ["02","#16837E",LIVE.s2(state.s2||{})],
+      ["03","#7A5C99",LIVE.s3(state.s3||{})],
+      ["04","#D2762B",LIVE.s4(state.s4||{})],
+      ["05","#3E8E5A",LIVE.s5(state.s5||{})]
+    ];
+    $("#summaryList").innerHTML=rows.map(function(r){
+      var miss=r[2].indexOf("ph")>=0;
+      return '<div class="sum-item"><span class="sk" style="background:'+r[1]+';">'+r[0]+'</span>'+(miss?'<span class="miss">这一关还有空格，点左侧回去补全。</span>':r[2])+'</div>';
+    }).join("");
+  }
+
+  /* ---------- 事件绑定 ---------- */
+  document.addEventListener("click",function(e){
+    var goBtn=e.target.closest("[data-go]");
+    if(goBtn){go(Number(goBtn.dataset.go));return;}
+    var stampBtn=e.target.closest("[data-stamp]");
+    if(stampBtn){
+      var n=Number(stampBtn.dataset.stamp);
+      if(!canPass(n)){
+        stampBtn.disabled=true;setTimeout(function(){stampBtn.disabled=false;},900);
+        shake(stampBtn);
+        var foot=stampBtn.parentElement,hint=$(".hint",foot);
+        var old=hint.textContent;hint.textContent="还没达标：完成本关填空与小任务才能盖章";hint.style.color="#C4453D";
+        setTimeout(function(){hint.textContent=old;hint.style.color="";},1800);
+        return;
+      }
+      state.done[n]=true;save();
+      var flash=$(".stamp-flash",stampBtn);flash.classList.remove("go");void flash.offsetWidth;flash.classList.add("go");
+      setTimeout(function(){go(n+1);},950);
+    }
+  });
+  $("#caseInput").addEventListener("input",function(e){
+    state.caseText=e.target.value;save();renderCasePreview();
+  });
+  function fullReset(){try{localStorage.removeItem(STORE_KEY);}catch(e){}location.reload();}
+  $("#resetBtn").addEventListener("click",fullReset);
+  $("#restartBtn").addEventListener("click",fullReset);
+  $all(".reveal-btn").forEach(function(b){
+    b.dataset.closed=b.textContent;
+    b.addEventListener("click",function(){
+      var body=b.nextElementSibling;var open=body.classList.toggle("open");
+      b.textContent=open?"▾ 收起范例":b.dataset.closed;
+    });
+  });
+
+  /* ---------- 范例占位 ---------- */
+  var PH_SVG='<svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#5E78A8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line><line x1="8.5" y1="11" x2="13.5" y2="11"></line></svg>';
+  $all(".box.demo").forEach(function(box){
+    var body=$(".demo-body",box),ph=document.createElement("div");
+    ph.className="demo-placeholder";
+    ph.innerHTML=PH_SVG+'<span>先点开「小林示范」，再动笔办自己的案</span>';
+    body.parentNode.insertBefore(ph,body.nextSibling);
+  });
+
+  /* ---------- 初始化 ---------- */
+  buildNav();bindLive();renderFact();renderPov();renderRules();renderInspires();renderMats();renderAsks();
+  $("#caseInput").value=state.caseText||"";
+  var h=parseInt((location.hash||"").replace("#s",""),10);
+  if(!isNaN(h)&&unlocked(h))state.step=h;
+  render();
+})();
+</script>
+</body>
+</html>

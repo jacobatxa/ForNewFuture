@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-24",
   "programs": [
     {
       "id": "camp",
@@ -183,6 +183,17 @@
       "updated": "",
       "path": "literacy/course/20-m2-pilot-deck.html",
       "source": "literacy/course/20-m2-pilot-deck.html"
+    },
+    {
+      "id": "lit-m2-workshop-dt",
+      "program": "literacy",
+      "title": "M2 · 动手课开场 · 设计思维探案",
+      "kind": "interaction",
+      "status": "active",
+      "size": "61 KB",
+      "notes": "M2 线下动手 2h 前 30 分钟 · 五关互动练习册，小林水杯贯穿案，可填写盖章",
+      "updated": "2026-11-24",
+      "path": "literacy/course/21-m2-workshop-design-thinking.html"
     },
     {
       "id": "lit-raptor",
