@@ -185,17 +185,17 @@
    "source": "literacy/course/20-m2-pilot-deck.html"
   },
   {
-   "id": "lit-m3-deck",
+   "id": "lit-m2-lesson2",
    "program": "literacy",
-   "title": "M3 · 产品与设计思维",
+   "title": "M2 · 第二次课｜产品与设计思维",
    "kind": "deck",
    "status": "active",
    "pages": 23,
-   "size": "6.0 MB",
-   "notes": "找 · 比 · 试 · Airbnb 案例 / HMW / 用户旅程 / 原型 / 多邻国 A/B / PRD / 分批交付 / 评审 · 60 分钟",
+   "size": "6.3 MB",
+   "notes": "找 · 比 · 试 · 设计思维→精益验证→敏捷交付一圈走完 · 60 分钟",
    "updated": "2026-11-26",
-   "path": "literacy/course/22-m3-product-design-deck.html",
-   "source": "literacy/course/22-m3-product-design-deck.html"
+   "path": "literacy/course/22-m2-lesson2-design-thinking.html",
+   "source": "literacy/course/22-m2-lesson2-design-thinking.html"
   },
   {
    "id": "lit-m4-6",
