@@ -916,5 +916,25 @@
   render();
 })();
 </script>
+
+<style id="fit-screen">
+html,body{width:100%!important;height:100%!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#F4EEDF;}
+[data-canvas-root]{position:fixed!important;left:0;top:0;transform-origin:top left;will-change:transform;}
+</style>
+<script id="fit-screen-js">
+(function(){
+  var W=1600,H=1200,c=null,s=1,vw=0,vh=0;
+  function fit(){
+    c=c||document.querySelector('[data-canvas-root]');
+    if(!c)return;
+    vw=window.innerWidth;vh=window.innerHeight;
+    s=Math.min(vw/W,vh/H);
+    c.style.transform='translate('+((vw-W*s)/2)+'px,'+((vh-H*s)/2)+'px) scale('+s+')';
+  }
+    window.addEventListener('resize',fit);
+  document.addEventListener('DOMContentLoaded',fit);
+  fit();window.addEventListener('load',fit);setTimeout(fit,120);setTimeout(fit,600);
+})();
+</script>
 </body>
 </html>
